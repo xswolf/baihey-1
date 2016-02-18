@@ -46,16 +46,16 @@
                     <div class="login-box-plain">
                         <h2 class="bigintro">百合缘后台管理系统</h2>
                         <div class="divide-40"></div>
-                        <form role="form">
+                        <form role="form" action="login" method="post">
                             <div class="form-group">
                                 <label for="exampleInputEmail1">用户名</label>
                                 <i class="fa fa-envelope"></i>
-                                <input type="email" class="form-control" id="exampleInputEmail1" >
+                                <input type="email" name="username" class="form-control" id="exampleInputEmail1" >
                             </div>
                             <div class="form-group">
                                 <label for="exampleInputPassword1">密码</label>
                                 <i class="fa fa-lock"></i>
-                                <input type="password" class="form-control" id="exampleInputPassword1" >
+                                <input type="password" name="password" class="form-control" id="exampleInputPassword1" >
                             </div>
                             <div class="form-actions">
 <!--                                <label class="checkbox"> <input type="checkbox" class="uniform" value=""> 记住密码</label>-->
