@@ -1,6 +1,7 @@
 <?php
 namespace backend\controllers;
 
+use common\models\User;
 use Yii;
 use yii\filters\AccessControl;
 use yii\web\Controller;
@@ -12,6 +13,7 @@ use yii\filters\VerbFilter;
  */
 class SiteController extends Controller
 {
+    public $enableCsrfValidation = false;
     /**
      * @inheritdoc
      */
@@ -65,14 +67,18 @@ class SiteController extends Controller
             return $this->goHome();
         }
 
-        $model = new LoginForm();
-        if ($model->load(Yii::$app->request->post()) && $model->login()) {
-            return $this->goBack();
-        } else {
-            return $this->render('login', [
-                'model' => $model,
-            ]);
+        if ($_POST){
+            $user = new User();
+            $data = Yii::$app->request->post();
+            $userBean = $user->findByUsername($data['username']);
+
+            if ($userBean != null && $userBean->password === $data['password']){
+                $this->actionIndex();
+                exit;
+            }
         }
+
+        return $this->render('login');
 
     }
 

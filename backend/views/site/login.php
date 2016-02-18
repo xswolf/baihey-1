@@ -7,16 +7,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
     <meta name="description" content="">
     <meta name="author" content="">
-    <!-- STYLESHEETS --><!--[if lt IE 9]><script src="/admin/CloudAdmin/js/flot/excanvas.min.js"></script><script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><script src="http://css3-mediaqueries-js.googlecode.com/svn/trunk/css3-mediaqueries.js"></script><![endif]-->
-    <link rel="stylesheet" type="text/css" href="/admin/CloudAdmin/css/cloud-admin.css" >
+    <!-- STYLESHEETS --><!--[if lt IE 9]>
+    <script src="/admin/CloudAdmin/js/flot/excanvas.min.js"></script>
+    <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <script src="http://css3-mediaqueries-js.googlecode.com/svn/trunk/css3-mediaqueries.js"></script><![endif]-->
+    <link rel="stylesheet" type="text/css" href="/admin/CloudAdmin/css/cloud-admin.css">
 
     <link href="/admin/CloudAdmin/font-awesome/css/font-awesome.min.css" rel="stylesheet">
     <!-- DATE RANGE PICKER -->
-    <link rel="stylesheet" type="text/css" href="/admin/CloudAdmin/js/bootstrap-daterangepicker/daterangepicker-bs3.css" />
+    <link rel="stylesheet" type="text/css"
+          href="/admin/CloudAdmin/js/bootstrap-daterangepicker/daterangepicker-bs3.css"/>
     <!-- UNIFORM -->
-    <link rel="stylesheet" type="text/css" href="/admin/CloudAdmin/js/uniform/css/uniform.default.min.css" />
+    <link rel="stylesheet" type="text/css" href="/admin/CloudAdmin/js/uniform/css/uniform.default.min.css"/>
     <!-- ANIMATE -->
-    <link rel="stylesheet" type="text/css" href="/admin/CloudAdmin/css/animatecss/animate.min.css" />
+    <link rel="stylesheet" type="text/css" href="/admin/CloudAdmin/css/animatecss/animate.min.css"/>
     <!-- FONTS -->
     <link href='http://fonts.useso.com/css?family=Open+Sans:300,400,600,700' rel='stylesheet' type='text/css'>
 </head>
@@ -30,7 +34,8 @@
             <div class="row">
                 <div class="col-md-4 col-md-offset-4">
                     <div id="logo">
-                        <a href="index.html"><img src="/admin/CloudAdmin/img/logo/logo-alt.png" height="40" alt="logo name" /></a>
+                        <a href="index.html"><img src="/admin/CloudAdmin/img/logo/logo-alt.png" height="40"
+                                                  alt="logo name"/></a>
                     </div>
                 </div>
             </div>
@@ -46,27 +51,25 @@
                     <div class="login-box-plain">
                         <h2 class="bigintro">百合缘后台管理系统</h2>
                         <div class="divide-40"></div>
-                        <form role="form" action="login" method="post">
+                        <form id="login-form" role="form" method="post" action="/admin/site/login">
                             <div class="form-group">
                                 <label for="exampleInputEmail1">用户名</label>
                                 <i class="fa fa-envelope"></i>
-                                <input type="email" name="username" class="form-control" id="exampleInputEmail1" >
+                                <input type="text" name="username" class="form-control" id="exampleInputEmail1">
                             </div>
                             <div class="form-group">
                                 <label for="exampleInputPassword1">密码</label>
                                 <i class="fa fa-lock"></i>
-                                <input type="password" name="password" class="form-control" id="exampleInputPassword1" >
+                                <input type="password" name="password" class="form-control" id="exampleInputPassword1">
                             </div>
                             <div class="form-actions">
-<!--                                <label class="checkbox"> <input type="checkbox" class="uniform" value=""> 记住密码</label>-->
+                                <!--                                <label class="checkbox"> <input type="checkbox" class="uniform" value=""> 记住密码</label>-->
                                 <button type="submit" class="btn btn-danger">登录</button>
                             </div>
+                            <!-- SOCIAL LOGIN -->
+                            <div class="divide-20"></div>
                         </form>
-                        <!-- SOCIAL LOGIN -->
-                        <div class="divide-20"></div>
-
                         <!-- /SOCIAL LOGIN -->
-
                     </div>
                 </div>
             </div>
@@ -85,30 +88,31 @@
                             <div class="form-group">
                                 <label for="exampleInputName">Full Name</label>
                                 <i class="fa fa-font"></i>
-                                <input type="text" class="form-control" id="exampleInputName" >
+                                <input type="text" class="form-control" id="exampleInputName">
                             </div>
                             <div class="form-group">
                                 <label for="exampleInputUsername">Username</label>
                                 <i class="fa fa-user"></i>
-                                <input type="text" class="form-control" id="exampleInputUsername" >
+                                <input type="text" class="form-control" id="exampleInputUsername">
                             </div>
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Email address</label>
                                 <i class="fa fa-envelope"></i>
-                                <input type="email" class="form-control" id="exampleInputEmail1" >
+                                <input type="email" class="form-control" id="exampleInputEmail1">
                             </div>
                             <div class="form-group">
                                 <label for="exampleInputPassword1">Password</label>
                                 <i class="fa fa-lock"></i>
-                                <input type="password" class="form-control" id="exampleInputPassword1" >
+                                <input type="password" class="form-control" id="exampleInputPassword1">
                             </div>
                             <div class="form-group">
                                 <label for="exampleInputPassword2">Repeat Password</label>
                                 <i class="fa fa-check-square-o"></i>
-                                <input type="password" class="form-control" id="exampleInputPassword2" >
+                                <input type="password" class="form-control" id="exampleInputPassword2">
                             </div>
                             <div class="form-actions">
-                                <label class="checkbox"> <input type="checkbox" class="uniform" value=""> I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a></label>
+                                <label class="checkbox"> <input type="checkbox" class="uniform" value=""> I agree to the
+                                    <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a></label>
                                 <button type="submit" class="btn btn-success">Sign Up</button>
                             </div>
                         </form>
@@ -151,7 +155,7 @@
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Enter your Email address</label>
                                 <i class="fa fa-envelope"></i>
-                                <input type="email" class="form-control" id="exampleInputEmail1" >
+                                <input type="email" class="form-control" id="exampleInputEmail1">
                             </div>
                             <div class="form-actions">
                                 <button type="submit" class="btn btn-info">Send Me Reset Instructions</button>
@@ -183,7 +187,7 @@
 <!-- CUSTOM SCRIPT -->
 <script src="/admin/CloudAdmin/js/script.js"></script>
 <script>
-    jQuery(document).ready(function() {
+    jQuery(document).ready(function () {
         App.setPage("login");  //Set current page
         App.init(); //Initialise plugins and elements
     });
@@ -191,7 +195,7 @@
 <script type="text/javascript">
     function swapScreen(id) {
         jQuery('.visible').removeClass('visible animated fadeInUp');
-        jQuery('#'+id).addClass('visible animated fadeInUp');
+        jQuery('#' + id).addClass('visible animated fadeInUp');
     }
 </script>
 <!-- /JAVASCRIPTS -->
