@@ -13,10 +13,17 @@ use yii\web\Controller;
 
 class UserController extends Controller
 {
+    public $enableCsrfValidation = false;
 
     public function actionLogin(){
 
         $this->layout = false;
+
+        if ($_POST){
+
+            return $this->redirect("/admin/");
+        }
+
         return $this->render('login');
     }
 

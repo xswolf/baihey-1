@@ -51,7 +51,7 @@
                     <div class="login-box-plain">
                         <h2 class="bigintro">百合缘后台管理系统</h2>
                         <div class="divide-40"></div>
-                        <form id="login-form" role="form" method="post" action="/admin/site/login">
+                        <form id="login-form" role="form" method="post" action="/admin/user/login">
                             <div class="form-group">
                                 <label for="exampleInputEmail1">用户名</label>
                                 <i class="fa fa-envelope"></i>
@@ -179,7 +179,7 @@
 <!-- JQUERY UI-->
 <script src="/admin/CloudAdmin/js/jquery-ui-1.10.3.custom/js/jquery-ui-1.10.3.custom.min.js"></script>
 <!-- BOOTSTRAP -->
-<script src="/admin/CloudAdmin/bootstrap-dist/js/bootstrap.min.js"></script>
+<script src="/admin/CloudAdmin/bootstrap/js/bootstrap.min.js"></script>
 
 
 <!-- UNIFORM -->

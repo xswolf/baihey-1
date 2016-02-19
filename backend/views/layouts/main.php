@@ -19,6 +19,10 @@
     <link rel="stylesheet" type="text/css" href="/admin/CloudAdmin/js/bootstrap-daterangepicker/daterangepicker-bs3.css" />
     <!-- FONTS -->
     <link href='http://fonts.useso.com/css?family=Open+Sans:300,400,600,700' rel='stylesheet' type='text/css'>
+
+    <link rel="stylesheet" type="text/css" href="/admin/CloudAdmin/js/datatables/media/css/jquery.dataTables.min.css" />
+    <link rel="stylesheet" type="text/css" href="/admin/CloudAdmin/js/datatables/media/assets/css/datatables.min.css" />
+    <link rel="stylesheet" type="text/css" href="/admin/CloudAdmin/js/datatables/extras/TableTools/media/css/TableTools.min.css" />
 </head>
 <body>
 <!-- HEADER -->
@@ -453,6 +457,17 @@
                     </div>
                     <!-- /PAGE HEADER -->
                     <div class="container">
+                        <div class="alert alert-block alert-success fade in">
+                            <a class="close" data-dismiss="alert" href="#" aria-hidden="true">&times;</a>
+                            <p><h4><i class="fa fa-heart"></i> <span>操作成功</span></h4> </p>
+                        </div>
+                        <div class="alert alert-block alert-danger fade in">
+                            <a class="close" data-dismiss="alert" href="#" aria-hidden="true">&times;</a>
+                            <h4><i class="fa fa-times"></i> <span>操作失败</span></h4>
+                            <p></p>
+
+                        </div>
+
                         <?= $content ?>
                     </div>
                 </div><!-- /CONTENT-->
@@ -469,8 +484,14 @@
 <!-- JQUERY UI-->
 <script src="/admin/CloudAdmin/js/jquery-ui-1.10.3.custom/js/jquery-ui-1.10.3.custom.min.js"></script>
 <!-- BOOTSTRAP -->
-<script src="/admin/CloudAdmin/bootstrap-dist/js/bootstrap.min.js"></script>
+<script src="/admin/CloudAdmin/bootstrap/js/bootstrap.min.js"></script>
 
+
+<!-- DATA TABLES -->
+<script type="text/javascript" src="/admin/CloudAdmin/js/datatables/media/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="/admin/CloudAdmin/js/datatables/media/assets/js/datatables.min.js"></script>
+<script type="text/javascript" src="/admin/CloudAdmin/js/datatables/extras/TableTools/media/js/TableTools.min.js"></script>
+<script type="text/javascript" src="/admin/CloudAdmin/js/datatables/extras/TableTools/media/js/ZeroClipboard.min.js"></script>
 
 <!-- DATE RANGE PICKER -->
 <script src="/admin/CloudAdmin/js/bootstrap-daterangepicker/moment.min.js"></script>
@@ -481,12 +502,27 @@
 <!-- COOKIE -->
 <script type="text/javascript" src="/admin/CloudAdmin/js/jQuery-Cookie/jquery.cookie.min.js"></script>
 <!-- CUSTOM SCRIPT -->
+<script src="/admin/js/dataTableQuery.js"></script>
 <script src="/admin/CloudAdmin/js/script.js"></script>
 <script>
+
     jQuery(document).ready(function() {
         App.setPage("fixed_header_sidebar");  //Set current page
         App.init(); //Initialise plugins and elements
+
     });
+
+    $(function(){
+        function hide_alert() {
+            $(".alert-success").hide();
+            $(".alert-danger").hide(1000);
+        }
+
+        setTimeout(hide_alert , 3000);
+
+    })
+
+
 </script>
 <!-- /JAVASCRIPTS -->
 </body>
