@@ -41,7 +41,7 @@
                         <th data-name="level">Browser</th>
                         <th class="hidden-xs">Platform(s)</th>
                         <th>Engine version</th>
-                        <th class="hidden-xs">CSS grade</th>
+                        <th class="hidden-xs">操作</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -54,7 +54,7 @@
                         </td>
                         <td class="hidden-xs">Win 95+</td>
                         <td class="center">4</td>
-                        <td class="center hidden-xs">X</td>
+                        <td class="center hidden-xs"><a href="/admin/site/form"> 编辑 </a></td>
                     </tr>
                     <tr class="gradeC">
                         <td>Trident</td>

@@ -5,7 +5,7 @@
 <head>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <meta charset="utf-8">
-    <title>Cloud Admin | Fixed Header & Sidebar</title>
+    <title>嘉瑞百合缘后台管理系统</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
     <meta name="description" content="">
     <meta name="author" content="">
@@ -23,6 +23,9 @@
     <link rel="stylesheet" type="text/css" href="/admin/CloudAdmin/js/datatables/media/css/jquery.dataTables.min.css" />
     <link rel="stylesheet" type="text/css" href="/admin/CloudAdmin/js/datatables/media/assets/css/datatables.min.css" />
     <link rel="stylesheet" type="text/css" href="/admin/CloudAdmin/js/datatables/extras/TableTools/media/css/TableTools.min.css" />
+    <link rel="stylesheet" type="text/css" href="/admin/CloudAdmin/bootstrap/css/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="/admin/CloudAdmin/js/file_input/fileinput.min.css" />
+
 </head>
 <body>
 <!-- HEADER -->
@@ -457,11 +460,11 @@
                     </div>
                     <!-- /PAGE HEADER -->
                     <div class="container">
-                        <div class="alert alert-block alert-success fade in">
+                        <div class="alert alert-block alert-success fade in" style="display: none;">
                             <a class="close" data-dismiss="alert" href="#" aria-hidden="true">&times;</a>
                             <p><h4><i class="fa fa-heart"></i> <span>操作成功</span></h4> </p>
                         </div>
-                        <div class="alert alert-block alert-danger fade in">
+                        <div class="alert alert-block alert-danger fade in" style="display: none;">
                             <a class="close" data-dismiss="alert" href="#" aria-hidden="true">&times;</a>
                             <h4><i class="fa fa-times"></i> <span>操作失败</span></h4>
                             <p></p>
@@ -501,8 +504,10 @@
 <script type="text/javascript" src="/admin/CloudAdmin/js/jQuery-slimScroll-1.3.0/jquery.slimscroll.min.js"></script><script type="text/javascript" src="/admin/CloudAdmin/js/jQuery-slimScroll-1.3.0/slimScrollHorizontal.min.js"></script>
 <!-- COOKIE -->
 <script type="text/javascript" src="/admin/CloudAdmin/js/jQuery-Cookie/jquery.cookie.min.js"></script>
+<script type="text/javascript" src="/admin/CloudAdmin/js/file_input/fileinput.min.js"></script>
 <!-- CUSTOM SCRIPT -->
 <script src="/admin/js/dataTableQuery.js"></script>
+<script src="/admin/js/app.js"></script>
 <script src="/admin/CloudAdmin/js/script.js"></script>
 <script>
 
