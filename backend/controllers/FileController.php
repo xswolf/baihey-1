@@ -34,10 +34,15 @@ class FileController extends Controller
         if (\Yii::$app->request->isPost) {
             $model->file = UploadedFile::getInstance($model, 'file');
             if ($model->validate()) {
-
-                $file_name = $dir."upload/".date('Ymd').'/'. time().rand(1,100000000) . '.' . $model->file->extension;
+                $date_time = date('Ymd');
+                $time = time();
+                $rand = rand(1,100000000);
+                $file_name = $dir."upload/".$date_time.'/'. $time.$rand . '.' . $model->file->extension;
                 $model->file->saveAs($file_name);
-                $return  = array('status' => 1, 'info' => '上传成功' , 'path' => $file_name);
+
+                $real_file_name = "/images/"."upload/".$date_time.'/'. $time.$rand . '.' . $model->file->extension;
+
+                $return  = array('status' => 1, 'info' => '上传成功' , 'path' => $real_file_name);
                 echo json_encode($return);
                 exit;
             }
