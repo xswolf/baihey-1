@@ -20,6 +20,15 @@ $(function(){
 
     });
 
+    $('.file_upload').on('fileuploaded', function(event, file, previewId, index, reader) {
+
+        var input_name = $(this).data('up-name')
+        var _input = "<input type='hidden' name='" + input_name + "[]' value='" + file.response.path + "' />";
+        $(this).after(_input)
+
+    });
+
+
     // 操作提示
     var message_cookie = $.cookie('message');
     if (message_cookie !== null && message_cookie != undefined){

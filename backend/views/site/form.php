@@ -40,7 +40,7 @@
                 <label class="col-sm-3 control-label">images upload</label>
                 <div class="col-sm-9">
 <!--                    <input class="file_upload" type="file" multiple=true>-->
-                    <input class="file_upload" type="file" name="UploadForm[file]" multiple data-preview-file-type="any" data-upload-url="/admin/file/upload">
+                    <input class="file_upload" type="file" data-up-name="img" name="UploadForm[file]" multiple data-preview-file-type="any" data-upload-url="/admin/file/upload">
                 </div>
             </div>
             <div class="form-group has-success">
