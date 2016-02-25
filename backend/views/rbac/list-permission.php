@@ -1,14 +1,14 @@
 <!--过滤表单-->
 <div class="box border green">
     <div class="box-body small">
-        <div class="row">
-            <div class="col-xs-2">
-                <input type="text" class="form-control j-dt-filter" data-col="name:name" placeholder="Rendering engine">
-            </div>
-            <div class="col-xs-3">
-                <input type="text" class="form-control j-dt-filter" data-col="level:name" placeholder="Browser">
-            </div>
-        </div>
+<!--        <div class="row">-->
+<!--            <div class="col-xs-2">-->
+<!--                <input type="text" class="form-control j-dt-filter" data-col="name:name" placeholder="Rendering engine">-->
+<!--            </div>-->
+<!--            <div class="col-xs-3">-->
+<!--                <input type="text" class="form-control j-dt-filter" data-col="level:name" placeholder="Browser">-->
+<!--            </div>-->
+<!--        </div>-->
     </div>
 </div>
 <!--表格-->
