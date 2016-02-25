@@ -21,7 +21,6 @@ class RbacController extends BaseController{
     }
     /**
      * 创建权限
-     * @param $item
      */
     public function actionCreatePermission()
     {
