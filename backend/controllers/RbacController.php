@@ -32,7 +32,7 @@ class RbacController extends BaseController{
             $createPost = $auth->createPermission($item);
             $createPost->description = '创建了 ' . $item . ' 许可';
             $auth->add($createPost);
-            $this->__success("添加成功" , "create-permission");
+            $this->__success("添加成功" , "list-permission");
         }
         return $this->render("create-permission");
     }

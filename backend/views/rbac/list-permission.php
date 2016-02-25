@@ -1,6 +1,6 @@
 <!--过滤表单-->
 <div class="box border green">
-    <div class="box-body small">
+<!--    <div class="box-body small">-->
 <!--        <div class="row">-->
 <!--            <div class="col-xs-2">-->
 <!--                <input type="text" class="form-control j-dt-filter" data-col="name:name" placeholder="Rendering engine">-->
@@ -9,7 +9,7 @@
 <!--                <input type="text" class="form-control j-dt-filter" data-col="level:name" placeholder="Browser">-->
 <!--            </div>-->
 <!--        </div>-->
-    </div>
+<!--    </div>-->
 </div>
 <!--表格-->
 <div class="row">
@@ -19,17 +19,8 @@
             <div class="box-title">
                 <h4><i class="fa fa-table"></i>表格demo</h4>
                 <div class="tools hidden-xs">
-                    <a href="#box-config" data-toggle="modal" class="config">
-                        <i class="fa fa-cog"></i>
-                    </a>
-                    <a href="javascript:;" class="reload">
-                        <i class="fa fa-refresh"></i>
-                    </a>
-                    <a href="javascript:;" class="collapse">
-                        <i class="fa fa-chevron-up"></i>
-                    </a>
-                    <a href="javascript:;" class="remove">
-                        <i class="fa fa-times"></i>
+                    <a href="/admin/rbac/create-permission" class="">
+                        <i class="fa  fa-plus-square">添加</i>
                     </a>
                 </div>
             </div>
