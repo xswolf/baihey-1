@@ -14,7 +14,7 @@ use yii\rbac\DbManager;
 use yii\rbac\Role;
 use yii\rbac\Item;
 
-class RbacController extends Controller{
+class RbacController extends BaseController{
 
     public function actionTest(){
 
@@ -23,13 +23,28 @@ class RbacController extends Controller{
      * 创建权限
      * @param $item
      */
-    public function actionPerTs($item)
+    public function actionCreatePermission()
     {
-        $auth = \Yii::$app->authManager;
+        if (\Yii::$app->request->post()){
 
-        $createPost = $auth->createPermission($item);
-        $createPost->description = '创建了 ' . $item . ' 许可';
-        $auth->add($createPost);
+            $auth = \Yii::$app->authManager;
+            $item = \Yii::$app->request->post("item");
+            $createPost = $auth->createPermission($item);
+            $createPost->description = '创建了 ' . $item . ' 许可';
+            $auth->add($createPost);
+            $this->__success("添加成功" , "create-permission");
+        }
+        return $this->render("create-permission");
+    }
+
+    public function actionListPermission(){
+
+        $list = \Yii::$app->authManager->getPermissions();
+
+
+        return $this->render('list-permission' , [
+            "list" => $list
+        ]);
     }
 
     /**

@@ -410,8 +410,6 @@
                     </a>
                 </li>
 
-
-
                 <li class="has-sub">
                     <a href="javascript:;" class="">
                         <i class="fa fa-file-text fa-fw"></i> <span class="menu-text">功能</span>
@@ -419,6 +417,18 @@
                     </a>
                     <ul class="sub">
                         <li><a class="" href="login.html"><span class="sub-menu-text">Login & Register Option 1</span></a></li><li><a class="" href="login_bg.html"><span class="sub-menu-text">Login & Register Option 2</span></a></li>
+
+                    </ul>
+                </li>
+
+                <li class="has-sub">
+                    <a href="javascript:;" class="">
+                        <i class="fa fa-file-text fa-fw"></i> <span class="menu-text">RBAC权限</span>
+                        <span class="arrow"></span>
+                    </a>
+                    <ul class="sub">
+                        <li><a class="" href="/admin/rbac/list-permission"><span class="sub-menu-text">权限列表</span></a></li>
+                        <li><a class="" href="login_bg.html"><span class="sub-menu-text">t</span></a></li>
 
                     </ul>
                 </li>
@@ -517,15 +527,6 @@
 
     });
 
-    $(function(){
-        function hide_alert() {
-            $(".alert-success").hide();
-            $(".alert-danger").hide(1000);
-        }
-
-        setTimeout(hide_alert , 3000);
-
-    })
 
 
 </script>

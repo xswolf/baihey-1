@@ -30,17 +30,18 @@ $(function(){
 
 
     // 操作提示
-    var message_cookie = $.cookie('message');
+    var message_cookie = $.cookie('alert_message');
     if (message_cookie !== null && message_cookie != undefined){
         message_cookie = JSON.parse(message_cookie);
         if (message_cookie != '' && message_cookie != undefined && message_cookie != 'null') {
+
             var _class = message_cookie.status == 1 ? 'alert-success' : 'alert-danger';
             $("." + _class).text(message_cookie.message).show();
             var success_hide = function () {
                 $("." + _class).hide()
             }
             setTimeout(success_hide, 3000);
-            $.cookie('message' , null);
+            $.cookie('alert_message' , null);
         }
     }
 
