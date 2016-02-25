@@ -57,31 +57,22 @@ return array (
       '@yii/faker' => $vendorDir . '/yiisoft/yii2-faker',
     ),
   ),
-  'kartik-v/yii2-krajee-base' => 
+  'mdmsoft/yii2-admin' => 
   array (
-    'name' => 'kartik-v/yii2-krajee-base',
-    'version' => '1.8.2.0',
+    'name' => 'mdmsoft/yii2-admin',
+    'version' => '9999999-dev',
     'alias' => 
     array (
-      '@kartik/base' => $vendorDir . '/kartik-v/yii2-krajee-base',
+      '@mdm/admin' => $vendorDir . '/mdmsoft/yii2-admin',
     ),
   ),
-  'kartik-v/yii2-popover-x' => 
+  'yiisoft/yii2-smarty' => 
   array (
-    'name' => 'kartik-v/yii2-popover-x',
-    'version' => '1.3.3.0',
+    'name' => 'yiisoft/yii2-smarty',
+    'version' => '9999999-dev',
     'alias' => 
     array (
-      '@kartik/popover' => $vendorDir . '/kartik-v/yii2-popover-x',
-    ),
-  ),
-  'kartik-v/yii2-editable' => 
-  array (
-    'name' => 'kartik-v/yii2-editable',
-    'version' => '1.7.4.0',
-    'alias' => 
-    array (
-      '@kartik/editable' => $vendorDir . '/kartik-v/yii2-editable',
+      '@yii/smarty' => $vendorDir . '/yiisoft/yii2-smarty',
     ),
   ),
 );

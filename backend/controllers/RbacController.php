@@ -42,7 +42,8 @@ class RbacController extends BaseController{
 
 
         return $this->render('list-permission' , [
-            "list" => $list
+            "list" => $list,
+            "test" => 'test'
         ]);
     }
 

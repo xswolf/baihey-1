@@ -15,8 +15,11 @@ return [
             'tablePrefix' => 'bhy_',   //加入前缀名称fc_
 
         ],
+
+
     ],
 
 
 
 ];
+

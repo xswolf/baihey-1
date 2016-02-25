@@ -70,7 +70,7 @@ class View extends Component
     /**
      * @var string the default view file extension. This will be appended to view file names if they don't have file extensions.
      */
-    public $defaultExtension = 'php';
+    public $defaultExtension = 'html';
     /**
      * @var Theme|array|string the theme object or the configuration for creating the theme object.
      * If not set, it means theming is not enabled.
