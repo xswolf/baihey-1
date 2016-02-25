@@ -16,53 +16,82 @@ use yii\rbac\Item;
 
 class RbacController extends Controller{
 
+    public function actionTest(){
+
+    }
     /**
-     * 添加角色
+     * 创建权限
+     * @param $item
      */
-    public function actionAddRole(){
-        $role = new Role();
-        $role->canSetProperty('name' , \Yii::$app->request->get('name'));
-        $dbManager = new DbManager();
-        if ( $dbManager->add($role) ){
-            $this->render('_roleForm',['model'=>$role]);
-        }else{
-            die('程序异常');
-        }
+    public function actionPerTs($item)
+    {
+        $auth = \Yii::$app->authManager;
+
+        $createPost = $auth->createPermission($item);
+        $createPost->description = '创建了 ' . $item . ' 许可';
+        $auth->add($createPost);
     }
 
     /**
-     * 添加权限
+     * 创建角色
+     * @param $item
      */
-    public function actionAddItem(){
-        $item = new Item();
-        $item->canSetProperty('name' , \Yii::$app->request->get('name'));
-        $dbManager = new DbManager();
-        if ( $dbManager->add($item) ){
-            $this->render('_itemForm',['model'=>$item]);
-        }else{
-            die('程序异常');
-        }
+    public function actionCreateRole($item)
+    {
+        $auth = \Yii::$app->authManager;
+
+        $role = $auth->createRole($item);
+        $role->description = '创建了 ' . $item . ' 角色';
+        $auth->add($role);
     }
 
     /**
-     * 权限归组。  一个角色所包含的权限
-     * @param $parent
-     * @param $child
+     * 给角色分配权限
+     * @param $items
      */
-    public function actionAddItemChild($parent , $child){
-        $dbManager = new DbManager();
-        $parent = \Yii::$app->request->get('parent');
-        $child = \Yii::$app->request->get('child');
-        $dbManager->addChild($parent,$child);
 
+    static public function createEmpowerment($items)
+    {
+        $auth = \Yii::$app->authManager;
+
+        $parent = $auth->createRole($items['name']);
+        $child = $auth->createPermission($items['description']);
+
+        $auth->addChild($parent, $child);
     }
 
     /**
-     * 设置用户所属角色组
-     * @param $userId int
-     * @param $itemName String
+     * 给用户分配角色
+     * @param $item
      */
-    public function actionAssignment($userId , $itemName){
 
+    static public function assign($item)
+    {
+        $auth = \Yii::$app->authManager;
+        $reader = $auth->createRole($item['name']);
+        $auth->assign($reader, $item['description']);
     }
+
+
+    /**
+     * 权限验证
+     * @param \yii\base\Action $action
+     * @return bool
+     * @throws \yii\web\UnauthorizedHttpException
+     */
+//    public function beforeAction($action)
+//    {
+//        $action = Yii::$app->controller->action->id;
+//        if(\Yii::$app->user->can($action)){
+//            return true;
+//        }else{
+//            throw new \yii\web\UnauthorizedHttpException('对不起，您现在还没获此操作的权限');
+//        }
+//    }
+
+
+
+
+
+
 }

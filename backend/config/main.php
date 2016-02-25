@@ -38,7 +38,24 @@ return [
         'request' => [
             'baseUrl' => '/admin',
         ],
+
+        'authManager'=> [
+
+            'class'=>'yii\rbac\DbManager',//认证类名称
+
+            'defaultRoles'=>['guest'],//默认角色
+
+            'itemTable' => 'bhy_auth_item',//认证项表名称
+
+            'itemChildTable' => 'bhy_auth_item_child',//认证项父子关系
+
+            'assignmentTable' => 'bhy_auth_assignment',//认证项赋权关系
+
+        ],
+
     ],
     'homeUrl' => '/admin',
     'params' => $params,
+
+
 ];

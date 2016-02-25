@@ -12,6 +12,8 @@ return [
             'username' => 'newbhy', //数据库用户名
             'password' => 'newbhy*2016', //数据库密码
             'charset' => 'utf8',
+            'tablePrefix' => 'bhy_',   //加入前缀名称fc_
+
         ],
     ],
 
