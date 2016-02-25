@@ -428,7 +428,7 @@
                     </a>
                     <ul class="sub">
                         <li><a class="" href="/admin/rbac/list-permission"><span class="sub-menu-text">权限列表</span></a></li>
-                        <li><a class="" href="login_bg.html"><span class="sub-menu-text">t</span></a></li>
+                        <li><a class="" href="/admin/rbac/list-role"><span class="sub-menu-text">角色列表</span></a></li>
 
                     </ul>
                 </li>
@@ -489,6 +489,25 @@
         </div>
     </div>
 </section>
+<!-- system modal start -->
+<div id="ycf-alert" class="modal">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+                <h5 class="modal-title"><i class="fa fa-exclamation-circle"></i> [Title]</h5>
+            </div>
+            <div class="modal-body small">
+                <p>[Message]</p>
+            </div>
+            <div class="modal-footer" >
+                <button type="button" class="btn btn-primary ok" data-dismiss="modal">[BtnOk]</button>
+                <button type="button" class="btn btn-default cancel" data-dismiss="modal">[BtnCancel]</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- system modal end -->
 <!--/PAGE -->
 <!-- JAVASCRIPTS -->
 <!-- Placed at the end of the document so the pages load faster -->
@@ -515,9 +534,11 @@
 <!-- COOKIE -->
 <script type="text/javascript" src="/admin/CloudAdmin/js/jQuery-Cookie/jquery.cookie.min.js"></script>
 <script type="text/javascript" src="/admin/CloudAdmin/js/file_input/fileinput.min.js"></script>
+<script type="text/javascript" src="/admin/CloudAdmin/js/bootstrap-alert/alert.js"></script>
 <!-- CUSTOM SCRIPT -->
 <script src="/admin/js/dataTableQuery.js"></script>
 <script src="/admin/js/app.js"></script>
+<script src="/admin/js/base.js"></script>
 <script src="/admin/CloudAdmin/js/script.js"></script>
 <script>
 

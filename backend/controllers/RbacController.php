@@ -21,6 +21,7 @@ class RbacController extends BaseController{
     }
     /**
      * 创建权限
+     * @param $item
      */
     public function actionCreatePermission()
     {
@@ -36,10 +37,12 @@ class RbacController extends BaseController{
         return $this->render("create-permission");
     }
 
+    /**
+     * 权限列表
+     * @return string
+     */
     public function actionListPermission(){
-
         $list = \Yii::$app->authManager->getPermissions();
-
 
         return $this->render('list-permission' , [
             "list" => $list,
@@ -48,16 +51,57 @@ class RbacController extends BaseController{
     }
 
     /**
+     * 删除权限
+     *
+     */
+    public function actionDeletePermission(){
+        $name = \Yii::$app->request->get('name');
+        $item = \Yii::$app->authManager->getPermission($name);
+        \Yii::$app->authManager->remove($item);
+
+        $this->__success("删除成功" , "list-permission");
+    }
+
+    /**
      * 创建角色
      * @param $item
      */
-    public function actionCreateRole($item)
+    public function actionCreateRole()
     {
-        $auth = \Yii::$app->authManager;
+        if (\Yii::$app->request->post()){
 
-        $role = $auth->createRole($item);
-        $role->description = '创建了 ' . $item . ' 角色';
-        $auth->add($role);
+            $auth = \Yii::$app->authManager;
+            $item = \Yii::$app->request->post("item");
+            $createPost = $auth->createRole($item);
+            $createPost->description = '创建了 ' . $item . ' 角色';
+            $auth->add($createPost);
+            $this->__success("添加成功" , "list-role");
+        }
+        return $this->render("create-role");
+    }
+
+    /**
+     * 角色列表
+     * @return string
+     */
+    public function actionListRole(){
+        $list = \Yii::$app->authManager->getRoles();
+
+        return $this->render('list-role' , [
+            "list" => $list
+        ]);
+    }
+
+    /**
+     * 删除角色
+     *
+     */
+    public function actionDeleteRole(){
+        $name = \Yii::$app->request->get('name');
+        $item = \Yii::$app->authManager->getRole($name);
+        \Yii::$app->authManager->remove($item);
+
+        $this->__success("删除成功" , "list-role");
     }
 
     /**
