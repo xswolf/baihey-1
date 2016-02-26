@@ -38,6 +38,29 @@ class RbacController extends BaseController{
     }
 
     /**
+     * 编辑角色
+     * @return string
+     */
+    public function actionEditPermission()
+    {
+        if (\Yii::$app->request->post()){
+
+            $auth = \Yii::$app->authManager;
+            $item = \Yii::$app->request->post("item");
+            $name = \Yii::$app->request->post("name");
+            $object = $auth->createPermission($item);
+            if($auth->update($name,$object)) {
+                $this->__success("更新成功" , "list-permission");
+            } else {
+                $this->__error("更新失败" , "list-permission");
+            }
+        }
+        return $this->render('edit-permission',[
+            'name' => \Yii::$app->request->get('item')
+        ]);
+    }
+
+    /**
      * 权限列表
      * @return string
      */
@@ -81,6 +104,29 @@ class RbacController extends BaseController{
     }
 
     /**
+     * 编辑角色
+     * @return string
+     */
+    public function actionEditRole()
+    {
+        if (\Yii::$app->request->post()){
+
+            $auth = \Yii::$app->authManager;
+            $item = \Yii::$app->request->post("item");
+            $name = \Yii::$app->request->post("name");
+            $object = $auth->createRole($item);
+            if($auth->update($name,$object)) {
+                $this->__success("更新成功" , "list-role");
+            } else {
+                $this->__error("更新失败" , "list-role");
+            }
+        }
+        return $this->render('edit-role',[
+            'name' => \Yii::$app->request->get('item')
+        ]);
+    }
+
+    /**
      * 角色列表
      * @return string
      */
@@ -88,7 +134,7 @@ class RbacController extends BaseController{
         $list = \Yii::$app->authManager->getRoles();
 
         return $this->render('list-role' , [
-            "list" => $list
+            'list' => $list
         ]);
     }
 
