@@ -47,7 +47,7 @@ class FileController extends Controller
                 exit;
             }
         }
-        $return  = array('status' => -1, 'info' => '上传失败');
+        $return  = array('status' => -1, 'info' => '上传失败!~');
         echo json_encode($return);
 
     }
