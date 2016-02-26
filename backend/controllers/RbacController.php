@@ -28,13 +28,14 @@ class RbacController extends BaseController {
     public function actionCreatePermission() {
         if ( \Yii::$app->request->post() ) {
             $auth = \Yii::$app->authManager;
-            $item = \Yii::$app->request->post( "item" );
+            $name = \Yii::$app->request->post("name");
+            $description = \Yii::$app->request->post("description");
             //判断是否存在
-            if ( ! $auth->getPermission( $item ) ) {
-                $createPost              = $auth->createPermission( $item );
-                $createPost->description = '创建了 ' . $item . ' 许可';
-                $auth->add( $createPost );
-                $this->__success( "添加成功" , "list-permission" );
+            if(!$auth->getPermission($name)) {
+                $createPost = $auth->createPermission($name);
+                $createPost->description = $description;
+                $auth->add($createPost);
+                $this->__success("添加成功" , "list-permission");
             } else {
                 $this->__error( "权限重复" , "list-permission" );
             }
@@ -47,22 +48,30 @@ class RbacController extends BaseController {
      * 编辑权限
      * @return string
      */
-    public function actionEditPermission() {
-        if ( \Yii::$app->request->post() ) {
-            $auth = \Yii::$app->authManager;
-            $item = \Yii::$app->request->post( "item" );
-            $name = \Yii::$app->request->post( "name" );
+    public function actionEditPermission()
+    {
+        $auth = \Yii::$app->authManager;
+        if (\Yii::$app->request->post()){
+            $item = \Yii::$app->request->post("item");
+            $name = \Yii::$app->request->post("name");
+            $description = \Yii::$app->request->post("description");
             //判断是否存在
-            if ( ! $auth->getPermission( $name ) ) {
-                $object = $auth->createPermission( $item );
-                $auth->update( $name , $object );
-                $this->__success( "更新成功" , "list-permission" );
+            if(!$auth->getPermission($name)) {
+                $editPost = $auth->createPermission($name);
+                $editPost->description = $description;
+                $auth->update($item, $editPost);
+                $this->__success("更新成功", "list-permission");
             } else {
                 $this->__error( "权限重复" , "list-permission" );
             }
         }
-
-        return $this->render( 'edit-permission' , [ 'name' => \Yii::$app->request->get( 'item' ) ] );
+        if(\Yii::$app->request->get('item')) {
+            $permission = $auth->getPermission(\Yii::$app->request->get('item'));
+            return $this->render('edit-permission', [
+                'name' => $permission->name,
+                'description' => $permission->description
+            ]);
+        }
     }
 
     /**
@@ -160,7 +169,6 @@ class RbacController extends BaseController {
      *
      * @param $items
      */
-
     public function actionCreateEmpowerment() {
         $request = \Yii::$app->request;
         if ( $request->post() ) {
@@ -189,7 +197,6 @@ class RbacController extends BaseController {
      *
      * @param $item
      */
-
     static public function assign( $item ) {
         $auth   = \Yii::$app->authManager;
         $reader = $auth->createRole( $item['name'] );
