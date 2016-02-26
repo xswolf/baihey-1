@@ -26,33 +26,38 @@ class RbacController extends BaseController{
     public function actionCreatePermission()
     {
         if (\Yii::$app->request->post()){
-
             $auth = \Yii::$app->authManager;
             $item = \Yii::$app->request->post("item");
-            $createPost = $auth->createPermission($item);
-            $createPost->description = '创建了 ' . $item . ' 许可';
-            $auth->add($createPost);
-            $this->__success("添加成功" , "list-permission");
+            //判断是否存在
+            if(!$auth->getPermission($item)) {
+                $createPost = $auth->createPermission($item);
+                $createPost->description = '创建了 ' . $item . ' 许可';
+                $auth->add($createPost);
+                $this->__success("添加成功" , "list-permission");
+            } else {
+                $this->__error("权限重复" , "list-permission");
+            }
         }
         return $this->render("create-permission");
     }
 
     /**
-     * 编辑角色
+     * 编辑权限
      * @return string
      */
     public function actionEditPermission()
     {
         if (\Yii::$app->request->post()){
-
             $auth = \Yii::$app->authManager;
             $item = \Yii::$app->request->post("item");
             $name = \Yii::$app->request->post("name");
-            $object = $auth->createPermission($item);
-            if($auth->update($name,$object)) {
-                $this->__success("更新成功" , "list-permission");
+            //判断是否存在
+            if(!$auth->getPermission($name)) {
+                $object = $auth->createPermission($item);
+                $auth->update($name, $object);
+                $this->__success("更新成功", "list-permission");
             } else {
-                $this->__error("更新失败" , "list-permission");
+                $this->__error("权限重复", "list-permission");
             }
         }
         return $this->render('edit-permission',[
@@ -92,13 +97,18 @@ class RbacController extends BaseController{
     public function actionCreateRole()
     {
         if (\Yii::$app->request->post()){
-
             $auth = \Yii::$app->authManager;
             $item = \Yii::$app->request->post("item");
-            $createPost = $auth->createRole($item);
-            $createPost->description = '创建了 ' . $item . ' 角色';
-            $auth->add($createPost);
-            $this->__success("添加成功" , "list-role");
+            //判断是否存在
+            if(!$auth->getRole($item)) {
+                $createPost = $auth->createRole($item);
+                $createPost->description = '创建了 ' . $item . ' 角色';
+                $auth->add($createPost);
+                $this->__success("添加成功" , "list-role");
+            } else {
+                $this->__error("角色重复" , "list-role");
+            }
+
         }
         return $this->render("create-role");
     }
@@ -110,15 +120,16 @@ class RbacController extends BaseController{
     public function actionEditRole()
     {
         if (\Yii::$app->request->post()){
-
             $auth = \Yii::$app->authManager;
             $item = \Yii::$app->request->post("item");
             $name = \Yii::$app->request->post("name");
-            $object = $auth->createRole($item);
-            if($auth->update($name,$object)) {
-                $this->__success("更新成功" , "list-role");
+            //判断是否存在
+            if(!$auth->getRole($name)) {
+                $object = $auth->createRole($item);
+                $auth->update($name, $object);
+                $this->__success("更新成功", "list-role");
             } else {
-                $this->__error("更新失败" , "list-role");
+                $this->__error("角色重复", "list-role");
             }
         }
         return $this->render('edit-role',[
