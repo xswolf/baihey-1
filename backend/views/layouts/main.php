@@ -538,7 +538,6 @@
 <!-- CUSTOM SCRIPT -->
 <script src="/admin/js/dataTableQuery.js"></script>
 <script src="/admin/js/app.js"></script>
-<script src="/admin/js/base.js"></script>
 <script src="/admin/CloudAdmin/js/script.js"></script>
 <script>
 
