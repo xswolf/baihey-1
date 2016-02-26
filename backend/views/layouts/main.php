@@ -513,6 +513,8 @@
 <!-- Placed at the end of the document so the pages load faster -->
 <!-- JQUERY -->
 <script src="/admin/CloudAdmin/js/jquery/jquery-2.0.3.min.js"></script>
+<!-- JQUERY VALIDATE -->
+<script src="/admin/CloudAdmin/js/jquery-validate/jquery.validate.min.js"></script>
 <!-- JQUERY UI-->
 <script src="/admin/CloudAdmin/js/jquery-ui-1.10.3.custom/js/jquery-ui-1.10.3.custom.min.js"></script>
 <!-- BOOTSTRAP -->
