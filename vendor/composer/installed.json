@@ -52,12 +52,12 @@
         "source": {
             "type": "git",
             "url": "https://github.com/cebe/markdown.git",
-            "reference": "e14d3da8f84eefa3792fd22b5b5ecba9c98d2e18"
+            "reference": "e4499350d8a94c4c693a7e784295eff7a717ae67"
         },
         "dist": {
             "type": "zip",
             "url": "https://api.github.com/repos/cebe/markdown/zipball/e4499350d8a94c4c693a7e784295eff7a717ae67",
-            "reference": "e14d3da8f84eefa3792fd22b5b5ecba9c98d2e18",
+            "reference": "e4499350d8a94c4c693a7e784295eff7a717ae67",
             "shasum": ""
         },
         "require": {
@@ -69,7 +69,7 @@
             "facebook/xhprof": "*@dev",
             "phpunit/phpunit": "4.1.*"
         },
-        "time": "2015-03-20 11:07:08",
+        "time": "2016-02-09 22:09:46",
         "bin": [
             "bin/markdown"
         ],
@@ -79,7 +79,7 @@
                 "dev-master": "1.1.x-dev"
             }
         },
-        "installation-source": "dist",
+        "installation-source": "source",
         "autoload": {
             "psr-4": {
                 "cebe\\markdown\\": ""
@@ -114,28 +114,28 @@
         "source": {
             "type": "git",
             "url": "https://github.com/yiisoft/yii2-framework.git",
-            "reference": "58cbb1ae2f9659a550e1ad7cbd935c1a608cd8a7"
+            "reference": "ffb3f5d7c1cab5f182f566fbfc820390ac291d60"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/yiisoft/yii2-framework/zipball/60caf0a6c6b541923c70bd6635fae00f1a2c6aff",
-            "reference": "58cbb1ae2f9659a550e1ad7cbd935c1a608cd8a7",
+            "url": "https://api.github.com/repos/yiisoft/yii2-framework/zipball/ffb3f5d7c1cab5f182f566fbfc820390ac291d60",
+            "reference": "ffb3f5d7c1cab5f182f566fbfc820390ac291d60",
             "shasum": ""
         },
         "require": {
-            "bower-asset/jquery": "2.1.*@stable | 1.11.*@stable",
+            "bower-asset/jquery": "2.2.*@stable | 2.1.*@stable | 1.11.*@stable",
             "bower-asset/jquery.inputmask": "~3.2.2",
             "bower-asset/punycode": "1.3.*",
-            "bower-asset/yii2-pjax": ">=2.0.1",
+            "bower-asset/yii2-pjax": "~2.0.1",
             "cebe/markdown": "~1.0.0 | ~1.1.0",
             "ext-ctype": "*",
             "ext-mbstring": "*",
-            "ezyang/htmlpurifier": "4.6.*",
+            "ezyang/htmlpurifier": "~4.6",
             "lib-pcre": "*",
             "php": ">=5.4.0",
-            "yiisoft/yii2-composer": "*"
+            "yiisoft/yii2-composer": "~2.0.4"
         },
-        "time": "2016-01-14 14:52:28",
+        "time": "2016-03-02 18:45:51",
         "bin": [
             "yii"
         ],
@@ -145,7 +145,7 @@
                 "dev-master": "2.0.x-dev"
             }
         },
-        "installation-source": "dist",
+        "installation-source": "source",
         "autoload": {
             "psr-4": {
                 "yii\\": ""
@@ -364,19 +364,19 @@
         "source": {
             "type": "git",
             "url": "https://github.com/yiisoft/yii2-bootstrap.git",
-            "reference": "7de7d5d63d655c0c69764f80f2dfc549e9b1d9f0"
+            "reference": "ef941bc83ea63326e44769b922476dc1035ea551"
         },
         "dist": {
             "type": "zip",
             "url": "https://api.github.com/repos/yiisoft/yii2-bootstrap/zipball/ef941bc83ea63326e44769b922476dc1035ea551",
-            "reference": "7de7d5d63d655c0c69764f80f2dfc549e9b1d9f0",
+            "reference": "ef941bc83ea63326e44769b922476dc1035ea551",
             "shasum": ""
         },
         "require": {
             "bower-asset/bootstrap": "3.3.* | 3.2.* | 3.1.*",
             "yiisoft/yii2": ">=2.0.6"
         },
-        "time": "2015-12-19 19:45:57",
+        "time": "2016-01-24 17:03:09",
         "type": "yii2-extension",
         "extra": {
             "branch-alias": {
@@ -387,7 +387,7 @@
                 "bower-asset-library": "vendor/bower"
             }
         },
-        "installation-source": "dist",
+        "installation-source": "source",
         "autoload": {
             "psr-4": {
                 "yii\\bootstrap\\": ""
@@ -406,55 +406,6 @@
         "description": "The Twitter Bootstrap extension for the Yii framework",
         "keywords": [
             "bootstrap",
-            "yii2"
-        ]
-    },
-    {
-        "name": "yiisoft/yii2-debug",
-        "version": "dev-master",
-        "version_normalized": "9999999-dev",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/yiisoft/yii2-debug.git",
-            "reference": "7a28977497e43bf7180a793389e6a5739ec52756"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/yiisoft/yii2-debug/zipball/e9a3f9dfdbaba482e958a9ef81c72a3dbb1ae419",
-            "reference": "7a28977497e43bf7180a793389e6a5739ec52756",
-            "shasum": ""
-        },
-        "require": {
-            "yiisoft/yii2": ">=2.0.4",
-            "yiisoft/yii2-bootstrap": "*"
-        },
-        "time": "2015-12-31 16:25:50",
-        "type": "yii2-extension",
-        "extra": {
-            "branch-alias": {
-                "dev-master": "2.0.x-dev"
-            }
-        },
-        "installation-source": "dist",
-        "autoload": {
-            "psr-4": {
-                "yii\\debug\\": ""
-            }
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "BSD-3-Clause"
-        ],
-        "authors": [
-            {
-                "name": "Qiang Xue",
-                "email": "qiang.xue@gmail.com"
-            }
-        ],
-        "description": "The debugger extension for the Yii framework",
-        "keywords": [
-            "debug",
-            "debugger",
             "yii2"
         ]
     },
@@ -495,73 +446,18 @@
         "description": "A comprehensive library for generating differences between two hashable objects (strings or arrays)."
     },
     {
-        "name": "yiisoft/yii2-gii",
-        "version": "dev-master",
-        "version_normalized": "9999999-dev",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/yiisoft/yii2-gii.git",
-            "reference": "05dd7a27c575fb3dc3482b5bd24c8bd6c151ae45"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/yiisoft/yii2-gii/zipball/ce42838abcbef076ebaf46147671d518ae69d028",
-            "reference": "05dd7a27c575fb3dc3482b5bd24c8bd6c151ae45",
-            "shasum": ""
-        },
-        "require": {
-            "bower-asset/typeahead.js": "0.10.* | ~0.11.0",
-            "phpspec/php-diff": ">=1.0.2",
-            "yiisoft/yii2": ">=2.0.4",
-            "yiisoft/yii2-bootstrap": "~2.0"
-        },
-        "time": "2016-01-05 08:55:15",
-        "type": "yii2-extension",
-        "extra": {
-            "branch-alias": {
-                "dev-master": "2.0.x-dev"
-            },
-            "asset-installer-paths": {
-                "npm-asset-library": "vendor/npm",
-                "bower-asset-library": "vendor/bower"
-            }
-        },
-        "installation-source": "dist",
-        "autoload": {
-            "psr-4": {
-                "yii\\gii\\": ""
-            }
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "BSD-3-Clause"
-        ],
-        "authors": [
-            {
-                "name": "Qiang Xue",
-                "email": "qiang.xue@gmail.com"
-            }
-        ],
-        "description": "The Gii extension for the Yii framework",
-        "keywords": [
-            "code generator",
-            "gii",
-            "yii2"
-        ]
-    },
-    {
         "name": "fzaninotto/faker",
         "version": "dev-master",
         "version_normalized": "9999999-dev",
         "source": {
             "type": "git",
             "url": "https://github.com/fzaninotto/Faker.git",
-            "reference": "de2ed3bbe68254efeff68db60092fc8ed5298055"
+            "reference": "416a132083aa6f19a6ac42ae0b31fdb26159e72f"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/fzaninotto/Faker/zipball/66ea6b0334813292af03ffbb8c0ee6beee65fd89",
-            "reference": "de2ed3bbe68254efeff68db60092fc8ed5298055",
+            "url": "https://api.github.com/repos/fzaninotto/Faker/zipball/416a132083aa6f19a6ac42ae0b31fdb26159e72f",
+            "reference": "416a132083aa6f19a6ac42ae0b31fdb26159e72f",
             "shasum": ""
         },
         "require": {
@@ -572,14 +468,14 @@
             "phpunit/phpunit": "~4.0",
             "squizlabs/php_codesniffer": "~1.5"
         },
-        "time": "2016-01-08 14:16:18",
+        "time": "2016-02-29 14:07:32",
         "type": "library",
         "extra": {
             "branch-alias": {
                 "dev-master": "1.6.x-dev"
             }
         },
-        "installation-source": "dist",
+        "installation-source": "source",
         "autoload": {
             "psr-4": {
                 "Faker\\": "src/Faker/"
@@ -871,18 +767,18 @@
         "source": {
             "type": "git",
             "url": "https://github.com/yiisoft/yii2-composer.git",
-            "reference": "574dcb1d101ae55be230e0c00a2428af6ec4c5c1"
+            "reference": "d33d1046a5951f2f7823fe343f28ddc58b3421a4"
         },
         "dist": {
             "type": "zip",
             "url": "https://api.github.com/repos/yiisoft/yii2-composer/zipball/d33d1046a5951f2f7823fe343f28ddc58b3421a4",
-            "reference": "574dcb1d101ae55be230e0c00a2428af6ec4c5c1",
+            "reference": "d33d1046a5951f2f7823fe343f28ddc58b3421a4",
             "shasum": ""
         },
         "require": {
             "composer-plugin-api": "^1.0"
         },
-        "time": "2015-12-01 20:06:03",
+        "time": "2016-02-06 01:03:32",
         "type": "composer-plugin",
         "extra": {
             "class": "yii\\composer\\Plugin",
@@ -967,63 +863,6 @@
         ]
     },
     {
-        "name": "smarty/smarty",
-        "version": "dev-master",
-        "version_normalized": "9999999-dev",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/smarty-php/smarty.git",
-            "reference": "8df91e9d0da27351b9041854cbe1fe9d45ebc048"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/smarty-php/smarty/zipball/8df91e9d0da27351b9041854cbe1fe9d45ebc048",
-            "reference": "8df91e9d0da27351b9041854cbe1fe9d45ebc048",
-            "shasum": ""
-        },
-        "require": {
-            "php": ">=5.2"
-        },
-        "time": "2016-02-25 01:53:55",
-        "type": "library",
-        "extra": {
-            "branch-alias": {
-                "dev-master": "3.1.x-dev"
-            }
-        },
-        "installation-source": "dist",
-        "autoload": {
-            "classmap": [
-                "libs/Smarty.class.php",
-                "libs/SmartyBC.class.php",
-                "libs/sysplugins/"
-            ]
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "LGPL-3.0"
-        ],
-        "authors": [
-            {
-                "name": "Monte Ohrt",
-                "email": "monte@ohrt.com"
-            },
-            {
-                "name": "Uwe Tews",
-                "email": "uwe.tews@googlemail.com"
-            },
-            {
-                "name": "Rodney Rehm",
-                "email": "rodney.rehm@medialize.de"
-            }
-        ],
-        "description": "Smarty - the compiling PHP template engine",
-        "homepage": "http://www.smarty.net",
-        "keywords": [
-            "templating"
-        ]
-    },
-    {
         "name": "yiisoft/yii2-smarty",
         "version": "dev-master",
         "version_normalized": "9999999-dev",
@@ -1104,5 +943,210 @@
             "bower-asset-main": "dist/typeahead.bundle.js"
         },
         "installation-source": "dist"
+    },
+    {
+        "name": "callmez/yii2-wechat-sdk",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/callmez/yii2-wechat-sdk.git",
+            "reference": "ba29d3d285840daa114fb81b8f8c4dc8848bdce5"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/callmez/yii2-wechat-sdk/zipball/ba29d3d285840daa114fb81b8f8c4dc8848bdce5",
+            "reference": "ba29d3d285840daa114fb81b8f8c4dc8848bdce5",
+            "shasum": ""
+        },
+        "require": {
+            "yiisoft/yii2": "*"
+        },
+        "time": "2016-02-29 13:43:59",
+        "type": "yii2-extension",
+        "installation-source": "source",
+        "autoload": {
+            "psr-4": {
+                "callmez\\wechat\\sdk\\": ""
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "CallMeZ",
+                "email": "callme-z@qq.com"
+            }
+        ],
+        "description": "The wechat api for the Yii framework",
+        "keywords": [
+            "sdk",
+            "wechat",
+            "weixin",
+            "yii2"
+        ]
+    },
+    {
+        "name": "yiisoft/yii2-debug",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/yiisoft/yii2-debug.git",
+            "reference": "e196aa3fe1717ceb8b0027b6a12d7de340a2b7d0"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/yiisoft/yii2-debug/zipball/e196aa3fe1717ceb8b0027b6a12d7de340a2b7d0",
+            "reference": "e196aa3fe1717ceb8b0027b6a12d7de340a2b7d0",
+            "shasum": ""
+        },
+        "require": {
+            "yiisoft/yii2": ">=2.0.4",
+            "yiisoft/yii2-bootstrap": "*"
+        },
+        "time": "2016-02-25 14:59:15",
+        "type": "yii2-extension",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "2.0.x-dev"
+            }
+        },
+        "installation-source": "source",
+        "autoload": {
+            "psr-4": {
+                "yii\\debug\\": ""
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "BSD-3-Clause"
+        ],
+        "authors": [
+            {
+                "name": "Qiang Xue",
+                "email": "qiang.xue@gmail.com"
+            }
+        ],
+        "description": "The debugger extension for the Yii framework",
+        "keywords": [
+            "debug",
+            "debugger",
+            "yii2"
+        ]
+    },
+    {
+        "name": "yiisoft/yii2-gii",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/yiisoft/yii2-gii.git",
+            "reference": "ce42838abcbef076ebaf46147671d518ae69d028"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/yiisoft/yii2-gii/zipball/ce42838abcbef076ebaf46147671d518ae69d028",
+            "reference": "ce42838abcbef076ebaf46147671d518ae69d028",
+            "shasum": ""
+        },
+        "require": {
+            "bower-asset/typeahead.js": "0.10.* | ~0.11.0",
+            "phpspec/php-diff": ">=1.0.2",
+            "yiisoft/yii2": ">=2.0.4",
+            "yiisoft/yii2-bootstrap": "~2.0"
+        },
+        "time": "2016-02-21 20:39:29",
+        "type": "yii2-extension",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "2.0.x-dev"
+            },
+            "asset-installer-paths": {
+                "npm-asset-library": "vendor/npm",
+                "bower-asset-library": "vendor/bower"
+            }
+        },
+        "installation-source": "source",
+        "autoload": {
+            "psr-4": {
+                "yii\\gii\\": ""
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "BSD-3-Clause"
+        ],
+        "authors": [
+            {
+                "name": "Qiang Xue",
+                "email": "qiang.xue@gmail.com"
+            }
+        ],
+        "description": "The Gii extension for the Yii framework",
+        "keywords": [
+            "code generator",
+            "gii",
+            "yii2"
+        ]
+    },
+    {
+        "name": "smarty/smarty",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/smarty-php/smarty.git",
+            "reference": "4f5aeeb2b6255dd01776b70e3d04bbf5e9dd5f89"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/smarty-php/smarty/zipball/4f5aeeb2b6255dd01776b70e3d04bbf5e9dd5f89",
+            "reference": "4f5aeeb2b6255dd01776b70e3d04bbf5e9dd5f89",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.2"
+        },
+        "time": "2016-03-02 17:17:22",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "3.1.x-dev"
+            }
+        },
+        "installation-source": "source",
+        "autoload": {
+            "classmap": [
+                "libs/Smarty.class.php",
+                "libs/SmartyBC.class.php",
+                "libs/sysplugins/"
+            ]
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "LGPL-3.0"
+        ],
+        "authors": [
+            {
+                "name": "Monte Ohrt",
+                "email": "monte@ohrt.com"
+            },
+            {
+                "name": "Uwe Tews",
+                "email": "uwe.tews@googlemail.com"
+            },
+            {
+                "name": "Rodney Rehm",
+                "email": "rodney.rehm@medialize.de"
+            }
+        ],
+        "description": "Smarty - the compiling PHP template engine",
+        "homepage": "http://www.smarty.net",
+        "keywords": [
+            "templating"
+        ]
     }
 ]
