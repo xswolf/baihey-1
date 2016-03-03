@@ -185,7 +185,7 @@ class RbacController extends BaseController {
         $request = \Yii::$app->request;
         $auth = \Yii::$app->authManager;
 
-        //已有权限处理
+        //角色已有权限处理
         $info = $auth->getChildren($request->get('item'));
         $permissionsList = $auth->getPermissions();
         $list = array();
@@ -202,18 +202,21 @@ class RbacController extends BaseController {
             $parent      = $request->post('parent');
             $children    = $request->post('child');
             $db          = \Yii::$app->db;
+            $parentChild = $auth->getChildren($parent);
             $transaction = $db->beginTransaction();
             //清除原有权限
-            if(!empty($info) && !$auth->removeChildren($auth->getRole($parent))) {
+            if(!empty($parentChild) && !$auth->removeChildren($auth->getRole($parent))) {
                 $transaction->rollBack();
                 $this->__error('清除权限失败');
             }
 
             //重新授权
-            foreach ($children as $v) {
-                if (!$auth->addChild($auth->getRole($parent), $auth->getPermission($v))) {
-                    $transaction->rollBack();
-                    $this->__error('添加失败');
+            if(!empty($children)) {
+                foreach ($children as $v) {
+                    if (!$auth->addChild($auth->getRole($parent), $auth->getPermission($v))) {
+                        $transaction->rollBack();
+                        $this->__error('添加失败');
+                    }
                 }
             }
             $transaction->commit();
@@ -228,10 +231,49 @@ class RbacController extends BaseController {
      *
      * @param $item
      */
-    static public function assign( $item ) {
-        $auth   = \Yii::$app->authManager;
-        $reader = $auth->createRole($item['name']);
-        $auth->assign($reader, $item['description']);
+    public function actionAssign() {
+        $request = \Yii::$app->request;
+        $auth = \Yii::$app->authManager;
+
+        //用户已有角色处理
+        $info = $auth->getAssignments($request->get('uid'));
+        $roleList = $auth->getRoles();
+        $list = array();
+        foreach($roleList as $key => $val) {
+            if(!empty($info) && array_key_exists($key,$info)) {
+                $list[$key] = 1;
+            } else {
+                $list[$key] = 0;
+            }
+        }
+
+        //提交处理
+        if ( $request->post() ) {
+            $db = \Yii::$app->db;
+            $uid = $request->post('uid');
+            $role = $request->post('role');
+            $uidRole = $auth->getAssignments($uid);
+            $transaction = $db->beginTransaction();
+            //清除原有角色
+            if(!empty($uidRole) && !$auth->revokeAll($uid)) {
+                $transaction->rollBack();
+                $this->__error('清除角色失败');
+            }
+
+            //重新分配角色
+            if(!empty($role)) {
+                foreach ($role as $v) {
+                    if (!$auth->assign($auth->getRole($v), $uid)) {
+                        $transaction->rollBack();
+                        $this->__error('添加失败');
+                    }
+                }
+            }
+            $transaction->commit();
+            $this->__success('添加成功', 'assign');
+        }
+
+        return $this->render( 'assign', ['name' => $request->get('uid'), 'list' => $list]);
     }
 
 
