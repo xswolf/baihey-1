@@ -126,7 +126,7 @@ class RbacController extends BaseController {
             $item = \Yii::$app->request->post('item');
             $name = \Yii::$app->request->post('name');
             //判断是否存在
-            if ( ! $auth->getRole($name) ) {
+            if (!$auth->getRole($item)) {
                 $object = $auth->createRole($item);
                 $auth->update($name, $object);
                 $this->__success('更新成功', 'list-role');

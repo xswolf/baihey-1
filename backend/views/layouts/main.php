@@ -429,7 +429,16 @@
                     <ul class="sub">
                         <li><a class="" href="/admin/rbac/list-permission"><span class="sub-menu-text">权限列表</span></a></li>
                         <li><a class="" href="/admin/rbac/list-role"><span class="sub-menu-text">角色列表</span></a></li>
+                    </ul>
+                </li>
 
+                <li class="has-sub">
+                    <a href="javascript:;" class="">
+                        <i class="fa fa-file-text fa-fw"></i> <span class="menu-text">用户管理</span>
+                        <span class="arrow"></span>
+                    </a>
+                    <ul class="sub">
+                        <li><a class="" href="/admin/user/list-user"><span class="sub-menu-text">用户列表</span></a></li>
                     </ul>
                 </li>
 
