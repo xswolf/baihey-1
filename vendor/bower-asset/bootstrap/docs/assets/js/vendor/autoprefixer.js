@@ -4022,8 +4022,7 @@ function Buffer (subject, encoding) {
   }
 
   if (length < 0) length = 0;
-  else length >>>= 0;; // coerce to uint32
-
+  else length >>>= 0; // coerce to uint32
   if (Buffer.TYPED_ARRAY_SUPPORT) {
     // Preferred: Return an augmented `Uint8Array` instance for best performance
     self = Buffer._augment(new Uint8Array(length)); // eslint-disable-line consistent-this
@@ -4251,7 +4250,7 @@ Buffer.prototype.indexOf = function indexOf (val, byteOffset) {
   if (byteOffset < 0) byteOffset = Math.max(this.length + byteOffset, 0);
 
   if (typeof val === 'string') {
-    if (val.length === 0) return -1;; // special case: looking for empty string always fails
+    if (val.length === 0) return -1; // special case: looking for empty string always fails
     return String.prototype.indexOf.call(this, val, byteOffset)
   }
   if (Buffer.isBuffer(val)) {
