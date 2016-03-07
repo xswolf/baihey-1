@@ -128,7 +128,7 @@ class DbManager extends BaseManager
     }
 
     /**
-     * 执行用于基于从高速缓存加载的数据的指定用户访问检查。
+     * Performs access check for the specified user based on the data loaded from cache.
      * This method is internally called by [[checkAccess()]] when [[cache]] is enabled.
      * @param string|integer $user the user ID. This should can be either an integer or a string representing
      * the unique identifier of a user. See [[\yii\web\User::id]].
@@ -170,7 +170,7 @@ class DbManager extends BaseManager
     }
 
     /**
-     * 执行指定用户的访问权限检查。
+     * Performs access check for the specified user.
      * This method is internally called by [[checkAccess()]].
      * @param string|integer $user the user ID. This should can be either an integer or a string representing
      * the unique identifier of a user. See [[\yii\web\User::id]].
@@ -240,8 +240,8 @@ class DbManager extends BaseManager
     }
 
     /**
-     * 返回一个值，指示数据库是否支持级联更新和删除
-     * 默认实现将返回false SQLite数据库，并适用于所有的其他数据库。
+     * Returns a value indicating whether the database supports cascading update and delete.
+     * The default implementation will return false for SQLite database and true for all other databases.
      * @return boolean whether the database supports cascading update and delete.
      */
     protected function supportsCascadeUpdate()
@@ -425,8 +425,8 @@ class DbManager extends BaseManager
     }
 
     /**
-     * 填充从数据库中读取数据的auth项
-     * @param array $row 从身份验证项目表中的数据
+     * Populates an auth item with the data fetched from database
+     * @param array $row the data from the auth item table
      * @return Item the populated auth item instance (either Role or Permission)
      */
     protected function populateItem($row)
@@ -508,10 +508,9 @@ class DbManager extends BaseManager
     }
 
     /**
-     * 返回直接分配给用户的所有权限
+     * Returns all permissions that are directly assigned to user.
      * @param string|integer $userId the user ID (see [[\yii\web\User::id]])
      * @return Permission[] all direct permissions that the user has. The array is indexed by the permission names.
-     *
      * @since 2.0.7
      */
     protected function getDirectPermissionsByUser($userId)
@@ -530,10 +529,9 @@ class DbManager extends BaseManager
     }
 
     /**
-     * 返回用户从分配给他的角色继承的所有权限
+     * Returns all permissions that the user inherits from the roles assigned to him.
      * @param string|integer $userId the user ID (see [[\yii\web\User::id]])
      * @return Permission[] all inherited permissions that the user has. The array is indexed by the permission names.
-     *
      * @since 2.0.7
      */
     protected function getInheritedPermissionsByUser($userId)
@@ -564,7 +562,7 @@ class DbManager extends BaseManager
     }
 
     /**
-     * Returns the children for every parent.返回子节点来自每个父节点
+     * Returns the children for every parent.
      * @return array the children list. Each array key is a parent item name,
      * and the corresponding array value is a list of child item names.
      */
@@ -579,7 +577,7 @@ class DbManager extends BaseManager
     }
 
     /**
-     * 递归方式查找所有子级和指定项目的孙级。
+     * Recursively finds all children and grand children of the specified item.
      * @param string $name the name of the item whose children are to be looked for.
      * @param array $childrenList the child list built via [[getChildrenList()]]
      * @param array $result the children and grand children (in array keys)

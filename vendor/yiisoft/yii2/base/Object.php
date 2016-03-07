@@ -240,12 +240,12 @@ class Object implements Configurable
     }
 
     /**
-     * 返回一个值，指示属性是否可以设置
-     * 如果属性是可读的:
+     * Returns a value indicating whether a property can be read.
+     * A property is readable if:
      *
-     * - 该类与指定名称相关联的getter方法
-     *   (在这种情况下，属性名称不区分大小写);
-     * - 该类具有指定名称的成员变量（当`$checkVars`是真实的）;
+     * - the class has a getter method associated with the specified name
+     *   (in this case, property name is case-insensitive);
+     * - the class has a member variable with the specified name (when `$checkVars` is true);
      *
      * @param string $name the property name
      * @param boolean $checkVars whether to treat member variables as properties
@@ -258,7 +258,7 @@ class Object implements Configurable
     }
 
     /**
-     * 返回一个值，指示属性是否可以设置.
+     * Returns a value indicating whether a property can be set.
      * A property is writable if:
      *
      * - the class has a setter method associated with the specified name

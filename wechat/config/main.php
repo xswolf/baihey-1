@@ -7,15 +7,19 @@ $params = array_merge(
 );
 
 return [
-    'id' => 'app-frontend',
+    'id' => 'app-wechat',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
-    'controllerNamespace' => 'frontend\controllers',
+    'controllerNamespace' => 'wechat\controllers',
     'components' => [
-        'user' => [
-            'identityClass' => 'common\models\User',
-            'enableAutoLogin' => true,
+
+        'wechat' => [
+            'class' => 'callmez\wechat\sdk\Wechat',
+            'appId' => 'wx787f8071dd1e1dac',
+            'appSecret' => 'd5517695e5b9e5c2b3e119affe8302ad',
+            'token' => 'jrbhy'
         ],
+
         'log' => [
             'traceLevel' => YII_DEBUG ? 3 : 0,
             'targets' => [
@@ -35,9 +39,9 @@ return [
             ],
         ],
         'request' => [
-            'baseUrl' => '/wechat',
+            'baseUrl' => '/wap',
         ],
     ],
-    'homeUrl' => '/wechat',
+    'homeUrl' => '/wap',
     'params' => $params,
 ];

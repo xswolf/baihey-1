@@ -129,7 +129,7 @@ class HelpController extends Controller
      */
     protected function getModuleCommands($module)
     {
-        $prefix = $module instanceof Application ? '' : $module->getUniqueID() . '/';
+        $prefix = $module instanceof Application ? '' : $module->getUniqueId() . '/';
 
         $commands = [];
         foreach (array_keys($module->controllerMap) as $id) {
@@ -164,7 +164,7 @@ class HelpController extends Controller
     /**
      * Validates if the given class is a valid console controller class.
      * @param string $controllerClass
-     * @return bool
+     * @return boolean
      */
     protected function validateControllerClass($controllerClass)
     {
@@ -397,7 +397,7 @@ class HelpController extends Controller
             } else {
                 $defaultValue = var_export($defaultValue, true);
             }
-            $doc = "$type (defaults to " . $defaultValue . ')';
+            $doc = "$type (defaults to $defaultValue)";
         } else {
             $doc = $type;
         }

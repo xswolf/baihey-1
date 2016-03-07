@@ -1,6 +1,15 @@
 ﻿ ===== 3.1.30-dev ===== (xx.xx.xx)
+ 02.03.2016
+  - revert autoloader optimizations because of unexplainable warning when using plugins https://github.com/smarty-php/smarty/issues/199
+  
+ 01.03.2016
+  - bugfix template objects must be cached on $smarty->fetch('foo.tpl) calls incase the template is fetched
+    multiple times (forum topic 25909)
+    
  25.02.2016
   - bugfix wrong _realpath with 4 or more parent-directories https://github.com/smarty-php/smarty/issues/190
+  - optimization of _realpath
+  - bugfix instanceof expression in template code must be treated as value https://github.com/smarty-php/smarty/issues/191
 
  20.02.2016
   - bugfix {strip} must keep space between hmtl tags. Broken by changes of 10.2.2016 https://github.com/smarty-php/smarty/issues/184

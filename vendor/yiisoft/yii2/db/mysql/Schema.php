@@ -243,7 +243,6 @@ class Schema extends \yii\db\Schema
     /**
      * Collects the foreign key column details for the given table.
      * @param TableSchema $table the table metadata
-     * @throws \Exception
      */
     protected function findConstraints($table)
     {
@@ -262,11 +261,11 @@ JOIN information_schema.key_column_usage AS kcu ON
     kcu.constraint_schema = rc.constraint_schema AND
     kcu.constraint_name = rc.constraint_name
 WHERE rc.constraint_schema = database() AND kcu.table_schema = database()
-AND rc.table_name = :tableName AND kcu.table_name = :tableName
+AND rc.table_name = :tableName AND kcu.table_name = :tableName1
 SQL;
 
         try {
-            $rows = $this->db->createCommand($sql, [':tableName' => $table->name])->queryAll();
+            $rows = $this->db->createCommand($sql, [':tableName' => $table->name, ':tableName1' => $table->name])->queryAll();
             $constraints = [];
             foreach ($rows as $row) {
                 $constraints[$row['constraint_name']]['referenced_table_name'] = $row['referenced_table_name'];

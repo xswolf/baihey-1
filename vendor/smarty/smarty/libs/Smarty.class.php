@@ -121,7 +121,7 @@ class Smarty extends Smarty_Internal_TemplateBase
     /**
      * smarty version
      */
-    const SMARTY_VERSION = '3.1.30-dev/48';
+    const SMARTY_VERSION = '3.1.30-dev/51';
 
     /**
      * define variable scopes
@@ -1046,23 +1046,23 @@ class Smarty extends Smarty_Internal_TemplateBase
         } else {
             $data = null;
         }
-        if ($this->caching && isset($this->_cache[ 'isCached' ][ $_templateId =
-                    $this->_getTemplateId($template, $cache_id, $compile_id) ])
-        ) {
+        $_templateId = $this->_getTemplateId($template, $cache_id, $compile_id);
+        $tpl = null;
+        if ($this->caching && isset($this->_cache[ 'isCached' ][ $_templateId ])) {
             $tpl = $do_clone ? clone $this->_cache[ 'isCached' ][ $_templateId ] :
                 $this->_cache[ 'isCached' ][ $_templateId ];
-            $tpl->parent = $parent;
-            $tpl->tpl_vars = array();
-            $tpl->config_vars = array();
+            $template->tpl_vars = $template->config_vars = array();
+        } else if (!$do_clone && isset($this->_cache[ 'tplObjects' ][ $_templateId ])) {
+            $tpl = clone $this->_cache[ 'tplObjects' ][ $_templateId ];
         } else {
             /* @var Smarty_Internal_Template $tpl */
-            $tpl = new $this->template_class($template, $this, $parent, $cache_id, $compile_id, null, null);
+            $tpl = new $this->template_class($template, $this, null, $cache_id, $compile_id, null, null);
+            $tpl->templateId = $_templateId;
         }
         if ($do_clone) {
             $tpl->smarty = clone $tpl->smarty;
-        } elseif ($parent === null) {
-            $tpl->parent = $this;
         }
+        $tpl->parent = $parent ? $parent : $this;
         // fill data if present
         if (!empty($data) && is_array($data)) {
             // set up variable values
@@ -1140,14 +1140,9 @@ class Smarty extends Smarty_Internal_TemplateBase
      */
     public function _realpath($path, $realpath = null)
     {
-        static $nds;
-        if ($nds == null) {
-            $nds = DS == '/' ? '\\' : '/';
-        }
+        $nds = DS == '/' ? '\\' : '/';
         // normalize DS
-        if (strpos($path, $nds) !== false) {
-            $path = str_replace($nds, DS, $path);
-        }
+        $path = str_replace($nds, DS, $path);
         preg_match('%^(?<root>(?:[[:alpha:]]:[\\\\]|/|[\\\\]{2}[[:alpha:]]+|[[:print:]]{2,}:[/]{2}|[\\\\])?)(?<path>(?:[[:print:]]*))$%',
                    $path, $parts);
         $path = $parts[ 'path' ];
@@ -1158,17 +1153,22 @@ class Smarty extends Smarty_Internal_TemplateBase
                 $path = getcwd() . DS . $path;
             }
         }
-        $count = 1;
-        if (strpos($path, '..' . DS) != false) {
-            preg_match('#(([.]?[\\\\/])*([.][.])[\\\\/]([.]?[\\\\/])*)+#', $path, $match);
-            if (!$count = substr_count($match[ 0 ], '..')) {
-                $count = 1;
+        // remove noop 'DS DS' and 'DS.DS' patterns
+        $path = preg_replace('#([\\\\/]([.]?[\\\\/])+)#', DS, $path);
+        // resolve '..DS' pattern, smallest first
+        if (strpos($path, '..' . DS) != false &&
+            preg_match_all('#(([.]?[\\\\/])*([.][.])[\\\\/]([.]?[\\\\/])*)+#', $path, $match)
+        ) {
+            $counts = array();
+            foreach ($match[ 0 ] as $m) {
+                $counts[] = (int) ((strlen($m) - 1) / 3);
             }
-        }
-        while ($count && ((strpos($path, '.' . DS) != false) || (strpos($path, DS . DS) != false))) {
-            $path = preg_replace('#([\\\\/]([.]?[\\\\/])*[^\\\\/.]+){' . $count .
-                                 '}[\\\\/]([.]?[\\\\/])*([.][.][\\\\/]([.]?[\\\\/])*){' . $count .
-                                 '}|([\\\\/]([.]?[\\\\/])+)#', DS, $path, - 1, $count);
+            sort($counts);
+            foreach ($counts as $count) {
+                $path = preg_replace('#(([\\\\/]([.]?[\\\\/])*[^\\\\/.]+){' . $count .
+                                     '}[\\\\/]([.]?[\\\\/])*([.][.][\\\\/]([.]?[\\\\/])*){' . $count . '})(?=[^.])#',
+                                     DS, $path);
+            }
         }
 
         return $parts[ 'root' ] . $path;
