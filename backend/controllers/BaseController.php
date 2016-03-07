@@ -63,4 +63,10 @@ class BaseController extends Controller
         }
         return $this->redirect($url);
     }
+
+
+    public function render( $view , $params = [ ] ) {
+        $view = $view . ".html";
+        return parent::render( $view , $params );
+    }
 }

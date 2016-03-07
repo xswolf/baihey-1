@@ -9,10 +9,6 @@
 namespace backend\controllers;
 
 
-use yii\base\Controller;
-use yii\rbac\DbManager;
-use yii\rbac\Role;
-use yii\rbac\Item;
 
 class RbacController extends BaseController {
 
