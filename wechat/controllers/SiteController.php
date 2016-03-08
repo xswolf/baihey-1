@@ -18,9 +18,8 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        $wechat = \Yii::$app->wechat;
+        \Yii::$app->wechat;
 
-        var_dump($wechat->accessToken);
     }
 
 
