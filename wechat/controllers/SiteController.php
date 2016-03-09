@@ -18,8 +18,7 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        \Yii::$app->wechat->addShopGroup();
-
+        echo 'this is wechat';
     }
 
 
