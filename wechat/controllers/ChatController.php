@@ -9,7 +9,7 @@
 namespace wechat\controllers;
 
 
-class ChatController {
+class ChatController extends BaseController{
 
     public function actionIndex(){
         return $this->render();
