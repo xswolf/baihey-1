@@ -9,7 +9,6 @@
 namespace wechat\controllers;
 
 
-use wechat\controllers\BaseController;
 
 class ChatController extends BaseController{
 
