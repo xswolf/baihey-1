@@ -8,7 +8,6 @@
 
 namespace wechat\controllers;
 
-
 class ChatController extends BaseController{
 
     public function actionIndex(){
