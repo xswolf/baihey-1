@@ -15,8 +15,7 @@
 
             var so=false;
 
-            var name = 'hello' + Math.random();
-
+            var name = 'hello' + Math.ceil(Math.random() * 10);
             so = new WebSocket(url);
             so.onopen=function(){
                 if(so.readyState==1){
