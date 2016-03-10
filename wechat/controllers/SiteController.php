@@ -1,6 +1,7 @@
 <?php
 namespace wechat\controllers;
 
+use wechat\models\User;
 use Yii;
 use yii\web\Controller;
 
@@ -18,7 +19,8 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        echo 'this is wechat';
+        $user = new User();
+        $user->login('a','b');
     }
 
 
