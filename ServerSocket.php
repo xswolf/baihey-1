@@ -2,13 +2,14 @@
 error_reporting( E_ALL ^ E_NOTICE );
 ob_implicit_flush();
 
-$sk = new Sock( '120.76.84.162' , 8080 );
+$sk = new Sock( '127.0.0.1' , 8080 );
 $sk->run();
 
 class Sock {
     public $sockets;
     public $users;
     public $master;
+    public $client;
 
     private $sda = [ ];//已接收的数据
     private $slen = [ ];//数据总长度
@@ -30,11 +31,11 @@ class Sock {
             socket_select( $changes , $write , $except , null );
             foreach ( $changes as $sock ) {
                 if ( $sock == $this->master ) {
-                    $client              = socket_accept( $this->master );
+                    $this->client        = socket_accept( $this->master );
                     $key                 = uniqid();
-                    $this->sockets[]     = $client;
+                    $this->sockets[]     = $this->client;
                     $this->users[ $key ] = [
-                        'socket' => $client ,
+                        'socket' => $this->client ,
                         'shou'   => false
                     ];
                 } else {
@@ -57,6 +58,7 @@ class Sock {
                         if ( $buffer == false ) {
                             continue;
                         }
+                        echo $buffer;
                         $this->send( $k , $buffer );
                     }
                 }
@@ -246,10 +248,23 @@ class Sock {
                 socket_write( $v['socket'] , $str , strlen( $str ) );
             }
         } else {
+
+            $key = $this->getReceived($key);
+            echo '---'.$key."---\n";
             socket_write( $this->users[ $k ]['socket'] , $str , strlen( $str ) );
             socket_write( $this->users[ $key ]['socket'] , $str , strlen( $str ) );
         }
     }
+
+    function getReceived($name){
+        foreach ($this->users as $k=>$v){
+            if ($v['name']  == $name){
+                return $k;
+            }
+        }
+        return false;
+    }
+
 
     //用户退出
     function send2( $k ) {

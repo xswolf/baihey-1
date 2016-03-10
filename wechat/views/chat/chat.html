@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>chat Title</title>
+</head>
+    <script src="/wechat/web/js/plugin/jquery-2.0.3.min.js"></script>
+    <script>
+        if(typeof(WebSocket)=='undefined'){
+            alert('你的浏览器不支持 WebSocket ，推荐使用Google Chrome 或者 Mozilla Firefox');
+        }
+
+        $(function(){
+            var url='ws://127.0.0.1:8080';
+
+            var so=false;
+
+            var name = 'hello' + Math.random();
+
+            so = new WebSocket(url);
+            so.onopen=function(){
+                if(so.readyState==1){
+                    so.send('type=add&ming='+name);
+                }
+            };
+
+            so.onclose=function(){
+                so=false;
+
+            };
+
+            so.onmessage=function(msg){
+                eval('var da='+msg.data);
+                $("#content").html($("#content").html() + da.nrong + "<br>");
+            };
+
+            $("#send").click(function(){
+                var message = $("#message").val();
+                var key = $("#name").val();
+                so.send('nr='+esc(message)+'&key='+key);
+                console.log('send ……');
+            });
+
+            function esc(da){
+                da=da.replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\"/g,'&quot;');
+                return encodeURIComponent(da);
+            }
+        })
+
+    </script>
+<body>
+
+    <div id="content">
+
+    </div>
+
+    <div>
+        <input type="text" value="" id="name">
+        <input type="text" value="121" id="message">
+        <input type="button" id="send" value="send">
+    </div>
+</body>
+</html>
