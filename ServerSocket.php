@@ -2,7 +2,7 @@
 error_reporting( E_ALL ^ E_NOTICE );
 ob_implicit_flush();
 
-$sk = new Sock( '127.0.0.1' , 8080 );
+$sk = new Sock( '120.76.84.162' , 8080 );
 $sk->run();
 
 class Sock {
