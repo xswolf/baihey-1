@@ -46,12 +46,4 @@ return [
     'homeUrl' => '/wap',
     'params' => $params,
 
-    'urlManager'=>[
-        'urlFormat'=>'path',
-        'rules'=>[
-            '/'=>'/view',
-            '//'=>'/',
-            '/'=>'/',
-        ]
-    ]
 ];
