@@ -65,7 +65,8 @@ class BaseController extends Controller
     }
 
 
-    public function render( $view , $params = [ ] ) {
+    public function render( $view='' , $params = [ ] ) {
+        if ($view == '') $view = \Yii::$app->controller->action->id;
         $view = $view . ".html";
         return parent::render( $view , $params );
     }

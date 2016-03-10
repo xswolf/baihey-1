@@ -40,6 +40,7 @@ return [
         ],
         'request' => [
             'baseUrl' => '/wap',
+            'cookieValidationKey' => 'iqa_LosD4NUf23yhp3OOjI8mHZM3bTZt',
         ],
     ],
     'homeUrl' => '/wap',
