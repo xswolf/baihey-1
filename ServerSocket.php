@@ -2,7 +2,8 @@
 error_reporting( E_ALL ^ E_NOTICE );
 ob_implicit_flush();
 
-$sk = new Sock( '120.76.84.162' , 8080 );
+//$sk = new Sock( '120.76.84.162' , 8080 );
+$sk = new Sock( '127.0.0.1' , 8080 );
 $sk->run();
 
 class Sock {
@@ -47,7 +48,7 @@ class Sock {
                         $buffer .= $buf;
                     } while ( $l == 1000 );
                     $k = $this->search( $sock );
-                    if ( $len < 7 ) {
+                    if ( $len < 10 ) {
                         $this->send2( $k );
                         continue;
                     }
@@ -249,19 +250,23 @@ class Sock {
             }
         } else {
 
-            $key = $this->getReceived($key);
-            echo '---'.$key."---\n";
+            $key = $this->getReceived( $key );
             socket_write( $this->users[ $k ]['socket'] , $str , strlen( $str ) );
-            socket_write( $this->users[ $key ]['socket'] , $str , strlen( $str ) );
+            if ( $this->users[ $key ]['socket'] != null ) {
+                socket_write( $this->users[ $key ]['socket'] , $str , strlen( $str ) );
+            } else {
+                $this->e( '用户已经下线，或不存在' ); // 这里直接写数据库
+            }
         }
     }
 
-    function getReceived($name){
-        foreach ($this->users as $k=>$v){
-            if ($v['name']  == $name){
+    function getReceived( $name ) {
+        foreach ( $this->users as $k => $v ) {
+            if ( $v['name'] == $name ) {
                 return $k;
             }
         }
+
         return false;
     }
 
