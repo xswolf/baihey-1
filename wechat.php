@@ -6,4 +6,10 @@
  * Time: 14:16
  */
 
-echo 'cqbaihey';
+define('TOKEN' , 'cqbaihey');
+traceHttp();
+
+
+function traceHttp(){
+    file_put_contents('log.txt' ,date().$_SERVER['REMOTE_ADDR']);
+}
