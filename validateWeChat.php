@@ -10,10 +10,15 @@ $wechatObj->valid();
 
 class wechatCallbackapiTest
 {
+    private function log($str){
+        file_put_contents('log.txt' , $str."\n");
+    }
     public function valid()
     {
 
         $echoStr = $_GET["echostr"];
+        $this->log($echoStr);
+
         echo $echoStr;
         exit;
         //valid signature , option
