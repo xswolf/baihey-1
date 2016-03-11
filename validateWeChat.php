@@ -12,8 +12,10 @@ class wechatCallbackapiTest
 {
     public function valid()
     {
-        $echoStr = $_GET["echostr"];
 
+        $echoStr = $_GET["echostr"];
+        echo $echoStr;
+        exit;
         //valid signature , option
         if($this->checkSignature()){
             echo $echoStr;
