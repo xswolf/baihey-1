@@ -6,10 +6,23 @@
  * Time: 14:16
  */
 
-define('TOKEN' , 'cqbaihey');
-traceHttp();
+define( 'TOKEN' , 'cqbaihey' );
+checkSignature();
 
 
-function traceHttp(){
-    file_put_contents('log.txt' ,date().$_SERVER['REMOTE_ADDR']);
+function checkSignature() {
+    $signature = $_GET["signature"];
+    $timestamp = $_GET["timestamp"];
+    $nonce     = $_GET["nonce"];
+    $token     = TOKEN;
+    $tmpArr    = [ $token , $timestamp , $nonce ];
+    sort( $tmpArr , SORT_STRING );
+    $tmpStr = implode( $tmpArr );
+    $tmpStr = sha1( $tmpStr );
+
+    if ( $tmpStr == $signature ) {
+        return true;
+    } else {
+        return false;
+    }
 }
