@@ -59,7 +59,7 @@ class Sock {
                         if ( $buffer == false ) {
                             continue;
                         }
-                        echo $buffer;
+
                         $this->send( $k , $buffer );
                     }
                 }
@@ -254,10 +254,10 @@ class Sock {
             $key = $this->getReceived( $key );
             socket_write( $this->users[ $k ]['socket'] , $str , strlen( $str ) );
             if ( $this->users[ $key ]['socket'] != null ) {
-
+                $this->e("消息发送——messagesend\n");
                 socket_write( $this->users[ $key ]['socket'] , $str , strlen( $str ) );
             } else {
-                $this->e( '用户已经下线，或不存在' ); // 这里直接写数据库
+                $this->e( "用户已经下线，或不存在\n" ); // 这里直接写数据库
             }
         }
     }
