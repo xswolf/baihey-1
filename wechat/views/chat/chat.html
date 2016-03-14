@@ -3,6 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <title>chat Title</title>
+    <link rel="stylesheet" type="text/css" href="/admin/CloudAdmin/css/cloud-admin.css" >
+
+    <link href="/admin/CloudAdmin/font-awesome/css/font-awesome.min.css" rel="stylesheet">
 </head>
     <script data-main="/wechat/web/js/app" src="/wechat/web/js/plugin/requireJs/require.js"></script>
 
@@ -12,15 +15,63 @@
         }
     </script>
 <body>
-
-    <div id="content">
-
+<!-- BOX -->
+<div class="box border green chat-window">
+    <div class="box-title">
+        <h4><i class="fa fa-comments"></i>Chat Window</h4>
+        <div class="tools">
+            <a href="#box-config" data-toggle="modal" class="config">
+                <i class="fa fa-cog"></i>
+            </a>
+            <a href="javascript:;" class="reload">
+                <i class="fa fa-refresh"></i>
+            </a>
+            <a href="javascript:;" class="collapse">
+                <i class="fa fa-chevron-up"></i>
+            </a>
+            <a href="javascript:;" class="remove">
+                <i class="fa fa-times"></i>
+            </a>
+        </div>
     </div>
+    <div class="box-body big">
+        <div class="scroller" data-height="450px" data-always-visible="1" data-rail-visible="1">
+            <ul class="media-list chat-list">
+                <li class="media other_send" style="display: none">
+                    <a class="pull-left" href="#">
+                        <img class="media-object" alt="Generic placeholder image" src="/admin/CloudAdmin/img/chat/headshot1.jpg">
+                    </a>
+                    <div class="media-body chat-pop">
+                        <h4 class="media-heading">John Doe <span class="pull-right"><i class="fa fa-clock-o"></i> <abbr class="timeago" title="" >Oct 9, 2013</abbr> </span></h4>
+                        <p>Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis.</p>
 
-    <div>
-        <input type="text" value="" id="name">
-        <input type="text" value="121" id="message">
-        <input type="button" id="send" value="send">
+                    </div>
+                </li>
+                <li class="media self_send" style="display: none">
+                    <a class="pull-right" href="#">
+                        <img class="media-object"  alt="Generic placeholder image" src="/admin/CloudAdmin/img/chat/headshot2.jpg">
+                    </a>
+                    <div class="pull-right media-body chat-pop mod">
+                        <h4 class="media-heading">You <span class="pull-left"><abbr class="timeago" title="Oct 10, 2013" ></abbr> <i class="fa fa-clock-o"></i></span></h4></h4>
+                        <span class="cot">
+                            abc
+                        </span>
+                    </div>
+                </li>
+
+            </ul>
+        </div>
+        <div class="divide-20"></div>
+        <div class="chat-form">
+            <div class="input-group">
+                <input type="hidden" value="{$name}" id="self_name">
+                <input type="hidden" value="{$sendName}" id="send_name">
+                <input type="text" id="send_message" class="form-control">
+                <span class="input-group-btn"> <button class="btn btn-primary" id="send" type="button"><i class="fa fa-check"></i></button> </span>
+            </div>
+        </div>
     </div>
+</div>
+
 </body>
 </html>

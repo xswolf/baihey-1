@@ -17,6 +17,12 @@ class ChatController extends BaseController{
 
     public function actionChat(){
 
+        return $this->render('' , ['name' => \Yii::$app->request->get('name') ,
+            'sendName'=>\Yii::$app->request->get('sendName')]);
+    }
+
+    public function actionList(){
+
         return $this->render();
     }
 }
