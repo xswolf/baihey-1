@@ -9,22 +9,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
     <meta name="description" content="">
     <meta name="author" content="">
-    <!-- STYLESHEETS --><!--[if lt IE 9]><script src="/admin/CloudAdmin/js/flot/excanvas.min.js"></script><script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><script src="http://css3-mediaqueries-js.googlecode.com/svn/trunk/css3-mediaqueries.js"></script><![endif]-->
-    <link rel="stylesheet" type="text/css" href="/admin/CloudAdmin/css/cloud-admin.css" >
-    <link rel="stylesheet" type="text/css"  href="/admin/CloudAdmin/css/themes/default.css" id="skin-switcher" >
-    <link rel="stylesheet" type="text/css"  href="/admin/CloudAdmin/css/responsive.css" >
+    <!-- STYLESHEETS --><!--[if lt IE 9]><script src="/backend/web/CloudAdmin/js/flot/excanvas.min.js"></script><script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><script src="http://css3-mediaqueries-js.googlecode.com/svn/trunk/css3-mediaqueries.js"></script><![endif]-->
+    <link rel="stylesheet" type="text/css" href="/backend/web/CloudAdmin/css/cloud-admin.css" >
+    <link rel="stylesheet" type="text/css"  href="/backend/web/CloudAdmin/css/themes/default.css" id="skin-switcher" >
+    <link rel="stylesheet" type="text/css"  href="/backend/web/CloudAdmin/css/responsive.css" >
 
-    <link href="/admin/CloudAdmin/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <link href="/backend/web/CloudAdmin/font-awesome/css/font-awesome.min.css" rel="stylesheet">
     <!-- DATE RANGE PICKER -->
-    <link rel="stylesheet" type="text/css" href="/admin/CloudAdmin/js/bootstrap-daterangepicker/daterangepicker-bs3.css" />
+    <link rel="stylesheet" type="text/css" href="/backend/web/CloudAdmin/js/bootstrap-daterangepicker/daterangepicker-bs3.css" />
     <!-- FONTS -->
     <link href='http://fonts.useso.com/css?family=Open+Sans:300,400,600,700' rel='stylesheet' type='text/css'>
 
-    <link rel="stylesheet" type="text/css" href="/admin/CloudAdmin/js/datatables/media/css/jquery.dataTables.min.css" />
-    <link rel="stylesheet" type="text/css" href="/admin/CloudAdmin/js/datatables/media/assets/css/datatables.min.css" />
-    <link rel="stylesheet" type="text/css" href="/admin/CloudAdmin/js/datatables/extras/TableTools/media/css/TableTools.min.css" />
-    <link rel="stylesheet" type="text/css" href="/admin/CloudAdmin/bootstrap/css/bootstrap.min.css" />
-    <link rel="stylesheet" type="text/css" href="/admin/CloudAdmin/js/file_input/fileinput.min.css" />
+    <link rel="stylesheet" type="text/css" href="/backend/web/CloudAdmin/js/datatables/media/css/jquery.dataTables.min.css" />
+    <link rel="stylesheet" type="text/css" href="/backend/web/CloudAdmin/js/datatables/media/assets/css/datatables.min.css" />
+    <link rel="stylesheet" type="text/css" href="/backend/web/CloudAdmin/js/datatables/extras/TableTools/media/css/TableTools.min.css" />
+    <link rel="stylesheet" type="text/css" href="/backend/web/CloudAdmin/bootstrap/css/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="/backend/web/CloudAdmin/js/file_input/fileinput.min.css" />
 
 </head>
 <body>
@@ -34,7 +34,7 @@
         <div class="navbar-brand">
             <!-- COMPANY LOGO -->
             <a href="index.html">
-                <img src="/admin/CloudAdmin/img/logo/logo.png" alt="Cloud Admin Logo" class="img-responsive" height="30" width="120">
+                <img src="/backend/web/CloudAdmin/img/logo/logo.png" alt="Cloud Admin Logo" class="img-responsive" height="30" width="120">
             </a>
             <!-- /COMPANY LOGO -->
             <!-- TEAM STATUS FOR MOBILE -->
@@ -80,7 +80,7 @@
             <!-- BEGIN USER LOGIN DROPDOWN -->
             <li class="dropdown user" id="header-user">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                    <img alt="" src="/admin/CloudAdmin/img/avatars/avatar3.jpg" />
+                    <img alt="" src="/backend/web/CloudAdmin/img/avatars/avatar3.jpg" />
                     <span class="username">admin</span>
                     <i class="fa fa-angle-down"></i>
                 </a>
@@ -105,7 +105,7 @@
                 <li class="current">
                     <a href="javascript:void(0);">
 				  <span class="image">
-					  <img src="/admin/CloudAdmin/img/avatars/avatar3.jpg" alt="" />
+					  <img src="/backend/web/CloudAdmin/img/avatars/avatar3.jpg" alt="" />
 				  </span>
 				  <span class="title">
 					You
@@ -140,7 +140,7 @@
                 <li>
                     <a href="javascript:void(0);">
 				  <span class="image">
-					  <img src="/admin/CloudAdmin/img/avatars/avatar1.jpg" alt="" />
+					  <img src="/backend/web/CloudAdmin/img/avatars/avatar1.jpg" alt="" />
 				  </span>
 				  <span class="title">
 					Max Doe
@@ -175,7 +175,7 @@
                 <li>
                     <a href="javascript:void(0);">
 				  <span class="image">
-					  <img src="/admin/CloudAdmin/img/avatars/avatar2.jpg" alt="" />
+					  <img src="/backend/web/CloudAdmin/img/avatars/avatar2.jpg" alt="" />
 				  </span>
 				  <span class="title">
 					Jane Doe
@@ -210,7 +210,7 @@
                 <li>
                     <a href="javascript:void(0);">
 				  <span class="image">
-					  <img src="/admin/CloudAdmin/img/avatars/avatar4.jpg" alt="" />
+					  <img src="/backend/web/CloudAdmin/img/avatars/avatar4.jpg" alt="" />
 				  </span>
 				  <span class="title">
 					Ellie Doe
@@ -245,7 +245,7 @@
                 <li>
                     <a href="javascript:void(0);">
 				  <span class="image">
-					  <img src="/admin/CloudAdmin/img/avatars/avatar5.jpg" alt="" />
+					  <img src="/backend/web/CloudAdmin/img/avatars/avatar5.jpg" alt="" />
 				  </span>
 				  <span class="title">
 					Lisa Doe
@@ -280,7 +280,7 @@
                 <li>
                     <a href="javascript:void(0);">
 				  <span class="image">
-					  <img src="/admin/CloudAdmin/img/avatars/avatar6.jpg" alt="" />
+					  <img src="/backend/web/CloudAdmin/img/avatars/avatar6.jpg" alt="" />
 				  </span>
 				  <span class="title">
 					Kelly Doe
@@ -315,7 +315,7 @@
                 <li>
                     <a href="javascript:void(0);">
 				  <span class="image">
-					  <img src="/admin/CloudAdmin/img/avatars/avatar7.jpg" alt="" />
+					  <img src="/backend/web/CloudAdmin/img/avatars/avatar7.jpg" alt="" />
 				  </span>
 				  <span class="title">
 					Jessy Doe
@@ -350,7 +350,7 @@
                 <li>
                     <a href="javascript:void(0);">
 				  <span class="image">
-					  <img src="/admin/CloudAdmin/img/avatars/avatar8.jpg" alt="" />
+					  <img src="/backend/web/CloudAdmin/img/avatars/avatar8.jpg" alt="" />
 				  </span>
 				  <span class="title">
 					Debby Doe
@@ -521,35 +521,35 @@
 <!-- JAVASCRIPTS -->
 <!-- Placed at the end of the document so the pages load faster -->
 <!-- JQUERY -->
-<script src="/admin/CloudAdmin/js/jquery/jquery-2.0.3.min.js"></script>
+<script src="/backend/web/CloudAdmin/js/jquery/jquery-2.0.3.min.js"></script>
 <!-- JQUERY VALIDATE -->
-<script src="/admin/CloudAdmin/js/jquery-validate/jquery.validate.min.js"></script>
+<script src="/backend/web/CloudAdmin/js/jquery-validate/jquery.validate.min.js"></script>
 <!-- JQUERY UI-->
-<script src="/admin/CloudAdmin/js/jquery-ui-1.10.3.custom/js/jquery-ui-1.10.3.custom.min.js"></script>
+<script src="/backend/web/CloudAdmin/js/jquery-ui-1.10.3.custom/js/jquery-ui-1.10.3.custom.min.js"></script>
 <!-- BOOTSTRAP -->
-<script src="/admin/CloudAdmin/bootstrap/js/bootstrap.min.js"></script>
+<script src="/backend/web/CloudAdmin/bootstrap/js/bootstrap.min.js"></script>
 
 
 <!-- DATA TABLES -->
-<script type="text/javascript" src="/admin/CloudAdmin/js/datatables/media/js/jquery.dataTables.min.js"></script>
-<script type="text/javascript" src="/admin/CloudAdmin/js/datatables/media/assets/js/datatables.min.js"></script>
-<script type="text/javascript" src="/admin/CloudAdmin/js/datatables/extras/TableTools/media/js/TableTools.min.js"></script>
-<script type="text/javascript" src="/admin/CloudAdmin/js/datatables/extras/TableTools/media/js/ZeroClipboard.min.js"></script>
+<script type="text/javascript" src="/backend/web/CloudAdmin/js/datatables/media/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="/backend/web/CloudAdmin/js/datatables/media/assets/js/datatables.min.js"></script>
+<script type="text/javascript" src="/backend/web/CloudAdmin/js/datatables/extras/TableTools/media/js/TableTools.min.js"></script>
+<script type="text/javascript" src="/backend/web/CloudAdmin/js/datatables/extras/TableTools/media/js/ZeroClipboard.min.js"></script>
 
 <!-- DATE RANGE PICKER -->
-<script src="/admin/CloudAdmin/js/bootstrap-daterangepicker/moment.min.js"></script>
+<script src="/backend/web/CloudAdmin/js/bootstrap-daterangepicker/moment.min.js"></script>
 
-<script src="/admin/CloudAdmin/js/bootstrap-daterangepicker/daterangepicker.min.js"></script>
+<script src="/backend/web/CloudAdmin/js/bootstrap-daterangepicker/daterangepicker.min.js"></script>
 <!-- SLIMSCROLL -->
-<script type="text/javascript" src="/admin/CloudAdmin/js/jQuery-slimScroll-1.3.0/jquery.slimscroll.min.js"></script><script type="text/javascript" src="/admin/CloudAdmin/js/jQuery-slimScroll-1.3.0/slimScrollHorizontal.min.js"></script>
+<script type="text/javascript" src="/backend/web/CloudAdmin/js/jQuery-slimScroll-1.3.0/jquery.slimscroll.min.js"></script><script type="text/javascript" src="/backend/web/CloudAdmin/js/jQuery-slimScroll-1.3.0/slimScrollHorizontal.min.js"></script>
 <!-- COOKIE -->
-<script type="text/javascript" src="/admin/CloudAdmin/js/jQuery-Cookie/jquery.cookie.min.js"></script>
-<script type="text/javascript" src="/admin/CloudAdmin/js/file_input/fileinput.min.js"></script>
-<script type="text/javascript" src="/admin/CloudAdmin/js/bootstrap-alert/alert.js"></script>
+<script type="text/javascript" src="/backend/web/CloudAdmin/js/jQuery-Cookie/jquery.cookie.min.js"></script>
+<script type="text/javascript" src="/backend/web/CloudAdmin/js/file_input/fileinput.min.js"></script>
+<script type="text/javascript" src="/backend/web/CloudAdmin/js/bootstrap-alert/alert.js"></script>
 <!-- CUSTOM SCRIPT -->
 <script src="/admin/js/dataTableQuery.js"></script>
 <script src="/admin/js/app.js"></script>
-<script src="/admin/CloudAdmin/js/script.js"></script>
+<script src="/backend/web/CloudAdmin/js/script.js"></script>
 <script>
 
     jQuery(document).ready(function() {
