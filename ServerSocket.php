@@ -2,8 +2,8 @@
 error_reporting( E_ALL ^ E_NOTICE );
 ob_implicit_flush();
 
-$sk = new Sock( '120.76.84.162' , 8080 );
-//$sk = new Sock( '127.0.0.1' , 8080 );
+//$sk = new Sock( '120.76.84.162' , 8080 );
+$sk = new Sock( '127.0.0.1' , 8080 );
 $sk->run();
 
 class Sock {
@@ -232,7 +232,7 @@ class Sock {
 
     //$k 发信息人的code $key接受人的 code
     function send1( $k , $ar , $key = 'all' ) {
-        $ar['code1'] = $key;
+        $ar['sendName'] = $key;
         $ar['code']  = $k;
         $ar['time']  = date( 'm-d H:i:s' );
         $str         = $this->code( json_encode( $ar ) );
@@ -249,10 +249,12 @@ class Sock {
                 socket_write( $v['socket'] , $str , strlen( $str ) );
             }
         } else {
-
+            $ar['type'] = 'send';
+            $str         = $this->code( json_encode( $ar ) );
             $key = $this->getReceived( $key );
             socket_write( $this->users[ $k ]['socket'] , $str , strlen( $str ) );
             if ( $this->users[ $key ]['socket'] != null ) {
+
                 socket_write( $this->users[ $key ]['socket'] , $str , strlen( $str ) );
             } else {
                 $this->e( '用户已经下线，或不存在' ); // 这里直接写数据库
@@ -274,7 +276,7 @@ class Sock {
     //用户退出
     function send2( $k ) {
         $this->close( $k );
-        $ar['type']  = 'rmove';
+        $ar['type']  = 'remove';
         $ar['nrong'] = $k;
         $this->send1( false , $ar , 'all' );
     }
