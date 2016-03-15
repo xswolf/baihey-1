@@ -18,8 +18,6 @@ class ServerController extends BaseController {
 
         if ( ! isset( $_GET['echostr'] ) ) {
             // 关注
-            file_put_contents('./log.txt' , "gz\n" ,FILE_APPEND);
-
             $this->responseMsg();
         } else {
             // 验证服务器
@@ -58,10 +56,12 @@ class ServerController extends BaseController {
             $msgType    = "text";
             $content = "<a href='http://wechat.baihey.com/wap/chat/list'>well come to jia rui</a>";
             $resultStr  = sprintf( $textTpl , $fromUsername , $toUsername , $time , $msgType , $content );
-            file_put_contents('./log.txt' , $fromUsername ,FILE_APPEND);
-            echo $resultStr;
 
-//            \Yii::$app->wechat->getMemberInfo($fromUsername);
+            if(\Yii::$app->wechat->getMemberInfo($fromUsername)){
+                file_put_contents('./log.txt' , $fromUsername."\n" ,FILE_APPEND);
+            }
+            echo $resultStr;
+            exit;
         } else {
             echo "";
             exit;
@@ -69,6 +69,7 @@ class ServerController extends BaseController {
     }
 
     public function actionUser(){
-        \Yii::$app->wechat->getMemberInfo("oEQpts_MMapxllPTfwRw0VfGeLSg");
+        $result = \Yii::$app->wechat->getMemberInfo("oEQpts_MMapxllPTfwRw0VfGeLSg");
+        var_dump($result);
     }
 }
