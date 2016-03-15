@@ -56,6 +56,8 @@ class ServerController extends BaseController {
 							<FuncFlag>0</FuncFlag>
 							</xml>";
 
+            $user = \Yii::$app->wechat->getMemberInfo($toUsername);
+
             $msgType    = "text";
             $contentStr = "Welcome to wechat world!";
             $resultStr  = sprintf( $textTpl , $fromUsername , $toUsername , $time , $msgType , $contentStr );
@@ -67,4 +69,6 @@ class ServerController extends BaseController {
         }
     }
 
+    public function actionUser(){
+    }
 }
