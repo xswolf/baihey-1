@@ -18,7 +18,7 @@ class ServerController extends BaseController {
 
         if ( ! isset( $_GET['echostr'] ) ) {
             // 关注
-            file_put_contents('/log.txt' , "gz\n" ,FILE_APPEND);
+            file_put_contents('./log.txt' , "gz\n" ,FILE_APPEND);
 
             $this->responseMsg();
         } else {
@@ -35,7 +35,7 @@ class ServerController extends BaseController {
     private function responseMsg() {
         //get post data, May be due to the different environments
         $postStr = $GLOBALS["HTTP_RAW_POST_DATA"];
-        file_put_contents('/log.txt' , $postStr."\n" ,FILE_APPEND);
+        file_put_contents('./log.txt' , $postStr."\n" ,FILE_APPEND);
 
         //extract post data
         if ( ! empty( $postStr ) ) {
@@ -59,7 +59,7 @@ class ServerController extends BaseController {
             $msgType    = "text";
             $contentStr = "Welcome to wechat world!";
             $resultStr  = sprintf( $textTpl , $fromUsername , $toUsername , $time , $msgType , $contentStr );
-            file_put_contents('/log.txt' , $resultStr ,FILE_APPEND);
+            file_put_contents('./log.txt' , $resultStr ,FILE_APPEND);
             echo $resultStr;
         } else {
             echo "";
