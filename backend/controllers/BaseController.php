@@ -77,6 +77,6 @@ class BaseController extends Controller
 
     public function assign($field , $value){
 
-
+        return \Yii::$app->view->assgin($field , $value);
     }
 }
