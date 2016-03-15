@@ -279,24 +279,4 @@ class RbacController extends BaseController {
         return $this->render();
     }
 
-
-    /**
-     * 权限验证
-     * @param \yii\base\Action $action
-     * @return bool
-     * @throws \yii\web\UnauthorizedHttpException
-     */
-    public function actionBeforeAction()
-    {
-        $action = explode('?',$_SERVER['REQUEST_URI']);
-        var_dump($action[0]);
-        exit;
-        if(\Yii::$app->user->can($action)){
-            return true;
-        }else{
-            throw new \yii\web\UnauthorizedHttpException('对不起，您现在还没获此操作的权限');
-        }
-    }
-
-
 }
