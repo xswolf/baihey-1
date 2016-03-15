@@ -33,7 +33,6 @@ class ServerController extends BaseController {
     private function responseMsg() {
         //get post data, May be due to the different environments
         $postStr = $GLOBALS["HTTP_RAW_POST_DATA"];
-        file_put_contents('./log.txt' , $postStr."\n" ,FILE_APPEND);
 
         //extract post data
         if ( ! empty( $postStr ) ) {
@@ -58,9 +57,7 @@ class ServerController extends BaseController {
             $resultStr  = sprintf( $textTpl , $fromUsername , $toUsername , $time , $msgType , $content );
 
             if(\Yii::$app->wechat->getMemberInfo($postObj->FromUserName)){
-                file_put_contents('./log.txt' , $postObj->FromUserName."\n" ,FILE_APPEND);
             }else{
-                file_put_contents('./log.txt' , "chuxiancuowo\n" ,FILE_APPEND);
             }
             echo $resultStr;
             exit;
