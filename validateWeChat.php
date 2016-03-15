@@ -7,8 +7,10 @@
 define("TOKEN", "cqbaihey");
 $wechatObj = new wechatCallbackapiTest();
 if (!isset($_GET['echostr'])){
+    file_put_contents('log.txt' , implode(",",$_GET)."xiangying\n");
     $wechatObj->responseMsg();
 }else{
+    file_put_contents('log.txt' , implode(",",$_GET)."yanzheng\n");
     $wechatObj->valid();
 }
 
