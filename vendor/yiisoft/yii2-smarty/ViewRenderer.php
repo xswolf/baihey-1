@@ -253,6 +253,13 @@ class ViewRenderer extends BaseViewRenderer
         return $template->fetch();
     }
 
+    public function assign($field , $value ,$view = ''){
+        if ($view == '') $view = \Yii::$app->controller->action->id;
+        $view = $view . ".html";
+        $template = $this->smarty->createTemplate($view.'.html', null, null, empty($params) ? null : $params, false);
+        $template->assign($field  , $value);
+    }
+
     /**
      * Resolves Yii alias into file path
      *
