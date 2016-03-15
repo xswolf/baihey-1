@@ -18,8 +18,7 @@ class RbacController extends BaseController {
 
     /**
      * 创建权限
-     *
-     * @param $item
+     * @return string
      */
     public function actionCreatePermission() {
         if ( \Yii::$app->request->post() ) {
@@ -37,7 +36,7 @@ class RbacController extends BaseController {
             }
         }
 
-        return $this->render('create-permission');
+        return $this->render();
     }
 
     /**
@@ -68,10 +67,9 @@ class RbacController extends BaseController {
         }
         if(\Yii::$app->request->get('item')) {
             $permission = $auth->getPermission(\Yii::$app->request->get('item'));
-            return $this->render('edit-permission', [
-                'name' => $permission->name,
-                'description' => $permission->description
-            ]);
+            $this->assign('name',$permission->name);
+            $this->assign('description',$permission->description);
+            return $this->render();
         }
     }
 
@@ -82,7 +80,9 @@ class RbacController extends BaseController {
     public function actionListPermission() {
         $list = \Yii::$app->authManager->getPermissions();
 
-        return $this->render('list-permission', ['list' => $list, 'test' => 'test']);
+        $this->assign('list',$list);
+        $this->assign('test','test');
+        return $this->render();
     }
 
     /**
@@ -99,8 +99,7 @@ class RbacController extends BaseController {
 
     /**
      * 创建角色
-     *
-     * @param $item
+     * @return string
      */
     public function actionCreateRole() {
         if ( \Yii::$app->request->post() ) {
@@ -118,7 +117,7 @@ class RbacController extends BaseController {
 
         }
 
-        return $this->render('create-role');
+        return $this->render();
     }
 
     /**
@@ -139,8 +138,8 @@ class RbacController extends BaseController {
                 $this->__error('角色重复', 'list-role');
             }
         }
-
-        return $this->render('edit-role', ['name' => \Yii::$app->request->get('item')]);
+        $this->assign('name',\Yii::$app->request->get('item'));
+        return $this->render();
     }
 
     /**
@@ -149,8 +148,8 @@ class RbacController extends BaseController {
      */
     public function actionListRole() {
         $list = \Yii::$app->authManager->getRoles();
-
-        return $this->render('list-role', ['list' => $list]);
+        $this->assign('list',$list);
+        return $this->render();
     }
 
     /**
@@ -179,8 +178,8 @@ class RbacController extends BaseController {
 
     /**
      * 给角色分配权限
-     *
-     * @param $items
+     * @return string
+     * @throws \yii\db\Exception
      */
     public function actionCreateEmpowerment() {
         $request = \Yii::$app->request;
@@ -223,14 +222,15 @@ class RbacController extends BaseController {
             $transaction->commit();
             $this->__success('添加成功', 'list-role');
         }
-
-        return $this->render( 'create-empowerment', ['name' => $request->get('item'), 'list' => $list]);
+        $this->assign('name',$request->get('item'));
+        $this->assign('list',$list);
+        return $this->render();
     }
 
     /**
      * 给用户分配角色
-     *
-     * @param $item
+     * @return string
+     * @throws \yii\db\Exception
      */
     public function actionAssign() {
         $request = \Yii::$app->request;
@@ -274,7 +274,9 @@ class RbacController extends BaseController {
             $this->__success('添加成功', 'assign');
         }
 
-        return $this->render( 'assign', ['name' => $request->get('uid'), 'list' => $list]);
+        $this->assign('name',$request->get('uid'));
+        $this->assign('list',$list);
+        return $this->render();
     }
 
 

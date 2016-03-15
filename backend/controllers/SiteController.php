@@ -27,12 +27,13 @@ class SiteController extends BaseController
 
     public function actionIndex()
     {
-        return $this->render('index');
+
+        return $this->render();
     }
 
 
     public function actionForm(){
 
-        return $this->render('form');
+        return $this->render();
     }
 }

@@ -34,7 +34,7 @@
         <div class="navbar-brand">
             <!-- COMPANY LOGO -->
             <a href="index.html">
-                <img src="/backend/web/CloudAdmin/img/logo/logo.png" alt="Cloud Admin Logo" class="img-responsive" height="30" width="120">
+                <img src="/backend/web/CloudAdmin/img/logo/jrbhy.png" alt="嘉瑞百合缘" class="img-responsive" height="30" width="120">
             </a>
             <!-- /COMPANY LOGO -->
             <!-- TEAM STATUS FOR MOBILE -->
@@ -63,14 +63,14 @@
                 </a>
                 <ul class="dropdown-menu skins">
                     <li class="dropdown-title">
-                        <span><i class="fa fa-leaf"></i> Theme Skins</span>
+                        <span><i class="fa fa-leaf"></i>主题皮肤</span>
                     </li>
-                    <li><a href="#" data-skin="default">Subtle (default)</a></li>
-                    <li><a href="#" data-skin="night">Night</a></li>
-                    <li><a href="#" data-skin="earth">Earth</a></li>
-                    <li><a href="#" data-skin="utopia">Utopia</a></li>
-                    <li><a href="#" data-skin="nature">Nature</a></li>
-                    <li><a href="#" data-skin="graphite">Graphite</a></li>
+                    <li><a href="#" data-skin="default">微妙 (默认)</a></li>
+                    <li><a href="#" data-skin="night">夜晚</a></li>
+                    <li><a href="#" data-skin="earth">地球</a></li>
+                    <li><a href="#" data-skin="utopia">乌托邦</a></li>
+                    <li><a href="#" data-skin="nature">自然</a></li>
+                    <li><a href="#" data-skin="graphite">石墨</a></li>
                 </ul>
             </li>
         </ul>
@@ -403,7 +403,7 @@
 
             <!-- SIDEBAR MENU -->
             <ul>
-                <li>
+                <li class="{$url}">
                     <a href="/admin/site/">
                         <i class="fa fa-tachometer fa-fw"></i> <span class="menu-text">主页</span>
                         <span class="selected"></span>
@@ -416,7 +416,7 @@
                         <span class="arrow"></span>
                     </a>
                     <ul class="sub">
-                        <li><a class="" href="login.html"><span class="sub-menu-text">Login & Register Option 1</span></a></li><li><a class="" href="login_bg.html"><span class="sub-menu-text">Login & Register Option 2</span></a></li>
+                        <li><a class="" href="login.html"><span class="sub-menu-text">功能 1</span></a></li><li><a class="" href="login_bg.html"><span class="sub-menu-text">功能 2</span></a></li>
 
                     </ul>
                 </li>
@@ -547,8 +547,8 @@
 <script type="text/javascript" src="/backend/web/CloudAdmin/js/file_input/fileinput.min.js"></script>
 <script type="text/javascript" src="/backend/web/CloudAdmin/js/bootstrap-alert/alert.js"></script>
 <!-- CUSTOM SCRIPT -->
-<script src="/admin/js/dataTableQuery.js"></script>
-<script src="/admin/js/app.js"></script>
+<script src="/backend/web/js/dataTableQuery.js"></script>
+<script src="/backend/web/js/app.js"></script>
 <script src="/backend/web/CloudAdmin/js/script.js"></script>
 <script>
 
