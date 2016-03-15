@@ -23,7 +23,7 @@ class UserController extends BaseController
         $user = new User();
         $list = $user->getList();
 
-        return $this->render('list-user', ['list' => $list]);
+        return $this->render(['list' => $list] , 'list-user');
     }
 
     /**

@@ -65,8 +65,7 @@ return [
                     ],
                 ],
             ],
-        ],
-
+        ]
     ],
     'homeUrl' => '/admin',
     'params' => $params,

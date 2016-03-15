@@ -16,6 +16,8 @@ class BaseController extends Controller
 
     public $enableCsrfValidation = false;
 
+    protected $assign;
+
     public function auth($userId, $name)
     {
 
@@ -70,13 +72,19 @@ class BaseController extends Controller
 
 
     public function render( $params = [ ] , $view='' ) {
+
         if ($view == '') $view = \Yii::$app->controller->action->id;
         $view = $view . ".html";
-        return parent::render( $view , $params );
+        array_merge($params , $this->assign);
+        return parent::render( $view , $this->assign );
     }
 
     public function assign($field , $value){
 
-        return \Yii::$app->view->assgin($field , $value);
+        $this->assign = [$field , $value];
+    }
+
+    public function display(){
+
     }
 }
