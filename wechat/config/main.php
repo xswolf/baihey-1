@@ -14,7 +14,7 @@ return [
     'components' => [
 
         'wechat' => [
-            'class' => 'callmez\wechat\sdk\Wechat',
+            'class' => 'common\wechat\Wechat',
             'appId' => 'wx787f8071dd1e1dac',
             'appSecret' => 'd5517695e5b9e5c2b3e119affe8302ad',
             'token' => 'jrbhy'

@@ -23,8 +23,8 @@ return [
                     'cachePath' => '@runtime/Smarty/cache',
                     'compilePath' => '@runtime/Smarty/compile',
                     'options' => [
-                        'left_delimiter' => '{',
-                        'right_delimiter' => '}',
+                        'left_delimiter' => '{{',
+                        'right_delimiter' => '}}',
                     ],
                 ],
             ],

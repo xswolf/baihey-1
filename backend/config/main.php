@@ -51,20 +51,6 @@ return [
 
             'assignmentTable' => 'bhy_auth_assignment',//认证项赋权关系
 
-        ],
-
-        'view' => [
-            'renderers' => [
-                'html' => [
-                    'class' => 'yii\smarty\ViewRenderer',
-                    'cachePath' => '@runtime/Smarty/cache',
-                    'compilePath' => '@runtime/Smarty/compile',
-                    'options' => [
-                        'left_delimiter' => '{',
-                        'right_delimiter' => '}',
-                    ],
-                ],
-            ],
         ]
     ],
     'homeUrl' => '/admin',

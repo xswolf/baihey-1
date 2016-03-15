@@ -15,6 +15,7 @@ class BaseController extends Controller{
 
     public $enableCsrfValidation = false;
 
+    protected $assign = [];
     /**
      * 判断是否登录
      * @return bool
@@ -50,9 +51,17 @@ class BaseController extends Controller{
     }
 
 
-    public function render( $view='' , $params = [ ] ) {
+    public function render( $params = [ ] , $view='' ) {
+
         if ($view == '') $view = \Yii::$app->controller->action->id;
         $view = $view . ".html";
-        return parent::render( $view , $params );
+        array_merge($params , $this->assign);
+        return parent::render( $view , $this->assign );
     }
+
+    public function assign($field , $value){
+
+        $this->assign = [$field , $value];
+    }
+
 }
