@@ -15,18 +15,6 @@ class UserController extends BaseController
 {
     public $enableCsrfValidation = false;
 
-    public function actionLogin(){
-
-        $this->layout = false;
-
-        if ($_POST){
-
-            return $this->redirect("/admin/");
-        }
-
-        return $this->render('login');
-    }
-
     /**
      * @return string
      * 用户列表

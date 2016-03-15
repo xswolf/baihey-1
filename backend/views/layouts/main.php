@@ -86,7 +86,7 @@
                 </a>
                 <ul class="dropdown-menu">
                     <li><a href="#"><i class="fa fa-cog"></i> 账户设置</a></li>
-                    <li><a href="login.html"><i class="fa fa-power-off"></i> 退出</a></li>
+                    <li><a href="/admin/login/logout"><i class="fa fa-power-off"></i> 退出</a></li>
                 </ul>
             </li>
             <!-- END USER LOGIN DROPDOWN -->

@@ -33,6 +33,14 @@ class User extends Model
     }
 
     /**
+     * 设置用户信息到session
+     * @param $user
+     */
+    public function setUserSession($user) {
+        \Yii::$app->session->set(USER_SESSION,$user);
+    }
+
+    /**
      * @return array|null
      * 获取列表
      */
@@ -108,7 +116,7 @@ class User extends Model
         $time = time();
         $data['created_at'] = $time;
         $data['updated_at'] = $time;
-        $data['password'] = \Yii::$app->security->generatePasswordHash($data['password']);
+        $data['password'] = md5(md5($data['password']));
         if(isset($data['role'])) {
             $role = $data['role'];
             unset($data['role']);
@@ -138,7 +146,7 @@ class User extends Model
         $time = time();
         $data['updated_at'] = $time;
         if($data['password']) {
-            $data['password'] = \Yii::$app->security->generatePasswordHash($data['password']);
+            $data['password'] = md5(md5($data['password']));
         } else {
             unset($data['password']);
         }

@@ -48,11 +48,16 @@ class RbacController extends BaseController {
     {
         $auth = \Yii::$app->authManager;
         if (\Yii::$app->request->post()){
-            $item = \Yii::$app->request->post('item');
+            $item = \Yii::$app->request->post('item');//旧
             $name = \Yii::$app->request->post('name');
             $description = \Yii::$app->request->post('description');
             //判断是否存在
-            if(!$auth->getPermission($name)) {
+            if($item == $name) {
+                $editPost = $auth->createPermission($name);
+                $editPost->description = $description;
+                $auth->update($item, $editPost);
+                $this->__success('更新成功', 'list-permission');
+            } elseif(!$auth->getPermission($name)) {
                 $editPost = $auth->createPermission($name);
                 $editPost->description = $description;
                 $auth->update($item, $editPost);
@@ -275,21 +280,21 @@ class RbacController extends BaseController {
 
     /**
      * 权限验证
-     *
      * @param \yii\base\Action $action
-     *
      * @return bool
      * @throws \yii\web\UnauthorizedHttpException
      */
-    //    public function beforeAction($action)
-    //    {
-    //        $action = \Yii::$app->controller->action->id;
-    //        if(\Yii::$app->user->can($action)){
-    //            return true;
-    //        }else{
-    //            throw new \yii\web\UnauthorizedHttpException('对不起，您现在还没获此操作的权限');
-    //        }
-    //    }
+    public function actionBeforeAction()
+    {
+        $action = explode('?',$_SERVER['REQUEST_URI']);
+        var_dump($action[0]);
+        exit;
+        if(\Yii::$app->user->can($action)){
+            return true;
+        }else{
+            throw new \yii\web\UnauthorizedHttpException('对不起，您现在还没获此操作的权限');
+        }
+    }
 
 
 }
