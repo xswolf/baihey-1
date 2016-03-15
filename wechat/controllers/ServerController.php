@@ -55,7 +55,7 @@ class ServerController extends BaseController {
 							<FuncFlag>0</FuncFlag>
 							</xml>";
 
-            $user = \Yii::$app->wechat->getMemberInfo($toUsername);
+//            $user = \Yii::$app->wechat->getMemberInfo($toUsername);
 
             $msgType    = "text";
             $content = "<a href='http://www.baihey.com/wap/chat/list'>well come to jia rui</a>";
