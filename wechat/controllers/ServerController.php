@@ -52,11 +52,13 @@ class ServerController extends BaseController {
 							<FuncFlag>0</FuncFlag>
 							</xml>";
 
-            $this->getWeChatUser($toUsername);
+//            $this->getWeChatUser($toUsername);
+
 
             $msgType    = "text";
             $contentStr = "Welcome to wechat world!";
             $resultStr  = sprintf( $textTpl , $fromUsername , $toUsername , $time , $msgType , $contentStr );
+            file_put_contents('log.txt' , implode(',' , $resultStr));
             echo $resultStr;
         } else {
             echo "";
@@ -67,6 +69,12 @@ class ServerController extends BaseController {
     public function getWeChatUser($openId){
         $userInfo = \Yii::$app->wechat->getMemberInfo($openId);
         file_put_contents('log.txt' , implode(',' , $userInfo));
+    }
+
+    public function actionUser(){
+        $openId = '';
+        $userInfo = \Yii::$app->wechat->getMemberInfo($openId);
+        var_dump($userInfo);
     }
 
 }
