@@ -59,16 +59,19 @@ class wechatCallbackapiTest
 							</xml>";
             if(!empty( $keyword ))
             {
+                $this->log('if');
                 $msgType = "text";
                 $contentStr = "Welcome to wechat world!";
                 $resultStr = sprintf($textTpl, $fromUsername, $toUsername, $time, $msgType, $contentStr);
                 echo $resultStr;
             }else{
+                $this->log('else');
                 echo "Input something...";
             }
 
         }else {
             echo "";
+            $this->log('sblb');
             exit;
         }
     }
