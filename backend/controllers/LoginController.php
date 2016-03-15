@@ -16,23 +16,22 @@ class LoginController  extends Controller{
 
     public $enableCsrfValidation = false;
 
-    public function actionLogin(){
+    public function actionIndex(){
         $this->layout = false;
 
         if($_POST) {
             $user = new User();
             $userInfo = $user->getFindUser(['name'=>$_POST['name']]);
             $pass = md5(md5($_POST['password']));
-            \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
-            if($userInfo['password'] === $pass) {
-                $user->setUserSession($userInfo);
+            \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;  //将响应数据转json格式
+            if($userInfo['password'] === $pass) {                           //验证用户登录信息
+                $user->setUserSession($userInfo);                           //设置Session
                 return ['msg'=>'登录成功！','status'=>1];
             } else {
                 return ['msg'=>'登录失败！','status'=>0];
             }
         }
-
-        return $this->render('login.html');
+        return $this->render('index.html');
     }
 
     public function actionLogout() {

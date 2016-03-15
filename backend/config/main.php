@@ -51,10 +51,13 @@ return [
 
             'assignmentTable' => 'bhy_auth_assignment',//认证项赋权关系
 
+        ],
+        'siteMap'=>[
+            'class'=>'common\models\Config'
         ]
+
     ],
     'homeUrl' => '/admin',
     'params' => $params,
-
 
 ];
