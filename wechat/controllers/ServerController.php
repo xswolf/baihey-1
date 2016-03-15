@@ -58,8 +58,8 @@ class ServerController extends BaseController {
             $user = \Yii::$app->wechat->getMemberInfo($toUsername);
 
             $msgType    = "text";
-            $contentStr = "<a href='http://www.baihey.com/wap/chat/list'>well come to jia rui</a>";
-            $resultStr  = sprintf( $textTpl , $fromUsername , $toUsername , $time , $msgType , $contentStr );
+            $content = "<a href='http://www.baihey.com/wap/chat/list'>well come to jia rui</a>";
+            $resultStr  = sprintf( $textTpl , $fromUsername , $toUsername , $time , $msgType , $content );
             file_put_contents('./log.txt' , $resultStr ,FILE_APPEND);
             echo $resultStr;
         } else {
