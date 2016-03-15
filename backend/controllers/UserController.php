@@ -23,7 +23,8 @@ class UserController extends BaseController
         $user = new User();
         $list = $user->getList();
 
-        return $this->render(['list' => $list] , 'list-user');
+        $this->assign('list',$list);
+        return $this->render();
     }
 
     /**
@@ -46,7 +47,8 @@ class UserController extends BaseController
             }
         }
 
-        return $this->render('create-user',['list' => $list]);
+        $this->assign('list',$list);
+        return $this->render();
     }
 
     /**
@@ -79,7 +81,9 @@ class UserController extends BaseController
             }
         }
 
-        return $this->render('edit-user',['user' => $user, 'list' => $list]);
+        $this->assign('user',$user);
+        $this->assign('list',$list);
+        return $this->render();
     }
 
     /**
