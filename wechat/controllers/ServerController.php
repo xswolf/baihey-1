@@ -56,7 +56,7 @@ class ServerController extends BaseController {
 							</xml>";
 
             $msgType    = "text";
-            $content = "<a href='http://www.baihey.com/wap/chat/list'>well come to jia rui</a>";
+            $content = "<a href='http://wechat.baihey.com/wap/chat/list'>well come to jia rui</a>";
             $resultStr  = sprintf( $textTpl , $fromUsername , $toUsername , $time , $msgType , $content );
             file_put_contents('./log.txt' , $resultStr ,FILE_APPEND);
             echo $resultStr;
