@@ -65,7 +65,7 @@ class wechatCallbackapiTest
                 $resultStr = sprintf($textTpl, $fromUsername, $toUsername, $time, $msgType, $contentStr);
                 echo $resultStr;
             }else{
-                $this->log('else');
+                $this->log('$postStr');
                 echo "Input something...";
             }
 
