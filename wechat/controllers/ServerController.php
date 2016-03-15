@@ -61,7 +61,7 @@ class ServerController extends BaseController {
             file_put_contents('./log.txt' , $fromUsername ,FILE_APPEND);
             echo $resultStr;
 
-            \Yii::$app->wechat->getMemberInfo($fromUsername);
+//            \Yii::$app->wechat->getMemberInfo($fromUsername);
         } else {
             echo "";
             exit;
