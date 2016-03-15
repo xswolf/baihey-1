@@ -42,6 +42,7 @@ class ServerController extends BaseController {
             $postObj      = simplexml_load_string( $postStr , 'SimpleXMLElement' , LIBXML_NOCDATA );
             $fromUsername = $postObj->FromUserName;
             $toUsername   = $postObj->ToUserName;
+            $keyword      = trim( $postObj->Content );
             $time         = time();
             $textTpl      = "<xml>
 							<ToUserName><![CDATA[%s]]></ToUserName>
@@ -52,29 +53,15 @@ class ServerController extends BaseController {
 							<FuncFlag>0</FuncFlag>
 							</xml>";
 
-//            $this->getWeChatUser($toUsername);
-
-
             $msgType    = "text";
             $contentStr = "Welcome to wechat world!";
             $resultStr  = sprintf( $textTpl , $fromUsername , $toUsername , $time , $msgType , $contentStr );
-            file_put_contents('log.txt' , implode(',' , $resultStr));
+            file_put_contents('/log.txt' , $resultStr);
             echo $resultStr;
         } else {
             echo "";
             exit;
         }
-    }
-
-    public function getWeChatUser($openId){
-        $userInfo = \Yii::$app->wechat->getMemberInfo($openId);
-        file_put_contents('log.txt' , implode(',' , $userInfo));
-    }
-
-    public function actionUser(){
-        $openId = '';
-        $userInfo = \Yii::$app->wechat->getMemberInfo($openId);
-        var_dump($userInfo);
     }
 
 }
