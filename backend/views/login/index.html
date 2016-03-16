@@ -105,7 +105,16 @@
         jQuery('.visible').removeClass('visible animated fadeInUp');
         jQuery('#' + id).addClass('visible animated fadeInUp');
     }
-    //文章提交验证
+
+    $(window).keydown(function(event){
+        switch(event.keyCode) {
+            case 13:
+                $('.login-submit').click();
+                break;
+        }
+    });
+
+    //提交验证
     $('.login-submit').click(function() {
         var btn = $(this);
         var form = $(document.login);
@@ -136,7 +145,7 @@
                     layer.msg(data.msg, {
                         icon: 1, time: 1000
                     },function() {
-                        location.href="/admin/site/index";
+                        location.href="/admin/site";
                     });
 
                 } else {
