@@ -692,11 +692,13 @@ class Wechat extends Component
             'timestamp' => (int)YII_BEGIN_TIME,
             'url' => explode('#', Yii::$app->getRequest()->getAbsoluteUrl())[0]
         ];
+
+        echo $data['url'];
         return array_merge([
             'debug' => $debug,
             'appId' => $this->appId,
             'timestamp' => $data['timestamp'],
-            'nonceStr' => $data['noncestr'],
+            'nonceStr' => $data['nonceStr'],
             'signature' => sha1(urldecode(http_build_query($data))),
             'jsApiList' => [
                 'checkJsApi',
