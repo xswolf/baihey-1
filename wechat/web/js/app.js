@@ -13,45 +13,7 @@ require.config({
     }
 });
 
-requirejs(['jquery', './chat', 'comm','jweixin'], function ($, chat, comm,wx) {
-
-    console.log(wx);
-
-    var config = $("#config").val();
-    wx.config(config);
-    console.log(1);
-    wx.ready(function(){
-        console.log('ready')
-    });
-
-    wx.chooseImage({
-        count: 1, // 默认9
-        sizeType: ['original', 'compressed'], // 可以指定是原图还是压缩图，默认二者都有
-        sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
-        success: function (res) {
-            var localIds = res.localIds; // 返回选定照片的本地ID列表，localId可以作为img标签的src属性显示图片
-        }
-    });
-
-    console.log(2);
-
-    wx.error(function(res){
-        console.log('error');
-    });
-    console.log(3);
-
-    wx.checkJsApi({
-        jsApiList: ['chooseImage'], // 需要检测的JS接口列表，所有JS接口列表见附录2,
-        success: function (res) {
-            console.log('chooseImage');
-            // 以键值对的形式返回，可用的api值true，不可用为false
-            // 如：{"checkResult":{"chooseImage":true},"errMsg":"checkJsApi:ok"}
-        }
-    });
-    console.log(4);
-
-
-    return false;
+requirejs(['jquery', './chat', 'comm'], function ($, chat, comm) {
 
     chat.init($("#self_name").val()); // 初始化聊天
 
