@@ -18,6 +18,11 @@ define(function () {
             myDate.toLocaleDateString();     //获取当前日期
             //var mytime=myDate.toLocaleTimeString();     //获取当前时间
             return myDate.toLocaleString( );        //获取日期与时间
+        },
+        
+        'timeStamp' : function () { // 当前时间戳
+
+            return Date.parse( new Date() );
         }
     };
     return ar
