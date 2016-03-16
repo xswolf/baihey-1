@@ -688,7 +688,7 @@ class Wechat extends Component
     {
         $data = [
             'jsapi_ticket' => $this->getJsApiTicket(),
-            'noncestr' => Yii::$app->getSecurity()->generateRandomString(16),
+            'nonceStr' => Yii::$app->getSecurity()->generateRandomString(16),
             'timestamp' => (int)YII_BEGIN_TIME,
             'url' => explode('#', Yii::$app->getRequest()->getAbsoluteUrl())[0]
         ];
