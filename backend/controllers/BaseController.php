@@ -27,7 +27,7 @@ class BaseController extends Controller
     public function beforeAction($action)
     {
         if (!$this->isLogin()) {
-            return $this->redirect("/admin/login/login");   //用户未登录自动跳转至登录页
+            return $this->redirect("/admin/login");   //用户未登录自动跳转至登录页
         }
 
         $this->isCan();//权限验证

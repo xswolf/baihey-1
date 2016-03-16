@@ -112,7 +112,7 @@
 
             <!-- 左侧菜单 -->
             <ul>
-                <li class="<?php echo $view->params['act']; ?>">
+                <li class="<?php  ?>">
                     <a href="/admin/site/">
                         <i class="fa fa-tachometer fa-fw"></i> <span class="menu-text">主页</span>
                         <span class="selected"></span>

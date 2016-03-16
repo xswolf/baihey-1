@@ -8,9 +8,8 @@
 
 namespace backend\controllers;
 
-use yii\web\Controller;
 use backend\models\User;
-use yii\web\YiiAsset;
+use yii\web\Controller;
 
 class LoginController  extends Controller{
 
@@ -19,16 +18,17 @@ class LoginController  extends Controller{
     public function actionIndex(){
         $this->layout = false;
 
-        if($_POST) {
+        if(\Yii::$app->request->isAjax) {
             $user = new User();
-            $userInfo = $user->getFindUser(['name'=>$_POST['name']]);
-            $pass = md5(md5($_POST['password']));
+            $data = \Yii::$app->request->post();
+            $userInfo = $user->getFindUser(['name'=>$data['name']]);
+            $pass = md5(md5($data['password']));
             \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;  //将响应数据转json格式
-            if($userInfo['password'] === $pass) {                           //验证用户登录信息
-                $user->setUserSession($userInfo);                           //设置Session
-                return ['msg'=>'登录成功！','status'=>1];
+            if( !$userInfo || $userInfo['password'] != $pass) {             //验证用户登录信息
+                return ['msg'=>'用户名或密码错误','status'=>0];
             } else {
-                return ['msg'=>'登录失败！','status'=>0];
+                $user->setUserSession($userInfo);                           //设置Session
+                return ['msg'=>'登录成功','status'=>1];
             }
         }
         return $this->render('index.html');
