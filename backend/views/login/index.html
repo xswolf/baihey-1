@@ -51,7 +51,7 @@
                     <div class="login-box-plain">
                         <h2 class="bigintro">百合缘后台管理系统</h2>
                         <div class="divide-40"></div>
-                        <form id="login-form" role="form" name="login" method="post" action="/admin/login/login">
+                        <form id="login-form" role="form" name="login" method="post" action="/admin/login">
                             <div class="form-group">
                                 <label for="exampleInputEmail1">用户名</label>
                                 <i class="fa fa-envelope"></i>
@@ -125,7 +125,7 @@
 
         $.ajax({
             type: 'POST',
-            url: '/admin/login/login',
+            url: '/admin/login',
             data:'name='+username+'&&password='+password,
             dataType:'json',
             beforeSend:function() {
@@ -136,15 +136,17 @@
                     layer.msg(data.msg, {
                         icon: 1, time: 1000
                     },function() {
-                        location.href="/admin/";
+                        location.href="/admin/site";
                     });
+                    
                 } else {
                     layer.msg(data.msg);
                     btn.prop('disabled',false);
                 }
             },
-            error:function(data) {
+            error:function() {
                 layer.msg('网络连接错误，请稍后重试！');
+                btn.prop('disabled',false);
             }
         });
 
