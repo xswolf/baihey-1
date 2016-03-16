@@ -55,8 +55,9 @@ class BaseController extends Controller{
 
         if ($view == '') $view = \Yii::$app->controller->action->id;
         $view = $view . ".html";
-        array_merge($params , $this->assign);
-        return parent::render( $view , $this->assign );
+        $arr = array_merge($params , $this->assign);
+
+        return parent::render( $view , $arr);
     }
 
     public function assign($field , $value){

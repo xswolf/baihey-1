@@ -8,11 +8,12 @@ require.config({
     paths: {
         jquery: 'plugin/jquery/jquery-2.0.3.min',
         chat: 'chat/chat',
-        comm: 'comm'
+        comm: 'comm',
+        jweixin: 'chat/jweixin'
     }
 });
 
-requirejs(['jquery', './chat', 'comm'], function ($, chat, comm) {
+requirejs(['jquery', './chat', 'comm',jweixin], function ($, chat, comm) {
 
 
     chat.init($("#self_name").val()); // 初始化聊天
