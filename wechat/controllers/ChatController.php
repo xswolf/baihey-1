@@ -20,6 +20,7 @@ class ChatController extends BaseController{
 
     public function actionChat(){
 
+        $this->assign('config' , \Yii::$app->wechat->jsApiConfig());
         return $this->render(['name' => \Yii::$app->request->get('name') ,
                               'sendName'=>\Yii::$app->request->get('sendName')] , '');
     }
