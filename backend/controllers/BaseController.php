@@ -51,11 +51,10 @@ class BaseController extends Controller
         $can = false;
         foreach($permissions as $vo) {
             if($action[0] == $vo->description) {
-                $can = true;
-                break;
+                return true;
             }
         }
-        return $can || $this->__error('对不起，您现在还没获此操作的权限');
+        $this->__error('对不起，您现在还没获此操作的权限');
 
     }
 
