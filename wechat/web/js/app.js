@@ -13,7 +13,7 @@ require.config({
     }
 });
 
-requirejs(['jquery', './chat', 'comm',jweixin], function ($, chat, comm) {
+requirejs(['jquery', './chat', 'comm','jweixin'], function ($, chat, comm) {
 
 
     chat.init($("#self_name").val()); // 初始化聊天
