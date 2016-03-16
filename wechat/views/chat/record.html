@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script data-main="/wechat/web/js/app" src="/wechat/web/js/plugin/requirejs/require.js"></script>
+</head>
+<script>
+
+</script>
+<body>
+    <button id="start">start</button>
+    <button id="stop">stop</button>
+    <button id="play">play</button>
+</body>
+
+<script>
+    requirejs(['http://res.wx.qq.com/open/js/jweixin-1.0.0.js','chat/chat'] , function (wx) {
+        var config = {
+        {
+            $config
+        };
+    }
+        wx.config(config);
+        wx.ready(function () {
+
+        });
+
+        var voice = null;
+
+        $(document).on('click', '#start', function () { // 点击发送按钮
+
+            wx.startRecord({
+                cancel: function () {
+                    alert('用户拒绝授权录音');
+                }
+            });
+
+        });
+
+        $(document).on('click', '#stop', function () { // 点击发送按钮
+
+            wx.stopRecord({
+                success: function (res) {
+                    voice.localId = res.localId;
+                },
+                fail: function (res) {
+                    alert(JSON.stringify(res));
+                }
+            })
+
+        });
+
+        $(document).on('click', '#play', function () { // 点击发送按钮
+
+            wx.playVoice({localId: voice.localId})
+
+        });
+
+    })
+</script>
+</html>
