@@ -48,7 +48,7 @@ class BaseController extends Controller
         $user = \Yii::$app->session->get(USER_SESSION);
         $uid = $user['id'];
         $permissions = $auth->getPermissionsByUser($uid);
-        $can = false;
+
         foreach($permissions as $vo) {
             if($action[0] == $vo->description) {
                 return true;
