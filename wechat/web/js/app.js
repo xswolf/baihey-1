@@ -17,7 +17,6 @@ requirejs(['jquery', './chat', 'comm','jweixin'], function ($, chat, comm,wx) {
 
 
     var config = $("#config").val();
-    console.log(config);
     wx.config(config);
 
     wx.ready(function(){
@@ -29,9 +28,9 @@ requirejs(['jquery', './chat', 'comm','jweixin'], function ($, chat, comm,wx) {
     });
 
     wx.checkJsApi({
-        jsApiList: ['chooseImage'], // 需要检测的JS接口列表，所有JS接口列表见附录2,
+        jsApiList: ['startRecord'], // 需要检测的JS接口列表，所有JS接口列表见附录2,
         success: function(res) {
-            alert(1)
+            alert(res)
         }
     });
 
