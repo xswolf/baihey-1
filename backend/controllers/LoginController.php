@@ -36,6 +36,6 @@ class LoginController  extends Controller{
 
     public function actionLogout() {
         \Yii::$app->session->remove(USER_SESSION);
-        $this->redirect('login');
+        $this->redirect('index');
     }
 }

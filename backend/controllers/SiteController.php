@@ -1,10 +1,7 @@
 <?php
 namespace backend\controllers;
 
-use common\models\User;
 use Yii;
-
-use common\models\LoginForm;
 
 /**
  * Site controller
