@@ -9,7 +9,7 @@ require.config({
         jquery: 'plugin/jquery/jquery-2.0.3.min',
         chat: 'chat/chat',
         comm: 'comm',
-        jweixin: 'chat/jweixin'
+        jweixin: 'http://res.wx.qq.com/open/js/jweixin-1.0.0'
     }
 });
 
