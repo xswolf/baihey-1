@@ -55,12 +55,8 @@ class BaseController extends Controller
                 break;
             }
         }
+        return $can || $this->__error('对不起，您现在还没获此操作的权限');
 
-        if($can) {
-            return true;
-        } else {
-            $this->__error('对不起，您现在还没获此操作的权限');
-        }
     }
 
     /**
