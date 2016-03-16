@@ -34,7 +34,7 @@
     <div class="container">
         <div class="navbar-brand">
             <!-- COMPANY LOGO -->
-            <a href="index.html">
+            <a href="/admin">
                 <img src="/backend/web/CloudAdmin/img/logo/jrbhy.png" alt="嘉瑞百合缘" class="img-responsive" height="30" width="120">
             </a>
             <!-- /COMPANY LOGO -->
@@ -82,7 +82,7 @@
             <li class="dropdown user" id="header-user">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                     <img alt="" src="/backend/web/CloudAdmin/img/avatars/avatar3.jpg" />
-                    <span class="username">admin</span>
+                    <span class="username"></span>
                     <i class="fa fa-angle-down"></i>
                 </a>
                 <ul class="dropdown-menu">
@@ -112,8 +112,8 @@
 
             <!-- 左侧菜单 -->
             <ul>
-                <li class="">
-                    <a href="/admin/site/">
+                <li class="has-sub" data-opt="1">
+                    <a href="/admin/site">
                         <i class="fa fa-tachometer fa-fw"></i> <span class="menu-text">主页</span>
                         <span class="selected"></span>
                     </a>
@@ -125,19 +125,20 @@
                         <span class="arrow"></span>
                     </a>
                     <ul class="sub">
-                        <li><a class="" href="login.html"><span class="sub-menu-text">功能 1</span></a></li><li><a class="" href="login_bg.html"><span class="sub-menu-text">功能 2</span></a></li>
+                        <li class="has-sub-sub" data-opt="2"><a class="" href="javascript:;"><span class="sub-menu-text">功能 1</span></a></li>
+                        <li class="has-sub-sub" data-opt="3"><a class=""  href="javascript:;"><span class="sub-menu-text">功能 2</span></a></li>
 
                     </ul>
                 </li>
 
-                <li class="has-sub">
+                <li class="has-sub ">
                     <a href="javascript:;" class="">
-                        <i class="fa fa-file-text fa-fw"></i> <span class="menu-text">RBAC权限</span>
+                        <i class="fa fa-file-text fa-fw"></i> <span class="menu-text">权限管理</span>
                         <span class="arrow"></span>
                     </a>
                     <ul class="sub">
-                        <li><a class="" href="/admin/rbac/list-permission"><span class="sub-menu-text">权限列表</span></a></li>
-                        <li><a class="" href="/admin/rbac/list-role"><span class="sub-menu-text">角色列表</span></a></li>
+                        <li class="has-sub-sub" data-opt="4"><a class="" href="/admin/rbac/list-permission"><span class="sub-menu-text">权限列表</span></a></li>
+                        <li class="has-sub-sub" data-opt="5"><a class="" href="/admin/rbac/list-role"><span class="sub-menu-text">角色列表</span></a></li>
                     </ul>
                 </li>
 
@@ -147,7 +148,7 @@
                         <span class="arrow"></span>
                     </a>
                     <ul class="sub">
-                        <li><a class="" href="/admin/user/list-user"><span class="sub-menu-text">用户列表</span></a></li>
+                        <li class="has-sub-sub" data-opt="6"><a class="has-sub-sub"  href="/admin/user/list-user"><span class="sub-menu-text">用户列表</span></a></li>
                     </ul>
                 </li>
 
@@ -171,18 +172,20 @@
                                 <ul class="breadcrumb">
                                     <li>
                                         <i class="fa fa-home"></i>
-                                        <a href="index.html">Home</a>
+                                        <a href="<?php echo $view->params['map'][Yii::$app->controller->id]['url'] ?>"><?php echo $view->params['map'][Yii::$app->controller->id]['name'] ?></a>
                                     </li>
-                                    <li>
-                                        <a href="#">Layouts</a>
-                                    </li>
-                                    <li>Fixed Header & Sidebar</li>
+                                    <?php
+                                       if($view->params['map'][Yii::$app->controller->id]['children']){
+                                           ?>
+                                           <li>
+                                               <a href="<?php echo $view->params['map'][Yii::$app->controller->id]['children'][Yii::$app->controller->action->id]['url'] ?>"><?php echo $view->params['map'][Yii::$app->controller->id]['children'][Yii::$app->controller->action->id]['name'] ?></a>
+                                           </li>
+                                    <?php
+                                       }
+                                    ?>
                                 </ul>
                                 <!-- /BREADCRUMBS -->
-                                <div class="clearfix">
-                                    <h3 class="content-title pull-left">Fixed Header & Sidebar</h3>
-                                </div>
-                                <div class="description">Fixed Header & Sidebar Layout</div>
+
                             </div>
                         </div>
                     </div>

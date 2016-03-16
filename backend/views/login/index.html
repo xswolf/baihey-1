@@ -8,19 +8,19 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <!-- STYLESHEETS --><!--[if lt IE 9]>
-    <script src="/admin/CloudAdmin/js/flot/excanvas.min.js"></script>
+    <script src="/backend/web/CloudAdmin/js/flot/excanvas.min.js"></script>
     <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <script src="http://css3-mediaqueries-js.googlecode.com/svn/trunk/css3-mediaqueries.js"></script><![endif]-->
-    <link rel="stylesheet" type="text/css" href="/admin/CloudAdmin/css/cloud-admin.css">
+    <link rel="stylesheet" type="text/css" href="/backend/web/CloudAdmin/css/cloud-admin.css">
 
-    <link href="/admin/CloudAdmin/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <link href="/backend/web/CloudAdmin/font-awesome/css/font-awesome.min.css" rel="stylesheet">
     <!-- DATE RANGE PICKER -->
     <link rel="stylesheet" type="text/css"
-          href="/admin/CloudAdmin/js/bootstrap-daterangepicker/daterangepicker-bs3.css"/>
+          href="/backend/web/CloudAdmin/js/bootstrap-daterangepicker/daterangepicker-bs3.css"/>
     <!-- UNIFORM -->
-    <link rel="stylesheet" type="text/css" href="/admin/CloudAdmin/js/uniform/css/uniform.default.min.css"/>
+    <link rel="stylesheet" type="text/css" href="/backend/web/CloudAdmin/js/uniform/css/uniform.default.min.css"/>
     <!-- ANIMATE -->
-    <link rel="stylesheet" type="text/css" href="/admin/CloudAdmin/css/animatecss/animate.min.css"/>
+    <link rel="stylesheet" type="text/css" href="/backend/web/CloudAdmin/css/animatecss/animate.min.css"/>
     <!-- FONTS -->
     <link href='http://fonts.useso.com/css?family=Open+Sans:300,400,600,700' rel='stylesheet' type='text/css'>
 </head>
@@ -34,7 +34,7 @@
             <div class="row">
                 <div class="col-md-4 col-md-offset-4">
                     <div id="logo">
-                        <a href="index.html"><img src="/admin/CloudAdmin/img/logo/logo-alt.png" height="40"
+                        <a href="/admin"><img src="/backend/web/CloudAdmin/img/logo/jrbhy.png" height="30"
                                                   alt="logo name"/></a>
                     </div>
                 </div>
@@ -51,7 +51,7 @@
                     <div class="login-box-plain">
                         <h2 class="bigintro">百合缘后台管理系统</h2>
                         <div class="divide-40"></div>
-                        <form id="login-form" role="form" name="login" method="post" action="/admin/login">
+                        <form id="login-form" role="form" name="login" method="post" action="/backend/web/login">
                             <div class="form-group">
                                 <label for="exampleInputEmail1">用户名</label>
                                 <i class="fa fa-envelope"></i>
@@ -82,18 +82,18 @@
 <!-- JAVASCRIPTS -->
 <!-- Placed at the end of the document so the pages load faster -->
 <!-- JQUERY -->
-<script src="/admin/CloudAdmin/js/jquery/jquery-2.0.3.min.js"></script>
+<script src="/backend/web/CloudAdmin/js/jquery/jquery-2.0.3.min.js"></script>
 <!-- JQUERY UI-->
-<script src="/admin/CloudAdmin/js/jquery-ui-1.10.3.custom/js/jquery-ui-1.10.3.custom.min.js"></script>
+<script src="/backend/web/CloudAdmin/js/jquery-ui-1.10.3.custom/js/jquery-ui-1.10.3.custom.min.js"></script>
 <!-- BOOTSTRAP -->
-<script src="/admin/CloudAdmin/bootstrap/js/bootstrap.min.js"></script>
+<script src="/backend/web/CloudAdmin/bootstrap/js/bootstrap.min.js"></script>
 <!-- layer -->
-<script src="/admin/CloudAdmin/layer/layer.js"></script>
+<script src="/backend/web/CloudAdmin/layer/layer.js"></script>
 
 <!-- UNIFORM -->
-<script type="text/javascript" src="/admin/CloudAdmin/js/uniform/jquery.uniform.min.js"></script>
+<script type="text/javascript" src="/backend/web/CloudAdmin/js/uniform/jquery.uniform.min.js"></script>
 <!-- CUSTOM SCRIPT -->
-<script src="/admin/CloudAdmin/js/script.js"></script>
+<script src="/backend/web/CloudAdmin/js/script.js"></script>
 <script>
     jQuery(document).ready(function () {
         App.setPage("login");  //Set current page
@@ -136,7 +136,7 @@
                     layer.msg(data.msg, {
                         icon: 1, time: 1000
                     },function() {
-                        location.href="/admin/site";
+                        location.href="/admin/site/index";
                     });
 
                 } else {

@@ -63,11 +63,12 @@ var App = function () {
 	/*-----------------------------------------------------------------------------------*/
 	var handleSidebar = function () {
 	jQuery('.sidebar-menu .has-sub > a').click(function () {
+            jQuery.cookie('clickOpt',null,{ path: "/"});
+            jQuery.cookie('clickOpt',jQuery(this).parent().data('opt'),{ path: "/"});
             var last = jQuery('.has-sub.open', $('.sidebar-menu'));
             last.removeClass("open");
             jQuery('.arrow', last).removeClass("open");
             jQuery('.sub', last).slideUp(200);
-            
 			var thisElement = $(this);
 			var slideOffeset = -200;
             var slideSpeed = 200;
@@ -96,11 +97,12 @@ var App = function () {
 		
 	// Handle sub-sub menus
 	jQuery('.sidebar-menu .has-sub .sub .has-sub-sub > a').click(function () {
+            jQuery.cookie('clickOpt',null,{ path: "/"});
+            jQuery.cookie('clickOpt',jQuery(this).parent().data('opt'),{ path: "/"});
             var last = jQuery('.has-sub-sub.open', $('.sidebar-menu'));
             last.removeClass("open");
             jQuery('.arrow', last).removeClass("open");
             jQuery('.sub', last).slideUp(200);
-                
             var sub = jQuery(this).next();
             if (sub.is(":visible")) {
                 jQuery('.arrow', jQuery(this)).removeClass("open");
@@ -112,6 +114,15 @@ var App = function () {
                 sub.slideDown(200);
             }
         });
+
+       jQuery('.sidebar-menu .has-sub-sub').each(function(){
+             if(jQuery(this).data('opt') == jQuery.cookie('clickOpt')){
+                 jQuery(this).addClass('open').parent().show().parent().addClass('open');
+             }
+       });
+        if(jQuery.cookie('clickOpt') == 1){
+            jQuery('li[data-opt="1"]').addClass('open');
+        }
 	}
 	
 	/*-----------------------------------------------------------------------------------*/

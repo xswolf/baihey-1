@@ -6439,7 +6439,7 @@ fieldset[disabled] .btn-yellow.active {
   border-bottom-color: #cdd2d2;
   color: #000000;
   margin: 0 -15px 30px;
-  min-height: 85px;
+  /*min-height: 85px;*/
   overflow: hidden;
   padding: 0 20px;
   position: relative;

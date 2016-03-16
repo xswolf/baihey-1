@@ -19,6 +19,8 @@ class User extends Model
 
     public $userTable = '{{%auth_user}}';
 
+    protected $user = null;
+
     public function init()
     {
         parent::init();
@@ -30,6 +32,14 @@ class User extends Model
         return [
                 [['file'], 'file']
             ];
+    }
+
+    public function getUser(){
+        return $this->user;
+    }
+
+    public function setUser($data){
+        return $this->user = $data;
     }
 
     /**
