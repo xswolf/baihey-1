@@ -15,26 +15,36 @@ require.config({
 
 requirejs(['jquery', './chat', 'comm','jweixin'], function ($, chat, comm,wx) {
 
+    console.log(wx);
 
     var config = $("#config").val();
     wx.config(config);
-
+    console.log(1);
     wx.ready(function(){
-
+        console.log(5);
+        wx.startRecord();
+        console.log(6)
     });
+    console.log(2);
 
     wx.error(function(res){
-
+        console.log('error');
     });
+    console.log(3);
 
     wx.checkJsApi({
         jsApiList: ['startRecord'], // 需要检测的JS接口列表，所有JS接口列表见附录2,
         success: function(res) {
-            alert(res)
+            console.log('startRecord')
+        },
+        fail: function () {
+            console.log('error startRecord');
         }
     });
+    console.log(4);
 
-    wx.startRecord();
+
+    return false;
 
     chat.init($("#self_name").val()); // 初始化聊天
 
