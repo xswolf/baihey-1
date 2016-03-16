@@ -21,7 +21,7 @@ requirejs(['jquery', './chat', 'comm','jweixin'], function ($, chat, comm,wx) {
     wx.config(config);
     console.log(1);
     wx.ready(function(){
-
+        console.log('ready')
     });
 
     wx.chooseImage({
