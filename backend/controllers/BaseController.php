@@ -43,7 +43,7 @@ class BaseController extends Controller
      */
     public function isCan() {
         $auth = \Yii::$app->authManager;
-        $action = explode('?',$_SERVER['REQUEST_URI']);
+        $action = explode('?',\Yii::$app->request->getUrl());
         //$reAction = explode('.com',$_SERVER['HTTP_REFERER']);
         $user = \Yii::$app->session->get(USER_SESSION);
         $uid = $user['id'];
