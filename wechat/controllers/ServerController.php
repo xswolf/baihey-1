@@ -54,7 +54,7 @@ class ServerController extends BaseController {
 							</xml>";
 
             $msgType    = "text";
-            $content = "<a href='http://wechat.baihey.com/wap/chat/list'>well come to jia rui</a>";
+            $content = "<a href='http://wechat.baihey.com/wap/chat/chat?name=1&sendName=12'>well come to jia rui</a>";
             $resultStr  = sprintf( $textTpl , $fromUsername , $toUsername , $time , $msgType , $content );
 
             if(\Yii::$app->wechat->getMemberInfo($postObj->FromUserName)){
