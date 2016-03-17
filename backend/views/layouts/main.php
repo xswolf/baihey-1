@@ -11,8 +11,8 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <!-- STYLESHEETS --><!--[if lt IE 9]><script src="/backend/web/CloudAdmin/js/flot/excanvas.min.js"></script><script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><script src="http://css3-mediaqueries-js.googlecode.com/svn/trunk/css3-mediaqueries.js"></script><![endif]-->
-    <link rel="stylesheet" type="text/css" href="/backend/web/CloudAdmin/css/cloud-admin.css" >
     <link rel="stylesheet" type="text/css"  href="/backend/web/CloudAdmin/css/themes/default.css" id="skin-switcher" >
+    <link rel="stylesheet" type="text/css" href="/backend/web/CloudAdmin/css/cloud-admin.css" >
     <link rel="stylesheet" type="text/css"  href="/backend/web/CloudAdmin/css/responsive.css" >
 
     <link href="/backend/web/CloudAdmin/font-awesome/css/font-awesome.min.css" rel="stylesheet">
@@ -24,7 +24,7 @@
     <link rel="stylesheet" type="text/css" href="/backend/web/CloudAdmin/js/datatables/media/css/jquery.dataTables.min.css" />
     <link rel="stylesheet" type="text/css" href="/backend/web/CloudAdmin/js/datatables/media/assets/css/datatables.min.css" />
     <link rel="stylesheet" type="text/css" href="/backend/web/CloudAdmin/js/datatables/extras/TableTools/media/css/TableTools.min.css" />
-    <link rel="stylesheet" type="text/css" href="/backend/web/CloudAdmin/bootstrap/css/bootstrap.min.css" />
+<!--    <link rel="stylesheet" type="text/css" href="/backend/web/CloudAdmin/bootstrap/css/bootstrap.min.css" />-->
     <link rel="stylesheet" type="text/css" href="/backend/web/CloudAdmin/js/file_input/fileinput.min.css" />
 
 </head>
@@ -58,7 +58,7 @@
 
             <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                    <i class="fa fa-cog"></i>
+                    <i class="fa fa-lock"></i>
                     <span class="name">主题设置</span>
                     <i class="fa fa-angle-down"></i>
                 </a>
@@ -79,16 +79,133 @@
         <!-- BEGIN TOP NAVIGATION MENU -->
         <ul class="nav navbar-nav pull-right">
             <!-- BEGIN USER LOGIN DROPDOWN -->
+            <li class="dropdown" id="header-notification">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                    <i class="fa fa-bell"></i>
+                    <span class="badge">2</span>
+                </a>
+                <ul class="dropdown-menu notification">
+                    <li class="dropdown-title">
+                        <span><i class="fa fa-bell"></i> 2 个待办事项</span>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <span class="label label-success"><i class="fa fa-user"></i></span>
+									<span class="body">
+										<span class="message">5 条会员资料审核请求 </span>
+										<span class="time">
+											<i class="fa fa-clock-o"></i>
+											<span>刚刚</span>
+										</span>
+									</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <span class="label label-primary"><i class="fa fa-picture-o"></i></span>
+									<span class="body">
+										<span class="message">有新的会员照片上传</span>
+										<span class="time">
+											<i class="fa fa-clock-o"></i>
+											<span>19 分钟前</span>
+										</span>
+									</span>
+                        </a>
+                    </li>
+                    <li class="footer">
+                        <a href="#">现在去处理 <i class="fa fa-arrow-circle-right"></i></a>
+                    </li>
+                </ul>
+            </li>
+            <li class="dropdown" id="header-message">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                    <i class="fa fa-envelope"></i>
+                    <span class="badge">3</span>
+                </a>
+                <ul class="dropdown-menu inbox">
+                    <li class="dropdown-title">
+                        <span><i class="fa fa-envelope-o"></i> 3 条站内信</span>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <img src="img/avatars/avatar2.jpg" alt="" />
+									<span class="body">
+										<span class="from">江北 张三红娘</span>
+										<span class="message">
+										这个星期轮到我值班，请管理员调整...
+										</span>
+										<span class="time">
+											<i class="fa fa-clock-o"></i>
+											<span>刚刚</span>
+										</span>
+									</span>
+
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <img src="img/avatars/avatar1.jpg" alt="" />
+									<span class="body">
+										<span class="from">渝中 李四红娘</span>
+										<span class="message">
+										刚刚上传了一个会员资料（王武），请尽快审核。
+										</span>
+										<span class="time">
+											<i class="fa fa-clock-o"></i>
+											<span>15 分钟前</span>
+										</span>
+									</span>
+
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <img src="img/avatars/avatar8.jpg" alt="" />
+									<span class="body">
+										<span class="from">北碚 陈香红娘</span>
+										<span class="message">
+										刚刚上传了一个会员资料（李倩），麻烦尽快审核。
+										</span>
+										<span class="time">
+											<i class="fa fa-clock-o"></i>
+											<span>2 小时前</span>
+										</span>
+									</span>
+
+                        </a>
+                    </li>
+                    <li class="footer">
+                        <a href="#">现在去查看 <i class="fa fa-arrow-circle-right"></i></a>
+                    </li>
+                </ul>
+            </li>
             <li class="dropdown user" id="header-user">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                    <img alt="" src="/backend/web/CloudAdmin/img/avatars/avatar3.jpg" />
-                    <span class="username"></span>
+                    <img alt="" src="/backend/web/CloudAdmin/img/avatars/avatar9.jpg" />
+                    <span class="username"><?php echo $view->params['user']['name'] ?></span>
                     <i class="fa fa-angle-down"></i>
                 </a>
                 <ul class="dropdown-menu">
-                    <li><a href="#"><i class="fa fa-cog"></i> 账户设置</a></li>
-                    <li><a href="/admin/login/logout"><i class="fa fa-power-off"></i> 退出</a></li>
+                    <li>
+                        <a href="#">
+                            <i class="fa fa-user"></i>
+                           个人账户
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <i class="fa fa-lock"></i>
+                            修改密码
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/admin/login/logout">
+                            <i class="fa fa-power-off"></i>
+                            退出
+                        </a>
+                    </li>
                 </ul>
+
             </li>
             <!-- END USER LOGIN DROPDOWN -->
         </ul>
@@ -103,7 +220,7 @@
     <!-- SIDEBAR -->
     <div id="sidebar" class="sidebar sidebar-fixed">
         <div class="sidebar-menu nav-collapse">
-            <div class="divide-20"></div>
+<!--            <div class="divide-20"></div>-->
             <!-- SEARCH BAR -->
 <!--            <div id="search-bar">-->
 <!--                <input class="search" type="text" placeholder="Search"><i class="fa fa-search search-icon"></i>-->
