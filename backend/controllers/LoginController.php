@@ -17,7 +17,6 @@ class LoginController  extends Controller{
 
     public function actionIndex(){
         $this->layout = false;
-
         if(\Yii::$app->request->isAjax) {
             $user = new User();
             $data = \Yii::$app->request->post();
