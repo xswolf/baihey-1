@@ -15,7 +15,11 @@ class ChatController extends BaseController{
     public function actionIndex(){
         \Yii::$app->wechat->test();
 
-        return $this->render();
+        $redis = \Yii::$app->redis;
+
+        echo $redis->get('name');
+        $redis->set('k','v');
+//        return $this->render();
     }
 
     public function actionChat(){
