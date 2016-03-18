@@ -118,7 +118,7 @@
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/yiisoft/yii2-framework/zipball/ffb3f5d7c1cab5f182f566fbfc820390ac291d60",
+            "url": "https://api.github.com/repos/yiisoft/yii2-framework/zipball/7d87dc78efb5fbbec3d94bce015e638b39ce5b4f",
             "reference": "ffb3f5d7c1cab5f182f566fbfc820390ac291d60",
             "shasum": ""
         },
@@ -269,7 +269,7 @@
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/yiisoft/yii2-swiftmailer/zipball/2cca1bb86444a6438b0720f8c60120a400982366",
+            "url": "https://api.github.com/repos/yiisoft/yii2-swiftmailer/zipball/26b30d94b44dc290d5ad1ecbec946e09fc275306",
             "reference": "2cca1bb86444a6438b0720f8c60120a400982366",
             "shasum": ""
         },
@@ -321,7 +321,7 @@
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/yiisoft/yii2-codeception/zipball/ee239c244fd011f11c8827f97ebe7600d03f1841",
+            "url": "https://api.github.com/repos/yiisoft/yii2-codeception/zipball/865034d374852b22c3dceaa0f64f8709ab4b43b0",
             "reference": "ee239c244fd011f11c8827f97ebe7600d03f1841",
             "shasum": ""
         },
@@ -368,7 +368,7 @@
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/yiisoft/yii2-bootstrap/zipball/ef941bc83ea63326e44769b922476dc1035ea551",
+            "url": "https://api.github.com/repos/yiisoft/yii2-bootstrap/zipball/361bd63975beefdb1f87a36f96957de67023f865",
             "reference": "ef941bc83ea63326e44769b922476dc1035ea551",
             "shasum": ""
         },
@@ -456,7 +456,7 @@
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/fzaninotto/Faker/zipball/416a132083aa6f19a6ac42ae0b31fdb26159e72f",
+            "url": "https://api.github.com/repos/fzaninotto/Faker/zipball/588da2fff1b9da3acb9b6e1d7395e820102bde01",
             "reference": "416a132083aa6f19a6ac42ae0b31fdb26159e72f",
             "shasum": ""
         },
@@ -820,7 +820,7 @@
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/mdmsoft/yii2-admin/zipball/99f828c8cc70602a5c9a7abc67591fdd6dfda889",
+            "url": "https://api.github.com/repos/mdmsoft/yii2-admin/zipball/c06498ccca24707223170fc5212c64238db7c179",
             "reference": "99f828c8cc70602a5c9a7abc67591fdd6dfda889",
             "shasum": ""
         },
@@ -873,7 +873,7 @@
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/yiisoft/yii2-smarty/zipball/aa8731d120439a729043abc92efed4c1c9ea1aa0",
+            "url": "https://api.github.com/repos/yiisoft/yii2-smarty/zipball/974003d1d299b71d56857019ebc57ceccd63b337",
             "reference": "aa8731d120439a729043abc92efed4c1c9ea1aa0",
             "shasum": ""
         },
@@ -999,7 +999,7 @@
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/yiisoft/yii2-debug/zipball/e196aa3fe1717ceb8b0027b6a12d7de340a2b7d0",
+            "url": "https://api.github.com/repos/yiisoft/yii2-debug/zipball/78d03b5b4dd74744779ddb7843463e81e996b435",
             "reference": "e196aa3fe1717ceb8b0027b6a12d7de340a2b7d0",
             "shasum": ""
         },
@@ -1048,7 +1048,7 @@
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/yiisoft/yii2-gii/zipball/ce42838abcbef076ebaf46147671d518ae69d028",
+            "url": "https://api.github.com/repos/yiisoft/yii2-gii/zipball/fed0f3b43b9dab333978e8394ee05cfd84d438b2",
             "reference": "ce42838abcbef076ebaf46147671d518ae69d028",
             "shasum": ""
         },
@@ -1103,7 +1103,7 @@
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/smarty-php/smarty/zipball/4f5aeeb2b6255dd01776b70e3d04bbf5e9dd5f89",
+            "url": "https://api.github.com/repos/smarty-php/smarty/zipball/ff6a8521bb588187eefa2695c3959fe101d22c18",
             "reference": "4f5aeeb2b6255dd01776b70e3d04bbf5e9dd5f89",
             "shasum": ""
         },
@@ -1147,6 +1147,56 @@
         "homepage": "http://www.smarty.net",
         "keywords": [
             "templating"
+        ]
+    },
+    {
+        "name": "yiisoft/yii2-redis",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/yiisoft/yii2-redis.git",
+            "reference": "0512be29cd214a9345bc0bc7883649138f5d5d25"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/yiisoft/yii2-redis/zipball/0512be29cd214a9345bc0bc7883649138f5d5d25",
+            "reference": "0512be29cd214a9345bc0bc7883649138f5d5d25",
+            "shasum": ""
+        },
+        "require": {
+            "yiisoft/yii2": ">=2.0.4"
+        },
+        "time": "2016-03-17 04:11:13",
+        "type": "yii2-extension",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "2.0.x-dev"
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "yii\\redis\\": ""
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "BSD-3-Clause"
+        ],
+        "authors": [
+            {
+                "name": "Carsten Brandt",
+                "email": "mail@cebe.cc"
+            }
+        ],
+        "description": "Redis Cache, Session and ActiveRecord for the Yii framework",
+        "keywords": [
+            "active-record",
+            "cache",
+            "redis",
+            "session",
+            "yii2"
         ]
     }
 ]
