@@ -15,18 +15,51 @@
     <link rel="stylesheet" type="text/css" href="/backend/web/CloudAdmin/css/cloud-admin.css" >
     <link rel="stylesheet" type="text/css"  href="/backend/web/CloudAdmin/css/responsive.css" >
 
+    <!-- css3动画 -->
+    <link rel="stylesheet" type="text/css"  href="/backend/web/css/animate.css" >
+
+
     <link href="/backend/web/CloudAdmin/font-awesome/css/font-awesome.min.css" rel="stylesheet">
     <!-- DATE RANGE PICKER -->
     <link rel="stylesheet" type="text/css" href="/backend/web/CloudAdmin/js/bootstrap-daterangepicker/daterangepicker-bs3.css" />
     <!-- FONTS -->
     <link href='http://fonts.useso.com/css?family=Open+Sans:300,400,600,700' rel='stylesheet' type='text/css'>
 
-    <link rel="stylesheet" type="text/css" href="/backend/web/CloudAdmin/js/datatables/media/css/jquery.dataTables.min.css" />
-    <link rel="stylesheet" type="text/css" href="/backend/web/CloudAdmin/js/datatables/media/assets/css/datatables.min.css" />
-    <link rel="stylesheet" type="text/css" href="/backend/web/CloudAdmin/js/datatables/extras/TableTools/media/css/TableTools.min.css" />
-<!--    <link rel="stylesheet" type="text/css" href="/backend/web/CloudAdmin/bootstrap/css/bootstrap.min.css" />-->
+    <!-- DataTables -->
+    <link rel="stylesheet" type="text/css"  href="/backend/web/css/site.css" >
+    <link rel="stylesheet" type="text/css" href="/backend/web/css/jquery.dataTables.css" />
     <link rel="stylesheet" type="text/css" href="/backend/web/CloudAdmin/js/file_input/fileinput.min.css" />
+    <!-- JAVASCRIPTS -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <!-- JQUERY -->
+    <script src="/backend/web/CloudAdmin/js/jquery/jquery-2.0.3.min.js"></script>
+    <!-- JQUERY VALIDATE -->
+    <script src="/backend/web/CloudAdmin/js/jquery-validate/jquery.validate.min.js"></script>
+    <!-- JQUERY UI-->
+    <script src="/backend/web/CloudAdmin/js/jquery-ui-1.10.3.custom/js/jquery-ui-1.10.3.custom.min.js"></script>
+    <script src="/backend/web/CloudAdmin/js/jQuery-BlockUI/jquery.blockUI.min.js"></script>
+    <!-- BOOTSTRAP -->
+    <script src="/backend/web/CloudAdmin/bootstrap/js/bootstrap.min.js"></script>
 
+
+    <!-- DATA TABLES -->
+    <script src="/backend/web/CloudAdmin/js/datatables/media/js/jquery.dataTables.min.js"></script>
+    <script src="/backend/web/js/dataTables.bootstrap.js"></script>
+
+    <!-- DATE RANGE PICKER -->
+    <script src="/backend/web/CloudAdmin/js/bootstrap-daterangepicker/moment.min.js"></script>
+
+    <script src="/backend/web/CloudAdmin/js/bootstrap-daterangepicker/daterangepicker.min.js"></script>
+    <!-- SLIMSCROLL -->
+    <script type="text/javascript" src="/backend/web/CloudAdmin/js/jQuery-slimScroll-1.3.0/jquery.slimscroll.min.js"></script><script type="text/javascript" src="/backend/web/CloudAdmin/js/jQuery-slimScroll-1.3.0/slimScrollHorizontal.min.js"></script>
+    <!-- COOKIE -->
+    <script type="text/javascript" src="/backend/web/CloudAdmin/js/jQuery-Cookie/jquery.cookie.min.js"></script>
+    <script type="text/javascript" src="/backend/web/CloudAdmin/js/file_input/fileinput.min.js"></script>
+    <script type="text/javascript" src="/backend/web/CloudAdmin/js/bootstrap-alert/alert.js"></script>
+    <!-- CUSTOM SCRIPT -->
+    <!--<script src="/backend/web/js/dataTableQuery.js"></script>-->
+    <script src="/backend/web/js/app.js"></script>
+    <script src="/backend/web/CloudAdmin/js/script.js"></script>
 </head>
 <body>
 <!-- HEADER -->
@@ -128,7 +161,7 @@
                     </li>
                     <li>
                         <a href="#">
-                            <img src="img/avatars/avatar2.jpg" alt="" />
+                            <img src="/backend/web/CloudAdmin/img/avatars/avatar2.jpg" alt="" />
 									<span class="body">
 										<span class="from">江北 张三红娘</span>
 										<span class="message">
@@ -144,7 +177,7 @@
                     </li>
                     <li>
                         <a href="#">
-                            <img src="img/avatars/avatar1.jpg" alt="" />
+                            <img src="/backend/web/CloudAdmin/img/avatars/avatar1.jpg" alt="" />
 									<span class="body">
 										<span class="from">渝中 李四红娘</span>
 										<span class="message">
@@ -160,7 +193,7 @@
                     </li>
                     <li>
                         <a href="#">
-                            <img src="img/avatars/avatar8.jpg" alt="" />
+                            <img src="/backend/web/CloudAdmin/img/avatars/avatar8.jpg" alt="" />
 									<span class="body">
 										<span class="from">北碚 陈香红娘</span>
 										<span class="message">
@@ -347,47 +380,15 @@
 </div>
 <!-- system modal end -->
 <!--/PAGE -->
-<!-- JAVASCRIPTS -->
-<!-- Placed at the end of the document so the pages load faster -->
-<!-- JQUERY -->
-<script src="/backend/web/CloudAdmin/js/jquery/jquery-2.0.3.min.js"></script>
-<!-- JQUERY VALIDATE -->
-<script src="/backend/web/CloudAdmin/js/jquery-validate/jquery.validate.min.js"></script>
-<!-- JQUERY UI-->
-<script src="/backend/web/CloudAdmin/js/jquery-ui-1.10.3.custom/js/jquery-ui-1.10.3.custom.min.js"></script>
-<!-- BOOTSTRAP -->
-<script src="/backend/web/CloudAdmin/bootstrap/js/bootstrap.min.js"></script>
 
-
-<!-- DATA TABLES -->
-<script type="text/javascript" src="/backend/web/CloudAdmin/js/datatables/media/js/jquery.dataTables.min.js"></script>
-<script type="text/javascript" src="/backend/web/CloudAdmin/js/datatables/media/assets/js/datatables.min.js"></script>
-<script type="text/javascript" src="/backend/web/CloudAdmin/js/datatables/extras/TableTools/media/js/TableTools.min.js"></script>
-<script type="text/javascript" src="/backend/web/CloudAdmin/js/datatables/extras/TableTools/media/js/ZeroClipboard.min.js"></script>
-
-<!-- DATE RANGE PICKER -->
-<script src="/backend/web/CloudAdmin/js/bootstrap-daterangepicker/moment.min.js"></script>
-
-<script src="/backend/web/CloudAdmin/js/bootstrap-daterangepicker/daterangepicker.min.js"></script>
-<!-- SLIMSCROLL -->
-<script type="text/javascript" src="/backend/web/CloudAdmin/js/jQuery-slimScroll-1.3.0/jquery.slimscroll.min.js"></script><script type="text/javascript" src="/backend/web/CloudAdmin/js/jQuery-slimScroll-1.3.0/slimScrollHorizontal.min.js"></script>
-<!-- COOKIE -->
-<script type="text/javascript" src="/backend/web/CloudAdmin/js/jQuery-Cookie/jquery.cookie.min.js"></script>
-<script type="text/javascript" src="/backend/web/CloudAdmin/js/file_input/fileinput.min.js"></script>
-<script type="text/javascript" src="/backend/web/CloudAdmin/js/bootstrap-alert/alert.js"></script>
-<!-- CUSTOM SCRIPT -->
-<script src="/backend/web/js/dataTableQuery.js"></script>
-<script src="/backend/web/js/app.js"></script>
-<script src="/backend/web/CloudAdmin/js/script.js"></script>
 <script>
 
     jQuery(document).ready(function() {
-        App.setPage("fixed_header_sidebar");  //Set current page
+//        App.setPage("fixed_header_sidebar");  //Set current page
+//        App.setPage("dynamic_table");  //Set current page
         App.init(); //Initialise plugins and elements
 
     });
-
-
 
 </script>
 <!-- /JAVASCRIPTS -->

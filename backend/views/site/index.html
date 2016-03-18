@@ -1,470 +1,185 @@
-<!--过滤表单-->
-<div class="box border green">
-    <div class="box-body small">
-        <div class="row">
-            <div class="col-xs-2">
-                <input type="text" class="form-control j-dt-filter" data-col="name:name" placeholder="Rendering engine">
-            </div>
-            <div class="col-xs-3">
-                <input type="text" class="form-control j-dt-filter" data-col="level:name" placeholder="Browser">
+<div class="wrapper wrapper-content animated fadeInUp">
+    <div class="ibox">
+        <div class="ibox-title"><h5>描述</h5>
+            <div class="ibox-tools rboor">
+                <a href="projects.html" class="btn btn-green btn-xs p310"><i class="fa fa-plus"></i> 添加</a>
+                <a href="projects.html" class="btn btn-green btn-xs p310"><i class="fa fa-edit"></i> 编辑</a>
+                <a href="projects.html" class="btn btn-green btn-xs p310"><i class="fa fa-trash-o"></i> 删除</a>
+                <a href="projects.html" class="btn btn-green btn-xs p310"><i class="fa fa-check-square-o"></i> 批量审核</a>
+                <button id="tb-refresh" href="projects.html" class="btn btn-green btn-xs p310"><i class="fa fa-refresh"></i> 刷新</button>
             </div>
         </div>
-    </div>
-</div>
-<!--表格-->
-<div class="row">
-    <div class="col-md-12">
-        <!-- BOX -->
-        <div class="box border primary">
-            <div class="box-title">
-                <h4><i class="fa fa-table"></i>表格</h4>
-                <div class="tools hidden-xs">
-                    <a href="#box-config" data-toggle="modal" class="config">
-                        <i class="fa fa-cog"></i>
-                    </a>
-                    <a href="javascript:;" class="reload">
-                        <i class="fa fa-refresh"></i>
-                    </a>
-                    <a href="javascript:;" class="collapse">
-                        <i class="fa fa-chevron-up"></i>
-                    </a>
-                    <a href="javascript:;" class="remove">
-                        <i class="fa fa-times"></i>
-                    </a>
+
+        <div class="ibox-content">
+            <!-- search star -->
+            <div class="form-horizontal clearfix">
+                <div class="col-lg-4 col-sm-3 pl0">
+                    <div class="form-group">
+                        <div class="col-lg-8 col-sm-7">
+                            <select class="input-sm form-control input-s-sm inline">
+                                <option value="0">请选择</option>
+                                <option value="1">冻结</option>
+                                <option value="2">开放</option>
+                                <option value="3">审核</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-sm-5">
+                    <div class="form-group">
+                        <label class="col-lg-3  col-sm-3 control-label">日期：</label>
+                        <div class="col-lg-8 col-sm-8 input-group date">
+                            <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                            <input type="email" placeholder="2014-11-17" class="input-sm form-control">
+                            <span class="input-group-addon">到</span>
+                            <input type="text" class="input-sm form-control" name="end" value="" placeholder="2014-11-17">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-sm-4">
+                    <div class="form-group">
+                        <div class="col-lg-12 col-sm-12 input-group">
+                            <input type="email" placeholder="请输入关键字" class="input-sm form-control">
+                                     <span class="input-group-btn">
+                                    <button type="button" class="btn btn-sm btn-green"> 搜索</button> </span>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="box-body">
-                <table cellpadding="0" cellspacing="0" border="0" class="j-datatables table table-striped table-bordered table-hover">
-                    <thead>
-                    <tr>
-                        <th data-name="name">Rendering engine</th>
-                        <th data-name="level">Browser</th>
-                        <th class="hidden-xs">Platform(s)</th>
-                        <th>Engine version</th>
-                        <th class="hidden-xs">操作</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr class="gradeX">
-                        <td>Trident</td>
-                        <td>
-                            Internet
-                            Explorer
-                            4.0
-                        </td>
-                        <td class="hidden-xs">Win 95+</td>
-                        <td class="center">4</td>
-                        <td class="center hidden-xs"><a href="/admin/site/form"> 编辑 </a></td>
-                    </tr>
-                    <tr class="gradeC">
-                        <td>Trident</td>
-                        <td>Internet
-                            Explorer 5.0</td>
-                        <td class="hidden-xs">Win 95+</td>
-                        <td class="center">5</td>
-                        <td class="center hidden-xs">C</td>
-                    </tr>
-                    <tr class="gradeA">
-                        <td>Trident</td>
-                        <td>Internet
-                            Explorer 5.5</td>
-                        <td class="hidden-xs">Win 95+</td>
-                        <td class="center">5.5</td>
-                        <td class="center hidden-xs">A</td>
-                    </tr>
-                    <tr class="gradeA">
-                        <td>Trident</td>
-                        <td>Internet
-                            Explorer 6</td>
-                        <td class="hidden-xs">Win 98+</td>
-                        <td class="center">6</td>
-                        <td class="center hidden-xs">A</td>
-                    </tr>
-                    <tr class="gradeA">
-                        <td>Trident</td>
-                        <td>Internet Explorer 7</td>
-                        <td class="hidden-xs">Win XP SP2+</td>
-                        <td class="center">7</td>
-                        <td class="center hidden-xs">A</td>
-                    </tr>
-                    <tr class="gradeA">
-                        <td>Trident</td>
-                        <td>AOL browser (AOL desktop)</td>
-                        <td class="hidden-xs">Win XP</td>
-                        <td class="center">6</td>
-                        <td class="center hidden-xs">A</td>
-                    </tr>
-                    <tr class="gradeA">
-                        <td>Gecko</td>
-                        <td>Firefox 1.0</td>
-                        <td class="hidden-xs">Win 98+ / OSX.2+</td>
-                        <td class="center">1.7</td>
-                        <td class="center hidden-xs">A</td>
-                    </tr>
-                    <tr class="gradeA">
-                        <td>Gecko</td>
-                        <td>Firefox 1.5</td>
-                        <td class="hidden-xs">Win 98+ / OSX.2+</td>
-                        <td class="center">1.8</td>
-                        <td class="center hidden-xs">A</td>
-                    </tr>
-                    <tr class="gradeA">
-                        <td>Gecko</td>
-                        <td>Firefox 2.0</td>
-                        <td class="hidden-xs">Win 98+ / OSX.2+</td>
-                        <td class="center">1.8</td>
-                        <td class="center hidden-xs">A</td>
-                    </tr>
-                    <tr class="gradeA">
-                        <td>Gecko</td>
-                        <td>Firefox 3.0</td>
-                        <td class="hidden-xs">Win 2k+ / OSX.3+</td>
-                        <td class="center">1.9</td>
-                        <td class="center hidden-xs">A</td>
-                    </tr>
-                    <tr class="gradeA">
-                        <td>Gecko</td>
-                        <td>Camino 1.0</td>
-                        <td class="hidden-xs">OSX.2+</td>
-                        <td class="center">1.8</td>
-                        <td class="center hidden-xs">A</td>
-                    </tr>
-                    <tr class="gradeA">
-                        <td>Gecko</td>
-                        <td>Camino 1.5</td>
-                        <td class="hidden-xs">OSX.3+</td>
-                        <td class="center">1.8</td>
-                        <td class="center hidden-xs">A</td>
-                    </tr>
-                    <tr class="gradeA">
-                        <td>Gecko</td>
-                        <td>Netscape 7.2</td>
-                        <td class="hidden-xs">Win 95+ / Mac OS 8.6-9.2</td>
-                        <td class="center">1.7</td>
-                        <td class="center hidden-xs">A</td>
-                    </tr>
-                    <tr class="gradeA">
-                        <td>Gecko</td>
-                        <td>Netscape Browser 8</td>
-                        <td class="hidden-xs">Win 98SE+</td>
-                        <td class="center">1.7</td>
-                        <td class="center hidden-xs">A</td>
-                    </tr>
-                    <tr class="gradeA">
-                        <td>Gecko</td>
-                        <td>Netscape Navigator 9</td>
-                        <td class="hidden-xs">Win 98+ / OSX.2+</td>
-                        <td class="center">1.8</td>
-                        <td class="center hidden-xs">A</td>
-                    </tr>
-                    <tr class="gradeA">
-                        <td>Gecko</td>
-                        <td>Mozilla 1.0</td>
-                        <td class="hidden-xs">Win 95+ / OSX.1+</td>
-                        <td class="center">1</td>
-                        <td class="center hidden-xs">A</td>
-                    </tr>
-                    <tr class="gradeA">
-                        <td>Gecko</td>
-                        <td>Mozilla 1.1</td>
-                        <td class="hidden-xs">Win 95+ / OSX.1+</td>
-                        <td class="center">1.1</td>
-                        <td class="center hidden-xs">A</td>
-                    </tr>
-                    <tr class="gradeA">
-                        <td>Gecko</td>
-                        <td>Mozilla 1.2</td>
-                        <td class="hidden-xs">Win 95+ / OSX.1+</td>
-                        <td class="center">1.2</td>
-                        <td class="center hidden-xs">A</td>
-                    </tr>
-                    <tr class="gradeA">
-                        <td>Gecko</td>
-                        <td>Mozilla 1.3</td>
-                        <td class="hidden-xs">Win 95+ / OSX.1+</td>
-                        <td class="center">1.3</td>
-                        <td class="center hidden-xs">A</td>
-                    </tr>
-                    <tr class="gradeA">
-                        <td>Gecko</td>
-                        <td>Mozilla 1.4</td>
-                        <td class="hidden-xs">Win 95+ / OSX.1+</td>
-                        <td class="center">1.4</td>
-                        <td class="center hidden-xs">A</td>
-                    </tr>
-                    <tr class="gradeA">
-                        <td>Gecko</td>
-                        <td>Mozilla 1.5</td>
-                        <td class="hidden-xs">Win 95+ / OSX.1+</td>
-                        <td class="center">1.5</td>
-                        <td class="center hidden-xs">A</td>
-                    </tr>
-                    <tr class="gradeA">
-                        <td>Gecko</td>
-                        <td>Mozilla 1.6</td>
-                        <td class="hidden-xs">Win 95+ / OSX.1+</td>
-                        <td class="center">1.6</td>
-                        <td class="center hidden-xs">A</td>
-                    </tr>
-                    <tr class="gradeA">
-                        <td>Gecko</td>
-                        <td>Mozilla 1.7</td>
-                        <td class="hidden-xs">Win 98+ / OSX.1+</td>
-                        <td class="center">1.7</td>
-                        <td class="center hidden-xs">A</td>
-                    </tr>
-                    <tr class="gradeA">
-                        <td>Gecko</td>
-                        <td>Mozilla 1.8</td>
-                        <td class="hidden-xs">Win 98+ / OSX.1+</td>
-                        <td class="center">1.8</td>
-                        <td class="center hidden-xs">A</td>
-                    </tr>
-                    <tr class="gradeA">
-                        <td>Gecko</td>
-                        <td>Seamonkey 1.1</td>
-                        <td class="hidden-xs">Win 98+ / OSX.2+</td>
-                        <td class="center">1.8</td>
-                        <td class="center hidden-xs">A</td>
-                    </tr>
-                    <tr class="gradeA">
-                        <td>Gecko</td>
-                        <td>Epiphany 2.20</td>
-                        <td class="hidden-xs">Gnome</td>
-                        <td class="center">1.8</td>
-                        <td class="center hidden-xs">A</td>
-                    </tr>
-                    <tr class="gradeA">
-                        <td>Webkit</td>
-                        <td>Safari 1.2</td>
-                        <td class="hidden-xs">OSX.3</td>
-                        <td class="center">125.5</td>
-                        <td class="center hidden-xs">A</td>
-                    </tr>
-                    <tr class="gradeA">
-                        <td>Webkit</td>
-                        <td>Safari 1.3</td>
-                        <td class="hidden-xs">OSX.3</td>
-                        <td class="center">312.8</td>
-                        <td class="center hidden-xs">A</td>
-                    </tr>
-                    <tr class="gradeA">
-                        <td>Webkit</td>
-                        <td>Safari 2.0</td>
-                        <td class="hidden-xs">OSX.4+</td>
-                        <td class="center">419.3</td>
-                        <td class="center hidden-xs">A</td>
-                    </tr>
-                    <tr class="gradeA">
-                        <td>Webkit</td>
-                        <td>Safari 3.0</td>
-                        <td class="hidden-xs">OSX.4+</td>
-                        <td class="center">522.1</td>
-                        <td class="center hidden-xs">A</td>
-                    </tr>
-                    <tr class="gradeA">
-                        <td>Webkit</td>
-                        <td>OmniWeb 5.5</td>
-                        <td class="hidden-xs">OSX.4+</td>
-                        <td class="center">420</td>
-                        <td class="center hidden-xs">A</td>
-                    </tr>
-                    <tr class="gradeA">
-                        <td>Webkit</td>
-                        <td>iPod Touch / iPhone</td>
-                        <td class="hidden-xs">iPod</td>
-                        <td class="center">420.1</td>
-                        <td class="center hidden-xs">A</td>
-                    </tr>
-                    <tr class="gradeA">
-                        <td>Webkit</td>
-                        <td>S60</td>
-                        <td class="hidden-xs">S60</td>
-                        <td class="center">413</td>
-                        <td class="center hidden-xs">A</td>
-                    </tr>
-                    <tr class="gradeA">
-                        <td>Presto</td>
-                        <td>Opera 7.0</td>
-                        <td class="hidden-xs">Win 95+ / OSX.1+</td>
-                        <td class="center">-</td>
-                        <td class="center hidden-xs">A</td>
-                    </tr>
-                    <tr class="gradeA">
-                        <td>Presto</td>
-                        <td>Opera 7.5</td>
-                        <td class="hidden-xs">Win 95+ / OSX.2+</td>
-                        <td class="center">-</td>
-                        <td class="center hidden-xs">A</td>
-                    </tr>
-                    <tr class="gradeA">
-                        <td>Presto</td>
-                        <td>Opera 8.0</td>
-                        <td class="hidden-xs">Win 95+ / OSX.2+</td>
-                        <td class="center">-</td>
-                        <td class="center hidden-xs">A</td>
-                    </tr>
-                    <tr class="gradeA">
-                        <td>Presto</td>
-                        <td>Opera 8.5</td>
-                        <td class="hidden-xs">Win 95+ / OSX.2+</td>
-                        <td class="center">-</td>
-                        <td class="center hidden-xs">A</td>
-                    </tr>
-                    <tr class="gradeA">
-                        <td>Presto</td>
-                        <td>Opera 9.0</td>
-                        <td class="hidden-xs">Win 95+ / OSX.3+</td>
-                        <td class="center">-</td>
-                        <td class="center hidden-xs">A</td>
-                    </tr>
-                    <tr class="gradeA">
-                        <td>Presto</td>
-                        <td>Opera 9.2</td>
-                        <td class="hidden-xs">Win 88+ / OSX.3+</td>
-                        <td class="center">-</td>
-                        <td class="center hidden-xs">A</td>
-                    </tr>
-                    <tr class="gradeA">
-                        <td>Presto</td>
-                        <td>Opera 9.5</td>
-                        <td class="hidden-xs">Win 88+ / OSX.3+</td>
-                        <td class="center">-</td>
-                        <td class="center hidden-xs">A</td>
-                    </tr>
-                    <tr class="gradeA">
-                        <td>Presto</td>
-                        <td>Opera for Wii</td>
-                        <td class="hidden-xs">Wii</td>
-                        <td class="center">-</td>
-                        <td class="center hidden-xs">A</td>
-                    </tr>
-                    <tr class="gradeA">
-                        <td>Presto</td>
-                        <td>Nokia N800</td>
-                        <td class="hidden-xs">N800</td>
-                        <td class="center">-</td>
-                        <td class="center hidden-xs">A</td>
-                    </tr>
-                    <tr class="gradeA">
-                        <td>Presto</td>
-                        <td>Nintendo DS browser</td>
-                        <td class="hidden-xs">Nintendo DS</td>
-                        <td class="center">8.5</td>
-                        <td class="center hidden-xs">C/A<sup>1</sup></td>
-                    </tr>
-                    <tr class="gradeC">
-                        <td>KHTML</td>
-                        <td>Konqureror 3.1</td>
-                        <td class="hidden-xs">KDE 3.1</td>
-                        <td class="center">3.1</td>
-                        <td class="center hidden-xs">C</td>
-                    </tr>
-                    <tr class="gradeA">
-                        <td>KHTML</td>
-                        <td>Konqureror 3.3</td>
-                        <td class="hidden-xs">KDE 3.3</td>
-                        <td class="center">3.3</td>
-                        <td class="center hidden-xs">A</td>
-                    </tr>
-                    <tr class="gradeA">
-                        <td>KHTML</td>
-                        <td>Konqureror 3.5</td>
-                        <td class="hidden-xs">KDE 3.5</td>
-                        <td class="center">3.5</td>
-                        <td class="center hidden-xs">A</td>
-                    </tr>
-                    <tr class="gradeX">
-                        <td>Tasman</td>
-                        <td>Internet Explorer 4.5</td>
-                        <td class="hidden-xs">Mac OS 8-9</td>
-                        <td class="center">-</td>
-                        <td class="center hidden-xs">X</td>
-                    </tr>
-                    <tr class="gradeC">
-                        <td>Tasman</td>
-                        <td>Internet Explorer 5.1</td>
-                        <td class="hidden-xs">Mac OS 7.6-9</td>
-                        <td class="center">1</td>
-                        <td class="center hidden-xs">C</td>
-                    </tr>
-                    <tr class="gradeC">
-                        <td>Tasman</td>
-                        <td>Internet Explorer 5.2</td>
-                        <td class="hidden-xs">Mac OS 8-X</td>
-                        <td class="center">1</td>
-                        <td class="center hidden-xs">C</td>
-                    </tr>
-                    <tr class="gradeA">
-                        <td>Misc</td>
-                        <td>NetFront 3.1</td>
-                        <td class="hidden-xs">Embedded devices</td>
-                        <td class="center">-</td>
-                        <td class="center hidden-xs">C</td>
-                    </tr>
-                    <tr class="gradeA">
-                        <td>Misc</td>
-                        <td>NetFront 3.4</td>
-                        <td class="hidden-xs">Embedded devices</td>
-                        <td class="center">-</td>
-                        <td class="center hidden-xs">A</td>
-                    </tr>
-                    <tr class="gradeX">
-                        <td>Misc</td>
-                        <td>Dillo 0.8</td>
-                        <td class="hidden-xs">Embedded devices</td>
-                        <td class="center">-</td>
-                        <td class="center hidden-xs">X</td>
-                    </tr>
-                    <tr class="gradeX">
-                        <td>Misc</td>
-                        <td>Links</td>
-                        <td class="hidden-xs">Text only</td>
-                        <td class="center">-</td>
-                        <td class="center hidden-xs">X</td>
-                    </tr>
-                    <tr class="gradeX">
-                        <td>Misc</td>
-                        <td>Lynx</td>
-                        <td class="hidden-xs">Text only</td>
-                        <td class="center">-</td>
-                        <td class="center hidden-xs">X</td>
-                    </tr>
-                    <tr class="gradeC">
-                        <td>Misc</td>
-                        <td>IE Mobile</td>
-                        <td class="hidden-xs">Windows Mobile 6</td>
-                        <td class="center">-</td>
-                        <td class="center hidden-xs">C</td>
-                    </tr>
-                    <tr class="gradeC">
-                        <td>Misc</td>
-                        <td>PSP browser</td>
-                        <td class="hidden-xs">PSP</td>
-                        <td class="center">-</td>
-                        <td class="center hidden-xs">C</td>
-                    </tr>
-                    <tr class="gradeU">
-                        <td>Other browsers</td>
-                        <td class="hidden-xs">All others</td>
-                        <td>-</td>
-                        <td class="center">-</td>
-                        <td class="center hidden-xs">U</td>
-                    </tr>
-                    </tbody>
-                    <tfoot>
-                    <tr>
-                        <th>Rendering engine</th>
-                        <th>Browser</th>
-                        <th class="hidden-xs">Platform(s)</th>
-                        <th>Engine version</th>
-                        <th class="hidden-xs">CSS grade</th>
-                    </tr>
-                    </tfoot>
-                </table>
-            </div>
+            <!-- search end -->
+            <table id="demo1" class="table table-striped table-bordered table-hover dataTables-example dataTable" cellspacing="0" width="100%">
+                <thead>
+                <tr>
+                    <th class="tn"><input id="checkall" name="" type="checkbox" value=""></th>
+                    <th>姓名</th>
+                    <th>地址</th>
+                    <th>详细地址</th>
+                    <th>年龄</th>
+                    <th>日期</th>
+                    <th>工资</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td><input  name="" type="checkbox" value=""></td>
+                    <td>Tiger Nixon</td>
+                    <td>System Architect</td>
+                    <td>Edinburgh</td>
+                    <td>61</td>
+                    <td>2011/04/25</td>
+                    <td>$320,800</td>
+                </tr>
+                <tr>
+                    <td><input name="" type="checkbox" value=""></td>
+                    <td>Garrett Winters</td>
+                    <td>Accountant</td>
+                    <td>Tokyo</td>
+                    <td>63</td>
+                    <td>2011/07/25</td>
+                    <td>$170,750</td>
+                </tr>
+                <tr>
+                    <td><input  name="" type="checkbox" value=""></td>
+                    <td>Ashton Cox</td>
+                    <td>Junior Technical Author</td>
+                    <td>San Francisco</td>
+                    <td>66</td>
+                    <td>2009/01/12</td>
+                    <td>$86,000</td>
+                </tr>
+                <tr>
+                    <td><input  name="" type="checkbox" value=""></td>
+                    <td>Cedric Kelly</td>
+                    <td>Senior Javascript Developer</td>
+                    <td>Edinburgh</td>
+                    <td>22</td>
+                    <td>2012/03/29</td>
+                    <td>$433,060</td>
+                </tr>
+                <tr>
+                    <td><input  name="" type="checkbox" value=""></td>
+                    <td>Airi Satou</td>
+                    <td>Accountant</td>
+                    <td>Tokyo</td>
+                    <td>33</td>
+                    <td>2008/11/28</td>
+                    <td>$162,700</td>
+                </tr>
+                <tr>
+                    <td><input  name="" type="checkbox" value=""></td>
+                    <td>Brielle Williamson</td>
+                    <td>Integration Specialist</td>
+                    <td>New York</td>
+                    <td>61</td>
+                    <td>2012/12/02</td>
+                    <td>$372,000</td>
+                </tr>
+                <tr>
+                    <td><input  name="" type="checkbox" value=""></td>
+                    <td>Herrod Chandler</td>
+                    <td>Sales Assistant</td>
+                    <td>San Francisco</td>
+                    <td>59</td>
+                    <td>2012/08/06</td>
+                    <td>$137,500</td>
+                </tr>
+                <tr>
+                    <td><input  name="" type="checkbox" value=""></td>
+                    <td>Ashton Cox</td>
+                    <td>Junior Technical Author</td>
+                    <td>San Francisco</td>
+                    <td>66</td>
+                    <td>2009/01/12</td>
+                    <td>$86,000</td>
+                </tr>
+                <tr>
+                    <td><input  name="" type="checkbox" value=""></td>
+                    <td>Cedric Kelly</td>
+                    <td>Senior Javascript Developer</td>
+                    <td>Edinburgh</td>
+                    <td>22</td>
+                    <td>2012/03/29</td>
+                    <td>$433,060</td>
+                </tr>
+                <tr>
+                    <td><input  name="" type="checkbox" value=""></td>
+                    <td>Airi Satou</td>
+                    <td>Accountant</td>
+                    <td>Tokyo</td>
+                    <td>33</td>
+                    <td>2008/11/28</td>
+                    <td>$162,700</td>
+                </tr>
+                <tr>
+                    <td><input  name="" type="checkbox" value=""></td>
+                    <td>Brielle Williamson</td>
+                    <td>Integration Specialist</td>
+                    <td>New York</td>
+                    <td>61</td>
+                    <td>2012/12/02</td>
+                    <td>$372,000</td>
+                </tr>
+                <tr>
+                    <td><input  name="" type="checkbox" value=""></td>
+                    <td>Herrod Chandler</td>
+                    <td>Sales Assistant</td>
+                    <td>San Francisco</td>
+                    <td>59</td>
+                    <td>2012/08/06</td>
+                    <td>$137,500</td>
+                </tr>
+                </tbody>
+            </table>
         </div>
+
     </div>
 </div>
 
 
+<script>
+
+    jQuery(document).ready(function() {
+        App.setPage("dynamic_table");  //Set current page
+    });
+
+</script>

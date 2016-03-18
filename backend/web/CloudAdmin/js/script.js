@@ -1214,27 +1214,31 @@ var App = function () {
 	/*	Data Tables
 	/*-----------------------------------------------------------------------------------*/
 	var handleDataTables = function () {
-		$('#datatable1').dataTable({
-				"sPaginationType": "bs_full"
-			});
-		$('#datatable2').dataTable({
-				"sPaginationType": "bs_full",
-				sDom: "<'row'<'dataTables_header clearfix'<'col-md-4'l><'col-md-8'Tf>r>>t<'row'<'dataTables_footer clearfix'<'col-md-6'i><'col-md-6'p>>>",
-                oTableTools: {
-                    aButtons: ["copy", "print", "csv", "xls", "pdf"],
-                    sSwfPath: "js/datatables/extras/TableTools/media/swf/copy_csv_xls_pdf.swf"
+        $('#demo1').DataTable({
+            "pagingType":   "full_numbers",
+            "sLoadingRecords": "正在加载数据...",
+            "sZeroRecords": "暂无数据",
+            stateSave: true,
+            "searching": false,
+            "dom": 'rt<"bottom"iflp<"clear">>',
+            "language": {
+                "processing": "玩命加载中...",
+                "lengthMenu": "显示 _MENU_ 项结果",
+                "zeroRecords": "没有匹配结果",
+                "info": "显示第 _START_ 至 _END_ 项结果，共 _TOTAL_ 项",
+                "infoEmpty": "显示第 0 至 0 项结果，共 0 项",
+                "infoFiltered": "(由 _MAX_ 项结果过滤)",
+                "infoPostFix": "",
+                "url": "",
+                "paginate": {
+                    "first":    "首页",
+                    "previous": "上一页",
+                    "next":     "下一页",
+                    "last":     "末页"
                 }
-			});
-		$('.datatable').each(function(){
-			var datatable = $(this);
-			// SEARCH - Add the placeholder for Search and Turn this into in-line form control
-			var search_input = datatable.closest('.dataTables_wrapper').find('div[id$=_filter] input');
-			search_input.attr('placeholder', 'Search');
-			search_input.addClass('form-control input-sm');
-			// LENGTH - Inline-Form control
-			var length_sel = datatable.closest('.dataTables_wrapper').find('div[id$=_length] select');
-			length_sel.addClass('form-control input-sm');
-		});
+            }
+        });
+
 	}
 	/*-----------------------------------------------------------------------------------*/
 	/*	jqGrid
@@ -3366,7 +3370,7 @@ var App = function () {
         blockUI: function (el, loaderOnTop) {
             lastBlockedUI = el;
             jQuery(el).block({
-                message: '<img src="./img/loaders/12.gif" align="absmiddle">',
+                message: '<img src="/backend/web/CloudAdmin/img/loaders/12.gif" align="absmiddle">',
                 css: {
                     border: 'none',
                     padding: '2px',
