@@ -47,15 +47,11 @@ class ServerSocketController extends Controller{
                         'shou'   => false
                     ];
                 } else {
-                    $len    = 0;
                     $buffer = '';
-//                    do {
                     $len = socket_recv( $sock , $buf , 2048 , 0 );
-//                        $len += $l;
-                        $buffer .= $buf;
-//                    } while ( $l == 1000 );
+                    $buffer .= $buf;
                     $k = $this->search( $sock );
-                    if ( $len < 7 ) {
+                    if ( $len < 2 ) {
                         $this->send2( $k );
                         continue;
                     }
