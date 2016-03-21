@@ -3,7 +3,7 @@
 <head>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <meta charset="utf-8">
-    <title>Cloud Admin | Login</title>
+    <title>嘉瑞百合缘后台管理系统-登录</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
     <meta name="description" content="">
     <meta name="author" content="">
@@ -35,7 +35,7 @@
                 <div class="col-md-4 col-md-offset-4">
                     <div id="logo">
                         <a href="/admin"><img src="/backend/web/CloudAdmin/img/logo/jrbhy.png" height="30"
-                                                  alt="logo name"/></a>
+                                              alt="logo name"/></a>
                     </div>
                 </div>
             </div>
@@ -106,8 +106,8 @@
         jQuery('#' + id).addClass('visible animated fadeInUp');
     }
 
-    $(window).keydown(function(event){
-        switch(event.keyCode) {
+    $(window).keydown(function (event) {
+        switch (event.keyCode) {
             case 13:
                 $('.login-submit').click();
                 break;
@@ -115,19 +115,19 @@
     });
 
     //提交验证
-    $('.login-submit').click(function() {
+    $('.login-submit').click(function () {
         var btn = $(this);
         var form = $(document.login);
-        var username = $('input[name="username"]',form);
-        var password = $('input[name="password"]',form);
+        var username = $('input[name="username"]', form);
+        var password = $('input[name="password"]', form);
         username = $.trim(username.val());
         password = $.trim(password.val());
 
-        if(username == '') {
+        if (username == '') {
             layer.msg('用户名不能为空');
             return false;
         }
-        if(password == '') {
+        if (password == '') {
             layer.msg('密码不能为空');
             return false;
         }
@@ -135,27 +135,27 @@
         $.ajax({
             type: 'POST',
             url: '/admin/login',
-            data:'name='+username+'&&password='+password,
-            dataType:'json',
-            beforeSend:function() {
-                btn.prop('disabled',true);
+            data: 'name=' + username + '&&password=' + password,
+            dataType: 'json',
+            beforeSend: function () {
+                btn.prop('disabled', true);
             },
-            success:function(data) {
-                if(data.status) {
+            success: function (data) {
+                if (data.status) {
                     layer.msg(data.msg, {
                         icon: 1, time: 1000
-                    },function() {
-                        location.href="/admin/site";
+                    }, function () {
+                        location.href = "/admin/site";
                     });
 
                 } else {
                     layer.msg(data.msg);
-                    btn.prop('disabled',false);
+                    btn.prop('disabled', false);
                 }
             },
-            error:function() {
+            error: function () {
                 layer.msg('网络连接错误，请稍后重试！');
-                btn.prop('disabled',false);
+                btn.prop('disabled', false);
             }
         });
 
