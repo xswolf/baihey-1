@@ -228,13 +228,13 @@ class ServerSocketController extends Controller{
         $ar = [ ];
         $i = 0;
         foreach ( $this->users as $k => $v ) {
-            if ($v['name'] == $currentName){
-                $i++;
-                if ($i >= 2){
-                    unset($this->users[$k]);
-                    continue;
-                }
-            }
+//            if ($v['name'] == $currentName){
+//                $i++;
+//                if ($i >= 2){
+//                    unset($this->users[$k]);
+//                    continue;
+//                }
+//            }
             $ar[] = [ 'code' => $k , 'name' => $v['name'] ];
         }
 
