@@ -41,6 +41,8 @@ define(['jquery'] , function(){
             this.socket = null;
             socket.close();
             console.log('socket close');
+            socket  =  new WebSocket(this.url);
+            console.log("重新链接");
         };
 
         socket.onmessage = function (msg) {
@@ -52,7 +54,7 @@ define(['jquery'] , function(){
             console.log('发生错误')
             socket.close();
 
-            socket  =  new WebSocket(this.url);
+
         }
 
         return socket;
