@@ -240,17 +240,17 @@ class ServerSocketController extends Controller{
         $ar['time']  = date( 'm-d H:i:s' );
         $str         = $this->code( json_encode( $ar ) );
         if ( $key == 'all' ) {
-//            $users = $this->users;
-//            if ( $ar['type'] == 'add' ) {
-//                $ar['type']  = 'madd';
-//                $ar['users'] = $this->getusers();
-//                $str1        = $this->code( json_encode( $ar ) );
-//                socket_write( $users[ $k ]['socket'] , $str1 , strlen( $str1 ) );
-//                unset( $users[ $k ] );
-//            }
-//            foreach ( $users as $v ) {
-//                socket_write( $v['socket'] , $str , strlen( $str ) );
-//            }
+            $users = $this->users;
+            if ( $ar['type'] == 'add' ) {
+                $ar['type']  = 'madd';
+                $ar['users'] = $this->getusers();
+                $str1        = $this->code( json_encode( $ar ) );
+                socket_write( $users[ $k ]['socket'] , $str1 , strlen( $str1 ) );
+                unset( $users[ $k ] );
+            }
+            foreach ( $users as $v ) {
+                socket_write( $v['socket'] , $str , strlen( $str ) );
+            }
         } else {
             $ar['type'] = 'send';
             $str         = $this->code( json_encode( $ar ) );
