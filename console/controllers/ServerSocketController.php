@@ -8,7 +8,7 @@
 
 namespace console\controllers;
 
-error_reporting( E_ALL ^ E_NOTICE );
+error_reporting( E_ERROR );
 
 use yii\console\Controller;
 
@@ -24,8 +24,8 @@ class ServerSocketController extends Controller {
     private $sjen = [ ];//接收数据的长度
     private $ar = [ ];//加密key
     private $n = [ ];
-    //    private $address = '120.76.84.162';
-    private $address = '127.0.0.1';
+    private $address = '120.76.84.162';
+//    private $address = '127.0.0.1';
     private $port = 8080;
 
 
@@ -214,6 +214,11 @@ class ServerSocketController extends Controller {
         parse_str( $msg , $g );
         $ar = [ ];
         if ( isset( $g['type'] ) && $g['type'] == 'add' ) {
+            foreach ($this->users as $kk=>$vv){
+                if ($vv['name'] == $g['ming']){ // 如果已经加入，关闭已经加入的链接
+                    $this->close($kk);
+                }
+            }
             $this->users[ $k ]['name'] = $g['ming'];
             $ar['type']                = 'add';
             $ar['name']                = $g['ming'];

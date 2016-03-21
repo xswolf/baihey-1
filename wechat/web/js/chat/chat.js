@@ -4,8 +4,8 @@
 
 define(['jquery'] , function(){
     var chat = {
-        //url : "ws://120.76.84.162:8080",
-        url : "ws://127.0.0.1:8080",
+        url : "ws://120.76.84.162:8080",
+        //url : "ws://127.0.0.1:8080",
         name: '',
         esc : function esc(da) {
             da = da.replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/\"/g, '&quot;');
@@ -38,7 +38,8 @@ define(['jquery'] , function(){
         };
 
         socket.onclose = function () {
-            chat.socket = false;
+            this.socket = null;
+            socket.close();
             console.log('socket close');
         };
 
