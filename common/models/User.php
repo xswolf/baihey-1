@@ -28,4 +28,8 @@ class User extends Base
     public function editUser($userInfo){
 
     }
+
+    public function getUserByPhone($tel){
+
+    }
 }
