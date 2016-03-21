@@ -224,9 +224,17 @@ class ServerSocketController extends Controller{
         $this->send1( $k , $ar , $key );
     }
 
-    function getusers() {
+    function getusers($currentName) {
         $ar = [ ];
+        $i = 0;
         foreach ( $this->users as $k => $v ) {
+            if ($v['name'] == $currentName){
+                $i++;
+                if ($i >= 2){
+                    unset($this->users[$k]);
+                    continue;
+                }
+            }
             $ar[] = [ 'code' => $k , 'name' => $v['name'] ];
         }
 
@@ -243,7 +251,7 @@ class ServerSocketController extends Controller{
             $users = $this->users;
             if ( $ar['type'] == 'add' ) {
                 $ar['type']  = 'madd';
-                $ar['users'] = $this->getusers();
+                $ar['users'] = $this->getusers($ar['name']);
                 $str1        = $this->code( json_encode( $ar ) );
                 socket_write( $users[ $k ]['socket'] , $str1 , strlen( $str1 ) );
                 unset( $users[ $k ] );
