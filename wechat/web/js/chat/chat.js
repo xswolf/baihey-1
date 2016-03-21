@@ -49,6 +49,7 @@ define(['jquery'] , function(){
         };
 
         socket.onerror = function () {
+
             socket.close();
         }
 
