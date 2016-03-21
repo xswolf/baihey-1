@@ -51,6 +51,8 @@ define(['jquery'] , function(){
         socket.onerror = function () {
             console.log('发生错误')
             socket.close();
+
+            socket  =  new WebSocket(this.url);
         }
 
         return socket;
