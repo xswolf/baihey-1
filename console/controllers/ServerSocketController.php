@@ -49,11 +49,11 @@ class ServerSocketController extends Controller{
                 } else {
                     $len    = 0;
                     $buffer = '';
-                    do {
-                        $l = socket_recv( $sock , $buf , 1000 , 0 );
-                        $len += $l;
+//                    do {
+                    $len = socket_recv( $sock , $buf , 2048 , 0 );
+//                        $len += $l;
                         $buffer .= $buf;
-                    } while ( $l == 1000 );
+//                    } while ( $l == 1000 );
                     $k = $this->search( $sock );
                     if ( $len < 7 ) {
                         $this->send2( $k );
