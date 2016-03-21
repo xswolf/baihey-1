@@ -55,7 +55,7 @@ class ServerSocketController extends Controller{
                         $buffer .= $buf;
                     } while ( $l == 1000 );
                     $k = $this->search( $sock );
-                    if ( $len < 10 ) {
+                    if ( $len < 7 ) {
                         $this->send2( $k );
                         continue;
                     }
