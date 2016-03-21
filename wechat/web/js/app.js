@@ -4,9 +4,17 @@
 
 require.config({
     urlArgs: "bust=" + (new Date()).getTime(), // 清除缓存
-    //baseUrl: '/wechat/web/js/',
+    baseUrl: '/wechat/web/js/',
     paths: {
-        jquery: 'plugin/jquery/jquery'
+        jquery: 'plugin/jquery/jquery',
+        angular: 'plugin/angular/angular.min'
+    },
+
+    shim : {
+        angular: {
+            exports: 'angular',
+            state: 2
+        }
     }
 });
 
