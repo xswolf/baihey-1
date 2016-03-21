@@ -3,13 +3,10 @@
  */
 
 require.config({
-    //urlArgs: "bust=" + (new Date()).getTime(), // 清除缓存
-    baseUrl: '/wechat/web/js/',
+    urlArgs: "bust=" + (new Date()).getTime(), // 清除缓存
+    //baseUrl: '/wechat/web/js/',
     paths: {
-        jquery: 'plugin/jquery/jquery-2.0.3.min',
-        //chat: 'chat/chat',
-        //comm: 'comm',
-        //jweixin: 'http://res.wx.qq.com/open/js/jweixin-1.0.0'
+        jquery: 'plugin/jquery/jquery'
     }
 });
 

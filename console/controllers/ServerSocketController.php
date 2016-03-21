@@ -8,11 +8,11 @@
 
 namespace console\controllers;
 
-
+error_reporting( E_ALL ^ E_NOTICE );
 
 use yii\console\Controller;
 
-class ServerSocketController extends Controller{
+class ServerSocketController extends Controller {
 
     public $sockets;
     public $users;
@@ -24,11 +24,12 @@ class ServerSocketController extends Controller{
     private $sjen = [ ];//接收数据的长度
     private $ar = [ ];//加密key
     private $n = [ ];
-    private $address = '120.76.84.162';
+    //    private $address = '120.76.84.162';
+    private $address = '127.0.0.1';
     private $port = 8080;
 
 
-    public function actionRun(){
+    public function actionRun() {
         $this->master  = $this->WebSocket( $this->address , $this->port );
         $this->sockets = [ $this->master ];
 
@@ -48,10 +49,10 @@ class ServerSocketController extends Controller{
                     ];
                 } else {
                     $buffer = '';
-                    $len = socket_recv( $sock , $buf , 2048 , 0 );
+                    $len    = socket_recv( $sock , $buf , 2048 , 0 );
                     $buffer .= $buf;
                     $k = $this->search( $sock );
-                    if ( $len < 2 ) {
+                    if ( $len < 7 ) {
                         $this->send2( $k );
                         continue;
                     }
@@ -169,7 +170,7 @@ class ServerSocketController extends Controller{
         } else {
             unset( $this->ar[ $key ] , $this->slen[ $key ] , $this->sjen[ $key ] , $this->n[ $key ] );
 
-            $data = isset($this->sda[ $key ]) ? $this->sda[ $key ] . $data : $data;
+            $data = isset( $this->sda[ $key ] ) ? $this->sda[ $key ] . $data : $data;
 
             unset( $this->sda[ $key ] );
 
@@ -212,29 +213,24 @@ class ServerSocketController extends Controller{
     function send( $k , $msg ) {
         parse_str( $msg , $g );
         $ar = [ ];
-        if ( isset($g['type']) && $g['type'] == 'add' ) {
+        if ( isset( $g['type'] ) && $g['type'] == 'add' ) {
             $this->users[ $k ]['name'] = $g['ming'];
             $ar['type']                = 'add';
             $ar['name']                = $g['ming'];
             $key                       = 'all';
         } else {
             $ar['nrong'] = $g['nr'];
-            $key         = $g['key'];
+            if ( $ar['nrong'] == null ) {
+                return;
+            }
+            $key = $g['key'];
         }
         $this->send1( $k , $ar , $key );
     }
 
-    function getusers($currentName) {
+    function getusers( $currentName ) {
         $ar = [ ];
-        $i = 0;
         foreach ( $this->users as $k => $v ) {
-//            if ($v['name'] == $currentName){
-//                $i++;
-//                if ($i >= 2){
-//                    unset($this->users[$k]);
-//                    continue;
-//                }
-//            }
             $ar[] = [ 'code' => $k , 'name' => $v['name'] ];
         }
 
@@ -244,14 +240,14 @@ class ServerSocketController extends Controller{
     //$k 发信息人的code $key接受人的 code
     function send1( $k , $ar , $key = 'all' ) {
         $ar['sendName'] = $key;
-        $ar['code']  = $k;
-        $ar['time']  = date( 'm-d H:i:s' );
-        $str         = $this->code( json_encode( $ar ) );
+        $ar['code']     = $k;
+        $ar['time']     = date( 'm-d H:i:s' );
+        $str            = $this->code( json_encode( $ar ) );
         if ( $key == 'all' ) {
             $users = $this->users;
             if ( $ar['type'] == 'add' ) {
                 $ar['type']  = 'madd';
-                $ar['users'] = $this->getusers($ar['name']);
+                $ar['users'] = $this->getusers( $ar['name'] );
                 $str1        = $this->code( json_encode( $ar ) );
                 socket_write( $users[ $k ]['socket'] , $str1 , strlen( $str1 ) );
                 unset( $users[ $k ] );
@@ -261,14 +257,14 @@ class ServerSocketController extends Controller{
             }
         } else {
             $ar['type'] = 'send';
-            $str         = $this->code( json_encode( $ar ) );
-            $key = $this->getReceived( $key );
+            $str        = $this->code( json_encode( $ar ) );
+            $key        = $this->getReceived( $key );
             socket_write( $this->users[ $k ]['socket'] , $str , strlen( $str ) );
             if ( $this->users[ $key ]['socket'] != null ) {
-                $this->e($str." messages is send\n");
+                $this->e( $str . " messages is send\n" );
                 socket_write( $this->users[ $key ]['socket'] , $str , strlen( $str ) );
             } else {
-                $this->e( $str." user no exsit\n" ); // 这里直接写数据库
+                $this->e( $str . " user no exsit\n" ); // 这里直接写数据库
             }
         }
     }

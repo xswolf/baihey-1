@@ -4,8 +4,8 @@
 
 define(['jquery'] , function(){
     var chat = {
-        url : "ws://120.76.84.162:8080",
-        //url : "ws://127.0.0.1:8080",
+        //url : "ws://120.76.84.162:8080",
+        url : "ws://127.0.0.1:8080",
         name: '',
         esc : function esc(da) {
             da = da.replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/\"/g, '&quot;');
@@ -16,8 +16,11 @@ define(['jquery'] , function(){
 
     // 初始化
     chat.init = function (name) {
-        this.socket = this.so();
-        this.name = name;
+        if (this.socket == null){
+            this.socket = this.so();
+            this.name = name;
+        }
+        return this.socket;
 
     };
 
@@ -44,16 +47,12 @@ define(['jquery'] , function(){
             chat.onMessageCallback(msg);
         };
 
+        socket.onerror = function () {
+            socket.close();
+        }
+
         return socket;
     };
-
-
-    // 发送消息
-    chat.so.sendMsg = function (msg) {
-        chat.socket.send(msg);
-    };
-
-
 
 
     return chat;

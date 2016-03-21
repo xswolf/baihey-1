@@ -73,7 +73,7 @@
     </div>
 </div>
 <script>
-    requirejs(['http://res.wx.qq.com/open/js/jweixin-1.0.0.js','chat/chat', 'comm'], function (wx,chat, comm) {
+    requirejs(['../js/chat/jweixin.js','chat/chat', 'comm'], function (wx,chat, comm) {
 
         // 微信接口调用
         var config = {{$config}};
@@ -83,13 +83,13 @@
         });
 
         // 初始化聊天
-        chat.init($("#self_name").val());
+        var socket = chat.init($("#self_name").val());
 
         $(document).on('click', '#send', function () { // 点击发送按钮
 
             var message = $("#send_message").val();
             var key = $("#send_name").val();
-            chat.so.sendMsg('&nr=' + chat.esc(message) + '&key=' + key);
+            socket.send('&nr=' + chat.esc(message) + '&key=' + key);
 
         });
 
