@@ -24,10 +24,11 @@ define(['jquery'] , function(){
     // 初始化socket
     chat.so = function(){
         var socket =  new WebSocket(this.url);
-        console.log('socket connecting');
+
 
         // 链接上socket 发送用户姓名到服务器
         socket.onopen = function () {
+            console.log('socket connecting');
             if (chat.socket.readyState == 1){
                 chat.socket.send('type=add&ming='+chat.name)
             }

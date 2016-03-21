@@ -9,7 +9,8 @@
 namespace console\controllers;
 
 
-use yii\base\Controller;
+
+use yii\console\Controller;
 
 class ServerSocketController extends Controller{
 
@@ -23,14 +24,14 @@ class ServerSocketController extends Controller{
     private $sjen = [ ];//接收数据的长度
     private $ar = [ ];//加密key
     private $n = [ ];
-    private $address = '127.0.0.1';
+    private $address = '120.76.84.162';
     private $port = 8080;
 
-    public function beforeAction() {
+
+    public function actionRun(){
         $this->master  = $this->WebSocket( $this->address , $this->port );
         $this->sockets = [ $this->master ];
-    }
-    public function actionRun(){
+
         while ( true ) {
             $changes = $this->sockets;
             $write   = null;
@@ -171,7 +172,9 @@ class ServerSocketController extends Controller{
             return false;
         } else {
             unset( $this->ar[ $key ] , $this->slen[ $key ] , $this->sjen[ $key ] , $this->n[ $key ] );
-            $data = $this->sda[ $key ] . $data;
+
+            $data = isset($this->sda[ $key ]) ? $this->sda[ $key ] . $data : $data;
+
             unset( $this->sda[ $key ] );
 
             return $data;
@@ -213,7 +216,7 @@ class ServerSocketController extends Controller{
     function send( $k , $msg ) {
         parse_str( $msg , $g );
         $ar = [ ];
-        if ( $g['type'] == 'add' ) {
+        if ( isset($g['type']) && $g['type'] == 'add' ) {
             $this->users[ $k ]['name'] = $g['ming'];
             $ar['type']                = 'add';
             $ar['name']                = $g['ming'];
