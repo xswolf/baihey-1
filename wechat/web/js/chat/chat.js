@@ -16,8 +16,11 @@ define(['jquery'] , function(){
 
     // 初始化
     chat.init = function (name) {
-        this.socket = this.so();
-        this.name = name;
+        if (this.socket == null){
+            this.socket = this.so();
+            this.name = name;
+        }
+        return this.socket;
 
     };
 
@@ -35,8 +38,11 @@ define(['jquery'] , function(){
         };
 
         socket.onclose = function () {
-            chat.socket = false;
+            this.socket = null;
+            socket.close();
             console.log('socket close');
+            socket  =  new WebSocket(this.url);
+            console.log("重新链接");
         };
 
         socket.onmessage = function (msg) {
@@ -44,16 +50,15 @@ define(['jquery'] , function(){
             chat.onMessageCallback(msg);
         };
 
+        socket.onerror = function () {
+            console.log('发生错误')
+            socket.close();
+
+
+        }
+
         return socket;
     };
-
-
-    // 发送消息
-    chat.so.sendMsg = function (msg) {
-        chat.socket.send(msg);
-    };
-
-
 
 
     return chat;

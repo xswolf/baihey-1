@@ -39,4 +39,9 @@ class ChatController extends BaseController{
 
         return $this->render();
     }
+
+    public function actionAngular(){
+        return $this->render();
+    }
+
 }
