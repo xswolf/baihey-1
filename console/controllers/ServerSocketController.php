@@ -224,6 +224,7 @@ class ServerSocketController extends Controller {
             $ar['name']                = $g['ming'];
             $key                       = 'all';
         } else {
+            if ($g['nr'] == 'heartbeat') return '心跳包不管,直接返回';
             $ar['nrong'] = $g['nr'];
             if ( $ar['nrong'] == null ) {
                 return;
