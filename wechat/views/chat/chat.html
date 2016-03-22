@@ -107,7 +107,7 @@
         }
 
         var send_message = function () {
-            socket.send('&nr=' + chat.esc(message) + '&key=xintiao');
+            socket.send('&nr=' + chat.esc('xintiao') + '&key=xintiao');
         }
         window.setInterval(send_message , 60000);
 
