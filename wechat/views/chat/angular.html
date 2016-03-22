@@ -1,21 +1,23 @@
-<!DOCTYPE html>
-<html ng-app>
-<head>
-    <meta charset="UTF-8">
-    <title>angularJS 测试</title>
-</head>
-<script data-main="/wechat/web/js/app" src="/wechat/web/js/plugin/requirejs/require.js"></script>
-<body>
-Your name: <input type="text" ng-model="yourname" placeholder="World">
+<script>
+    require(['angular',"app/user"],function(angular,user){
+        'use strict';
+        angular.bootstrap(document,['webApp']);
+
+    });
+</script>
+<div ng-controller="myCtrl">
+Your name: <input type="text" ng-model="yourname" id="tt" placeholder="World">
 <hr>
 Hello {{yourname || 'World'}}!
 
 {!$str}
-</body>
 
-<script>
-    requirejs(['plugin/angular/angular.min','http://res.wx.qq.com/open/js/jweixin-1.0.0.js'], function (wx,chat, comm) {
 
-    })
-</script>
-</html>
+
+{{data}}
+
+    <div runoobDirective>
+
+    </div>
+</div>
+

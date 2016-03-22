@@ -85,7 +85,7 @@
         var processChat = function () {
             // 初始化聊天
             var socket = chat.init($("#self_name").val());
-            console.log('123123');
+            console.log('123123')
             $(document).on('click', '#send', function () { // 点击发送按钮
 
                 var message = $("#send_message").val();
@@ -109,8 +109,8 @@
                 }
             }
         }
-        processChat();
-        window.setInterval(processChat , 50000);
+
+        window.setInterval(processChat , 2000);
 
     });
 </script>
