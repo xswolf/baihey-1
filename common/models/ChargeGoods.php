@@ -3,6 +3,11 @@ namespace common\models;
 
 use Yii;
 
+/**
+ * 商品类
+ * Class ChargeGoods
+ * @package common\models
+ */
 class ChargeGoods extends Base
 {
 
@@ -11,16 +16,18 @@ class ChargeGoods extends Base
      */
     public static function tableName()
     {
-        return 'ChargeGoods';
+        return 'charge_goods';
     }
 
     /**
-     * 获取所有 status=1 的商品数据
+     * 获取所有商品
+     * @param string $status
      * @return static[]
      */
-    public function getAllList()
+    public function getAllList($status = "")
     {
-        return $this->findAll(['status' => 1]);
+        $status = $status == "" ? 1 : $status;
+        return $this->findAll(['status' => $status]);
     }
 
     /**

@@ -3,6 +3,11 @@ namespace common\models;
 
 use Yii;
 
+/**
+ * 订单类
+ * Class ChargeOrder
+ * @package common\models
+ */
 class ChargeOrder extends Base
 {
     /**
@@ -10,8 +15,27 @@ class ChargeOrder extends Base
      */
     public static function tableName()
     {
-        return 'ChargeType';
+        return 'charge_order';
     }
+
+    /**
+     * 查询所有订单
+     * @param string $status
+     */
+    public function getAllList($status = ''){
+        $status = $status == "" ? 1 : $status;
+        $this->findAll($status);
+    }
+
+    /**
+     * 根据一个或多个条件查询一条记录
+     * @param $condition
+     */
+    public function getOne($condition){
+        $this->findOne($condition);
+    }
+
+
 
 
 

@@ -1,12 +1,16 @@
 <!DOCTYPE html>
-<html lang="en">
+<html ng-app>
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>angularJS 测试</title>
 </head>
 <script data-main="/wechat/web/js/app" src="/wechat/web/js/plugin/requirejs/require.js"></script>
 <body>
+Your name: <input type="text" ng-model="yourname" placeholder="World">
+<hr>
+Hello {{yourname || 'World'}}!
 
+{!$str}
 </body>
 
 <script>

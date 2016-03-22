@@ -41,7 +41,9 @@ class ChatController extends BaseController{
     }
 
     public function actionAngular(){
+        $this->assign('str','nsk');
         return $this->render();
     }
+
 
 }

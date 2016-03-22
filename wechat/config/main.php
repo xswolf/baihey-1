@@ -42,6 +42,19 @@ return [
             'baseUrl' => '/wap',
 
         ],
+        'view' => [
+            'renderers' => [
+                'html' => [
+                    'class' => 'yii\smarty\ViewRenderer',
+                    'cachePath' => '@runtime/Smarty/cache',
+                    'compilePath' => '@runtime/Smarty/compile',
+                    'options' => [
+                        'left_delimiter' => '{!',
+                        'right_delimiter' => '}',
+                    ],
+                ],
+            ],
+        ],
     ],
     'homeUrl' => '/wap',
     'params' => $params,
