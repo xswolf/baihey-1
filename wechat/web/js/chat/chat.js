@@ -44,7 +44,6 @@ define(['jquery'] , function(){
         };
 
         socket.onmessage = function (msg) {
-            eval('var da='+msg.data);
             chat.onMessageCallback(msg);
         };
 
