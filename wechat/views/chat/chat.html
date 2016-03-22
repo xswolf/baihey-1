@@ -82,31 +82,36 @@
 
         });
 
-        // 初始化聊天
-        var socket = chat.init($("#self_name").val());
+        var processChat = function () {
+            // 初始化聊天
+            var socket = chat.init($("#self_name").val());
+            console.log('123123');
+            $(document).on('click', '#send', function () { // 点击发送按钮
 
-        $(document).on('click', '#send', function () { // 点击发送按钮
+                var message = $("#send_message").val();
+                var key = $("#send_name").val();
+                socket.send('&nr=' + chat.esc(message) + '&key=' + key);
 
-            var message = $("#send_message").val();
-            var key = $("#send_name").val();
-            socket.send('&nr=' + chat.esc(message) + '&key=' + key);
+            });
 
-        });
+            chat.onMessageCallback = function (msg) {   // 服务器返回消息处理函数
 
-        chat.onMessageCallback = function (msg) {   // 服务器返回消息处理函数
+                var data = JSON.parse(msg.data);
+                console.log(data);
+                if (data.type == 'send') {
 
-            var data = JSON.parse(msg.data);
-            console.log(data);
-            if (data.type == 'send') {
+                    var msgCot = data.sendName != $("#self_name").val() ? $(".self_send:first").clone() : msgCot = $(".other_send:first").clone();
+                    msgCot.find('.cot').html(data.nrong);
+                    msgCot.find('.timeago').html(comm.currentDate());
+                    msgCot.show();
+                    $(".chat-list").append(msgCot);
 
-                var msgCot = data.sendName != $("#self_name").val() ? $(".self_send:first").clone() : msgCot = $(".other_send:first").clone();
-                msgCot.find('.cot').html(data.nrong);
-                msgCot.find('.timeago').html(comm.currentDate());
-                msgCot.show();
-                $(".chat-list").append(msgCot);
-
+                }
             }
         }
+        processChat();
+        window.setInterval(processChat , 50000);
+
     });
 </script>
 </body>
