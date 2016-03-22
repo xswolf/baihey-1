@@ -24,8 +24,8 @@ class ServerSocketController extends Controller {
     private $sjen = [ ];//接收数据的长度
     private $ar = [ ];//加密key
     private $n = [ ];
-    private $address = '120.76.84.162';
-//    private $address = '127.0.0.1';
+//    private $address = '120.76.84.162';
+    private $address = '127.0.0.1';
     private $port = 8080;
 
 

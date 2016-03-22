@@ -3,7 +3,7 @@
  */
 
 require.config({
-    urlArgs: "bust=" + (new Date()).getTime(), // 清除缓存
+    urlArgs: "bust=v2", // 清除缓存
     baseUrl: '/wechat/web/js/',
     paths: {
         jquery: 'plugin/jquery/jquery',

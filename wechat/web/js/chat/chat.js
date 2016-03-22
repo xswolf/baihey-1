@@ -4,8 +4,8 @@
 
 define(['jquery'] , function(){
     var chat = {
-        url : "ws://120.76.84.162:8080",
-        //url : "ws://127.0.0.1:8080",
+        //url : "ws://120.76.84.162:8080",
+        url : "ws://127.0.0.1:8080",
         name: '',
         esc : function esc(da) {
             da = da.replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/\"/g, '&quot;');
@@ -41,8 +41,6 @@ define(['jquery'] , function(){
             this.socket = null;
             socket.close();
             console.log('socket close');
-            socket  =  new WebSocket(this.url);
-            console.log("重新链接");
         };
 
         socket.onmessage = function (msg) {
@@ -53,7 +51,7 @@ define(['jquery'] , function(){
         socket.onerror = function () {
             console.log('发生错误')
             socket.close();
-
+            this.socket = null;
 
         }
 
