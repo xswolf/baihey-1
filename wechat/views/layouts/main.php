@@ -1,6 +1,14 @@
-<htm>
+<!DOCTYPE html>
+<html lang="zh-CN">
     <head>
-        <title>this is main</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+        <title>嘉瑞百合缘手机网站</title>
+        <link href="/wechat/web/images/apple-touch-icon.png" rel="apple-touch-icon">
+        <link href="/wechat/web/css/plugin/bootstrap/css/bootstrap.css" rel="stylesheet">
+        <link href="/wechat/web/css/plugin/bootstrap/css/buttons.css" rel="stylesheet">
+        <link href="/wechat/web/css/base.css" rel="stylesheet">
+        <link href="/wechat/web/css/index.css" rel="stylesheet">
     </head>
     <script data-main="/wechat/web/js/app" src="/wechat/web/js/plugin/requirejs/require.js"></script>
     <script>
@@ -10,8 +18,9 @@
             paths: {
                 jquery: 'plugin/jquery/jquery',
                 angular: 'plugin/angular/angular.min',
-                "angular-route":"plugin/angular/angular-route",
-                bootstrap:'bootstrap'
+                "angular-route": "plugin/angular/angular-route",
+                bootstrap:'plugin/bootstrap/bootstrap.min',
+                less:'plugin/less/less.min'
             },
 
             shim:{
@@ -28,9 +37,14 @@
             }
         });
 
-
     </script>
+
     <body>
+
+    <div class="container bhy">
+
     <?= $content ?>
+
+    </div>
     </body>
-</htm>
+</html>

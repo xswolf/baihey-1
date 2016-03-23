@@ -1,0 +1,88 @@
+/*
+ *  移动端公共样式
+*/
+.pr{position:relative;}
+.pa{position:absolute;}
+
+.o_h{overflow:hidden;}
+
+.hr_1{height:1px;background:#E3DBDA;overflow:hidden;display:none;}
+.hr_1px{height:1px;}
+.hr_10{height:10px;}
+.hr_20{height:20px;}
+.hr_30{height:30px;}
+.hr_40{height:40px;}
+
+.hr_2{height:2px;}
+.bg_corF0{background:#F0F0F0;}
+.bg_n{background:none;}
+.main_bg{background:#F0F0F0;}
+.top_shadow_g{box-shadow:0px -2px 3px #EAEAEA;}
+.p_20_8{padding:20px 8px;}
+.p_0_8{padding:20px 8px;}
+.p_10_18{padding:10px 18px;}
+.p_0_15{padding:0 15px;}
+.p_0_20{padding:0 20px;}
+.p_0_10{padding:0 10px;}
+.p_15_0{padding:15px 0;}
+.pt_10{padding-top:20px;}
+.p_b_33{padding-bottom:33px;}
+.p_20_0{padding:20px 0;}
+.p_0_10{padding:0 10px;}
+.p_10_10{padding:10px 10px;}
+.pt20{padding-top:20px;}
+.p10{padding-bottom:10px;}
+.pb25{padding-bottom:25px;}
+.pl18{padding-left:18px;}
+.pl20{padding-left:20px;}
+.p14{padding:14px;}
+.mar_r8{margin-right:8px;}
+.mar_r_23{margin-right:23px;}
+.mr15{margin-right:15px;}
+.mr30{margin-right:30px;}
+.mr30{margin-right:30px;}
+.mr20{margin-right:20px;}
+.mb15{margin-bottom:15px;}
+.m15_10{margin:15px auto 10px auto;}
+
+.mr10{margin-right:10px;}
+.bor{border-top:#F0D9E3 1px solid;border-bottom:1px solid #DCDCDC;}
+.bor_btm{border-bottom:1px solid #DCDCDC;}
+.bor_btm2{border-bottom:#d4d4d4 1px solid;}
+.bbd1{border-bottom:1px dashed #d9d9d9;}
+
+
+.cor1{color:#fd4359;}
+.cor2{color:#ad7e24;}
+.cor3{color:#459b17;}
+.cor4{color:#999999;}
+.cor5{color:#9b9b9b;}
+.cor6{color:#4d4d4d;}
+.cor7{color:#494949;}
+.cor8{color:#666666;}
+.cor9{color:#4ec1ff;}
+.cor10{color:#888888;}
+.cor11{color:#555555;}
+.cor12{color:#9da3b2;}
+.cor13{color:#fc6ea2;}
+.cor14{color:#444444;}
+.cor15{color:#ff485c;}
+.cor16{color:#fc6da2;}
+.cor17{color:#999999;}
+
+
+.fwn{font-weight:normal;}
+.tal{text-align:left}
+.com_w_100{width:100%;min-width:320px;}
+.mr0a{margin:0 auto;}
+.dl{display:inline;}
+.m_10_0{margin:10px auto;}
+
+.bor_r_n{border-right:none;}
+.bor_b_n{border-bottom:none;}
+.bor_l_n{border-left:none;}
+.bor_t_n{border-top:none;}
+
+.cbh{clear:both;}
+
+.bhy{  font-size: 20px;  max-width: 640px;}

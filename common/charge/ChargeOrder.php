@@ -1,41 +1,42 @@
 <?php
-namespace common\models;
+namespace common\charge;
 
 use Yii;
 
 /**
- * 支付方式类
- * Class ChargeType
+ * 订单类
+ * Class ChargeOrder
  * @package common\models
  */
-class ChargeType extends Base
+class ChargeOrder extends Base
 {
     /**
      * @return string 返回该AR类关联的数据表名
      */
     public static function tableName()
     {
-        return 'charge_type';
+        return 'charge_order';
     }
 
     /**
-     * 获取所有支付方式
+     * 查询所有订单
      * @param string $status
-     * @return static[]
      */
     public function getAllList($status = ''){
         $status = $status == "" ? 1 : $status;
-        return $this->findAll(['status'=>$status]);
+        $this->findAll($status);
     }
 
     /**
      * 根据一个或多个条件查询一条记录
      * @param $condition
-     * @return null|static
      */
     public function getOne($condition){
-        return $this->findOne($condition);
+        $this->findOne($condition);
     }
+
+
+
 
 
 }

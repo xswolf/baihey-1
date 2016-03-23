@@ -1,5 +1,5 @@
 <?php
-namespace common\models;
+namespace common\charge;
 
 use Yii;
 
