@@ -14,8 +14,8 @@ define(['jquery'] , function(){
         socket : null
     };
 
-    chat.sendMessage = function (message,toUser){
-        this.socket.send('&nr=' + chat.esc(message) + '&key='+toUser);
+    chat.sendMessage = function (message,toUser,type){
+        this.socket.send('&nr=' + chat.esc(message) + '&key='+toUser+'&type='+type);
     }
 
     // 初始化

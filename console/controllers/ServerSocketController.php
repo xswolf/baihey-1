@@ -224,6 +224,7 @@ class ServerSocketController extends Controller {
             $ar['name']                = $g['ming'];
             $key                       = 'all';
         } else {
+            $ar['type'] = isset($g['type']) ? $g['type'] : 'send';
             if ($g['nr'] == 'heartbeat') return '心跳包不管,直接返回';
             $ar['nrong'] = $g['nr'];
             if ( $ar['nrong'] == null ) {
@@ -262,7 +263,6 @@ class ServerSocketController extends Controller {
                 socket_write( $v['socket'] , $str , strlen( $str ) );
             }
         } else {
-            $ar['type'] = 'send';
             $str        = $this->code( json_encode( $ar ) );
             $key        = $this->getReceived( $key );
             socket_write( $this->users[ $k ]['socket'] , $str , strlen( $str ) );

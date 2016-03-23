@@ -11,14 +11,8 @@ define(['http://res.wx.qq.com/open/js/jweixin-1.0.0.js','chat/chat'] , function 
 
     });
 
-    // 开始录音
-    $(document).on('.wx_record','moused',function(){
-        wx.startRecord();
-
-    });
-
-    // 结束录音
-    $(document).on('.wx_record','moused',function(){
+    //console.log($);
+    wx.send_record = function () {
         var localId = null;
         var serverId = null; // 音频服务端ID
         wx.stopRecord({
@@ -36,10 +30,8 @@ define(['http://res.wx.qq.com/open/js/jweixin-1.0.0.js','chat/chat'] , function 
             }
         });
 
-        //var socket = chat.init($("#self_name").val());
-        //chat.sendMessage();
-
-    });
+        return serverId;
+    }
 
     return wx;
 })
