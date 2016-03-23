@@ -16,16 +16,24 @@ define(['angular','app/module'], function (angular,module) {
     //    });
     //}])
 
-    module.directive("runoobDirective", function() {
+    module.directive("rundirective", function() {
+        console.log('directive');
         return {
             restrict : "A",
             template : "<h1>自定义指12121令!</h1>"
-        };
+        }
+    });
+
+    module.directive('hello' , function () {
+        return {
+            restrict:"A",
+            template:"<span>abc</span>"
+        }
     });
 
     module.service('$server_test' , function () {
         this.func = function () {
-            return 123;
+            return 'this is server';
         }
     })
 
