@@ -9,7 +9,7 @@ class User extends Base
     public $tablePrefix;
 
     public function init() {
-        $this->tablePrefix = Yii::$app->params['components']['db']['tablePrefix'];
+        $this->tablePrefix = Yii::$app->db->tablePrefix;
     }
 
     /**
