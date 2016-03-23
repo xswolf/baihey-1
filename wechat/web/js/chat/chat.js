@@ -11,8 +11,12 @@ define(['jquery'] , function(){
             da = da.replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/\"/g, '&quot;');
             return encodeURIComponent(da);
         },
-        socket : null,
+        socket : null
     };
+
+    chat.sendMessage = function (message,toUser){
+        this.socket.send('&nr=' + chat.esc(message) + '&key='+toUser);
+    }
 
     // 初始化
     chat.init = function (name) {
