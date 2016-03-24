@@ -41,7 +41,6 @@ define(['http://res.wx.qq.com/open/js/jweixin-1.0.0.js','chat/chat'] , function 
                 }
             }
         );
-        alert(serverId+'--')
 
         return serverId;
     }
