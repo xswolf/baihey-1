@@ -107,6 +107,7 @@
         $(document).on('click','.wx_end_record',function(){
             console.log('end record')
             var serverId= wx.send_record();
+            alert(serverId);
             chat.sendMessage(serverId , toUser ,'record')
         });
 
