@@ -12,7 +12,11 @@
 .hr_20{height:20px;}
 .hr_30{height:30px;}
 .hr_40{height:40px;}
-
+.lh20{line-height: 20px;}
+.lh24{line-height: 24px;}
+.lh36{line-height: 36px;}
+.lh40{line-height: 40px;}
+.lh48{line-height: 48px;}
 .hr_2{height:2px;}
 .bg_corF0{background:#F0F0F0;}
 .bg_n{background:none;}
@@ -44,14 +48,17 @@
 .mr20{margin-right:20px;}
 .mb15{margin-bottom:15px;}
 .m15_10{margin:15px auto 10px auto;}
-
+.mt10{ margin-top: 10px;}
+.mt15{ margin-top: 15px;}
+.mt20{ margin-top: 20px;}
+.mt30{ margin-top: 30px;}
 .mr10{margin-right:10px;}
 .bor{border-top:#F0D9E3 1px solid;border-bottom:1px solid #DCDCDC;}
 .bor_btm{border-bottom:1px solid #DCDCDC;}
 .bor_btm2{border-bottom:#d4d4d4 1px solid;}
 .bbd1{border-bottom:1px dashed #d9d9d9;}
 
-
+.cor0{color: #fff;}
 .cor1{color:#fd4359;}
 .cor2{color:#ad7e24;}
 .cor3{color:#459b17;}
@@ -74,9 +81,13 @@
 .fwn{font-weight:normal;}
 .tal{text-align:left}
 .com_w_100{width:100%;min-width:320px;}
+.w100{width: 100%;}
 .mr0a{margin:0 auto;}
 .dl{display:inline;}
+.dbl{display:block;}
 .m_10_0{margin:10px auto;}
+.fl{ float: left;}
+.fr{ float: right;}
 
 .bor_r_n{border-right:none;}
 .bor_b_n{border-bottom:none;}
@@ -85,4 +96,8 @@
 
 .cbh{clear:both;}
 
-.bhy{  font-size: 20px;  max-width: 640px;}
+.bhy{max-width: 640px; margin: 0 auto;}
+.tac{ text-align: center;}
+
+/*清除浮动*/
+.clearfix:after{content:".";display:block;height:0;clear:both;visibility:hidden}

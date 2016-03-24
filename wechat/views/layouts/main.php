@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
         <title>嘉瑞百合缘手机网站</title>
-        <link href="/wechat/web/images/apple-touch-icon.png" rel="apple-touch-icon">
+        <link href="/wechat/web/images/apple-touch-icon.png" rel="shortcut icon">
         <link href="/wechat/web/css/plugin/bootstrap/css/bootstrap.css" rel="stylesheet">
         <link href="/wechat/web/css/plugin/bootstrap/css/buttons.css" rel="stylesheet">
         <link href="/wechat/web/css/base.css" rel="stylesheet">
@@ -19,10 +19,8 @@
                 jquery: 'plugin/jquery/jquery',
                 angular: 'plugin/angular/angular.min',
                 "angular-route": "plugin/angular/angular-route",
-                bootstrap:'plugin/bootstrap/bootstrap.min',
-                less:'plugin/less/less.min'
+                bootstrap:'plugin/bootstrap/bootstrap.min'
             },
-
             shim:{
                 angular:{
                     exports:"angular"
@@ -40,11 +38,10 @@
     </script>
 
     <body>
+        <div class="container bhy com_w_100 pr bds0">
 
-    <div class="container bhy">
+            <?= $content ?>
 
-    <?= $content ?>
-
-    </div>
+        </div>
     </body>
 </html>
