@@ -693,7 +693,7 @@ class Wechat extends Component
             'url' => explode('#', Yii::$app->getRequest()->getAbsoluteUrl())[0]
         ];
 
-        echo urldecode(http_build_query($data));
+
         return array_merge([
             'debug' => $debug,
             'appId' => $this->appId,
