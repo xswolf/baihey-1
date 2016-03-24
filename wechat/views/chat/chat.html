@@ -129,22 +129,24 @@
                 msgCot.show();
                 $(".chat-list").append(msgCot);
             }else if (data.type == 'record'){
-                wx.downloadVoice({
-                    serverId: data.nrong, // 需要下载的音频的服务器端ID，由uploadVoice接口获得
-                    success: function (res) {
-                        var localId = res.localId; // 返回音频的本地ID
+                if (data.sendName == $("#self_name").val()) {
+                    wx.downloadVoice({
+                        serverId: data.nrong, // 需要下载的音频的服务器端ID，由uploadVoice接口获得
+                        success: function (res) {
+                            var localId = res.localId; // 返回音频的本地ID
 
-                        var msgCot = data.sendName != $("#self_name").val() ? $(".self_send:first").clone() : msgCot = $(".other_send:first").clone();
-                        msgCot.find('.cot').html(data.nrong);
-                        msgCot.find('.timeago').html(comm.currentDate());
-                        msgCot.show();
-                        $(".chat-list").append(msgCot);
+                            var msgCot = data.sendName != $("#self_name").val() ? $(".self_send:first").clone() : msgCot = $(".other_send:first").clone();
+                            msgCot.find('.cot').html(data.nrong);
+                            msgCot.find('.timeago').html(comm.currentDate());
+                            msgCot.show();
+                            $(".chat-list").append(msgCot);
 
-                        wx.playVoice({
-                            localId: localId // 需要播放的音频的本地ID，由stopRecord接口获得
-                        });
-                    }
-                });
+                            wx.playVoice({
+                                localId: localId // 需要播放的音频的本地ID，由stopRecord接口获得
+                            });
+                        }
+                    });
+                }
             }else if (data.type == 'pic'){
                 wx.downloadImage({
                     serverId: data.nrong, // 需要下载的图片的服务器端ID，由uploadImage接口获得
