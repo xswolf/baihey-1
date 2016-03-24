@@ -63,7 +63,8 @@
                 <input type="hidden" value="{!$sendName}}" id="send_name">
                 <input type="text" id="send_message" class="form-control">
                 <span class="input-group-btn"> <button class="btn btn-primary" id="send" type="button"><i class="fa fa-check"></i></button> </span>
-                <span class="input-group-btn"> <button class="btn btn-primary wx_record" type="button"><i class="fa fa-check"></i></button> </span>
+                <span class="input-group-btn"> <button class="btn btn-primary wx_start_record" type="button"><i class="fa fa-check"></i></button> </span>
+                <span class="input-group-btn"> <button class="btn btn-primary wx_end_record" type="button"><i class="fa fa-check"></i></button> </span>
             </div>
         </div>
     </div>
@@ -92,7 +93,7 @@
         });
 
         // 开始录音
-        $(document).on('mousedown','.wx_record',function(){
+        $(document).on('click','.wx_start_record',function(){
             console.log('start record')
             wx.startRecord({
                 cancel: function () {
@@ -103,7 +104,7 @@
 
 
         // 结束录音
-        $(document).on('mouseup','.wx_record',function(){
+        $(document).on('click','.wx_end_record',function(){
             console.log('end record')
             var serverId= wx.send_record();
             chat.sendMessage(serverId , toUser ,'record')
