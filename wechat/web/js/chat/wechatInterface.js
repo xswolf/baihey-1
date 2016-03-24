@@ -68,9 +68,12 @@ define(['http://res.wx.qq.com/open/js/jweixin-1.0.0.js','chat/chat'] , function 
                                 success: function (res) {
                                     var localId = res.localId; // 返回图片下载后的本地ID
                                     if(localId != null) {
-                                        alert(111);
+                                        wx.previewImage({
+                                            current: localId, // 当前显示图片的http链接
+                                            urls: [localId] // 需要预览的图片http链接列表
+                                        });
                                     } else {
-                                        alert(22);
+                                        alert('没有图片url');
                                     }
                                 }
                             });
