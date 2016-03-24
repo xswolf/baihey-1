@@ -65,6 +65,7 @@
                 <span class="input-group-btn"> <button class="btn btn-primary" id="send" type="button"><i class="fa fa-check"></i></button> </span>
                 <span class="input-group-btn"> <button class="btn btn-primary wx_start_record" type="button"><i class="fa fa-check"></i></button> </span>
                 <span class="input-group-btn"> <button class="btn btn-primary wx_end_record" type="button"><i class="fa fa-check"></i></button> </span>
+                <span class="input-group-btn"> <button class="btn btn-primary wx_pic" type="button"><i class="fa fa-check"></i></button> </span>
             </div>
         </div>
     </div>
@@ -110,6 +111,11 @@
 
         });
 
+        // 上传图片
+        $(document).on('click','.wx_pic',function() {
+            console.log('up pic');
+            wx.send_pic(toUser);
+        });
 
 
         chat.onMessageCallback = function (msg) {   // 服务器返回消息处理函数
