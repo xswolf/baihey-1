@@ -698,7 +698,7 @@ class Wechat extends Component
             'debug' => $debug,
             'appId' => $this->appId,
             'timestamp' => $data['timestamp'],
-            'noncestr' => $data['noncestr'],
+            'nonceStr' => $data['noncestr'],
             'signature' => sha1(urldecode(http_build_query($data))),
             'jsApiList' => [
                 'checkJsApi',
