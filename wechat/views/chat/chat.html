@@ -152,11 +152,14 @@
                     isShowProgressTips: 1, // 默认为1，显示进度提示
                     success: function (res) {
                         var localId = res.localId; // 返回图片下载后的本地ID
-                        alert(localId);
-                        wx.previewImage({
-                            current: '', // 当前显示图片的http链接
-                            urls: [] // 需要预览的图片http链接列表
-                        });
+                        if(localId != null) {
+                            wx.previewImage({
+                                current: localId, // 当前显示图片的http链接
+                                urls: [localId] // 需要预览的图片http链接列表
+                            });
+                        } else {
+                            alert('没有图片url');
+                        }
                     }
                 });
             }
