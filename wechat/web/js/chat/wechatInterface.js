@@ -25,21 +25,17 @@ define(['http://res.wx.qq.com/open/js/jweixin-1.0.0.js','chat/chat'] , function 
         wx.stopRecord({
                 success: function (res) {
                     localId = res.localId;
+                    wx.uploadVoice({
+                        localId: localId, // 需要上传的音频的本地ID，由stopRecord接口获得
+                        isShowProgressTips: 1, // 默认为1，显示进度提示
+                        success: function (res) {
+                            serverId = res.serverId; // 返回音频的服务器端ID
+                        }
+                    });
                 }
             }
         );
 
-        if (localId != null) {
-            wx.uploadVoice({
-                localId: localId, // 需要上传的音频的本地ID，由stopRecord接口获得
-                isShowProgressTips: 1, // 默认为1，显示进度提示
-                success: function (res) {
-                    serverId = res.serverId; // 返回音频的服务器端ID
-                }
-            });
-        }else{
-            alert('没有录音Id');
-        }
 
         return serverId;
     }
