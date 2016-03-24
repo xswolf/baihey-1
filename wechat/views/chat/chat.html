@@ -76,9 +76,6 @@
         'chat/chat',
         'comm'
     ], function (wx,chat, comm) {
-        function stop(){
-            return false;
-        }
         document.oncontextmenu=stop;
         // 微信接口调用
         var config = {!$config};
@@ -129,6 +126,7 @@
                 msgCot.show();
                 $(".chat-list").append(msgCot);
             }else if (data.type == 'record'){
+                alert(data.sendName +'------'+$("#self_name").val());
                 if (data.sendName == $("#self_name").val()) {
                     wx.downloadVoice({
                         serverId: data.nrong, // 需要下载的音频的服务器端ID，由uploadVoice接口获得
