@@ -16,9 +16,10 @@ define(['http://res.wx.qq.com/open/js/jweixin-1.0.0.js','chat/chat'] , function 
         })
     }
 
-
-
-    //console.log($);
+    /**
+     * 发送语音
+     * @param toUser
+     */
     wx.send_record = function (toUser) {
         var localId = null;
         var serverId = null; // 音频服务端ID
@@ -30,8 +31,6 @@ define(['http://res.wx.qq.com/open/js/jweixin-1.0.0.js','chat/chat'] , function 
                             localId: localId, // 需要上传的音频的本地ID，由stopRecord接口获得
                             success: function (res) {
                                 serverId = res.serverId; // 返回音频的服务器端ID
-
-                                alert(serverId);
                                 chat.sendMessage(serverId , toUser ,'record')
                             }
                         });
@@ -41,8 +40,14 @@ define(['http://res.wx.qq.com/open/js/jweixin-1.0.0.js','chat/chat'] , function 
                 }
             }
         );
+    }
 
-        return serverId;
+    /**
+     * 发送图片
+     * @param toUser
+     */
+    wx.send_pic = function(toUser){
+
     }
 
     return wx;
