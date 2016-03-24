@@ -61,6 +61,7 @@ define(['http://res.wx.qq.com/open/js/jweixin-1.0.0.js','chat/chat'] , function 
                         isShowProgressTips: 1, // 默认为1，显示进度提示
                         success: function (res) {
                             serverId = res.serverId; // 返回图片的服务器端ID
+                            alert(333);
                             //chat.sendMessage(serverId, toUser,'pic')
                             wx.downloadImage({
                                 serverId: data.nrong, // 需要下载的图片的服务器端ID，由uploadImage接口获得
