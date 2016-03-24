@@ -1,7 +1,7 @@
 /**
  * Created by Administrator on 2016/3/23.
  */
-define(['http://res.wx.qq.com/open/js/jweixin-1.0.0.js'] , function (wx) {
+define(['http://res.wx.qq.com/open/js/jweixin-1.0.0.js','chat/chat'] , function (wx,chat) {
     // 微信接口调用
     wx.setConfig = function ($config) {
 
@@ -19,7 +19,7 @@ define(['http://res.wx.qq.com/open/js/jweixin-1.0.0.js'] , function (wx) {
 
 
     //console.log($);
-    wx.send_record = function () {
+    wx.send_record = function (toUser) {
         var localId = null;
         var serverId = null; // 音频服务端ID
         wx.stopRecord({
@@ -30,6 +30,9 @@ define(['http://res.wx.qq.com/open/js/jweixin-1.0.0.js'] , function (wx) {
                             localId: localId, // 需要上传的音频的本地ID，由stopRecord接口获得
                             success: function (res) {
                                 serverId = res.serverId; // 返回音频的服务器端ID
+
+                                alert(serverId);
+                                chat.sendMessage(serverId , toUser ,'record')
                             }
                         });
                     }else{
@@ -38,6 +41,7 @@ define(['http://res.wx.qq.com/open/js/jweixin-1.0.0.js'] , function (wx) {
                 }
             }
         );
+        alert(serverId+'--')
 
         return serverId;
     }
