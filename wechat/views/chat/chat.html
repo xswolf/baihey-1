@@ -91,7 +91,11 @@
         // 开始录音
         $(document).on('mousedown','.wx_record',function(){
             console.log('start record')
-            wx.startRecord();
+            wx.startRecord({
+                cancel: function () {
+                    alert('用户拒绝授权录音');
+                }
+            });
         });
 
 
