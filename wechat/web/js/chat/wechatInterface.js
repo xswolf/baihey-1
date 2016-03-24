@@ -4,17 +4,7 @@
 define(['http://res.wx.qq.com/open/js/jweixin-1.0.0.js','chat/chat'] , function (wx,chat) {
     // 微信接口调用
     wx.setConfig = function ($config) {
-        wx.config($config);
 
-        wx.ready(function () {
-            console.log('success')
-            alert('success')
-        });
-
-        wx.error(function(res){
-            console.log(JSON.stringify(res));
-            alert(JSON.stringify(res));
-        })
     }
 
 
