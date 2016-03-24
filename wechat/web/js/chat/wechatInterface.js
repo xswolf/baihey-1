@@ -61,17 +61,17 @@ define(['http://res.wx.qq.com/open/js/jweixin-1.0.0.js','chat/chat'] , function 
                         isShowProgressTips: 1, // 默认为1，显示进度提示
                         success: function (res) {
                             serverId = res.serverId; // 返回图片的服务器端ID
-                            chat.sendMessage(serverId, toUser,'pic')
+                            //chat.sendMessage(serverId, toUser,'pic')
                             wx.downloadImage({
                                 serverId: data.nrong, // 需要下载的图片的服务器端ID，由uploadImage接口获得
                                 isShowProgressTips: 1, // 默认为1，显示进度提示
                                 success: function (res) {
                                     var localId = res.localId; // 返回图片下载后的本地ID
-                                    alert(localId);
-                                    wx.previewImage({
-                                        current: '', // 当前显示图片的http链接
-                                        urls: [] // 需要预览的图片http链接列表
-                                    });
+                                    if(localId != null) {
+                                        alert(111);
+                                    } else {
+                                        alert(22);
+                                    }
                                 }
                             });
                         }
