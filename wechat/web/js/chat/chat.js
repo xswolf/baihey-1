@@ -8,6 +8,7 @@ define(['jquery'] , function(){
         //url : "ws://127.0.0.1:8080",
         name: '',
         esc : function esc(da) {
+            if (da == null || da == '') return ;
             da = da.replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/\"/g, '&quot;');
             return encodeURIComponent(da);
         },
@@ -15,6 +16,7 @@ define(['jquery'] , function(){
     };
 
     chat.sendMessage = function (message,toUser,type){
+        if (message == null || message == '' || message == undefined) return;
         this.socket.send('&nr=' + chat.esc(message) + '&key='+toUser+'&type='+type);
     }
 

@@ -63,7 +63,9 @@
                 <input type="hidden" value="{!$sendName}}" id="send_name">
                 <input type="text" id="send_message" class="form-control">
                 <span class="input-group-btn"> <button class="btn btn-primary" id="send" type="button"><i class="fa fa-check"></i></button> </span>
-                <span class="input-group-btn"> <button class="btn btn-primary wx_record" type="button"><i class="fa fa-check"></i></button> </span>
+                <span class="input-group-btn"> <button class="btn btn-primary wx_start_record" type="button"><i class="fa fa-check"></i></button> </span>
+                <span class="input-group-btn"> <button class="btn btn-primary wx_end_record" type="button"><i class="fa fa-check"></i></button> </span>
+                <span class="input-group-btn"> <button class="btn btn-primary wx_pic" type="button"><i class="fa fa-check"></i></button> </span>
             </div>
         </div>
     </div>
@@ -74,11 +76,13 @@
         'chat/chat',
         'comm'
     ], function (wx,chat, comm) {
-        console.log(wx)
+        function stop(){
+            return false;
+        }
+        document.oncontextmenu=stop;
         // 微信接口调用
         var config = {!$config};
         wx.setConfig(config);
-
 
         // 初始化聊天
         var socket = chat.init($("#self_name").val());
@@ -90,26 +94,28 @@
         });
 
         // 开始录音
-        $(document).on('mousedown','.wx_record',function(){
+        $(document).on('click','.wx_start_record',function(){
             console.log('start record')
-            wx.startRecord();
+            wx.startRecord({
+                cancel: function () {
+                    alert('用户拒绝授权录音');
+                }
+            });
         });
 
 
         // 结束录音
-        $(document).on('mouseup','.wx_record',function(){
+        $(document).on('click','.wx_end_record',function(){
             console.log('end record')
-            var serverId= wx.send_record();
-//            wx.downloadVoice({
-//                serverId: serverId, // 需要下载的音频的服务器端ID，由uploadVoice接口获得
-//                isShowProgressTips: 1, // 默认为1，显示进度提示
-//                success: function (res) {
-//                    var localId = res.localId; // 返回音频的本地ID
-//                }
-//            });
-            chat.sendMessage(serverId , toUser ,'record')
+            wx.send_record(toUser);
+
         });
 
+        // 上传图片
+        $(document).on('click','.wx_pic',function() {
+            console.log('up pic');
+            wx.send_pic(toUser);
+        });
 
 
         chat.onMessageCallback = function (msg) {   // 服务器返回消息处理函数
@@ -125,15 +131,44 @@
             }else if (data.type == 'record'){
                 wx.downloadVoice({
                     serverId: data.nrong, // 需要下载的音频的服务器端ID，由uploadVoice接口获得
-                    isShowProgressTips: 1, // 默认为1，显示进度提示
                     success: function (res) {
                         var localId = res.localId; // 返回音频的本地ID
+
+                        var msgCot = data.sendName != $("#self_name").val() ? $(".self_send:first").clone() : msgCot = $(".other_send:first").clone();
+                        msgCot.find('.cot').html(data.nrong);
+                        msgCot.find('.timeago').html(comm.currentDate());
+                        msgCot.show();
+                        $(".chat-list").append(msgCot);
+
                         wx.playVoice({
                             localId: localId // 需要播放的音频的本地ID，由stopRecord接口获得
                         });
                     }
                 });
+            }else if (data.type == 'pic'){
+                wx.downloadImage({
+                    serverId: data.nrong, // 需要下载的图片的服务器端ID，由uploadImage接口获得
+                    isShowProgressTips: 1, // 默认为1，显示进度提示
+                    success: function (res) {
+                        var localId = res.localId; // 返回图片下载后的本地ID
 
+
+                        var msgCot = data.sendName != $("#self_name").val() ? $(".self_send:first").clone() : msgCot = $(".other_send:first").clone();
+                        msgCot.find('.cot').html(data.nrong);
+                        msgCot.find('.timeago').html(comm.currentDate());
+                        msgCot.show();
+                        $(".chat-list").append(msgCot);
+
+                        if(localId != null) {
+                            wx.previewImage({
+                                current: localId, // 当前显示图片的http链接
+                                urls: [localId] // 需要预览的图片http链接列表
+                            });
+                        } else {
+                            alert('没有图片url');
+                        }
+                    }
+                });
             }
         }
 
