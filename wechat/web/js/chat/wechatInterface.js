@@ -8,8 +8,14 @@ define(['http://res.wx.qq.com/open/js/jweixin-1.0.0.js','chat/chat'] , function 
     }
 
     wx.ready(function () {
-
+        console.log(1)
+        alert('success')
     });
+
+    wx.error(function(res){
+        console.log(res);
+        alert('error');
+    })
 
     //console.log($);
     wx.send_record = function () {
