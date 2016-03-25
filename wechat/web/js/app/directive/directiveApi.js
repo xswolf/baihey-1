@@ -6,7 +6,12 @@ define(['app/module'] , function (module) {
     module.directive("hello", function() {
         return {
             restrict : "A",
-            template : "<h1>自定义指12121令!</h1>"
+            $scope: {
+                title: '@'
+            },
+            template : "<h1>{{title}}自定义指12121令!<span ng-transclude></span></h1>",
+
+            transclude:true
         }
     });
 
