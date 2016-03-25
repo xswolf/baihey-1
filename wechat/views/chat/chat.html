@@ -144,12 +144,13 @@
                         isShowProgressTips: 1, // 默认为1，显示进度提示
                         success: function (res) {
                             if(res.localId != null) {
-                                var img = '<img str="'+res.localId+'" />';
-                                msgCot.find('.cot').html(data.nrong);
-                                /*wx.previewImage({
+                                /*var img = '<img str="'+res.localId+'" />';
+                                msgCot.find('.cot').html(data.nrong);*/
+                                wx.previewImage({
                                     current: res.localId, // 当前显示图片的http链接
                                     urls: [res.localId] // 需要预览的图片http链接列表
-                                });*/
+                                });
+                                alert(res.localId);
                             } else {
                                 alert('没有图片url');
                             }
