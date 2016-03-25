@@ -27,7 +27,8 @@
         'validateMobile': function (mobile) {
             var pattern = /^1[34578]\d{9}$/;
             return pattern.test(mobile);
-        },
+        }/*,
+
         'bhyModal':{
             'modal':function(title,text){
                 var $modal = $('<div class="am-modal am-modal-no-btn" tabindex="-1" id="bhy-modal"><div class="am-modal-dialog"><div class="am-modal-hd">'+title+'<a href="javascript: void(0)" class="am-close am-close-spin" data-am-modal-close>&times;</a> </div> <div class="am-modal-bd">'+text+'</div> </div> </div>');
@@ -42,5 +43,5 @@
             'confirm':function(){
 
             }
-        }
+        }*/
     };
