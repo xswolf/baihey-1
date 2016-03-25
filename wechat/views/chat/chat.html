@@ -48,6 +48,7 @@
                     </a>
                     <div class="pull-right media-body chat-pop mod">
                         <h4 class="media-heading">You <span class="pull-left"><abbr class="timeago" title="Oct 10, 2013" ></abbr> <i class="fa fa-clock-o"></i></span></h4></h4>
+                        <img src="weixin://resourceid/817813978c1ffe3cc91d4a7e2b949912">
                         <span class="cot">
                         </span>
                     </div>
@@ -144,13 +145,12 @@
                         isShowProgressTips: 1, // 默认为1，显示进度提示
                         success: function (res) {
                             if(res.localId != null) {
-                                /*var img = '<img str="'+res.localId+'" />';
-                                msgCot.find('.cot').html(data.nrong);*/
-                                wx.previewImage({
+                                var img = '<img str="'+res.localId+'" />';
+                                msgCot.find('.cot').html(img);
+                                /*wx.previewImage({
                                     current: res.localId, // 当前显示图片的http链接
                                     urls: [res.localId] // 需要预览的图片http链接列表
-                                });
-                                alert(res.localId);
+                                });*/
                             } else {
                                 alert('没有图片url');
                             }
