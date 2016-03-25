@@ -39,7 +39,7 @@ return [
             ],
         ],
         'request' => [
-            'baseUrl' => '/wap',
+            'baseUrl' => '/',
 
         ],
         'view' => [
@@ -56,7 +56,7 @@ return [
             ],
         ],
     ],
-    'homeUrl' => '/wap',
+    'homeUrl' => '/',
     'params' => $params,
 
 ];
