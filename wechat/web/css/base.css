@@ -52,7 +52,15 @@
 .mt15{ margin-top: 15px;}
 .mt20{ margin-top: 20px;}
 .mt30{ margin-top: 30px;}
+.mt40{ margin-top: 40px;}
+.mt50{ margin-top: 50px;}
+.mr5{margin-right:5px;}
 .mr10{margin-right:10px;}
+.ml5{ margin-left: 5px;}
+.ml10{ margin-left: 10px;}
+.ml15{ margin-left: 15px;}
+.ml20{ margin-left: 20px;}
+.ml30{ margin-left: 30px;}
 .bor{border-top:#F0D9E3 1px solid;border-bottom:1px solid #DCDCDC;}
 .bor_btm{border-bottom:1px solid #DCDCDC;}
 .bor_btm2{border-bottom:#d4d4d4 1px solid;}
