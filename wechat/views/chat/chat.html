@@ -117,59 +117,63 @@
 
         chat.onMessageCallback = function (msg) {   // 服务器返回消息处理函数
 
+            var self_name = $("#self_name").val();
             var data = JSON.parse(msg.data);
-            console.log(data);
-            if (data.type == 'send') {
-                var msgCot = data.sendName != $("#self_name").val() ? $(".self_send:first").clone() : msgCot = $(".other_send:first").clone();
-                msgCot.find('.cot').html(data.nrong);
-                msgCot.find('.timeago').html(comm.currentDate());
-                msgCot.show();
-                $(".chat-list").append(msgCot);
-            }else if (data.type == 'record'){
-                alert(data.sendName +'------'+$("#self_name").val());
-                if (data.sendName != $("#self_name").val()) {
+            var msgCot = data.sendName !=  self_name ? $(".self_send:first").clone() : msgCot = $(".other_send:first").clone();
+            msgCot.find('.cot').html(data.nrong);
+            msgCot.find('.timeago').html(comm.currentDate());
+            msgCot.show();
+
+
+            switch (data.type) {
+                case 'send':
+                    break;
+                case 'record':
                     wx.downloadVoice({
                         serverId: data.nrong, // 需要下载的音频的服务器端ID，由uploadVoice接口获得
                         success: function (res) {
-                            var localId = res.localId; // 返回音频的本地ID
-
-                            var msgCot = data.sendName != $("#self_name").val() ? $(".self_send:first").clone() : msgCot = $(".other_send:first").clone();
-                            msgCot.find('.cot').html(data.nrong);
-                            msgCot.find('.timeago').html(comm.currentDate());
-                            msgCot.show();
-                            $(".chat-list").append(msgCot);
-
                             wx.playVoice({
-                                localId: localId // 需要播放的音频的本地ID，由stopRecord接口获得
+                                localId: res.localId // 需要播放的音频的本地ID，由stopRecord接口获得
                             });
                         }
                     });
-                }
-            }else if (data.type == 'pic'){
-                wx.downloadImage({
-                    serverId: data.nrong, // 需要下载的图片的服务器端ID，由uploadImage接口获得
-                    isShowProgressTips: 1, // 默认为1，显示进度提示
-                    success: function (res) {
-                        var localId = res.localId; // 返回图片下载后的本地ID
-
-
-                        var msgCot = data.sendName != $("#self_name").val() ? $(".self_send:first").clone() : msgCot = $(".other_send:first").clone();
-                        msgCot.find('.cot').html(data.nrong);
-                        msgCot.find('.timeago').html(comm.currentDate());
-                        msgCot.show();
-                        $(".chat-list").append(msgCot);
-
-                        if(localId != null) {
-                            wx.previewImage({
-                                current: localId, // 当前显示图片的http链接
-                                urls: [localId] // 需要预览的图片http链接列表
-                            });
-                        } else {
-                            alert('没有图片url');
+                    break;
+                case 'pic':
+                    wx.downloadImage({
+                        serverId: data.nrong, // 需要下载的图片的服务器端ID，由uploadImage接口获得
+                        isShowProgressTips: 1, // 默认为1，显示进度提示
+                        success: function (res) {
+                            if(res.localId != null) {
+                                wx.previewImage({
+                                    current: res.localId, // 当前显示图片的http链接
+                                    urls: [res.localId] // 需要预览的图片http链接列表
+                                });
+                            } else {
+                                alert('没有图片url');
+                            }
                         }
-                    }
-                });
+                    });
+                    break;
+                default:
+                    return false;
             }
+
+            $(".chat-list").append(msgCot);
+
+//            if (data.type == 'send') {
+//
+//
+//            }else if (data.type == 'record'){
+//
+//
+//
+//            }else if (data.type == 'pic'){
+//
+//
+//            }else{
+//                return ;
+//            }
+
         }
 
         var send_message = function () {
