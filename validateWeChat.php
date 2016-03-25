@@ -60,7 +60,7 @@ class wechatCallbackapiTest
 
             $this->log('if');
             $msgType = "text";
-            $contentStr = "Welcome to wechat world!";
+            $contentStr = "Welcome to wechat world";
             $resultStr = sprintf($textTpl, $fromUsername, $toUsername, $time, $msgType, $contentStr);
             $this->log($resultStr);
             echo $resultStr;
