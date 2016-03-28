@@ -13,9 +13,9 @@ class WeChat extends \callmez\wechat\sdk\Wechat{
     }
 
     public function aotures() {
-        var_dump(\Yii::$app->wechat->token);exit;
-        $url = "https://api.weixin.qq.com/cgi-bin/get_current_autoreply_info?access_token=ACCESS_TOKEN";
+        $token = \Yii::$app->wechat->token;
+        $url = "https://api.weixin.qq.com/cgi-bin/get_current_autoreply_info?access_token=$token";
         $html = file_get_contents($url);
-        var_dump($html);
+        var_dump($html);exit;
     }
 }
