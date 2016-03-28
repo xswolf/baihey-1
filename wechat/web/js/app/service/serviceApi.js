@@ -15,6 +15,11 @@ define(['app/module'] , function (module) {
             return $http.get('url....');
         }
 
+        api.getMobileIsExist = function(mobile){
+            return $http.get('url',{params:{mobile:mobile}});
+        }
+
+
         return api;
     }])
 });

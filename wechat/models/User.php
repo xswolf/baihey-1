@@ -34,5 +34,10 @@ class User extends \yii\db\ActiveRecord{
         return false;
     }
 
+    public function validate($attributeNames = null, $clearErrors = true)
+    {
+
+    }
+
 
 }
