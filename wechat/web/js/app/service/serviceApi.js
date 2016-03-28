@@ -11,7 +11,7 @@ define(['app/module'] , function (module) {
          * @returns {*}
          */
         api.getLoginStatus = function () {
-            return 'test';
+            return 'app.serviceApi';
             return $http.get('url....');
         }
 
