@@ -13,11 +13,8 @@ class WeChat extends \callmez\wechat\sdk\Wechat{
     }
 
     public function getAccessToken() {
-        $appid = \Yii::$app->wechat->appId;
-        $secret = \Yii::$app->wechat->appSecret;
-        $url = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=$appid&secret=$secret";
-        $html = file_get_contents($url);
-        $accessToken = json_decode($html,true);
+        $accessToken = \Yii::$app->wechat->getAccessToken();
+        var_dump($accessToken);exit;
         return $accessToken['access_token'];
     }
 
