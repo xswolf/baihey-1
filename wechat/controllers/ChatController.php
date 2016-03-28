@@ -13,12 +13,12 @@ namespace wechat\controllers;
 class ChatController extends BaseController{
 
     public function actionIndex(){
-        /*\Yii::$app->wechat->test();
+        \Yii::$app->wechat->aotures();
 
         $redis = \Yii::$app->redis;
 
         echo $redis->get('name');
-        $redis->set('k','v');*/
+        $redis->set('k','v');
         return $this->render();
     }
 
