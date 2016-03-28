@@ -13,7 +13,7 @@ class WeChat extends \callmez\wechat\sdk\Wechat{
     }
 
     public function getAccessToken() {
-        $accessToken = \Yii::$app->wechat->getAccessToken();
+        $accessToken = \Yii::$app->wechat;
         var_dump($accessToken);exit;
         return $accessToken['access_token'];
     }
