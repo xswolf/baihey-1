@@ -46,5 +46,8 @@ class ChatController extends BaseController{
         return $this->render();
     }
 
-
+    public function actionMeizi(){
+        $this->layout = false;
+        return $this->render();
+    }
 }

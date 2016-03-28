@@ -1,7 +1,6 @@
 /**
  * Created by Administrator on 2016/3/14.
  */
-define(function () {
     var ar = {
         'currentDate': function () {
             var myDate = new Date();
@@ -17,14 +16,32 @@ define(function () {
             myDate.getMilliseconds();    //获取当前毫秒数(0-999)
             myDate.toLocaleDateString();     //获取当前日期
             //var mytime=myDate.toLocaleTimeString();     //获取当前时间
-            return myDate.toLocaleString( );        //获取日期与时间
+            return myDate.toLocaleString();        //获取日期与时间
         },
-        
-        'timeStamp' : function () { // 当前时间戳
 
-            return Date.parse( new Date() );
-        }
+        'timeStamp': function () { // 当前时间戳
+
+            return Date.parse(new Date());
+        },
+
+        'validateMobile': function (mobile) {
+            var pattern = /^1[34578]\d{9}$/;
+            return pattern.test(mobile);
+        }/*,
+
+        'bhyModal':{
+            'modal':function(title,text){
+                var $modal = $('<div class="am-modal am-modal-no-btn" tabindex="-1" id="bhy-modal"><div class="am-modal-dialog"><div class="am-modal-hd">'+title+'<a href="javascript: void(0)" class="am-close am-close-spin" data-am-modal-close>&times;</a> </div> <div class="am-modal-bd">'+text+'</div> </div> </div>');
+                $('body').append($modal);
+                $modal.modal();
+            },
+            'alert':function(text){
+                var $modal = $('<div class="am-modal am-modal-alert" tabindex="-1" id="bhy-alert"><div class="am-modal-dialog"><div class="am-modal-bd">'+text+'</div><div class="am-modal-footer"><span class="am-modal-btn">确定</span></div></div></div>');
+                $('body').append($modal);
+                $modal.modal();
+            },
+            'confirm':function(){
+
+            }
+        }*/
     };
-    return ar
-});
-
