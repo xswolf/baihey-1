@@ -9,7 +9,7 @@ define(['angular','app/module','app/directive/directiveApi'
 
     module.controller("myCtrl" , ['app.serviceApi','$scope',function (api,$scope ) {
         $scope.data = 123;
-        $scope.title = 'this title';
+        $scope.status = 123;
         var r = api.getLoginStatus()
         console.log(r)
     }])
