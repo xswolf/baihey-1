@@ -59,7 +59,6 @@ define(['jquery', 'angular', 'app/module', 'app/directive/directiveApi'
         // 获取验证码
         $scope.getCode = function () {
             if (!validatePhone($scope.mobile)) return; //验证手机号码格式
-            LOCAL_STORAGE
             //计时
             $scope.codeSwitch = true;
             $scope.codeCls = true;
