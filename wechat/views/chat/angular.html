@@ -1,11 +1,7 @@
 <script>
-    require(['angular',"app/controller/user"],function(angular){
-        'use strict';
-        angular.bootstrap(document,['webApp']);
 
-    });
 </script>
-<div ng-controller="myCtrl">
+<div ng-controller="login">
 Your name: <input type="text" ng-model="yourname" id="tt" placeholder="World">
 <hr>
 Hello {{yourname || 'World'}}!

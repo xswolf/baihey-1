@@ -10,30 +10,10 @@
         <link href="/wechat/web/css/base.css" rel="stylesheet">
         <link href="/wechat/web/css/index.css" rel="stylesheet">
     </head>
-    <script data-main="/wechat/web/js/app" src="/wechat/web/js/plugin/requirejs/require.js"></script>
+    <script data-main="../js/app" src="/wechat/web/js/plugin/requirejs/require.js"></script>
+<!--    <script data-main="../js/build" src="/wechat/web/js/plugin/requirejs/require.js"></script>-->
     <script>
-        require.config({
-            urlArgs: "bust=v3"+Math.random(), // 清除缓存
-            baseUrl: '/wechat/web/js/',
-            paths: {
-                jquery: 'plugin/jquery/jquery',
-                angular: 'plugin/angular/angular.min',
-                "angular-route": "plugin/angular/angular-route",
-                bootstrap:'plugin/bootstrap/bootstrap.min'
-            },
-            shim:{
-                angular:{
-                    exports:"angular"
-                },
-                "angular-route":{
-                    deps:['angular'],
-                    exports:"angular-route"
-                },
-                jquery : {
-                    exports:"jquery"
-                }
-            }
-        });
+
 
     </script>
 
