@@ -19,18 +19,15 @@ define(['jquery', 'angular', 'app/module', 'app/directive/directiveApi'
             $scope.sexCk2 = false;
             $scope.sexCk1 = true;
             $scope.User.sex = 1;
-            $scope.$apply();
         }
         $scope.selSex2 = function () {
             $scope.sexCk1 = false;
             $scope.sexCk2 = true;
             $scope.User.sex = 2;
-            $scope.$apply();
         }
 
         //获取验证码
-        $scope.getCode = function ($event) {
-            $event.stopPropagation();
+        $scope.getCode = function () {
 
             if (!ar.validateMobile($scope.mobile)) {   //验证手机号码格式
                 $('#bhy-alert1').modal();

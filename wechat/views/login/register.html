@@ -52,7 +52,7 @@
                         type="button" class="fr getCode" ng-click="getCode()" ng-init="codeBtn='获取验证码';codeSwitch=false;codeCls=false;"
                          ng-disabled="codeSwitch" ng-class="{true:'dslb',false:''}[codeCls]" value="{{codeBtn}}">-->
 
-                    <a href="javascript:;" class="fr getCode" ng-click="getCode($event)" ng-bind="codeBtn" ng-class="{true:'dslb',false:''}[codeCls]" ng-disabled="codeSwitch">获取验证码</a>
+                    <a href="javascript:;" class="fr getCode" ng-click="codeSwitch || getCode()" ng-bind="codeBtn" ng-class="{true:'dslb',false:''}[codeCls]" ng-disabled="codeSwitch">获取验证码</a>
 
                 </div>
                 <div class="form-group mt30">
