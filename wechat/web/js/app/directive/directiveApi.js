@@ -42,6 +42,15 @@ define(['app/module'], function (module) {
         }
     });
 
+    module.directive("config" , function () {
+        return {
+            restrict : "E",
+            link : function ($scope, element) {
+                console.log(element.html());
+                //$scope.Chat.config =
+            }
+        }
+    });
 
 })
 

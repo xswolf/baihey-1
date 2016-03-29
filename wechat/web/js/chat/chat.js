@@ -2,10 +2,10 @@
  * Created by Administrator on 2016/3/11.
  */
 
-define(['jquery'] , function(){
+define(function(){
     var chat = {
-        url : "ws://120.76.84.162:8080",
-        //url : "ws://127.0.0.1:8080",
+        //url : "ws://120.76.84.162:8080",
+        url : "ws://127.0.0.1:8080",
         name: '',
         esc : function esc(da) {
             if (da == null || da == '') return ;

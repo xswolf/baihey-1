@@ -20,6 +20,12 @@ define(['app/module'] , function (module) {
         }
 
 
+        api.wxConfig = function (wx ) {
+
+            return $http.get('../chat/config');
+
+        }
+
         return api;
     }])
 });

@@ -11,7 +11,7 @@
     </script>
 
 <!-- BOX -->
-<div class="box border green chat-window">
+<div class="box border green chat-window" ng-controller="Chat">
     <div class="box-title">
         <h4><i class="fa fa-comments"></i>Chat Window</h4>
         <div class="tools">
@@ -31,38 +31,40 @@
     </div>
     <div class="box-body big">
         <div class="scroller" data-height="450px" data-always-visible="1" data-rail-visible="1">
-            <ul class="media-list chat-list">
-                <li class="media other_send" style="display: none">
-                    <a class="pull-left" href="#">
+            <ul class="media-list chat-list" ng-repeat="item in chatContent">
+                <li class="media other_send">
+                    <a  ng-class="{true:'pull-right',false:'pull-left'}[item.isSelf]" href="#">
                         <img class="media-object" alt="Generic placeholder image" src="/backend/web/CloudAdmin/img/chat/headshot1.jpg">
                     </a>
-                    <div class="media-body chat-pop">
+                    <div ng-class="{true:'pull-right',false:'pull-left'}[item.isSelf]" class="media-body chat-pop">
                         <h4 class="media-heading">John Doe <span class="pull-right"><i class="fa fa-clock-o"></i> <abbr class="timeago" title="" >Oct 9, 2013</abbr> </span></h4>
-                        <p class="cot"></p>
+                        <p class="cot">{{item.nrong}}</p>
 
                     </div>
                 </li>
-                <li class="media self_send" style="display: none">
-                    <a class="pull-right" href="#">
-                        <img class="media-object"  alt="Generic placeholder image" src="/backend/web/CloudAdmin/img/chat/headshot2.jpg">
-                    </a>
-                    <div class="pull-right media-body chat-pop mod">
-                        <h4 class="media-heading">You <span class="pull-left"><abbr class="timeago" title="Oct 10, 2013" ></abbr> <i class="fa fa-clock-o"></i></span></h4></h4>
-                        <span class="cot">
-                        </span>
-                    </div>
-                </li>
+                <!--<li class="media self_send">-->
+                    <!--<a class="pull-right" href="#">-->
+                        <!--<img class="media-object"  alt="Generic placeholder image" src="/backend/web/CloudAdmin/img/chat/headshot2.jpg">-->
+                    <!--</a>-->
+                    <!--<div class="pull-right media-body chat-pop mod">-->
+                        <!--<h4 class="media-heading">You <span class="pull-left"><abbr class="timeago" title="Oct 10, 2013" ></abbr> <i class="fa fa-clock-o"></i></span></h4></h4>-->
+                        <!--<img src="weixin://resourceid/817813978c1ffe3cc91d4a7e2b949912">-->
+                        <!--<span class="cot">-->
+                        <!--</span>-->
+                    <!--</div>-->
+                <!--</li>-->
 
             </ul>
         </div>
         <div class="divide-20"></div>
         <div class="chat-form">
             <div class="input-group">
-                <input type="hidden" value='{!$config}}' id="config">
-                <input type="hidden" value="{!$name}}" id="self_name">
-                <input type="hidden" value="{!$sendName}}" id="send_name">
-                <input type="text" id="send_message" class="form-control">
-                <span class="input-group-btn"> <button class="btn btn-primary" id="send" type="button"><i class="fa fa-check"></i></button> </span>
+                <config></config>
+                <input type="hidden" ng-model="Chat.config" ng-init="Chat.config='{!$config}}'" id="config">
+                <input type="hidden" ng-model="name" ng-init="name='{!$name}}'" id="self_name">
+                <input type="hidden" ng-model="sendName" ng-init="sendName='{!$sendName}}'" id="send_name">
+                <input type="text" id="send_message" ng-model="message" class="form-control">
+                <span class="input-group-btn"> <button ng-click="send()" class="btn btn-primary" id="send" type="button"><i class="fa fa-check"></i>点击</button> </span>
                 <span class="input-group-btn"> <button class="btn btn-primary wx_start_record" type="button"><i class="fa fa-check"></i></button> </span>
                 <span class="input-group-btn"> <button class="btn btn-primary wx_end_record" type="button"><i class="fa fa-check"></i></button> </span>
                 <span class="input-group-btn"> <button class="btn btn-primary wx_pic" type="button"><i class="fa fa-check"></i></button> </span>
@@ -71,104 +73,109 @@
     </div>
 </div>
 <script>
-    requirejs([
-        'chat/wechatInterface',
-        'chat/chat',
-        'comm'
-    ], function (wx,chat, comm) {
-        document.oncontextmenu=stop;
-        // 微信接口调用
-        var config = {!$config};
-        wx.setConfig(config);
-
-        // 初始化聊天
-        var socket = chat.init($("#self_name").val());
-        var toUser = $("#send_name").val();
-        $(document).on('click', '#send', function () { // 点击发送按钮
-            var message = $("#send_message").val();
-            socket.send('&nr=' + chat.esc(message) + '&key=' + toUser);
-
-        });
-
-        // 开始录音
-        $(document).on('click','.wx_start_record',function(){
-            console.log('start record')
-            wx.startRecord({
-                cancel: function () {
-                    alert('用户拒绝授权录音');
-                }
-            });
-        });
-
-
-        // 结束录音
-        $(document).on('click','.wx_end_record',function(){
-            console.log('end record')
-            wx.send_record(toUser);
-
-        });
-
-        // 上传图片
-        $(document).on('click','.wx_pic',function() {
-            console.log('up pic');
-            wx.send_pic(toUser);
-        });
-
-
-        chat.onMessageCallback = function (msg) {   // 服务器返回消息处理函数
-
-            var self_name = $("#self_name").val();
-            var data = JSON.parse(msg.data);
-            var msgCot = data.sendName !=  self_name ? $(".self_send:first").clone() : msgCot = $(".other_send:first").clone();
-            msgCot.find('.cot').html(data.nrong);
-            msgCot.find('.timeago').html(comm.currentDate());
-            msgCot.show();
-
-
-            switch (data.type) {
-                case 'send':
-                    break;
-                case 'record':
-                    wx.downloadVoice({
-                        serverId: data.nrong, // 需要下载的音频的服务器端ID，由uploadVoice接口获得
-                        success: function (res) {
-                            wx.playVoice({
-                                localId: res.localId // 需要播放的音频的本地ID，由stopRecord接口获得
-                            });
-                        }
-                    });
-                    break;
-                case 'pic':
-                    wx.downloadImage({
-                        serverId: data.nrong, // 需要下载的图片的服务器端ID，由uploadImage接口获得
-                        isShowProgressTips: 1, // 默认为1，显示进度提示
-                        success: function (res) {
-                            if(res.localId != null) {
-                                var img = '<img str="'+res.localId+'" />';
-                                msgCot.find('.cot').html(img);
-                                /*wx.previewImage({
-                                    current: res.localId, // 当前显示图片的http链接
-                                    urls: [res.localId] // 需要预览的图片http链接列表
-                                });*/
-                            } else {
-                                alert('没有图片url');
-                            }
-                        }
-                    });
-                    break;
-                default:
-                    return false;
-            }
-
-            $(".chat-list").append(msgCot);
-
-
-        }
-
-        var send_message = function () {
-            socket.send('&nr=' + chat.esc('heartbeat') + '&key=heartbeat');
-        }
-        window.setInterval(send_message , 60000);
+    require(['angular',"app/controller/chat"],function(angular){
+        'use strict';
+        angular.bootstrap(document,['webApp']);
 
     });
+//    requirejs([
+//        'chat/wechatInterface',
+//        'chat/chat',
+//        'comm'
+//    ], function (wx,chat, comm) {
+//        document.oncontextmenu=stop;
+//        // 微信接口调用
+//        var config = {!$config};
+//        wx.setConfig(config);
+//
+//        // 初始化聊天
+//        var socket = chat.init($("#self_name").val());
+//        var toUser = $("#send_name").val();
+//        $(document).on('click', '#send', function () { // 点击发送按钮
+//            var message = $("#send_message").val();
+//            socket.send('&nr=' + chat.esc(message) + '&key=' + toUser);
+//
+//        });
+//
+//        // 开始录音
+//        $(document).on('click','.wx_start_record',function(){
+//            console.log('start record')
+//            wx.startRecord({
+//                cancel: function () {
+//                    alert('用户拒绝授权录音');
+//                }
+//            });
+//        });
+//
+//
+//        // 结束录音
+//        $(document).on('click','.wx_end_record',function(){
+//            console.log('end record')
+//            wx.send_record(toUser);
+//
+//        });
+//
+//        // 上传图片
+//        $(document).on('click','.wx_pic',function() {
+//            console.log('up pic');
+//            wx.send_pic(toUser);
+//        });
+//
+//
+//        chat.onMessageCallback = function (msg) {   // 服务器返回消息处理函数
+//
+//            var self_name = $("#self_name").val();
+//            var data = JSON.parse(msg.data);
+//            var msgCot = data.sendName !=  self_name ? $(".self_send:first").clone() : msgCot = $(".other_send:first").clone();
+//            msgCot.find('.cot').html(data.nrong);
+//            msgCot.find('.timeago').html(comm.currentDate());
+//            msgCot.show();
+//
+//
+//            switch (data.type) {
+//                case 'send':
+//                    break;
+//                case 'record':
+//                    wx.downloadVoice({
+//                        serverId: data.nrong, // 需要下载的音频的服务器端ID，由uploadVoice接口获得
+//                        success: function (res) {
+//                            wx.playVoice({
+//                                localId: res.localId // 需要播放的音频的本地ID，由stopRecord接口获得
+//                            });
+//                        }
+//                    });
+//                    break;
+//                case 'pic':
+//                    wx.downloadImage({
+//                        serverId: data.nrong, // 需要下载的图片的服务器端ID，由uploadImage接口获得
+//                        isShowProgressTips: 1, // 默认为1，显示进度提示
+//                        success: function (res) {
+//                            if(res.localId != null) {
+//                                var img = '<img str="'+res.localId+'" />';
+//                                msgCot.find('.cot').html(img);
+//                                /*wx.previewImage({
+//                                    current: res.localId, // 当前显示图片的http链接
+//                                    urls: [res.localId] // 需要预览的图片http链接列表
+//                                });*/
+//                            } else {
+//                                alert('没有图片url');
+//                            }
+//                        }
+//                    });
+//                    break;
+//                default:
+//                    return false;
+//            }
+//
+//            $(".chat-list").append(msgCot);
+//
+//
+//        }
+//
+//        var send_message = function () {
+//            socket.send('&nr=' + chat.esc('heartbeat') + '&key=heartbeat');
+//        }
+//        window.setInterval(send_message , 60000);
+//
+//    });
 </script>

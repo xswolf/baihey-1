@@ -23,10 +23,18 @@ class ChatController extends BaseController{
     }
 
     public function actionChat(){
-
-        $this->assign('config' , json_encode(\Yii::$app->wechat->jsApiConfig([],false)));
+        $config = str_replace("\"" , "'" , json_encode(\Yii::$app->wechat->jsApiConfig([],false)));
+        $config = addslashes($config);
+        $this->assign('config' , $config);
         return $this->render(['name' => \Yii::$app->request->get('name') ,
                               'sendName'=>\Yii::$app->request->get('sendName')] , '');
+    }
+
+    public function actionConfig(){
+        $config = str_replace("\"" , "'" , json_encode(\Yii::$app->wechat->jsApiConfig([],false)));
+        $this->assign('config' , $config);
+
+        $this->renderAjax();
     }
 
 

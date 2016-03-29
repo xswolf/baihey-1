@@ -24,8 +24,8 @@ class ServerSocketController extends Controller {
     private $sjen = [ ];//接收数据的长度
     private $ar = [ ];//加密key
     private $n = [ ];
-    private $address = '120.76.84.162';
-//    private $address = '127.0.0.1';
+//    private $address = '120.76.84.162';
+    private $address = '127.0.0.1';
     private $port = 8080;
 
 
@@ -265,7 +265,7 @@ class ServerSocketController extends Controller {
         } else {
             $str        = $this->code( json_encode( $ar ) );
             $key        = $this->getReceived( $key );
-            socket_write( $this->users[ $k ]['socket'] , $str , strlen( $str ) );
+//            socket_write( $this->users[ $k ]['socket'] , $str , strlen( $str ) );
             if ( $this->users[ $key ]['socket'] != null ) {
                 $this->e( $str . " messages is send\n" );
                 socket_write( $this->users[ $key ]['socket'] , $str , strlen( $str ) );
