@@ -15,41 +15,7 @@
     <link href="/wechat/web/js/plugin/icheck/orange.css" rel="stylesheet">
 </head>
 <script data-main="/wechat/web/js/app" src="/wechat/web/js/plugin/requirejs/require.js"></script>
-<script>
-    require.config({
-        urlArgs: "bust=v3" + Math.random(), // 清除缓存
-        baseUrl: '/wechat/web/js/',
-        paths: {
-            jquery: 'plugin/jquery/jquery',
-            angular: 'plugin/angular/angular.min',
-            "angular-route": "plugin/angular/angular-route",
-            bootstrap: 'plugin/bootstrap/bootstrap.min',
-            amezeui: 'plugin/amezeui/amazeui.min',
-            comm: 'comm'
-        },
-        shim: {
-            angular: {
-                exports: "angular"
-            },
-            "angular-route": {
-                deps: ['angular'],
-                exports: "angular-route"
-            },
-            jquery: {
-                exports: "jquery"
-            }
-        }
-    });
 
-</script>
-
-<script>
-    require(['angular', 'app/controller/user', 'comm', '//cdn.amazeui.org/amazeui/2.5.2/js/amazeui.min.js'], function (angular) {
-        'use strict';
-        angular.bootstrap(document, ['webApp']);
-
-    })
-</script>
 <!--[if lte IE 8 ]>
 <script src="/wechat/web/js/plugin/jquery/jquery-1.12.2.min.js"></script>
 <script src="http://cdn.staticfile.org/modernizr/2.8.3/modernizr.js"></script>
