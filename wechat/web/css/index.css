@@ -125,14 +125,20 @@ a.weibo {
   margin-right: 0;
 }
 /* register */
-.getCode {
+.getCode,
+.getCode:hover,
+.getCode:focus {
   background: #1b9af7;
   padding: 9px 8px;
   border: medium none;
   color: #fff;
   border-radius: 5px;
+  cursor: pointer;
+  text-decoration: none;
 }
-.dslb {
+.dslb,
+.dslb:hover,
+.dslb:focus {
   color: #ccc;
   background: #eee;
 }
@@ -147,6 +153,7 @@ a.weibo {
   width: 18px;
   height: 18px;
   vertical-align: middle;
+  margin-right: 10px;
 }
 i.checked {
   background: url("/wechat/web/images/check.png") no-repeat center;

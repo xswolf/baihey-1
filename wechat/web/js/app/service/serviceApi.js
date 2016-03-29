@@ -21,6 +21,7 @@ define(['app/module'], function (module) {
          * @returns {*}
          */
         api.getMobileIsExist = function (mobile) {
+            return true;
             return $http.get('url', {params: {mobile: mobile}});
         }
 

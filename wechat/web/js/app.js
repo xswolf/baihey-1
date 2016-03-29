@@ -8,7 +8,9 @@ require.config({
         jquery: 'plugin/jquery/jquery',
         angular: 'plugin/angular/angular.min',
         "angular-route": "plugin/angular/angular-route",
-        bootstrap:'plugin/bootstrap/bootstrap.min'
+        bootstrap:'plugin/bootstrap/bootstrap.min',
+        amezeui: 'plugin/amezeui/amazeui.min',
+        comm: 'comm'
     },
     shim:{
         angular:{
