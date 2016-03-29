@@ -15,48 +15,57 @@ define(['jquery', 'angular', 'app/module', 'app/directive/directiveApi'
         }
 
         $scope.User = {};
+
         $scope.selSex1 = function () {
             $scope.sexCk2 = false;
             $scope.sexCk1 = true;
             $scope.User.sex = 1;
         }
+
+        // 女生点击事件
         $scope.selSex2 = function () {
             $scope.sexCk1 = false;
             $scope.sexCk2 = true;
             $scope.User.sex = 2;
         }
 
-        //获取验证码
-        $scope.getCode = function () {
-
-            if (!ar.validateMobile($scope.mobile)) {   //验证手机号码格式
+        function validatePhone(phone){
+            if (!ar.validateMobile(phone)) {
                 $('#bhy-alert1').modal();
                 return false;
             }
 
-
-            if (!api.getMobileIsExist($scope.mobile)) { //验证手机是否已存在
+            if (!api.getMobileIsExist(phone)) { //验证手机是否已存在
                 $('#bhy-alert2').modal();
                 return false;
             }
+            return true;
+        }
+
+        $scope.startTime = function() {
+            $scope.max_time -= 1;
+            $scope.codeBtn = "重新发送" + $scope.max_time;
+            $scope.$apply();
+        }
+
+        $scope.endTime = function(){
+            $scope.codeSwitch = false;
+            $scope.codeCls = false;
+            $scope.codeBtn = '获取验证码';
+            clearInterval($scope.timer);
+            $scope.$apply();
+        }
+
+        // 获取验证码
+        $scope.getCode = function () {
+            if (!validatePhone($scope.mobile)) return; //验证手机号码格式
+            LOCAL_STORAGE
             //计时
             $scope.codeSwitch = true;
             $scope.codeCls = true;
-            max_time = 60;
-            timer = setInterval(function () {
-                max_time -= 1;
-                $scope.codeBtn = "重新发送" + max_time;
-                $scope.$apply();
-            },1000)
-            setTimeout(function(){
-                $scope.codeSwitch = false;
-                $scope.codeCls = false;
-                $scope.codeBtn = '获取验证码';
-                clearInterval(timer);
-                $scope.$apply();
-            },max_time * 1000)
-
-
+            $scope.max_time = 60;
+            $scope.timer = setInterval($scope.startTime,1000);
+            setTimeout($scope.endTime,$scope.max_time * 1000)
 
             /*var btn = $('.getCode');
              btn.prop('disabled', true).addClass('dslb');
