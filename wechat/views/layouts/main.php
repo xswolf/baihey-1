@@ -12,11 +12,6 @@
     </head>
     <script data-main="../js/app" src="/wechat/web/js/plugin/requirejs/require.js"></script>
 <!--    <script data-main="../js/build" src="/wechat/web/js/plugin/requirejs/require.js"></script>-->
-    <script>
-
-
-    </script>
-
     <body>
         <div class="container bhy com_w_100 pr bds0">
 
