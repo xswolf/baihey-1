@@ -14,7 +14,7 @@ class WeChat extends \callmez\wechat\sdk\Wechat{
 
     public function aotures() {
         $token = $this->getAccessToken();
-        $url = "https://api.weixin.qq.com/cgi-bin/get_current_autoreply_info?access_token=$token";
+        $url = "https://api.weixin.qq.com/cgi-bin/media/uploadimg?access_token=$token";
         echo $url;
         $html = file_get_contents($url);
         var_dump($html);exit;
