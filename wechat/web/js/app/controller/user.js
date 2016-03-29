@@ -12,6 +12,16 @@ define(['jquery', 'angular', 'app/module', 'app/directive/directiveApi'
             'height': document.documentElement.clientHeight + 'px'
         }
 
+        $scope.selSexO = function (){
+            $scope.sexCk = false;
+            $scope.sex = 1;
+            $scope.$apply();
+        }
+        $scope.selSexT = function (){
+            $scope.sexCk = true;
+            $scope.sex = 2;
+            $scope.$apply();
+        }
         //获取验证码
         $scope.getCode = function () {
 
@@ -20,7 +30,6 @@ define(['jquery', 'angular', 'app/module', 'app/directive/directiveApi'
                 return false;
             }*/
             $scope.codeSwitch = true;
-            console.log($scope.getCodeBtn);
             $scope.$apply();
 
             /* if (!api.getMobileIsExist($scope.mobile)) { //验证手机是否已存在

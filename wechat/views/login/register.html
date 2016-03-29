@@ -70,10 +70,11 @@
         <div class="login_form tac mr0a">
             <form action="" method="post" name="reg"  >
                 <input type="hidden" name="rememberPass" id="rememberPass" value="1">
-                <div class="form-group"><span class="cor0 sex"><i class="check checked"></i>我是男生</span> <span class="cor0 sex"><i class="check"></i>我是女生</span></div>
+                <input type="hidden" name="sex" ng-model="sex" value="1">
+                <div class="form-group"><span class="cor0 sex" ng-click="selSexO()"><i ng-class="{true:checked,false:check}[sexCk]"></i>我是男生</span> <span class="cor0 sex" ng-click="selSexT()"><i ng-class="{true:checked,false:check}[sexCk]"></i>我是女生</span></div>
                 <div class="form-group">
                     <i class="icon-mobile-phone icon-input"></i>
-                    <input class="login_input mobile" ng-model="formData.mobile" placeholder="请输入正确的手机号码">
+                    <input class="login_input mobile" ng-model="mobile" placeholder="请输入正确的手机号码">
                 </div>
                 <div class="form-group clearfix" ><input class="login_input pass fl mr5" id="code"  ng-model="code" placeholder="请输入短信验证码"
                                                         style="padding-left: 10px !important; width: 60%;"><input

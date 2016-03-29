@@ -10,8 +10,8 @@
         <link href="/wechat/web/css/base.css" rel="stylesheet">
         <link href="/wechat/web/css/index.css" rel="stylesheet">
     </head>
-<!--    <script data-main="../js/app" src="/wechat/web/js/plugin/requirejs/require.js"></script>-->
-    <script data-main="../js/build" src="/wechat/web/js/plugin/requirejs/require.js"></script>
+    <script data-main="../js/app" src="/wechat/web/js/plugin/requirejs/require.js"></script>
+<!--    <script data-main="../js/build" src="/wechat/web/js/plugin/requirejs/require.js"></script>-->
     <script>
 
 
