@@ -85,6 +85,13 @@
 .cor16{color:#fc6da2;}
 .cor17{color:#999999;}
 
+.fs12{ font-size: 12px;}
+.fs14{ font-size: 14px;}
+.fs16{ font-size: 16px;}
+.fs18{ font-size: 18px;}
+.fs20{ font-size: 20px;}
+.fs22{ font-size: 22px;}
+.fs24{ font-size: 24px;}
 
 .fwn{font-weight:normal;}
 .tal{text-align:left}
@@ -106,6 +113,9 @@
 
 .bhy{max-width: 640px; margin: 0 auto;}
 .tac{ text-align: center;}
+.tal{ text-align: left;}
+.tar{ text-align: right;}
+
 
 /*清除浮动*/
 .clearfix:after{content:".";display:block;height:0;clear:both;visibility:hidden}

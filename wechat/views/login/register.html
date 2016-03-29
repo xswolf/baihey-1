@@ -12,6 +12,7 @@
     <link href="/wechat/web/css/plugin/amezeui/amazeui.min.css" rel="stylesheet">
     <link href="/wechat/web/css/base.css" rel="stylesheet">
     <link href="/wechat/web/css/index.css" rel="stylesheet">
+    <link href="/wechat/web/js/plugin/icheck/orange.css" rel="stylesheet">
 </head>
 <script data-main="/wechat/web/js/app" src="/wechat/web/js/plugin/requirejs/require.js"></script>
 <script>
@@ -46,6 +47,7 @@
     require(['angular', 'app/controller/user', 'comm', '//cdn.amazeui.org/amazeui/2.5.2/js/amazeui.min.js'], function (angular) {
         'use strict';
         angular.bootstrap(document, ['webApp']);
+
     })
 </script>
 <!--[if lte IE 8 ]>
@@ -66,18 +68,20 @@
 
 
         <div class="login_form tac mr0a">
-            <form action="" method="post">
+            <form action="" method="post" name="reg"  >
                 <input type="hidden" name="rememberPass" id="rememberPass" value="1">
+                <div class="form-group"><span class="cor0 sex"><i class="check checked"></i>我是男生</span> <span class="cor0 sex"><i class="check"></i>我是女生</span></div>
                 <div class="form-group">
                     <i class="icon-mobile-phone icon-input"></i>
-                    <input class="login_input mobile" ng-model="mobile" placeholder="请输入正确的手机号码">
+                    <input class="login_input mobile" ng-model="formData.mobile" placeholder="请输入正确的手机号码">
                 </div>
-                <div class="form-group clearfix" ng-init="codeSwitch" ><input class="login_input pass fl mr5" id="code" ng-model="codeSwitch" placeholder="请输入短信验证码"
+                <div class="form-group clearfix" ><input class="login_input pass fl mr5" id="code"  ng-model="code" placeholder="请输入短信验证码"
                                                         style="padding-left: 10px !important; width: 60%;"><input
-                        type="button" class="fr getCode" ng-click="getCode()" ng-disabled="codeSwitch"  value="获取验证码"></div>
+                        type="button" class="fr getCode" ng-click="getCode()" ng-disabled="codeSwitch" ng-model="getCodeBtn" value="获取验证码"></div>
                 <div class="form-group mt30">
-                    <button id="login_submit" class="button button-highlight button-rounded button-large">立即注册</button>
+                    <input type="button" id="login_submit" class="button button-highlight button-rounded button-large" ng-click="register()" value="立即注册">
                 </div>
+                <div class="form-group mt15 tal cor0 fs12"><p>注册即表示您同意<a class="agree" href="javascript:;">《嘉瑞百合缘用户协议》</a></p><p>账户密码通过短信发送到您的手机上，请及时前往个人中心修改您的密码。</p></div>
                 <div class="form-group mt50"><h5 class="cor0">或用以下帐号注册</h5></div>
                 <div class="form-group mt30"><a href="" class="third-party qq"></a> <a href=""
                                                                                        class="third-party wechat"></a>
@@ -92,6 +96,9 @@
 
 <alert num="1" body="请输入正确的手机号码"></alert>
 <alert num="2" body="手机号码已存在"></alert>
+<alert num="3" body="验证码错误"></alert>
+<alert num="4" body="网络错误，请稍候再试。"></alert>
+
 </body>
 
 </html>

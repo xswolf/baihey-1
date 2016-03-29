@@ -58,7 +58,7 @@
   display: inline-block;
 }
 .login_form {
-  width: 78%;
+  width: 80%;
 }
 .login_form .icon-input {
   color: #ea8214;
@@ -135,4 +135,22 @@ a.weibo {
 .dslb {
   color: #ccc;
   background: #eee;
+}
+.agree,
+.agree:hover {
+  color: #00adef;
+  text-decoration: none;
+}
+.check {
+  background: url("/wechat/web/images/uncheck.png") no-repeat center;
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+  vertical-align: middle;
+}
+i.checked {
+  background: url("/wechat/web/images/check.png") no-repeat center;
+}
+.sex {
+  vertical-align: top;
 }
