@@ -16,6 +16,7 @@ define(['jquery', 'angular', 'app/module', 'app/directive/directiveApi'
 
         $scope.User = {};
 
+        // 男生点击事件
         $scope.selSex1 = function () {
             $scope.sexCk2 = false;
             $scope.sexCk1 = true;
@@ -30,24 +31,26 @@ define(['jquery', 'angular', 'app/module', 'app/directive/directiveApi'
         }
 
         function validatePhone(phone){
-            if (!ar.validateMobile(phone)) {
+            if (!ar.validateMobile(phone)) {  // 验证手机格式
                 $('#bhy-alert1').modal();
                 return false;
             }
 
-            if (!api.getMobileIsExist(phone)) { //验证手机是否已存在
+            if (!api.getMobileIsExist(phone)) { // 验证手机是否已存在
                 $('#bhy-alert2').modal();
                 return false;
             }
             return true;
         }
 
+        // 开始计时
         $scope.startTime = function() {
             $scope.max_time -= 1;
             $scope.codeBtn = "重新发送" + $scope.max_time;
             $scope.$apply();
         }
 
+        // 结束计时，还原文字
         $scope.endTime = function(){
             $scope.codeSwitch = false;
             $scope.codeCls = false;
@@ -58,7 +61,8 @@ define(['jquery', 'angular', 'app/module', 'app/directive/directiveApi'
 
         // 获取验证码
         $scope.getCode = function () {
-            if (!validatePhone($scope.mobile)) return; //验证手机号码格式
+            if (!validatePhone($scope.mobile)) return; // 验证手机号码格式
+
             //计时
             $scope.codeSwitch = true;
             $scope.codeCls = true;
@@ -66,47 +70,26 @@ define(['jquery', 'angular', 'app/module', 'app/directive/directiveApi'
             $scope.timer = setInterval($scope.startTime,1000);
             setTimeout($scope.endTime,$scope.max_time * 1000)
 
-            /*var btn = $('.getCode');
-             btn.prop('disabled', true).addClass('dslb');
-             max_time = 60;
-             var timer = setInterval(function () {
-             btn_tick(btn, max_time);
-             }, 1000);
-             setTimeout(function () {
-             btn.prop('disabled', false).removeClass('dslb');
-             end_tick(btn, timer);
-             }, max_time * 1000);*/
-
         }
 
+        //注册提交
         $scope.register = function () {
             if (!api.validateCode($scope.code)) {
                 $('#bhy-alert3').modal();
                 return false;
             }
             $scope.formData = {'sex': $scope.User.sex, 'mobile': $scope.User.mobile}; //组装表单数据
-            var result = api.save($scope.formData);
-            if (result.status == 1) {  //注册成功
-                window.location.href = '';
-            } else {                   //注册失败
-                $('#bhy-alert4').modal();
-                return false;
-            }
-        }
 
+            var result = api.save('url',$scope.formData);
+            result.success(function(data){
+                if(data.status == 1){  window.location.href = '';}
+            }).error(function(){ $('#bhy-alert4').modal();})
+
+        }
 
     }])
 
     return module;
 })
 
-function btn_tick(btn) {
-    max_time -= 1;
-    btn.val("重新发送" + max_time);
-}
-
-function end_tick(btn, timerObj) {
-    btn.val("获取验证码");
-    clearInterval(timerObj);
-}
 

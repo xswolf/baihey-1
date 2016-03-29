@@ -11,7 +11,6 @@ define(['app/module','app/service/serviceApi'] , function (module) {
             config.success(function (data) {
                 wx.setConfig(data.config);
                 chat.init($scope.name);
-
             })
 
             $scope.chatContent = []

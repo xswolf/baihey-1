@@ -35,12 +35,12 @@ define(['app/module'], function (module) {
         }
 
         /**
-         * 注册
+         * 提交数据
          * @param formData
          * @returns {*}
          */
-        api.save = function (formData) {
-            return $http.post('url',{params:{data:formData}});
+        api.save = function (url,formData) {
+            return $http.post(url,{params:formData});
         }
 
         api.wxConfig = function (wx ) {
