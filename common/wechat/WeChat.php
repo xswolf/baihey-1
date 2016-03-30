@@ -8,6 +8,9 @@ namespace common\wechat;
  */
 class WeChat extends \callmez\wechat\sdk\Wechat {
 
+    /**
+     * 被动回复
+     */
     public function rassiveReply() {
         $postStr = $GLOBALS["HTTP_RAW_POST_DATA"];
         file_put_contents('./log.txt' , $postStr."\n" ,FILE_APPEND);
@@ -26,13 +29,13 @@ class WeChat extends \callmez\wechat\sdk\Wechat {
 							<FromUserName><![CDATA[%s]]></FromUserName>
 							<CreateTime>%s</CreateTime>
 							<MsgType><![CDATA[%s]]></MsgType>
-							<Content><![CDATA[%s]]></Content>
+							<Event><![CDATA[subscribe]]></Event>
 							<FuncFlag>0</FuncFlag>
 							</xml>";
 
-            $msgType    = "text";
+            $msgType    = "event";
             $content = "<a href='http://wechat.baihey.com/wap/chat/chat?name=1&sendName=12'>自动回复</a>";
-            $resultStr  = sprintf( $textTpl , $fromUsername , $toUsername , $time , $msgType , $content );
+            $resultStr  = sprintf( $textTpl , $fromUsername , $toUsername , $time , $msgType );
 
             if(\Yii::$app->wechat->getMemberInfo($postObj->FromUserName)){
                 file_put_contents('./log.txt' , $postObj->FromUserName."\n" ,FILE_APPEND);
