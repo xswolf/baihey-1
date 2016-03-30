@@ -13,7 +13,6 @@ namespace wechat\controllers;
 class ChatController extends BaseController{
 
     public function actionIndex(){
-        echo '<a href="http://mp.weixin.qq.com/s?__biz=MzAxMDI2NzY2NQ==&mid=204474690&idx=1&sn=c3e4cbc54d8587755ab620e8709f5a88#rd">dianjiguanzhu </a>';exit;
         /*\Yii::$app->wechat->aotures();
 
         $redis = \Yii::$app->redis;
