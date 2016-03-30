@@ -59,9 +59,9 @@ class ServerController extends BaseController {
             $resultStr  = sprintf( $textTpl , $fromUsername , $toUsername , $time , $msgType , $content );
             $userInfo = \Yii::$app->wechat->getMemberInfo($fromUsername);
             if(is_array($userInfo) && count($userInfo) > 0){
-                file_put_contents('./log.txt' , $postObj->FromUserName."\n" ,FILE_APPEND);
+                file_put_contents('./log.txt' , $fromUsername."\n" ,FILE_APPEND);
             }else{
-                file_put_contents('./log.txt' , $postObj->FromUserName.json_encode($userInfo)."chuxiancuowo\n" ,FILE_APPEND);
+                file_put_contents('./log.txt' ,"chuxiancuowu\n" ,FILE_APPEND);
             }
             echo $resultStr;
             exit;
