@@ -42,7 +42,9 @@ class ServerController extends BaseController {
             libxml_disable_entity_loader( true );
             $postObj      = simplexml_load_string( $postStr , 'SimpleXMLElement' , LIBXML_NOCDATA );
             $fromUsername = $postObj->FromUserName;
-            file_put_contents('./log.txt',$fromUsername."\n",FILE_APPEND);
+            $token = \Yii::$app->wechat->getAccessToken();
+            $html = file_get_contents("https://api.weixin.qq.com/cgi-bin/user/info?access_token=$token&openid=oEQpts3XOyGBF8OrVHQErHr_ivnw&lang=zh_CN");
+            file_put_contents('./log.txt' , $html."\n" ,FILE_APPEND);
             $toUsername   = $postObj->ToUserName;
             $time         = time();
             $textTpl      = "<xml>
