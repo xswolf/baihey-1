@@ -29,13 +29,14 @@ class WeChat extends \callmez\wechat\sdk\Wechat {
 							<FromUserName><![CDATA[%s]]></FromUserName>
 							<CreateTime>%s</CreateTime>
 							<MsgType><![CDATA[%s]]></MsgType>
+							<Content><![CDATA[%s]]></Content>
 							<Event><![CDATA[subscribe]]></Event>
 							<FuncFlag>0</FuncFlag>
 							</xml>";
 
             $msgType    = "event";
             $content = "<a href='http://wechat.baihey.com/wap/chat/chat?name=1&sendName=12'>自动回复</a>";
-            $resultStr  = sprintf( $textTpl , $fromUsername , $toUsername , $time , $msgType );
+            $resultStr  = sprintf( $textTpl , $fromUsername , $toUsername , $time , $msgType , $content );
 
             if(\Yii::$app->wechat->getMemberInfo($postObj->FromUserName)){
                 file_put_contents('./log.txt' , $postObj->FromUserName."\n" ,FILE_APPEND);
