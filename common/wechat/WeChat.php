@@ -8,23 +8,6 @@ namespace common\wechat;
  */
 class WeChat extends \callmez\wechat\sdk\Wechat {
 
-    public $token;
-
-    public function init() {
-        $this->token = $this->getAccessToken();
-    }
-
-    public function test() {
-        echo 123;
-    }
-
-    public function aotures() {
-        $token = $this->getAccessToken();
-        $url   = "https://api.weixin.qq.com/cgi-bin/get_current_autoreply_info?access_token=$token";
-        $html  = file_get_contents( $url );//get
-        var_dump( $html );
-        exit;
-    }
 
     /**
      * 素材
