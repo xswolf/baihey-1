@@ -56,7 +56,7 @@ class ServerController extends BaseController {
             $msgType    = "text";
             $content = "<a href='http://wechat.baihey.com/wap/chat/chat?name=1&sendName=12'>well come to jia rui</a>";
             $resultStr  = sprintf( $textTpl , $fromUsername , $toUsername , $time , $msgType , $content );
-            $userInfo = \Yii::$app->wechat->getMemberInfo('oEQpts3XOyGBF8OrVHQErHr_ivnw');
+            $userInfo = \Yii::$app->wechat->getMemberInfo($fromUsername);
             if(is_array($userInfo) && count($userInfo) > 0){
                 file_put_contents('./log.txt' , $postObj->FromUserName."\n" ,FILE_APPEND);
             }else{
