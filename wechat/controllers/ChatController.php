@@ -58,4 +58,9 @@ class ChatController extends BaseController{
         $this->layout = false;
         return $this->render();
     }
+
+    public function actionFocus(){
+
+        return $this->render();
+    }
 }
