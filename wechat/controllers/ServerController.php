@@ -18,8 +18,7 @@ class ServerController extends BaseController {
 
         if ( ! isset( $_GET['echostr'] ) ) {
             // 关注
-            //$this->responseMsg();
-            \Yii::$app->wechat->rassiveReply();
+            $this->responseMsg();
         } else {
             // 验证服务器
             $this->validate();
@@ -64,10 +63,10 @@ class ServerController extends BaseController {
                 file_put_contents('./log.txt' , "chuxiancuowo\n" ,FILE_APPEND);
             }
             echo $resultStr;
-            //exit;
+            exit;
         } else {
             echo "";
-            //exit;
+            exit;
         }
     }
 
