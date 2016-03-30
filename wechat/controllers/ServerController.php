@@ -42,6 +42,7 @@ class ServerController extends BaseController {
             libxml_disable_entity_loader( true );
             $postObj      = simplexml_load_string( $postStr , 'SimpleXMLElement' , LIBXML_NOCDATA );
             $fromUsername = $postObj->FromUserName;
+            file_put_contents('./log.txt',$fromUsername."\n",FILE_APPEND);
             $toUsername   = $postObj->ToUserName;
             $time         = time();
             $textTpl      = "<xml>
