@@ -30,7 +30,7 @@ define(['jquery', 'angular', 'app/module', 'app/directive/directiveApi'
             $scope.User.sex = 2;
         }
 
-        function validatePhone(phone){
+        function validatePhone(phone) {
             if (!ar.validateMobile(phone)) {  // 验证手机格式
                 $('#bhy-alert1').modal();
                 return false;
@@ -44,14 +44,14 @@ define(['jquery', 'angular', 'app/module', 'app/directive/directiveApi'
         }
 
         // 开始计时
-        $scope.startTime = function() {
+        $scope.startTime = function () {
             $scope.max_time -= 1;
             $scope.codeBtn = "重新发送" + $scope.max_time;
             $scope.$apply();
         }
 
         // 结束计时，还原文字
-        $scope.endTime = function(){
+        $scope.endTime = function () {
             $scope.codeSwitch = false;
             $scope.codeCls = false;
             $scope.codeBtn = '获取验证码';
@@ -67,8 +67,8 @@ define(['jquery', 'angular', 'app/module', 'app/directive/directiveApi'
             $scope.codeSwitch = true;
             $scope.codeCls = true;
             $scope.max_time = 60;
-            $scope.timer = setInterval($scope.startTime,1000);
-            setTimeout($scope.endTime,$scope.max_time * 1000)
+            $scope.timer = setInterval($scope.startTime, 1000);
+            setTimeout($scope.endTime, $scope.max_time * 1000)
 
         }
 
@@ -78,12 +78,16 @@ define(['jquery', 'angular', 'app/module', 'app/directive/directiveApi'
                 $('#bhy-alert3').modal();
                 return false;
             }
-            $scope.formData = {'sex': $scope.User.sex, 'mobile': $scope.User.mobile}; //组装表单数据
+            $scope.formData = $scope.User; // 组装表单数据
 
-            var result = api.save('url',$scope.formData);
-            result.success(function(data){
-                if(data.status == 1){  window.location.href = '';}
-            }).error(function(){ $('#bhy-alert4').modal();})
+            var result = api.save('url', $scope.formData);
+            result.success(function (data) {
+                if (data.status == 1) {
+                    window.location.href = '';
+                }
+            }).error(function () {
+                $('#bhy-alert4').modal();
+            })
 
         }
 
