@@ -42,6 +42,7 @@ class ServerController extends BaseController {
             libxml_disable_entity_loader( true );
             $postObj      = simplexml_load_string( $postStr , 'SimpleXMLElement' , LIBXML_NOCDATA );
             $fromUsername = $postObj->FromUserName;
+            $fromUsername = trim($fromUsername);
             $toUsername   = $postObj->ToUserName;
             $time         = time();
             $textTpl      = "<xml>
@@ -56,11 +57,11 @@ class ServerController extends BaseController {
             $msgType    = "text";
             $content = "<a href='http://wechat.baihey.com/wap/chat/chat?name=1&sendName=12'>well come to jia rui</a>";
             $resultStr  = sprintf( $textTpl , $fromUsername , $toUsername , $time , $msgType , $content );
-
-            if(\Yii::$app->wechat->getMemberInfo($postObj->FromUserName)){
-                file_put_contents('./log.txt' , $postObj->FromUserName."\n" ,FILE_APPEND);
+            $userInfo = \Yii::$app->wechat->getMemberInfo($fromUsername);
+            if(is_array($userInfo) && count($userInfo) > 0){
+                file_put_contents('./log.txt' , $fromUsername."\n" ,FILE_APPEND);
             }else{
-                file_put_contents('./log.txt' , "chuxiancuowo\n" ,FILE_APPEND);
+                file_put_contents('./log.txt' ,"chuxiancuowu\n" ,FILE_APPEND);
             }
             echo $resultStr;
             exit;
