@@ -18,7 +18,7 @@ class ServerController extends BaseController {
 
         if ( ! isset( $_GET['echostr'] ) ) {
             // 关注
-            $this->responseMsg();
+            //$this->responseMsg();
             \Yii::$app->wechat->rassiveReply();
         } else {
             // 验证服务器
