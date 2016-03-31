@@ -115,7 +115,7 @@
 .tac{ text-align: center;}
 .tal{ text-align: left;}
 .tar{ text-align: right;}
-
+.form-group {  margin-bottom: 15px;}
 
 /*清除浮动*/
 .clearfix:after{content:".";display:block;height:0;clear:both;visibility:hidden}
