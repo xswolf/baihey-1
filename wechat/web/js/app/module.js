@@ -11,7 +11,7 @@ define(['angular','uiRoute'], function (angular) {
 
         $stateProvider.state("index", {
             url: "/index",
-            templateUrl: "../user/login.html"
+            templateUrl: "user/login.html"
         })
     });
 
