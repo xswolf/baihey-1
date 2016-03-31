@@ -17,7 +17,6 @@ class ServerController extends BaseController {
     public function actionEvent() {
 
         if ( ! isset( $_GET['echostr'] ) ) {
-            file_put_contents('./log.txt' , $_GET['echostr']."\n" ,FILE_APPEND);
             // 关注
             $this->responseMsg();
         } else {
@@ -36,6 +35,7 @@ class ServerController extends BaseController {
         $postStr = $GLOBALS["HTTP_RAW_POST_DATA"];
         file_put_contents('./log.txt' , $postStr."\n" ,FILE_APPEND);
 
+        file_put_contents('./log.txt' , json_encode($_GET)."\n" ,FILE_APPEND);
         //extract post data
         if ( ! empty( $postStr ) ) {
             /* libxml_disable_entity_loader is to prevent XML eXternal Entity Injection,
