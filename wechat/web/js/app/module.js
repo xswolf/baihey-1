@@ -1,9 +1,9 @@
 /**
  * Created by Administrator on 2016/3/22.
  */
-define(['angular','uiRoute'], function (angular) {
+define(['angular','uiRoute'], function (ng) {
 
-    var app = angular.module('webApp',['ui.router']);
+    var app = ng.module('webApp',['ui.router']);
 
     app.config(function ($stateProvider, $urlRouterProvider) {
 

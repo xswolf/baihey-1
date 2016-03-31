@@ -6,7 +6,7 @@ require.config({
     baseUrl: '/wechat/web/js/',
     paths: {
         jquery: 'plugin/jquery/jquery',
-        angular: 'plugin/angular/angular',
+        angular: 'plugin/angular/angular.min',
         uiRoute: "plugin/angular/angular-ui-router.min",
         bootstrap:'plugin/bootstrap/bootstrap.min',
         amezeui: 'plugin/amezeui/amazeui.min',
