@@ -74,36 +74,17 @@
 .login_form i.ck {
   color: #fff;
 }
-.login_form .forgetpass:hover {
+.login_form .reg_link,
+.login_form .forgetpass_link {
+  text-decoration: underline;
+}
+.login_form .reg_link:hover,
+.login_form .forgetpass_link:hover {
   text-decoration: none;
   color: #fff;
 }
 .login_form .check_pass {
   cursor: pointer;
-}
-.login_input {
-  margin: 0;
-  min-width: 0;
-  padding-bottom: 8px;
-  padding-left: 33px !important;
-  padding-right: 8px;
-  padding-top: 10px;
-  width: 100%;
-}
-.login_input {
-  background-color: #fff;
-  border: 1px solid #cccccc;
-  border-radius: 4px;
-  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
-  color: #555555;
-  display: block;
-  font-size: 14px;
-  height: 38px;
-  line-height: 1.42857;
-  padding: 6px 12px;
-  transition: border-color 0.15s ease-in-out 0s, box-shadow 0.15s ease-in-out 0s;
-  vertical-align: middle;
-  width: 100%;
 }
 .third-party {
   display: inline-block;
@@ -148,17 +129,12 @@ a.weibo {
   text-decoration: none;
 }
 .check {
-  background: url("/wechat/web/images/uncheck.png") no-repeat center;
-  display: inline-block;
-  width: 18px;
-  height: 18px;
-  vertical-align: middle;
-  margin-right: 10px;
-}
-i.checked {
-  background: url("/wechat/web/images/check.png") no-repeat center;
+  font-size: 20px;
+  top: 0;
+  left: 0;
 }
 .sex {
-  vertical-align: top;
-  margin: 0 5%;
+  cursor: pointer;
+  display: inline-block;
+  padding-left: 24px;
 }
