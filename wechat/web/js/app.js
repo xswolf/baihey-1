@@ -7,7 +7,7 @@ require.config({
     paths: {
         jquery: 'plugin/jquery/jquery',
         angular: 'plugin/angular/angular.min',
-        "uiRoute": "plugin/angular/angular-ui-router.min",
+        uiRoute: "plugin/angular/angular-ui-router.min",
         bootstrap:'plugin/bootstrap/bootstrap.min',
         amezeui: 'plugin/amezeui/amazeui.min',
         comm: 'comm'
@@ -27,7 +27,7 @@ require.config({
 });
 
 
-require(['angular',"app/controller/listController"],function(angular){
+define(['angular',"app/controller/listController"],function(angular){
     'use strict';
     angular.bootstrap(document,['webApp']);
 
