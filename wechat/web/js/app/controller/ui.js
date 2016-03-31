@@ -6,7 +6,7 @@ define(['angular','app/module','app/directive/directiveApi'
 ,'app/service/serviceApi'
 ], function (angular,module,directiveApi,service) {
 
-    module.controller("modal" , ['app.serviceApi','$scope',function (api,$scope ) {
+    module.controller("ui" , ['app.serviceApi','$scope',function (api,$scope ) {
 
 
 

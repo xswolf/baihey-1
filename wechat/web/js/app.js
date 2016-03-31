@@ -10,6 +10,7 @@ require.config({
         uiRoute: "plugin/angular/angular-ui-router.min",
         bootstrap:'plugin/bootstrap/bootstrap.min',
         amezeui: 'plugin/amezeui/amazeui.min',
+        "ionic-bundle" : 'plugin/ionic/ionic.bundle.min',
         comm: 'comm'
     },
     shim:{

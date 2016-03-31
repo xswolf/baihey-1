@@ -9,30 +9,34 @@ define(['app/module', 'app/directive/directiveApi'
 
     // 注册
     module.controller("register", ['app.serviceApi', '$scope', function (api, $scope) {
+
         $scope.codeBtn = '获取验证码';
+
         //设定页面高度为屏幕高度
         $scope.winHeight = {
             'height': document.documentElement.clientHeight + 'px'
         }
-        $scope.sexCk1 = false;
-        $scope.sexCk2 = false;
+
+        $scope.User = {};
+
+        $scope.User.sex = {
+            man : false,
+            woman : false
+        }
+
 
         require(['jquery'], function ($) {
 
-            $scope.User = {};
-
             // 男生点击事件
             $scope.selSex1 = function () {
-                $scope.sexCk2 = false;
-                $scope.sexCk1 = true;
-                $scope.User.sex = 1;
+                $scope.User.sex.man = true;
+                $scope.User.sex.woman = false;
             }
 
             // 女生点击事件
             $scope.selSex2 = function () {
-                $scope.sexCk1 = false;
-                $scope.sexCk2 = true;
-                $scope.User.sex = 2;
+                $scope.User.sex.man = false;
+                $scope.User.sex.woman = true;
             }
 
             function validatePhone(phone) {
@@ -115,8 +119,6 @@ define(['app/module', 'app/directive/directiveApi'
         }
 
         require(['jquery'], function ($) {
-
-
 
         })
 
