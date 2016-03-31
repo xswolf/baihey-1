@@ -7,7 +7,7 @@ require.config({
     paths: {
         jquery: 'plugin/jquery/jquery',
         angular: 'plugin/angular/angular.min',
-        "ui-route": "plugin/angular/angularUiRouter.min",
+        "uiRoute": "plugin/angular/angularUiRouter.min",
         bootstrap:'plugin/bootstrap/bootstrap.min',
         amezeui: 'plugin/amezeui/amazeui.min',
         comm: 'comm'
@@ -18,7 +18,7 @@ require.config({
         },
         "angular-route":{
             deps:['angular'],
-            exports:"angular-route"
+            exports:"uiRoute"
         },
         jquery : {
             exports:"jquery"
