@@ -3,6 +3,6 @@
  */
 define(['angular'], function (ng) {
 
-    return ng.module('webApp',[]);
+    return ng.module('webApp',['ionic']);
 
 });

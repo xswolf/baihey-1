@@ -6,20 +6,14 @@ require.config({
     baseUrl: '/wechat/web/js/',
     paths: {
         jquery: 'plugin/jquery/jquery',
-        angular: 'plugin/angular/angular.min',
-        uiRoute: "plugin/angular/angular-ui-router.min",
+        angular: 'plugin/ionic/ionic.bundle.min',
         bootstrap:'plugin/bootstrap/bootstrap.min',
         amezeui: 'plugin/amezeui/amazeui.min',
-        "ionic-bundle" : 'plugin/ionic/ionic.bundle.min',
         comm: 'comm'
     },
     shim:{
         angular:{
             exports:"angular"
-        },
-        "angular-route":{
-            deps:['angular'],
-            exports:"uiRoute"
         },
         jquery : {
             exports:"jquery"
