@@ -19,6 +19,7 @@ class BaseController extends Controller{
     protected $assign = [];
 
     public function init() {
+        var_dump($_REQUEST);
         if(!$this->isLogin()) {
 
         }
