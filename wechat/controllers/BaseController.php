@@ -19,11 +19,7 @@ class BaseController extends Controller{
     protected $assign = [];
 
     public function init() {
-        echo 11111111111;
-        var_dump($_REQUEST);exit;
-        if(!$this->isLogin()) {
 
-        }
     }
     /**
      * 判断是否登录
@@ -32,7 +28,7 @@ class BaseController extends Controller{
     public function isLogin()
     {
 
-        return true;
+        return false;
     }
 
     /**
