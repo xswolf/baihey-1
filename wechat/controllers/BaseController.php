@@ -20,10 +20,7 @@ class BaseController extends Controller{
 
     public function init() {
         if(!$this->isLogin()) {
-            var_dump($_GET['echosetr']);exit;
-            if(! isset( $_GET['echostr'])){
 
-            }
         }
     }
     /**
@@ -33,7 +30,7 @@ class BaseController extends Controller{
     public function isLogin()
     {
 
-        return false;
+        return true;
     }
 
     /**

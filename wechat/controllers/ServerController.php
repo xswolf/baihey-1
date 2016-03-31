@@ -17,6 +17,7 @@ class ServerController extends BaseController {
     public function actionEvent() {
 
         if ( ! isset( $_GET['echostr'] ) ) {
+            file_put_contents('./log.txt' , $_GET['echostr']."\n" ,FILE_APPEND);
             // 关注
             $this->responseMsg();
         } else {
