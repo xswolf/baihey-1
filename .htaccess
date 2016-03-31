@@ -17,7 +17,7 @@ RewriteRule ^backend(/.+)?$ /backend/web/$1 [L,PT]
 RewriteCond %{REQUEST_URI} ^/wap/$
 RewriteRule ^(wap)/$ /$1 [R=301,L]
 RewriteCond %{REQUEST_URI} ^/wap
-RewriteRule ^wap(/.+)?$ /wechat/web/$1 [L,PT]
+RewriteRule ^wap(/.+)?$ /wechat/web/ [L,PT]
 
 
 RewriteCond %{REQUEST_URI} ^.*$
