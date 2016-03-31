@@ -52,25 +52,6 @@ define(['app/module'], function (module) {
         }
     });
 
-    module.directive("main" , function () {
-        console.log(12)
-        return {
-            restrict: "EA",
-            replace : true,
-            templateUrl: '<div>123</div>'
-
-
-        }
-    })
-
-    //module.directive("layoutfooter" , function () {
-    //    return {
-    //        restrict: "EA",
-    //        replace : true,
-    //        templateUrl: '/wechat/web/html/common/footer.html'
-    //    }
-    //})
-
 })
 
 
