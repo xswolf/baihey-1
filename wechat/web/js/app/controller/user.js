@@ -93,9 +93,9 @@ define(['app/module', 'app/directive/directiveApi'
                     $('#bhy-alert3').modal();
                     return false;
                 }
-                $scope.formData = {'sex': $scope.User.sex, 'mobile': $scope.User.mobile}; //组装表单数据
+                $scope.formData = {'sex': $scope.User.sex, 'username': $scope.mobile}; //组装表单数据
 
-                var result = api.save('url', $scope.formData);
+                var result = api.save('/wap/user/register', $scope.formData);
                 result.success(function (data) {
                     if (data.status == 1) {
                         window.location.href = '';
