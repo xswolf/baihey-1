@@ -14,7 +14,8 @@ define(['angular','uiRoute'], function (angular) {
             templateUrl: "user/login.html"
         }).state('register' , {
             url : "/register",
-            templateUrl : 'user/register.html'
+            templateUrl : 'user/register.html',
+            controller:'register'
         })
     });
 
