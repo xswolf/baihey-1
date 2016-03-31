@@ -17,6 +17,15 @@ class BaseController extends Controller{
     public $enableCsrfValidation = false;
 
     protected $assign = [];
+
+    public function init() {
+        if(!$this->isLogin()) {
+            var_dump($_GET['echosetr']);exit;
+            if(! isset( $_GET['echostr'])){
+
+            }
+        }
+    }
     /**
      * 判断是否登录
      * @return bool
@@ -24,7 +33,7 @@ class BaseController extends Controller{
     public function isLogin()
     {
 
-        return true;
+        return false;
     }
 
     /**
