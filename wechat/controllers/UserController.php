@@ -6,7 +6,7 @@ namespace wechat\controllers;
  * Class ChargeController
  * @package wechat\controllers
  */
-class LoginController extends BaseController{
+class UserController extends BaseController{
 
     public function beforeAction($action)
     {
@@ -14,7 +14,7 @@ class LoginController extends BaseController{
         return parent::beforeAction($action);
     }
 
-    public function actionIndex(){
+    public function actionLogin(){
         return $this->render();
     }
 
