@@ -7,11 +7,14 @@ define(['angular','uiRoute'], function (angular) {
 
     app.config(function ($stateProvider, $urlRouterProvider) {
 
-        $urlRouterProvider.when("", "/index");
+        $urlRouterProvider.when("", "index");
 
         $stateProvider.state("index", {
             url: "/index",
             templateUrl: "user/login.html"
+        }).state('register' , {
+            url : "/register",
+            templateUrl : 'user/register.html'
         })
     });
 
