@@ -2,11 +2,11 @@
  * Created by Administrator on 2016/3/29.
  */
 require.config({
-    //urlArgs: "bust=v3"+Math.random(), // 清除缓存
+    urlArgs: "bust=v3"+Math.random(), // 清除缓存
     baseUrl: '/wechat/web/js/',
     paths: {
         jquery: 'plugin/jquery/jquery',
-        angular: 'plugin/angular/angular.min',
+        angular: 'plugin/angular/angular',
         uiRoute: "plugin/angular/angular-ui-router.min",
         bootstrap:'plugin/bootstrap/bootstrap.min',
         amezeui: 'plugin/amezeui/amazeui.min',
@@ -27,7 +27,7 @@ require.config({
 });
 
 
-define(['angular',"app/controller/listController"],function(angular){
+require(['angular',"app/controller/listController"],function(angular){
     'use strict';
     angular.bootstrap(document,['webApp']);
 

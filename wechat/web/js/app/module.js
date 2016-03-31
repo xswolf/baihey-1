@@ -9,13 +9,9 @@ define(['angular','uiRoute'], function (angular) {
 
         $urlRouterProvider.when("", "index");
 
-        $stateProvider.state("index", {
-            url: "/index",
-            templateUrl: "user/login.html"
-        }).state('register' , {
-            url : "/register",
-            templateUrl : 'user/register.html',
-            controller:'register'
+        $stateProvider.state("chat", {
+            url: "/chat",
+            templateUrl: "chat/index.html"
         })
     });
 
