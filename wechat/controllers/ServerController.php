@@ -71,8 +71,4 @@ class ServerController extends BaseController {
         }
     }
 
-    public function actionUser(){
-        $result = \Yii::$app->wechat->getMemberInfo("oEQpts_MMapxllPTfwRw0VfGeLSg");
-        var_dump($result);
-    }
 }
