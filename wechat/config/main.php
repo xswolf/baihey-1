@@ -19,10 +19,6 @@ return [
             'appSecret' => 'd5517695e5b9e5c2b3e119affe8302ad',
             'token' => 'jrbhy'
         ],
-        'message' => [
-            'class' => 'common\message\Message'
-        ],
-
         'log' => [
             'traceLevel' => YII_DEBUG ? 3 : 0,
             'targets' => [

@@ -1,13 +1,15 @@
 <?php
 namespace wechat\controllers;
+
 use wechat\models\User;
 
 /**
  * 登录 控制层
- * Class ChargeController
+ * Class UserController
  * @package wechat\controllers
  */
-class UserController extends BaseController{
+class UserController extends BaseController
+{
 
     public function beforeAction($action)
     {
@@ -15,24 +17,26 @@ class UserController extends BaseController{
         return parent::beforeAction($action);
     }
 
-    public function actionLogin(){
+    public function actionLogin()
+    {
         return $this->render();
     }
 
-    public function actionWelcome(){
+    public function actionWelcome()
+    {
         return $this->render();
     }
 
-    public function actionRegister(){
-        if(\Yii::$app->request->post()) {
+    public function actionRegister()
+    {
+        if(\Yii::$app->request->isPost) {
             $userModel = new User();
-            $data['username'] = \Yii::$app->request->post('username');
-            $data['password'] = rand(100000, 999999);
+            $data = \Yii::$app->request->post();
             if($userModel->addUser($data)) {
-                \Yii::$app->message->passwordMessage(13452398854,123456);
-                return $this->renderAjax(11111);
+                \Yii::$app->messageApi->passwordMsg(15084410950,substr($data['mobile'],-6));
+                $this->renderAjax(['status'=>1,'msg'=>'注册成功']);
             } else {
-                return $this->renderAjax(11111);
+                $this->renderAjax(['status'=>0,'msg'=>'注册失败']);
             }
         }
 
@@ -43,17 +47,30 @@ class UserController extends BaseController{
      * 验证手机号是否存在
      * @return string
      */
-    public function actionMobileIsExist() {
-        $username = \Yii::$app->request->get('mobile');
-        $userModel = new User();
-        // 将响应数据转json格式
-        //\Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
-        if($userModel->getUserByName($username)) {
-            //return ['status'=>0,'该手机号已存在'];
-            return 0;
-        } else {
-           //return ['status'=>1,'msg'=>'手机号可用'];
-            return 1;
+    public function actionMobileIsExist()
+    {
+        if (\Yii::$app->request->isGet) {
+            $data = \Yii::$app->request->get();
+            $userModel = new User();
+            if($userModel->getMobileExist($data['mobile'])){
+                $this->renderAjax(['status' => 0, 'msg' => '手机号码已存在']);
+            }else{
+                $this->renderAjax(['status' => 1, 'msg' => '该手机号可以注册']);
+            }
+        }
+    }
+
+    public function actionSendCodeMsg(){
+        if (\Yii::$app->request->isGet) {
+            $data = \Yii::$app->request->get();
+            $this->renderAjax(['status'=>\Yii::$app->messageApi->sendCode($data['mobile'])]);
+        }
+    }
+
+    public function actionValidateCode(){
+        if (\Yii::$app->request->isGet) {
+            $data = \Yii::$app->request->get();
+            $this->renderAjax(['status'=>\Yii::$app->messageApi->validataCode($data['code'])]);
         }
     }
 

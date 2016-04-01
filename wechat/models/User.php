@@ -78,4 +78,15 @@ class User extends \yii\db\ActiveRecord{
         return $row;
     }
 
+    /**
+     * 通过手机号码查询用户是否已存在
+     * @param $mobile
+     * @return bool  存在返回 true  不存在返回 false
+     */
+    public function getMobileExist($mobile){
+
+         return false;
+//        return true;
+    }
+
 }

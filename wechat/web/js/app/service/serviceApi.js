@@ -20,9 +20,12 @@ define(['app/module'], function (module) {
          * @param mobile
          * @returns {*}
          */
-        api.getMobileIsExist = function (mobile) {
-            //return true;
-            return $http.get('/wap/user/mobile-is-exist', {params: {mobile: mobile}});
+        api.getMobileIsExist = function (_mobile) {
+            return $http.get('/wap/user/mobile-is-exist', {params:{mobile: _mobile}});
+        }
+
+        api.sendCodeMsg = function(_mobile){
+            return $http.get('/wap/user/send-code-msg', {params:{mobile:_mobile}});
         }
 
         /**
@@ -31,7 +34,7 @@ define(['app/module'], function (module) {
          * @returns {*}
          */
         api.validateCode = function (code) {
-            return $http.get('url',{params:{code:code}});
+            return $http.get('/wap/user/validate-code',{params:{code:code}});
         }
 
         /**
@@ -40,7 +43,7 @@ define(['app/module'], function (module) {
          * @returns {*}
          */
         api.save = function (url,formData) {
-            return $http.post(url,{params:formData});
+            return $http.post(url,formData);
         }
 
         api.wxConfig = function (wx ) {

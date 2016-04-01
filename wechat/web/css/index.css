@@ -106,17 +106,6 @@ a.weibo {
   margin-right: 0;
 }
 /* register */
-.getCode,
-.getCode:hover,
-.getCode:focus {
-  background: #1b9af7;
-  padding: 9px 8px;
-  border: medium none;
-  color: #fff;
-  border-radius: 5px;
-  cursor: pointer;
-  text-decoration: none;
-}
 .dslb,
 .dslb:hover,
 .dslb:focus {
