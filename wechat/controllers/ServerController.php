@@ -36,7 +36,6 @@ class ServerController extends BaseController {
         $postStr = $GLOBALS["HTTP_RAW_POST_DATA"];
         file_put_contents('./log.txt' , $postStr."\n" ,FILE_APPEND);
 
-        file_put_contents('./log.txt' , json_encode($_GET)."\n" ,FILE_APPEND);
         //extract post data
         if ( ! empty( $postStr ) ) {
             /* libxml_disable_entity_loader is to prevent XML eXternal Entity Injection,
@@ -59,7 +58,7 @@ class ServerController extends BaseController {
                 file_put_contents('./log.txt' ,"chuxiancuowu\n" ,FILE_APPEND);
             }
             echo $resultStr;
-
+            file_put_contents('./log.txt' , $resultStr."\n" ,FILE_APPEND);
             \Yii::$app->wechat->sendMaterial($fromUsername , "TtSb9HO50njLDfRLrBEM_NKXrzVpIgfX9DYtwftdrGQ");
 
             exit;
