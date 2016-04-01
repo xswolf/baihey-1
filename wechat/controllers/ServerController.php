@@ -49,19 +49,7 @@ class ServerController extends BaseController {
 
             $resultStr = \Yii::$app->wechat->responseNews($fromUsername , $toUsername);
 //            $resultStr = \Yii::$app->wechat->responseText($fromUsername , $toUsername);
-            \Yii::$app->wechat->deleteMenu();
-            \Yii::$app->wechat->createMenu([
-                                   [
-                                        'type' => 'click',
-                                        'name' => '嘉瑞百合缘',
-                                        'key' => 'V1001_TODAY_MUSIC'
-                                   ],
-                                   [
-                                        'type' => 'view',
-                                        'name' => '开发中',
-                                        'url' => 'http://wechat.baihey.com/wap/chat/chat'
-                                   ]
-                              ]);
+
 
             $userInfo = \Yii::$app->wechat->getMemberInfo($fromUsername);
             if(is_array($userInfo) && count($userInfo) > 0){
@@ -81,9 +69,20 @@ class ServerController extends BaseController {
     }
 
     public function actionMaterial(){
-//        $material = \Yii::$app->wechat->materialList();
-        \Yii::$app->wechat->sendMaterial("oEQpts_MMapxllPTfwRw0VfGeLSg" , "TtSb9HO50njLDfRLrBEM_NKXrzVpIgfX9DYtwftdrGQ");
-//        var_dump($material);
+        \Yii::$app->wechat->deleteMenu();
+        \Yii::$app->wechat->createMenu([
+            [
+                'type' => 'click',
+                'name' => '嘉瑞百合缘',
+                'key' => 'V1001_TODAY_MUSIC'
+            ],
+            [
+                'type' => 'view',
+                'name' => '开发中',
+                'url' => 'http://wechat.baihey.com/wap/chat/chat'
+            ]
+        ]);
+        echo 123;
     }
 
 }
