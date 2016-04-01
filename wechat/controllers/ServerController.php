@@ -49,7 +49,7 @@ class ServerController extends BaseController {
 
             $resultStr = \Yii::$app->wechat->responseNews($fromUsername , $toUsername);
 //            $resultStr = \Yii::$app->wechat->responseText($fromUsername , $toUsername);
-
+            \Yii::$app->wechat->deleteMenu();
             \Yii::$app->wechat->createMenu([
                                    [
                                         'type' => 'click',
