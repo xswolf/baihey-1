@@ -77,9 +77,9 @@ class ServerController extends BaseController {
     }
 
     public function actionMaterial(){
-        $material = \Yii::$app->wechat->materialList();
+//        $material = \Yii::$app->wechat->materialList();
         \Yii::$app->wechat->sendMaterial("oEQpts_MMapxllPTfwRw0VfGeLSg" , "TtSb9HO50njLDfRLrBEM_NKXrzVpIgfX9DYtwftdrGQ");
-        var_dump($material);
+//        var_dump($material);
     }
 
 }
