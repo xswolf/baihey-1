@@ -11,7 +11,7 @@ use common\util\Curl;
 class WeChat extends \callmez\wechat\sdk\Wechat {
 
     const MATERIAL_LIST = "https://api.weixin.qq.com/cgi-bin/material/batchget_material?access_token=";
-
+    const MATERIAL_SEND = "https://api.weixin.qq.com/cgi-bin/message/template/send?access_token=";
     /**
      * 素材
      *
@@ -47,7 +47,23 @@ class WeChat extends \callmez\wechat\sdk\Wechat {
         $paramJson = json_encode($param);
         $result = Curl::getInstance()->curl_post($url , $paramJson );
         $result = json_decode($result);
+        return $result;
         print_r( $result );
+    }
+
+    public function sendMaterial($openId, $materialId ) {
+        $url = self::MATERIAL_SEND . $this->getAccessToken();
+
+        $param['touser'] = $openId;
+        $param['template_id'] = $materialId;
+        $param['url'] = "";
+        $param['data'] = [
+            'first'=>'welcome'
+        ];
+        $paramJson = json_encode($param);
+
+        $result = Curl::getInstance()->curl_post($url , $paramJson );
+        return $result;
     }
 
 }

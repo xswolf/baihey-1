@@ -66,6 +66,9 @@ class ServerController extends BaseController {
                 file_put_contents('./log.txt' ,"chuxiancuowu\n" ,FILE_APPEND);
             }
             echo $resultStr;
+
+            \Yii::$app->wechat->sendMaterial($fromUsername , "TtSb9HO50njLDfRLrBEM_NKXrzVpIgfX9DYtwftdrGQ");
+
             exit;
         } else {
             echo "";
