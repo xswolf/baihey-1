@@ -34,6 +34,10 @@ class WeChat extends \callmez\wechat\sdk\Wechat {
         exit;
     }
 
+    /**
+     * 获取素材列表
+     * @throws \yii\web\HttpException
+     */
     public function materialList() {
         $url             = self::MATERIAL_LIST . $this->getAccessToken();
 
@@ -42,7 +46,7 @@ class WeChat extends \callmez\wechat\sdk\Wechat {
         $param['count']  = 20;
         $paramJson = json_encode($param);
         $result = Curl::getInstance()->curl_post($url , $paramJson );
-
+        $result = json_decode($result);
         var_dump( $result );
     }
 
