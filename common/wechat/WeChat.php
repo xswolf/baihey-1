@@ -41,7 +41,7 @@ class WeChat extends \callmez\wechat\sdk\Wechat {
         $param['offset'] = 0;
         $param['count']  = 20;
         $paramJson = json_encode($param);
-        $result = Curl::getInstance()->curl_post($url , $paramJson , true);
+        $result = Curl::getInstance()->curl_post($url , $paramJson );
 
         var_dump( $result );
     }
