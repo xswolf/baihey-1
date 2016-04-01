@@ -1,5 +1,6 @@
 <?php
 namespace common\wechat;
+
 use common\util\Curl;
 
 /**
@@ -12,6 +13,7 @@ class WeChat extends \callmez\wechat\sdk\Wechat {
 
     const MATERIAL_LIST = "https://api.weixin.qq.com/cgi-bin/material/batchget_material?access_token=";
     const MATERIAL_SEND = "https://api.weixin.qq.com/cgi-bin/message/template/send?access_token=";
+
     /**
      * 素材
      *
@@ -39,31 +41,37 @@ class WeChat extends \callmez\wechat\sdk\Wechat {
      * @throws \yii\web\HttpException
      */
     public function materialList() {
-        $url             = self::MATERIAL_LIST . $this->getAccessToken();
+        $url = self::MATERIAL_LIST . $this->getAccessToken();
 
         $param['type']   = 'news';
         $param['offset'] = 0;
         $param['count']  = 20;
-        $paramJson = json_encode($param);
-        $result = Curl::getInstance()->curl_post($url , $paramJson );
-        $result = json_decode($result);
+        $paramJson       = json_encode( $param );
+        $result          = Curl::getInstance()->curl_post( $url , $paramJson );
+        $result          = json_decode( $result );
+
         return $result;
         print_r( $result );
     }
 
-    public function sendMaterial($openId, $materialId ) {
-        $url = self::MATERIAL_SEND . $this->getAccessToken();
-
-        $param['touser'] = $openId;
-        $param['template_id'] = $materialId;
-        $param['url'] = "";
-        $param['data'] = [
-            'first'=>'welcome'
-        ];
-        $paramJson = json_encode($param);
-
-        $result = Curl::getInstance()->curl_post($url , $paramJson );
-        return $result;
+    public function responseNews( $toUserName,$fromUserName ) {
+        $newTpl = "<xml>
+                    <ToUserName><![CDATA[%s]]></ToUserName>
+                    <FromUserName><![CDATA[%s]]></FromUserName>
+                    <CreateTime>%s</CreateTime>
+                    <MsgType><![CDATA[news]]></MsgType>
+                    <ArticleCount>1</ArticleCount>
+                    <Articles>
+                    <item>
+                    <Title><![CDATA[%s]]></Title>
+                    <Description><![CDATA[%s]]></Description>
+                    <PicUrl><![CDATA[%s]]></PicUrl>
+                    <Url><![CDATA[%s]]></Url>
+                    </item>
+                    </Articles>
+                   </xml>";
+        $resultStr = sprintf($newTpl,$toUserName,$fromUserName,time(),'欢迎进入','摸黑我','....','....');
+        return $resultStr;
     }
 
 }
