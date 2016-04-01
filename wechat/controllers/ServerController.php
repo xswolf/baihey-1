@@ -50,6 +50,18 @@ class ServerController extends BaseController {
             $resultStr = \Yii::$app->wechat->responseNews($fromUsername , $toUsername);
 //            $resultStr = \Yii::$app->wechat->responseText($fromUsername , $toUsername);
 
+            \Yii::$app->wechat->createMenu([
+                                   [
+                                        'type' => 'click',
+                                        'name' => '今日歌曲',
+                                        'key' => 'V1001_TODAY_MUSIC'
+                                   ],
+                                   [
+                                        'type' => 'view',
+                                        'name' => '搜索',
+                                        'url' => 'http://wechat.baihey.com'
+                                   ]
+                              ]);
 
             $userInfo = \Yii::$app->wechat->getMemberInfo($fromUsername);
             if(is_array($userInfo) && count($userInfo) > 0){
