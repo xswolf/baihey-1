@@ -4,6 +4,7 @@
  * User: Administrator
  * Date: 2016/3/15
  * Time: 15:45
+ * 微信自动回复累
  */
 
 namespace wechat\controllers;
@@ -70,6 +71,11 @@ class ServerController extends BaseController {
             echo "";
             exit;
         }
+    }
+
+    public function actionMaterial(){
+        $material = \Yii::$app->wechat->materialList();
+        var_dump($material);
     }
 
 }

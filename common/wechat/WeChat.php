@@ -1,5 +1,7 @@
 <?php
 namespace common\wechat;
+use common\util\Curl;
+
 /**
  * Created by PhpStorm.
  * User: Administrator
@@ -8,6 +10,7 @@ namespace common\wechat;
  */
 class WeChat extends \callmez\wechat\sdk\Wechat {
 
+    const MATERIAL_LIST = "https://api.weixin.qq.com/cgi-bin/material/batchget_material?access_token=";
 
     /**
      * 素材
@@ -30,4 +33,17 @@ class WeChat extends \callmez\wechat\sdk\Wechat {
         var_dump( $html );
         exit;
     }
+
+    public function materialList() {
+        $url             = self::MATERIAL_LIST . $this->getAccessToken();
+
+        $param['type']   = 'news';
+        $param['offset'] = 0;
+        $param['count']  = 20;
+        $paramJson = json_encode($param);
+        $result = Curl::getInstance()->curl_post($url , $paramJson , true);
+
+        var_dump( $result );
+    }
+
 }
