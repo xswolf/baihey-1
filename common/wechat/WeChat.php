@@ -54,7 +54,7 @@ class WeChat extends \callmez\wechat\sdk\Wechat {
         print_r( $result );
     }
 
-    public function responseNews( $toUserName,$fromUserName ) {
+    public function responseNews( $fromUserName,$toUserName ) {
         $newTpl = "<xml>
                     <ToUserName><![CDATA[%s]]></ToUserName>
                     <FromUserName><![CDATA[%s]]></FromUserName>
@@ -71,6 +71,22 @@ class WeChat extends \callmez\wechat\sdk\Wechat {
                     </Articles>
                    </xml>";
         $resultStr = sprintf($newTpl,$toUserName,$fromUserName,time(),'欢迎进入','摸黑我','....','....');
+        return $resultStr;
+    }
+
+    public function responseText($fromUsername,$toUsername){
+        $textTpl      = "<xml>
+                        <ToUserName><![CDATA[%s]]></ToUserName>
+                        <FromUserName><![CDATA[%s]]></FromUserName>
+                        <CreateTime>%s</CreateTime>
+                        <MsgType><![CDATA[text]]></MsgType>
+                        <Content><![CDATA[%s]]></Content>
+                        <FuncFlag>0</FuncFlag>
+                        </xml>";
+
+        $msgType    = "text";
+        $content = "<a href='http://wechat.baihey.com/wap/chat/chat?name=1&sendName=12'>well come to jia rui</a>";
+        $resultStr  = sprintf( $textTpl , $fromUsername , $toUsername , time() , $msgType , $content );
         return $resultStr;
     }
 
