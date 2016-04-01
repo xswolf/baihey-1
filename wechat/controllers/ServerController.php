@@ -46,19 +46,12 @@ class ServerController extends BaseController {
             $fromUsername = $postObj->FromUserName;
             $fromUsername = trim($fromUsername);
             $toUsername   = $postObj->ToUserName;
-            $time         = time();
-            $textTpl      = "<xml>
-							<ToUserName><![CDATA[%s]]></ToUserName>
-							<FromUserName><![CDATA[%s]]></FromUserName>
-							<CreateTime>%s</CreateTime>
-							<MsgType><![CDATA[%s]]></MsgType>
-							<Content><![CDATA[%s]]></Content>
-							<FuncFlag>0</FuncFlag>
-							</xml>";
 
-            $msgType    = "text";
-            $content = "<a href='http://wechat.baihey.com/wap/chat/chat?name=1&sendName=12'>well come to jia rui</a>";
-            $resultStr  = sprintf( $textTpl , $fromUsername , $toUsername , $time , $msgType , $content );
+
+//            $resultStr = \Yii::$app->wechat->responseNews($fromUsername , $toUsername);
+            $resultStr = \Yii::$app->wechat->responseText($fromUsername , $toUsername);
+
+
             $userInfo = \Yii::$app->wechat->getMemberInfo($fromUsername);
             if(is_array($userInfo) && count($userInfo) > 0){
                 file_put_contents('./log.txt' , $fromUsername."\n" ,FILE_APPEND);
@@ -77,9 +70,9 @@ class ServerController extends BaseController {
     }
 
     public function actionMaterial(){
-        $material = \Yii::$app->wechat->materialList();
+//        $material = \Yii::$app->wechat->materialList();
         \Yii::$app->wechat->sendMaterial("oEQpts_MMapxllPTfwRw0VfGeLSg" , "TtSb9HO50njLDfRLrBEM_NKXrzVpIgfX9DYtwftdrGQ");
-        var_dump($material);
+//        var_dump($material);
     }
 
 }
