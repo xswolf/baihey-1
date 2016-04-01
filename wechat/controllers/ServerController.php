@@ -53,13 +53,13 @@ class ServerController extends BaseController {
             \Yii::$app->wechat->createMenu([
                                    [
                                         'type' => 'click',
-                                        'name' => '今日歌曲',
+                                        'name' => '嘉瑞百合缘',
                                         'key' => 'V1001_TODAY_MUSIC'
                                    ],
                                    [
                                         'type' => 'view',
-                                        'name' => '搜索',
-                                        'url' => 'http://wechat.baihey.com'
+                                        'name' => '开发中',
+                                        'url' => 'http://wechat.baihey.com/wap/chat/chat'
                                    ]
                               ]);
 
