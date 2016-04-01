@@ -79,4 +79,12 @@ class BaseController extends Controller{
         $this->assign[$field] = $value;
     }
 
+    /**
+     * 404页面
+     */
+    public function actionError(){
+
+        $view = "/".\Yii::$app->request->pathInfo;
+        return $this->render([],$view);
+    }
 }
