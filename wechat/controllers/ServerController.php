@@ -4,6 +4,7 @@
  * User: Administrator
  * Date: 2016/3/15
  * Time: 15:45
+ * 微信自动回复累
  */
 
 namespace wechat\controllers;
@@ -35,7 +36,6 @@ class ServerController extends BaseController {
         $postStr = $GLOBALS["HTTP_RAW_POST_DATA"];
         file_put_contents('./log.txt' , $postStr."\n" ,FILE_APPEND);
 
-        file_put_contents('./log.txt' , json_encode($_GET)."\n" ,FILE_APPEND);
         //extract post data
         if ( ! empty( $postStr ) ) {
             /* libxml_disable_entity_loader is to prevent XML eXternal Entity Injection,
@@ -45,19 +45,12 @@ class ServerController extends BaseController {
             $fromUsername = $postObj->FromUserName;
             $fromUsername = trim($fromUsername);
             $toUsername   = $postObj->ToUserName;
-            $time         = time();
-            $textTpl      = "<xml>
-							<ToUserName><![CDATA[%s]]></ToUserName>
-							<FromUserName><![CDATA[%s]]></FromUserName>
-							<CreateTime>%s</CreateTime>
-							<MsgType><![CDATA[%s]]></MsgType>
-							<Content><![CDATA[%s]]></Content>
-							<FuncFlag>0</FuncFlag>
-							</xml>";
 
-            $msgType    = "text";
-            $content = "<a href='http://wechat.baihey.com/wap/chat/chat?name=1&sendName=12'>well come to jia rui</a>";
-            $resultStr  = sprintf( $textTpl , $fromUsername , $toUsername , $time , $msgType , $content );
+
+            $resultStr = \Yii::$app->wechat->responseNews($fromUsername , $toUsername);
+//            $resultStr = \Yii::$app->wechat->responseText($fromUsername , $toUsername);
+
+
             $userInfo = \Yii::$app->wechat->getMemberInfo($fromUsername);
             if(is_array($userInfo) && count($userInfo) > 0){
                 file_put_contents('./log.txt' , $fromUsername."\n" ,FILE_APPEND);
@@ -65,11 +58,34 @@ class ServerController extends BaseController {
                 file_put_contents('./log.txt' ,"chuxiancuowu\n" ,FILE_APPEND);
             }
             echo $resultStr;
+            file_put_contents('./log.txt' , $resultStr."\n" ,FILE_APPEND);
+            \Yii::$app->wechat->sendMaterial($fromUsername , "TtSb9HO50njLDfRLrBEM_NKXrzVpIgfX9DYtwftdrGQ");
+
             exit;
         } else {
             echo "";
             exit;
         }
+    }
+
+    public function actionMaterial(){
+        $result_1 = \Yii::$app->wechat->deleteMenu();
+        $result = \Yii::$app->wechat->createMenu([
+            [
+                'type' => 'click',
+                'name' => '嘉瑞百合缘',
+                'key' => 'V1001_TODAY_MUSIC'
+            ],
+            [
+                'type' => 'view',
+                'name' => '开发中',
+                'url' => 'http://wechat.baihey.com/wap/chat/chat'
+            ]
+        ]);
+
+        var_dump($result_1);
+
+        var_dump($result);
     }
 
 }
