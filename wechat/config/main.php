@@ -17,8 +17,8 @@ return [
             'class' => 'common\wechat\WeChat',
 //            'appId' => 'wx787f8071dd1e1dac',
 //            'appSecret' => 'd5517695e5b9e5c2b3e119affe8302ad',
-            'appId' => 'wxf3a5554f9951cb6f', // 测试
-            'appSecret' => 'a77bffd482ed7ffd246c8c960b7837aa', // 测试
+            'appId' => 'wxd7e0ddc236831e27', // 测试
+            'appSecret' => 'e457c991b0fbe7adcec7ed4e6468e20d', // 测试
             'token' => 'jrbhy'
         ],
         'log' => [
