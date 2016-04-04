@@ -76,19 +76,19 @@ define(['app/module', 'app/directive/directiveApi'
 
             if (!validatePhone($scope.User.mobile)) return;
 
+            //计时
+            $scope.User.codeSwitch = true;
+            $scope.User.codeCls = true;
+            $scope.User.max_time = 60;
+            $scope.User.timer = setInterval($scope.User.startTime, 1000);
+            setTimeout($scope.User.endTime, $scope.User.max_time * 1000);
+
             // 发送验证码
             api.sendCodeMsg($scope.User.mobile).success(function (data) {
 
                 if (!data.status) {
                     $ionicPopup.alert({title: '短信发送失败，请稍后重试。'});
                     return false;
-                } else {
-                    //计时
-                    $scope.User.codeSwitch = true;
-                    $scope.User.codeCls = true;
-                    $scope.User.max_time = 60;
-                    $scope.User.timer = setInterval($scope.User.startTime, 1000);
-                    setTimeout($scope.User.register.endTime, $scope.User.max_time * 1000);
                 }
             });
 
@@ -181,6 +181,14 @@ define(['app/module', 'app/directive/directiveApi'
         // 发送验证码
         $scope.User.getCode = function () {
 
+
+            //计时
+            $scope.User.codeSwitch = true;
+            $scope.User.codeCls = true;
+            $scope.User.max_time = 60;
+            $scope.User.timer = setInterval($scope.User.startTime, 1000);
+            setTimeout($scope.User.endTime, $scope.User.max_time * 1000);
+
             if (!ar.validateMobile($scope.User.mobile)) {  // 验证手机格式
                 $ionicPopup.alert({title: '手机号码格式不正确'});
                 return false;
@@ -190,13 +198,6 @@ define(['app/module', 'app/directive/directiveApi'
                 if (!data.status) {
                     $ionicPopup.alert({title: '短信发送失败，请稍后重试。'});
                     return false;
-                } else {
-                    //计时
-                    $scope.User.codeSwitch = true;
-                    $scope.User.codeCls = true;
-                    $scope.User.max_time = 60;
-                    $scope.User.timer = setInterval($scope.User.startTime, 1000);
-                    setTimeout($scope.User.endTime, $scope.User.max_time * 1000);
                 }
 
             });
