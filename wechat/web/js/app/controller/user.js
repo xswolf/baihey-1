@@ -220,7 +220,7 @@ define(['app/module', 'app/directive/directiveApi'
         }
 
         $scope.User.getPass = function () {
-            api.save('',$scope.User);
+            api.save('url',$scope.User);
         }
 
 
