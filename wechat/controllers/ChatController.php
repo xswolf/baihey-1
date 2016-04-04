@@ -45,7 +45,7 @@ class ChatController extends BaseController{
     }
 
     public function actionList(){
-
+        $this->weChatMember();
         return $this->render();
     }
 
