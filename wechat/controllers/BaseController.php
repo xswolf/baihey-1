@@ -20,7 +20,7 @@ class BaseController extends Controller {
     protected $assign = [ ];
 
     public function init() {
-
+        $this->weChatMember();
     }
 
     /**
