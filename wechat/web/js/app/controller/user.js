@@ -43,13 +43,13 @@ define(['app/module', 'app/directive/directiveApi'
                 return false;
             }
 
-            api.getMobileIsExist(phone).success(function(data){
-                    if(!data.status){
-                        $ionicPopup.alert({title: data.msg});
-                        return true;
-                    }else {
-                        return false;
-                    }
+            api.getMobileIsExist(phone).success(function (data) {
+                if (!data.status) {
+                    $ionicPopup.alert({title: data.msg});
+                    return true;
+                } else {
+                    return false;
+                }
             })
 
             return true;
@@ -77,12 +77,12 @@ define(['app/module', 'app/directive/directiveApi'
             if (!validatePhone($scope.User.mobile)) return;
 
             // 发送验证码
-            api.sendCodeMsg($scope.User.mobile).success(function (data){
+            api.sendCodeMsg($scope.User.mobile).success(function (data) {
 
-                if(!data.status){
+                if (!data.status) {
                     $ionicPopup.alert({title: '短信发送失败，请稍后重试。'});
                     return false;
-                }else {
+                } else {
                     //计时
                     $scope.User.codeSwitch = true;
                     $scope.User.codeCls = true;
@@ -91,7 +91,6 @@ define(['app/module', 'app/directive/directiveApi'
                     setTimeout($scope.User.register.endTime, $scope.User.max_time * 1000);
                 }
             });
-
 
 
         }
@@ -105,7 +104,7 @@ define(['app/module', 'app/directive/directiveApi'
                 return false;
             }
 
-            if(!ar.trim($scope.User.code)){
+            if (!ar.trim($scope.User.code)) {
 
                 $ionicPopup.alert({title: '请填写短信验证码'});
                 return false;
@@ -114,8 +113,7 @@ define(['app/module', 'app/directive/directiveApi'
             var result = api.save('/wap/user/register', $scope.User);
             result.success(function (data) {
                 if (data.status) {
-                    var m = $scope.User.mobile;
-                    ar.cookieUser($scope.User.mobile, m.substring(m.length-6));
+                    ar.cookieUser($scope.User.mobile);
                     window.location.href = '/wap/site/index';
                 }
             }).error(function () {
@@ -137,16 +135,16 @@ define(['app/module', 'app/directive/directiveApi'
         }
 
 
-        $scope.User.login = function(){
+        $scope.User.login = function () {
 
-            if(!$scope.User.validateFrom()) return;
+            if (!$scope.User.validateFrom()) return;
 
-            api.save('/wap/user/login',$scope.User).success(function(data){
+            api.save('/wap/user/login', $scope.User).success(function (data) {
 
-                if(data.status){
-                    ar.cookieUser($scope.User.username,$scope.User.password);  //存入cookie
+                if (data.status) {
+                    ar.cookieUser($scope.User.username);  //存入cookie
                     window.location.href = '/wap/site';
-                }else {
+                } else {
                     $ionicPopup.alert({title: '用户名或者密码错误'});
                 }
 
@@ -154,14 +152,14 @@ define(['app/module', 'app/directive/directiveApi'
 
         }
 
-        $scope.User.validateFrom = function(){
+        $scope.User.validateFrom = function () {
 
-            if(!$scope.User.username){
+            if (!$scope.User.username) {
                 $ionicPopup.alert({title: '请输入您的手机号码或ID'});
                 return false;
             }
 
-            if(!$scope.User.password){
+            if (!$scope.User.password) {
                 $ionicPopup.alert({title: '请输入您的密码'});
                 return false;
             }
@@ -175,25 +173,24 @@ define(['app/module', 'app/directive/directiveApi'
     //找回密码
     module.controller("User.forgetpass", ['app.serviceApi', '$scope', '$ionicPopup', function (api, $scope, $ionicPopup) {
 
-        $scope.User = { }
+        $scope.User = {}
 
         $scope.User.codeBtn = '获取验证码';
 
 
-
         // 发送验证码
-        $scope.User.getCode = function(){
+        $scope.User.getCode = function () {
 
             if (!ar.validateMobile($scope.User.mobile)) {  // 验证手机格式
                 $ionicPopup.alert({title: '手机号码格式不正确'});
                 return false;
             }
 
-            api.sendCodeMsg($scope.User.mobile).success(function (data){
-                if(!data.status){
+            api.sendCodeMsg($scope.User.mobile).success(function (data) {
+                if (!data.status) {
                     $ionicPopup.alert({title: '短信发送失败，请稍后重试。'});
                     return false;
-                }else {
+                } else {
                     //计时
                     $scope.User.codeSwitch = true;
                     $scope.User.codeCls = true;
@@ -222,6 +219,9 @@ define(['app/module', 'app/directive/directiveApi'
             $scope.$apply();
         }
 
+        $scope.User.getPass = function () {
+            api.save('',$scope.User);
+        }
 
 
     }])
