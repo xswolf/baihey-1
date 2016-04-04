@@ -11,7 +11,6 @@ define(['app/module', 'app/directive/directiveApi'
 
         $scope.User = {};
 
-        $scope.User.isOk = false;  //是否通行
 
         $scope.User.codeBtn = '获取验证码';
 
@@ -81,10 +80,7 @@ define(['app/module', 'app/directive/directiveApi'
 
                 if(!data.status){
                     $ionicPopup.alert({title: '短信发送失败，请稍后重试。'});
-                    $scope.User.isOk = false;
                     return false;
-                }else {
-                    $scope.User.isOk = true;
                 }
             });
 
@@ -194,6 +190,28 @@ define(['app/module', 'app/directive/directiveApi'
         }
 
 
+        // 开始计时
+        $scope.User.startTime = function () {
+            $scope.User.max_time -= 1;
+            $scope.User.codeBtn = "重新发送" + $scope.User.max_time;
+            $scope.$apply();
+        }
+
+        // 结束计时，还原文字
+        $scope.User.endTime = function () {
+            $scope.User.codeSwitch = false;
+            $scope.User.codeCls = false;
+            $scope.User.codeBtn = '获取验证码';
+            clearInterval($scope.User.timer);
+            $scope.$apply();
+        }
+
+        //计时
+        $scope.User.codeSwitch = true;
+        $scope.User.codeCls = true;
+        $scope.User.max_time = 60;
+        $scope.User.timer = setInterval($scope.User.startTime, 1000);
+        setTimeout($scope.User.endTime, $scope.User.max_time * 1000)
 
     }])
 
