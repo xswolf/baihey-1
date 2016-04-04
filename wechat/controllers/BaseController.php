@@ -9,6 +9,7 @@
 namespace wechat\controllers;
 
 
+use wechat\models\User;
 use yii\base\Exception;
 use yii\web\Controller;
 
@@ -88,8 +89,17 @@ class BaseController extends Controller{
         return $this->render([],$view);
     }
 
+    /**
+     * 微信登录获取微信用户信息
+     * @return array|bool
+     */
     protected function weChatMember(){
-        $memberInfo = \Yii::$app->wechat->getMemberByCode(\Yii::$app->request->get('code'));
+        $code = \Yii::$app->request->get('code');
+        if ($code == null) {
+            return false;
+        }
+        $memberInfo = \Yii::$app->wechat->getMemberByCode($code);
+//        User::getInstance()
         return $memberInfo;
     }
 }
