@@ -21,6 +21,7 @@ use Yii;
  * This property is read-only.
  * @property \yii\db\Connection $db The database connection. This property is read-only.
  * @property \common\wechat\WeChat $wechat
+ * @property \common\message\MessageApi messageApi
  * @property \yii\web\ErrorHandler|\yii\console\ErrorHandler $errorHandler The error handler application
  * component. This property is read-only.
  * @property \yii\i18n\Formatter $formatter The formatter application component. This property is read-only.
