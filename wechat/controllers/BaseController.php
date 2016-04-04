@@ -110,7 +110,7 @@ class BaseController extends Controller {
             return false;
         }
         $memberInfo = \Yii::$app->wechat->getMemberByCode( $code ); // 从微信获取用户
-        var_dump($memberInfo);exit();
+        print_r($memberInfo);exit();
         $data = [
             'wx_id'      => $memberInfo['openid'] ,
             'username'   => $memberInfo['openid'] ,
