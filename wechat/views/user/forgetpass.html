@@ -28,17 +28,21 @@
 
         <label class="item item-input">
             <span class="input-label">手机号码</span>
-            <input type="text" placeholder="请输入正确的手机号码">
+            <input type="text" ng-model="User.mobile" placeholder="请输入正确的手机号码">
         </label>
 
         <div class="item item-input">
             <input class="login_input pass fl mr5 " type="text"
-                   placeholder="请输入短信验证码" ng-model="User.mobile">
-            <a class="button button-positive button-block" ng-disabled="User.forgetpass.codeSwitch"
-               ng-class="{true:'dslb',false:''}[User.forgetpass.codeCls]" ng-bind="User.forgetpass.codeBtn"
-               ng-click="User.forgetpass.codeSwitch || User.forgetpass.getCode()" href="javascript:;">获取验证码</a>
+                   placeholder="请输入短信验证码" ng-model="User.code">
+            <a class="button button-positive button-block" ng-disabled="User.codeSwitch"
+               ng-class="{true:'dslb',false:''}[User.codeCls]" ng-bind="User.codeBtn"
+               ng-click="User.codeSwitch || User.getCode()" href="javascript:;">获取验证码</a>
+        </div>
+        <div class="ft_btn">
+            <button class="button button-block button-energized">下一步</button>
         </div>
     </div>
+
 </ion-content>
 
 
