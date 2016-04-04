@@ -62,7 +62,7 @@ class ServerController extends BaseController {
 
     public function actionMaterial(){
         $result_1 = \Yii::$app->wechat->deleteMenu();
-        $result = \Yii::$app->wechat->createMenu([
+        $result = \Yii::$app->wechat->createMenu(
 //            [
 //                'type' => 'click',
 //                'name' => '嘉瑞百合缘',
@@ -73,7 +73,7 @@ class ServerController extends BaseController {
                 'name' => '嘉瑞登录',
                 'url' => 'http://wechat.baihey.com/wap/chat/chat'
             ]
-        ]);
+        );
 
         var_dump(\Yii::$app->wechat->getMenuList());
 
