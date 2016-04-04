@@ -91,10 +91,9 @@ class WeChat extends \callmez\wechat\sdk\Wechat {
     }
 
     public function getOauthToken($code){
-        $code = '021cbb47ccd521ff559c531aa4b0429s';
-        echo $this->appSecret;
-        $result = $this->httpGet(self::OAUTH_TOKEN."?appid={$this->appId}&secret=>{$this->appSecret}&code={$code}&grant_type=authorization_code");
-        var_dump($result);
+
+        $result = $this->httpGet(self::OAUTH_TOKEN."?appid={$this->appId}&secret={$this->appSecret}&code={$code}&grant_type=authorization_code");
+        return $result;
     }
 
 }
