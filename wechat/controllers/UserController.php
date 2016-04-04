@@ -24,6 +24,7 @@ class UserController extends BaseController
 
     public function actionWelcome()
     {
+        $this->weChatMember();
         return $this->render();
     }
 
