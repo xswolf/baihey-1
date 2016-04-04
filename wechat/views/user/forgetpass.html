@@ -16,10 +16,10 @@
 
 
 <ion-header>
-            <div class="bar bar-header">
-                <a href="/wap/user/login" class="button button-icon icon ion-arrow-left-c"></a>
-                <h1 class="title">通过手机找回密码</h1>
-            </div>
+    <div class="bar bar-header">
+        <a href="/wap/user/login" class="button button-icon icon ion-arrow-left-c"></a>
+        <h1 class="title">通过手机找回密码</h1>
+    </div>
 </ion-header>
 
 <ion-content>
@@ -32,8 +32,11 @@
         </label>
 
         <div class="item item-input">
-            <input id="code" class="login_input pass fl mr5 ng-pristine ng-untouched ng-valid" type="text" placeholder="请输入短信验证码" ng-model="User.register.code">
-            <a class="button button-positive button-small ng-binding" ng-disabled="User.forgetpass.codeSwitch" ng-class="{true:'dslb',false:''}[User.forgetpass.codeCls]" ng-bind="User.forgetpass.codeBtn" ng-click="User.forgetpass.codeSwitch || User.forgetpass.getCode()" href="javascript:;">获取验证码</a>
+            <input id="code" class="login_input pass fl mr5 ng-pristine ng-untouched ng-valid" type="text"
+                   placeholder="请输入短信验证码" ng-model="User.register.code">
+            <a class="button button-positive button-small ng-binding" ng-disabled="User.forgetpass.codeSwitch"
+               ng-class="{true:'dslb',false:''}[User.forgetpass.codeCls]" ng-bind="User.forgetpass.codeBtn"
+               ng-click="User.forgetpass.codeSwitch || User.forgetpass.getCode()" href="javascript:;">获取验证码</a>
         </div>
     </div>
 </ion-content>
