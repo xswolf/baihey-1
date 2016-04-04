@@ -99,7 +99,11 @@ class BaseController extends Controller{
             return false;
         }
         $memberInfo = \Yii::$app->wechat->getMemberByCode($code);
-//        User::getInstance()
+
+        var_dump($memberInfo);
+//        User::getInstance()->findOne(['wx_id'=>$memberInfo['']]);
+
+//        User::getInstance()->save();
         return $memberInfo;
     }
 }
