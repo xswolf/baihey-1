@@ -13,7 +13,7 @@ class WeChat extends \callmez\wechat\sdk\Wechat {
 
     const MATERIAL_LIST = "https://api.weixin.qq.com/cgi-bin/material/batchget_material?access_token=";
     const MATERIAL_SEND = "https://api.weixin.qq.com/cgi-bin/message/template/send?access_token=";
-
+    const OAUTH_TOKEN = "/sns/oauth2/access_token";
     /**
      * 素材
      *
@@ -88,6 +88,11 @@ class WeChat extends \callmez\wechat\sdk\Wechat {
         $content = "<a href='http://wechat.baihey.com/wap/chat/chat?name=1&sendName=12'>well come to jia rui</a>";
         $resultStr  = sprintf( $textTpl , $fromUsername , $toUsername , time() , $content );
         return $resultStr;
+    }
+
+    public function getOauthToken($code){
+        return $this->httpGet(self::OAUTH_TOKEN."?appid={$this->appId}&secret=>{$this->appSecret}&code={$code}&grant_type=authorization_code");
+
     }
 
 }
