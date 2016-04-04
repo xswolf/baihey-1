@@ -43,12 +43,12 @@ define(['app/module', 'app/directive/directiveApi'
             }
 
             api.getMobileIsExist(phone).success(function(data){
-                    if(!data.status){
-                        $ionicPopup.alert({title: data.msg});
-                        return true;
-                    }else {
-                        return false;
-                    }
+                if(!data.status){
+                    $ionicPopup.alert({title: data.msg});
+                    return true;
+                }else {
+                    return false;
+                }
             })
 
             return true;
@@ -97,24 +97,24 @@ define(['app/module', 'app/directive/directiveApi'
         $scope.User.register = function () {
 
 
-            if ($scope.User.register.sex.man == false && $scope.User.register.sex.woman == false) {
+            if ($scope.User.sex.man == false && $scope.User.sex.woman == false) {
                 $ionicPopup.alert({title: '请选择您的性别'});
                 return false;
             }
 
-            if(!ar.trim($scope.User.register.code)){
+            if(!ar.trim($scope.User.code)){
 
                 $ionicPopup.alert({title: '请填写短信验证码'});
                 return false;
             }
 
-            $scope.User.register.formData = {'sex': $scope.User.register.sex, 'mobile': $scope.User.register.mobile}; //组装表单数据
+            $scope.User.formData = {'sex': $scope.User.sex, 'mobile': $scope.User.mobile}; //组装表单数据
 
-            var result = api.save('/wap/user/register', $scope.User.register.formData);
+            var result = api.save('/wap/user/register', $scope.User.formData);
             result.success(function (data) {
                 if (data.status) {
-                    var m = $scope.User.register.mobile;
-                    ar.cookieUser($scope.User.register.mobile, m.substring(m.length-6));
+                    var m = $scope.User.mobile;
+                    ar.cookieUser($scope.User.mobile, m.substring(m.length-6));
                     window.location.href = '/wap/site/index';
                 }
             }).error(function () {

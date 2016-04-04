@@ -30,16 +30,22 @@ class UserController extends BaseController
 
     public function actionRegister()
     {
-        if(\Yii::$app->request->isPost) {
-            $userModel = new User();
-            $data = \Yii::$app->request->post();
-            $data = json_encode($data);
-            var_dump($data);exit;
-            if($userModel->addUser($data)) {
-                \Yii::$app->messageApi->passwordMsg(15084410950,substr($data['mobile'],-6));
-                $this->renderAjax(['status'=>1,'msg'=>'注册成功']);
+        if(\Yii::$app->request->get('mobile')) {
+            // 注册数据处理
+            if(\Yii::$app->request->get('log_code') == \Yii::$app->session->get('log_code')) {
+                $sex = \Yii::$app->request->get('sex');
+                $data['sex'] = json_decode($sex);
+                $data['sex'] = $data['sex']->man ? 1 : 0;
+                $data['username'] = \Yii::$app->request->get('mobile');
+                $data['password'] = substr($data['username'], -6);
+                if (User::getInstance()->addUser($data)) {
+                    \Yii::$app->messageApi->passwordMsg($data['username'], $data['password']);
+                    $this->renderAjax(['status' => 1, 'msg' => '注册成功']);
+                } else {
+                    $this->renderAjax(['status' => 0, 'msg' => '注册失败']);
+                }
             } else {
-                $this->renderAjax(['status'=>0,'msg'=>'注册失败']);
+                $this->renderAjax(['status' => 0, 'msg' => '验证码错误']);
             }
         }
 
@@ -60,7 +66,7 @@ class UserController extends BaseController
         if (\Yii::$app->request->isGet) {
             $data = \Yii::$app->request->get();
             $userModel = new User();
-            if($userModel->getMobileExist($data['mobile'])){
+            if($userModel->getUserByName($data['mobile'])){
                 $this->renderAjax(['status' => 0, 'msg' => '手机号码已存在']);
             }else{
                 $this->renderAjax(['status' => 1, 'msg' => '该手机号可以注册']);
