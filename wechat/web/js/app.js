@@ -7,6 +7,7 @@ require.config({
     paths: {
         jquery: 'plugin/jquery/jquery',
         angular: 'plugin/ionic/ionic.bundle.min',
+        ionic:'plugin/ionic/ionic.min',
         bootstrap:'plugin/bootstrap/bootstrap.min',
         amezeui: 'plugin/amezeui/amazeui.min',
         comm: 'comm'

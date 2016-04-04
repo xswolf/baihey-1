@@ -84,6 +84,7 @@
 .cor15{color:#ff485c;}
 .cor16{color:#fc6da2;}
 .cor17{color:#999999;}
+.cor18{color:#2e2d44;}
 
 .fs12{ font-size: 12px;}
 .fs14{ font-size: 14px;}
@@ -116,6 +117,8 @@
 .tal{ text-align: left;}
 .tar{ text-align: right;}
 .form-group {  margin-bottom: 15px;}
+
+.bar-header-clear{ height: 44px;}
 
 /*清除浮动*/
 .clearfix:after{content:".";display:block;height:0;clear:both;visibility:hidden}

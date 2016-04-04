@@ -43,6 +43,11 @@ class UserController extends BaseController
         return $this->render();
     }
 
+    public function actionForgetpass(){
+
+        return $this->render();
+    }
+
     /**
      * 验证手机号是否存在
      * @return string

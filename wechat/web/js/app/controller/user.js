@@ -79,8 +79,6 @@ define(['app/module', 'app/directive/directiveApi'
             // 发送验证码
             api.sendCodeMsg($scope.User.register.mobile).then(function(resp){
 
-                alert(resp.status);
-                return;
 
                 if(data.status != 0){
                     $ionicPopup.alert({title: '短信发送失败，请稍后重试。'});
@@ -192,6 +190,15 @@ define(['app/module', 'app/directive/directiveApi'
 
 
     }])
+
+    //找回密码
+    module.controller("forgetpass", ['app.serviceApi', '$scope', '$ionicPopup', function (api, $scope, $ionicPopup) {
+
+
+
+
+    }])
+
     return module;
 })
 
