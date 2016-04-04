@@ -77,7 +77,11 @@ define(['app/module', 'app/directive/directiveApi'
             if (!validatePhone($scope.User.register.mobile)) return;
 
             // 发送验证码
-            api.sendCodeMsg($scope.User.register.mobile).success(function(data){
+            api.sendCodeMsg($scope.User.register.mobile).then(function(resp){
+
+                alert(resp.status);
+                return;
+
                 if(data.status != 0){
                     $ionicPopup.alert({title: '短信发送失败，请稍后重试。'});
                     $scope.User.isOk = false;
@@ -152,6 +156,40 @@ define(['app/module', 'app/directive/directiveApi'
         $scope.User.login.winHeight = {
             "height": document.documentElement.clientHeight + 'px'
         }
+
+
+        $scope.User.login.login = function(){
+
+            if(!$scope.User.login.validateFrom()) return;
+
+            api.save('/wap/user/login',$scope.User.login).success(function(data){
+
+                if(data.status){
+                    ar.cookieUser($scope.User.login.username,$scope.User.login.password);  //存入cookie
+                    window.location.href = '/wap/site';
+                }else {
+                    $ionicPopup.alert({title: '用户名或者密码错误'});
+                }
+
+            })
+
+        }
+
+        $scope.User.login.validateFrom = function(){
+
+            if(!$scope.User.login.username){
+                $ionicPopup.alert({title: '请输入您的手机号码或ID'});
+                return false;
+            }
+
+            if(!$scope.User.login.password){
+                $ionicPopup.alert({title: '请输入您的密码'});
+                return false;
+            }
+
+            return true;
+        }
+
 
     }])
     return module;

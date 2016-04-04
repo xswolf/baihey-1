@@ -11,10 +11,12 @@
     <link href="/wechat/web/css/plugin/bootstrap/css/animate.css" rel="stylesheet">
     <script data-main="/wechat/web/js/app" src="/wechat/web/js/plugin/requirejs/require.js"></script>
 </head>
+
 <body ng-controller="login">
 <div class="bhy com_w_100 pa login_bg" ng-style="User.login.winHeight">
 
     <div class="login_box">
+
         <p class="cor0 mt40 login_title tac mb15">
             <span class="t_line"></span>
             <span class="t_f p_0_10">会员登录</span>
@@ -23,11 +25,10 @@
 
         <div class="login_form tac mr0a">
             <form action="" method="post" >
-                <input type="hidden" name="rememberPass" id="rememberPass" value="1">
-                <div class="form-group"><label class="item item-input"><input type="text" class="login_input name" placeholder="请输入手机号码、ID"></label></div>
-                <div class="form-group"><label class="item item-input"><input type="password" class="login_input pass" placeholder="请输入密码"></label></div>
-                <div class="form-group clearfix"><a href="/wap/user/register" class="reg_link cor0 fl">立即注册</a> <a class="forgetpass_link cor0 fr" href="forgetpass.html">忘记密码</a></div>
-                <div class="form-group mt30"><button id="login_submit" class="button button-block button-energized">立即登录</button></div>
+                <div class="form-group"><label class="item item-input"><input type="text" class="login_input name" ng-model="User.login.username" placeholder="请输入手机号码、ID"></label></div>
+                <div class="form-group"><label class="item item-input"><input type="password" class="login_input pass" ng-model="User.login.password" placeholder="请输入密码"></label></div>
+                <div class="form-group clearfix"><a href="/wap/user/register" class="reg_link cor0 fl">立即注册</a> <a class="forgetpass_link cor0 fr" href="/wap/user/forgetpass">忘记密码</a></div>
+                <div class="form-group mt30"><button id="login_submit" ng-click="User.login.login()" class="button button-block button-energized">立即登录</button></div>
                 <div class="form-group mt50"><h5 class="cor0">或用以下帐号登录</h5></div>
                 <div class="form-group mt30"><a href="" class="third-party qq"></a> <a href="" class="third-party wechat"></a> <a href="" class="third-party weibo"></a></div>
             </form>

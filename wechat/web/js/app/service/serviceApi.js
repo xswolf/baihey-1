@@ -21,11 +21,17 @@ define(['app/module'], function (module) {
          * @returns {*}
          */
         api.getMobileIsExist = function (_mobile) {
-            return $http.get('/wap/user/mobile-is-exist', {params:{mobile: _mobile}});
+            return $http.get('/wap/user/mobile-is-exist', {params: {mobile: _mobile}});
         }
 
-        api.sendCodeMsg = function(_mobile){
-            return $http.get('/wap/user/send-code-msg', {params:{mobile:_mobile}});
+        /**
+         * 发送短信验证码
+         * @param _mobile
+         * @returns {*}
+         */
+        api.sendCodeMsg = function (_mobile) {
+            return $http.get('/wap/user/send-code-msg', {params: {mobile: _mobile}});
+
         }
 
         /**
@@ -34,7 +40,7 @@ define(['app/module'], function (module) {
          * @returns {*}
          */
         api.validateCode = function (code) {
-            return $http.get('/wap/user/validate-code',{params:{code:code}});
+            return $http.get('/wap/user/validate-code', {params: {code: code}});
         }
 
         /**
@@ -42,14 +48,17 @@ define(['app/module'], function (module) {
          * @param formData
          * @returns {*}
          */
-        api.save = function (url,formData) {
-            return $http.post(url,formData);
+        api.save = function (url, formData) {
+            return $http({
+                method: 'POST',
+                url: url,
+                data: formData
+            });
         }
 
-        api.wxConfig = function (wx ) {
 
+        api.wxConfig = function (wx) {
             return $http.get('../chat/config');
-
         }
 
         return api;
