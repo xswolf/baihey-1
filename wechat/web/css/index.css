@@ -74,8 +74,10 @@
 .login_form i.ck {
   color: #fff;
 }
-.login_form .reg_link,
 .login_form .forgetpass_link {
+  text-decoration: none;
+}
+.login_form .reg_link {
   text-decoration: underline;
 }
 .login_form .reg_link:hover,
