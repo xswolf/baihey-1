@@ -67,6 +67,9 @@ class UserController extends BaseController
         }
     }
 
+    /**
+     * 发送手机验证码
+     */
     public function actionSendCodeMsg(){
         if (\Yii::$app->request->isGet) {
             $data = \Yii::$app->request->get();
@@ -74,6 +77,9 @@ class UserController extends BaseController
         }
     }
 
+    /**
+     * 验证客户端输入验证码是否与服务端一致
+     */
     public function actionValidateCode(){
         if (\Yii::$app->request->isGet) {
             $data = \Yii::$app->request->get();
