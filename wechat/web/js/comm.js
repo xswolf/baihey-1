@@ -29,7 +29,7 @@ var ar = {
         return pattern.test(mobile);
     },
 
-    'cookieUser': function (userName, password) {
+    'cookieUser': function (userName) {
         if (window.localStorage) {   // 浏览器支持 localStorage
             window.localStorage.setItem("bhy_u_name", userName);
         } else {                     // 浏览器不支持 localStorage  则使用 cookie
