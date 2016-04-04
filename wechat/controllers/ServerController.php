@@ -64,15 +64,16 @@ class ServerController extends BaseController {
         $result_1 = \Yii::$app->wechat->deleteMenu();
 
         $appId = \Yii::$app->wechat->appId;
-        $redirectUri = urlencode("http://wechat.baihey.com/wap/chat/list");
+        $redirectUri = urlencode("http://120.76.84.162/wap/chat/list");
 
-        $url = "https://open.weixin.qq.com/connect/oauth2/authorize?appid={$appId}&redirect_uri={$redirectUri}&response_type=code&scope=snsapi_base&state=ad#wechat_redirect";
-        $result = \Yii::$app->wechat->createMenu(
+        $url = "https://open.weixin.qq.com/connect/oauth2/authorize?appid={$appId}&redirect_uri={$redirectUri}&response_type=code&scope=snsapi_base&state=123#wechat_redirect";
+        $result = \Yii::$app->wechat->createMenu([
             [
                 'type' => 'view',
                 'name' => '嘉瑞登录',
                 'url' => $url
             ]
+                ]
         );
 
 

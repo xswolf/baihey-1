@@ -783,7 +783,7 @@ class Wechat extends Component
      */
     public function deleteMenu()
     {
-        $result = $this->httpGet(self::WECHAT_MENU_DELETE_URL . 'access_token=' . $this->getAccessToken());
+        $result = $this->httpGet(self::WECHAT_MENU_DELETE_URL . '?access_token=' . $this->getAccessToken());
         return isset($result['errmsg']) && $result['errmsg'] == 'ok';
     }
 
