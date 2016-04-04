@@ -105,12 +105,13 @@ class BaseController extends Controller {
      */
     protected function weChatMember() {
         $code = \Yii::$app->request->get( 'code' );
+        $code = '01127dc39aa77e3a3e8f4c84717d4cb-';
         if ( $code == null ) {
             return false;
         }
         echo $code;
         $memberInfo = \Yii::$app->wechat->getMemberByCode( $code ); // 从微信获取用户
-        var_dump($memberInfo);
+//        var_dump($memberInfo);
         $data = [
             'wx_id'      => $memberInfo['openid'] ,
             'username'   => $memberInfo['openid'] ,
