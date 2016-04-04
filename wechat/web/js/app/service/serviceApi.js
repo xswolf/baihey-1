@@ -52,7 +52,7 @@ define(['app/module'], function (module) {
             return $http({
                 method: 'POST',
                 url: url,
-                data: formData
+                param: formData
             });
         }
 

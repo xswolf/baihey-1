@@ -79,7 +79,7 @@ define(['app/module', 'app/directive/directiveApi'
             // 发送验证码
             api.sendCodeMsg($scope.User.register.mobile).success(function (data){
 
-                if(data.status != 0){
+                if(!data.status){
                     $ionicPopup.alert({title: '短信发送失败，请稍后重试。'});
                     $scope.User.isOk = false;
                     return false;
