@@ -104,12 +104,12 @@ class BaseController extends Controller {
      * @return array|bool
      */
     protected function weChatMember() {
-//        $code = \Yii::$app->request->get( 'code' );
-//        if ( $code == null ) {
-//            return false;
-//        }
-//        $memberInfo = \Yii::$app->wechat->getMemberByCode( $code ); // 从微信获取用户
-        $memberInfo['openid'] = 'oEQpts_MMapxllPTfwRw0VfGeLSg';
+        $code = \Yii::$app->request->get( 'code' );
+        if ( $code == null ) {
+            return false;
+        }
+        $memberInfo = \Yii::$app->wechat->getMemberByCode( $code ); // 从微信获取用户
+//        $memberInfo['openid'] = 'oEQpts_MMapxllPTfwRw0VfGeLSg'; // 测试
         $data = [
             'wx_id'      => $memberInfo['openid'] ,
             'username'   => $memberInfo['openid'] ,
