@@ -7,34 +7,34 @@ define(['app/module', 'app/directive/directiveApi'
 ], function (module) {
 
     // 注册
-    module.controller("register", ['app.serviceApi', '$scope', '$ionicPopup', function (api, $scope, $ionicPopup) {
+    module.controller("User.register", ['app.serviceApi', '$scope', '$ionicPopup', function (api, $scope, $ionicPopup) {
 
-        $scope.User = {register: {}};
+        $scope.User = {};
 
         $scope.User.isOk = false;  //是否通行
 
-        $scope.User.register.codeBtn = '获取验证码';
+        $scope.User.codeBtn = '获取验证码';
 
         //设定页面高度为屏幕高度
-        $scope.User.register.winHeight = {
+        $scope.User.winHeight = {
             'height': document.documentElement.clientHeight + 'px'
         }
 
-        $scope.User.register.sex = {
+        $scope.User.sex = {
             man: false,
             woman: false
         }
 
         // 男生点击事件
-        $scope.User.register.selSex1 = function () {
-            $scope.User.register.sex.man = true;
-            $scope.User.register.sex.woman = false;
+        $scope.User.selSex1 = function () {
+            $scope.User.sex.man = true;
+            $scope.User.sex.woman = false;
         }
 
         // 女生点击事件
-        $scope.User.register.selSex2 = function () {
-            $scope.User.register.sex.man = false;
-            $scope.User.register.sex.woman = true;
+        $scope.User.selSex2 = function () {
+            $scope.User.sex.man = false;
+            $scope.User.sex.woman = true;
         }
 
         function validatePhone(phone) {
@@ -56,28 +56,28 @@ define(['app/module', 'app/directive/directiveApi'
         }
 
         // 开始计时
-        $scope.User.register.startTime = function () {
-            $scope.User.register.max_time -= 1;
-            $scope.User.register.codeBtn = "重新发送" + $scope.User.register.max_time;
+        $scope.User.startTime = function () {
+            $scope.User.max_time -= 1;
+            $scope.User.codeBtn = "重新发送" + $scope.User.max_time;
             $scope.$apply();
         }
 
         // 结束计时，还原文字
-        $scope.User.register.endTime = function () {
-            $scope.User.register.codeSwitch = false;
-            $scope.User.register.codeCls = false;
-            $scope.User.register.codeBtn = '获取验证码';
-            clearInterval($scope.User.register.timer);
+        $scope.User.endTime = function () {
+            $scope.User.codeSwitch = false;
+            $scope.User.codeCls = false;
+            $scope.User.codeBtn = '获取验证码';
+            clearInterval($scope.User.timer);
             $scope.$apply();
         }
 
         // 获取验证码
-        $scope.User.register.getCode = function () {
+        $scope.User.getCode = function () {
 
-            if (!validatePhone($scope.User.register.mobile)) return;
+            if (!validatePhone($scope.User.mobile)) return;
 
             // 发送验证码
-            api.sendCodeMsg($scope.User.register.mobile).success(function (data){
+            api.sendCodeMsg($scope.User.mobile).success(function (data){
 
                 if(!data.status){
                     $ionicPopup.alert({title: '短信发送失败，请稍后重试。'});
@@ -89,16 +89,16 @@ define(['app/module', 'app/directive/directiveApi'
             });
 
             //计时
-            $scope.User.register.codeSwitch = true;
-            $scope.User.register.codeCls = true;
-            $scope.User.register.max_time = 60;
-            $scope.User.register.timer = setInterval($scope.User.register.startTime, 1000);
-            setTimeout($scope.User.register.endTime, $scope.User.register.max_time * 1000)
+            $scope.User.codeSwitch = true;
+            $scope.User.codeCls = true;
+            $scope.User.max_time = 60;
+            $scope.User.timer = setInterval($scope.User.startTime, 1000);
+            setTimeout($scope.User.register.endTime, $scope.User.max_time * 1000)
 
         }
 
         //注册提交
-        $scope.User.register.register = function () {
+        $scope.User.register = function () {
 
 
             if ($scope.User.register.sex.man == false && $scope.User.register.sex.woman == false) {
@@ -130,24 +130,24 @@ define(['app/module', 'app/directive/directiveApi'
     }])
 
     // 登录
-    module.controller("login", ['app.serviceApi', '$scope', '$ionicPopup', function (api, $scope, $ionicPopup) {
+    module.controller("User.login", ['app.serviceApi', '$scope', '$ionicPopup', function (api, $scope, $ionicPopup) {
 
-        $scope.User = {login: {}};
+        $scope.User = {};
 
         // 设定页面高度为屏幕高度
-        $scope.User.login.winHeight = {
+        $scope.User.winHeight = {
             "height": document.documentElement.clientHeight + 'px'
         }
 
 
-        $scope.User.login.login = function(){
+        $scope.User.login = function(){
 
-            if(!$scope.User.login.validateFrom()) return;
+            if(!$scope.User.validateFrom()) return;
 
-            api.save('/wap/user/login',$scope.User.login).success(function(data){
+            api.save('/wap/user/login',$scope.User).success(function(data){
 
                 if(data.status){
-                    ar.cookieUser($scope.User.login.username,$scope.User.login.password);  //存入cookie
+                    ar.cookieUser($scope.User.username,$scope.User.password);  //存入cookie
                     window.location.href = '/wap/site';
                 }else {
                     $ionicPopup.alert({title: '用户名或者密码错误'});
@@ -157,14 +157,14 @@ define(['app/module', 'app/directive/directiveApi'
 
         }
 
-        $scope.User.login.validateFrom = function(){
+        $scope.User.validateFrom = function(){
 
-            if(!$scope.User.login.username){
+            if(!$scope.User.username){
                 $ionicPopup.alert({title: '请输入您的手机号码或ID'});
                 return false;
             }
 
-            if(!$scope.User.login.password){
+            if(!$scope.User.password){
                 $ionicPopup.alert({title: '请输入您的密码'});
                 return false;
             }
@@ -176,8 +176,22 @@ define(['app/module', 'app/directive/directiveApi'
     }])
 
     //找回密码
-    module.controller("forgetpass", ['app.serviceApi', '$scope', '$ionicPopup', function (api, $scope, $ionicPopup) {
+    module.controller("User.forgetpass", ['app.serviceApi', '$scope', '$ionicPopup', function (api, $scope, $ionicPopup) {
 
+        $scope.User = { }
+
+        $scope.User.codeBtn = '获取验证码';
+
+        // 发送验证码
+        $scope.User.getCode = function(){
+            api.sendCodeMsg($scope.User.mobile).success(function (data){
+                if(data.status != 0){
+                    $ionicPopup.alert({title: '短信发送失败，请稍后重试。'});
+                    return false;
+                }
+
+            });
+        }
 
 
 

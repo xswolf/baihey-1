@@ -14,9 +14,9 @@
 </head>
 
 
-<body ng-controller="register">
+<body ng-controller="User.register">
 
-<div class="bhy com_w_100 pa login_bg" ng-style="User.register.winHeight">
+<div class="bhy com_w_100 pa login_bg" ng-style="User.winHeight">
 
     <div class="login_box">
         <p class="cor0 mt40 login_title tac mb15">
@@ -30,30 +30,30 @@
             <form action="" method="post" name="reg">
                 <div class="form-group clearfix ">
                     <div>
-                        <span class="cor0 sex pr mr30" ng-click="User.register.selSex1()"><i class="check pa energized"
-                                                                                           ng-class="{true:'ion-ios-circle-filled',false:'ion-ios-circle-outline'}[User.register.sex.man]"></i>我是男生</span>
-                        <span class="cor0 sex pr " ng-click="User.register.selSex2()"><i class="check pa energized"
-                                                                       ng-class="{true:'ion-ios-circle-filled',false:'ion-ios-circle-outline'}[User.register.sex.woman]"></i>我是女生</span>
+                        <span class="cor0 sex pr mr30" ng-click="User.selSex1()"><i class="check pa energized"
+                                                                                           ng-class="{true:'ion-ios-circle-filled',false:'ion-ios-circle-outline'}[User.sex.man]"></i>我是男生</span>
+                        <span class="cor0 sex pr " ng-click="User.selSex2()"><i class="check pa energized"
+                                                                       ng-class="{true:'ion-ios-circle-filled',false:'ion-ios-circle-outline'}[User.sex.woman]"></i>我是女生</span>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="item item-input">
-                        <input type="text" class="login_input mobile" ng-model="User.register.mobile" placeholder="请输入正确的手机号码">
+                        <input type="text" class="login_input mobile" ng-model="User.mobile" placeholder="请输入正确的手机号码">
                     </label>
                 </div>
                 <div class="form-group clearfix">
                     <div class="item item-input">
-                        <input type="text" class="login_input pass fl mr5" id="code" ng-model="User.register.code"
+                        <input type="text" class="login_input pass fl mr5" id="code" ng-model="User.code"
                                placeholder="请输入短信验证码">
                         <a href="javascript:;" class="button button-positive button-small"
-                           ng-click="User.register.codeSwitch || User.register.getCode()" ng-bind="User.register.codeBtn"
-                           ng-class="{true:'dslb',false:''}[User.register.codeCls]" ng-disabled="User.register.codeSwitch">获取验证码</a>
+                           ng-click="User.codeSwitch || User.getCode()" ng-bind="User.codeBtn"
+                           ng-class="{true:'dslb',false:''}[User.codeCls]" ng-disabled="User.codeSwitch">获取验证码</a>
                     </div>
 
                 </div>
                 <div class="form-group mt30">
                     <input type="button" id="login_submit" class="button button-block button-energized"
-                           ng-click="User.register.register()" value="立即注册">
+                           ng-click="User.register()" value="立即注册">
                 </div>
                 <div class="form-group mt15 tal cor0 fs12"><p>注册即表示您同意<a class="agree"
                                                                          href="javascript:;">《嘉瑞百合缘用户协议》</a></p>
@@ -63,7 +63,6 @@
                                                                                        class="third-party wechat"></a>
                     <a href="" class="third-party weibo"></a></div>
             </form>
-
 
         </div>
 

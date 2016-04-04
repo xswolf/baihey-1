@@ -43,6 +43,12 @@ define(['app/module'], function (module) {
             return $http.get('/wap/user/validate-code', {params: {code: code}});
         }
 
+        api.CountdownTimer = function () {
+
+
+        }
+
+
         /**
          * 提交数据
          * @param formData

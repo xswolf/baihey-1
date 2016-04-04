@@ -12,7 +12,7 @@
     <script data-main="/wechat/web/js/app" src="/wechat/web/js/plugin/requirejs/require.js"></script>
 </head>
 
-<body ng-controller="forgetpass" nav-router animation="slide-left-right-ios7">
+<body ng-controller="User.forgetpass" >
 
 
 <ion-header>
@@ -34,7 +34,7 @@
         <div class="item item-input">
             <input id="code" class="login_input pass fl mr5 ng-pristine ng-untouched ng-valid" type="text"
                    placeholder="请输入短信验证码" ng-model="User.register.code">
-            <a class="button button-positive button-small ng-binding" ng-disabled="User.forgetpass.codeSwitch"
+            <a class="button button-positive button-block" ng-disabled="User.forgetpass.codeSwitch"
                ng-class="{true:'dslb',false:''}[User.forgetpass.codeCls]" ng-bind="User.forgetpass.codeBtn"
                ng-click="User.forgetpass.codeSwitch || User.forgetpass.getCode()" href="javascript:;">获取验证码</a>
         </div>
