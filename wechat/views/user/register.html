@@ -29,12 +29,10 @@
         <div class="login_form tac mr0a">
             <form action="" method="post" name="reg">
                 <div class="form-group clearfix ">
-                    <div>
-                        <span class="cor0 sex pr mr30" ng-click="User.selSex1()"><i class="check pa energized"
-                                                                                           ng-class="{true:'ion-ios-circle-filled',false:'ion-ios-circle-outline'}[User.sex.man]"></i>我是男生</span>
-                        <span class="cor0 sex pr " ng-click="User.selSex2()"><i class="check pa energized"
-                                                                       ng-class="{true:'ion-ios-circle-filled',false:'ion-ios-circle-outline'}[User.sex.woman]"></i>我是女生</span>
-                    </div>
+
+                    <span class="sex mr15" ng-click="User.selSex1()" ng-class="{true:'checked',false:''}[User.sex.man]">我是男生</span>
+                    <span class="sex" ng-click="User.selSex2()" ng-class="{true:'checked',false:''}[User.sex.woman]">我是女生</span>
+
                 </div>
                 <div class="form-group">
                     <label class="item item-input">

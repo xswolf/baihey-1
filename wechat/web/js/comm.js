@@ -42,6 +42,19 @@ var ar = {
 
     'trim': function (str) {
         return str.replace(/(^\s*)|(\s*$)/g, "");
+    },
+
+    'getQueryString': function (name) {
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+        var r = window.location.search.substr(1).match(reg);
+        if (r != null) return unescape(r[2]);
+        return null;
+    },
+
+    'validatePass': function (pass) {
+        var reg = /^\w{6}$/;
+        return reg.test(pass);
     }
+
 
 };

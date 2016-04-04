@@ -122,3 +122,20 @@
 
 /*清除浮动*/
 .clearfix:after{content:".";display:block;height:0;clear:both;visibility:hidden}
+
+/* 标准底部导航 */
+.bhy-footer{ border-top: 1px solid #dcdcdc; height: 64px;}
+#footer{ width: 100%;}
+#footer li{ float: left; background-color: #fff;  height: 43px;  text-align: center;  width: 20%;}
+#footer a.page,#footer a.page:hover,#footer a.page:active{height: auto;  line-height: 18px;  margin: 0 auto;  padding-left: 0;  padding-right: 0;  width: 90%;color: #666;  display: block;position: relative;  text-decoration: none;}
+#footer li .bhy_wap_menu{ background: url("/wechat/web/images/menu.png") no-repeat; background-position: 0 center; width:45px; height: 36px; margin: 0 auto; display: block; cursor: pointer; }
+#footer li .page .home{ background-position: 1px 0;}
+#footer li .page .msg{background-position: 1px -34px;}
+#footer li .page .me{background-position: 1px -70px;}
+#footer li .page .find{background-position: 1px -107px;}
+#footer li .page .eng{background-position: 1px -144px;}
+#footer li.home .cur{ color: #e4007f; background-position: -41px 0;}
+#footer li.msg .cur{ color: #e4007f; background-position: -41px -34px;}
+#footer li.me .cur{ color: #e4007f; background-position: -41px -70px;}
+#footer li.find .cur{ color: #e4007f; background-position: -41px -107px;}
+#footer li.eng .cur{ color: #e4007f; background-position: -41px -144px;}

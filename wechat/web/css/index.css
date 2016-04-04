@@ -116,15 +116,17 @@ a.weibo {
   color: #00adef;
   text-decoration: none;
 }
-.check {
-  font-size: 18px;
-  top: 0;
-  left: 0;
-}
 .sex {
+  background-color: #fff;
+  color: #fc6da2;
   cursor: pointer;
   display: inline-block;
-  padding-left: 24px;
+  font-size: 16px;
+  padding: 6px 20px;
+}
+.checked {
+  background-color: #fc6da2;
+  color: #fff;
 }
 /* forgetpass */
 .ft_btn {

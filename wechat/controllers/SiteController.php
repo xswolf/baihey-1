@@ -16,9 +16,8 @@ class SiteController extends BaseController
      */
     public function actionIndex()
     {
+
         return $this->render();
-//        $user = new User();
-//        $user->login('a','b');
     }
 
 

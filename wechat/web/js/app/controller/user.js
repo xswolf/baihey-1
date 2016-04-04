@@ -11,13 +11,19 @@ define(['app/module', 'app/directive/directiveApi'
 
         $scope.User = {};
 
-
         $scope.User.codeBtn = '获取验证码';
 
-        //设定页面高度为屏幕高度
-        $scope.User.winHeight = {
-            'height': document.documentElement.clientHeight + 'px'
+        //如果文档高度大于屏幕高度，使用文档高度。 否则使用屏幕高度
+        if (document.body.scrollHeight > document.documentElement.clientHeight) {
+            $scope.User.winHeight = {
+                'height': document.body.scrollHeight + 'px'
+            }
+        } else {
+            $scope.User.winHeight = {
+                'height': document.documentElement.clientHeight + 'px'
+            }
         }
+
 
         $scope.User.sex = {
             man: false,
@@ -129,9 +135,17 @@ define(['app/module', 'app/directive/directiveApi'
 
         $scope.User = {};
 
-        // 设定页面高度为屏幕高度
-        $scope.User.winHeight = {
-            "height": document.documentElement.clientHeight + 'px'
+        //如果文档高度大于屏幕高度，使用文档高度。 否则使用屏幕高度
+        if (document.body.scrollHeight > document.documentElement.clientHeight) {
+            $scope.User.winHeight = {
+                'height': document.body.scrollHeight + 'px'
+            }
+        } else {
+
+            $scope.User.winHeight = {
+                'height': document.documentElement.clientHeight + 'px'
+            }
+
         }
 
 
@@ -220,10 +234,59 @@ define(['app/module', 'app/directive/directiveApi'
             $scope.$apply();
         }
 
-        $scope.User.getPass = function () {
-            api.save('url',$scope.User);
+        $scope.User.next = function () {
+
+            //TODO
+            // 查询手机号是否存在，如不存在自动注册
+            window.location.href = '/wap/user/setpass?mobile=' + $scope.User.mobile;
+            //比对验证码是否正确
+            api.validateCode($scope.User.code).success(function (data) {
+                if (data.status) {   //验证成功则跳转设置新密码页
+                    window.location.href = '/wap/user/setpass?mobile=' + $scope.User.mobile;
+                } else {
+                    $ionicPopup.alert({title: '验证码不正确'});
+                    return false;
+                }
+            });
         }
 
+
+    }])
+
+    //设置新密码
+    module.controller("User.setpass", ['app.serviceApi', '$scope', '$ionicPopup', function (api, $scope, $ionicPopup) {
+
+        $scope.User = {};
+
+        $scope.mobile = ar.getQueryString('mobile');
+
+
+        //设置新密码
+        $scope.User.setpass = function () {
+
+            if(!ar.validatePass($scope.User.password)){
+                $ionicPopup.alert({title:'密码不能少于6位字符'})
+                return false;
+            }
+
+            if($scope.User.password != $scope.User.repassword){
+                $ionicPopup.alert({title:'两次输入的密码不一致'});
+                return false;
+            }
+
+            api.save('url', $scope.User).success(function(data){
+                if(data.status){
+                    //提交成功
+                    window.location.href='/wap/user/login'
+
+                }else {
+                    $ionicPopup.alert({title:'设置密码失败'});
+                }
+            }).error(function(){
+                $ionicPopup.alert({title:'网络错误，请稍候再试'});
+            });
+
+        }
 
     }])
 

@@ -68,6 +68,15 @@ class UserController extends BaseController
         return $this->render();
     }
 
+    public function actionSetpass(){
+
+        if(!\Yii::$app->request->get('mobile')){ //没有传入mobile参数，跳转至404页面
+            $this->redirect('/wap/site/error');
+        }
+
+       return $this->render();
+    }
+
     /**
      * 验证手机号是否存在
      * @return string
