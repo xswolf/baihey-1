@@ -17,8 +17,15 @@ class UserController extends BaseController
         return parent::beforeAction($action);
     }
 
+    /**
+     * 登录
+     * @return string
+     */
     public function actionLogin()
     {
+        if(\Yii::$app->request->get('username')) {
+
+        }
         return $this->render();
     }
 
@@ -28,6 +35,10 @@ class UserController extends BaseController
         return $this->render();
     }
 
+    /**
+     * 注册
+     * @return string
+     */
     public function actionRegister()
     {
         if(\Yii::$app->request->get('mobile')) {

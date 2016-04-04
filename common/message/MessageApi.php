@@ -28,6 +28,11 @@ class MessageApi extends Component{
         return $output;
     }
 
+    /**
+     * 发送验证码
+     * @param $phone
+     * @return bool
+     */
     public function sendCode($phone){
         $code = rand(100000,999999);
         $nr = '您好，本次验证码为：'.$code.'。【嘉瑞百合缘】';
@@ -45,6 +50,11 @@ class MessageApi extends Component{
         return false;
     }
 
+    /**
+     * 判断验证码是否正确
+     * @param $code
+     * @return bool
+     */
     public function validataCode($code){
         if(\Yii::$app->session->get('reg_code') && intval($code) == intval(\Yii::$app->session->get('reg_code'))){
             \Yii::$app->session->remove('reg_code');
