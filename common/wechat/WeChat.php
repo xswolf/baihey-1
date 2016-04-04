@@ -90,10 +90,16 @@ class WeChat extends \callmez\wechat\sdk\Wechat {
         return $resultStr;
     }
 
-    public function getOauthToken($code){
+    /**
+     * @param $code 网页授权返回CODE
+     *
+     * @return array|bool 微信用户信息
+     */
+    public function getMemberByCode($code){
 
         $result = $this->httpGet(self::OAUTH_TOKEN."?appid={$this->appId}&secret={$this->appSecret}&code={$code}&grant_type=authorization_code");
-        return $result;
+        $member = \Yii::$app->wechat->getMemberInfo($result['openid']);
+        return $member;
     }
 
 }

@@ -87,4 +87,9 @@ class BaseController extends Controller{
         $view = "/".\Yii::$app->request->pathInfo;
         return $this->render([],$view);
     }
+
+    protected function weChatMember(){
+        $memberInfo = \Yii::$app->wechat->getMemberByCode(\Yii::$app->request->get('code'));
+        return $memberInfo;
+    }
 }
