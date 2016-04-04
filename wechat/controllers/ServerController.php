@@ -32,24 +32,16 @@ class ServerController extends BaseController {
     }
 
     private function responseMsg() {
-        //get post data, May be due to the different environments
         $postStr = $GLOBALS["HTTP_RAW_POST_DATA"];
         file_put_contents('./log.txt' , $postStr."\n" ,FILE_APPEND);
-
-        //extract post data
         if ( ! empty( $postStr ) ) {
-            /* libxml_disable_entity_loader is to prevent XML eXternal Entity Injection,
-               the best way is to check the validity of xml by yourself */
             libxml_disable_entity_loader( true );
             $postObj      = simplexml_load_string( $postStr , 'SimpleXMLElement' , LIBXML_NOCDATA );
             $fromUsername = $postObj->FromUserName;
             $fromUsername = trim($fromUsername);
             $toUsername   = $postObj->ToUserName;
 
-
             $resultStr = \Yii::$app->wechat->responseNews($fromUsername , $toUsername);
-//            $resultStr = \Yii::$app->wechat->responseText($fromUsername , $toUsername);
-
 
             $userInfo = \Yii::$app->wechat->getMemberInfo($fromUsername);
             if(is_array($userInfo) && count($userInfo) > 0){
@@ -71,17 +63,19 @@ class ServerController extends BaseController {
     public function actionMaterial(){
         $result_1 = \Yii::$app->wechat->deleteMenu();
         $result = \Yii::$app->wechat->createMenu([
-            [
-                'type' => 'click',
-                'name' => '嘉瑞百合缘',
-                'key' => 'V1001_TODAY_MUSIC'
-            ],
+//            [
+//                'type' => 'click',
+//                'name' => '嘉瑞百合缘',
+//                'key' => 'V1001_TODAY_MUSIC'
+//            ],
             [
                 'type' => 'view',
-                'name' => '开发中',
+                'name' => '嘉瑞登录',
                 'url' => 'http://wechat.baihey.com/wap/chat/chat'
             ]
         ]);
+
+        var_dump(\Yii::$app->wechat->getMenuList());
 
         var_dump($result_1);
 
