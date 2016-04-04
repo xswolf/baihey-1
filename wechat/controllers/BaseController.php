@@ -104,13 +104,12 @@ class BaseController extends Controller {
      * @return array|bool
      */
     protected function weChatMember() {
-        $code = \Yii::$app->request->get( 'code' );
-//        $code = '011c4f0d4cb6971338b27e5dd75faeaM'; // 测试code
-        if ( $code == null ) {
-            return false;
-        }
-        $memberInfo = \Yii::$app->wechat->getMemberByCode( $code ); // 从微信获取用户
-        print_r($memberInfo);exit();
+//        $code = \Yii::$app->request->get( 'code' );
+//        if ( $code == null ) {
+//            return false;
+//        }
+//        $memberInfo = \Yii::$app->wechat->getMemberByCode( $code ); // 从微信获取用户
+        $memberInfo['openid'] = 'oEQpts_MMapxllPTfwRw0VfGeLSg';
         $data = [
             'wx_id'      => $memberInfo['openid'] ,
             'username'   => $memberInfo['openid'] ,
@@ -120,7 +119,8 @@ class BaseController extends Controller {
 
         $user = User::getInstance()->findOne( [ 'wx_id' => $data['wx_id'] ] );
         if ( ! $user ) { // 用户不存在，写入数据
-            User::getInstance()->save( $data );
+            User::getInstance()->addUser( $data );
+            echo User::getInstance()->getDb()->getLastInsertID();
             $user = $data;
         }
 
