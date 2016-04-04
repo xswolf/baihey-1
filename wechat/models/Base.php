@@ -14,7 +14,7 @@ class Base extends \yii\db\ActiveRecord{
     static $instance;
 
     /**
-     * @return $instance
+     * @return $this
      */
     public static function getInstance(){
         $class = get_called_class();

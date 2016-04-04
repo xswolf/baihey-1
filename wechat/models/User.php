@@ -49,7 +49,8 @@ class User extends Base{
      */
     public function addUser($data) {
         $db = \Yii::$app->db;
-        $data['password'] = md5(md5($data['pass']));
+        $data['password'] = md5(md5($data['password']));
+
         $row = $db->createCommand()
             ->insert($this->tableName(), $data)
             ->execute();
