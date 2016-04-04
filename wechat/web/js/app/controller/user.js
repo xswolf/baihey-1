@@ -106,9 +106,8 @@ define(['app/module', 'app/directive/directiveApi'
                 return false;
             }
 
-            if (!validatePhone($scope.User.register.mobile)) return;
-
             if(!ar.trim($scope.User.register.code)){
+
                 $ionicPopup.alert({title: '请填写短信验证码'});
                 return false;
             }
