@@ -29,9 +29,6 @@ class MessageApi extends Component{
     }
 
     public function sendCode($phone){
-        $code = '333333';
-        \Yii::$app->session->set('reg_code',$code);
-        return true;
         $code = rand(100000,999999);
         $nr = '您好，本次验证码为：'.$code.'。【嘉瑞百合缘】';
         \Yii::$app->session->set('reg_code',$code);
