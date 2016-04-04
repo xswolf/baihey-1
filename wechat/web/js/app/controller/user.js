@@ -79,9 +79,6 @@ define(['app/module', 'app/directive/directiveApi'
             // 发送验证码
             api.sendCodeMsg($scope.User.register.mobile).then(function(resp){
 
-                alert(resp.status);
-                return;
-
                 if(data.status != 0){
                     $ionicPopup.alert({title: '短信发送失败，请稍后重试。'});
                     $scope.User.isOk = false;
@@ -131,7 +128,6 @@ define(['app/module', 'app/directive/directiveApi'
             }
 
             $scope.User.register.formData = {'sex': $scope.User.register.sex, 'mobile': $scope.User.register.mobile}; //组装表单数据
-
             var result = api.save('/wap/user/register', $scope.User.register.formData);
             result.success(function (data) {
                 if (data.status) {

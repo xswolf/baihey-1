@@ -32,6 +32,8 @@ class UserController extends BaseController
         if(\Yii::$app->request->isPost) {
             $userModel = new User();
             $data = \Yii::$app->request->post();
+            $data = json_encode($data);
+            var_dump($data);exit;
             if($userModel->addUser($data)) {
                 \Yii::$app->messageApi->passwordMsg(15084410950,substr($data['mobile'],-6));
                 $this->renderAjax(['status'=>1,'msg'=>'注册成功']);
@@ -63,7 +65,7 @@ class UserController extends BaseController
     public function actionSendCodeMsg(){
         if (\Yii::$app->request->isGet) {
             $data = \Yii::$app->request->get();
-            $this->renderAjax(['status'=>\Yii::$app->messageApi->sendCode($data['mobile'])]);
+            $this->renderAjax(['status'=>\Yii::$app->messageApi->sendCode($data['mobile']),'reg_code'=>\Yii::$app->session->get('reg_code')]);
         }
     }
 
