@@ -46,7 +46,8 @@ class ChatController extends BaseController{
 
     public function actionList(){
         var_dump($_REQUEST);
-        \Yii::$app->wechat->getOauthToken($_REQUEST['code']);
+        $accessToken = \Yii::$app->wechat->getOauthToken($_REQUEST['code']);
+        var_dump($accessToken);
         return $this->render();
     }
 
