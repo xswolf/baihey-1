@@ -62,6 +62,10 @@ class ServerController extends BaseController {
 
     public function actionMaterial(){
         $result_1 = \Yii::$app->wechat->deleteMenu();
+
+        $appId = \Yii::$app->wechat->appId;
+
+        $url = "https://open.weixin.qq.com/connect/oauth2/authorize?appid={$appId}&redirect_uri=http://wechat.baihey.com/wap/chat/list&response_type=code&scope=snsapi_base&state=az#wechat_redirect";
         $result = \Yii::$app->wechat->createMenu(
 //            [
 //                'type' => 'click',
@@ -71,9 +75,10 @@ class ServerController extends BaseController {
             [
                 'type' => 'view',
                 'name' => '嘉瑞登录',
-                'url' => 'http://wechat.baihey.com/wap/chat/chat'
+                'url' => $url
             ]
         );
+
 
         var_dump(\Yii::$app->wechat->getMenuList());
 
