@@ -32,8 +32,8 @@
         </label>
 
         <div class="item item-input">
-            <input id="code" class="login_input pass fl mr5 ng-pristine ng-untouched ng-valid" type="text"
-                   placeholder="请输入短信验证码" ng-model="User.register.code">
+            <input class="login_input pass fl mr5 " type="text"
+                   placeholder="请输入短信验证码" ng-model="User.mobile">
             <a class="button button-positive button-block" ng-disabled="User.forgetpass.codeSwitch"
                ng-class="{true:'dslb',false:''}[User.forgetpass.codeCls]" ng-bind="User.forgetpass.codeBtn"
                ng-click="User.forgetpass.codeSwitch || User.forgetpass.getCode()" href="javascript:;">获取验证码</a>
