@@ -112,20 +112,6 @@ define(['app/module', 'app/directive/directiveApi'
                 return false;
             }
 
-            api.validateCode(ar.trim($scope.User.register.code)).success(function(data){
-                if(!data.status){
-                    $ionicPopup.alert({title: '验证码不正确'});
-                    $scope.User.isOk = false;
-                    return false;
-                }else {
-                    $scope.User.isOk = true;
-                }
-            })
-
-            if(!$scope.User.isOk){
-                return false;
-            }
-
             $scope.User.register.formData = {'sex': $scope.User.register.sex, 'mobile': $scope.User.register.mobile}; //组装表单数据
 
             var result = api.save('/wap/user/register', $scope.User.register.formData);
