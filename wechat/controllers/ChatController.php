@@ -45,7 +45,7 @@ class ChatController extends BaseController{
     }
 
     public function actionList(){
-
+        var_dump($_REQUEST);
         return $this->render();
     }
 
