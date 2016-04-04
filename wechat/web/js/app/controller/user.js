@@ -37,18 +37,19 @@ define(['app/module', 'app/directive/directiveApi'
         }
 
         function validatePhone(phone) {
+
             if (!ar.validateMobile(phone)) {  // 验证手机格式
                 $ionicPopup.alert({title: '手机号码格式不正确'});
                 return false;
             }
 
             api.getMobileIsExist(phone).success(function(data){
-                if(!data.status){
-                    $ionicPopup.alert({title: data.msg});
-                    return true;
-                }else {
-                    return false;
-                }
+                    if(!data.status){
+                        $ionicPopup.alert({title: data.msg});
+                        return true;
+                    }else {
+                        return false;
+                    }
             })
 
             return true;
@@ -81,15 +82,17 @@ define(['app/module', 'app/directive/directiveApi'
                 if(!data.status){
                     $ionicPopup.alert({title: '短信发送失败，请稍后重试。'});
                     return false;
+                }else {
+                    //计时
+                    $scope.User.codeSwitch = true;
+                    $scope.User.codeCls = true;
+                    $scope.User.max_time = 60;
+                    $scope.User.timer = setInterval($scope.User.startTime, 1000);
+                    setTimeout($scope.User.register.endTime, $scope.User.max_time * 1000);
                 }
             });
 
-            //计时
-            $scope.User.codeSwitch = true;
-            $scope.User.codeCls = true;
-            $scope.User.max_time = 60;
-            $scope.User.timer = setInterval($scope.User.startTime, 1000);
-            setTimeout($scope.User.register.endTime, $scope.User.max_time * 1000)
+
 
         }
 
@@ -108,9 +111,7 @@ define(['app/module', 'app/directive/directiveApi'
                 return false;
             }
 
-            $scope.User.formData = {'sex': $scope.User.sex, 'mobile': $scope.User.mobile}; //组装表单数据
-
-            var result = api.save('/wap/user/register', $scope.User.formData);
+            var result = api.save('/wap/user/register', $scope.User);
             result.success(function (data) {
                 if (data.status) {
                     var m = $scope.User.mobile;
@@ -178,12 +179,27 @@ define(['app/module', 'app/directive/directiveApi'
 
         $scope.User.codeBtn = '获取验证码';
 
+
+
         // 发送验证码
         $scope.User.getCode = function(){
+
+            if (!ar.validateMobile($scope.User.mobile)) {  // 验证手机格式
+                $ionicPopup.alert({title: '手机号码格式不正确'});
+                return false;
+            }
+
             api.sendCodeMsg($scope.User.mobile).success(function (data){
-                if(data.status != 0){
+                if(!data.status){
                     $ionicPopup.alert({title: '短信发送失败，请稍后重试。'});
                     return false;
+                }else {
+                    //计时
+                    $scope.User.codeSwitch = true;
+                    $scope.User.codeCls = true;
+                    $scope.User.max_time = 60;
+                    $scope.User.timer = setInterval($scope.User.startTime, 1000);
+                    setTimeout($scope.User.endTime, $scope.User.max_time * 1000);
                 }
 
             });
@@ -206,12 +222,7 @@ define(['app/module', 'app/directive/directiveApi'
             $scope.$apply();
         }
 
-        //计时
-        $scope.User.codeSwitch = true;
-        $scope.User.codeCls = true;
-        $scope.User.max_time = 60;
-        $scope.User.timer = setInterval($scope.User.startTime, 1000);
-        setTimeout($scope.User.endTime, $scope.User.max_time * 1000)
+
 
     }])
 
