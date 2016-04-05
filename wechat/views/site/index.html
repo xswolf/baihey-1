@@ -1,0 +1,9 @@
+<ion-list ng-controller="site.index" show-delete="data.showDelete" on-delete="onItemDelete(item)" option-buttons="itemButtons">
+
+    <ion-item ng-repeat="item in items" item="item" href="#/item/{{item.id}}">
+        <div style="height: 80px;">
+        Item {{ item.id }}
+        </div>
+    </ion-item>
+
+</ion-list>

@@ -13,7 +13,7 @@
     <script data-main="/wechat/web/js/app" src="/wechat/web/js/plugin/requirejs/require.js"></script>
     <body>
 
-        <ion-content>
+        <ion-content class="com_w_100">
 
             <?= $content ?>
 
@@ -22,32 +22,32 @@
         <div class="bar bar-footer bhy-footer">
             <ul id="footer">
                 <li class="home">
-                    <a href="/wap/site/index" class="page ">
-                        <i class="bhy_wap_menu home "></i>
+                    <a href="/wap/site/index" class="page <?php echo \Yii::$app->controller->id == 'site' ? 'cur' : ''; ?>">
+                        <i class="bhy_wap_menu home <?php echo \Yii::$app->controller->id == 'site' ? 'cur' : ''; ?>"></i>
                         <div>首页</div>
                     </a>
                 </li>
                 <li class="msg">
-                    <a href="/wap/site/index" class="page ">
-                        <i class="bhy_wap_menu msg "></i>
+                    <a href="/wap/message/index" class="page <?php echo \Yii::$app->controller->id == 'message' ? 'cur' : ''; ?>">
+                        <i class="bhy_wap_menu msg <?php echo \Yii::$app->controller->id == 'message' ? 'cur' : ''; ?>"></i>
                         <div>消息</div>
                     </a>
                 </li>
                 <li class="me">
-                    <a href="/wap/site/index" class="page">
-                        <i class="bhy_wap_menu me"></i>
+                    <a href="/wap/member/index" class="page <?php echo \Yii::$app->controller->id == 'member' ? 'cur' : ''; ?>">
+                        <i class="bhy_wap_menu me <?php echo \Yii::$app->controller->id == 'member' ? 'cur' : ''; ?>"></i>
                         <div>我</div>
                     </a>
                 </li>
-                <li class="find">
-                    <a href="/wap/site/index" class="page">
-                        <i class="bhy_wap_menu find"></i>
+                <li class="discovery">
+                    <a href="/wap/discovery/index" class="page <?php echo \Yii::$app->controller->id == 'discovery' ? 'cur' : ''; ?>">
+                        <i class="bhy_wap_menu discovery <?php echo \Yii::$app->controller->id == 'discovery' ? 'cur' : ''; ?>"></i>
                         <div>发现</div>
                     </a>
                 </li>
-                <li class="eng">
-                    <a href="/wap/site/index" class="page">
-                      <i class="bhy_wap_menu eng"></i>
+                <li class="rende">
+                    <a href="/wap/rendezvous/index" class="page <?php echo \Yii::$app->controller->id == 'rendezvous' ? 'cur' : ''; ?>">
+                      <i class="bhy_wap_menu rende <?php echo \Yii::$app->controller->id == 'rendezvous' ? 'cur' : ''; ?>"></i>
                       <div>约会</div>
                     </a>
 

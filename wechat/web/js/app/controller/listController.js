@@ -4,7 +4,8 @@
 
 define ([
     'app/controller/chat',
-    'app/controller/user'
+    'app/controller/user',
+    'app/controller/site'
 ] , function () {
 
 })
