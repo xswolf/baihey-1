@@ -22,13 +22,18 @@ class UserController extends BaseController {
      * @return string
      */
     public function actionLogin() {
+
         $this->isLogin();
         if ( \Yii::$app->request->get('username') && \Yii::$app->request->get('password') ) {
+
             if(User::getInstance()->login($this->get['username'], $this->get['password'])) {
+
                 // 设置COOKIE
                 Cookie::getInstance()->setCookie( 'bhy_u_name' , $this->get['username'] );
                 return $this->renderAjax( [ 'status' => 1 , 'msg' => '登录成功' ] );
+
             } else {
+
                 return $this->renderAjax( [ 'status' => 0 , 'msg' => '登录失败' ] );
             }
         }
@@ -62,7 +67,10 @@ class UserController extends BaseController {
      * @return string
      */
     public function actionRegister() {
+
+        // 判断是否提交注册
         if ( \Yii::$app->request->get( 'mobile' ) ) {
+
             // 注册数据处理
             if ( \Yii::$app->request->get( 'log_code' ) == \Yii::$app->session->get( 'log_code' ) ) {
                 $sex              = \Yii::$app->request->get( 'sex' );
@@ -70,13 +78,22 @@ class UserController extends BaseController {
                 $data['sex']      = $data['sex']->man ? 1 : 0;
                 $data['username'] = \Yii::$app->request->get( 'mobile' );
                 $data['password'] = substr( $data['username'] , - 6 );
+                // 添加用户
                 if ( User::getInstance()->addUser( $data ) ) {
+
+                    // 发送默认密码
                     \Yii::$app->messageApi->passwordMsg( $data['username'] , $data['password'] );
+
+                    // 设置cookie
+                    Cookie::getInstance()->setCookie('bhy_u_name', $data['username']);
+
                     $this->renderAjax( [ 'status' => 1 , 'msg' => '注册成功' ] );
                 } else {
+
                     $this->renderAjax( [ 'status' => 0 , 'msg' => '注册失败' ] );
                 }
             } else {
+
                 $this->renderAjax( [ 'status' => 0 , 'msg' => '验证码错误' ] );
             }
         }
@@ -104,11 +121,14 @@ class UserController extends BaseController {
      */
     public function actionMobileIsExist() {
         if ( \Yii::$app->request->isGet ) {
+
             $data      = \Yii::$app->request->get();
-            $userModel = new User();
-            if ( $userModel->getUserByName( $data['mobile'] ) ) {
+            // 通过手机号查询用户信息
+            if ( User::getInstance()->getUserByName( $data['mobile'] ) ) {
+
                 $this->renderAjax( [ 'status' => 0 , 'msg' => '手机号码已存在' ] );
             } else {
+
                 $this->renderAjax( [ 'status' => 1 , 'msg' => '该手机号可以注册' ] );
             }
         }
@@ -118,7 +138,9 @@ class UserController extends BaseController {
      * 发送手机验证码
      */
     public function actionSendCodeMsg() {
+
         if ( \Yii::$app->request->isGet ) {
+
             $data = \Yii::$app->request->get();
             $this->renderAjax( [ 'status'   => \Yii::$app->messageApi->sendCode( $data['mobile'] ) ,
                                  'reg_code' => \Yii::$app->session->get( 'reg_code' )
@@ -130,7 +152,9 @@ class UserController extends BaseController {
      * 验证客户端输入验证码是否与服务端一致
      */
     public function actionValidateCode() {
+
         if ( \Yii::$app->request->isGet ) {
+
             $data = \Yii::$app->request->get();
             $this->renderAjax( [ 'status' => \Yii::$app->messageApi->validataCode( $data['code'] ) ] );
         }
