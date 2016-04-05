@@ -34,6 +34,16 @@ class UserController extends BaseController {
         return $this->render();
     }
 
+    /**
+     *
+     */
+    public function actionWxLogin(){
+        $appId = \Yii::$app->wechat->appId;
+        $redirectUri = urlencode("http://wechat.baihey.com/wap/user/welcome");
+        $url = "https://open.weixin.qq.com/connect/oauth2/authorize?appid={$appId}&redirect_uri={$redirectUri}&response_type=code&scope=snsapi_base&state=123#wechat_redirect";
+        $this->redirect($url);
+    }
+
     public function actionWelcome() {
 
         $user = $this->weChatMember();
