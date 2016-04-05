@@ -37,9 +37,6 @@ class UserController extends BaseController {
     }
 
     public function actionWelcome() {
-//        echo \Yii::$app->getRequest()->getCsrfToken()."<br>";
-//        echo \yii\web\Request::CSRF_HEADER;exit;
-        print_r($_SERVER);
 
         $user = $this->weChatMember();
         $user['username'] = '18623558229';
