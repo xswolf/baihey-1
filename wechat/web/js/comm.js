@@ -29,11 +29,29 @@ var ar = {
         return pattern.test(mobile);
     },
 
+    'getCookie': function (name) {
+        var arr, reg = new RegExp("(^| )" + name + "=([^;]*)(;|$)");
+        if (arr == document.cookie.match(reg)) {
+            return unescape(arr[2]);
+        }
+        else {
+            return null;
+        }
+    },
+
+    'delCookie': function (name) {
+        var exp = new Date();
+        exp.setTime(exp.getTime() - 1);
+        var cval = getCookie(name);
+        if (cval != null)
+            document.cookie = name + "=" + cval + ";expires=" + exp.toGMTString() + ";path=/";
+    },
+
     'cookieUser': function (userName) {
-            var Days = 30;
-            var exp = new Date();
-            exp.setTime(exp.getTime() + Days * 24 * 60 * 60 * 1000);
-            document.cookie = "bhy_u_name=" + escape(userName) + ";expires=" + exp.toGMTString()+";path=/";
+        var Days = 30;
+        var exp = new Date();
+        exp.setTime(exp.getTime() + Days * 24 * 60 * 60 * 1000);
+        document.cookie = "bhy_u_name=" + escape(userName) + ";expires=" + exp.toGMTString() + ";path=/";
     },
 
     'trim': function (str) {
