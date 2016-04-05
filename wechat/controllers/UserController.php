@@ -22,6 +22,7 @@ class UserController extends BaseController {
      * @return string
      */
     public function actionLogin() {
+
         if ( \Yii::$app->request->get('username') && \Yii::$app->request->get('password') ) {
             if(User::getInstance()->login($this->get['username'], $this->get['password'])) {
                 $this->renderAjax( [ 'status' => 1 , 'msg' => '登录成功' ] );
@@ -34,6 +35,7 @@ class UserController extends BaseController {
     }
 
     public function actionWelcome() {
+
         $user = $this->weChatMember();
 
         if(!isset($_COOKIE["bhy_u_name"]) && isset($user) && isset($user['username'])) {
@@ -47,6 +49,7 @@ class UserController extends BaseController {
      * @return string
      */
     public function actionRegister() {
+
         if ( \Yii::$app->request->get( 'mobile' ) ) {
             // 注册数据处理
             if ( \Yii::$app->request->get( 'log_code' ) == \Yii::$app->session->get( 'log_code' ) ) {
