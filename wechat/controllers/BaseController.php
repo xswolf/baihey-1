@@ -20,10 +20,12 @@ class BaseController extends Controller {
 
     protected $get;
     protected $post;
+    public $title;
 
     public function init() {
         $this->get = \Yii::$app->request->get();
         $this->post = \Yii::$app->request->post();
+        $this->title = '嘉瑞百合缘';
         parent::init();
     }
 
