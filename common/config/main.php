@@ -40,7 +40,7 @@ return [
         ],
 
         'request'=> [
-            "cookieValidationKey"=>"123456789"
+            "cookieValidationKey"=>"jrbhy*cnmkey"
         ]
     ],
 
