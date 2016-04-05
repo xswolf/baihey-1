@@ -23,7 +23,10 @@ class UserController extends BaseController {
      */
     public function actionLogin() {
 
-        $this->isLogin();
+        // 判断是否自动登录
+        if($this->isLogin()) { return $this->redirect('/wap/site');}
+
+        //判断是否点击提交
         if ( \Yii::$app->request->get('username') && \Yii::$app->request->get('password') ) {
 
             if(User::getInstance()->login($this->get['username'], $this->get['password'])) {

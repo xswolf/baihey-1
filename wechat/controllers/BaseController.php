@@ -9,6 +9,7 @@
 namespace wechat\controllers;
 
 
+use common\util\Cookie;
 use wechat\models\User;
 use yii\web\Controller;
 
@@ -35,6 +36,7 @@ class BaseController extends Controller {
      */
     public function isLogin() {
 
+        if(Cookie::getInstance()->getCookie('bhy_u_name')) { return true;}
         return false;
     }
 
