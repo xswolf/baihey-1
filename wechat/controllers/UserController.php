@@ -36,10 +36,19 @@ class UserController extends BaseController {
         return $this->render();
     }
 
+    /**
+     * 微信登录
+     */
+    public function actionWxLogin(){
+        $appId = \Yii::$app->wechat->appId;
+        $redirectUri = urlencode("http://wechat.baihey.com/wap/user/welcome");
+        $url = "https://open.weixin.qq.com/connect/oauth2/authorize?appid={$appId}&redirect_uri={$redirectUri}&response_type=code&scope=snsapi_base&state=123#wechat_redirect";
+        $this->redirect($url);
+    }
+
     public function actionWelcome() {
 
         $user = $this->weChatMember();
-        $user['username'] = '18623558229';
         if(!isset($_COOKIE["bhy_u_name"]) && isset($user) && isset($user['username'])) {
 
             Cookie::getInstance()->setCookie('bhy_u_name' , $user['username']);
