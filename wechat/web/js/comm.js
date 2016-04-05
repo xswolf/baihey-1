@@ -30,14 +30,10 @@ var ar = {
     },
 
     'cookieUser': function (userName) {
-        if (window.localStorage) {   // 浏览器支持 localStorage
-            window.localStorage.setItem("bhy_u_name", userName);
-        } else {                     // 浏览器不支持 localStorage  则使用 cookie
             var Days = 30;
             var exp = new Date();
             exp.setTime(exp.getTime() + Days * 24 * 60 * 60 * 1000);
             document.cookie = "bhy_u_name=" + escape(userName) + ";expires=" + exp.toGMTString();
-        }
     },
 
     'trim': function (str) {
