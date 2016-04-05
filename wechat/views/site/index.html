@@ -1,18 +1,31 @@
 <ion-header>
     <div class="bar bar-header">
-        <a href="/wap/user/login" class="button button-icon icon ion-arrow-left-c"></a>
-        <h1 class="title"></h1>
+        <a href="/wap/user/login" class="button button-icon "><i class="fs16 ion-android-pin positive mr5"></i>重庆<i class="ml5 fs14 ion-android-arrow-dropdown positive"></i></a>
+        <a href="/wap/user/login" class="button button-icon">搜索</a>
     </div>
 </ion-header>
 
-<ion-content class="com_w_100 has-header has-footer bhy-has-footer">
+<ion-content class=" has-header has-footer bhy-has-footer site">
     <ion-list ng-controller="site.index" show-delete="data.showDelete" on-delete="onItemDelete(item)" option-buttons="itemButtons">
 
         <ion-item ng-repeat="item in items" item="item" href="#/item/{{item.id}}">
-            <dl >
-                <dt><img src=""></dt>
-                <dd>Item {{ item.id }}</dd>
-            </dl>
+            <div class="row">
+                <div class="col col-25"><img class="item_uimg" src="/wechat/web/images/test.jpg"></div>
+                <div class="col col-75">
+                    <div class="row pl0">
+                        <div class="col"> <span class="fwb fs14">张小姐</span> <span class="cor19 fs12">27岁</span> <span class="cor19 fs12">165cm</span> <span class="cor19 fs12">离异</span></div>
+                        <div class="col-20"><label class="label-right fs12"><i class="ion-android-pin mr5 positive"></i>渝中区</label></div>
+                    </div>
+
+                    <div class="row pl0">
+                        <div class="col fs12">身份证 手机 贵宾</div>
+                    </div>
+
+                    <div class="row pl0">
+                        <div class="col"><p class="cor20 signature">个性签名个性签名个性签名个性签名个性签名</p></div>
+                    </div>
+                </div>
+            </div>
         </ion-item>
 
     </ion-list>

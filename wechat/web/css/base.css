@@ -85,6 +85,8 @@
 .cor16{color:#fc6da2;}
 .cor17{color:#999999;}
 .cor18{color:#2e2d44;}
+.cor19{color:#616161;}
+.cor20{color:#909090;}
 
 .fs12{ font-size: 12px;}
 .fs14{ font-size: 14px;}
@@ -104,12 +106,17 @@
 .m_10_0{margin:10px auto;}
 .fl{ float: left;}
 .fr{ float: right;}
+.ml0{margin-left: 0 !important;}
+.mr0{margin-right: 0 !important;}
+.pl0{padding-left: 0 !important;}
+.pr0{padding-right: 0 !important;}
 
 .bor_r_n{border-right:none;}
 .bor_b_n{border-bottom:none;}
 .bor_l_n{border-left:none;}
 .bor_t_n{border-top:none;}
-
+.bor_r_1{ border-right: 1px solid #a2a2a2;}
+.pd5{ padding: 0 5px;}
 .cbh{clear:both;}
 
 .bhy{max-width: 640px; margin: 0 auto;}
@@ -117,6 +124,7 @@
 .tal{ text-align: left;}
 .tar{ text-align: right;}
 .form-group {  margin-bottom: 15px;}
+.fwb{ font-weight: bold;}
 
 
 /*清除浮动*/
