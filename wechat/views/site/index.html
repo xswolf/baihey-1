@@ -8,12 +8,12 @@
 <ion-content class=" has-header has-footer bhy-has-footer site">
     <ion-list ng-controller="site.index" show-delete="data.showDelete" on-delete="onItemDelete(item)" option-buttons="itemButtons">
 
-        <ion-item ng-repeat="item in items" item="item" href="#/item/{{item.id}}">
+        <ion-item ng-repeat="item in items track by item.id" item="item" href="#/item/{{item.id}}">
             <div class="row">
                 <div class="col col-25"><img class="item_uimg" src="/wechat/web/images/test.jpg"></div>
                 <div class="col col-75">
                     <div class="row pl0">
-                        <div class="col"> <span class="fwb fs14">张小姐</span> <span class="cor19 fs12">27岁</span> <span class="cor19 fs12">165cm</span> <span class="cor19 fs12">离异</span></div>
+                        <div class="col"> <span class="fwb fs14">张小姐</span> <span class="cor19 fs12">{{item.id}}岁</span> <span class="cor19 fs12">165cm</span> <span class="cor19 fs12">离异</span></div>
                         <div class="col-20"><label class="label-right fs12"><i class="ion-android-pin mr5 positive"></i>渝中区</label></div>
                     </div>
 
