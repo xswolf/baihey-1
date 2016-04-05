@@ -22,9 +22,11 @@ class UserController extends BaseController {
      * @return string
      */
     public function actionLogin() {
-
+        $this->isLogin();
         if ( \Yii::$app->request->get('username') && \Yii::$app->request->get('password') ) {
             if(User::getInstance()->login($this->get['username'], $this->get['password'])) {
+                // 设置COOKIE
+                Cookie::getInstance()->setCookie('bhy_u_name',$this->get['username']);
                 $this->renderAjax( [ 'status' => 1 , 'msg' => '登录成功' ] );
             } else {
                 $this->renderAjax( [ 'status' => 0 , 'msg' => '登录失败' ] );
@@ -34,28 +36,12 @@ class UserController extends BaseController {
         return $this->render();
     }
 
-    /**
-     *
-     */
-    public function actionWxLogin(){
-        $appId = \Yii::$app->wechat->appId;
-        $redirectUri = urlencode("http://wechat.baihey.com/wap/user/welcome");
-        $url = "https://open.weixin.qq.com/connect/oauth2/authorize?appid={$appId}&redirect_uri={$redirectUri}&response_type=code&scope=snsapi_base&state=123#wechat_redirect";
-        $this->redirect($url);
-    }
-
     public function actionWelcome() {
-
         $user = $this->weChatMember();
 
         if(!isset($_COOKIE["bhy_u_name"]) && isset($user) && isset($user['username'])) {
             Cookie::getInstance()->setCookie('bhy_u_name' , $user['username']);
         }
-
-        if ($loginName = Cookie::getInstance()->getCookie('bhy_u_name')){
-//            echo '登录名称:'.$loginName;
-        }
-
         return $this->render();
     }
 
@@ -64,7 +50,6 @@ class UserController extends BaseController {
      * @return string
      */
     public function actionRegister() {
-
         if ( \Yii::$app->request->get( 'mobile' ) ) {
             // 注册数据处理
             if ( \Yii::$app->request->get( 'log_code' ) == \Yii::$app->session->get( 'log_code' ) ) {

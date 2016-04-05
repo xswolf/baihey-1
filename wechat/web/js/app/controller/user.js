@@ -156,7 +156,6 @@ define(['app/module', 'app/directive/directiveApi'
             api.save('/wap/user/login', $scope.User).success(function (data) {
 
                 if (data.status) {
-                    ar.cookieUser($scope.User.username);  //存入cookie
                     window.location.href = '/wap/site';
                 } else {
                     $ionicPopup.alert({title: '用户名或者密码错误'});
