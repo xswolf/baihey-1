@@ -13,13 +13,11 @@
     <script data-main="/wechat/web/js/app" src="/wechat/web/js/plugin/requirejs/require.js"></script>
     <body>
 
-        <ion-content class="com_w_100">
 
-            <?= $content ?>
+        <?= $content ?>
 
-        </ion-content>
 
-        <div class="bar bar-footer bhy-footer">
+        <div class="bar bar-footer bhy-footer com_w_100">
             <ul id="footer">
                 <li class="home">
                     <a href="/wap/site/index" class="page <?php echo \Yii::$app->controller->id == 'site' ? 'cur' : ''; ?>">

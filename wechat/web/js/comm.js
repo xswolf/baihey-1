@@ -33,7 +33,7 @@ var ar = {
             var Days = 30;
             var exp = new Date();
             exp.setTime(exp.getTime() + Days * 24 * 60 * 60 * 1000);
-            document.cookie = "bhy_u_name=" + escape(userName) + ";expires=" + exp.toGMTString();
+            document.cookie = "bhy_u_name=" + escape(userName) + ";expires=" + exp.toGMTString()+";path=/";
     },
 
     'trim': function (str) {
