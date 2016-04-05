@@ -24,6 +24,7 @@ class BaseController extends Controller {
     public function init() {
         $this->get = \Yii::$app->request->get();
         $this->post = \Yii::$app->request->post();
+        parent::init();
     }
 
     /**
