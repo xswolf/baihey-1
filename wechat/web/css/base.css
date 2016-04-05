@@ -118,13 +118,14 @@
 .tar{ text-align: right;}
 .form-group {  margin-bottom: 15px;}
 
-.bar-header-clear{ height: 44px;}
 
 /*清除浮动*/
 .clearfix:after{content:".";display:block;height:0;clear:both;visibility:hidden}
 
+
 /* 标准底部导航 */
 .bhy-footer{ border-top: 1px solid #dcdcdc; height: 64px;}
+.bhy-has-footer{ bottom: 64px;}
 #footer{ width: 100%;}
 #footer li{ float: left; background-color: #fff;  height: 43px;  text-align: center;  width: 20%;}
 #footer a.page,#footer a.page:hover,#footer a.page:active{height: auto;  line-height: 18px;  margin: 0 auto;  padding-left: 0;  padding-right: 0;  width: 90%;color: #666;  display: block;position: relative;  text-decoration: none;}
