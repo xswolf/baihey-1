@@ -53,7 +53,7 @@ class UserController extends BaseController {
         }
 
         if ($loginName = Cookie::getInstance()->getCookie('bhy_u_name')){
-            echo '登录名称:'.$loginName;
+//            echo '登录名称:'.$loginName;
         }
 
         return $this->render();
