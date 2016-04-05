@@ -119,7 +119,6 @@ define(['app/module', 'app/directive/directiveApi'
             var result = api.save('/wap/user/register', $scope.User);
             result.success(function (data) {
                 if (data.status) {
-                    ar.cookieUser($scope.User.mobile);
                     window.location.href = '/wap/site/index';
                 }
             }).error(function () {
@@ -156,7 +155,7 @@ define(['app/module', 'app/directive/directiveApi'
             api.save('/wap/user/login', $scope.User).success(function (data) {
 
                 if (data.status) {
-                    //window.location.href = '/wap/site';
+                    window.location.href = '/wap/site';
                 } else {
                     $ionicPopup.alert({title: '用户名或者密码错误'});
                 }
