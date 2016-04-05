@@ -84,9 +84,6 @@ class BaseController extends Controller {
         $view = $view . ".html";
         $arr  = array_merge( $params , $this->assign );
         echo json_encode( $arr );
-        exit;
-
-        return parent::renderAjax( $view , $arr );
 
     }
 

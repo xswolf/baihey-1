@@ -27,9 +27,9 @@ class UserController extends BaseController {
             if(User::getInstance()->login($this->get['username'], $this->get['password'])) {
                 // 设置COOKIE
                 Cookie::getInstance()->setCookie( 'bhy_u_name' , $this->get['username'] );
-                $this->renderAjax( [ 'status' => 1 , 'msg' => '登录成功' ] );
+                return $this->renderAjax( [ 'status' => 1 , 'msg' => '登录成功' ] );
             } else {
-                $this->renderAjax( [ 'status' => 0 , 'msg' => '登录失败' ] );
+                return $this->renderAjax( [ 'status' => 0 , 'msg' => '登录失败' ] );
             }
         }
 
