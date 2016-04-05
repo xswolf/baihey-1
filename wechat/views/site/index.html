@@ -8,7 +8,8 @@
 <ion-content class=" has-header has-footer bhy-has-footer site">
     <ion-list ng-controller="site.index" show-delete="data.showDelete" on-delete="onItemDelete(item)" option-buttons="itemButtons">
 
-        <ion-item ng-repeat="item in items" item="item" href="#/item/{{item.id}}">
+        <div ng-repeat="item in items" item="item">
+        <ion-item  href="#/item/{{item.id}}">
             <div class="row">
                 <div class="col col-25"><img class="item_uimg" src="/wechat/web/images/test.jpg"></div>
                 <div class="col col-75">
@@ -27,6 +28,6 @@
                 </div>
             </div>
         </ion-item>
-
+        </div>
     </ion-list>
 </ion-content>
