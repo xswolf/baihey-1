@@ -28,7 +28,10 @@ class User extends Base{
      */
     public function login($username,$password){
 
-        $condition = [];
+        $condition = [
+            'username' => $username,
+            'password' => md5(md5($password))
+        ];
         if ($user = $this->findOne($condition)){
             return $user;
         }

@@ -21,8 +21,12 @@ class UserController extends BaseController {
      * @return string
      */
     public function actionLogin() {
-        if ( \Yii::$app->request->get( 'username' ) ) {
-
+        if ( \Yii::$app->request->get('username') && \Yii::$app->request->get('password') ) {
+            if(User::getInstance()->login($this->get['username'], $this->get['password'])) {
+                $this->renderAjax( [ 'status' => 1 , 'msg' => '登录成功' ] );
+            } else {
+                $this->renderAjax( [ 'status' => 0 , 'msg' => '登录失败' ] );
+            }
         }
 
         return $this->render();
