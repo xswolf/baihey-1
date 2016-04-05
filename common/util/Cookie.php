@@ -13,6 +13,9 @@ class Cookie {
 
     static $instance;
 
+    /**
+     * @return $this
+     */
     public static function getInstance(){
         $class = get_called_class();
         if (!isset(self::$instance[$class])){

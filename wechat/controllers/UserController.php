@@ -1,6 +1,7 @@
 <?php
 namespace wechat\controllers;
 
+use common\util\Cookie;
 use wechat\models\User;
 
 /**
@@ -33,15 +34,10 @@ class UserController extends BaseController {
     }
 
     public function actionWelcome() {
-
         $user = $this->weChatMember();
+
         if(!isset($_COOKIE["bhy_u_name"]) && isset($user) && isset($user['username'])) {
-            $cookies = \Yii::$app->response->cookies;
-            $cookies->add( new \yii\web\Cookie( [
-                'name'   => 'bhy_u_name' ,
-                'value'  => $user['username'] ,
-                'expire' => time() + 30 * 24 * 3600
-            ] ) );
+            Cookie::getInstance()->setCookie('bhy_u_name' , $user['username']);
         }
         return $this->render();
     }
