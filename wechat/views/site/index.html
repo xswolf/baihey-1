@@ -1,24 +1,45 @@
+<div class="com_w_100" ng-controller="site.index">
 <ion-header>
     <div class="bar bar-header">
-        <a href="/wap/user/login" class="button button-icon "><i class="fs16 ion-android-pin positive mr5"></i>重庆<i class="ml5 fs14 ion-android-arrow-dropdown positive"></i></a>
-        <a href="/wap/user/login" class="button button-icon">搜索</a>
+        <a href="javascript:;" ng-click="modal.show()" class="button button-icon "><i class="fs16 ion-android-pin positive mr5"></i>重庆<i
+                class="ml5 fs14 ion-android-arrow-dropdown positive"></i></a>
+        <a href="javascript:;" class="button button-icon">搜索</a>
     </div>
 </ion-header>
 
-<ion-content class=" has-header has-footer bhy-has-footer site">
-    <ion-list ng-controller="site.index" show-delete="data.showDelete" on-delete="onItemDelete(item)" option-buttons="itemButtons">
+<ion-content class="has-header has-footer bhy-has-footer site">
+    <ion-list>
+        <div class="row">
+            <div class="col col-25"><img class="item_uimg rounded" src="/wechat/web/images/u_noimg.jpg"></div>
+            <div class="col col-75">
 
-        <ion-item ng-repeat="item in items track by item.id" item="item" href="#/item/{{item.id}}">
+                <div class="row pl0">
+                    <div class="col">会员1564198，您好！</div>
+                    <label class="label-right fs12 cor20">ID:1564198</label>
+                </div>
+
+                <div class="row pl0">
+                    <div class="col"><a class="warn" href="/member/information"><i
+                            class="ion-ios-information cor0 mr5"></i>请您上传身份证，完善资料 >></a></div>
+                </div>
+            </div>
+        </div>
+
+        <ion-item ng-repeat="item in items track by item.id" item="item" href="/item/{{item.id}}">
             <div class="row">
-                <div class="col col-25"><img class="item_uimg" src="/wechat/web/images/test.jpg"></div>
+
+                <div class="col col-25"><img class="item_uimg rounded" src="/wechat/web/images/test.jpg"></div>
+
                 <div class="col col-75">
                     <div class="row pl0">
-                        <div class="col"> <span class="fwb fs14">张小姐</span> <span class="cor19 fs12">{{item.id}}岁</span> <span class="cor19 fs12">165cm</span> <span class="cor19 fs12">离异</span></div>
-                        <div class="col-20"><label class="label-right fs12"><i class="ion-android-pin mr5 positive"></i>渝中区</label></div>
+                        <div class="col"><span class="fwb fs14">张小姐</span> <span class="cor19 fs12">27岁</span> <span
+                                class="cor19 fs12">165cm</span> <span class="cor19 fs12">离异</span></div>
+                        <div class="col-20"><label class="label-right fs12"><i class="ion-android-pin mr5 positive"></i>渝中区</label>
+                        </div>
                     </div>
 
                     <div class="row pl0">
-                        <div class="col fs12">身份证 手机 贵宾</div>
+                        <div class="col fs12"><span class=" sfz">身份证</span> 手机 贵宾</div>
                     </div>
 
                     <div class="row pl0">
@@ -27,6 +48,36 @@
                 </div>
             </div>
         </ion-item>
-
     </ion-list>
 </ion-content>
+
+    <script id="selCityModal.html" type="text/ng-template">
+        <div class="modal">
+            <ion-header-bar class="bar bar-header bar-positive">
+                <h1 class="title">New Contact</h1>
+                <button class="button button-clear button-primary" ng-click="modal.hide()">Cancel</button>
+            </ion-header-bar>
+            <ion-content>
+                <div class="padding">
+                    <div class="list">
+                        <label class="item item-input">
+                            <span class="input-label">First Name</span>
+                            <input  type="text">
+                        </label>
+                        <label class="item item-input">
+                            <span class="input-label">Last Name</span>
+                            <input  type="text">
+                        </label>
+                        <label class="item item-input">
+                            <span class="input-label">Email</span>
+                            <input  type="text">
+                        </label>
+                        <button class="button button-full button-positive" >Create</button>
+                    </div>
+                </div>
+            </ion-content>
+        </div>
+    </script>
+
+</div>
+

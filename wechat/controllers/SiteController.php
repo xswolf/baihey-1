@@ -1,5 +1,6 @@
 <?php
 namespace wechat\controllers;
+
 use common\util\Cookie;
 
 
@@ -20,6 +21,7 @@ class SiteController extends BaseController
         $cc = Cookie::getInstance()->getCookie('bhy_u_name');
         return $this->render();
     }
+
 
 
 }
