@@ -98,7 +98,14 @@ class WeChat extends \callmez\wechat\sdk\Wechat {
     public function getMemberByCode($code){
 
         $result = $this->httpGet(self::OAUTH_TOKEN."?appid={$this->appId}&secret={$this->appSecret}&code={$code}&grant_type=authorization_code");
-        $member = \Yii::$app->wechat->getMemberInfo($result['openid']);
+        if (isset($result['openid'])){
+            $member = \Yii::$app->wechat->getMemberInfo($result['openid']);
+        }else{
+            var_dump($result);
+            echo "<br>".$code;
+            exit;
+        }
+
         return $member;
     }
 

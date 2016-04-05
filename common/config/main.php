@@ -38,6 +38,10 @@ return [
         'messageApi' => [
             'class' => 'common\message\MessageApi'
         ],
+
+        'request'=> [
+            "cookieValidationKey"=>"jrbhy*cnmkey"
+        ]
     ],
 
 
