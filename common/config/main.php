@@ -40,6 +40,7 @@ return [
         ],
 
         'request'=> [
+            'csrfParam' => 'jrbhy',
             "cookieValidationKey"=>"jrbhy*cnmkey"
         ]
     ],

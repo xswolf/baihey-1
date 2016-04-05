@@ -13,7 +13,7 @@ class UserController extends BaseController {
 
     public function beforeAction( $action ) {
         $this->layout = false;
-
+        $this->enableCsrfValidation = false;
         return parent::beforeAction( $action );
     }
 
@@ -26,7 +26,7 @@ class UserController extends BaseController {
         if ( \Yii::$app->request->get('username') && \Yii::$app->request->get('password') ) {
             if(User::getInstance()->login($this->get['username'], $this->get['password'])) {
                 // 设置COOKIE
-                Cookie::getInstance()->setCookie('bhy_u_name',$this->get['username']);
+                Cookie::getInstance()->setCookie( 'bhy_u_name' , $this->get['username'] );
                 $this->renderAjax( [ 'status' => 1 , 'msg' => '登录成功' ] );
             } else {
                 $this->renderAjax( [ 'status' => 0 , 'msg' => '登录失败' ] );
@@ -37,10 +37,16 @@ class UserController extends BaseController {
     }
 
     public function actionWelcome() {
-        $user = $this->weChatMember();
+//        echo \Yii::$app->getRequest()->getCsrfToken()."<br>";
+//        echo \yii\web\Request::CSRF_HEADER;exit;
+        print_r($_SERVER);
 
+        $user = $this->weChatMember();
+        $user['username'] = '18623558229';
         if(!isset($_COOKIE["bhy_u_name"]) && isset($user) && isset($user['username'])) {
+
             Cookie::getInstance()->setCookie('bhy_u_name' , $user['username']);
+
         }
         return $this->render();
     }

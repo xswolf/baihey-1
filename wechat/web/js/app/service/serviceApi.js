@@ -58,6 +58,10 @@ define(['app/module'], function (module) {
             return $http({
                 method: 'POST',
                 url: url,
+                headers: {
+                    'Content-Type':'application/json',
+                    //'X-CSRF-Token':'bzFrQUtlbHU3AS8SGAweRyt1CAInMkElCXMRCzIoH0AGS1MSJjwFPg=='
+                },
                 params: formData
             });
         }
