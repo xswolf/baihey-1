@@ -162,6 +162,8 @@ define(['app/module', 'app/directive/directiveApi'
                     $ionicPopup.alert({title: '用户名或者密码错误'});
                 }
 
+            }).error(function () {
+                $ionicPopup.alert({title: '网络连接错误，请重试'});
             })
 
         }
