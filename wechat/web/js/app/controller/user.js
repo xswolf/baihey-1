@@ -112,14 +112,18 @@ define(['app/module', 'app/directive/directiveApi'
 
             if (!ar.trim($scope.User.code)) {
 
-                $ionicPopup.alert({title: '请填写短信验证码'});
+                $ionicPopup.alert({title: '请填写正确短信验证码'});
                 return false;
             }
 
             var result = api.save('/wap/user/register', $scope.User);
             result.success(function (data) {
-                if (data.status) {
+                if (data.status == 1) {
                     window.location.href = '/wap/site/index';
+                } else if(data.status == 2) {
+                    $ionicPopup.alert({title: '验证码错误'});
+                } else {
+                    $ionicPopup.alert({title: '注册失败'});
                 }
             }).error(function () {
                 $ionicPopup.alert({title: '网络连接错误，请重试'});

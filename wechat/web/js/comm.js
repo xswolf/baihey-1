@@ -55,6 +55,7 @@ var ar = {
     },
 
     'trim': function (str) {
+        str = str ? str : "";
         return str.replace(/(^\s*)|(\s*$)/g, "");
     },
 

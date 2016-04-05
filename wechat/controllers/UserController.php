@@ -45,12 +45,18 @@ class UserController extends BaseController {
      * 微信登录
      */
     public function actionWxLogin(){
+
         $appId = \Yii::$app->wechat->appId;
         $redirectUri = urlencode("http://wechat.baihey.com/wap/user/welcome");
         $url = "https://open.weixin.qq.com/connect/oauth2/authorize?appid={$appId}&redirect_uri={$redirectUri}&response_type=code&scope=snsapi_base&state=123#wechat_redirect";
+
         $this->redirect($url);
     }
 
+    /**
+     * 欢迎页面
+     * @return string
+     */
     public function actionWelcome() {
 
         $user = $this->weChatMember();
@@ -71,8 +77,9 @@ class UserController extends BaseController {
         // 判断是否提交注册
         if ( \Yii::$app->request->get( 'mobile' ) ) {
 
-            // 注册数据处理
-            if ( \Yii::$app->request->get( 'log_code' ) == \Yii::$app->session->get( 'log_code' ) ) {
+            // 验证码判断
+            if ( \Yii::$app->request->get( 'code' ) == \Yii::$app->session->get( 'reg_code' ) ) {
+                // 注册数据处理
                 $sex              = \Yii::$app->request->get( 'sex' );
                 $data['sex']      = json_decode( $sex );
                 $data['sex']      = $data['sex']->man ? 1 : 0;
@@ -87,14 +94,14 @@ class UserController extends BaseController {
                     // 设置cookie
                     Cookie::getInstance()->setCookie('bhy_u_name', $data['username']);
 
-                    $this->renderAjax( [ 'status' => 1 , 'msg' => '注册成功' ] );
+                    return $this->renderAjax( [ 'status' => 1 , 'msg' => '注册成功' ] );
                 } else {
 
-                    $this->renderAjax( [ 'status' => 0 , 'msg' => '注册失败' ] );
+                    return $this->renderAjax( [ 'status' => 0 , 'msg' => '注册失败' ] );
                 }
             } else {
 
-                $this->renderAjax( [ 'status' => 0 , 'msg' => '验证码错误' ] );
+                return $this->renderAjax( [ 'status' => 2 , 'msg' => '验证码错误' ] );
             }
         }
 
