@@ -51,6 +51,11 @@ class UserController extends BaseController {
         if(!isset($_COOKIE["bhy_u_name"]) && isset($user) && isset($user['username'])) {
             Cookie::getInstance()->setCookie('bhy_u_name' , $user['username']);
         }
+
+        if ($loginName = Cookie::getInstance()->getCookie('bhy_u_name')){
+            echo '登录名称:'.$loginName;
+        }
+
         return $this->render();
     }
 
