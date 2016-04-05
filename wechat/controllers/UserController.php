@@ -34,7 +34,15 @@ class UserController extends BaseController {
 
     public function actionWelcome() {
 
-        $this->weChatMember();
+        $user = $this->weChatMember();
+        if(!isset($_COOKIE["bhy_u_name"]) && isset($user) && isset($user['username'])) {
+            $cookies = \Yii::$app->response->cookies;
+            $cookies->add( new \yii\web\Cookie( [
+                'name'   => 'bhy_u_name' ,
+                'value'  => $user['username'] ,
+                'expire' => time() + 30 * 24 * 3600
+            ] ) );
+        }
         return $this->render();
     }
 
