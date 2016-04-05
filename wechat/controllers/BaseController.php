@@ -10,7 +10,6 @@ namespace wechat\controllers;
 
 
 use wechat\models\User;
-use yii\base\Exception;
 use yii\web\Controller;
 
 class BaseController extends Controller {
@@ -19,8 +18,12 @@ class BaseController extends Controller {
 
     protected $assign = [ ];
 
-    public function init() {
+    protected $get;
+    protected $post;
 
+    public function init() {
+        $this->get = \Yii::$app->request->get();
+        $this->post = \Yii::$app->request->post();
     }
 
     /**
