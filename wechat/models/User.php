@@ -13,12 +13,13 @@ class User extends Base
 {
 
     protected $user;
+    protected $user_id;
     protected $_user_information_table = 'user_information';
 
     /**
+     * 用户登录
      * @param $username
      * @param $password
-     *
      * @return bool
      */
     public function login($username, $password)
@@ -29,6 +30,12 @@ class User extends Base
             'password' => md5(md5($password))
         ];
         if ($user = $this->findOne($condition)) {
+            $user->last_login_time = YII_BEGIN_TIME;
+            $user->save(false);
+            // 写入用户日志表
+            $log['user_id'] = $user->id;
+            $log['type'] = 1;
+            $this->userLog($log);
             return $user;
         }
 
@@ -54,6 +61,8 @@ class User extends Base
 
         // 数据处理
         $data['password'] = md5(md5($data['password']));
+        $data['reg_time'] = YII_BEGIN_TIME;
+        $data['last_login_time'] = YII_BEGIN_TIME;
 
         // user表 数据写入
         $user = $db->createCommand()
@@ -75,14 +84,22 @@ class User extends Base
             'is_marriage'   => '未知',
         ];
         $infoData['info'] = json_encode($userInfo);
+        $infoData['city'] = 1;
 
         // user_information表 数据写入
         $info = $db->createCommand()
             ->insert('bhy_user_information', $infoData)
             ->execute();
+
         if($user && $info) {
+
             $transaction->commit();
+            // 写入用户日志表
+            $log['user_id'] = $id;
+            $log['type'] = 2;
+            $this->userLog($log);
         } else {
+
             $transaction->rollBack();
         }
 
@@ -114,10 +131,11 @@ class User extends Base
      */
     public function userLog($log){
 
-        $this->user_id = $log['user_id'];
-        $this->type = $log['type'];
-        $this->time = time();
-        $this->ip = $_SERVER["REMOTE_ADDR"];
-        return Base::getInstance('user_log')->insert(false);
+        $userLog = Base::getInstance('user_log');
+        $userLog->user_id = $log['user_id'];
+        $userLog->type = $log['type'];
+        $userLog->time = time();
+        $userLog->ip = ip2long($_SERVER["REMOTE_ADDR"]);
+        return $userLog->insert(false);
     }
 }
