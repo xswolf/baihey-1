@@ -30,11 +30,13 @@ class User extends Base
             'password' => md5(md5($password))
         ];
         if ($user = $this->findOne($condition)) {
-            $user->last_login_time = YII_BEGIN_TIME;
+            $time = YII_BEGIN_TIME;
+            $user->last_login_time = $time;
             $user->save(false);
             // 写入用户日志表
             $log['user_id'] = $user->id;
             $log['type'] = 1;
+            $log['time'] = $time;
             $this->userLog($log);
             return $user;
         }
@@ -61,8 +63,9 @@ class User extends Base
 
         // 数据处理
         $data['password'] = md5(md5($data['password']));
-        $data['reg_time'] = YII_BEGIN_TIME;
-        $data['last_login_time'] = YII_BEGIN_TIME;
+        $time = YII_BEGIN_TIME;
+        $data['reg_time'] = $time;
+        $data['last_login_time'] = $time;
 
         // user表 数据写入
         $user = $db->createCommand()
@@ -97,6 +100,7 @@ class User extends Base
             // 写入用户日志表
             $log['user_id'] = $id;
             $log['type'] = 2;
+            $log['time'] = $time;
             $this->userLog($log);
         } else {
 
@@ -134,7 +138,7 @@ class User extends Base
         $userLog = Base::getInstance('user_log');
         $userLog->user_id = $log['user_id'];
         $userLog->type = $log['type'];
-        $userLog->time = time();
+        $userLog->time = $log['time'];
         $userLog->ip = ip2long($_SERVER["REMOTE_ADDR"]);
         return $userLog->insert(false);
     }
