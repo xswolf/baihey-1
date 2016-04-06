@@ -18,15 +18,15 @@ class User extends Base
 
     /**
      * 用户登录
-     * @param $username
+     * @param $userName
      * @param $password
      * @return bool
      */
-    public function login($username, $password)
+    public function login($userName, $password)
     {
 
         $condition = [
-            'username' => $username,
+            'username' => $userName,
             'password' => md5(md5($password))
         ];
         if ($user = $this->findOne($condition)) {
