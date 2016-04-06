@@ -7,7 +7,7 @@
     </div>
 </ion-header>
 
-<ion-content class="has-header has-footer bhy-has-footer site">
+<ion-content ng-cloak class="has-header has-footer bhy-has-footer site">
     <ion-list>
         <div class="row">
             <div class="col col-25"><img class="item_uimg rounded" src="/wechat/web/images/u_noimg.jpg"></div>
@@ -52,31 +52,14 @@
 </ion-content>
 
     <script id="selCityModal.html" type="text/ng-template">
-        <div class="modal">
-            <ion-header-bar class="bar bar-header bar-positive">
-                <h1 class="title">New Contact</h1>
-                <button class="button button-clear button-primary" ng-click="modal.hide()">Cancel</button>
-            </ion-header-bar>
-            <ion-content>
-                <div class="padding">
-                    <div class="list">
-                        <label class="item item-input">
-                            <span class="input-label">First Name</span>
-                            <input  type="text">
-                        </label>
-                        <label class="item item-input">
-                            <span class="input-label">Last Name</span>
-                            <input  type="text">
-                        </label>
-                        <label class="item item-input">
-                            <span class="input-label">Email</span>
-                            <input  type="text">
-                        </label>
-                        <button class="button button-full button-positive" >Create</button>
-                    </div>
-                </div>
-            </ion-content>
-        </div>
+           <ion-modal-view>
+                 <ion-header-bar>
+                   <h1 class="title">My Modal title</h1>
+                 </ion-header-bar>
+                 <ion-content>
+                   Hello!
+                 </ion-content>
+               </ion-modal-view>
     </script>
 
 </div>
