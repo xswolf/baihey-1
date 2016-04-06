@@ -8,7 +8,7 @@
 <ion-content class=" has-header has-footer bhy-has-footer site">
     <ion-list ng-controller="site.index" show-delete="data.showDelete" on-delete="onItemDelete(item)" option-buttons="itemButtons">
 
-        <ion-item ng-repeat="item in items track by item.id" item="item" href="#/item/{{item.id}}">
+        <ion-item ng-repeat="item in items track by item.id" ng-cloak item="item" href="#/item/{{item.id}}">
             <div class="row">
                 <div class="col col-25"><img class="item_uimg" src="/wechat/web/images/test.jpg"></div>
                 <div class="col col-75">
