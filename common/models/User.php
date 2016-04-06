@@ -25,7 +25,7 @@ class User extends Base
         $row = (new Query)
             ->select('*')
             ->from($userTable)
-            ->leftJoin('bhy_user_information',"$userTable.userID = ".$this->tablePrefix.'user_information.id')
+            ->leftJoin($this->tablePrefix.'user_information',"$userTable.userID = ".$this->tablePrefix.'user_information.id')
             ->where(['userID' => $id])
             ->one();
 

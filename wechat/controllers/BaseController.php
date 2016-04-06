@@ -119,13 +119,13 @@ class BaseController extends Controller {
             'wx_id'      => $memberInfo['openid'] ,
             'username'   => $memberInfo['openid'] ,
             'password'   => 'wx_xx' ,
-            'login_type' => 3
+            'login_type' => 3,
+            'sex'        => $memberInfo['sex']
         ];
 
         $user = User::getInstance()->findOne( [ 'wx_id' => $data['wx_id'] ] );
         if ( ! $user ) { // 用户不存在，写入数据
             User::getInstance()->addUser( $data );
-            echo User::getInstance()->getDb()->getLastInsertID();
             $user = $data;
         }
 
