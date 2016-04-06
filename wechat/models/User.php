@@ -109,4 +109,15 @@ class User extends Base
         return $row;
     }
 
+    /**
+     * 用户操作日志
+     */
+    public function userLog($log){
+
+        $this->user_id = $log['user_id'];
+        $this->type = $log['type'];
+        $this->time = time();
+        $this->ip = $_SERVER["REMOTE_ADDR"];
+        return Base::getInstance('user_log')->insert(false);
+    }
 }
