@@ -48,8 +48,9 @@ define(['app/module', 'app/directive/directiveApi'
             });
 
 
-        }])
-        .controller('site', ['app.serviceApi', '$scope'], function (api, $scope) {
+        }]);
+
+    module.controller('site.childController', ['app.serviceApi', '$scope', function (api, $scope) {
 
             $scope.provinces = [
                 {
@@ -118,5 +119,5 @@ define(['app/module', 'app/directive/directiveApi'
                 }
             ];
 
-        })
+        }])
 })

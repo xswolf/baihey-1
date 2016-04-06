@@ -52,9 +52,9 @@
             </ion-item>
         </ion-list>
     </ion-content>
-
-    <script id="selCityModal.html" type="text/ng-template">
-        <ion-modal-view ng-controller="site">
+    <div  ng-controller="site.childController">
+        <script id="selCityModal.html" type="text/ng-template">
+        <ion-modal-view>
             <ion-header-bar>
                 <h1 class="title">选择城市</h1>
             </ion-header-bar>
@@ -76,6 +76,6 @@
             </ion-content>
         </ion-modal-view>
     </script>
-
+    </div>
 </div>
 
