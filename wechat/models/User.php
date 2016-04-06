@@ -14,13 +14,6 @@ class User extends Base
 
     protected $user;
 
-    /**
-     * @return string 返回该AR类关联的数据表名
-     */
-    public static function tableName()
-    {
-        return 'bhy_user';
-    }
 
     /**
      * @param $username
@@ -110,4 +103,13 @@ class User extends Base
         return $row;
     }
 
+    /**
+     * 示例
+     */
+    public function add(){
+
+        $result = Base::getInstance('user_information')->findOne(['user_id'=>123]);
+
+        var_dump($result);
+    }
 }
