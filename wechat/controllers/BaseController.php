@@ -119,7 +119,8 @@ class BaseController extends Controller {
             'wx_id'      => $memberInfo['openid'] ,
             'username'   => $memberInfo['openid'] ,
             'password'   => 'wx_xx' ,
-            'login_type' => 3
+            'login_type' => 3,
+            'sex'        => $memberInfo['sex']
         ];
 
         $user = User::getInstance()->findOne( [ 'wx_id' => $data['wx_id'] ] );
