@@ -2,6 +2,7 @@
 namespace wechat\controllers;
 
 use common\util\Cookie;
+use wechat\models\User;
 
 
 /**
@@ -18,10 +19,16 @@ class SiteController extends BaseController
      */
     public function actionIndex()
     {
-        $cc = Cookie::getInstance()->getCookie('bhy_u_name');
         return $this->render();
     }
 
+    /**
+     * 首页列表页
+     */
+    public function actionUserList(){
+        $list = User::getInstance()->userList();
+        $this->renderAjax(['status=>1' , 'data'=>$list] );
+    }
 
 
 }

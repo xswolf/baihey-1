@@ -44,10 +44,6 @@ class User extends Base
         return false;
     }
 
-    public function validate($attributeNames = null, $clearErrors = true)
-    {
-
-    }
 
     /**
      * 新增/注册用户
@@ -141,5 +137,20 @@ class User extends Base
         $userLog->time = $log['time'];
         $userLog->ip = ip2long($_SERVER["REMOTE_ADDR"]);
         return $userLog->insert(false);
+    }
+
+    public function userList(){
+        $condition = [
+            'i.city'=>1,
+            'u.sex'=>1
+        ];
+        $joinTable = \Yii::$app->getDb()->tablePrefix.$this->_user_information_table;
+        $result = (new Query())->select(['*'])
+        ->where($condition)
+        ->from(static::tableName().' u')
+        ->innerJoin($joinTable.' i',"u.id=i.user_id")
+        ->all();
+
+        return $result;
     }
 }
