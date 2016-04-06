@@ -1,65 +1,80 @@
 <div class="com_w_100" ng-controller="site.index">
-<ion-header>
-    <div class="bar bar-header">
-        <a href="javascript:;" ng-click="modal.show()" class="button button-icon "><i class="fs16 ion-android-pin positive mr5"></i>重庆<i
-                class="ml5 fs14 ion-android-arrow-dropdown positive"></i></a>
-        <a href="javascript:;" class="button button-icon">搜索</a>
-    </div>
-</ion-header>
+    <ion-header>
+        <div class="bar bar-header">
+            <a href="javascript:;" ng-click="modal.show()" class="button button-icon "><i
+                    class="fs16 ion-android-pin positive mr5"></i>重庆<i
+                    class="ml5 fs14 ion-android-arrow-dropdown positive"></i></a>
+            <a href="javascript:;" class="button button-icon">搜索</a>
+        </div>
+    </ion-header>
 
-<ion-content ng-cloak class="has-header has-footer bhy-has-footer site">
-    <ion-list>
-        <div class="row">
-            <div class="col col-25"><img class="item_uimg rounded" src="/wechat/web/images/u_noimg.jpg"></div>
-            <div class="col col-75">
+    <ion-content ng-cloak class="has-header has-footer bhy-has-footer site">
+        <ion-list>
+            <div class="row">
+                <div class="col col-25"><img class="item_uimg rounded" src="/wechat/web/images/u_noimg.jpg"></div>
+                <div class="col col-75">
 
-                <div class="row pl0">
-                    <div class="col">会员1564198，您好！</div>
-                    <label class="label-right fs12 cor20">ID:1564198</label>
-                </div>
+                    <div class="row pl0">
+                        <div class="col">会员1564198，您好！</div>
+                        <label class="label-right fs12 cor20">ID:1564198</label>
+                    </div>
 
-                <div class="row pl0">
-                    <div class="col"><a class="warn" href="/member/information"><i
-                            class="ion-ios-information cor0 mr5"></i>请您上传身份证，完善资料 >></a></div>
+                    <div class="row pl0">
+                        <div class="col"><a class="warn" href="/member/information"><i
+                                class="ion-ios-information cor0 mr5"></i>请您上传身份证，完善资料 >></a></div>
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <ion-item ng-repeat="item in items track by item.id" item="item" href="/item/{{item.id}}">
-            <div class="row">
+            <ion-item collection-repeat="item in items track by item.id" item="item" href="/item/{{item.id}}">
+                <div class="row">
 
-                <div class="col col-25"><img class="item_uimg rounded" src="/wechat/web/images/test.jpg"></div>
+                    <div class="col col-25"><img class="item_uimg rounded" src="/wechat/web/images/test.jpg"></div>
 
-                <div class="col col-75">
-                    <div class="row pl0">
-                        <div class="col"><span class="fwb fs14">张小姐</span> <span class="cor19 fs12">27岁</span> <span
-                                class="cor19 fs12">165cm</span> <span class="cor19 fs12">离异</span></div>
-                        <div class="col-20"><label class="label-right fs12"><i class="ion-android-pin mr5 positive"></i>渝中区</label>
+                    <div class="col col-75">
+                        <div class="row pl0">
+                            <div class="col"><span class="fwb fs14">张小姐</span> <span class="cor19 fs12">27岁</span> <span
+                                    class="cor19 fs12">165cm</span> <span class="cor19 fs12">离异</span></div>
+                            <div class="col-20"><label class="label-right fs12"><i
+                                    class="ion-android-pin mr5 positive"></i>渝中区</label>
+                            </div>
+                        </div>
+
+                        <div class="row pl0">
+                            <div class="col fs12"><span class=" sfz">身份证</span> 手机 贵宾</div>
+                        </div>
+
+                        <div class="row pl0">
+                            <div class="col"><p class="cor20 signature">个性签名个性签名个性签名个性签名个性签名</p></div>
                         </div>
                     </div>
-
-                    <div class="row pl0">
-                        <div class="col fs12"><span class=" sfz">身份证</span> 手机 贵宾</div>
-                    </div>
-
-                    <div class="row pl0">
-                        <div class="col"><p class="cor20 signature">个性签名个性签名个性签名个性签名个性签名</p></div>
-                    </div>
                 </div>
-            </div>
-        </ion-item>
-    </ion-list>
-</ion-content>
+            </ion-item>
+        </ion-list>
+    </ion-content>
 
     <script id="selCityModal.html" type="text/ng-template">
-           <ion-modal-view>
-                 <ion-header-bar>
-                   <h1 class="title">My Modal title</h1>
-                 </ion-header-bar>
-                 <ion-content>
-                   Hello!
-                 </ion-content>
-               </ion-modal-view>
+        <ion-modal-view ng-controller="site">
+            <ion-header-bar>
+                <h1 class="title">选择城市</h1>
+            </ion-header-bar>
+            <ion-content >
+                <ion-list>
+                    <ion-scroll zooming="false"
+                                style="width: 50%; height: 600px; float: left; border-right: 1px solid #ccc; ">
+                        <ion-item collection-repeat="province in provinces track by province.id" item="province" class="item tac" ng-repea href="#">
+                            重庆市
+                        </ion-item>
+                    </ion-scroll>
+                    <ion-scroll zooming="false" style="width: 50%; height: 600px; float: left;">
+                        <ion-item collection-repeat="city in citys track by city.id" item="city" class="item tac" href="#">
+                            重庆市 <i class="ml30 ion-ios-checkmark-outline"></i>
+                        </ion-item>
+                    </ion-scroll>
+                </ion-list>
+                </ion-scroll>
+            </ion-content>
+        </ion-modal-view>
     </script>
 
 </div>

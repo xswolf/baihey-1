@@ -12,6 +12,8 @@
 .hr_20{height:20px;}
 .hr_30{height:30px;}
 .hr_40{height:40px;}
+
+.lh11{line-height: 11px;}
 .lh20{line-height: 20px;}
 .lh24{line-height: 24px;}
 .lh36{line-height: 36px;}
@@ -87,7 +89,9 @@
 .cor18{color:#2e2d44;}
 .cor19{color:#616161;}
 .cor20{color:#909090;}
+.cor21{color:#e4007f;}
 
+.fs11{ font-size: 11px;}
 .fs12{ font-size: 12px;}
 .fs14{ font-size: 14px;}
 .fs16{ font-size: 16px;}
@@ -95,6 +99,9 @@
 .fs20{ font-size: 20px;}
 .fs22{ font-size: 22px;}
 .fs24{ font-size: 24px;}
+.fs26{ font-size: 26px;}
+.fs28{ font-size: 28px;}
+.fs30{ font-size: 30px;}
 
 .fwn{font-weight:normal;}
 .tal{text-align:left}
@@ -132,19 +139,7 @@
 
 
 /* 标准底部导航 */
-.bhy-footer{ border-top: 1px solid #dcdcdc; height: 64px;}
-.bhy-has-footer{ bottom: 64px;}
+.bhy-footer{ border-top: 1px solid #dcdcdc; }
 #footer{ width: 100%;}
 #footer li{ float: left; background-color: #fff;  height: 43px;  text-align: center;  width: 20%;}
-#footer a.page,#footer a.page:hover,#footer a.page:active{height: auto;  line-height: 18px;  margin: 0 auto;  padding-left: 0;  padding-right: 0;  width: 90%;color: #666;  display: block;position: relative;  text-decoration: none;}
-#footer li .bhy_wap_menu{ background: url("/wechat/web/images/menu.png") no-repeat; background-position: 0 center; width:45px; height: 36px; margin: 0 auto; display: block; cursor: pointer; }
-#footer li .page .home{ background-position: 1px 0;}
-#footer li .page .msg{background-position: 1px -34px;}
-#footer li .page .me{background-position: 1px -70px;}
-#footer li .page .discovery{background-position: 1px -107px;}
-#footer li .page .rende{background-position: 1px -144px;}
-#footer li.home .cur{ color: #e4007f; background-position: -41px 0;}
-#footer li.msg .cur{ color: #e4007f; background-position: -41px -34px;}
-#footer li.me .cur{ color: #e4007f; background-position: -41px -70px;}
-#footer li.discovery .cur{ color: #e4007f; background-position: -41px -107px;}
-#footer li.rende .cur{ color: #e4007f; background-position: -41px -144px;}
+#footer a.page,#footer a.page:hover,#footer a.page:active{height: auto;  line-height: 11px;  margin: 0 auto;  padding-left: 0;  padding-right: 0;  width: 90%;color: #666;  display: block;position: relative;  text-decoration: none;}

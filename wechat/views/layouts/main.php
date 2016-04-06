@@ -20,33 +20,33 @@
         <div class="bar bar-footer bhy-footer com_w_100">
             <ul id="footer">
                 <li class="home">
-                    <a href="/wap/site/index" class="page <?php echo \Yii::$app->controller->id == 'site' ? 'cur' : ''; ?>">
-                        <i class="bhy_wap_menu home <?php echo \Yii::$app->controller->id == 'site' ? 'cur' : ''; ?>"></i>
-                        <div>首页</div>
+                    <a href="/wap/site/index" class="page">
+                        <i class="fs24 <?php echo \Yii::$app->controller->id == 'site' ? 'ion-ios-home cor21' : 'ion-ios-home-outline'; ?>"></i>
+                        <p class="fs11 <?php echo \Yii::$app->controller->id == 'site' ? 'cor21' : ''; ?>">首页</p>
                     </a>
                 </li>
                 <li class="msg">
-                    <a href="/wap/message/index" class="page <?php echo \Yii::$app->controller->id == 'message' ? 'cur' : ''; ?>">
-                        <i class="bhy_wap_menu msg <?php echo \Yii::$app->controller->id == 'message' ? 'cur' : ''; ?>"></i>
-                        <div>消息</div>
+                    <a href="/wap/message/index" class="page">
+                        <i class="fs24 <?php echo \Yii::$app->controller->id == 'message' ? 'ion-ios-chatbubble cor21' : 'ion-ios-chatbubble-outline'; ?>"></i>
+                        <p class="fs11 <?php echo \Yii::$app->controller->id == 'message' ? 'cor21' : ''; ?>">消息</p>
                     </a>
                 </li>
                 <li class="me">
-                    <a href="/wap/member/index" class="page <?php echo \Yii::$app->controller->id == 'member' ? 'cur' : ''; ?>">
-                        <i class="bhy_wap_menu me <?php echo \Yii::$app->controller->id == 'member' ? 'cur' : ''; ?>"></i>
-                        <div>我</div>
+                    <a href="/wap/member/index" class="page">
+                        <i class="fs24 <?php echo \Yii::$app->controller->id == 'member' ? 'ion-ios-person cor21' : 'ion-ios-person-outline'; ?>"></i>
+                        <p class="fs11 <?php echo \Yii::$app->controller->id == 'member' ? 'cor21' : ''; ?>">我</p>
                     </a>
                 </li>
                 <li class="discovery">
-                    <a href="/wap/discovery/index" class="page <?php echo \Yii::$app->controller->id == 'discovery' ? 'cur' : ''; ?>">
-                        <i class="bhy_wap_menu discovery <?php echo \Yii::$app->controller->id == 'discovery' ? 'cur' : ''; ?>"></i>
-                        <div>发现</div>
+                    <a href="/wap/discovery/index" class="page">
+                        <i class="fs24 <?php echo \Yii::$app->controller->id == 'discovery' ? 'ion-ios-eye cor21' : 'ion-ios-eye-outline'; ?>"></i>
+                        <p class="fs11 <?php echo \Yii::$app->controller->id == 'discovery' ? 'cor21' : ''; ?>">发现</p>
                     </a>
                 </li>
                 <li class="rende">
-                    <a href="/wap/rendezvous/index" class="page <?php echo \Yii::$app->controller->id == 'rendezvous' ? 'cur' : ''; ?>">
-                      <i class="bhy_wap_menu rende <?php echo \Yii::$app->controller->id == 'rendezvous' ? 'cur' : ''; ?>"></i>
-                      <div>约会</div>
+                    <a href="/wap/rendezvous/index" class="page">
+                      <i class="fs24 <?php echo \Yii::$app->controller->id == 'rendezvous' ? 'ion-ios-heart cor21' : 'ion-ios-heart-outline'; ?>"></i>
+                      <p class="fs11 <?php echo \Yii::$app->controller->id == 'rendezvous' ? 'cor21' : ''; ?>">约会</p>
                     </a>
 
                 </li>
