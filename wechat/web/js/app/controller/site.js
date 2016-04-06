@@ -5,7 +5,7 @@ define(['app/module', 'app/directive/directiveApi'
     , 'app/service/serviceApi', 'comm'
 ], function (module) {
 
-    module.controller("site.index", ['app.serviceApi', '$scope', '$ionicPopup', '$ionicModal', function (api, $scope, $ionicPopup, $ionicModal) {
+    module.controller("site.index", ['app.serviceApi', '$scope', '$ionicPopup', '$ionicModal', '$ionicActionSheet', function (api, $scope, $ionicPopup, $ionicModal, $ionicActionSheet) {
 
         $scope.items = [
             {
@@ -47,6 +47,68 @@ define(['app/module', 'app/directive/directiveApi'
             focusFirstInput: true
         });
 
+        $scope.buttonsItemIndex = '';
+
+        $scope.search = function () {
+
+
+            $scope.buttonsItem = [
+                { text: '全部' },
+                { text: '只看男' },
+                { text: '只看女' },
+                { text: '高级搜索' },
+                { text: 'ID搜索' }
+            ];
+
+            console.log($scope.buttonsItemIndex);
+
+            if($scope.buttonsItemIndex != ''){
+                $scope.buttonsItem[$scope.buttonsItemIndex].text = '<b>'+$scope.buttonsItem[$scope.buttonsItemIndex].text+'</b>'
+            }else {
+                $scope.buttonsItem[0].text = '<b>全部</b>';
+            }
+
+            var hideSheet = $ionicActionSheet.show({
+                buttons: $scope.buttonsItem,
+                titleText: '搜索',
+                cancelText: '取消',
+                cancel: function () {
+                    // add cancel code..
+                },
+                buttonClicked: function (index) {
+
+                    $scope.buttonsItemIndex = index;
+
+                    if (index == 0) {   // 全部
+
+                    }
+                    if (index == 1) {   //只看男
+
+                    }
+                    if (index == 2) {   //只看女
+
+                    }
+                    if (index == 3) {   //高级搜索
+
+                    }
+                    if (index == 4) {   //ID搜索
+                        $ionicPopup.prompt({
+                            title: 'ID搜索',
+                            cancelText: '取消',
+                            cancelType: 'button-light',
+                            okText: '确认搜索',
+                            okType: 'button-energized',
+                            inputPlaceholder: '请输入对方ID号'
+                        }).then(function (res) {
+                            alert(res);
+                        });
+                    }
+
+                    return true;
+                }
+            });
+
+        }
 
     }]);
 
@@ -59,12 +121,16 @@ define(['app/module', 'app/directive/directiveApi'
             'float': 'left',
             'width': '50%'
         }
-        $scope.selId =1;
+        $scope.selId = 1;
+        $scope.cityId = 11;
 
-        $scope.selected_pv = function(pv_id){
+        $scope.selected_pv = function (pv_id) {
             $scope.selId = pv_id;
         }
 
+        $scope.selected_city = function (city_id) {
+            $scope.cityId = city_id;
+        }
         $scope.provinces = [
             {
                 id: 1,

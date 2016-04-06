@@ -165,3 +165,29 @@ a.weibo {
   background-color: #69b1f3;
   padding-left: 10px;
 }
+.selected a {
+  color: #387ef5;
+}
+.city .selected a {
+  color: #fc6da2;
+}
+.identity {
+  color: #fff;
+  padding: 0 5px;
+  font-size: 12px;
+}
+.sfz {
+  background-color: #64c041;
+}
+.phone {
+  background-color: #6db9ff;
+}
+.vip {
+  background-color: #f4af36;
+}
+.guest {
+  background-color: #ee7fef;
+}
+.diamond {
+  background-color: #fb79a1;
+}
