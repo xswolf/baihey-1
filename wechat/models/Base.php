@@ -19,7 +19,8 @@ class Base extends \yii\db\ActiveRecord{
         if (self::$_table){
             return \Yii::$app->getDb()->tablePrefix.self::$_table;
         }
-        parent::tableName();
+
+        return parent::tableName();
     }
 
     /**

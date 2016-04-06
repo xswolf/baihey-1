@@ -82,21 +82,27 @@ class UserController extends BaseController {
 
             // 验证码判断
             if ( \Yii::$app->request->get( 'code' ) == \Yii::$app->session->get( 'reg_code' ) ) {
+
                 // 注册数据处理
                 $sex              = \Yii::$app->request->get( 'sex' );
                 $data['sex']      = json_decode( $sex );
                 $data['sex']      = $data['sex']->man ? 1 : 0;
                 $data['username'] = \Yii::$app->request->get( 'mobile' );
                 $data['password'] = substr( $data['username'] , - 6 );
+
+                // 验证手机号是否存在
+                if(User::getInstance()->getUserByName($data['username'])) {
+                    return $this->renderAjax( [ 'status' => 0 , 'msg' => '手机号已存在' ] );
+                }
+
                 // 添加用户
                 if ( User::getInstance()->addUser( $data ) ) {
-
-                    // 发送默认密码
-                    \Yii::$app->messageApi->passwordMsg( $data['username'] , $data['password'] );
 
                     // 设置cookie
                     Cookie::getInstance()->setCookie('bhy_u_name', $data['username']);
 
+                    // 发送默认密码
+                    \Yii::$app->messageApi->passwordMsg( $data['username'] , $data['password'] );
                     return $this->renderAjax( [ 'status' => 1 , 'msg' => '注册成功' ] );
                 } else {
 

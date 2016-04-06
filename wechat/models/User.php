@@ -13,7 +13,7 @@ class User extends Base
 {
 
     protected $user;
-
+    protected $_user_information_table = 'user_information';
 
     /**
      * @param $username
@@ -49,18 +49,19 @@ class User extends Base
     public function addUser($data)
     {
 
-        $db = \Yii::$app->db;
+        $db = $this->getDb();
+        $transaction = $db->beginTransaction();// 启动事件
+
+        // 数据处理
         $data['password'] = md5(md5($data['password']));
 
         // user表 数据写入
-        $row = $db->createCommand()
+        $user = $db->createCommand()
             ->insert($this->tableName(), $data)
             ->execute();
 
-        // 获取uid
-        $id = $this->db->getLastInsertID();
-        if (!$row) {
-            return false;
+        if($user) {
+            $id = $db->getLastInsertID();// 获取id
         }
 
         // user_information表 数据处理
@@ -76,9 +77,14 @@ class User extends Base
         $infoData['info'] = json_encode($userInfo);
 
         // user_information表 数据写入
-        $db->createCommand()
+        $info = $db->createCommand()
             ->insert('bhy_user_information', $infoData)
             ->execute();
+        if($user && $info) {
+            $transaction->commit();
+        } else {
+            $transaction->rollBack();
+        }
 
         return $id;
     }
@@ -103,13 +109,4 @@ class User extends Base
         return $row;
     }
 
-    /**
-     * 示例
-     */
-    public function add(){
-
-        $result = Base::getInstance('user_information')->findOne(['user_id'=>123]);
-
-        var_dump($result);
-    }
 }
