@@ -39,6 +39,7 @@ define(['app/module', 'app/directive/directiveApi'
                 id: 10
             }
         ];
+
         $ionicModal.fromTemplateUrl('selCityModal.html', function (modal) {
             $scope.modal = modal;
         }, {
