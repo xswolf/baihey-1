@@ -125,7 +125,6 @@ class BaseController extends Controller {
         $user = User::getInstance()->findOne( [ 'wx_id' => $data['wx_id'] ] );
         if ( ! $user ) { // 用户不存在，写入数据
             User::getInstance()->addUser( $data );
-            echo User::getInstance()->getDb()->getLastInsertID();
             $user = $data;
         }
 
