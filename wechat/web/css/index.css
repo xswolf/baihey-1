@@ -138,9 +138,30 @@ a.weibo {
 }
 .site .item_uimg {
   vertical-align: middle;
-  max-width: 100%;
-  max-height: 100%;
+}
+@media screen and (max-width: 400px) {
+  .site .item_uimg {
+    width: 74px;
+    height: 90px;
+  }
+}
+@media screen and (min-width: 400px) {
+  .site .item_uimg {
+    max-width: 100%;
+  }
 }
 .site p.signature {
   font-size: 12px;
+}
+.warn,
+.warn:hover,
+.warn:active {
+  color: #fff;
+  text-decoration: none;
+  width: 109%;
+  height: 36px;
+  line-height: 36px;
+  display: block;
+  background-color: #69b1f3;
+  padding-left: 10px;
 }

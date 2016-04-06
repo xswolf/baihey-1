@@ -1,5 +1,6 @@
 <?php
 namespace wechat\models;
+
 use yii\db\Query;
 
 /**
@@ -8,7 +9,8 @@ use yii\db\Query;
  * Date: 2016/3/10
  * Time: 10:21
  */
-class User extends Base{
+class User extends Base
+{
 
     protected $user;
 
@@ -26,13 +28,14 @@ class User extends Base{
      *
      * @return bool
      */
-    public function login($username,$password){
+    public function login($username, $password)
+    {
 
         $condition = [
             'username' => $username,
             'password' => md5(md5($password))
         ];
-        if ($user = $this->findOne($condition)){
+        if ($user = $this->findOne($condition)) {
             return $user;
         }
 
@@ -50,17 +53,40 @@ class User extends Base{
      * @return bool
      * @throws \yii\db\Exception
      */
-    public function addUser($data) {
+    public function addUser($data)
+    {
+
         $db = \Yii::$app->db;
         $data['password'] = md5(md5($data['password']));
 
+        // user表 数据写入
         $row = $db->createCommand()
             ->insert($this->tableName(), $data)
             ->execute();
+
+        // 获取uid
         $id = $this->db->getLastInsertID();
-        if(!$row) {
+        if (!$row) {
             return false;
         }
+
+        // user_information表 数据处理
+        $infoData['user_id'] = $id;
+        $userInfo = [
+            'real_name'     => '未知',
+            'identity_id'   => '未知',
+            'age'           => '未知',
+            'height'        => '未知',
+            'level'         => '未知',
+            'is_marriage'   => '未知',
+        ];
+        $infoData['info'] = json_encode($userInfo);
+
+        // user_information表 数据写入
+        $db->createCommand()
+            ->insert('bhy_user_information', $infoData)
+            ->execute();
+
         return $id;
     }
 
@@ -69,16 +95,18 @@ class User extends Base{
      * @param $name
      * @return array|bool|null
      */
-    public function getUserByName($name) {
+    public function getUserByName($name)
+    {
         $row = (new Query())
             ->select('*')
             ->from($this->tableName())
-            ->where(['username'=>$name])
+            ->where(['username' => $name])
             ->one();
 
-        if(!$row) {
+        if (!$row) {
             return null;
         }
+
         return $row;
     }
 
