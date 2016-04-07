@@ -144,7 +144,6 @@ class User extends Base
         $condition = [
             'i.city'=>1,
             'u.sex'=>1,
-            "json_extract(info, '$.age')"=>'未知'
         ];
         $joinTable = \Yii::$app->getDb()->tablePrefix.$this->_user_information_table;
         $result = (new Query())->select(['*'])
