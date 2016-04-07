@@ -148,6 +148,7 @@ class User extends Base
         $joinTable = \Yii::$app->getDb()->tablePrefix.$this->_user_information_table;
         $result = (new Query())->select(['*'])
         ->where($condition)
+        ->andWhere(['<>',"json_extract(info,'$.head_pic')",'未知'])
         ->from(static::tableName().' u')
         ->innerJoin($joinTable.' i',"u.id=i.user_id")
         ->all();

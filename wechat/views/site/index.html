@@ -29,7 +29,7 @@
             <ion-item collection-repeat="item in items track by item.id" item="item" href="/item/{{item.id}}">
                 <div class="row">
 
-                    <div class="col col-25"><img class="item_uimg rounded" src="/wechat/web/images/test.jpg"></div>
+                    <div class="col col-25"><img class="item_uimg rounded" src="{{item.info.head_pic}}"></div>
 
                     <div class="col col-75">
                         <div class="row pl0">
@@ -46,7 +46,7 @@
 
                         <div class="row pl0">
                             <div class="col">
-                                <p class="cor20 signature">一個人的時候總是在想可不可以兩個人。</p>
+                                <p class="cor20 signature">{{item.personalized}}</p>
                             </div>
                         </div>
                     </div>
