@@ -40,31 +40,41 @@ define(['app/module', 'app/directive/directiveApi'
             }
         ];
 
+        //选择城市模版
         $ionicModal.fromTemplateUrl('selCityModal.html', function (modal) {
-            $scope.modal = modal;
+            $scope.cityModal = modal;
+            $scope.$broadcast('cityChild', modal);
         }, {
             animation: 'slide-in-up',
             focusFirstInput: true
         });
 
+        //高级搜索模版
+        $ionicModal.fromTemplateUrl('MoreSearchModal.html', function (modal) {
+            $scope.searchModal = modal;
+            $scope.$broadcast('searchChild', modal);
+        }, {
+            animation: 'slide-in-up',
+            focusFirstInput: true
+        });
+
+
         $scope.buttonsItemIndex = '';
 
+        //点击搜索
         $scope.search = function () {
 
-
             $scope.buttonsItem = [
-                { text: '全部' },
-                { text: '只看男' },
-                { text: '只看女' },
-                { text: '高级搜索' },
-                { text: 'ID搜索' }
+                {text: '全部'},
+                {text: '只看男'},
+                {text: '只看女'},
+                {text: '高级搜索'},
+                {text: 'ID搜索'}
             ];
 
-            console.log($scope.buttonsItemIndex);
-
-            if($scope.buttonsItemIndex != ''){
-                $scope.buttonsItem[$scope.buttonsItemIndex].text = '<b>'+$scope.buttonsItem[$scope.buttonsItemIndex].text+'</b>'
-            }else {
+            if ($scope.buttonsItemIndex != '') {
+                $scope.buttonsItem[$scope.buttonsItemIndex].text = '<b>' + $scope.buttonsItem[$scope.buttonsItemIndex].text + '</b>'
+            } else {
                 $scope.buttonsItem[0].text = '<b>全部</b>';
             }
 
@@ -73,7 +83,7 @@ define(['app/module', 'app/directive/directiveApi'
                 titleText: '搜索',
                 cancelText: '取消',
                 cancel: function () {
-                    // add cancel code..
+
                 },
                 buttonClicked: function (index) {
 
@@ -89,7 +99,7 @@ define(['app/module', 'app/directive/directiveApi'
 
                     }
                     if (index == 3) {   //高级搜索
-
+                        $scope.searchModal.show();
                     }
                     if (index == 4) {   //ID搜索
                         $ionicPopup.prompt({
@@ -112,7 +122,12 @@ define(['app/module', 'app/directive/directiveApi'
 
     }]);
 
-    module.controller('site.childController', ['app.serviceApi', '$scope', function (api, $scope) {
+    //选择城市
+    module.controller('site.childCityController', ['app.serviceApi', '$scope', function (api, $scope) {
+
+        $scope.$on('cityChild', function (event, data) {
+            alert(data);
+        });
 
         $scope.bodyHeight = document.body.scrollHeight;
         if ($scope.bodyHeight == 0) $scope.bodyHeight = window.screen.height;
@@ -260,5 +275,15 @@ define(['app/module', 'app/directive/directiveApi'
             }
         ];
 
-    }])
+    }]);
+
+    // 高级搜索
+    module.controller('site.childSearchController', ['app.serviceApi', '$scope', function (api, $scope) {
+
+        $scope.$on('searchChild', function (event, data) {
+            console.log('searchChild', data);		 //子级能得到值
+        });
+
+    }]);
+
 })
