@@ -7,38 +7,13 @@ define(['app/module', 'app/directive/directiveApi'
 
     module.controller("site.index", ['app.serviceApi', '$scope', '$ionicPopup', '$ionicModal', '$ionicActionSheet', function (api, $scope, $ionicPopup, $ionicModal, $ionicActionSheet) {
 
-        $scope.items = [
-            {
-                id: 1
-            },
-            {
-                id: 2
-            },
-            {
-                id: 3
-            },
-            {
-                id: 4
-            },
-            {
-                id: 5
-            },
-            {
-                id: 6
-            },
-            {
-                id: 7
-            },
-            {
-                id: 8
-            },
-            {
-                id: 9
-            },
-            {
-                id: 10
+        api.list("user-list", {}).success(function (res) {
+            $scope.items = res.data;
+            for( i in $scope.items){
+                $scope.items[i].info = JSON.parse($scope.items[i].info);
             }
-        ];
+        })
+
 
         $ionicModal.fromTemplateUrl('selCityModal.html', function (modal) {
             $scope.modal = modal;

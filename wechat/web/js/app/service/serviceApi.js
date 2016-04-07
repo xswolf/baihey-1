@@ -66,9 +66,27 @@ define(['app/module'], function (module) {
             });
         }
 
-
+        /**
+         * 获取微信配置
+         * @param wx
+         * @returns {*}
+         */
         api.wxConfig = function (wx) {
             return $http.get('../chat/config');
+        }
+
+        /**
+         * 获取列表
+         * @param url
+         * @param params
+         * @returns {*}
+         */
+        api.list = function (url , params){
+            return $http({
+                method: 'POST',
+                url: url,
+                params: params
+            });
         }
 
         return api;
