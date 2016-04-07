@@ -1,7 +1,7 @@
 <div class="com_w_100" ng-controller="site.index">
     <ion-header>
         <div class="bar bar-header">
-            <a href="javascript:;" ng-click="cityModal.show()" class="button button-icon "><i
+            <a href="javascript:;" ng-click="openCityModal()" class="button button-icon "><i
                     class="fs16 ion-android-pin positive mr5"></i>重庆<i
                     class="ml5 fs14 ion-android-arrow-dropdown positive"></i></a>
             <a href="javascript:;" ng-click="search()" class="button button-icon">搜索</a>
@@ -58,10 +58,10 @@
     <script id="selCityModal.html" type="text/ng-template">
         <ion-modal-view ng-controller="site.childCityController">
             <ion-header-bar>
-                <a href="javascript:;" ng-click="cityModal.hide()" class="button button-icon "><i
+                <a href="javascript:;" ng-click="openCityModal()" class="button button-icon "><i
                         class="fs16 ion-android-pin positive mr5"></i>重庆<i
                         class="ml5 fs14 ion-android-arrow-dropup positive"></i></a>
-                <a href="javascript:;" ng-click="cityModal.hide()" class="button button-icon">保存</a>
+                <a href="javascript:;" ng-click="closeCityModal()" class="button button-icon">保存</a>
 
             </ion-header-bar>
             <ion-content>
@@ -91,11 +91,11 @@
 
         <ion-modal-view ng-controller="site.childSearchController">
             <ion-header-bar>
-                <a href="javascript:;" ng-click="searchModal.hide()" class="button button-icon "><i
+                <a href="javascript:;" ng-click="closeSearchModal()" class="button button-icon "><i
                         class="fs16 ion-android-pin positive mr5"></i>取消<i
                         class="ml5 fs14 ion-android-arrow-dropup positive"></i></a>
                 <h1 class="title">高级搜索</h1>
-                <a href="javascript:;" ng-click="searchModal.hide()" class="button button-icon">确定</a>
+                <a href="javascript:;" ng-click="closeSearchModal()" class="button button-icon">确定</a>
 
             </ion-header-bar>
 

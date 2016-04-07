@@ -15,24 +15,34 @@ define(['app/module', 'app/directive/directiveApi'
         })
 
 
-        //选择城市模版
-        $ionicModal.fromTemplateUrl('selCityModal.html', function (modal) {
+        // 选择城市模版
+        $ionicModal.fromTemplateUrl('selCityModal.html', {
+            scope: $scope,
+            animation: 'slide-in-up'
+        }).then(function(modal) {
             $scope.cityModal = modal;
-            $scope.$broadcast('cityChild', modal);
-        }, {
-            animation: 'slide-in-up',
-            focusFirstInput: true
         });
+        $scope.openCityModal = function() {
+            $scope.cityModal.show();
+        };
+        $scope.closeCityModal = function() {
+            $scope.cityModal.hide();
+        };
 
-        //高级搜索模版
-        $ionicModal.fromTemplateUrl('MoreSearchModal.html', function (modal) {
+
+        // 高级搜索模版
+        $ionicModal.fromTemplateUrl('MoreSearchModal.html', {
+            scope: $scope,
+            animation: 'slide-in-up'
+        }).then(function(modal) {
             $scope.searchModal = modal;
-            $scope.$broadcast('searchChild', modal);
-        }, {
-            animation: 'slide-in-up',
-            focusFirstInput: true
         });
-
+        $scope.openSearchModal = function() {
+            $scope.searchModal.show();
+        };
+        $scope.closeSearchModal = function() {
+            $scope.searchModal.hide();
+        };
 
         $scope.buttonsItemIndex = '';
 
@@ -74,7 +84,7 @@ define(['app/module', 'app/directive/directiveApi'
 
                     }
                     if (index == 3) {   //高级搜索
-                        $scope.searchModal.show();
+                        $scope.openSearchModal();
                     }
                     if (index == 4) {   //ID搜索
                         $ionicPopup.prompt({
@@ -100,9 +110,6 @@ define(['app/module', 'app/directive/directiveApi'
     //选择城市
     module.controller('site.childCityController', ['app.serviceApi', '$scope', function (api, $scope) {
 
-        $scope.$on('cityChild', function (event, data) {
-            alert(data);
-        });
 
         $scope.bodyHeight = document.body.scrollHeight;
         if ($scope.bodyHeight == 0) $scope.bodyHeight = window.screen.height;
@@ -255,9 +262,6 @@ define(['app/module', 'app/directive/directiveApi'
     // 高级搜索
     module.controller('site.childSearchController', ['app.serviceApi', '$scope', function (api, $scope) {
 
-        $scope.$on('searchChild', function (event, data) {
-            console.log('searchChild', data);		 //子级能得到值
-        });
 
     }]);
 
