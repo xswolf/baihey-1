@@ -75,6 +75,7 @@ class User extends Base
         // user_information表 数据处理
         $infoData['user_id'] = $id;
         $userInfo = [
+            'head_pic'      => '未知',
             'real_name'     => '未知',
             'identity_id'   => '未知',
             'age'           => '未知',
@@ -142,7 +143,8 @@ class User extends Base
     public function userList(){
         $condition = [
             'i.city'=>1,
-            'u.sex'=>1
+            'u.sex'=>1,
+            'i.info->\'$.age\''=>'未知'
         ];
         $joinTable = \Yii::$app->getDb()->tablePrefix.$this->_user_information_table;
         $result = (new Query())->select(['*'])
