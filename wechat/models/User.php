@@ -143,7 +143,7 @@ class User extends Base
     public function userList(){
         $condition = [
             'i.city'=>1,
-            'u.sex'=>1,
+            'u.sex'=>0,
         ];
         $joinTable = \Yii::$app->getDb()->tablePrefix.$this->_user_information_table;
         $result = (new Query())->select(['*'])
