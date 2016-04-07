@@ -9,40 +9,27 @@ define(['app/module', 'app/directive/directiveApi'
 
         api.list("user-list", {}).success(function (res) {
             $scope.items = res.data;
-            for( i in $scope.items){
+            for (i in $scope.items) {
                 $scope.items[i].info = JSON.parse($scope.items[i].info);
             }
         })
-
 
         // 选择城市模版
         $ionicModal.fromTemplateUrl('selCityModal.html', {
             scope: $scope,
             animation: 'slide-in-up'
-        }).then(function(modal) {
+        }).then(function (modal) {
             $scope.cityModal = modal;
         });
-        $scope.openCityModal = function() {
-            $scope.cityModal.show();
-        };
-        $scope.closeCityModal = function() {
-            $scope.cityModal.hide();
-        };
 
 
         // 高级搜索模版
         $ionicModal.fromTemplateUrl('MoreSearchModal.html', {
             scope: $scope,
             animation: 'slide-in-up'
-        }).then(function(modal) {
+        }).then(function (modal) {
             $scope.searchModal = modal;
         });
-        $scope.openSearchModal = function() {
-            $scope.searchModal.show();
-        };
-        $scope.closeSearchModal = function() {
-            $scope.searchModal.hide();
-        };
 
         $scope.buttonsItemIndex = '';
 
@@ -77,15 +64,19 @@ define(['app/module', 'app/directive/directiveApi'
                     if (index == 0) {   // 全部
 
                     }
+
                     if (index == 1) {   //只看男
 
                     }
+
                     if (index == 2) {   //只看女
 
                     }
+
                     if (index == 3) {   //高级搜索
-                        $scope.openSearchModal();
+                        $scope.searchModal.show();
                     }
+
                     if (index == 4) {   //ID搜索
                         $ionicPopup.prompt({
                             title: 'ID搜索',
@@ -98,7 +89,6 @@ define(['app/module', 'app/directive/directiveApi'
                             alert(res);
                         });
                     }
-
                     return true;
                 }
             });
@@ -262,6 +252,13 @@ define(['app/module', 'app/directive/directiveApi'
     // 高级搜索
     module.controller('site.childSearchController', ['app.serviceApi', '$scope', function (api, $scope) {
 
+        $scope.searchForm = {};
+
+        $scope.searchForm.sex = 'all';
+
+        $scope.searchForm.clickSex = function (value) {
+            $scope.searchForm.sex = value;
+        }
 
     }]);
 
