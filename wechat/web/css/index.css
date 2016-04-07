@@ -211,6 +211,9 @@ a.weibo {
 .moreSearch_form_box .sex_item:last-child {
   border-right: 0;
 }
+.search_sex {
+  border: 1px solid #ddd;
+}
 .search_sex > a.checked {
   background-color: #eaf1f6;
 }
