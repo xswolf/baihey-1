@@ -10,7 +10,8 @@ require.config({
         ionic:'plugin/ionic/ionic.min',
         bootstrap:'plugin/bootstrap/bootstrap.min',
         amezeui: 'plugin/amezeui/amazeui.min',
-        comm: 'comm'
+        comm: 'comm',
+        config:'config'
     },
     shim:{
         angular:{

@@ -134,8 +134,7 @@
 .tar{ text-align: right;}
 .form-group {  margin-bottom: 15px;}
 .fwb{ font-weight: bold;}
-
-
+.cp{ cursor: pointer;}
 /*清除浮动*/
 .clearfix:after{content:".";display:block;height:0;clear:both;visibility:hidden}
 

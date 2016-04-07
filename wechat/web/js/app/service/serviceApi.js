@@ -1,11 +1,12 @@
 /**
  * Created by Administrator on 2016/3/23.
  */
-define(['app/module'], function (module) {
+define(['app/module','config'], function (module,config) {
     module.factory('app.serviceApi', ['$http', function ($http) {
 
         var api = {};
 
+        api.city = config.city;
         /**
          * 获取用户登录状态
          * @returns {*}

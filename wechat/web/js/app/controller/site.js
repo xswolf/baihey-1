@@ -260,6 +260,15 @@ define(['app/module', 'app/directive/directiveApi'
             $scope.searchForm.sex = value;
         }
 
+        $scope.moreText = '展开';
+        $scope.more = false;
+        $scope.moreToggle = function(){
+            $scope.more = !$scope.more;
+            if($scope.more ){$scope.moreText = '收起';}else{$scope.moreText = '展开';}
+        }
+
+
+
     }]);
 
 })

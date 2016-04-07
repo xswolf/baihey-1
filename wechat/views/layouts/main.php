@@ -8,15 +8,12 @@
         <link href="/wechat/web/css/plugin/ionic/ionic.min.css" rel="stylesheet">
         <link href="/wechat/web/css/base.css" rel="stylesheet">
         <link href="/wechat/web/css/index.css" rel="stylesheet">
+        <link href="/wechat/web/css/android.css" rel="stylesheet">
 
     </head>
     <script data-main="/wechat/web/js/app" src="/wechat/web/js/plugin/requirejs/require.js"></script>
     <body>
-
-
         <?= $content ?>
-
-
         <div class="bar bar-footer bhy-footer com_w_100">
             <ul id="footer">
                 <li class="home">
@@ -53,6 +50,10 @@
 
             </ul>
         </div>
-
+        <!--[if lt IE 9]>
+        <script src="/wechat/web/js/plugin/h5/html5.js"></script>
+        <script src="/wechat/web/js/plugin/h5/excanvas.min.js"></script>
+        <script src="/wechat/web/js/plugin/h5/css3-mediaqueries.js"></script>
+        <![endif]-->
     </body>
 </html>
