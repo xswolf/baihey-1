@@ -121,24 +121,23 @@
           transform-origin: 50% 0;
 }
 .city-picker .row,.city-picker  .col{padding: 0;}
-.bhy-search-city-picker{
-    -moz-appearance: none !important;
-    background: #fff !important;
-    border: 0 !important;
-    bottom: 0 !important;
-    color: #333 !important;
-    cursor: pointer !important;
-    direction: rtl !important;
-    font-size: 14px !important;
-    max-width: 65% !important;
-    padding: 0 48px 0 16px !important;
-    position: absolute !important;
-    right: 0 !important;
-    text-indent: 0.01px !important;
-    text-overflow: "" !important;
-    top: 0 !important;
-    white-space: nowrap !important;
-    height: 48px !important;
-    line-height: 48px !important;
-    width: auto !important;
+#bhy-search-city-picker{
+    -moz-appearance: none;
+    background: #fff none repeat scroll 0 0;
+    border: medium none;
+    bottom: 0;
+    color: #333;
+    cursor: pointer;
+    direction: rtl;
+    font-size: 14px;
+    max-width: 65%;
+    padding: 0 48px 0 16px;
+    position: absolute;
+    right: 0;
+    text-indent: 0.01px;
+    /*text-overflow: "";*/
+    top: 13px;
+    white-space: nowrap;
+    width: auto;
+
 }
