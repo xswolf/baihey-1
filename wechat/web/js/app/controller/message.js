@@ -58,11 +58,17 @@ define(['app/module', 'app/directive/directiveApi'
 
         }, 2000);
 
+        // 联系人pop窗口
         $scope.popShow = false;
         $scope.pop_toggle = function(){
             $scope.popShow = !$scope.popShow;
         }
 
+        // 删除操作
+        $scope.removeItem = function(item){
+            console.log(item);
+
+        }
 
 
 

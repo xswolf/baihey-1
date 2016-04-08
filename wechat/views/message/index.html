@@ -19,7 +19,7 @@
     </ion-header>
 
     <ion-content ng-cloak class="has-header has-footer bhy-has-footer message">
-        <ion-list>
+        <ion-list show-delete="shouldShowDelete">
             <ion-item collection-repeat="item in items track by item.id" item="item" href="/item/{{item.id}}">
                 <div class="row">
                     <div class="msg_u_img mr20 pr fl">
@@ -34,6 +34,9 @@
                     </p>
                     <span class="send_time dbl">2016-03-20 11:01:33</span>
                 </div>
+                <ion-option-button class="button-assertive" ng-click="removeItem(item)">
+                删除
+                </ion-option-button>
             </ion-item>
         </ion-list>
     </ion-content>
