@@ -1,6 +1,7 @@
 <?php
 namespace wechat\models;
 
+use common\util\Cookie;
 use yii\db\Query;
 
 /**
@@ -68,20 +69,20 @@ class User extends Base
             ->insert($this->tableName(), $data)
             ->execute();
 
-        if($user) {
+        if ($user) {
             $id = $db->getLastInsertID();// 获取id
         }
 
         // user_information表 数据处理
         $infoData['user_id'] = $id;
         $userInfo = [
-            'head_pic'      => '未知',
-            'real_name'     => '未知',
-            'identity_id'   => '未知',
-            'age'           => '未知',
-            'height'        => '未知',
-            'level'         => '未知',
-            'is_marriage'   => '未知',
+            'head_pic' => '未知',
+            'real_name' => '未知',
+            'identity_id' => '未知',
+            'age' => '未知',
+            'height' => '未知',
+            'level' => '未知',
+            'is_marriage' => '未知',
         ];
         $infoData['info'] = json_encode($userInfo);
         $infoData['city'] = 1;
@@ -91,7 +92,7 @@ class User extends Base
             ->insert('bhy_user_information', $infoData)
             ->execute();
 
-        if($user && $info) {
+        if ($user && $info) {
 
             $transaction->commit();
             // 写入用户日志表
@@ -114,9 +115,11 @@ class User extends Base
      */
     public function getUserByName($name)
     {
+        $joinTable = \Yii::$app->getDb()->tablePrefix . $this->_user_information_table;
         $row = (new Query())
             ->select('*')
-            ->from($this->tableName())
+            ->from(static::tableName() . ' u')
+            ->innerJoin($joinTable . ' i', "u.id=i.user_id")
             ->where(['username' => $name])
             ->one();
 
@@ -130,7 +133,8 @@ class User extends Base
     /**
      * 用户操作日志
      */
-    public function userLog($log){
+    public function userLog($log)
+    {
 
         $userLog = Base::getInstance('user_log');
         $userLog->user_id = $log['user_id'];
@@ -140,18 +144,37 @@ class User extends Base
         return $userLog->insert(false);
     }
 
-    public function userList(){
+    /**
+     * 获取用户列表
+     * @return array
+     */
+    public function userList()
+    {
         $condition = [
-            'i.city'=>1,
-            'u.sex'=>0,
+            'i.city' => 1,
+            'u.sex' => 0,
         ];
-        $joinTable = \Yii::$app->getDb()->tablePrefix.$this->_user_information_table;
-        $result = (new Query())->select(['*'])
-        ->where($condition)
-        ->andWhere(['<>',"json_extract(info,'$.head_pic')",'未知'])
-        ->from(static::tableName().' u')
-        ->innerJoin($joinTable.' i',"u.id=i.user_id")
-        ->all();
+        $joinTable = \Yii::$app->getDb()->tablePrefix . $this->_user_information_table;
+
+        // 判断是否登录，登录则不显示自己的信息
+        if (Cookie::getInstance()->getCookie('bhy_u_name')) {
+
+            $result = (new Query())->select(['*'])
+                ->where($condition)
+                ->andWhere(['<>', "json_extract(info,'$.head_pic')", '未知'])
+                ->andWhere(['<>', "u.username", Cookie::getInstance()->getCookie('bhy_u_name')])
+                ->from(static::tableName() . ' u')
+                ->innerJoin($joinTable . ' i', "u.id=i.user_id")
+                ->all();
+        } else {
+
+            $result = (new Query())->select(['*'])
+                ->where($condition)
+                ->andWhere(['<>', "json_extract(info,'$.head_pic')", '未知'])
+                ->from(static::tableName() . ' u')
+                ->innerJoin($joinTable . ' i', "u.id=i.user_id")
+                ->all();
+        }
 
         return $result;
     }

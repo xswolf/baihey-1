@@ -18,6 +18,30 @@ class UserController extends BaseController {
     }
 
     /**
+     * 获取的当前登录状态
+     */
+    public function actionGetLoginStatus() {
+        if($this->isLogin()) {
+            return $this->renderAjax( [ 'status' => 1 , 'msg' => '已登录' ] );
+        } else {
+            return $this->renderAjax( [ 'status' => 0 , 'msg' => '未登录' ] );
+        }
+    }
+
+    /**
+     * 获取当前用户信息
+     */
+    public function actionGetUserInfo() {
+        if($this->isLogin()) {
+            $userName = Cookie::getInstance()->getCookie('bhy_u_name');
+            $userInfo = User::getInstance()->getUserByName($userName);
+            return $this->renderAjax( [ 'status' => 1 , 'msg' => '成功', 'data' => $userInfo ] );
+        } else {
+            return $this->renderAjax( [ 'status' => 0 , 'msg' => '失败' ] );
+        }
+    }
+
+    /**
      * 登录
      * @return string
      */

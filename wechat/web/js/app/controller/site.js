@@ -16,10 +16,16 @@ define(['app/module', 'app/directive/directiveApi'
             showDelay: 0
         });
 
+        // 获取当前用户信息
+        api.getUserInfo().success(function (res) {
+            $scope.userInfo = res.data;
+            $scope.userInfo.info = JSON.parse($scope.userInfo.info);
+        });
+
         // 模拟延迟2秒展现页面
         $timeout(function () {
             $ionicLoading.hide();
-            api.list("user-list", {}).success(function (res) {
+            api.list("site/user-list", {}).success(function (res) {
                 $scope.items = res.data;
                 for (var i in $scope.items) {
                     $scope.items[i].info = JSON.parse($scope.items[i].info);
