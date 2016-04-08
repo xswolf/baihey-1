@@ -1,6 +1,6 @@
 <div class="com_w_100" ng-controller="message.index">
     <ion-header>
-        <div class="bar bar-header com_w_100" ng-cloak>
+        <div class="bar bar-header com_w_100 " ng-cloak>
             <div class="pa msg_type_pop" ng-show="popShow">
                 <p>
                     <a href="javascript:;">所有联系人</a>
@@ -22,35 +22,17 @@
         <ion-list>
             <ion-item collection-repeat="item in items track by item.id" item="item" href="/item/{{item.id}}">
                 <div class="row">
-
-                    <div class="col col-25"><img class="item_uimg rounded" src="/wechat/web/images/test.jpg"></div>
-
-                    <div class="col col-75">
-                        <div class="row pl0">
-                            <div class="col">
-                                <span class="fwb fs14">李小姐</span>
-                                <span class="cor19 fs12">25岁</span> <span class="cor19 fs12">165cm</span>
-                                <span class="cor19 fs12">未婚</span>
-                            </div>
-                            <div class="col-20"><label class="label-right fs12"><i
-                                    class="ion-android-pin mr5 positive"></i>渝中区</label>
-                            </div>
-                        </div>
-
-                        <div class="row pl0">
-                            <p class="col fs12"><span class="identity sfz">身份证</span> <span
-                                    class="identity phone">手机</span> <span ng-if="item.info.level == 1"
-                                                                           class="identity vip">vip</span> <span
-                                    ng-if="item.info.level == 2" class="identity guest">贵宾</span> <span
-                                    ng-if="item.info.level == 3" class="identity diamond">钻石</span></p>
-                        </div>
-
-                        <div class="row pl0">
-                            <div class="col">
-                                <p class="cor20 signature">{{item.personalized}}</p>
-                            </div>
-                        </div>
+                    <div class="msg_u_img mr20 pr fl">
+                        <img class="item_uimg rounded" src="/wechat/web/images/test.jpg" width="56" height="56">
+                        <i class="info_nb">12</i>
                     </div>
+                    <p style="width: 65%;" class="">
+                        <span class="fwb fs14 mr10 lh28">李小姐</span>
+                        <span class="identity sfz lh28">身份证</span>
+                        <span class="identity phone lh28">手机</span>
+                        <span class="dbl fs12 lh28 msg_text"><span class="mr20">[23岁 未婚]</span>第四幅国画丢分韩国幅国画丢分规划法规和使得法国斯蒂芬个的</span>
+                    </p>
+                    <span class="send_time dbl">2016-03-20 11:01:33</span>
                 </div>
             </ion-item>
         </ion-list>

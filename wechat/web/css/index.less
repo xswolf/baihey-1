@@ -36,16 +36,16 @@ a.weibo{background-position: -1px -136px;}
 .ft_btn{ margin-top:20px; }
 
 /* 首页 */
-.site .item-content{ padding: 0;}
-.item_uimg{ vertical-align: middle;  }
+.site .item-content,.message .item-content{ padding: 0;}
+.site .item_uimg,.message .item_uimg{ vertical-align: middle;  }
 @media screen and (max-width: 400px) {
-.item_uimg {
+.site .item_uimg{
     width: 74px;
     height: 90px;
   }
 }
 @media screen and (min-width: 400px) {
-.item_uimg {
+.site .item_uimg{
     max-width: 100%;
   }
 }
@@ -74,7 +74,8 @@ a.weibo{background-position: -1px -136px;}
 .msg_type_pop{ background: #ffffff;  border: 1px solid #dcdcdc; border-bottom: 0;  right: 0;  top: 43px;  width: auto; max-width: 40%;  z-index: 2; }
 .msg_type_pop>p{ margin: 0;}
 .msg_type_pop>p>a,.msg_type_pop>p>a:hover,.msg_type_pop>p>a:active{ padding: 0 5px;  border-bottom: 1px solid #dcdcdc; color: #6c6c6c;  display: block;  font-size: 14px;  height: 32px;  line-height: 32px;  text-align: left; text-decoration: none;}
-
-
-
+.msg_u_img{ width: 56px; height: 56px;}
+.msg_text{ color: #999999; overflow: hidden;  text-overflow: ellipsis;  white-space: nowrap; }
+.send_time{ color: #aaaaaa;  font-size: 10px;  position: absolute;  right: 5%;  top: 10%;}
+.message .info_nb{ background: #ff2727;  border-radius: 50%;  color: #ffffff;  font-size: 9px;  height: 16px;  line-height: 16px;  position: absolute;  right: -5px;  text-align: center;  top: -5px;  width: 16px; z-index: 1;}
 
