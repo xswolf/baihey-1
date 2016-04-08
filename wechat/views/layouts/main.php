@@ -22,10 +22,11 @@
                         <p class="fs11 <?php echo \Yii::$app->controller->id == 'site' ? 'cor21' : ''; ?>">首页</p>
                     </a>
                 </li>
-                <li class="msg">
+                <li  class="msg">
                     <a href="/wap/message/index" class="page">
-                        <i class="fs24 <?php echo \Yii::$app->controller->id == 'message' ? 'ion-ios-chatbubble cor21' : 'ion-ios-chatbubble-outline'; ?>"></i>
+                        <i class="fs24 pr  <?php echo \Yii::$app->controller->id == 'message' ? 'ion-ios-chatbubble cor21' : 'ion-ios-chatbubble-outline'; ?>"><i class="msg-info-nb">5</i></i>
                         <p class="fs11 <?php echo \Yii::$app->controller->id == 'message' ? 'cor21' : ''; ?>">消息</p>
+
                     </a>
                 </li>
                 <li class="me">

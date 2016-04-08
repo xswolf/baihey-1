@@ -136,17 +136,17 @@ a.weibo {
 .site .item-content {
   padding: 0;
 }
-.site .item_uimg {
+.item_uimg {
   vertical-align: middle;
 }
 @media screen and (max-width: 400px) {
-  .site .item_uimg {
+  .item_uimg {
     width: 74px;
     height: 90px;
   }
 }
 @media screen and (min-width: 400px) {
-  .site .item_uimg {
+  .item_uimg {
     max-width: 100%;
   }
 }
@@ -216,4 +216,44 @@ a.weibo {
 }
 .search_sex > a.checked {
   background-color: #eaf1f6;
+}
+/* 消息 index */
+.red-point:after {
+  position: absolute;
+  content: ' ';
+  height: 6px;
+  width: 6px;
+  border-radius: 3px;
+  background-color: red;
+}
+.red-point:after {
+  top: 4px;
+  left: 70%;
+  right: 35%;
+}
+.msg_type_pop {
+  background: #ffffff;
+  border: 1px solid #dcdcdc;
+  border-bottom: 0;
+  right: 0;
+  top: 43px;
+  width: auto;
+  max-width: 40%;
+  z-index: 2;
+}
+.msg_type_pop > p {
+  margin: 0;
+}
+.msg_type_pop > p > a,
+.msg_type_pop > p > a:hover,
+.msg_type_pop > p > a:active {
+  padding: 0 5px;
+  border-bottom: 1px solid #dcdcdc;
+  color: #6c6c6c;
+  display: block;
+  font-size: 14px;
+  height: 32px;
+  line-height: 32px;
+  text-align: left;
+  text-decoration: none;
 }

@@ -144,3 +144,19 @@
 #footer{ width: 100%;}
 #footer li{ float: left; background-color: #fff;  height: 43px;  text-align: center;  width: 20%;}
 #footer a.page,#footer a.page:hover,#footer a.page:active{height: auto;  line-height: 11px;  margin: 0 auto;  padding-left: 0;  padding-right: 0;  width: 90%;color: #666;  display: block;position: relative;  text-decoration: none;}
+.m_red-point:after{  position: absolute;  content: ' ';  height: 6px;  width: 6px;  border-radius: 3px;  background-color: red;  }
+.m_red-point:after{  top: 5px;  right: -5px;}
+.msg-info-nb{  background: #ff2727;
+    border-radius: 50%;
+    color: #ffffff;
+    font-size: 9px;
+    height: 14px;
+    line-height: 14px;
+    position: absolute;
+    right: -11px;
+    text-align: center;
+    top: 1px;
+    width: 14px;
+    z-index: 1;}
+
+

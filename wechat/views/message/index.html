@@ -1,10 +1,58 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+<div class="com_w_100" ng-controller="message.index">
+    <ion-header>
+        <div class="bar bar-header com_w_100" ng-cloak>
+            <div class="pa msg_type_pop" ng-show="popShow">
+                <p>
+                    <a href="javascript:;">所有联系人</a>
+                    <a href="javascript:;">我关注的人</a>
+                    <a href="javascript:;">谁关注了我</a>
+                    <a href="javascript:;">最近联系人</a>
+                </p>
+            </div>
+            <h1 class="title">消息中心</h1>
+            <a href="javascript:;" ng-click="pop_toggle()" class="button button-icon "
+               ng-class="{true:'red-point',false:''}[isFollow]">联系人<i
+                    class="ml5 fs14"
+                    ng-class="{true:'ion-android-arrow-dropup',false:'ion-android-arrow-dropdown'}[popShow]"></i>
+            </a>
+        </div>
+    </ion-header>
 
-</body>
-</html>
+    <ion-content ng-cloak class="has-header has-footer bhy-has-footer message">
+        <ion-list>
+            <ion-item collection-repeat="item in items track by item.id" item="item" href="/item/{{item.id}}">
+                <div class="row">
+
+                    <div class="col col-25"><img class="item_uimg rounded" src="/wechat/web/images/test.jpg"></div>
+
+                    <div class="col col-75">
+                        <div class="row pl0">
+                            <div class="col">
+                                <span class="fwb fs14">李小姐</span>
+                                <span class="cor19 fs12">25岁</span> <span class="cor19 fs12">165cm</span>
+                                <span class="cor19 fs12">未婚</span>
+                            </div>
+                            <div class="col-20"><label class="label-right fs12"><i
+                                    class="ion-android-pin mr5 positive"></i>渝中区</label>
+                            </div>
+                        </div>
+
+                        <div class="row pl0">
+                            <p class="col fs12"><span class="identity sfz">身份证</span> <span
+                                    class="identity phone">手机</span> <span ng-if="item.info.level == 1"
+                                                                           class="identity vip">vip</span> <span
+                                    ng-if="item.info.level == 2" class="identity guest">贵宾</span> <span
+                                    ng-if="item.info.level == 3" class="identity diamond">钻石</span></p>
+                        </div>
+
+                        <div class="row pl0">
+                            <div class="col">
+                                <p class="cor20 signature">{{item.personalized}}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </ion-item>
+        </ion-list>
+    </ion-content>
+</div>
