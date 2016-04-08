@@ -12,8 +12,15 @@ define(['app/module','config'], function (module,config) {
          * @returns {*}
          */
         api.getLoginStatus = function () {
-            return 'app.serviceApi';
-            return $http.get('url....');
+            return $http.get('/wap/user/get-login-status');
+        }
+
+        /**
+         * 获取当前用户信息
+         * @returns {HttpPromise}
+         */
+        api.getUserInfo = function() {
+            return $http.get('/wap/user/get-user-info');
         }
 
         /**
@@ -60,7 +67,7 @@ define(['app/module','config'], function (module,config) {
                 method: 'POST',
                 url: url,
                 headers: {
-                    'Content-Type':'application/json',
+                    'Content-Type':'application/json'
                     //'X-CSRF-Token':'bzFrQUtlbHU3AS8SGAweRyt1CAInMkElCXMRCzIoH0AGS1MSJjwFPg=='
                 },
                 params: formData
