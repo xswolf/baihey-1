@@ -5,14 +5,28 @@ define(['app/module', 'app/directive/directiveApi'
     , 'app/service/serviceApi', 'comm'
 ], function (module) {
 
-    module.controller("site.index", ['app.serviceApi', '$scope', '$ionicPopup', '$ionicModal', '$ionicActionSheet', function (api, $scope, $ionicPopup, $ionicModal, $ionicActionSheet) {
+    module.controller("site.index", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$ionicModal', '$ionicActionSheet', '$ionicLoading', function (api, $scope, $timeout, $ionicPopup, $ionicModal, $ionicActionSheet, $ionicLoading) {
 
-        api.list("user-list", {}).success(function (res) {
-            $scope.items = res.data;
-            for (i in $scope.items) {
-                $scope.items[i].info = JSON.parse($scope.items[i].info);
-            }
-        })
+        // 加载中动画
+        $ionicLoading.show({
+            content: 'Loading',
+            animation: 'fade-in',
+            showBackdrop: false,
+            maxWidth: 200,
+            showDelay: 0
+        });
+
+        // 模拟延迟2秒展现页面
+        $timeout(function () {
+            $ionicLoading.hide();
+            api.list("user-list", {}).success(function (res) {
+                $scope.items = res.data;
+                for (var i in $scope.items) {
+                    $scope.items[i].info = JSON.parse($scope.items[i].info);
+                }
+            })
+        }, 2000);
+
 
         // 选择城市模版
         $ionicModal.fromTemplateUrl('selCityModal.html', {
@@ -262,11 +276,14 @@ define(['app/module', 'app/directive/directiveApi'
 
         $scope.moreText = '展开';
         $scope.more = false;
-        $scope.moreToggle = function(){
+        $scope.moreToggle = function () {
             $scope.more = !$scope.more;
-            if($scope.more ){$scope.moreText = '收起';}else{$scope.moreText = '展开';}
+            if ($scope.more) {
+                $scope.moreText = '收起';
+            } else {
+                $scope.moreText = '展开';
+            }
         }
-
 
 
     }]);

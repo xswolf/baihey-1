@@ -6,16 +6,8 @@ define(function () {
         "city": [
             {
                 "name": "不限",
-                "sub":[
-                    {
-                        "name":"不限",
-                        "sub":[
-                            {
-                                "name":"不限"
-                            }
-                        ]
-                    }
-                ]
+                "sub":[],
+                "type":0
             },
             {
                 "name": "北京",
@@ -97,7 +89,9 @@ define(function () {
                     {
                         "name": "广州",
                         "sub": [
-
+                            {
+                                "name":"不限"
+                            },
                             {
                                 "name": "越秀区"
                             },

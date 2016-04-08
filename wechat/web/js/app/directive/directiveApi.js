@@ -12,7 +12,7 @@ define(['app/module'], function (module) {
             }
         }
     });
-    //<input type="text" placeholder={{vm.placeholder}} ng-model="citydata"  class={{vm.cssClass}} readonly>
+
     module.directive("ionicCityPicker", ['$ionicPopup', '$timeout', 'app.serviceApi', '$ionicScrollDelegate', '$ionicModal', function ($ionicPopup, $timeout, api, $ionicScrollDelegate, $ionicModal) {
         return {
             restrict: 'AE',
@@ -24,6 +24,7 @@ define(['app/module'], function (module) {
                 buttonClicked: '&'
             },
             link: function (scope, element, attrs) {
+                scope.citydata = '不限';
                 var vm = scope.vm = {}, citypickerModel = null;
                 //根据城市数据来 设置Handle。
                 vm.provinceHandle = "provinceHandle" + attrs.citydata;
@@ -72,7 +73,7 @@ define(['app/module'], function (module) {
                             country && (vm.country = vm.city.sub[index]);//处理乡数据
                             HandleChild && $ionicScrollDelegate.$getByHandle(HandleChild).scrollTop();//初始化子scroll top位
                             //数据同步
-                            (vm.city.sub && vm.city.sub.length > 0) ? (scope.citydata = vm.province.name + vm.tag + vm.city.name + vm.tag + vm.country.name ) : (scope.citydata = vm.province.name + vm.tag + vm.city.name)
+                            (vm.city.sub && vm.city.sub.length > 0) ? (scope.citydata = vm.province.name + vm.tag + proccesName(vm.city.name) + vm.tag + proccesName(vm.country.name) ) : (scope.citydata = vm.province.name + vm.tag + proccesName(vm.city.name))
                         }, 150)
                     } else {
                         vm.scrolling = $timeout(function () {
@@ -80,6 +81,9 @@ define(['app/module'], function (module) {
                         }, 150)
                     }
 
+                }
+                function proccesName(name) {
+                    return name == "不限" ? "" : name;
                 }
 
                 element.on("click", function () {
