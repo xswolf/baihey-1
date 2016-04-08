@@ -1,5 +1,3 @@
-<link href="/wechat/web/css/plugin/ionic/ionic-citypicker.css" rel="stylesheet">
-
 <div class="com_w_100" ng-controller="site.index">
     <ion-header>
         <div class="bar bar-header">
@@ -35,21 +33,19 @@
 
                     <div class="col col-75">
                         <div class="row pl0">
-                            <div class="col"><span class="fwb fs14">{{item.info.real_name}}</span> <span
-                                    class="cor19 fs12">{{item.info.real_name}}岁</span> <span
-                                    class="cor19 fs12">165cm</span> <span
-                                    class="cor19 fs12">{{item.info.real_name}}离异</span></div>
+                            <div class="col">
+                                <span class="fwb fs14">{{item.info.real_name}}</span>
+                                <span ng-if="item.info.age != '未知'" class="cor19 fs12">{{item.info.age}}岁</span> <span ng-if="item.info.height != '未知'"
+                                    class="cor19 fs12">{{item.info.height}}cm</span>
+                                <span ng-if="item.info.is_marriage != '未知'" class="cor19 fs12">{{item.info.is_marriage}}</span>
+                            </div>
                             <div class="col-20"><label class="label-right fs12"><i
                                     class="ion-android-pin mr5 positive"></i>{{item.city}}渝中区</label>
                             </div>
                         </div>
 
                         <div class="row pl0">
-                            <p class="col fs12"><span class="identity sfz">身份证</span> <span
-                                    class="identity phone">手机</span> <span ng-if="item.info.level == 1"
-                                                                           class="identity vip">vip</span> <span
-                                    ng-if="item.info.level == 2" class="identity guest">贵宾</span> <span
-                                    ng-if="item.info.level == 3" class="identity diamond">钻石</span></p>
+                            <p class="col fs12"><span class="identity sfz">身份证</span> <span class="identity phone">手机</span> <span ng-if="item.info.level == 1" class="identity vip">vip</span> <span ng-if="item.info.level == 2" class="identity guest">贵宾</span> <span ng-if="item.info.level == 3" class="identity diamond">钻石</span></p>
                         </div>
 
                         <div class="row pl0">
