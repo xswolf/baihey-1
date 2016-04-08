@@ -1,7 +1,7 @@
 /**
  * Created by Administrator on 2016/3/23.
  */
-define(['app/module','config','comm'], function (module,config,comm) {
+define(['app/module','config'], function (module,config) {
     module.factory('app.serviceApi', ['$http', function ($http) {
 
         var api = {};
