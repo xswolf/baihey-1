@@ -18,8 +18,14 @@ define(['app/module', 'app/directive/directiveApi'
 
         // 获取当前用户信息
         api.getUserInfo().success(function (res) {
-            $scope.userInfo = res.data;
-            $scope.userInfo.info = JSON.parse($scope.userInfo.info);
+            if (res.data) {
+                $scope.userInfo = res.data;
+                $scope.userInfo.info = JSON.parse($scope.userInfo.info);
+            } else {
+                $scope.userInfo = [];
+                console.log('没有获取到当前用户信息');
+            }
+
         });
 
         // 模拟延迟2秒展现页面

@@ -38,14 +38,11 @@ return [
         'messageApi' => [
             'class' => 'common\message\MessageApi'
         ],
-
         'request'=> [
             'csrfParam' => 'jrbhy',
             "cookieValidationKey"=>"jrbhy*cnmkey"
         ]
     ],
-
-
     'bootstrap' => ['debug'],
     'modules' => [
         'debug' => 'yii\debug\Module',

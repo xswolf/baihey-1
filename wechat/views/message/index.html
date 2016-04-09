@@ -20,7 +20,7 @@
 
     <ion-content ng-cloak class="has-header has-footer bhy-has-footer message">
         <ion-list show-delete="shouldShowDelete">
-            <ion-item collection-repeat="item in items track by item.id" item="item" href="/item/{{item.id}}">
+            <ion-item collection-repeat="item in items track by item.id" item="item" href="/wap/message/chat?id={{item.id}}">
                 <div class="row">
                     <div class="msg_u_img mr20 pr fl">
                         <img class="item_uimg rounded" src="/wechat/web/images/test.jpg" width="56" height="56">

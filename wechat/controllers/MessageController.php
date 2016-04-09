@@ -3,7 +3,7 @@ namespace wechat\controllers;
 
 
 /**
- * Site controller
+ * Message controller
  */
 class MessageController extends BaseController
 {
@@ -20,5 +20,11 @@ class MessageController extends BaseController
         return $this->render();
     }
 
+    public function actionChat()
+    {
+        //$this->layout = false;
+
+        return $this->render();
+    }
 
 }
