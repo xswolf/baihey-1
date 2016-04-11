@@ -1,9 +1,8 @@
-<div class="com_w_100" ng-controller="message.index">
+<div class="com_w_100" ng-controller="message.index" ng-cloak>
     <ion-header>
-        <div class="bar bar-header com_w_100 " ng-cloak>
+        <div class="bar bar-header com_w_100 ">
             <div class="pa msg_type_pop" ng-show="popShow">
                 <p>
-                    <!--<a href="javascript:;">所有联系人</a>-->
                     <a href="javascript:;">我关注的人</a>
                     <a href="javascript:;">谁关注了我</a>
                     <a href="javascript:;">最近联系人</a>
@@ -18,7 +17,7 @@
         </div>
     </ion-header>
 
-    <ion-content ng-cloak class="has-header has-footer bhy-has-footer message">
+    <ion-content class="has-header has-footer bhy-has-footer message">
         <ion-list show-delete="shouldShowDelete">
             <ion-item collection-repeat="item in items track by item.id" item="item" href="/wap/message/chat?id={{item.id}}">
                 <div class="row">

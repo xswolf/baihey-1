@@ -21,34 +21,34 @@ define(['app/module', 'app/directive/directiveApi'
             $ionicLoading.hide();
 
             // 获取页面数据
-            $scope.items =[
+            $scope.items = [
                 {
-                    id : 1,
-                    name:"张三"
+                    id: 1,
+                    name: "张三"
                 },
                 {
-                    id : 2,
-                    name:"李四"
+                    id: 2,
+                    name: "李四"
                 },
                 {
-                    id : 3,
-                    name:"王二麻子"
+                    id: 3,
+                    name: "王二麻子"
                 },
                 {
-                    id : 4,
-                    name:"王二麻子"
+                    id: 4,
+                    name: "王二麻子"
                 },
                 {
-                    id : 5,
-                    name:"王二麻子"
+                    id: 5,
+                    name: "王二麻子"
                 },
                 {
-                    id : 6,
-                    name:"王二麻子"
+                    id: 6,
+                    name: "王二麻子"
                 },
                 {
-                    id : 7,
-                    name:"王二麻子"
+                    id: 7,
+                    name: "王二麻子"
                 }
 
             ]
@@ -60,20 +60,30 @@ define(['app/module', 'app/directive/directiveApi'
 
         // 联系人pop窗口
         $scope.popShow = false;
-        $scope.pop_toggle = function(){
+        $scope.pop_toggle = function () {
             $scope.popShow = !$scope.popShow;
         }
 
         // 删除操作
-        $scope.removeItem = function(item){
+        $scope.removeItem = function (item) {
             console.log(item);
 
         }
 
 
-
-
-
     }]);
 
+
+    module.controller("message.chat", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$ionicModal', '$ionicActionSheet', '$ionicLoading', '$ionicScrollDelegate', function (api, $scope, $timeout, $ionicPopup, $ionicModal, $ionicActionSheet, $ionicLoading, $ionicScrollDelegate) {
+
+        $scope.multi = false;
+        $scope.showMulti = function () {
+            $scope.multi = !$scope.multi;
+        }
+
+        $scope.scrollBot = function () {
+            $ionicScrollDelegate.scrollBottom(true);
+        }
+
+    }]);
 })

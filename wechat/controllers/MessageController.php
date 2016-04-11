@@ -27,4 +27,5 @@ class MessageController extends BaseController
         return $this->render();
     }
 
+
 }

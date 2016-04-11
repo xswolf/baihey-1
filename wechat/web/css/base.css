@@ -149,4 +149,13 @@
 .m_red-point:after{  top: 5px;  right: -5px;}
 .msg-info-nb{  background: #ff2727;  border-radius: 50%;  color: #ffffff;  font-size: 9px;  height: 14px;  line-height: 14px;  position: absolute;  right: -11px;  text-align: center;  top: 1px;  width: 14px;  z-index: 1;}
 
-
+/* 转圈动画 */
+.ion-spin {
+    -webkit-animation: spin 1s infinite linear;
+    -moz-animation: spin 1s infinite linear;
+    -o-animation: spin 1s infinite linear;
+    animation: spin 1s infinite linear;  }
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(359deg); }
+}
