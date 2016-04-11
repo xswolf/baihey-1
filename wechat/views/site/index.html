@@ -99,13 +99,13 @@
             <ion-header-bar>
                 <a href="javascript:;" ng-click="searchModal.hide()" class="button button-icon">取消</a>
                 <h1 class="title">高级搜索</h1>
-                <a href="javascript:;" ng-click="searchModal.hide()" class="button button-icon">确定</a>
+                <a href="javascript:;" ng-click="moreSearchModalHide()" class="button button-icon">确定</a>
             </ion-header-bar>
             <ion-content class="stable-bg">
                 <div class="row mb15">
                     <div class="col-90 mr0a">
                         <label class="item item-input">
-                            <input type="text" placeholder="请输入ID">
+                            <input type="text" ng-model="searchForm.data.id" placeholder="请输入ID">
                         </label>
                     </div>
                 </div>
@@ -124,14 +124,14 @@
                                 <div class="input-label">
                                     年龄
                                 </div>
-                                <select>
+                                <select ng-model="searchForm.data.age">
                                     <option value="0" selected>不限</option>
-                                    <option value="1">18-22</option>
-                                    <option value="1">23-26</option>
-                                    <option value="1">27-35</option>
-                                    <option value="1">36-45</option>
-                                    <option value="1">46-55</option>
-                                    <option value="1">56以上</option>
+                                    <option value="18-22">18-22</option>
+                                    <option value="22-26">23-26</option>
+                                    <option value="27-35">27-35</option>
+                                    <option value="36-45">36-45</option>
+                                    <option value="46-55">46-55</option>
+                                    <option value="56">56以上</option>
                                 </select>
                             </label>
                         </div>
@@ -140,18 +140,18 @@
                                 <div class="input-label">
                                     身高
                                 </div>
-                                <select>
+                                <select ng-model="searchForm.data.height">
                                     <option value="0" selected>不限</option>
-                                    <option value="1">140-150 厘米</option>
-                                    <option value="1">151-155 厘米</option>
-                                    <option value="1">156-160 厘米</option>
-                                    <option value="1">161-165 厘米</option>
-                                    <option value="1">166-170 厘米</option>
-                                    <option value="1">171-175 厘米</option>
-                                    <option value="1">176-180 厘米</option>
-                                    <option value="1">181-185 厘米</option>
-                                    <option value="1">186-190 厘米</option>
-                                    <option value="1">191 厘米以上</option>
+                                    <option value="140-150">140-150 厘米</option>
+                                    <option value="151-155">151-155 厘米</option>
+                                    <option value="156-160">156-160 厘米</option>
+                                    <option value="161-165">161-165 厘米</option>
+                                    <option value="166-170">166-170 厘米</option>
+                                    <option value="171-175">171-175 厘米</option>
+                                    <option value="176-180">176-180 厘米</option>
+                                    <option value="181-185">181-185 厘米</option>
+                                    <option value="186-190">186-190 厘米</option>
+                                    <option value="191">191 厘米以上</option>
                                 </select>
                             </label>
                         </div>
@@ -176,18 +176,18 @@
                                 <div class="input-label">
                                     婚姻状况
                                 </div>
-                                <select>
+                                <select ng-model="searchForm.data.is_marriage">
                                     <option value="0" selected>不限</option>
-                                    <option value="1">140-150 厘米</option>
-                                    <option value="1">151-155 厘米</option>
-                                    <option value="1">156-160 厘米</option>
-                                    <option value="1">161-165 厘米</option>
-                                    <option value="1">166-170 厘米</option>
-                                    <option value="1">171-175 厘米</option>
-                                    <option value="1">176-180 厘米</option>
-                                    <option value="1">181-185 厘米</option>
-                                    <option value="1">186-190 厘米</option>
-                                    <option value="1">191 厘米以上</option>
+                                    <option value="140-150">140-150 厘米</option>
+                                    <option value="151-155">151-155 厘米</option>
+                                    <option value="156-160">156-160 厘米</option>
+                                    <option value="161-165">161-165 厘米</option>
+                                    <option value="166-170">166-170 厘米</option>
+                                    <option value="171-175">171-175 厘米</option>
+                                    <option value="176-180">176-180 厘米</option>
+                                    <option value="181-185">181-185 厘米</option>
+                                    <option value="186-190">186-190 厘米</option>
+                                    <option value="191">191 厘米以上</option>
                                 </select>
                             </label>
                         </div>
@@ -196,7 +196,7 @@
                                 <div class="input-label">
                                     有无子女
                                 </div>
-                                <select>
+                                <select ng-model="searchForm.data.is_marriage">
                                     <option value="0" selected>不限</option>
                                     <option value="1">140-150 厘米</option>
                                     <option value="1">151-155 厘米</option>
@@ -216,7 +216,7 @@
                                 <div class="input-label">
                                     学历
                                 </div>
-                                <select>
+                                <select ng-model="searchForm.data.is_marriage">
                                     <option value="0" selected>不限</option>
                                     <option value="1">140-150 厘米</option>
                                     <option value="1">151-155 厘米</option>
@@ -236,7 +236,7 @@
                                 <div class="input-label">
                                     年收入
                                 </div>
-                                <select>
+                                <select ng-model="searchForm.data.is_marriage">
                                     <option value="0" selected>不限</option>
                                     <option value="1">140-150 厘米</option>
                                     <option value="1">151-155 厘米</option>
@@ -256,7 +256,7 @@
                                 <div class="input-label">
                                     购房
                                 </div>
-                                <select>
+                                <select ng-model="searchForm.data.is_marriage">
                                     <option value="0" selected>不限</option>
                                     <option value="1">140-150 厘米</option>
                                     <option value="1">151-155 厘米</option>
@@ -276,7 +276,7 @@
                                 <div class="input-label">
                                     购车
                                 </div>
-                                <select>
+                                <select ng-model="searchForm.data.is_marriage">
                                     <option value="0" selected>不限</option>
                                     <option value="1">140-150 厘米</option>
                                     <option value="1">151-155 厘米</option>
@@ -296,7 +296,7 @@
                                 <div class="input-label">
                                     职业
                                 </div>
-                                <select>
+                                <select ng-model="searchForm.data.is_marriage">
                                     <option value="0" selected>不限</option>
                                     <option value="1">140-150 厘米</option>
                                     <option value="1">151-155 厘米</option>
@@ -316,7 +316,7 @@
                                 <div class="input-label">
                                     属相
                                 </div>
-                                <select>
+                                <select ng-model="searchForm.data.is_marriage">
                                     <option value="0" selected>不限</option>
                                     <option value="1">140-150 厘米</option>
                                     <option value="1">151-155 厘米</option>
@@ -336,7 +336,7 @@
                                 <div class="input-label">
                                     星座
                                 </div>
-                                <select>
+                                <select ng-model="searchForm.data.is_marriage">
                                     <option value="0" selected>不限</option>
                                     <option value="1">140-150 厘米</option>
                                     <option value="1">151-155 厘米</option>
@@ -356,7 +356,7 @@
                                 <div class="input-label">
                                     民族
                                 </div>
-                                <select>
+                                <select ng-model="searchForm.data.is_marriage">
                                     <option value="0" selected>不限</option>
                                     <option value="1">140-150 厘米</option>
                                     <option value="1">151-155 厘米</option>

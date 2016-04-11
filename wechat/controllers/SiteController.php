@@ -26,6 +26,7 @@ class SiteController extends BaseController
      * 首页列表页
      */
     public function actionUserList(){
+        var_dump($this->get);exit;
         $list = User::getInstance()->userList($this->get);
         $this->renderAjax(['status=>1' , 'data'=>$list] );
     }

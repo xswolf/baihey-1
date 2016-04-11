@@ -15,6 +15,12 @@ define(['app/module', 'app/directive/directiveApi'
             maxWidth: 200,
             showDelay: 0
         });
+        $scope.searchForm={
+            data:{
+                sex:0,
+                id:123
+            }
+        }
 
         // 获取当前用户信息
         api.getUserInfo().success(function (res) {
@@ -31,7 +37,7 @@ define(['app/module', 'app/directive/directiveApi'
         // 模拟延迟2秒展现页面
         $timeout(function () {
             $ionicLoading.hide();
-            api.list("../site/user-list", {'pageNum':2,'sex':1,'age':'18-22'}).success(function (res) {
+            api.list("/wap/site/user-list", {'pageNum':2,'sex':1,'age':'18-22'}).success(function (res) {
                 $scope.items = res.data;
                 for (var i in $scope.items) {
                     $scope.items[i].info = JSON.parse($scope.items[i].info);
@@ -55,7 +61,21 @@ define(['app/module', 'app/directive/directiveApi'
             animation: 'slide-in-up'
         }).then(function (modal) {
             $scope.searchModal = modal;
+            $scope.moreSearchModal = modal;
         });
+
+       $scope.moreSearchModalHide = function(){
+           $scope.moreSearchModal.hide();
+           //console.log($scope.searchForm.data);
+           $scope.user = api.list("/wap/site/user-list", $scope.searchForm.data);
+           $scope.user.success(function (res) {
+               $scope.items = res.data;
+               for (var i in $scope.items) {
+                   $scope.items[i].info = JSON.parse($scope.items[i].info);
+               }
+           })
+           ///ss
+       }
 
         $scope.buttonsItemIndex = '';
 
@@ -84,7 +104,7 @@ define(['app/module', 'app/directive/directiveApi'
 
                 },
                 buttonClicked: function (index) {
-
+                    var user = null;
                     $scope.buttonsItemIndex = index;
 
                     if (index == 0) {   // 全部
@@ -92,15 +112,19 @@ define(['app/module', 'app/directive/directiveApi'
                     }
 
                     if (index == 1) {   //只看男
-
+                        $scope.searchForm.data.sex =1;
+                        user = api.list("/wap/site/user-list", $scope.searchForm.data);
                     }
 
                     if (index == 2) {   //只看女
-
+                        $scope.searchForm.data.sex =1;
+                        user = api.list("/wap/site/user-list", $scope.searchForm.data);
                     }
 
                     if (index == 3) {   //高级搜索
+                        $scope.$broadcast('someEvent', $scope.searchForm.data);
                         $scope.searchModal.show();
+
                     }
 
                     if (index == 4) {   //ID搜索
@@ -112,9 +136,20 @@ define(['app/module', 'app/directive/directiveApi'
                             okType: 'button-energized',
                             inputPlaceholder: '请输入对方ID号'
                         }).then(function (res) {
-                            alert(res);
+                            $scope.searchForm.data.id=res;
+                            user = api.list("/wap/site/user-list", $scope.searchForm.data);
                         });
                     }
+                    if( user != undefined){
+                        user.success(function (res) {
+                            $scope.items = res.data;
+                            for (var i in $scope.items) {
+                                $scope.items[i].info = JSON.parse($scope.items[i].info);
+                            }
+                        })
+                    }
+
+
                     return true;
                 }
             });
@@ -277,13 +312,16 @@ define(['app/module', 'app/directive/directiveApi'
 
     // 高级搜索
     module.controller('site.childSearchController', ['app.serviceApi', '$scope', function (api, $scope) {
-
+        $scope.$on('someEvent', function(event, mass) {
+            $scope.searchForm.data = mass;
+        });
         $scope.searchForm = {};
 
         $scope.searchForm.sex = 'all';
 
         $scope.searchForm.clickSex = function (value) {
             $scope.searchForm.sex = value;
+            $scope.searchForm.data.sex = value;
         }
 
         $scope.moreText = '展开';

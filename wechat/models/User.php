@@ -181,25 +181,13 @@ class User extends Base
 
                 switch ($key) {
                     case 'pageNum':
-                        $data['offset'] = ($where['pageNum'] - 1) * $pageSize;
-                        break;
-                    case 'id':
-                        $data['where'] = ['id' => $where['id']];
-                        break;
-                    case 'sex':
-                        $data['where'] = ['sex' => $where['sex']];
+                        $data['offset'] = ($val - 1) * $pageSize;
                         break;
                     case 'age':
-                        $data['where'] = ['age' => $where['pageNum']];
-                        break;
-                    case 'sex':
-                        $data['where'] = ['sex' => $where['pageNum']];
-                        break;
-                    case 'sex':
-                        $data['where'] = ['sex' => $where['pageNum']];
+                        $data['where'] = ['age' => $where['age']];
                         break;
                     default:
-                        $data['where'] = [];
+                        $data['where'][] = [$key => $val];
                         break;
                 }
             }
