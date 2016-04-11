@@ -40,7 +40,16 @@ class Base extends \yii\db\ActiveRecord{
 
 
     /**
-     *
+     *[
+        'type'=>1,
+        'name'=>['!=' =>'name'],
+        'id'=>['in'=>['1',2,3]],
+        'age'=>['>',12],
+        'age1'=>['<',12],
+        'age2'=>['>=',12],
+        'age3'=>['<=',12],
+        'age3'=>['between',[12,15]],
+        ];
      * @param $where Array
      * @return $where String
      */
