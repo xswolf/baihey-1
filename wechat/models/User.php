@@ -148,34 +148,62 @@ class User extends Base
      * 获取用户列表
      * @return array
      */
-    public function userList()
+    public function userList($where = [])
     {
+        // 查询条件处理
+        $where = $this->getUserListWhere($where, 3);
+        $offset = $where['offset'];
         $condition = [
             'i.city' => 1,
             'u.sex' => 0,
         ];
+        $condition = $this->processWhere($where['where']);
         $joinTable = \Yii::$app->getDb()->tablePrefix . $this->_user_information_table;
 
-        // 判断是否登录，登录则不显示自己的信息
-        if (Cookie::getInstance()->getCookie('bhy_u_name')) {
-
-            $result = (new Query())->select(['*'])
-                ->where($condition)
-                ->andWhere(['<>', "json_extract(info,'$.head_pic')", '未知'])
-                ->andWhere(['<>', "u.username", Cookie::getInstance()->getCookie('bhy_u_name')])
-                ->from(static::tableName() . ' u')
-                ->innerJoin($joinTable . ' i', "u.id=i.user_id")
-                ->all();
-        } else {
-
-            $result = (new Query())->select(['*'])
-                ->where($condition)
-                ->andWhere(['<>', "json_extract(info,'$.head_pic')", '未知'])
-                ->from(static::tableName() . ' u')
-                ->innerJoin($joinTable . ' i', "u.id=i.user_id")
-                ->all();
-        }
+        $result = (new Query())->select(['*'])
+            ->where($condition)
+            //->andWhere(['<>', "json_extract(info,'$.head_pic')", '未知'])
+            //->andWhere($where['where'])
+            ->from(static::tableName() . ' u')
+            ->innerJoin($joinTable . ' i', "u.id=i.user_id")
+            //->limit(3)
+            //->offset($offset)
+            ->all();
 
         return $result;
+    }
+
+    public function getUserListWhere($where, $pageSize = 10) {
+
+        if($where) {
+
+            foreach ($where as $key => $val) {
+
+                switch ($key) {
+                    case 'pageNum':
+                        $data['offset'] = ($where['pageNum'] - 1) * $pageSize;
+                        break;
+                    case 'id':
+                        $data['where'] = ['id' => $where['id']];
+                        break;
+                    case 'sex':
+                        $data['where'] = ['sex' => $where['sex']];
+                        break;
+                    case 'age':
+                        $data['where'] = ['age' => $where['pageNum']];
+                        break;
+                    case 'sex':
+                        $data['where'] = ['sex' => $where['pageNum']];
+                        break;
+                    case 'sex':
+                        $data['where'] = ['sex' => $where['pageNum']];
+                        break;
+                    default:
+                        $data['where'] = [];
+                        break;
+                }
+            }
+        }
+        return $data;
     }
 }

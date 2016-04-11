@@ -31,7 +31,7 @@ define(['app/module', 'app/directive/directiveApi'
         // 模拟延迟2秒展现页面
         $timeout(function () {
             $ionicLoading.hide();
-            api.list("site/user-list", {}).success(function (res) {
+            api.list("site/user-list", {'pageNum':2,'sex':1,'age':'18-22'}).success(function (res) {
                 $scope.items = res.data;
                 for (var i in $scope.items) {
                     $scope.items[i].info = JSON.parse($scope.items[i].info);
