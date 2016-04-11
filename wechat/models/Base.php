@@ -39,6 +39,25 @@ class Base extends \yii\db\ActiveRecord{
     }
 
 
+    /**
+     *
+     * @param $where Array
+     * @return $where String
+     */
+    public function processWhere($where){
+        $where = [
+               'type'=>1,
+               'name'=>['!=' =>'name'],
+                'id'=>['in'=>['1',2,3]],
+                'age'=>['>',12],
+                'age1'=>['<',12],
+                'age2'=>['>=',12],
+                'age3'=>['<=',12],
+                'age3'=>['between',[12,15]],
+              ];
+
+        return $where;
+    }
 
 
 }
