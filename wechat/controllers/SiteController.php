@@ -19,7 +19,7 @@ class SiteController extends BaseController
      */
     public function actionIndex()
     {
-        //return $this->render();
+        return $this->render();
     }
 
     /**
