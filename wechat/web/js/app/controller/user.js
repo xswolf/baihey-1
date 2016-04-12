@@ -3,7 +3,7 @@
  */
 
 define(['app/module', 'app/directive/directiveApi'
-    , 'app/service/serviceApi', 'comm'
+    , 'app/service/serviceApi'
 ], function (module) {
 
     // 注册

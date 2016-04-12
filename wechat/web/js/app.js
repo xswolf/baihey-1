@@ -24,8 +24,9 @@ require.config({
 });
 
 
-require(['angular',"app/controller/listController"],function(angular){
+require(['comm','angular',"app/controller/listController"],function(comm,angular){
     'use strict';
+
     angular.bootstrap(document,['webApp']);
 
 });
