@@ -71,9 +71,8 @@ class ChatController extends BaseController {
         $messageModel             = \wechat\models\Base::getInstance( "user_message" );
         $where['receive_user_id'] = $this->get['id'];
         $where['send_user_id']    = 2;//Cookie::getInstance()->getCookie( 'bhy_id' );
-        $where['or']              = $where;
+        $where['or']              = ['receive_user_id'=>2,'send_user_id'=>$this->get['id']];
 
-        print_r($where);
         $where                    = $messageModel->processWhere( $where );
         echo $where; exit;
         $list                     = $messageModel->Query()->where($where)->select('*')->all();

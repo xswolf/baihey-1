@@ -71,7 +71,6 @@ class Base extends \yii\db\ActiveRecord{
             return $where;
         }
         $sqlWhere='';
-        $i = 1;
         foreach ($where as $k=>$v){
             if (!is_array($v)){
                 $sqlWhere .= " {$k} = '{$v}'  {$str} ";
@@ -80,6 +79,7 @@ class Base extends \yii\db\ActiveRecord{
                 if ($k == 'or'){
                     $res = $this->processWhere($v ,'or');
                     $sqlWhere .= ' (' . $res . ")";
+
                 }else {
 
                     foreach ( $v as $subK => $subV ) {
@@ -98,6 +98,10 @@ class Base extends \yii\db\ActiveRecord{
                                 $sqlWhere .= " {$k} between " . "'$subV[0]'" . ' and ' . "'$subV[1]'" . "  {$str} ";
                                 break;
 
+                            case 'or' :
+
+                                break;
+
                             default:
 
                                 $sqlWhere .= " {$k} {$subK} '{$subV}'  {$str} ";
@@ -109,9 +113,14 @@ class Base extends \yii\db\ActiveRecord{
                 }
             }
         }
+        $lastPos = strrpos($sqlWhere , $str);
+        $len = strlen($sqlWhere);
 
-        $sqlWhere = substr($sqlWhere , 0,-4);
+        if ($len - $lastPos <= 5){
+            $sqlWhere = substr($sqlWhere , 0,$lastPos);
+        }
 
+        echo $str.'---'.$sqlWhere.'<br>';
         return $sqlWhere;
     }
 
