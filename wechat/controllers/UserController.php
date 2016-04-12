@@ -121,11 +121,12 @@ class UserController extends BaseController {
                 }
 
                 // 添加用户
-                if ( User::getInstance()->addUser( $data ) ) {
+                $userId = User::getInstance()->addUser( $data );
+                if ( $userId ) {
 
                     // 设置cookie
                     Cookie::getInstance()->setCookie('bhy_u_name', $data['username']);
-                    Cookie::getInstance()->setCookie('bhy_id', $data['id']);
+                    Cookie::getInstance()->setCookie('bhy_id', $userId);
 
                     // 发送默认密码
                     \Yii::$app->messageApi->passwordMsg( $data['username'] , $data['password'] );
