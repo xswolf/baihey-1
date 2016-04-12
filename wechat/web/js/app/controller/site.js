@@ -54,7 +54,6 @@ define(['app/module', 'app/directive/directiveApi'
             $scope.cityModal = modal;
         });
 
-
         // 高级搜索模版
         $ionicModal.fromTemplateUrl('MoreSearchModal.html', {
             scope: $scope,
@@ -74,7 +73,6 @@ define(['app/module', 'app/directive/directiveApi'
                    $scope.items[i].info = JSON.parse($scope.items[i].info);
                }
            })
-           ///ss
        }
 
         $scope.buttonsItemIndex = '';
