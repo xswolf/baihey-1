@@ -169,6 +169,7 @@ define(['app/module', 'app/directive/directiveApi'
 
         $scope.selected_city = function (city_id) {
             $scope.cityId = city_id;
+            $scope.searchForm.data.city = city_id;
         }
         $scope.provinces = [
             {
