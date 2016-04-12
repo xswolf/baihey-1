@@ -39,7 +39,11 @@ class User extends Base
             $log['type'] = 1;
             $log['time'] = $time;
             $this->userLog($log);
+
+            // 设置cookie
+            Cookie::getInstance()->setCookie('bhy_u_name', $user['username']);
             Cookie::getInstance()->setCookie('bhy_id', $user['id']);
+            setcookie('bhy_u_sex', $user['sex'], $time + 3600 * 24 * 30, '/wap');
             return $user;
         }
 
@@ -185,7 +189,7 @@ class User extends Base
 
             switch ($key) {
                 case 'sex':
-                    if(is_numeric($val)) {
+                    if (is_numeric($val)) {
                         $data['where']['sex'] = $val;
                     }
                     break;
@@ -216,7 +220,7 @@ class User extends Base
                     break;
 
                 default:
-                    $data['where']["json_extract(info,'$.".$key."')"] = $val;
+                    $data['where']["json_extract(info,'$." . $key . "')"] = $val;
                     break;
             }
         }

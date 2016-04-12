@@ -31,7 +31,7 @@ define(['app/module', 'app/directive/directiveApi'
 
         });
 
-            api.list("/wap/site/user-list", {'pageNum':2,'sex':1,'age':'18-22'}).success(function (res) {
+            api.list("/wap/site/user-list", {'pageNum':1,'sex':0,'age':'18-22'}).success(function (res) {
                 $scope.items = res.data;
                 for (var i in $scope.items) {
                     $scope.items[i].info = JSON.parse($scope.items[i].info);
