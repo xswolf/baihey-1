@@ -3,7 +3,7 @@
  */
 define(['app/module' , 'app/directive/directiveApi'
     , 'app/service/serviceApi', 'comm'
-], function (module , wx,chat) {
+], function (module) {
 
     module.controller("message.index", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$ionicModal', '$ionicActionSheet', '$ionicLoading', function (api, $scope, $timeout, $ionicPopup, $ionicModal, $ionicActionSheet, $ionicLoading) {
 
