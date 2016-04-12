@@ -41,6 +41,8 @@ return [
         ],
         'request' => [
             'baseUrl' => '/wap',
+            'csrfParam' => 'jrbhy',
+            "cookieValidationKey"=>"jrbhy*cnmkey"
 
         ],
         'view' => [
