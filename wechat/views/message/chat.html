@@ -8,8 +8,9 @@
             <button class="button button-icon" href="/wap/message">关注</button>
         </div>
     </ion-header>
-
+    <input type="hidden" ng-model="sendId" ng-init="sendId={!$id}">
     <ion-content class="bhy com_w_100 has-header has-footer chat" ng-init="scrollBot()">
+
             <ion-list>
                 <ion-item class="clearfix" ng-class="{true:'talk_item_u',false:'talk_item_m'}[sendId==vo.send_user_id]" ng-repeat="vo in historyList track by vo.id">
                     <div class="s_date">

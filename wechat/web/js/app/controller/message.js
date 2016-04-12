@@ -132,8 +132,8 @@ define(['app/module', 'app/directive/directiveApi'
 
 
         //  获取历史聊天数据
-        $scope.sendId = ar.getQueryString('id')
-        api.list("/wap/chat/message-history", {id: $scope.sendId}).success(function (data) {
+        $scope.receiveId = ar.getQueryString('id')
+        api.list("/wap/message/message-history", {id: $scope.receiveId}).success(function (data) {
             $scope.historyList = data;
 
         }).error(function () {
@@ -147,7 +147,7 @@ define(['app/module', 'app/directive/directiveApi'
             var config = api.wxConfig(wx, chat);
             config.success(function (data) {
                 wx.setConfig(data.config);
-                chat.init($scope.name);
+                chat.init($scope.sendId);
             })
 
 
@@ -156,7 +156,7 @@ define(['app/module', 'app/directive/directiveApi'
 
                 if ($scope.message == '' || $scope.message == null) return;
 
-                chat.sendMessage($scope.message, $scope.sendId, 'send');
+                chat.sendMessage($scope.message, $scope.receiveId, 'send');
 
             }
 

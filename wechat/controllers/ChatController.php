@@ -67,15 +67,5 @@ class ChatController extends BaseController {
         return $this->render();
     }
 
-    public function actionMessageHistory() {
-        $messageModel             = \wechat\models\Base::getInstance( "user_message" );
-        $where['receive_user_id'] = $this->get['id'];
-        $where['send_user_id']    = 2;//Cookie::getInstance()->getCookie( 'bhy_id' );
-//        $where['or']              = ['receive_user_id'=>2,'send_user_id'=>$this->get['id']];
 
-        $where                    = $messageModel->processWhere( $where );
-        $where                   .= "or receive_user_id=2 and send_user_id={$this->get['id']}";
-        $list                     = $messageModel->Query()->where($where)->select('*')->all();
-        $this->renderAjax($list);
-    }
 }
