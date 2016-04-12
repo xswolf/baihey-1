@@ -225,9 +225,9 @@ class ServerSocketController extends Controller {
             $key                       = 'all';
         } else {
             $ar['type'] = isset($g['type']) ? $g['type'] : 'send';
-            if ($g['nr'] == 'heartbeat') return '心跳包不管,直接返回';
-            $ar['nrong'] = $g['nr'];
-            if ( $ar['nrong'] == null ) {
+            if ($g['message'] == 'heartbeat') return '心跳包不管,直接返回';
+            $ar['message'] = $g['message'];
+            if ( $ar['message'] == null ) {
                 return;
             }
             $key = $g['key'];
@@ -265,7 +265,7 @@ class ServerSocketController extends Controller {
         } else {
             $str        = $this->code( json_encode( $ar ) );
             $key        = $this->getReceived( $key );
-//            socket_write( $this->users[ $k ]['socket'] , $str , strlen( $str ) );
+            socket_write( $this->users[ $k ]['socket'] , $str , strlen( $str ) );
             if ( $this->users[ $key ]['socket'] != null ) {
                 $this->e( $str . " messages is send\n" );
                 socket_write( $this->users[ $key ]['socket'] , $str , strlen( $str ) );
@@ -290,7 +290,7 @@ class ServerSocketController extends Controller {
     function send2( $k ) {
         $this->close( $k );
         $ar['type']  = 'remove';
-        $ar['nrong'] = $k;
+        $ar['message'] = $k;
         $this->send1( false , $ar , 'all' );
     }
 

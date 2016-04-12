@@ -1,9 +1,9 @@
 /**
  * Created by NSK. on 2016/4/5/0005.
  */
-define(['app/module', 'app/directive/directiveApi'
+define(['app/module', 'chat/wechatInterface','chat/chat' , 'app/directive/directiveApi'
     , 'app/service/serviceApi', 'comm'
-], function (module) {
+], function (module , wx,chat) {
 
     module.controller("message.index", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$ionicModal', '$ionicActionSheet', '$ionicLoading', function (api, $scope, $timeout, $ionicPopup, $ionicModal, $ionicActionSheet, $ionicLoading) {
 
@@ -90,8 +90,8 @@ define(['app/module', 'app/directive/directiveApi'
 
 
         //  获取历史聊天数据
-        $scope.selfId = ar.getQueryString('id')
-        api.list("/wap/chat/message-history",{id:$scope.selfId}).success(function (data) {
+        $scope.sendId = ar.getQueryString('id')
+        api.list("/wap/chat/message-history",{id:$scope.sendId}).success(function (data) {
             $scope.historyList = data;
 
         }).error(function () {
@@ -99,7 +99,7 @@ define(['app/module', 'app/directive/directiveApi'
         })
 
         // socket聊天
-        requirejs(['chat/wechatInterface','chat/chat'] , function (wx , chat) {
+        //requirejs(['chat/wechatInterface','chat/chat'] , function (wx , chat) {
 
             // 获取微信配置文件
             var config = api.wxConfig(wx , chat);
@@ -108,27 +108,29 @@ define(['app/module', 'app/directive/directiveApi'
                 chat.init($scope.name);
             })
 
-            $scope.chatContent = []
+
             // 发送消息
             $scope.send = function () {
+
                 if ($scope.message == '' || $scope.message == null) return;
-                $scope.chatContent.push({nrong:$scope.message ,isSelf:true});
-                chat.sendMessage($scope.message , $scope.sendName ,'send')
+
+                chat.sendMessage($scope.message , $scope.sendId ,'send')
             }
 
             // 消息响应回调函数
             chat.onMessageCallback = function (msg) {
                 var response = JSON.parse(msg.data);
-                response.isSelf = false; // 别人发来的消息
                 switch (response.type) {
                     case 'send':
-                        $scope.chatContent.push(response);
+                        console.log(response);
+                        response.id = $scope.historyList[$scope.historyList.length-1].id + 1;
+                        $scope.historyList.push(response);
                         break;
 
                 }
                 $scope.$apply();
             }
-        })
+        //})
 
     }]);
 })
