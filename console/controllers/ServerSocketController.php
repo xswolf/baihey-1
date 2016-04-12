@@ -25,7 +25,7 @@ class ServerSocketController extends Controller {
     private $ar = [ ];//加密key
     private $n = [ ];
 //    private $address = '120.76.84.162';
-    private $address = '127.0.0.1';
+    private $address = '192.168.0.112';
     private $port = 8080;
 
 

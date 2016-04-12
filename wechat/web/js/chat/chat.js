@@ -5,7 +5,7 @@
 define(function(){
     var chat = {
         //url : "ws://120.76.84.162:8080",
-        url : "ws://127.0.0.1:8080",
+        url : "ws://192.168.0.112:8080",
         name: '',
         esc : function esc(da) {
             if (da == null || da == '') return ;
