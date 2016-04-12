@@ -15,12 +15,12 @@
             _PageWidth = document.documentElement.clientWidth;
 
         // 计算loading框距离顶部和左部的距离（loading框的宽度为215px，高度为61px）
-        var _LoadingTop = _PageHeight > 32 ? (_PageHeight - 32) / 2 : 0,
+        var _LoadingTop = _PageHeight > 28 ? (_PageHeight - 28) / 2 : 0,
 
-            _LoadingLeft = _PageWidth > 32 ? (_PageWidth - 32) / 2 : 0;
+            _LoadingLeft = _PageWidth > 28 ? (_PageWidth - 28) / 2 : 0;
 
         // 在页面未加载完毕之前显示的loading Html自定义内容
-        var _LoadingHtml = '<div id="loadingDiv" style="position:absolute;left:0;width:100%;height:' + _PageHeight + 'px;top:0;background-color: rgba(255, 255, 255, 0.1);opacity:1;filter:alpha(opacity=100);z-index:10000;"><div style="position: absolute; cursor1: wait; left: ' + _LoadingLeft + 'px; top:' + _LoadingTop + 'px; width: auto; height: 32px;' +
+        var _LoadingHtml = '<div id="loadingDiv" style="position:absolute;left:0;width:100%;height:' + _PageHeight + 'px;top:0;background-color: rgba(255, 255, 255, 0.1);opacity:1;filter:alpha(opacity=100);z-index:10000;"><div style="position: absolute; cursor1: wait; left: ' + _LoadingLeft + 'px; top:' + _LoadingTop + 'px; width: auto; height: 28px;' +
             '"><img src="/wechat/web/images/pageLoading.gif"></div></div>';
 
 
