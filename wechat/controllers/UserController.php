@@ -90,6 +90,7 @@ class UserController extends BaseController {
         if(!isset($_COOKIE["bhy_u_name"]) && isset($user) && isset($user['username'])) {
 
             Cookie::getInstance()->setCookie('bhy_u_name' , $user['username']);
+            Cookie::getInstance()->setCookie('bhy_id' , $user['id']);
 
         }
         return $this->render();

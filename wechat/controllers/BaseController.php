@@ -24,8 +24,8 @@ class BaseController extends Controller {
     public $title;
 
     public function init() {
-        $this->get = \Yii::$app->request->get();
-        $this->post = \Yii::$app->request->post();
+        $this->get   = \Yii::$app->request->get();
+        $this->post  = \Yii::$app->request->post();
         $this->title = '嘉瑞百合缘';
         parent::init();
     }
@@ -36,7 +36,10 @@ class BaseController extends Controller {
      */
     public function isLogin() {
 
-        if(Cookie::getInstance()->getCookie('bhy_u_name')) { return true;}
+        if ( Cookie::getInstance()->getCookie( 'bhy_u_name' ) ) {
+            return true;
+        }
+
         return false;
     }
 
@@ -114,19 +117,21 @@ class BaseController extends Controller {
             return false;
         }
         $memberInfo = \Yii::$app->wechat->getMemberByCode( $code ); // 从微信获取用户
-//        $memberInfo['openid'] = 'oEQpts_MMapxllPTfwRw0VfGeLSg'; // 测试
+        //        $memberInfo['openid'] = 'oEQpts_MMapxllPTfwRw0VfGeLSg'; // 测试
         $data = [
             'wx_id'      => $memberInfo['openid'] ,
             'username'   => $memberInfo['openid'] ,
             'password'   => 'wx_xx' ,
-            'login_type' => 3,
+            'login_type' => 3 ,
             'sex'        => $memberInfo['sex']
         ];
 
         $user = User::getInstance()->findOne( [ 'wx_id' => $data['wx_id'] ] );
         if ( ! $user ) { // 用户不存在，写入数据
             User::getInstance()->addUser( $data );
-            $user = $data;
+            $userId     = User::getInstance()->getDb()->lastInsertID;
+            $data['id'] = $userId;
+            $user       = $data;
         }
 
         return $user;

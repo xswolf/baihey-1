@@ -10,15 +10,13 @@ namespace wechat\controllers;
 
 
 
+use common\util\Cookie;
+use Faker\Provider\Base;
+
 class ChatController extends BaseController{
 
     public function actionIndex(){
-        /*\Yii::$app->wechat->aotures();
 
-        $redis = \Yii::$app->redis;
-
-        echo $redis->get('name');
-        $redis->set('k','v');*/
         return $this->render();
     }
 
@@ -62,5 +60,12 @@ class ChatController extends BaseController{
     public function actionFocus(){
 
         return $this->render();
+    }
+
+    public function actionMessageHistory(){
+        $userModel = \wechat\models\Base::getInstance("user_message");
+        $where['receive_user_id'] = $this->get[1];
+        $where['send_user_id'] = Cookie::getInstance()->getCookie('');
+        $userModel->processWhere();
     }
 }

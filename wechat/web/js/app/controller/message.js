@@ -70,6 +70,9 @@ define(['app/module', 'app/directive/directiveApi'
 
         }
 
+        $scope.chatHref = function (id) {
+            window.location.href = '/wap/message/chat?id='+ id;
+        }
 
     }]);
 
@@ -85,5 +88,6 @@ define(['app/module', 'app/directive/directiveApi'
             $ionicScrollDelegate.scrollBottom(true);
         }
 
+        api.list("")
     }]);
 })
