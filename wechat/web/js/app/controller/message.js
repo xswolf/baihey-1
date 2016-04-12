@@ -77,7 +77,7 @@ define(['app/module', 'app/directive/directiveApi'
     }]);
 
 
-    module.controller("message.chat", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$ionicModal', '$ionicActionSheet', '$ionicLoading', '$ionicScrollDelegate','$location', function (api, $scope, $timeout, $ionicPopup, $ionicModal, $ionicActionSheet, $ionicLoading, $ionicScrollDelegate,$location) {
+    module.controller("message.chat", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$ionicModal', '$ionicActionSheet', '$ionicLoading', '$ionicScrollDelegate', function (api, $scope, $timeout, $ionicPopup, $ionicModal, $ionicActionSheet, $ionicLoading, $ionicScrollDelegate) {
 
         $scope.multi = false;
         $scope.showMulti = function () {
@@ -89,11 +89,46 @@ define(['app/module', 'app/directive/directiveApi'
         }
 
 
-
-        api.list("/wap/chat/message-history",{id:ar.getQueryString('id')}).success(function (data) {
+        //  获取历史聊天数据
+        $scope.selfId = ar.getQueryString('id')
+        api.list("/wap/chat/message-history",{id:$scope.selfId}).success(function (data) {
+            $scope.historyList = data;
 
         }).error(function () {
             console.log('页面message.js出现错误，代码：/wap/chat/message-history')
         })
+
+        // socket聊天
+        requirejs(['chat/wechatInterface','chat/chat'] , function (wx , chat) {
+
+            // 获取微信配置文件
+            var config = api.wxConfig(wx , chat);
+            config.success(function (data) {
+                wx.setConfig(data.config);
+                chat.init($scope.name);
+            })
+
+            $scope.chatContent = []
+            // 发送消息
+            $scope.send = function () {
+                if ($scope.message == '' || $scope.message == null) return;
+                $scope.chatContent.push({nrong:$scope.message ,isSelf:true});
+                chat.sendMessage($scope.message , $scope.sendName ,'send')
+            }
+
+            // 消息响应回调函数
+            chat.onMessageCallback = function (msg) {
+                var response = JSON.parse(msg.data);
+                response.isSelf = false; // 别人发来的消息
+                switch (response.type) {
+                    case 'send':
+                        $scope.chatContent.push(response);
+                        break;
+
+                }
+                $scope.$apply();
+            }
+        })
+
     }]);
 })

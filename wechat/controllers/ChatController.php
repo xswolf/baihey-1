@@ -71,11 +71,11 @@ class ChatController extends BaseController {
         $messageModel             = \wechat\models\Base::getInstance( "user_message" );
         $where['receive_user_id'] = $this->get['id'];
         $where['send_user_id']    = 2;//Cookie::getInstance()->getCookie( 'bhy_id' );
-        $where['or']              = ['receive_user_id'=>2,'send_user_id'=>$this->get['id']];
+//        $where['or']              = ['receive_user_id'=>2,'send_user_id'=>$this->get['id']];
 
         $where                    = $messageModel->processWhere( $where );
-        echo $where; exit;
+        $where                   .= "or receive_user_id=2 and send_user_id={$this->get['id']}";
         $list                     = $messageModel->Query()->where($where)->select('*')->all();
-        var_dump($list);
+        $this->renderAjax($list);
     }
 }
