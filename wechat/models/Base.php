@@ -120,7 +120,6 @@ class Base extends \yii\db\ActiveRecord{
             $sqlWhere = substr($sqlWhere , 0,$lastPos);
         }
 
-        echo $str.'---'.$sqlWhere.'<br>';
         return $sqlWhere;
     }
 
