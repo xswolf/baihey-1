@@ -2,11 +2,11 @@
  * Created by Administrator on 2016/3/29.
  */
 require.config({
-    urlArgs: "bust=v3"+Math.random(), // 清除缓存
+    //urlArgs: "bust=v3"+Math.random(), // 清除缓存
     baseUrl: '/wechat/web/js/',
     paths: {
         jquery: 'plugin/jquery/jquery',
-        angular: 'plugin/ionic/ionic.bundle.min',
+        angular: '//cdn.bootcss.com/ionic/1.2.4/js/ionic.bundle.min',
         ionic:'plugin/ionic/ionic.min',
         bootstrap:'plugin/bootstrap/bootstrap.min',
         amezeui: 'plugin/amezeui/amazeui.min',
