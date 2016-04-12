@@ -9,63 +9,74 @@
 namespace wechat\controllers;
 
 
-
 use common\util\Cookie;
 use Faker\Provider\Base;
 
-class ChatController extends BaseController{
+class ChatController extends BaseController {
 
-    public function actionIndex(){
+    public function actionIndex() {
 
         return $this->render();
     }
 
-    public function actionChat(){
-        $config = str_replace("\"" , "'" , json_encode(\Yii::$app->wechat->jsApiConfig([],false)));
-        $config = addslashes($config);
-        $this->assign('config' , $config);
-        return $this->render(['name' => \Yii::$app->request->get('name') ,
-                              'sendName'=>\Yii::$app->request->get('sendName')] , '');
+    public function actionChat() {
+        $config = str_replace( "\"" , "'" , json_encode( \Yii::$app->wechat->jsApiConfig( [ ] , false ) ) );
+        $config = addslashes( $config );
+        $this->assign( 'config' , $config );
+
+        return $this->render( [
+            'name'     => \Yii::$app->request->get( 'name' ) ,
+            'sendName' => \Yii::$app->request->get( 'sendName' )
+        ] , '' );
     }
 
-    public function actionConfig(){
-        $config = str_replace("\"" , "'" , json_encode(\Yii::$app->wechat->jsApiConfig([],false)));
-        $this->assign('config' , $config);
+    public function actionConfig() {
+        $config = str_replace( "\"" , "'" , json_encode( \Yii::$app->wechat->jsApiConfig( [ ] , false ) ) );
+        $this->assign( 'config' , $config );
 
         $this->renderAjax();
     }
 
 
-    public function actionRecord(){
+    public function actionRecord() {
 
-        $this->assign('config' , json_encode(\Yii::$app->wechat->jsApiConfig([],false)));
-        return $this->render();
-    }
-
-    public function actionList(){
+        $this->assign( 'config' , json_encode( \Yii::$app->wechat->jsApiConfig( [ ] , false ) ) );
 
         return $this->render();
     }
 
-    public function actionAngular(){
-        $this->assign('str','nsk');
+    public function actionList() {
+
         return $this->render();
     }
 
-    public function actionMeizi(){
+    public function actionAngular() {
+        $this->assign( 'str' , 'nsk' );
+
+        return $this->render();
+    }
+
+    public function actionMeizi() {
         $this->layout = false;
-        return $this->render();
-    }
-
-    public function actionFocus(){
 
         return $this->render();
     }
 
-    public function actionMessageHistory(){
-        $userModel = \wechat\models\Base::getInstance("user_message");
-        $where['receive_user_id'] = $this->get[1];
-        $where['send_user_id'] = Cookie::getInstance()->getCookie('');
-        $userModel->processWhere();
+    public function actionFocus() {
+
+        return $this->render();
+    }
+
+    public function actionMessageHistory() {
+        $messageModel             = \wechat\models\Base::getInstance( "user_message" );
+        $where['receive_user_id'] = $this->get['id'];
+        $where['send_user_id']    = 2;//Cookie::getInstance()->getCookie( 'bhy_id' );
+        $where['or']              = $where;
+
+        print_r($where);
+        $where                    = $messageModel->processWhere( $where );
+        echo $where; exit;
+        $list                     = $messageModel->Query()->where($where)->select('*')->all();
+        var_dump($list);
     }
 }

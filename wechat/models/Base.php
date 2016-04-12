@@ -9,6 +9,8 @@
 namespace wechat\models;
 
 
+use yii\db\Query;
+
 class Base extends \yii\db\ActiveRecord{
 
     static $instance;
@@ -111,6 +113,10 @@ class Base extends \yii\db\ActiveRecord{
         $sqlWhere = substr($sqlWhere , 0,-4);
 
         return $sqlWhere;
+    }
+
+    public function Query(){
+        return (new Query())->from(\Yii::$app->db->tablePrefix.self::$_table);
     }
 
 
