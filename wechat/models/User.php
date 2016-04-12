@@ -39,6 +39,7 @@ class User extends Base
             $log['type'] = 1;
             $log['time'] = $time;
             $this->userLog($log);
+            Cookie::getInstance()->setCookie('bhy_id',$user['id']);
             return $user;
         }
 

@@ -125,6 +125,7 @@ class UserController extends BaseController {
 
                     // 设置cookie
                     Cookie::getInstance()->setCookie('bhy_u_name', $data['username']);
+                    Cookie::getInstance()->setCookie('bhy_id', $data['id']);
 
                     // 发送默认密码
                     \Yii::$app->messageApi->passwordMsg( $data['username'] , $data['password'] );
