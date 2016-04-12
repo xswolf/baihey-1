@@ -8,8 +8,6 @@ define(['app/module', 'app/directive/directiveApi'
     module.controller("message.index", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$ionicModal', '$ionicActionSheet', '$ionicLoading', function (api, $scope, $timeout, $ionicPopup, $ionicModal, $ionicActionSheet, $ionicLoading) {
 
 
-
-
         // 获取页面数据
         $scope.items = [
             {
@@ -102,7 +100,8 @@ define(['app/module', 'app/directive/directiveApi'
 
                 if ($scope.message == '' || $scope.message == null) return;
 
-                chat.sendMessage($scope.message, $scope.sendId, 'send')
+                chat.sendMessage($scope.message, $scope.sendId, 'send');
+
             }
 
             // 消息响应回调函数
@@ -111,11 +110,15 @@ define(['app/module', 'app/directive/directiveApi'
                 switch (response.type) {
                     case 'send':
                         console.log(response);
-                        response.id = $scope.historyList[$scope.historyList.length - 1].id + 1;
+                        if($scope.historyList.length == 0){
+                            response.id = 1
+                        }else {
+                            response.id = $scope.historyList[$scope.historyList.length - 1].id + 1;
+                        }
                         $scope.historyList.push(response);
                         break;
-
                 }
+                $scope.scrollBot(); // 滚动至底部
                 $scope.$apply();
             }
         })
