@@ -39,7 +39,7 @@ class User extends Base
             $log['type'] = 1;
             $log['time'] = $time;
             $this->userLog($log);
-            Cookie::getInstance()->setCookie('bhy_id',$user['id']);
+            Cookie::getInstance()->setCookie('bhy_id', $user['id']);
             return $user;
         }
 
@@ -151,48 +151,112 @@ class User extends Base
      */
     public function userList($where = [])
     {
+        $pageSize = 3;
         // 查询条件处理
-        $where = $this->getUserListWhere($where, 3);
+        $where = $this->getUserListWhere($where, $pageSize);
         $offset = $where['offset'];
-        $condition = [
-            'i.city' => 1,
-            'u.sex' => 0,
-        ];
+
         $condition = $this->processWhere($where['where']);
         $joinTable = \Yii::$app->getDb()->tablePrefix . $this->_user_information_table;
 
         $result = (new Query())->select(['*'])
             ->where($condition)
-            //->andWhere(['<>', "json_extract(info,'$.head_pic')", '未知'])
-            //->andWhere($where['where'])
             ->from(static::tableName() . ' u')
             ->innerJoin($joinTable . ' i', "u.id=i.user_id")
-            //->limit(3)
-            //->offset($offset)
-            ->all();
+            ->limit($pageSize)
+            ->offset($offset);
 
+        //echo $result->createCommand()->getRawSql();
+        $result = $result->all();
         return $result;
     }
 
-    public function getUserListWhere($where, $pageSize = 10) {
+    /**
+     * 获取userlist条件
+     * @param $where
+     * @param int $pageSize
+     * @return mixed
+     */
+    public function getUserListWhere($where, $pageSize = 10)
+    {
+        $where['pageNum'] = isset($where['pageNum']) ? $where['pageNum'] : 1;
 
-        if($where) {
+        foreach ($where as $key => $val) {
 
-            foreach ($where as $key => $val) {
+            switch ($key) {
+                case 'sex':
+                    if(is_numeric($val)) {
+                        $data['where']['sex'] = $val;
+                    }
+                    break;
 
-                switch ($key) {
-                    case 'pageNum':
-                        $data['offset'] = ($val - 1) * $pageSize;
-                        break;
-                    case 'age':
-                        $data['where'] = ['age' => $where['age']];
-                        break;
-                    default:
-                        $data['where'][] = [$key => $val];
-                        break;
-                }
+                case 'pageNum':
+                    $data['offset'] = ($val - 1) * $pageSize;
+                    break;
+
+                case 'age':
+                    if (is_numeric($val)) {
+                        $age = $this->getTimestampByAge($val);
+                        $data['where']["json_extract(info,'$.age')"] = ['>=', $age];
+                    } else {
+
+                        $age = explode('-', $val);
+                        $age1 = $this->getTimestampByAge($age[0]);
+                        $age2 = $this->getTimestampByAge($age[1]);
+                        $data['where']["json_extract(info,'$.age')"] = ['between' => [$age2, $age1]];
+                    }
+                    break;
+
+                case 'height':
+                    $data['where']["json_extract(info,'$.height')"] = $this->getRangeWhere($val);
+                    break;
+
+                case 'year_income':
+                    $data['where']["json_extract(info,'$.year_income')"] = $this->getRangeWhere($val);
+                    break;
+
+                default:
+                    $data['where']["json_extract(info,'$.".$key."')"] = $val;
+                    break;
             }
         }
+        $data['where']["json_extract(info,'$.head_pic')"] = ['!=' => '未知'];
+
         return $data;
+    }
+
+    /**
+     * 获取年龄生日时间戳
+     * @param $age
+     * @return int
+     */
+    public function getTimestampByAge($age)
+    {
+
+        $time = time();
+        $year = date('Y', $time) - $age;
+        $date = date('-m-d');
+        $ageTimestamp = strtotime($year . $date);
+        //$date = date('Y-m-d',$ageTimestamp);
+        return $ageTimestamp;
+    }
+
+    /**
+     * 获得范围条件
+     * @param $name
+     * @param $data
+     * @return array
+     */
+    public function getRangeWhere($data)
+    {
+        if (is_numeric($data)) {
+
+            $where = ['>=', $data];
+        } else {
+
+            $data = explode('-', $data);
+            $where = ['between' => [$data[0], $data[1]]];
+        }
+        return $where;
     }
 }
