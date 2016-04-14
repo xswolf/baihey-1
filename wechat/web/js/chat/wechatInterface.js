@@ -13,7 +13,7 @@ define(['chat/jweixin','chat/chat'] , function (wx,chat) {
         });
 
         wx.error(function(res){
-
+            console.log('发生错误，wechatInterface.js' , res)
         })
     }
 
@@ -50,6 +50,7 @@ define(['chat/jweixin','chat/chat'] , function (wx,chat) {
     wx.send_pic = function(sendId,toUser){
         var localId = null;
         var serverId = null; // 图片服务端ID
+        console.log(wx)
         wx.chooseImage({
             count: 1, // 默认9
             sizeType: ['original', 'compressed'], // 可以指定是原图还是压缩图，默认二者都有
@@ -68,6 +69,12 @@ define(['chat/jweixin','chat/chat'] , function (wx,chat) {
                 } else {
                     alert('没有图片Id');
                 }
+            },
+            complete : function () {
+                console.log('什么情况')
+            },
+            fail : function () {
+                console.log('发送错误了')
             }
         });
 
