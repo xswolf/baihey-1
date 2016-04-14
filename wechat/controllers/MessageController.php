@@ -1,5 +1,6 @@
 <?php
 namespace wechat\controllers;
+use common\models\Message;
 use yii\web\Cookie;
 
 
@@ -35,14 +36,8 @@ class MessageController extends BaseController
      * 获取聊天消息
      */
     public function actionMessageHistory() {
-        $sendId                   = \common\util\Cookie::getInstance()->getCookie( 'bhy_id' );
-        $messageModel             = \wechat\models\Base::getInstance( "user_message" );
-        $where['receive_user_id'] = $this->get['id'];
-        $where['send_user_id']    = $sendId;
-
-        $where                    = $messageModel->processWhere( $where );
-        $where                   .= "or receive_user_id={$sendId} and send_user_id={$this->get['id']}";
-        $list                     = $messageModel->Query()->where($where)->select('*')->all();
+        $sendId  = \common\util\Cookie::getInstance()->getCookie( 'bhy_id' );
+        $list    = Message::getInstance()->getMessageHistory($sendId , $this->get['id']);
         $this->renderAjax($list);
     }
 

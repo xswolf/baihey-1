@@ -2,7 +2,7 @@
  * Created by NSK. on 2016/4/5/0005.
  */
 define(['app/module', 'app/directive/directiveApi'
-    , 'app/service/serviceApi'
+    , 'app/service/serviceApi', 'app/filter/filterApi'
 ], function (module) {
 
     module.controller("site.index", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$ionicModal', '$ionicActionSheet', '$ionicLoading', function (api, $scope, $timeout, $ionicPopup, $ionicModal, $ionicActionSheet, $ionicLoading) {
@@ -31,12 +31,18 @@ define(['app/module', 'app/directive/directiveApi'
 
         });
 
-            api.list("/wap/site/user-list", {'pageNum':1,'sex':0,'age':'18-22'}).success(function (res) {
-                $scope.items = res.data;
-                for (var i in $scope.items) {
-                    $scope.items[i].info = JSON.parse($scope.items[i].info);
-                }
-            })
+        // 默认查询条件处理（性别处理）
+        if(ar.getCookie('bhy_u_sex') && (ar.getCookie('bhy_u_sex') == 0)) {
+            $scope.searchForm.data.sex = 1;
+        } else {
+            $scope.searchForm.data.sex = 0;
+        }
+        api.list("/wap/site/user-list", {'sex':$scope.searchForm.data.sex, 'age':'18-22'}).success(function (res) {
+            $scope.items = res.data;
+            for (var i in $scope.items) {
+                $scope.items[i].info = JSON.parse($scope.items[i].info);
+            }
+        })
 
 
         // 选择城市模版
@@ -108,7 +114,7 @@ define(['app/module', 'app/directive/directiveApi'
                     }
 
                     if (index == 2) {   //只看女
-                        $scope.searchForm.data.sex =1;
+                        $scope.searchForm.data.sex =0;
                         user = api.list("/wap/site/user-list", $scope.searchForm.data);
                     }
 
@@ -127,8 +133,10 @@ define(['app/module', 'app/directive/directiveApi'
                             okType: 'button-energized',
                             inputPlaceholder: '请输入对方ID号'
                         }).then(function (res) {
-                            $scope.searchForm.data.id=res;
-                            user = api.list("/wap/site/user-list", $scope.searchForm.data);
+                            api.list("/wap/site/user-list", {'id':res}).success(function (res) {
+                                $scope.items = res.data;
+                                $scope.items[0].info = JSON.parse($scope.items[0].info);
+                            })
                         });
                     }
                     if( user != undefined){

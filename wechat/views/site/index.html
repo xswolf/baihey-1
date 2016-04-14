@@ -37,7 +37,7 @@
                         <div class="row pl0">
                             <div class="col">
                                 <span class="fwb fs14">{{item.info.real_name}}</span>
-                                <span ng-if="item.info.age != '未知'" class="cor19 fs12">{{item.info.age}}岁</span> <span ng-if="item.info.height != '未知'"
+                                <span ng-if="item.info.age != '未知'" class="cor19 fs12">{{item.info.age | timeToAge}}岁</span> <span ng-if="item.info.height != '未知'"
                                     class="cor19 fs12">{{item.info.height}}cm</span>
                                 <span ng-if="item.info.is_marriage != '未知'" class="cor19 fs12">{{item.info.is_marriage}}</span>
                             </div>

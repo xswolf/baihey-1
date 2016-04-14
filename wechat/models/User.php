@@ -10,7 +10,7 @@ use yii\db\Query;
  * Date: 2016/3/10
  * Time: 10:21
  */
-class User extends Base
+class User extends \common\models\Base
 {
 
     protected $user;
@@ -141,7 +141,7 @@ class User extends Base
     public function userLog($log)
     {
 
-        $userLog = Base::getInstance('user_log');
+        $userLog = \common\models\Base::getInstance('user_log');
         $userLog->user_id = $log['user_id'];
         $userLog->type = $log['type'];
         $userLog->time = $log['time'];
@@ -185,45 +185,53 @@ class User extends Base
     {
         $where['pageNum'] = isset($where['pageNum']) ? $where['pageNum'] : 1;
 
-        foreach ($where as $key => $val) {
+        if (isset($where['id']) && is_numeric($where['id'])) {
 
-            switch ($key) {
-                case 'sex':
-                    if (is_numeric($val)) {
-                        $data['where']['sex'] = $val;
-                    }
-                    break;
+            $data['offset'] = ($where['pageNum'] - 1) * $pageSize;
+            $data['where']['id'] = $where['id'];
+        } else {
 
-                case 'pageNum':
-                    $data['offset'] = ($val - 1) * $pageSize;
-                    break;
+            foreach ($where as $key => $val) {
 
-                case 'age':
-                    if (is_numeric($val)) {
-                        $age = $this->getTimestampByAge($val);
-                        $data['where']["json_extract(info,'$.age')"] = ['>=', $age];
-                    } else {
+                switch ($key) {
+                    case 'sex':
+                        if (is_numeric($val)) {
+                            $data['where']['sex'] = $val;
+                        }
+                        break;
 
-                        $age = explode('-', $val);
-                        $age1 = $this->getTimestampByAge($age[0]);
-                        $age2 = $this->getTimestampByAge($age[1]);
-                        $data['where']["json_extract(info,'$.age')"] = ['between' => [$age2, $age1]];
-                    }
-                    break;
+                    case 'pageNum':
+                        $data['offset'] = ($val - 1) * $pageSize;
+                        break;
 
-                case 'height':
-                    $data['where']["json_extract(info,'$.height')"] = $this->getRangeWhere($val);
-                    break;
+                    case 'age':
+                        if (is_numeric($val)) {
+                            $age = $this->getTimestampByAge($val);
+                            $data['where']["json_extract(info,'$.age')"] = ['>=', $age];
+                        } else {
 
-                case 'year_income':
-                    $data['where']["json_extract(info,'$.year_income')"] = $this->getRangeWhere($val);
-                    break;
+                            $age = explode('-', $val);
+                            $age1 = $this->getTimestampByAge($age[0]);
+                            $age2 = $this->getTimestampByAge($age[1]);
+                            $data['where']["json_extract(info,'$.age')"] = ['between' => [$age2, $age1]];
+                        }
+                        break;
 
-                default:
-                    $data['where']["json_extract(info,'$." . $key . "')"] = $val;
-                    break;
+                    case 'height':
+                        $data['where']["json_extract(info,'$.height')"] = $this->getRangeWhere($val);
+                        break;
+
+                    case 'year_income':
+                        $data['where']["json_extract(info,'$.year_income')"] = $this->getRangeWhere($val);
+                        break;
+
+                    default:
+                        $data['where']["json_extract(info,'$." . $key . "')"] = $val;
+                        break;
+                }
             }
         }
+        $data['where']['is_show'] = 1;
         $data['where']["json_extract(info,'$.head_pic')"] = ['!=' => '未知'];
 
         return $data;
@@ -247,7 +255,6 @@ class User extends Base
 
     /**
      * 获得范围条件
-     * @param $name
      * @param $data
      * @return array
      */

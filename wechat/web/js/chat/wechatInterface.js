@@ -1,8 +1,8 @@
 /**
  * Created by Administrator on 2016/3/23.
  */
-//define(['http://res.wx.qq.com/open/js/jweixin-1.0.0.js','chat/chat'] , function (wx,chat) {
-define(['chat/jweixin','chat/chat'] , function (wx,chat) {
+define(['http://res.wx.qq.com/open/js/jweixin-1.0.0.js','chat/chat'] , function (wx,chat) {
+//define(['chat/jweixin','chat/chat'] , function (wx,chat) {
     // 微信接口调用
     wx.setConfig = function ($config) {
 
@@ -13,7 +13,7 @@ define(['chat/jweixin','chat/chat'] , function (wx,chat) {
         });
 
         wx.error(function(res){
-
+            console.log('发生错误，wechatInterface.js' , res)
         })
     }
 
@@ -47,7 +47,7 @@ define(['chat/jweixin','chat/chat'] , function (wx,chat) {
      * 发送图片
      * @param toUser
      */
-    wx.send_pic = function(toUser){
+    wx.send_pic = function(sendId,toUser){
         var localId = null;
         var serverId = null; // 图片服务端ID
         wx.chooseImage({
@@ -62,27 +62,18 @@ define(['chat/jweixin','chat/chat'] , function (wx,chat) {
                         isShowProgressTips: 1, // 默认为1，显示进度提示
                         success: function (res) {
                             serverId = res.serverId; // 返回图片的服务器端ID
-                            chat.sendMessage(serverId, toUser,'pic')
-                            /*wx.downloadImage({
-                                serverId: serverId, // 需要下载的图片的服务器端ID，由uploadImage接口获得
-                                isShowProgressTips: 1, // 默认为1，显示进度提示
-                                success: function (res) {
-                                    var localId = res.localId; // 返回图片下载后的本地ID
-                                    if(localId != null) {
-                                        wx.previewImage({
-                                            current: localId, // 当前显示图片的http链接
-                                            urls: [localId] // 需要预览的图片http链接列表
-                                        });
-                                    } else {
-                                        alert('没有图片url');
-                                    }
-                                }
-                            });*/
+                            chat.sendMessage(serverId,sendId, toUser, 'pic');
                         }
                     });
                 } else {
                     alert('没有图片Id');
                 }
+            },
+            complete : function () {
+                console.log('什么情况')
+            },
+            fail : function () {
+                console.log('发送错误了')
             }
         });
 

@@ -15,9 +15,9 @@ define(function(){
         socket : null
     };
 
-    chat.sendMessage = function (message,toUser,type){
+    chat.sendMessage = function (message,sendId,toUser,type){
         if (message == null || message == '' || message == undefined) return;
-        this.socket.send('&message=' + chat.esc(message) + '&key='+toUser+'&type='+type);
+        this.socket.send('&message=' + chat.esc(message) + '&receiveId='+toUser+'&type='+type+'&sendId='+sendId);
     }
 
     // 初始化
