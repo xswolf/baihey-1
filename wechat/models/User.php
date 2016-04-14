@@ -141,7 +141,7 @@ class User extends \common\models\Base
     public function userLog($log)
     {
 
-        $userLog = Base::getInstance('user_log');
+        $userLog = \common\models\Base::getInstance('user_log');
         $userLog->user_id = $log['user_id'];
         $userLog->type = $log['type'];
         $userLog->time = $log['time'];
