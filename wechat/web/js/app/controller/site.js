@@ -133,8 +133,10 @@ define(['app/module', 'app/directive/directiveApi'
                             okType: 'button-energized',
                             inputPlaceholder: '请输入对方ID号'
                         }).then(function (res) {
-                            $scope.searchForm.data.id=res;
-                            user = api.list("/wap/site/user-list", $scope.searchForm.data);
+                            api.list("/wap/site/user-list", {'id':res}).success(function (res) {
+                                $scope.items = res.data;
+                                $scope.items[0].info = JSON.parse($scope.items[0].info);
+                            })
                         });
                     }
                     if( user != undefined){
