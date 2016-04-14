@@ -47,6 +47,6 @@ class Message extends Base {
         $this->message         = $messageContent;
         $this->message_type    = $type;
         $this->time            = time();
-        return $this->save(false);
+        return $this->insert(false);
     }
 }
