@@ -156,7 +156,7 @@ define(['app/module', 'app/directive/directiveApi'
 
                 if ($scope.message == '' || $scope.message == null) return;
 
-                chat.sendMessage($scope.message, $scope.receiveId, 'send');
+                chat.sendMessage($scope.message,$scope.sendId, $scope.receiveId, 'send');
 
             }
 

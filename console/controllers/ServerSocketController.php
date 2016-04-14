@@ -10,6 +10,7 @@ namespace console\controllers;
 
 error_reporting( E_ERROR );
 
+use common\models\Message;
 use yii\console\Controller;
 
 class ServerSocketController extends Controller {
@@ -230,7 +231,8 @@ class ServerSocketController extends Controller {
             if ( $ar['message'] == null ) {
                 return;
             }
-            $key = $g['key'];
+            $ar['sendId'] = $g['sendId'];
+            $key = $g['receiveId'];
         }
         $this->send1( $k , $ar , $key );
     }
@@ -263,15 +265,29 @@ class ServerSocketController extends Controller {
                 socket_write( $v['socket'] , $str , strlen( $str ) );
             }
         } else {
-            $str        = $this->code( json_encode( $ar ) );
-            $key        = $this->getReceived( $key );
-            socket_write( $this->users[ $k ]['socket'] , $str , strlen( $str ) );
-            if ( $this->users[ $key ]['socket'] != null ) {
-                $this->e( $str . " messages is send\n" );
-                socket_write( $this->users[ $key ]['socket'] , $str , strlen( $str ) );
-            } else {
-                $this->e( $str . " user no exsit\n" ); // 这里直接写数据库
+
+            if ($ar['type'] ==  'send'){
+                $type = 1;
             }
+            // 写入数据库
+            if(Message::getInstance()->add($ar['sendId'],$ar['sendName'] , $ar['message'] , $type)){
+                $ar['send_user_id'] = $ar['sendId'];
+                $str        = $this->code( json_encode( $ar ) );
+                $key_code        = $this->getReceived( $key );
+                socket_write( $this->users[ $k ]['socket'] , $str , strlen( $str ) );
+                if ( $this->users[ $key_code ]['socket'] != null ) {
+                    $this->e( $str . " messages is send\n" );
+                    socket_write( $this->users[ $key_code ]['socket'] , $str , strlen( $str ) );
+                } else {
+                    $this->e( $str . " user is not online\n" ); // 这里直接写数据库
+                }
+            }else{
+                $ar['type'] = 'error'; // 发送错误
+                $str        = $this->code( json_encode( $ar ) );
+                socket_write( $this->users[ $k ]['socket'] , $str , strlen( $str ) );
+            }
+
+
         }
     }
 

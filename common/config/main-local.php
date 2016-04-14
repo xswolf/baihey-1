@@ -1,14 +1,14 @@
 <?php
 return [
     'components' => [
-        'db' => [
-            'class' => 'yii\db\Connection',
-            'dsn' => 'mysql:host=localhost;dbname=jm',
-            'username' => 'root',
-            'password' => '',
-            'charset' => 'utf8',
-            'tablePrefix' => 'bhy_',   //加入前缀名称fc_
-        ],
+//        'db' => [
+//            'class' => 'yii\db\Connection',
+//            'dsn' => 'mysql:host=localhost;dbname=jm',
+//            'username' => 'root',
+//            'password' => '',
+//            'charset' => 'utf8',
+//            'tablePrefix' => 'bhy_',   //加入前缀名称fc_
+//        ],
         'mailer' => [
             'class' => 'yii\swiftmailer\Mailer',
             'viewPath' => '@common/mail',

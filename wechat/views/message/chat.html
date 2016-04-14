@@ -12,7 +12,7 @@
     <ion-content class="bhy com_w_100 has-header has-footer chat" ng-init="scrollBot()">
 
             <ion-list>
-                <ion-item class="clearfix" ng-class="{true:'talk_item_u',false:'talk_item_m'}[sendId==vo.send_user_id]" ng-repeat="vo in historyList track by vo.id">
+                <ion-item class="clearfix" ng-class="{true:'talk_item_m',false:'talk_item_u'}[sendId==vo.send_user_id]" ng-repeat="vo in historyList track by vo.id">
                     <div class="s_date">
                         <p class="line" ng-if="$index%5==0">{{vo.time*1000|date:'yyyy-MM-dd:HH:mm:ss'}}</p>
                     </div>
