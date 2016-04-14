@@ -144,9 +144,11 @@ define(['app/module', 'app/directive/directiveApi'
         requirejs(['chat/wechatInterface', 'chat/chat'], function (wx, chat) {
 
             // 获取微信配置文件
-            var config = api.wxConfig(wx, chat);
+            var config = api.wxConfig();
+
             config.success(function (data) {
-                wx.setConfig(data.config);
+
+                wx.setConfig(JSON.parse(data.config));
                 chat.init($scope.sendId);
             })
 

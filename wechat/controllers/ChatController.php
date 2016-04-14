@@ -31,7 +31,8 @@ class ChatController extends BaseController {
     }
 
     public function actionConfig() {
-        $config = str_replace( "\"" , "'" , json_encode( \Yii::$app->wechat->jsApiConfig( [ ] , true ) ) );
+//        $config = str_replace( "\"" , "'" , json_encode( \Yii::$app->wechat->jsApiConfig( [ ] , true ) ) );
+        $config = json_encode( \Yii::$app->wechat->jsApiConfig( [ ] , true ) );
         $this->assign( 'config' , $config );
 
         $this->renderAjax();

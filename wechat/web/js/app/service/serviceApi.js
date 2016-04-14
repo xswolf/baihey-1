@@ -79,7 +79,7 @@ define(['app/module'], function (module,config) {
          * @param wx
          * @returns {*}
          */
-        api.wxConfig = function (wx) {
+        api.wxConfig = function () {
             return $http.get('../chat/config');
         }
 
