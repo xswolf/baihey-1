@@ -50,7 +50,6 @@ define(['http://res.wx.qq.com/open/js/jweixin-1.0.0.js','chat/chat'] , function 
     wx.send_pic = function(sendId,toUser){
         var localId = null;
         var serverId = null; // 图片服务端ID
-        console.log(wx)
         wx.chooseImage({
             count: 1, // 默认9
             sizeType: ['original', 'compressed'], // 可以指定是原图还是压缩图，默认二者都有
