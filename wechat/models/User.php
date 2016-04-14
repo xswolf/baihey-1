@@ -231,6 +231,7 @@ class User extends \common\models\Base
                 }
             }
         }
+        $data['where']['is_show'] = 1;
         $data['where']["json_extract(info,'$.head_pic')"] = ['!=' => '未知'];
 
         return $data;
@@ -254,7 +255,6 @@ class User extends \common\models\Base
 
     /**
      * 获得范围条件
-     * @param $name
      * @param $data
      * @return array
      */
