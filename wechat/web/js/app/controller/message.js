@@ -150,8 +150,12 @@ define(['app/module', 'app/directive/directiveApi'
                 chat.init($scope.sendId);
             })
 
+            // 发送图片调用接口
+            $scope.send_pic = function () {
+                wx.send_pic($scope.sendId , $scope.receiveId);
+            }
 
-            // 发送消息
+            // 发送文本消息调用接口
             $scope.send = function () {
 
                 if ($scope.message == '' || $scope.message == null) return;

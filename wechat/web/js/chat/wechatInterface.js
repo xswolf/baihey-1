@@ -47,7 +47,7 @@ define(['chat/jweixin','chat/chat'] , function (wx,chat) {
      * 发送图片
      * @param toUser
      */
-    wx.send_pic = function(toUser){
+    wx.send_pic = function(sendId,toUser){
         var localId = null;
         var serverId = null; // 图片服务端ID
         wx.chooseImage({
@@ -62,7 +62,7 @@ define(['chat/jweixin','chat/chat'] , function (wx,chat) {
                         isShowProgressTips: 1, // 默认为1，显示进度提示
                         success: function (res) {
                             serverId = res.serverId; // 返回图片的服务器端ID
-                            chat.sendMessage(serverId, toUser,'pic')
+                            chat.sendMessage(serverId,sendId, toUser, 'pic');
                             /*wx.downloadImage({
                                 serverId: serverId, // 需要下载的图片的服务器端ID，由uploadImage接口获得
                                 isShowProgressTips: 1, // 默认为1，显示进度提示
