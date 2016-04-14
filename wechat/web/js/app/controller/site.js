@@ -31,12 +31,18 @@ define(['app/module', 'app/directive/directiveApi'
 
         });
 
-            api.list("/wap/site/user-list", {'pageNum':1,'sex':0,'age':'18-22'}).success(function (res) {
-                $scope.items = res.data;
-                for (var i in $scope.items) {
-                    $scope.items[i].info = JSON.parse($scope.items[i].info);
-                }
-            })
+        // 默认查询条件处理（性别处理）
+        if(ar.getCookie('bhy_u_sex') && (ar.getCookie('bhy_u_sex') == 0)) {
+            $scope.searchForm.data.sex = 1;
+        } else {
+            $scope.searchForm.data.sex = 0;
+        }
+        api.list("/wap/site/user-list", {'sex':$scope.searchForm.data.sex, 'age':'18-22'}).success(function (res) {
+            $scope.items = res.data;
+            for (var i in $scope.items) {
+                $scope.items[i].info = JSON.parse($scope.items[i].info);
+            }
+        })
 
 
         // 选择城市模版
@@ -108,7 +114,7 @@ define(['app/module', 'app/directive/directiveApi'
                     }
 
                     if (index == 2) {   //只看女
-                        $scope.searchForm.data.sex =1;
+                        $scope.searchForm.data.sex =0;
                         user = api.list("/wap/site/user-list", $scope.searchForm.data);
                     }
 
