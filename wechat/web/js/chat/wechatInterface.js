@@ -63,21 +63,6 @@ define(['chat/jweixin','chat/chat'] , function (wx,chat) {
                         success: function (res) {
                             serverId = res.serverId; // 返回图片的服务器端ID
                             chat.sendMessage(serverId,sendId, toUser, 'pic');
-                            /*wx.downloadImage({
-                                serverId: serverId, // 需要下载的图片的服务器端ID，由uploadImage接口获得
-                                isShowProgressTips: 1, // 默认为1，显示进度提示
-                                success: function (res) {
-                                    var localId = res.localId; // 返回图片下载后的本地ID
-                                    if(localId != null) {
-                                        wx.previewImage({
-                                            current: localId, // 当前显示图片的http链接
-                                            urls: [localId] // 需要预览的图片http链接列表
-                                        });
-                                    } else {
-                                        alert('没有图片url');
-                                    }
-                                }
-                            });*/
                         }
                     });
                 } else {

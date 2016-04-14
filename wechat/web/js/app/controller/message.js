@@ -146,7 +146,6 @@ define(['app/module', 'app/directive/directiveApi'
             // 获取微信配置文件
             var config = api.wxConfig(wx, chat);
             config.success(function (data) {
-                console.log(data.config)
                 wx.setConfig(data.config);
                 chat.init($scope.sendId);
             })
