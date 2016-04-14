@@ -146,12 +146,14 @@ define(['app/module', 'app/directive/directiveApi'
             // 获取微信配置文件
             var config = api.wxConfig(wx, chat);
             config.success(function (data) {
+                console.log(data.config)
                 wx.setConfig(data.config);
                 chat.init($scope.sendId);
             })
 
             // 发送图片调用接口
             $scope.send_pic = function () {
+                console.log('调起发送接口')
                 wx.send_pic($scope.sendId , $scope.receiveId);
             }
 
