@@ -30,8 +30,8 @@ var ar = {
     },
 
     'getCookie': function (name) {
-        var arr,reg=new RegExp("(^| )"+name+"=([^;]*)(;|$)");
-        if(arr=document.cookie.match(reg))
+        var arr, reg = new RegExp("(^| )" + name + "=([^;]*)(;|$)");
+        if (arr = document.cookie.match(reg))
             return unescape(arr[2]);
         else
             return null;
@@ -69,11 +69,13 @@ var ar = {
         return reg.test(pass);
     },
 
-    //获取URL参数
-    getQueryString : function (name) {
-        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
-        var r = window.location.search.substr(1).match(reg);
-        if (r != null) return unescape(r[2]); return null;
+    'validateMoney': function (money) {
+        if (/^\d+(\.\d{2})?$/.test(money)){
+            return true;
+        }else {
+            return false;
+        }
+
     }
 
 };

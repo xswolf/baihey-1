@@ -119,6 +119,7 @@ define(['app/module', 'app/directive/directiveApi'
     }]);
 
 
+
     module.controller("message.chat", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$ionicModal', '$ionicActionSheet', '$ionicLoading', '$ionicScrollDelegate', function (api, $scope, $timeout, $ionicPopup, $ionicModal, $ionicActionSheet, $ionicLoading, $ionicScrollDelegate) {
 
         $scope.multi = false;
@@ -129,6 +130,15 @@ define(['app/module', 'app/directive/directiveApi'
         $scope.scrollBot = function () {
             $ionicScrollDelegate.scrollBottom(true);
         }
+
+        // 红包
+        $ionicModal.fromTemplateUrl('briberyModal.html', {
+            scope: $scope,
+            animation: 'slide-in-up'
+        }).then(function (modal) {
+            $scope.briberyModal = modal;
+        });
+
 
 
         //  获取历史聊天数据
@@ -166,9 +176,9 @@ define(['app/module', 'app/directive/directiveApi'
                 switch (response.type) {
                     case 'send':
                         console.log(response);
-                        if($scope.historyList.length == 0){
+                        if ($scope.historyList.length == 0) {
                             response.id = 1
-                        }else {
+                        } else {
                             response.id = $scope.historyList[$scope.historyList.length - 1].id + 1;
                         }
                         $scope.historyList.push(response);
@@ -180,4 +190,28 @@ define(['app/module', 'app/directive/directiveApi'
         })
 
     }]);
+
+    module.controller("message.childBriberyController", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$ionicModal',  function (api, $scope, $timeout, $ionicPopup, $ionicModal) {
+
+            $scope.validateMoney = function(){
+               /* if($scope.money > 200){
+                    alert('大于200');
+                    return;
+                }
+                if($scope.money < 0){
+                    alert('小于0');
+                    return;
+                }*/
+
+                if(ar.validateMoney($scope.money)){
+                    console.log('true');
+                }else {
+                    $scope.money = 0;
+                    console.log('false');
+                }
+
+            }
+
+    }]);
+
 })

@@ -25,7 +25,7 @@ class MessageController extends BaseController
     {
         //$this->layout = false;
         if (!$this->isLogin()){
-            $this->redirect("/wap/user/login");
+//            $this->redirect("/wap/user/login");
         }
         $this->assign('id' , \common\util\Cookie::getInstance()->getCookie('bhy_id'));
         return $this->render();
