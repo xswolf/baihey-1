@@ -123,7 +123,7 @@ class BaseController extends Controller {
             'username'   => $memberInfo['openid'] ,
             'password'   => 'wx_xx' ,
             'login_type' => 3 ,
-            'sex'        => ($memberInfo['sex'] == 2) ? 1 : 0
+            'sex'        => ($memberInfo['sex'] == 2) ? 0 : 1
         ];
 
         $user = User::getInstance()->findOne( [ 'wx_id' => $data['wx_id'] ] );
