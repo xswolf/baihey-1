@@ -70,8 +70,8 @@ var ar = {
     },
 
     'validateMoney': function (money) {
-        if (/^\d+(\.\d{2})?$/.test(money)){
-            return true;
+        if (/^\d+(\.\d{1,3})?$/.test(money)){
+           return true;
         }else {
             return false;
         }

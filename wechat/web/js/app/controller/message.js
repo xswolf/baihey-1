@@ -119,7 +119,6 @@ define(['app/module', 'app/directive/directiveApi'
     }]);
 
 
-
     module.controller("message.chat", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$ionicModal', '$ionicActionSheet', '$ionicLoading', '$ionicScrollDelegate', function (api, $scope, $timeout, $ionicPopup, $ionicModal, $ionicActionSheet, $ionicLoading, $ionicScrollDelegate) {
 
         $scope.multi = false;
@@ -137,9 +136,14 @@ define(['app/module', 'app/directive/directiveApi'
             animation: 'slide-in-up'
         }).then(function (modal) {
             $scope.briberyModal = modal;
+            $scope.briPageHide = function(){
+                modal.hide();
+            }
         });
 
-
+        $scope.briPageHide = function(){
+            briberyModal.hide();
+        }
 
         //  获取历史聊天数据
         $scope.receiveId = ar.getQueryString('id')
@@ -165,7 +169,7 @@ define(['app/module', 'app/directive/directiveApi'
             // 发送图片调用接口
             $scope.send_pic = function () {
                 console.log('调起发送接口')
-                wx.send_pic($scope.sendId , $scope.receiveId);
+                wx.send_pic($scope.sendId, $scope.receiveId);
             }
 
             // 发送文本消息调用接口
@@ -173,7 +177,7 @@ define(['app/module', 'app/directive/directiveApi'
 
                 if ($scope.message == '' || $scope.message == null) return;
 
-                chat.sendMessage($scope.message,$scope.sendId, $scope.receiveId, 'send');
+                chat.sendMessage($scope.message, $scope.sendId, $scope.receiveId, 'send');
 
             }
 
@@ -198,26 +202,37 @@ define(['app/module', 'app/directive/directiveApi'
 
     }]);
 
-    module.controller("message.childBriberyController", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$ionicModal',  function (api, $scope, $timeout, $ionicPopup, $ionicModal) {
+    module.controller("message.childBriberyController", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$ionicModal', function (api, $scope, $timeout, $ionicPopup, $ionicModal) {
 
-            $scope.validateMoney = function(){
-               /* if($scope.money > 200){
-                    alert('大于200');
-                    return;
+        $scope.btnStatus = true;
+        $scope.money = 0;
+        $scope.valMoney = function (money) {
+            if (ar.validateMoney(money)) {
+                $scope.money = money;
+                if ( money > 200) {
+                    $scope.btnStatus = true;
+                } else {
+                    $scope.btnStatus = false;
                 }
-                if($scope.money < 0){
-                    alert('小于0');
-                    return;
-                }*/
-
-                if(ar.validateMoney($scope.money)){
-                    console.log('true');
-                }else {
-                    $scope.money = 0;
-                    console.log('false');
-                }
-
+            } else {
+                $scope.money = 0;
+                $scope.btnStatus = true;
             }
+        }
+
+        // 发红包
+        $scope.bri_submit = function(){
+            if($scope.money == 0){
+                $ionicPopup.alert({title: '红包金额不合法'});
+                return false;
+            }
+
+            api.save(url,$scope.money).success(function(res){
+
+                //成功，隐藏窗口
+                $scope.briPageHide();
+            });
+        }
 
     }]);
 

@@ -155,22 +155,21 @@
             <a href="javascript:;" ng-click="briberyModal.hide()" class="button button-icon ">关闭</a>
             <title class="title">发红包</title>
         </ion-header-bar>
-        <ion-content class="bribery">
+        <ion-content class="bribery has-header">
             <div class="list">
-                    <label class="item item-input" ng-init="money=0.00">
+                    <label class="item item-input">
                         <span class="input-label">红包金额</span>
-                        <!--<input type="text" placeholder="请填写金额" class="tar bri_money_input" ng-model="money" onkeyup="value = ar.validateMoney(this.value)">-->
-                        <input type="text" placeholder="请填写金额" class="tar bri_money_input" ng-model="money" ng-keyup="validateMoney()">
+                        <input type="number" placeholder="请填写金额" class="tar bri_money_input" ng-model="input_money" ng-keyup="valMoney(this.input_money)">
                         <a class="button button-icon">元</a>
                     </label>
                     <label class="item item-input item-stacked-label">
                         <span class="input-label">留言</span>
                         <input type="text" placeholder="恭喜发财"></label>
                     <label class="item tac">
-                        <span class="bri_money">{{money | currency:"￥"}}</span>
+                        <span class="bri_money">{{money | currency:'￥'}}</span>
                     </label>
                     <div class="item tac">
-                        <input type="button" class="button button-block button-assertive" value="塞钱进红包">
+                        <input type="button" class="button button-block" ng-class="{true:'bri_dsbd',false:'button-assertive'}[btnStatus]" ng-disabled="btnStatus" value="塞钱进红包" ng-click="bri_submit()">
                     </div>
             </div>
         </ion-content>
