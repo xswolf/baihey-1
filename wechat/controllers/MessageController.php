@@ -24,10 +24,12 @@ class MessageController extends BaseController
 
     public function actionChat()
     {
-        //$this->layout = false;
         if (!$this->isLogin()){
 //            $this->redirect("/wap/user/login");
         }
+
+        $config = str_replace( "\"" , "'" , json_encode( \Yii::$app->wechat->jsApiConfig( [ ] , true ) ) );
+        $this->assign( 'config' , $config );
         $this->assign('id' , \common\util\Cookie::getInstance()->getCookie('bhy_id'));
         return $this->render();
     }
