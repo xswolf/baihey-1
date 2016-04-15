@@ -179,6 +179,27 @@
     text-align: center;
 }
 
+.chat .r_warning{
+    background-color: rgba(0,0,0,0.2);
+    text-align: center;
+    max-width: 320px;
+    margin: 0 auto;
+    padding: 5px;
+    margin-bottom: 15px;
+}
+.chat .r_warning p{
+    color: #fff;
+    font-size: 12px;
+    overflow: hidden;
+    text-overflow: clip;
+    white-space: normal;
+}
+.chat .r_warning p .warning_ico{
+    margin-right: 5px;
+    vertical-align: top;
+}
+
+
 .ok_btn, .ok_btn:hover {
     color: #33cd5f;
     cursor: pointer;
@@ -192,12 +213,23 @@
     font-size: 32px;
     line-height: 38px;
     vertical-align: top;
-    padding: 0 2px;
+    padding-left: 3px;
+    padding-right: 2px;
     min-width: initial;
     min-height: 38px;
     z-index: 1;
 }
 
+.txt_btn, .txt_btn:hover, .txt_btn:before {
+    font-size: 32px;
+    line-height: 38px;
+    vertical-align: top;
+    padding-left: 1px;
+    padding-right: 0;
+    min-width: initial;
+    min-height: 38px;
+    z-index: 1;
+}
 .multi_btn, .multi_btn:before, .multi_btn:hover {
     color: #387ef5;
     font-size: 32px;
@@ -209,7 +241,7 @@
     min-height: 38px;
 }
 
-.talk_txt {
+.talk_txt,.talk_voice {
     position: absolute;
     text-align: center;
     padding: 0 11% 0 12%;
@@ -218,12 +250,13 @@
 }
 .talk_txt p{
     display: inline-block;
-    left: 18.5%;
+    left: 19.5%;
     line-height: 1.2em;
     padding: 1%;
     position: absolute;
     text-align: left;
-    width: 64%;
+    width: 60%;
+    margin: 0;
 }
 .input_area {
     border-bottom: 1px solid #ddd !important;
@@ -232,6 +265,25 @@
     width: 100%;
     border-radius: 0;
 }
+
+.talk_voice{
+
+}
+.talk_voice p{
+    margin: 0;
+    padding: 0 2% 0 12%;
+}
+.talk_voice p .talk_voice_btn{
+    background-color: #f9f9f9;
+    border: 1px solid #ccc;
+    margin: 0;
+    max-width: 89%;
+}
+.talk_voice p .talk_voice_btn:active{
+    background-color: #bbb;
+}
+
+
 
 .send_btn {
     min-width: 44px !important;

@@ -13,7 +13,37 @@
     <ion-content class="bhy com_w_100 has-header has-footer chat" ng-init="scrollBot()">
 
         <ion-list>
+            <!-- 固定item -->
             <ion-item class="talk_item_u">
+                <div class="talk_user">
+                    <img src="/wechat/web/images/test.jpg" alt="">
+                </div>
+                <div class="talk_r">
+                    <div class="talk_con clearfix">
+                        <div class="content normal">
+                            <p>个性签名个性签名 | 现在我们已经成为好友，可以开始聊天了！</p>
+                        </div>
+                    </div>
+                </div>
+            </ion-item>
+            <!-- 固定item/ -->
+            <ion-item class="talk_item_m">
+
+                <div class="talk_user">
+                    <img src="/wechat/web/images/test.jpg" alt="">
+                </div>
+                <div class="talk_r">
+                    <div class="talk_con clearfix">
+                        <div class="content normal">
+                            <p>个性签名个性签名 | 现在我们已经成为好友，可以开始聊天了！</p>
+                        </div>
+                    </div>
+                </div>
+            </ion-item>
+            <ion-item class="talk_item_m">
+                <div class="r_warning" ng-if="u_novalidate">
+                    <p><i class="ion-alert-circled assertive fs14 warning_ico"></i>王先生 | 会员123456 您好，对方还未在本站验证身份，需谨慎交流！</p>
+                </div>
                 <div class="talk_user">
                     <img src="/wechat/web/images/test.jpg" alt="">
                 </div>
@@ -142,21 +172,25 @@
 
     <div class="msg_footer bhy com_w_100">
         <div class="common">
-            <button class="button button-icon ion-ios-mic-outline voice_btn fl"></button>
+            <button class="button button-icon fl" ng-class="{'voice':'ion-ios-keypad-outline txt_btn','txt':'ion-ios-mic-outline voice_btn'}[talk_type]" ng-click="changeType()"></button>
             <button class="button button-icon ion-plus-circled positive multi_btn fl" ng-click="showMulti()"></button>
-            <div class="talk_txt">
+            <div class="talk_txt" ng-show="talk_type=='txt'">
                 <p>
                     <input type="text" ng-model="message" class="input_area">
                 </p>
             </div>
-
+            <div class="talk_voice" ng-show="talk_type=='voice'">
+                <p>
+                    <input type="button"  class="button button-block button-light talk_voice_btn" value="按住说话">
+                </p>
+            </div>
             <button class="button button-balanced send_btn fr" ng-click="send()">发送</button>
         </div>
         <div class="multi_con pr" ng-show="multi">
             <ul>
                 <li><img src="/wechat/web/images/picture.jpg" ng-click="send_pic()"></li>
                 <li><img src="/wechat/web/images/bribery.jpg" ng-click="briberyModal.show()"></li>
-                <li><img src="/wechat/web/images/gift.jpg" ng-click=""></li>
+                <!--<li><img src="/wechat/web/images/gift.jpg" ng-click=""></li>-->
             </ul>
         </div>
     </div>

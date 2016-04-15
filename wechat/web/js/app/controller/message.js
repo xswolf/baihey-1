@@ -99,7 +99,6 @@ define(['app/module', 'app/directive/directiveApi'
 
         $scope.isFollow = true;   // 是否有谁关注了我，有则显示小红点
 
-
         // 联系人pop窗口
         $scope.popShow = false;
         $scope.pop_toggle = function () {
@@ -130,6 +129,16 @@ define(['app/module', 'app/directive/directiveApi'
             $ionicScrollDelegate.scrollBottom(true);
         }
 
+        $scope.talk_type = 'voice';
+
+        $scope.changeType = function(){
+            if($scope.talk_type == 'voice'){
+                $scope.talk_type = 'txt';
+            }else{
+                $scope.talk_type = 'voice';
+            }
+        }
+
         // 是否已关注对方， 已关注则不显示关注按钮。
         $scope.u_isFollow = true;
 
@@ -145,6 +154,9 @@ define(['app/module', 'app/directive/directiveApi'
 
             });
         }
+
+        // 显示警示语，根据对方是否验证身份证。
+        $scope.u_novalidate = true;
 
         // 红包
         $ionicModal.fromTemplateUrl('briberyModal.html', {
