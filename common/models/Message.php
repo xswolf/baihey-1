@@ -40,6 +40,16 @@ class Message extends Base {
     }
 
 
+    /**
+     * 添加聊天消息
+     * @param $sendId
+     * @param $receiveId
+     * @param $messageContent
+     * @param int $type
+     *
+     * @return bool
+     * @throws \Exception
+     */
     public function add( $sendId,$receiveId , $messageContent , $type = 1 ) {
         $this->send_user_id    = $sendId;
         $this->receive_user_id = $receiveId;
