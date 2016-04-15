@@ -9,7 +9,6 @@
 namespace common\models;
 
 
-use common\util\Cookie;
 
 class Message extends Base {
 
@@ -47,6 +46,10 @@ class Message extends Base {
         $this->message         = $messageContent;
         $this->message_type    = $type;
         $this->time            = time();
-        return $this->insert(false);
+
+        echo $this->send_user_id."\n===".$this->receive_user_id ."\n===". $this->message ."\n===". $type ."\n===";
+
+
+        return $this->insert(true);
     }
 }

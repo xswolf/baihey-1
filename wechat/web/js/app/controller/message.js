@@ -199,7 +199,7 @@ define(['app/module', 'app/directive/directiveApi'
             chat.onMessageCallback = function (msg) {
                 var response = JSON.parse(msg.data);
 
-                if ($scope.historyList.length == 0) { // 判断是否有聊天内容设置ID
+                if ($scope.historyList == undefined || $scope.historyList.length == 0) { // 判断是否有聊天内容设置ID
                     response.id = 1
                 } else {
                     response.id = $scope.historyList[$scope.historyList.length - 1].id + 1;

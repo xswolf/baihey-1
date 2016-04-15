@@ -270,7 +270,8 @@ class ServerSocketController extends Controller {
                 $type = 1;
             }
             // 写入数据库
-            if(Message::getInstance()->add($ar['sendId'],$ar['sendName'] , $ar['message'] , $type)){
+
+            if((new Message())->add($ar['sendId'],$ar['sendName'] , $ar['message'] , $type)){
                 $ar['send_user_id'] = $ar['sendId'];
                 $str        = $this->code( json_encode( $ar ) );
                 $key_code        = $this->getReceived( $key );
