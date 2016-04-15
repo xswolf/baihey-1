@@ -181,7 +181,7 @@
             </div>
             <div class="talk_voice" ng-show="talk_type=='voice'">
                 <p>
-                    <input type="button"  class="button button-block button-light talk_voice_btn" value="按住说话">
+                    <input type="button"  class="button button-block button-light talk_voice_btn" value="按住说话" on-touch="start_record()" on-release="send_record()">
                 </p>
             </div>
             <button class="button button-balanced send_btn fr" ng-click="send()">发送</button>
