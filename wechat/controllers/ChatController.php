@@ -68,17 +68,17 @@ class ChatController extends BaseController {
 
         $result1 = (new Query())->select(['*'])
                                ->from("bhy_area")
-                               ->where(['parentId'=>0])
+                               ->where("LENGTH(relation) - LENGTH(REPLACE(relation,',',''))  = 1 ")
                                ->all();
 
         $result2 = (new Query())->select(['*'])
                                ->from("bhy_area")
-                               ->where(['parentId'=>0])
+                               ->where("LENGTH(relation) - LENGTH(REPLACE(relation,',',''))  = 2 ")
                                ->all();
 
-        file_put_contents('area.js' , "var provines = ".json_encode($result).";");
-        file_put_contents('area.js' , "var provines = ".json_encode($result1).";");
-        file_put_contents('area.js' , "var provines = ".json_encode($result2).";");
+        file_put_contents('city.js' , "var provines = ".json_encode($result).";", FILE_APPEND);
+        file_put_contents('city.js' , "var city = ".json_encode($result1).";" , FILE_APPEND);
+        file_put_contents('area.js' , "var area = ".json_encode($result2).";", FILE_APPEND);
 
     }
 
