@@ -18,7 +18,11 @@ define(['app/module', 'app/directive/directiveApi'
 
         // 微信接口，获取用户地理位置。 如果用户拒绝提供位置，则默认重庆
         $scope.cityName = '重庆';
-
+        $scope.cityId = 2
+        $scope.$on('cityName',function(event,data) {
+            $scope.cityName = data.name;
+            $scope.cityId = data.id;
+        });
 
         $scope.searchForm = {
             data: {}
@@ -42,7 +46,10 @@ define(['app/module', 'app/directive/directiveApi'
         } else {
             $scope.searchForm.data.sex = 0;
         }
-        api.list("/wap/site/user-list", {'sex': $scope.searchForm.data.sex, 'age': '18-22'}).success(function (res) {
+        // 地区处理
+        $scope.searchForm.data.city = $scope.cityId;
+
+        api.list("/wap/site/user-list", {'city': $scope.searchForm.data.city,'sex': $scope.searchForm.data.sex, 'age': '18-22'}).success(function (res) {
             $scope.items = res.data;
             for (var i in $scope.items) {
                 $scope.items[i].info = JSON.parse($scope.items[i].info);
@@ -193,12 +200,14 @@ define(['app/module', 'app/directive/directiveApi'
         $scope.citySave = function () {
 
             for (var i = 0; i < $scope.citys.length; i++) {
-                if(citys[i].id = $scope.cityId){
-                    $scope.cityName = citys[i].name;
+                if($scope.citys[i].id == $scope.cityId){
+                    $scope.modalCityName = $scope.citys[i].name;
+                    $scope.$emit('cityName',$scope.citys[i]);
                     continue;
                 }
             }
 
+            $scope.cityModal.hide();
         }
 
         $scope.provinces = [
