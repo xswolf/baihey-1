@@ -66,7 +66,10 @@
                 <div class="talk_r">
                     <div class="talk_con clearfix">
                         <div class="content normal">
-                            <p>{{vo.message}}</p>
+                            <p ng-if="vo.type=='send'">{{vo.message}}</p>
+                            <p ng-if="vo.type=='pic'">{{vo.message}}</p>
+                            <p ng-if="vo.type=='record'">{{vo.message}}</p>
+                            <p ng-if="vo.type=='xxx'">{{vo.message}}</p>
                         </div>
                     </div>
                 </div>
