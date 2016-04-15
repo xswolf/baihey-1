@@ -194,6 +194,12 @@ class User extends \common\models\Base
             foreach ($where as $key => $val) {
 
                 switch ($key) {
+                    case 'city':
+                        if (is_numeric($val)) {
+                            $data['where']['city'] = $val;
+                        }
+                        break;
+
                     case 'sex':
                         if (is_numeric($val)) {
                             $data['where']['sex'] = $val;
