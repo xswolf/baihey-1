@@ -21,7 +21,7 @@ define(['http://res.wx.qq.com/open/js/jweixin-1.0.0.js','chat/chat'] , function 
      * 发送语音
      * @param toUser
      */
-    wx.send_record = function (toUser) {
+    wx.send_record = function (sendId , toUser) {
         var localId = null;
         var serverId = null; // 音频服务端ID
         wx.stopRecord({
@@ -32,7 +32,7 @@ define(['http://res.wx.qq.com/open/js/jweixin-1.0.0.js','chat/chat'] , function 
                             localId: localId, // 需要上传的音频的本地ID，由stopRecord接口获得
                             success: function (res) {
                                 serverId = res.serverId; // 返回音频的服务器端ID
-                                chat.sendMessage(serverId , toUser ,'record')
+                                chat.sendMessage(serverId,sendId, toUser ,'record')
                             }
                         });
                     }else{

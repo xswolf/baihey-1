@@ -186,6 +186,10 @@ define(['app/module', 'app/directive/directiveApi'
                 wx.send_pic($scope.sendId, $scope.receiveId);
             }
 
+            $scope.send_record = function () {
+                wx.send_record($scope.sendId, $scope.receiveId);
+            }
+
             // 发送文本消息调用接口
             $scope.send = function () {
 
