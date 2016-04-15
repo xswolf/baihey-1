@@ -157,18 +157,15 @@ define(['app/module', 'app/directive/directiveApi'
         // socket聊天
         requirejs(['chat/wechatInterface', 'chat/chat'], function (wx, chat) {
 
-            // 获取微信配置文件
-            //var config = api.wxConfig();
-            //
-            //config.success(function (data) {
-
-            console.log($scope.wx_config);
+            // 配置微信
             wx.setConfig($scope.wx_config);
+
+            // 初始化聊天
             chat.init($scope.sendId);
-            //})
 
             // 发送图片调用接口
             $scope.send_pic = function () {
+
                 console.log('调起发送接口')
                 wx.send_pic($scope.sendId, $scope.receiveId);
             }
@@ -185,14 +182,21 @@ define(['app/module', 'app/directive/directiveApi'
             // 消息响应回调函数
             chat.onMessageCallback = function (msg) {
                 var response = JSON.parse(msg.data);
+
+                if ($scope.historyList.length == 0) { // 判断是否有聊天内容设置ID
+                    response.id = 1
+                } else {
+                    response.id = $scope.historyList[$scope.historyList.length - 1].id + 1;
+                }
+
                 switch (response.type) {
-                    case 'send':
-                        console.log(response);
-                        if ($scope.historyList.length == 0) {
-                            response.id = 1
-                        } else {
-                            response.id = $scope.historyList[$scope.historyList.length - 1].id + 1;
-                        }
+                    case 'send': // 文字
+
+                        $scope.historyList.push(response);
+                        break;
+
+                    case 'pic': // 图片
+
                         $scope.historyList.push(response);
                         break;
                 }
