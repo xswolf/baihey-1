@@ -199,6 +199,11 @@ define(['app/module', 'app/directive/directiveApi'
 
                         $scope.historyList.push(response);
                         break;
+
+                    case 'record': // 录音
+
+                        $scope.historyList.push(response);
+                        break;
                 }
                 $scope.scrollBot(); // 滚动至底部
                 $scope.$apply();
