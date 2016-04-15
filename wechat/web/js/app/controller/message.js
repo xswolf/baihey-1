@@ -179,7 +179,7 @@ define(['app/module', 'app/directive/directiveApi'
             $scope.historyList = data;
 
         }).error(function () {
-            console.log('页面message.js出现错误，代码：/wap/chat/message-history')
+            console.log('页面message.js出现错误，代码：/wap/chat/message-history');
         })
 
         // socket聊天
@@ -193,7 +193,6 @@ define(['app/module', 'app/directive/directiveApi'
 
             // 发送图片调用接口
             $scope.send_pic = function () {
-
                 console.log('调起发送接口')
                 wx.send_pic($scope.sendId, $scope.receiveId);
             }
@@ -205,6 +204,7 @@ define(['app/module', 'app/directive/directiveApi'
 
             // 结束录音
             $scope.send_record = function () {
+                console.log('end');
                 wx.send_record($scope.sendId, $scope.receiveId);
             }
 
