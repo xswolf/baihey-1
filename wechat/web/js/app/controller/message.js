@@ -158,13 +158,14 @@ define(['app/module', 'app/directive/directiveApi'
         requirejs(['chat/wechatInterface', 'chat/chat'], function (wx, chat) {
 
             // 获取微信配置文件
-            var config = api.wxConfig();
+            //var config = api.wxConfig();
+            //
+            //config.success(function (data) {
 
-            config.success(function (data) {
-
-                wx.setConfig(JSON.parse(data.config));
-                chat.init($scope.sendId);
-            })
+            console.log($scope.wx_config);
+            wx.setConfig($scope.wx_config);
+            chat.init($scope.sendId);
+            //})
 
             // 发送图片调用接口
             $scope.send_pic = function () {
