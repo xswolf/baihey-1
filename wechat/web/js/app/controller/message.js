@@ -235,12 +235,34 @@ define(['app/module', 'app/directive/directiveApi'
 
                     case 'pic': // 图片
 
-                        $scope.historyList.push(response);
+                        wx.downloadImage({
+                            serverId: response.message, // 需要下载的图片的服务器端ID，由uploadImage接口获得
+                            isShowProgressTips: 1, // 默认为1，显示进度提示
+                            success: function (res) {
+                                if(res.localId != null) {
+                                    //var img = '<img str="'+res.localId+'" />';
+                                    response.message = res.localId;
+                                    $scope.historyList.push(response);
+                                } else {
+                                    alert('没有图片url');
+                                }
+                            }
+                        });
+
                         break;
 
                     case 'record': // 录音
+                        wx.downloadVoice({
+                            serverId: response.message, // 需要下载的音频的服务器端ID，由uploadVoice接口获得
+                            success: function (res) {
+                                wx.playVoice({
+                                    localId: res.localId // 需要播放的音频的本地ID，由stopRecord接口获得
+                                });
+                                response.message = res.localId;
+                                $scope.historyList.push(response);
+                            }
+                        });
 
-                        $scope.historyList.push(response);
                         break;
                 }
                 $scope.scrollBot(); // 滚动至底部

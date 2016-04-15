@@ -268,6 +268,10 @@ class ServerSocketController extends Controller {
 
             if ($ar['type'] ==  'send'){
                 $type = 1;
+            }else if($ar['type'] ==  'record'){
+                $type = 2;
+            }else if ($ar['type'] ==  'pic'){
+                $type = 3;
             }
             // 写入数据库
 
