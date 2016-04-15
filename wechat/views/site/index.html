@@ -3,7 +3,7 @@
     <ion-header>
         <div class="bar bar-header">
             <a href="javascript:;" ng-click="cityModal.show()" class="button button-icon "><i
-                    class="fs16 ion-android-pin positive mr5"></i>重庆<i
+                    class="fs16 ion-android-pin positive mr5"></i>{{cityName}}<i
                     class="ml5 fs14 ion-android-arrow-dropdown positive"></i></a>
             <a href="javascript:;" ng-click="search()" class="button button-icon">搜索</a>
         </div>
@@ -65,9 +65,9 @@
         <ion-modal-view ng-controller="site.childCityController">
             <ion-header-bar>
                 <a href="javascript:;" ng-click="cityModal.hide()" class="button button-icon " ng-model="searchForm.data.age"><i
-                        class="fs16 ion-android-pin positive mr5"></i>重庆<i
+                        class="fs16 ion-android-pin positive mr5"></i>{{modalCityName}}<i
                         class="ml5 fs14 ion-android-arrow-dropup positive"></i></a>
-                <a href="javascript:;" ng-click="cityModal.hide()" class="button button-icon">保存</a>
+                <a href="javascript:;" ng-click="citySave()" class="button button-icon">保存</a>
             </ion-header-bar>
             <ion-content>
                 <ion-scroll zooming="false"

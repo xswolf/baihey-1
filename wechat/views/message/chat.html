@@ -5,13 +5,25 @@
         <div class="bar bar-header bhy com_w_100">
             <a class="button button-icon icon ion-arrow-left-c" href="/wap/message"></a>
             <h1 class="title">正在与 李小姐 聊天</h1>
-            <button class="button button-icon" href="/wap/message">关注</button>
+            <button class="button button-icon" ng-click="addFollow()" ng-if="u_isFollow">关注</button>
         </div>
     </ion-header>
     <input type="hidden" ng-model="sendId" ng-init="sendId={!$id}">
     <ion-content class="bhy com_w_100 has-header has-footer chat" ng-init="scrollBot()">
 
         <ion-list>
+            <ion-item class="talk_item_u">
+                <div class="talk_user">
+                    <img src="/wechat/web/images/test.jpg" alt="">
+                </div>
+                <div class="talk_r">
+                    <div class="talk_con clearfix">
+                        <div class="content normal">
+                            <p>个性签名个性签名 | 现在我们已经成为好友，可以开始聊天了！</p>
+                        </div>
+                    </div>
+                </div>
+            </ion-item>
             <ion-item class="clearfix" ng-class="{true:'talk_item_u',false:'talk_item_m'}[sendId==vo.send_user_id]"
                       ng-repeat="vo in historyList track by vo.id">
                 <div class="s_date">

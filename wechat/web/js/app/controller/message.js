@@ -130,18 +130,34 @@ define(['app/module', 'app/directive/directiveApi'
             $ionicScrollDelegate.scrollBottom(true);
         }
 
+        // 是否已关注对方， 已关注则不显示关注按钮。
+        $scope.u_isFollow = true;
+
+        // 加关注
+        $scope.addFollow = function () {
+
+            $scope.followData = [{sendId: $scope.sendId}, {receiveId: $scope.receiveId}];
+
+            api.save(url, $scope.followData).success(function (res) {
+
+                // 成功，提示
+                $ionicPopup.alert({title: '加关注成功'});
+
+            });
+        }
+
         // 红包
         $ionicModal.fromTemplateUrl('briberyModal.html', {
             scope: $scope,
             animation: 'slide-in-up'
         }).then(function (modal) {
             $scope.briberyModal = modal;
-            $scope.briPageHide = function(){
+            $scope.briPageHide = function () {
                 modal.hide();
             }
         });
 
-        $scope.briPageHide = function(){
+        $scope.briPageHide = function () {
             briberyModal.hide();
         }
 
@@ -209,7 +225,7 @@ define(['app/module', 'app/directive/directiveApi'
         $scope.valMoney = function (money) {
             if (ar.validateMoney(money)) {
                 $scope.money = money;
-                if ( money > 200) {
+                if (money > 200) {
                     $scope.btnStatus = true;
                 } else {
                     $scope.btnStatus = false;
@@ -220,14 +236,17 @@ define(['app/module', 'app/directive/directiveApi'
             }
         }
 
+
         // 发红包
-        $scope.bri_submit = function(){
-            if($scope.money == 0){
+        $scope.bri_submit = function () {
+            if ($scope.money == 0) {
                 $ionicPopup.alert({title: '红包金额不合法'});
                 return false;
             }
 
-            api.save(url,$scope.money).success(function(res){
+            $scope.briFormData = [{sendId: $scope.sendId, receiveId: $scope.receiveId, money: $scope.money}];
+
+            api.save(url, $scope.briFormData).success(function (res) {
 
                 //成功，隐藏窗口
                 $scope.briPageHide();

@@ -15,8 +15,13 @@ define(['app/module', 'app/directive/directiveApi'
         //    maxWidth: 200,
         //    showDelay: 0
         //});
-        $scope.searchForm={
-            data:{}
+
+        // 微信接口，获取用户地理位置。 如果用户拒绝提供位置，则默认重庆
+        $scope.cityName = '重庆';
+
+
+        $scope.searchForm = {
+            data: {}
         }
 
         // 获取当前用户信息
@@ -32,12 +37,12 @@ define(['app/module', 'app/directive/directiveApi'
         });
 
         // 默认查询条件处理（性别处理）
-        if(ar.getCookie('bhy_u_sex') && (ar.getCookie('bhy_u_sex') == 0)) {
+        if (ar.getCookie('bhy_u_sex') && (ar.getCookie('bhy_u_sex') == 0)) {
             $scope.searchForm.data.sex = 1;
         } else {
             $scope.searchForm.data.sex = 0;
         }
-        api.list("/wap/site/user-list", {'sex':$scope.searchForm.data.sex, 'age':'18-22'}).success(function (res) {
+        api.list("/wap/site/user-list", {'sex': $scope.searchForm.data.sex, 'age': '18-22'}).success(function (res) {
             $scope.items = res.data;
             for (var i in $scope.items) {
                 $scope.items[i].info = JSON.parse($scope.items[i].info);
@@ -62,17 +67,17 @@ define(['app/module', 'app/directive/directiveApi'
             $scope.moreSearchModal = modal;
         });
 
-       $scope.moreSearchModalHide = function(){
-           $scope.moreSearchModal.hide();
-           //console.log($scope.searchForm.data);
-           $scope.user = api.list("/wap/site/user-list", $scope.searchForm.data);
-           $scope.user.success(function (res) {
-               $scope.items = res.data;
-               for (var i in $scope.items) {
-                   $scope.items[i].info = JSON.parse($scope.items[i].info);
-               }
-           })
-       }
+        $scope.moreSearchModalHide = function () {
+            $scope.moreSearchModal.hide();
+            //console.log($scope.searchForm.data);
+            $scope.user = api.list("/wap/site/user-list", $scope.searchForm.data);
+            $scope.user.success(function (res) {
+                $scope.items = res.data;
+                for (var i in $scope.items) {
+                    $scope.items[i].info = JSON.parse($scope.items[i].info);
+                }
+            })
+        }
 
         $scope.buttonsItemIndex = '';
 
@@ -109,12 +114,12 @@ define(['app/module', 'app/directive/directiveApi'
                     }
 
                     if (index == 1) {   //只看男
-                        $scope.searchForm.data.sex =1;
+                        $scope.searchForm.data.sex = 1;
                         user = api.list("/wap/site/user-list", $scope.searchForm.data);
                     }
 
                     if (index == 2) {   //只看女
-                        $scope.searchForm.data.sex =0;
+                        $scope.searchForm.data.sex = 0;
                         user = api.list("/wap/site/user-list", $scope.searchForm.data);
                     }
 
@@ -133,13 +138,13 @@ define(['app/module', 'app/directive/directiveApi'
                             okType: 'button-energized',
                             inputPlaceholder: '请输入对方ID号'
                         }).then(function (res) {
-                            api.list("/wap/site/user-list", {'id':res}).success(function (res) {
+                            api.list("/wap/site/user-list", {'id': res}).success(function (res) {
                                 $scope.items = res.data;
                                 $scope.items[0].info = JSON.parse($scope.items[0].info);
                             })
                         });
                     }
-                    if( user != undefined){
+                    if (user != undefined) {
                         user.success(function (res) {
                             $scope.items = res.data;
                             for (var i in $scope.items) {
@@ -168,17 +173,34 @@ define(['app/module', 'app/directive/directiveApi'
             'float': 'left',
             'width': '50%'
         }
-        $scope.selId = 1;
+
+        // modal内左上角地理位置名称
+        $scope.modalCityName = $scope.cityName;
+
+        $scope.pvId = 1;
         $scope.cityId = 11;
 
         $scope.selected_pv = function (pv_id) {
-            $scope.selId = pv_id;
+            $scope.pvId = pv_id;
         }
 
         $scope.selected_city = function (city_id) {
             $scope.cityId = city_id;
             $scope.searchForm.data.city = city_id;
         }
+
+        // 保存已选择城市
+        $scope.citySave = function () {
+
+            for (var i = 0; i < $scope.citys.length; i++) {
+                if(citys[i].id = $scope.cityId){
+                    $scope.cityName = citys[i].name;
+                    continue;
+                }
+            }
+
+        }
+
         $scope.provinces = [
             {
                 id: 1,
@@ -312,7 +334,7 @@ define(['app/module', 'app/directive/directiveApi'
 
     // 高级搜索
     module.controller('site.childSearchController', ['app.serviceApi', '$scope', function (api, $scope) {
-        $scope.$on('someEvent', function(event, mass) {
+        $scope.$on('someEvent', function (event, mass) {
             $scope.searchForm.data = mass;
         });
         $scope.searchForm = {};
