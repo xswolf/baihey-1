@@ -8,10 +8,7 @@
 
 namespace wechat\controllers;
 
-
-use common\util\Cookie;
-use Faker\Provider\Base;
-
+use yii\db\Query;
 class ChatController extends BaseController {
 
     public function actionIndex() {
@@ -64,8 +61,25 @@ class ChatController extends BaseController {
     }
 
     public function actionFocus() {
+        $result = (new Query())->select(['*'])
+                               ->from("bhy_area")
+            ->where(['parentId'=>0])
+                               ->all();
 
-        return $this->render();
+        $result1 = (new Query())->select(['*'])
+                               ->from("bhy_area")
+                               ->where(['parentId'=>0])
+                               ->all();
+
+        $result2 = (new Query())->select(['*'])
+                               ->from("bhy_area")
+                               ->where(['parentId'=>0])
+                               ->all();
+
+        file_put_contents('area.js' , "var provines = ".json_encode($result).";");
+        file_put_contents('area.js' , "var provines = ".json_encode($result1).";");
+        file_put_contents('area.js' , "var provines = ".json_encode($result2).";");
+
     }
 
 

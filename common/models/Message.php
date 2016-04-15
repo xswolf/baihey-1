@@ -50,12 +50,13 @@ class Message extends Base {
      * @return bool
      * @throws \Exception
      */
-    public function add( $sendId,$receiveId , $messageContent , $type = 1 ) {
+    public function add( $sendId,$receiveId , $messageContent , $type = 1 ,$status) {
         $this->send_user_id    = $sendId;
         $this->receive_user_id = $receiveId;
         $this->message         = $messageContent;
         $this->message_type    = $type;
         $this->time            = time();
+        $this->status          = $status;
 
         return $this->insert(true);
     }

@@ -198,6 +198,12 @@ define(['app/module', 'app/directive/directiveApi'
                 wx.send_pic($scope.sendId, $scope.receiveId);
             }
 
+            // 开始录音
+            $scope.start_record = function () {
+                wx.startRecord();
+            }
+
+            // 结束录音
             $scope.send_record = function () {
                 wx.send_record($scope.sendId, $scope.receiveId);
             }

@@ -271,22 +271,25 @@ class ServerSocketController extends Controller {
             }
             // 写入数据库
 
-            if((new Message())->add($ar['sendId'],$ar['sendName'] , $ar['message'] , $type)){
-                $ar['send_user_id'] = $ar['sendId'];
-                $str        = $this->code( json_encode( $ar ) );
-                $key_code        = $this->getReceived( $key );
-                socket_write( $this->users[ $k ]['socket'] , $str , strlen( $str ) );
-                if ( $this->users[ $key_code ]['socket'] != null ) {
-                    $this->e( $str . " messages is send\n" );
-                    socket_write( $this->users[ $key_code ]['socket'] , $str , strlen( $str ) );
-                } else {
-                    $this->e( $str . " user is not online\n" ); // 这里直接写数据库
-                }
-            }else{
-                $ar['type'] = 'error'; // 发送错误
-                $str        = $this->code( json_encode( $ar ) );
-                socket_write( $this->users[ $k ]['socket'] , $str , strlen( $str ) );
+            $ar['send_user_id'] = $ar['sendId'];
+            $str        = $this->code( json_encode( $ar ) );
+            $key_code        = $this->getReceived( $key );
+
+            // 发送给自己
+            socket_write( $this->users[ $k ]['socket'] , $str , strlen( $str ) );
+            if ( $this->users[ $key_code ]['socket'] != null ) {
+
+                // 发送给别人
+                socket_write( $this->users[ $key_code ]['socket'] , $str , strlen( $str ) );
+                $this->e( $str . " messages is send\n" );
+                $status = 1;
+            } else {
+                $status = 2;
+                $this->e( $str . " user is not online\n" ); // 这里直接写数据库
             }
+
+            // 消息记录数据库
+            (new Message())->add($ar['sendId'],$ar['sendName'] , $ar['message'] , $type , $status);
 
 
         }
