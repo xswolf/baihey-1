@@ -166,3 +166,50 @@ input::-webkit-inner-spin-button{
     margin: 0;
 }
 input[type="number"]{-moz-appearance:textfield;}
+
+
+
+
+
+
+/* 字体图标 */
+@font-face {
+    font-family: 'bhy-font';
+    src:    url('../fonts/icomoon.eot?5khs5x');
+    src:    url('../fonts/icomoon.eot?5khs5x#iefix') format('embedded-opentype'),
+    url('../fonts/icomoon.ttf?5khs5x') format('truetype'),
+    url('../fonts/icomoon.woff?5khs5x') format('woff'),
+    url('../fonts/icomoon.svg?5khs5x#icomoon') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+
+[class^="icon-"], [class*=" icon-"] {
+    /* use !important to prevent issues with browser extensions that change fonts */
+    font-family: 'bhy-font' !important;
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+
+    /* Better Font Rendering =========== */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+
+.icon-bhy-user-online:before {
+    content: "\e001";
+}
+.icon-bhy-user-outline:before {
+    content: "\e002";
+}
+.icon-bhy-bribery:before {
+    content: "\e003";
+}
+.icon-bhy-msg-voice:before {
+    content: "\e004";
+}

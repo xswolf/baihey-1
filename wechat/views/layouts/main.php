@@ -65,7 +65,7 @@
         </li>
         <li class="me">
             <a href="/wap/member/index" class="page">
-                <i class="fs24 <?php echo \Yii::$app->controller->id == 'member' ? 'ion-ios-person cor21' : 'ion-ios-person-outline'; ?>"></i>
+                <i class="fs24 <?php echo \Yii::$app->controller->id == 'member' ? 'icon-bhy-user-online cor21' : 'icon-bhy-user-outline'; ?>"></i>
                 <p class="fs11 <?php echo \Yii::$app->controller->id == 'member' ? 'cor21' : ''; ?>">我</p>
             </a>
         </li>

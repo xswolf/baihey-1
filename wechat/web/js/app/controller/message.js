@@ -173,6 +173,14 @@ define(['app/module', 'app/directive/directiveApi'
             briberyModal.hide();
         }
 
+        // 发送图片
+        $scope.send_pic = function () {
+            var e=document.getElementById("pic_fileInput");
+            var ev=document.createEvent("MouseEvents");
+            ev.initEvent("click",true,true);
+            e.dispatchEvent(ev);
+        }
+
         //  获取历史聊天数据
         $scope.receiveId = ar.getQueryString('id')
         api.list("/wap/message/message-history", {id: $scope.receiveId}).success(function (data) {
@@ -190,12 +198,6 @@ define(['app/module', 'app/directive/directiveApi'
 
             // 初始化聊天
             chat.init($scope.sendId);
-
-            // 发送图片调用接口
-            $scope.send_pic = function () {
-                console.log('调起发送接口')
-                wx.send_pic($scope.sendId, $scope.receiveId);
-            }
 
             // 开始录音
             $scope.start_record = function () {

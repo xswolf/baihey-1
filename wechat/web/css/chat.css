@@ -330,9 +330,72 @@
     cursor: pointer;
 }
 
+/* 图片 */
+
+.content .pic{
+    display: block;
+    cursor: pointer;
+}
+.content .pic img{
+    max-width: 60px;
+}
+
+.pic_fileInput{
+    display: none;
+    visibility: hidden;
+}
 
 /* 红包 */
 .bribery{ background: #f9f9f9;}
 .bribery .bri_money_input{ background: #fff; padding-right: 10px;}
 .bribery .bri_money{ font-size: 38px;}
 .bribery .bri_dsbd{background: #ccc;}
+
+.content.bri{
+    background-color: #f38111 !important;
+}
+.content.bri.normal::before{
+    background-color: #f38111 !important;
+}
+.content .bri_con{
+    max-width: 300px;
+    min-width: 185px;
+}
+.content .bri_con .bri_con_icon{
+    color: #eb4f38;
+    font-size: 60px;
+    float: left;
+}
+
+.content .bri_con .bri_con_txt{
+    float: left;
+}
+.content .bri_con .bri_con_txt p{
+    line-height: 28px;
+    max-width: 125px;
+    overflow: hidden;
+    text-overflow: clip;
+}
+
+/* 语音 */
+.content .voice_con{
+
+}
+.talk_item_m .content .voice_con .voice_icon{
+    display: inline-block;
+    -moz-transform:scaleX(-1);
+    -webkit-transform:scaleX(-1);
+    -o-transform:scaleX(-1);
+    transform: rotateY(180deg);
+    transform:scaleX(-1);
+    /*IE*/
+    filter:FlipH;
+}
+
+.talk_item_u .content .voice_con .voice_icon{
+    display: inline-block;
+    -moz-transform:none;
+    -webkit-transform:none;
+    -o-transform:none;
+    transform: none;
+}
