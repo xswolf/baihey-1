@@ -46,6 +46,7 @@ class Message extends Base {
      * @param $receiveId
      * @param $messageContent
      * @param int $type
+     * @param int $status
      *
      * @return bool
      * @throws \Exception

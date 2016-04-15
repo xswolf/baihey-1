@@ -22,6 +22,7 @@ define(['http://res.wx.qq.com/open/js/jweixin-1.0.0.js','chat/chat'] , function 
      * @param toUser
      */
     wx.send_record = function (sendId , toUser) {
+        console.log(sendId)
         var localId = null;
         var serverId = null; // 音频服务端ID
         wx.stopRecord({
