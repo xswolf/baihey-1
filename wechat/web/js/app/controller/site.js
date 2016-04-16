@@ -2,7 +2,7 @@
  * Created by NSK. on 2016/4/5/0005.
  */
 define(['app/module', 'app/directive/directiveApi'
-    , 'app/service/serviceApi', 'app/filter/filterApi'
+    , 'app/service/serviceApi', 'app/filter/filterApi', 'config/city'
 ], function (module) {
 
     module.controller("site.index", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$ionicModal', '$ionicActionSheet', '$ionicLoading', function (api, $scope, $timeout, $ionicPopup, $ionicModal, $ionicActionSheet, $ionicLoading) {
@@ -16,17 +16,33 @@ define(['app/module', 'app/directive/directiveApi'
         //    showDelay: 0
         //});
 
-        // 微信接口，获取用户地理位置。 如果用户拒绝提供位置，则默认重庆
-        $scope.cityName = '重庆';
-        $scope.cityId = 2
-        $scope.$on('cityName',function(event,data) {
-            $scope.cityName = data.name;
-            $scope.cityId = data.id;
-        });
-
         $scope.searchForm = {
             data: {}
         }
+
+        // 默认查询条件处理（性别处理）
+        if (ar.getCookie('bhy_u_sex') && (ar.getCookie('bhy_u_sex') == 0)) {
+            $scope.searchForm.data.sex = 1;
+        } else {
+            $scope.searchForm.data.sex = 0;
+        }
+        // 微信接口，获取用户地理位置。 如果用户拒绝提供位置，则默认重庆
+        $scope.cityName = '重庆';
+        $scope.cityId = 2;
+        $scope.searchForm.data.age = '18-28';
+
+        // 地区选择查询广播
+        $scope.$on('cityName',function(event,data) {
+            $scope.cityName = data.name;
+            $scope.cityId = data.id;
+            api.list("/wap/site/user-list", {'city': $scope.cityId,'sex': $scope.searchForm.data.sex, 'age': $scope.searchForm.data.age}).success(function (res) {
+                $scope.items = res.data;
+                for (var i in $scope.items) {
+                    $scope.items[i].info = JSON.parse($scope.items[i].info);
+                    $scope.items[i].identity_pic = JSON.parse($scope.items[i].identity_pic);
+                }
+            })
+        });
 
         // 获取当前用户信息
         api.getUserInfo().success(function (res) {
@@ -41,16 +57,10 @@ define(['app/module', 'app/directive/directiveApi'
 
         });
 
-        // 默认查询条件处理（性别处理）
-        if (ar.getCookie('bhy_u_sex') && (ar.getCookie('bhy_u_sex') == 0)) {
-            $scope.searchForm.data.sex = 1;
-        } else {
-            $scope.searchForm.data.sex = 0;
-        }
         // 地区处理
         $scope.searchForm.data.city = $scope.cityId;
 
-        api.list("/wap/site/user-list", {'city': $scope.searchForm.data.city,'sex': $scope.searchForm.data.sex, 'age': '18-22'}).success(function (res) {
+        api.list("/wap/site/user-list", {'city': $scope.searchForm.data.city,'sex': $scope.searchForm.data.sex, 'age': $scope.searchForm.data.age}).success(function (res) {
             $scope.items = res.data;
             for (var i in $scope.items) {
                 $scope.items[i].info = JSON.parse($scope.items[i].info);
@@ -190,7 +200,7 @@ define(['app/module', 'app/directive/directiveApi'
         $scope.modalCityName = $scope.cityName;
 
         $scope.pvId = 1;
-        $scope.cityId = 11;
+        $scope.cityId = 2;
 
         $scope.selected_pv = function (pv_id) {
             $scope.pvId = pv_id;
@@ -198,7 +208,7 @@ define(['app/module', 'app/directive/directiveApi'
 
         $scope.selected_city = function (city_id) {
             $scope.cityId = city_id;
-            $scope.searchForm.data.city = city_id;
+            //$scope.searchForm.data.city = city_id;
         }
 
         // 保存已选择城市
@@ -215,7 +225,11 @@ define(['app/module', 'app/directive/directiveApi'
             $scope.cityModal.hide();
         }
 
-        $scope.provinces = [
+        console.log(provines[0]);
+        $scope.provinces = provines;
+        $scope.citys = citys;
+
+        /*$scope.provinces = [
             {
                 id: 1,
                 name: '重庆市'
@@ -343,7 +357,7 @@ define(['app/module', 'app/directive/directiveApi'
                 name: '东莞市'
             }
         ];
-
+*/
     }]);
 
     // 高级搜索

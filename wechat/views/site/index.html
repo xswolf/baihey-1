@@ -85,7 +85,7 @@
                 <ion-scroll zooming="false" ng-style="scrollStyle">
                     <ion-list class="city" style="height: 3000px;">
                         <ion-item ng-repeat="city in citys track by city.id" item="city" class="item tac"
-                                  ng-if="pvId == city.parent" ng-click="selected_city({{city.id}})"
+                                  ng-if="pvId == city.parentId" ng-click="selected_city({{city.id}})"
                                   ng-class="{true:'selected',flase:''}[cityId == city.id]" href="#">
                             {{city.name}} <i class="ml25 ion-ios-checkmark-outline"></i>
                         </ion-item>
