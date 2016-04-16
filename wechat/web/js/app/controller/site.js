@@ -33,6 +33,7 @@ define(['app/module', 'app/directive/directiveApi'
             if (res.data) {
                 $scope.userInfo = res.data;
                 $scope.userInfo.info = JSON.parse($scope.userInfo.info);
+                $scope.userInfo.identity_pic = JSON.parse($scope.userInfo.identity_pic);
             } else {
                 $scope.userInfo = [];
                 console.log('没有获取到当前用户信息');
@@ -53,6 +54,7 @@ define(['app/module', 'app/directive/directiveApi'
             $scope.items = res.data;
             for (var i in $scope.items) {
                 $scope.items[i].info = JSON.parse($scope.items[i].info);
+                $scope.items[i].identity_pic = JSON.parse($scope.items[i].identity_pic);
             }
         })
 
@@ -82,6 +84,7 @@ define(['app/module', 'app/directive/directiveApi'
                 $scope.items = res.data;
                 for (var i in $scope.items) {
                     $scope.items[i].info = JSON.parse($scope.items[i].info);
+                    $scope.items[i].identity_pic = JSON.parse($scope.items[i].identity_pic);
                 }
             })
         }
@@ -148,6 +151,7 @@ define(['app/module', 'app/directive/directiveApi'
                             api.list("/wap/site/user-list", {'id': res}).success(function (res) {
                                 $scope.items = res.data;
                                 $scope.items[0].info = JSON.parse($scope.items[0].info);
+                                $scope.items[i].identity_pic = JSON.parse($scope.items[i].identity_pic);
                             })
                         });
                     }
@@ -156,6 +160,7 @@ define(['app/module', 'app/directive/directiveApi'
                             $scope.items = res.data;
                             for (var i in $scope.items) {
                                 $scope.items[i].info = JSON.parse($scope.items[i].info);
+                                $scope.items[i].identity_pic = JSON.parse($scope.items[i].identity_pic);
                             }
                         })
                     }

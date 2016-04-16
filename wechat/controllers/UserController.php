@@ -121,6 +121,7 @@ class UserController extends BaseController
                 $data['sex'] = json_decode($sex);
                 $data['sex'] = $data['sex']->man ? 1 : 0;
                 $data['username'] = \Yii::$app->request->get('mobile');
+                $data['phone'] = $data['username'];
                 $data['password'] = substr($data['username'], -6);
 
                 // 验证手机号是否存在

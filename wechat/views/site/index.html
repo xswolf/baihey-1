@@ -17,7 +17,7 @@
 
                     <div class="row pl0">
                         <div class="col" ng-if="userInfo.info.real_name != '未知'">会员{{userInfo.info.real_name}}，您好！</div>
-                        <div class="col" ng-if="userInfo.info.real_name == '未知'">会员，您好！</div>
+                        <div class="col" ng-if="userInfo.info.real_name == '未知'">会员ID:{{userInfo.id}}，您好！</div>
                         <label class="label-right fs12 cor20">ID:{{userInfo.id}}</label>
                     </div>
 
@@ -37,7 +37,8 @@
                     <div class="col col-75">
                         <div class="row pl0">
                             <div class="col">
-                                <span class="fwb fs14">{{item.info.real_name | sex:item.info.sex :item.info.age}}</span>
+                                <span class="fwb fs14" ng-if="item.info.real_name != '未知'">{{item.info.real_name | sex:item.sex :item.info.age}}</span>
+                                <span class="fwb fs14" ng-if="item.info.real_name == '未知'">会员ID:{{item.id}}</span>
                                 <span ng-if="item.info.age != '未知'" class="cor19 fs12">{{item.info.age | timeToAge}}岁</span> <span ng-if="item.info.height != '未知'"
                                     class="cor19 fs12">{{item.info.height}}cm</span>
                                 <span ng-if="item.info.is_marriage != '未知'" class="cor19 fs12">{{item.info.is_marriage}}</span>
@@ -48,7 +49,7 @@
                         </div>
 
                         <div class="row pl0">
-                            <p class="col fs12"><span class="identity sfz">身份证</span> <span class="identity phone">手机</span> <span ng-if="item.info.level == 1" class="identity vip">vip</span> <span ng-if="item.info.level == 2" class="identity guest">贵宾</span> <span ng-if="item.info.level == 3" class="identity diamond">钻石</span></p>
+                            <p class="col fs12"><span class="identity sfz"ng-if="item.identity_pic.is_check == 1">身份证</span> <span class="identity phone" ng-if="item.phone">手机</span> <span ng-if="item.info.level == 1" class="identity vip">vip</span> <span ng-if="item.info.level == 2" class="identity guest">贵宾</span> <span ng-if="item.info.level == 3" class="identity diamond">钻石</span></p>
                         </div>
 
                         <div class="row pl0">
