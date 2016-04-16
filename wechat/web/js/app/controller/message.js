@@ -260,6 +260,14 @@ define(['app/module', 'app/directive/directiveApi'
                                 wx.playVoice({
                                     localId: res.localId // 需要播放的音频的本地ID，由stopRecord接口获得
                                 });
+
+                                // 监听播放结束
+                                wx.onVoicePlayEnd({
+                                    success: function (res) {
+                                        var localId = res.localId; // 返回音频的本地ID
+                                    }
+
+                                });
                                 response.message = res.localId;
                                 $scope.historyList.push(response);
                             }
