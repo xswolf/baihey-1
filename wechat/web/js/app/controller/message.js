@@ -179,6 +179,12 @@ define(['app/module', 'app/directive/directiveApi'
             var ev=document.createEvent("MouseEvents");
             ev.initEvent("click",true,true);
             e.dispatchEvent(ev);
+            //console.log($scope.uploadPic);
+        }
+
+        // 上传图片
+        $scope.picUpload = function () {
+            console.log($scope.uploadPic);
         }
 
         //  获取历史聊天数据

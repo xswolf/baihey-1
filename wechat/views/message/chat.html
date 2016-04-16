@@ -296,7 +296,7 @@
         </div>
     </div>
 
-    <input type="file" id="pic_fileInput" class="pic_fileInput">
+    <input type="file" id="pic_fileInput" ng-model="uploadPic" onchange="angular.element(this).scope().picUpload()" class="pic_fileInput">
 </div>
 
 <script id="briberyModal.html" type="text/ng-template">
