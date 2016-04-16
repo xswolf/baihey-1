@@ -37,7 +37,15 @@
                 <div class="talk_r">
                     <div class="talk_con clearfix">
                         <div class="content normal">
-                            <span class="pic"><img src="/wechat/web/images/test2.jpg"></span>
+                            <span class="pic">
+
+                                <ion-slide-box>
+                                    <ion-slide>
+                                        <img src="/wechat/web/images/test2.jpg">
+                                    </ion-slide>
+                                </ion-slide-box>
+
+                            </span>
                         </div>
                     </div>
                 </div>
@@ -47,6 +55,7 @@
                 <div class="talk_user">
                     <img src="/wechat/web/images/test.jpg" alt="">
                 </div>
+
                 <div class="talk_r">
                     <div class="talk_con clearfix">
                         <div class="content normal">
@@ -63,6 +72,7 @@
                 <div class="talk_user">
                     <img src="/wechat/web/images/test.jpg" alt="">
                 </div>
+
                 <div class="talk_r">
                     <div class="talk_con clearfix">
                         <div class="content normal voice">
@@ -100,19 +110,21 @@
                 <div class="talk_user">
                     <img src="/wechat/web/images/test.jpg" alt="">
                 </div>
+
                 <div class="talk_r">
+
                     <div class="talk_con clearfix">
-                        <div class="content normal bri">
+                        <div class="content normal bri" ng-click="draw_bri(vo.id,vo.type,vo.status)">
                            <div class="bri_con clearfix">
                                 <div class="icon-bhy-bribery bri_con_icon"></div>
                                 <div class="bri_con_txt">
                                     <p>恭喜发财恭喜发财恭</p>
                                     <p>领取红包</p>
                                 </div>
-
                            </div>
                         </div>
                     </div>
+
                 </div>
             </ion-item>
 
@@ -296,13 +308,13 @@
         </div>
     </div>
 
-    <input type="file" id="pic_fileInput" nv-file-select=""  uploader="uploader" class="pic_fileInput">
+    <input type="file" id="pic_fileInput" class="pic_fileInput" nv-file-select=""  uploader="uploader" accept="image/*" />
 </div>
 
 <script id="briberyModal.html" type="text/ng-template">
     <ion-modal-view ng-controller="message.childBriberyController">
         <ion-header-bar>
-            <a href="javascript:;" ng-click="briberyModal.hide()" class="button button-icon ">关闭</a>
+            <a href="javascript:;" ng-click="briPageHide()" class="button button-icon ">关闭</a>
             <title class="title">发红包</title>
         </ion-header-bar>
         <ion-content class="bribery has-header">

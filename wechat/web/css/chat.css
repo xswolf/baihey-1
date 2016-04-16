@@ -351,8 +351,13 @@
 .bribery .bri_money{ font-size: 38px;}
 .bribery .bri_dsbd{background: #ccc;}
 
+
+
+
+
 .content.bri{
     background-color: #f38111 !important;
+    cursor: pointer;
 }
 .content.bri.normal::before{
     background-color: #f38111 !important;
@@ -381,6 +386,7 @@
 .content .voice_con{
 
 }
+
 .talk_item_m .content .voice_con .voice_icon{
     display: inline-block;
     -moz-transform:scaleX(-1);

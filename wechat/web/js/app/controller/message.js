@@ -180,6 +180,10 @@ define(['app/module', 'app/directive/directiveApi'
             ev.initEvent("click",true,true);
             e.dispatchEvent(ev);
             //console.log($scope.uploadPic);
+
+
+
+
         }
 
         // 实例化上传图片插件
@@ -199,18 +203,16 @@ define(['app/module', 'app/directive/directiveApi'
         uploader.onWhenAddingFileFailed = function(item /*{File|FileLikeObject}*/, filter, options) {
             console.info('onWhenAddingFileFailed', item, filter, options);
         };
-        uploader.onAfterAddingFile = function(fileItem) {
+        uploader.onAfterAddingFile = function(fileItem) {   // 上传之后
             fileItem.uploader.queue[0].upload();
             console.info('onAfterAddingFile', fileItem);
         };
-        uploader.onBeforeUploadItem = function(item) {
+        uploader.onBeforeUploadItem = function(item) {   // 上传之前
             console.info('onBeforeUploadItem', item);
+
         };
         uploader.onProgressItem = function(fileItem, progress) {
             console.info('onProgressItem', fileItem, progress);
-        };
-        uploader.onProgressAll = function(progress) {
-            console.info('onProgressAll', progress);
         };
         uploader.onSuccessItem = function(fileItem, response, status, headers) {
             console.info('onSuccessItem', fileItem, response, status, headers);
@@ -218,9 +220,7 @@ define(['app/module', 'app/directive/directiveApi'
         uploader.onErrorItem = function(fileItem, response, status, headers) {
             console.info('onErrorItem', fileItem, response, status, headers);
         };
-        uploader.onCancelItem = function(fileItem, response, status, headers) {
-            console.info('onCancelItem', fileItem, response, status, headers);
-        };
+
         uploader.onCompleteItem = function(fileItem, response, status, headers) {
             console.info('onCompleteItem', fileItem, response, status, headers);
         };
