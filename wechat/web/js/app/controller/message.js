@@ -7,7 +7,6 @@ define(['app/module', 'app/directive/directiveApi'
 
     module.controller("message.index", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$ionicModal', '$ionicActionSheet', '$ionicLoading', function (api, $scope, $timeout, $ionicPopup, $ionicModal, $ionicActionSheet, $ionicLoading) {
 
-
         // 获取页面数据
         $scope.items = [
             {
@@ -107,7 +106,15 @@ define(['app/module', 'app/directive/directiveApi'
 
         // 删除操作
         $scope.removeItem = function (item) {
-            console.log(item);
+            api.setMsgDisplay(item.id).success(function(res){
+                if(res.status){ // 删除成功
+                    $scope.items.splice($scope.items.indexOf(item), 1);
+                }else {
+                    $ionicPopup.alert({title:'删除失败！'});
+                }
+            }).error(function(){
+                $ionicPopup.alert({title:'操作失败，请刷新页面重试！'});
+            })
 
         }
 
@@ -155,10 +162,7 @@ define(['app/module', 'app/directive/directiveApi'
             });
         }
 
-        // 显示警示语，根据对方是否验证身份证。
-        $scope.u_novalidate = true;
-
-        // 红包
+        // 发红包
         $ionicModal.fromTemplateUrl('briberyModal.html', {
             scope: $scope,
             animation: 'slide-in-up'
@@ -168,99 +172,97 @@ define(['app/module', 'app/directive/directiveApi'
                 modal.hide();
             }
         });
-
         $scope.briPageHide = function () {
             briberyModal.hide();
         }
 
-        // 选择图片
-        $scope.send_pic = function () {
-            var e = document.getElementById("pic_fileInput");
-            var ev = document.createEvent("MouseEvents");
-            ev.initEvent("click", true, true);
-            e.dispatchEvent(ev);
+        // 查看图片
+        $scope.detail_pic = function (id) {
+
+            $ionicModal.fromTemplateUrl('picSliderModal.html', {
+                scope: $scope,
+                animation: 'slide-in-up'
+            }).then(function (modal) {
+                $scope.picSliderModal = modal;
+            });
+
+            picSliderModal.show();
+        }
+
+        // 播放语音
+        $scope.detail_record = function (id) {
 
 
         }
 
-        // 实例化上传图片插件
-        var uploader = $scope.uploader = new FileUploader({
-            url: '/wap/file/upload'
-        });
-
-        // 过滤器，限制用户只能上传图片
-        uploader.filters.push({
-            name: 'file-type-Res',
-            fn: function (item) {
-
-                // 压缩图片
-                api.resizeFile(item).then(function (blob_data) {
-                    var fd = new FormData();
-                    fd.append("imageFile", blob_data);
-                    $http.post('/wap/file/upload', fd, {
-                            headers: {'Content-Type': undefined},
-                            transformRequest: angular.identity
-                        })
-                        .success(function (data) {
-                            console.info('success', data);
-                        })
-                        .error(function () {
-                            console.log("uploaded error...")
-                        });
-                }, function (err_reason) {
-                    console.log(err_reason);
-                });
+        // 领取红包
+        $scope.detail_bri = function (id,status) {
 
 
-                if (!ar.msg_file_res_img(item)) {
-                    // 文件格式不合法
-                    $ionicPopup.alert({title: '只能发送图片类型的文件！'});
-                }
-                return true;
+        }
+
+        // 测试数据
+        $scope.historyList = [
+            {
+                id:1,
+                send_user_id:1001,
+                headImgUrl:'/wechat/web/images/test.jpg',
+                type:'txt',
+                content:'你好你好你好啊，测试文本消息',
+                status:1,
+                display:1
+            },
+            {
+                id:2,
+                send_user_id:1001,
+                headImgUrl:'/wechat/web/images/test.jpg',
+                type:'pic',
+                content:'/wechat/web/images/test2.jpg',
+                status:3,
+                display:1
+            },
+            {
+                id:3,
+                send_user_id:1001,
+                headImgUrl:'/wechat/web/images/test.jpg',
+                type:'record',
+                content:'语音路径',
+                status:2,
+                display:1
+
+            },
+            {
+                id:4,
+                send_user_id:1001,
+                headImgUrl:'/wechat/web/images/test.jpg',
+                type:'bri',
+                content:'红包数据',
+                status:4,
+                display:1
             }
-        });
 
+        ]
 
-        // 上传图片相关回调
+        // 对方是否认证身份
+        $scope.auth_validate = function(receviceId){
 
-        uploader.onWhenAddingFileFailed = function (item /*{File|FileLikeObject}*/, filter, options) {   // 当文件添加失败
-            console.info('onWhenAddingFileFailed', item, filter, options);
-        };
-        uploader.onAfterAddingFile = function (fileItem) {   // 上传之后
-            fileItem.uploader.queue[0].upload();
-            console.info('onAfterAddingFile', fileItem);
-        };
-        uploader.onBeforeUploadItem = function (item) {   // 上传之前
-            console.info('onBeforeUploadItem', item);
+            api.getUserAuthStatus(receviceId).success(function(res){
 
-        };
-        uploader.onProgressItem = function (fileItem, progress) {  // 文件上传进度
-            console.info('onProgressItem', fileItem, progress);
-        };
-        uploader.onSuccessItem = function (fileItem, response, status, headers) {  // 上传成功
-            console.info('onSuccessItem', fileItem, response, status, headers);
+                // 显示警示语
+                $scope.u_auth_validate = res.status;
 
-        };
-        uploader.onErrorItem = function (fileItem, response, status, headers) {   // 上传出错
-            console.info('onErrorItem', fileItem, response, status, headers);
-        };
-
-        uploader.onCompleteItem = function (fileItem, response, status, headers) {  // 上传结束
-            console.info('onCompleteItem', fileItem, response, status, headers);
-        };
-        uploader.onCompleteAll = function () {
-            console.info('onCompleteAll');
-        };
+            })
+        }
 
 
         //  获取历史聊天数据
-        $scope.receiveId = ar.getQueryString('id')
+       /* $scope.receiveId = ar.getQueryString('id')
         api.list("/wap/message/message-history", {id: $scope.receiveId}).success(function (data) {
             $scope.historyList = data;
 
         }).error(function () {
             console.log('页面message.js出现错误，代码：/wap/chat/message-history');
-        })
+        })*/
 
         // socket聊天
         requirejs(['chat/wechatInterface', 'chat/chat'], function (wx, chat) {
@@ -290,6 +292,79 @@ define(['app/module', 'app/directive/directiveApi'
                 chat.sendMessage($scope.message, $scope.sendId, $scope.receiveId, 'send');
 
             }
+
+            // 发送图片
+            $scope.send_pic = function () {
+                var e = document.getElementById("pic_fileInput");
+                var ev = document.createEvent("MouseEvents");
+                ev.initEvent("click", true, true);
+                e.dispatchEvent(ev);
+
+                // 实例化上传图片插件
+                var uploader = $scope.uploader = new FileUploader({
+                    url: '/wap/file/upload'
+                });
+
+                // 过滤器，限制用户只能上传图片
+                uploader.filters.push({
+                    name: 'file-type-Res',
+                    fn: function (item) {
+
+                        if (!ar.msg_file_res_img(item)) {   // 验证文件是否是图片格式
+                            $ionicPopup.alert({title: '只能发送图片类型的文件！'});
+                            return false;
+                        }
+
+                        if ((item.size / 1024) > 2) {    // 图片大于2M，则压缩图片
+                            api.resizeFile(item).then(function (blob_data) {
+                                var fd = new FormData();
+                                fd.append("imageFile", blob_data);
+
+                                console.log(fd);
+                            }, function (err_reason) {
+                                console.log(err_reason);
+                            });
+                        }
+
+                        return true;
+                    }
+                });
+
+               /* // 上传图片相关回调
+                uploader.onWhenAddingFileFailed = function (item /!*{File|FileLikeObject}*!/, filter, options) {   // 当文件添加失败
+                    console.info('onWhenAddingFileFailed', item, filter, options);
+                };
+                uploader.onAfterAddingFile = function (fileItem) {   // 上传之后
+                    fileItem.uploader.queue[0].upload();
+
+                    console.info('onAfterAddingFile', fileItem);
+
+                };
+                uploader.onBeforeUploadItem = function (item) {   // 上传之前
+
+                    console.info('onBeforeUploadItem', item);
+
+                };
+                uploader.onProgressItem = function (fileItem, progress) {  // 文件上传进度
+                    console.info('onProgressItem', fileItem, progress);
+                };
+                uploader.onSuccessItem = function (fileItem, response, status, headers) {  // 上传成功
+                    console.info('onSuccessItem', fileItem, response, status, headers);
+
+                };
+                uploader.onErrorItem = function (fileItem, response, status, headers) {   // 上传出错
+                    console.info('onErrorItem', fileItem, response, status, headers);
+                };
+
+                uploader.onCompleteItem = function (fileItem, response, status, headers) {  // 上传结束
+                    console.info('onCompleteItem', fileItem, response, status, headers);
+                };*/
+
+
+                //chat.sendMessage($scope.message, $scope.sendId, $scope.receiveId, 'send');
+
+            }
+
 
             // 消息响应回调函数
             chat.onMessageCallback = function (msg) {

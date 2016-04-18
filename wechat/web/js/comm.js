@@ -79,11 +79,12 @@ var ar = {
 
     'msg_file_res_img': function (imgFile) {
         var suffixName = imgFile.name.toLowerCase().substr(imgFile.name.lastIndexOf("."));    //后缀名
-        if(suffixName != '.jpg' || suffixName != '.png' || suffixName != '.bmp' || suffixName != '.gif' || suffixName != '.jpeg'){
-            return false;
-        }else {
+
+        if (suffixName == '.jpg' || suffixName == '.png' || suffixName == '.bmp' || suffixName == '.gif' || suffixName == '.jpeg') {
             return true;
         }
+
+        return false;
     }
 
 };

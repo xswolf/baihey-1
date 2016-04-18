@@ -24,6 +24,23 @@ define(['app/module'], function (module,config) {
         }
 
         /**
+         * 删除消息列表item
+         * @returns {*}
+         */
+        api.setMsgDisplay = function(msgId){
+            return $http.get('url',{params: {msgId: msgId}});
+        }
+
+        /**
+         * 根据用户ID获取身份认证状态
+         * @param receviceId
+         * @returns {*}
+         */
+        api.getUserAuthStatus = function(receviceId){
+            return $http.get('url', {params: {recevice_user_id: receviceId}});
+        }
+
+        /**
          * 验证手机号是否存在
          * @param mobile
          * @returns {*}
@@ -50,12 +67,6 @@ define(['app/module'], function (module,config) {
         api.validateCode = function (code) {
             return $http.get('/wap/user/validate-code', {params: {code: code}});
         }
-
-        api.CountdownTimer = function () {
-
-
-        }
-
 
         /**
          * 提交数据
