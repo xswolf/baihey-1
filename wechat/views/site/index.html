@@ -41,9 +41,12 @@
                 </div>
             </div>
 
-            <ion-item collection-repeat="item in items track by item.id" item="item" href="/message/chat?id={{item.id}}">
+
+            <ion-item collection-repeat="item in items track by item.id" item="item" href="message/chat?id={{item.id}}">
                 <div class="row">
+
                     <div class="col col-25"><img class="item_uimg rounded" src="{{item.info.head_pic}}"></div>
+
                     <div class="col col-75">
                         <div class="row pl0">
                             <div class="col">
@@ -70,12 +73,7 @@
                     </div>
                 </div>
             </ion-item>
-
-
         </ion-list>
-        <ion-item style="padding: 0; border: 0;"  ng-if="pageLast" ng-click="loadMore()">
-            <button style="margin: 0;" class="button button-block">点击加载更多</button>
-        </ion-item>
     </ion-content>
 
     <script id="selCityModal.html" type="text/ng-template">

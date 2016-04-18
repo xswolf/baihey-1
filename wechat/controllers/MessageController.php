@@ -1,6 +1,7 @@
 <?php
 namespace wechat\controllers;
 use common\models\Message;
+use wechat\models\UserMessage;
 use yii\web\Cookie;
 
 
@@ -18,7 +19,10 @@ class MessageController extends BaseController
      */
     public function actionIndex()
     {
-
+        /*if(!$this->isLogin()) {
+            return $this->redirect('/wap/user/login');
+        }*/
+        UserMessage::getInstance()->messageList($this->get);
         return $this->render();
     }
 
