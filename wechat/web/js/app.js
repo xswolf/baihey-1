@@ -29,8 +29,8 @@ require.config({
     }
 });
 
-require(['angular','angular_animate','ionic'] , function (angular) {
-    require(['ionic_angular','angular_sanitize','angular_ui_router','comm',"app/controller/listController",'angular_upload'],function(comm){
+require(['angular','ionic'] , function (angular) {
+    require(['angular_animate','ionic_angular','angular_sanitize','angular_ui_router','comm',"app/controller/listController",'angular_upload'],function(comm){
         'use strict';
 
         angular.bootstrap(document,['webApp']);
