@@ -7,14 +7,6 @@ define(['app/module', 'app/directive/directiveApi'
 
     module.controller("site.index", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$ionicModal', '$ionicActionSheet', '$ionicLoading', function (api, $scope, $timeout, $ionicPopup, $ionicModal, $ionicActionSheet, $ionicLoading) {
 
-        // 加载中动画
-        //$ionicLoading.show({
-        //    content: 'Loading',
-        //    animation: 'fade-in',
-        //    showBackdrop: false,
-        //    maxWidth: 200,
-        //    showDelay: 0
-        //});
 
         $scope.searchForm = {
             data: {}
@@ -187,6 +179,9 @@ define(['app/module', 'app/directive/directiveApi'
             });
 
         }
+
+        // 是否还有更多
+        $scope.pageLast = true;
 
         // 点击加载更多
         $scope.loadMore = function () {
