@@ -30,9 +30,11 @@ define(['app/module', 'app/directive/directiveApi'
         if (ar.getCookie('bhy_u_city') && ar.getCookie('bhy_u_cityId')) {
             $scope.cityName = eval(ar.getCookie('bhy_u_city'));
             $scope.cityId = ar.getCookie('bhy_u_cityId');
+            $scope.searchForm.data.city = ar.getCookie('bhy_u_cityId');
         } else {
             $scope.cityName = '重庆';
             $scope.cityId = 2;
+            $scope.searchForm.data.city = 2
         }
         $scope.searchForm.data.age = '18-28';
 
@@ -40,11 +42,8 @@ define(['app/module', 'app/directive/directiveApi'
         $scope.$on('cityName', function (event, data) {
             $scope.cityName = data.name;
             $scope.cityId = data.id;
-            api.list("/wap/site/user-list", {
-                'city': $scope.cityId,
-                'sex': $scope.searchForm.data.sex,
-                'age': $scope.searchForm.data.age
-            }).success(function (res) {
+            $scope.searchForm.data.city = data.id;
+            api.list("/wap/site/user-list", $scope.searchForm.data).success(function (res) {
                 $scope.items = res.data;
                 for (var i in $scope.items) {
                     $scope.items[i].info = JSON.parse($scope.items[i].info);
@@ -66,14 +65,7 @@ define(['app/module', 'app/directive/directiveApi'
 
         });
 
-        // 地区处理
-        $scope.searchForm.data.city = $scope.cityId;
-
-        api.list("/wap/site/user-list", {
-            'city': $scope.searchForm.data.city,
-            'sex': $scope.searchForm.data.sex,
-            'age': $scope.searchForm.data.age
-        }).success(function (res) {
+        api.list("/wap/site/user-list", $scope.searchForm.data).success(function (res) {
             $scope.items = res.data;
             for (var i in $scope.items) {
                 $scope.items[i].info = JSON.parse($scope.items[i].info);
@@ -143,7 +135,8 @@ define(['app/module', 'app/directive/directiveApi'
                     $scope.buttonsItemIndex = index;
 
                     if (index == 0) {   // 全部
-
+                        $scope.searchForm.data.sex = 'all';
+                        user = api.list("/wap/site/user-list", $scope.searchForm.data);
                     }
 
                     if (index == 1) {   //只看男
@@ -201,7 +194,7 @@ define(['app/module', 'app/directive/directiveApi'
 
             $scope.loadMoreData = {pageIndex:$scope.pageIndex};
 
-            api.list('url',$scope.loadMoreData).success(function(res){
+            api.list('/wap/site/user-list',$scope.loadMoreData).success(function(res){
 
                 $scope.items = res;
 

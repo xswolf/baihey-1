@@ -42,7 +42,7 @@
             </div>
 
 
-            <ion-item collection-repeat="item in items track by item.id" item="item" href="/item/{{item.id}}">
+            <ion-item collection-repeat="item in items track by item.id" item="item" href="/message/chat?id={{item.id}}">
                 <div class="row">
 
                     <div class="col col-25"><img class="item_uimg rounded" src="{{item.info.head_pic}}"></div>

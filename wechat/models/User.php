@@ -163,7 +163,7 @@ class User extends \common\models\Base
      */
     public function userList($where = [])
     {
-        $pageSize = 3;
+        $pageSize = 6;
         // 查询条件处理
         $where = $this->getUserListWhere($where, $pageSize);
         $offset = $where['offset'];
@@ -175,6 +175,7 @@ class User extends \common\models\Base
             ->where($condition)
             ->from(static::tableName() . ' u')
             ->innerJoin($joinTable . ' i', "u.id=i.user_id")
+            ->orderBy('last_login_time desc')
             ->limit($pageSize)
             ->offset($offset);
 
