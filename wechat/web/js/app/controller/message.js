@@ -118,7 +118,7 @@ define(['app/module', 'app/directive/directiveApi'
     }]);
 
 
-    module.controller("message.chat", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$ionicModal', '$ionicActionSheet', '$ionicLoading', '$ionicScrollDelegate','FileUploader', function (api, $scope, $timeout, $ionicPopup, $ionicModal, $ionicActionSheet, $ionicLoading, $ionicScrollDelegate,FileUploader) {
+    module.controller("message.chat", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$ionicModal', '$ionicActionSheet', '$ionicLoading', '$ionicScrollDelegate', 'FileUploader', '$http', function (api, $scope, $timeout, $ionicPopup, $ionicModal, $ionicActionSheet, $ionicLoading, $ionicScrollDelegate, FileUploader, $http) {
 
         $scope.multi = false;
         $scope.showMulti = function () {
@@ -131,10 +131,10 @@ define(['app/module', 'app/directive/directiveApi'
 
         $scope.talk_type = 'voice';
 
-        $scope.changeType = function(){
-            if($scope.talk_type == 'voice'){
+        $scope.changeType = function () {
+            if ($scope.talk_type == 'voice') {
                 $scope.talk_type = 'txt';
-            }else{
+            } else {
                 $scope.talk_type = 'voice';
             }
         }
@@ -173,17 +173,13 @@ define(['app/module', 'app/directive/directiveApi'
             briberyModal.hide();
         }
 
-        // 发送图片
+        // 选择图片
         $scope.send_pic = function () {
-            var e=document.getElementById("pic_fileInput");
-            var ev=document.createEvent("MouseEvents");
-            ev.initEvent("click",true,true);
+            var e = document.getElementById("pic_fileInput");
+            var ev = document.createEvent("MouseEvents");
+            ev.initEvent("click", true, true);
             e.dispatchEvent(ev);
             //console.log($scope.uploadPic);
-
-
-
-
         }
 
         // 实例化上传图片插件
@@ -191,40 +187,66 @@ define(['app/module', 'app/directive/directiveApi'
             url: '/wap/file/upload'
         });
 
-        // 多图上传
+        // 过滤器，限制用户只能上传图片
         uploader.filters.push({
-            name: 'customFilter',
-            fn: function(item /*{File|FileLikeObject}*/, options) {
-                return this.queue.length < 10;
+            name: 'file-type-Res',
+            fn: function (item) {
+
+                // 压缩图片
+                api.resizeFile(item).then(function (blob_data) {
+                    var fd = new FormData();
+                    fd.append("imageFile", blob_data);
+                    $http.post('/wap/file/upload', fd, {
+                            headers: {'Content-Type': undefined},
+                            transformRequest: angular.identity
+                        })
+                        .success(function (data) {
+                            console.info('success', data);
+                        })
+                        .error(function () {
+                            console.log("uploaded error...")
+                        });
+                }, function (err_reason) {
+                    console.log(err_reason);
+                });
+
+
+                if (!ar.msg_file_res_img(item)) {
+                    // 文件格式不合法
+                    $ionicPopup.alert({title: '只能发送图片类型的文件！'});
+                }
+                return true;
             }
         });
+
+
         // 上传图片相关回调
 
-        uploader.onWhenAddingFileFailed = function(item /*{File|FileLikeObject}*/, filter, options) {
+        uploader.onWhenAddingFileFailed = function (item /*{File|FileLikeObject}*/, filter, options) {   // 当文件添加失败
             console.info('onWhenAddingFileFailed', item, filter, options);
         };
-        uploader.onAfterAddingFile = function(fileItem) {   // 上传之后
+        uploader.onAfterAddingFile = function (fileItem) {   // 上传之后
             fileItem.uploader.queue[0].upload();
             console.info('onAfterAddingFile', fileItem);
         };
-        uploader.onBeforeUploadItem = function(item) {   // 上传之前
+        uploader.onBeforeUploadItem = function (item) {   // 上传之前
             console.info('onBeforeUploadItem', item);
 
         };
-        uploader.onProgressItem = function(fileItem, progress) {
+        uploader.onProgressItem = function (fileItem, progress) {  // 文件上传进度
             console.info('onProgressItem', fileItem, progress);
         };
-        uploader.onSuccessItem = function(fileItem, response, status, headers) {
+        uploader.onSuccessItem = function (fileItem, response, status, headers) {  // 上传成功
             console.info('onSuccessItem', fileItem, response, status, headers);
         };
-        uploader.onErrorItem = function(fileItem, response, status, headers) {
+        uploader.onErrorItem = function (fileItem, response, status, headers) {   // 上传出错
             console.info('onErrorItem', fileItem, response, status, headers);
         };
 
-        uploader.onCompleteItem = function(fileItem, response, status, headers) {
+        uploader.onCompleteItem = function (fileItem, response, status, headers) {  // 上传结束
             console.info('onCompleteItem', fileItem, response, status, headers);
         };
-        uploader.onCompleteAll = function() {
+        uploader.onCompleteAll = function () {
             console.info('onCompleteAll');
         };
 
@@ -289,7 +311,7 @@ define(['app/module', 'app/directive/directiveApi'
                             serverId: response.message, // 需要下载的图片的服务器端ID，由uploadImage接口获得
                             isShowProgressTips: 1, // 默认为1，显示进度提示
                             success: function (res) {
-                                if(res.localId != null) {
+                                if (res.localId != null) {
                                     //var img = '<img str="'+res.localId+'" />';
                                     response.message = res.localId;
                                     $scope.historyList.push(response);
