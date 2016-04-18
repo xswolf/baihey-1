@@ -26,16 +26,25 @@ define(['app/module', 'app/directive/directiveApi'
         } else {
             $scope.searchForm.data.sex = 0;
         }
-        // 微信接口，获取用户地理位置。 如果用户拒绝提供位置，则默认重庆
-        $scope.cityName = '重庆';
-        $scope.cityId = 2;
+        // 获取用户地理位置。 如果为获取到，则默认重庆
+        if (ar.getCookie('bhy_u_city') && ar.getCookie('bhy_u_cityId')) {
+            $scope.cityName = eval(ar.getCookie('bhy_u_city'));
+            $scope.cityId = ar.getCookie('bhy_u_cityId');
+        } else {
+            $scope.cityName = '重庆';
+            $scope.cityId = 2;
+        }
         $scope.searchForm.data.age = '18-28';
 
         // 地区选择查询广播
-        $scope.$on('cityName',function(event,data) {
+        $scope.$on('cityName', function (event, data) {
             $scope.cityName = data.name;
             $scope.cityId = data.id;
-            api.list("/wap/site/user-list", {'city': $scope.cityId,'sex': $scope.searchForm.data.sex, 'age': $scope.searchForm.data.age}).success(function (res) {
+            api.list("/wap/site/user-list", {
+                'city': $scope.cityId,
+                'sex': $scope.searchForm.data.sex,
+                'age': $scope.searchForm.data.age
+            }).success(function (res) {
                 $scope.items = res.data;
                 for (var i in $scope.items) {
                     $scope.items[i].info = JSON.parse($scope.items[i].info);
@@ -60,7 +69,11 @@ define(['app/module', 'app/directive/directiveApi'
         // 地区处理
         $scope.searchForm.data.city = $scope.cityId;
 
-        api.list("/wap/site/user-list", {'city': $scope.searchForm.data.city,'sex': $scope.searchForm.data.sex, 'age': $scope.searchForm.data.age}).success(function (res) {
+        api.list("/wap/site/user-list", {
+            'city': $scope.searchForm.data.city,
+            'sex': $scope.searchForm.data.sex,
+            'age': $scope.searchForm.data.age
+        }).success(function (res) {
             $scope.items = res.data;
             for (var i in $scope.items) {
                 $scope.items[i].info = JSON.parse($scope.items[i].info);
@@ -215,9 +228,9 @@ define(['app/module', 'app/directive/directiveApi'
         $scope.citySave = function () {
 
             for (var i = 0; i < $scope.citys.length; i++) {
-                if($scope.citys[i].id == $scope.cityId){
+                if ($scope.citys[i].id == $scope.cityId) {
                     $scope.modalCityName = $scope.citys[i].name;
-                    $scope.$emit('cityName',$scope.citys[i]);
+                    $scope.$emit('cityName', $scope.citys[i]);
                     continue;
                 }
             }
@@ -225,139 +238,138 @@ define(['app/module', 'app/directive/directiveApi'
             $scope.cityModal.hide();
         }
 
-        console.log(provines[0]);
         $scope.provinces = provines;
         $scope.citys = citys;
 
         /*$scope.provinces = [
-            {
-                id: 1,
-                name: '重庆市'
-            },
-            {
-                id: 2,
-                name: '北京市'
+         {
+         id: 1,
+         name: '重庆市'
+         },
+         {
+         id: 2,
+         name: '北京市'
 
-            },
-            {
-                id: 3,
-                name: '上海市'
-            },
-            {
-                id: 4,
-                name: '天津市'
-            },
-            {
-                id: 5,
-                name: '广东省'
-            },
-            {
-                id: 6,
-                name: '四川省'
-            },
-            {
-                id: 7,
-                name: '浙江省'
-            },
-            {
-                id: 8,
-                name: '辽宁省'
-            },
-            {
-                id: 9,
-                name: '吉林省'
-            },
-            {
-                id: 10,
-                name: '陕西省'
-            }
-            ,
-            {
-                id: 11,
-                name: '陕西省'
-            }
-            ,
-            {
-                id: 12,
-                name: '陕西省'
-            }
-            ,
-            {
-                id: 13,
-                name: '陕西省'
-            }
-            ,
-            {
-                id: 14,
-                name: '陕西省'
-            }
-            ,
-            {
-                id: 15,
-                name: '陕西省'
-            }
-            ,
-            {
-                id: 16,
-                name: '陕西省'
-            }
-            ,
-            {
-                id: 17,
-                name: '陕西省'
-            }
-            ,
-            {
-                id: 18,
-                name: '陕西省'
-            }
-            ,
-            {
-                id: 19,
-                name: '陕西省'
-            }
+         },
+         {
+         id: 3,
+         name: '上海市'
+         },
+         {
+         id: 4,
+         name: '天津市'
+         },
+         {
+         id: 5,
+         name: '广东省'
+         },
+         {
+         id: 6,
+         name: '四川省'
+         },
+         {
+         id: 7,
+         name: '浙江省'
+         },
+         {
+         id: 8,
+         name: '辽宁省'
+         },
+         {
+         id: 9,
+         name: '吉林省'
+         },
+         {
+         id: 10,
+         name: '陕西省'
+         }
+         ,
+         {
+         id: 11,
+         name: '陕西省'
+         }
+         ,
+         {
+         id: 12,
+         name: '陕西省'
+         }
+         ,
+         {
+         id: 13,
+         name: '陕西省'
+         }
+         ,
+         {
+         id: 14,
+         name: '陕西省'
+         }
+         ,
+         {
+         id: 15,
+         name: '陕西省'
+         }
+         ,
+         {
+         id: 16,
+         name: '陕西省'
+         }
+         ,
+         {
+         id: 17,
+         name: '陕西省'
+         }
+         ,
+         {
+         id: 18,
+         name: '陕西省'
+         }
+         ,
+         {
+         id: 19,
+         name: '陕西省'
+         }
 
-        ]
+         ]
 
 
-        $scope.citys = [
-            {
-                id: 11,
-                parent: 1,
-                name: '重庆市'
-            },
-            {
-                id: 21,
-                parent: 2,
-                name: '北京市'
-            },
-            {
-                id: 31,
-                parent: 3,
-                name: '上海市'
-            },
-            {
-                id: 41,
-                parent: 4,
-                name: '天津市'
-            },
-            {
-                id: 51,
-                parent: 5,
-                name: '广州市'
-            },
-            {
-                id: 52,
-                parent: 5,
-                name: '深圳市'
-            },
-            {
-                id: 53,
-                parent: 5,
-                name: '东莞市'
-            }
-        ];
-*/
+         $scope.citys = [
+         {
+         id: 11,
+         parent: 1,
+         name: '重庆市'
+         },
+         {
+         id: 21,
+         parent: 2,
+         name: '北京市'
+         },
+         {
+         id: 31,
+         parent: 3,
+         name: '上海市'
+         },
+         {
+         id: 41,
+         parent: 4,
+         name: '天津市'
+         },
+         {
+         id: 51,
+         parent: 5,
+         name: '广州市'
+         },
+         {
+         id: 52,
+         parent: 5,
+         name: '深圳市'
+         },
+         {
+         id: 53,
+         parent: 5,
+         name: '东莞市'
+         }
+         ];
+         */
     }]);
 
     // 高级搜索

@@ -43,4 +43,26 @@ class Curl{
         }
         return $result;
     }
+
+    /**
+     * @param $url
+     * @param $data
+     * @param bool $debug
+     * @return mixed
+     */
+    public function curl_get($url , $data , $debug = false){
+
+        $ch = curl_init ();
+        curl_setopt ( $ch, CURLOPT_URL, $url );
+        curl_setopt ( $ch, CURLOPT_HEADER, 0 );
+        curl_setopt ( $ch, CURLOPT_RETURNTRANSFER, 1 );
+        curl_setopt ( $ch, CURLOPT_POSTFIELDS, $data );
+        $result = curl_exec ( $ch );
+        curl_close ( $ch );
+        if ($debug){
+            echo "调用的URL是：".$url;
+            echo $data;
+        }
+        return $result;
+    }
 }
