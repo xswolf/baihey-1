@@ -70,12 +70,20 @@ var ar = {
     },
 
     'validateMoney': function (money) {
-        if (/^\d+(\.\d{1,3})?$/.test(money)){
-           return true;
-        }else {
+        if (/^\d+(\.\d{1,3})?$/.test(money)) {
+            return true;
+        } else {
             return false;
         }
+    },
 
+    'msg_file_res_img': function (imgFile) {
+        var suffixName = imgFile.name.toLowerCase().substr(imgFile.name.lastIndexOf("."));    //后缀名
+        if(suffixName != '.jpg' || suffixName != '.png' || suffixName != '.bmp' || suffixName != '.gif'){
+            return false;
+        }else {
+            return true;
+        }
     }
 
 };

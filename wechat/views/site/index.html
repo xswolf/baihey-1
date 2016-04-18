@@ -11,7 +11,7 @@
 
     <ion-content class="has-header has-footer bhy-has-footer site">
         <ion-list>
-            <div class="row">
+            <div class="row" ng-if="userInfo.info">
                 <div class="col col-25"><img class="item_uimg rounded" ng-if="userInfo.info.head_pic == '未知'" src="/wechat/web/images/u_noimg.jpg"><img class="item_uimg rounded" ng-if="userInfo.info.head_pic != '未知'" src="{{userInfo.info.head_pic}}"></div>
                 <div class="col col-75">
 
@@ -24,6 +24,19 @@
                     <div class="row pl0">
                         <div class="col"><a class="warn" href="/member/information" ng-if="userInfo.info.identity_id == '未知'"><i
                                 class="ion-ios-information cor0 mr5"></i>请您上传身份证，完善资料 >></a></div>
+                    </div>
+                </div>
+            </div>
+            <div class="row" ng-if="!userInfo.info">
+                <div class="col col-25"><img class="item_uimg rounded" src="/wechat/web/images/u_noimg.jpg"></div>
+                <div class="col col-75">
+
+                    <div class="row pl0">
+                        <div class="col" >会员您好！您还没有登录！</div>
+                    </div>
+
+                    <div class="row pl0">
+                        <div class="col"></div>
                     </div>
                 </div>
             </div>
