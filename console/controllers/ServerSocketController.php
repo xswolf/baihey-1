@@ -72,14 +72,14 @@ class ServerSocketController extends Controller {
         }
     }
 
-    function close( $k ) {
+    function close( $k ,$ming='') {
         socket_close( $this->users[ $k ]['socket'] );
         unset( $this->users[ $k ] );
         $this->sockets = [ $this->master ];
         foreach ( $this->users as $v ) {
             $this->sockets[] = $v['socket'];
         }
-        $this->e( "key:$k close" );
+        $this->e( "用户:$ming 下线" );
     }
 
     function search( $sock ) {
@@ -217,9 +217,11 @@ class ServerSocketController extends Controller {
         if ( isset( $g['type'] ) && $g['type'] == 'add' ) {
             foreach ($this->users as $kk=>$vv){
                 if ($vv['name'] == $g['ming']){ // 如果已经加入，关闭已经加入的链接
-                    $this->close($kk);
+                    $this->close($kk , $g['ming']);
                 }
             }
+            $this->e( "用户:{$g['ming']} 上线" );
+
             $this->users[ $k ]['name'] = $g['ming'];
             $ar['type']                = 'add';
             $ar['name']                = $g['ming'];
@@ -312,16 +314,14 @@ class ServerSocketController extends Controller {
 
     //用户退出
     function send2( $k ) {
-        $this->close( $k );
+        $this->close( $k ,$this->users[$k]['name']);
         $ar['type']  = 'remove';
         $ar['message'] = $k;
         $this->send1( false , $ar , 'all' );
     }
 
     function e( $str ) {
-        //$path=dirname(__FILE__).'/log.txt';
         $str = $str . "\n";
-        //error_log($str,3,$path);
         echo iconv( 'utf-8' , 'gbk//IGNORE' , $str );
     }
 }
