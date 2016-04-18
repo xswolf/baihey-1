@@ -34,7 +34,12 @@ class Message extends Base {
 
         $where = $messageModel->processWhere( $where );
         $where .= "or receive_user_id={$sendId} and send_user_id={$receiveId}";
-        $list = $messageModel->Query()->where( $where )->select( '*' )->all();
+        $handle = $messageModel->Query()->where( $where )
+            ->select( '*' );
+
+        $count = $handle->count();
+
+        $list = $handle->offset($count-6)->limit(6)->all();
 
         return $list;
     }

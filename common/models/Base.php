@@ -123,6 +123,9 @@ class Base extends \yii\db\ActiveRecord{
         return $sqlWhere;
     }
 
+    /**
+     * @return \yii\db\Query
+     */
     public function Query(){
         return (new Query())->from(\Yii::$app->db->tablePrefix.self::$_table);
     }
