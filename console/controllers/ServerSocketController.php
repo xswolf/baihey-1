@@ -79,7 +79,7 @@ class ServerSocketController extends Controller {
         foreach ( $this->users as $v ) {
             $this->sockets[] = $v['socket'];
         }
-        $this->e( "用户:$ming 下线" );
+        $this->e( "user:$ming offline" );
     }
 
     function search( $sock ) {
@@ -220,7 +220,7 @@ class ServerSocketController extends Controller {
                     $this->close($kk , $g['ming']);
                 }
             }
-            $this->e( "用户:{$g['ming']} 上线" );
+            $this->e( "user:{$g['ming']} online" );
 
             $this->users[ $k ]['name'] = $g['ming'];
             $ar['type']                = 'add';
@@ -228,7 +228,7 @@ class ServerSocketController extends Controller {
             $key                       = 'all';
         } else {
             $ar['type'] = isset($g['type']) ? $g['type'] : 'send';
-            if ($g['message'] == 'heartbeat') return '心跳包不管,直接返回';
+            if ($g['message'] == 'heartbeat') return 'heart is nothing';
             $ar['message'] = $g['message'];
             if ( $ar['message'] == null ) {
                 return;
