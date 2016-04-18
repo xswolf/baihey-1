@@ -179,7 +179,8 @@ define(['app/module', 'app/directive/directiveApi'
             var ev = document.createEvent("MouseEvents");
             ev.initEvent("click", true, true);
             e.dispatchEvent(ev);
-            //console.log($scope.uploadPic);
+
+
         }
 
         // 实例化上传图片插件
@@ -238,6 +239,7 @@ define(['app/module', 'app/directive/directiveApi'
         };
         uploader.onSuccessItem = function (fileItem, response, status, headers) {  // 上传成功
             console.info('onSuccessItem', fileItem, response, status, headers);
+
         };
         uploader.onErrorItem = function (fileItem, response, status, headers) {   // 上传出错
             console.info('onErrorItem', fileItem, response, status, headers);

@@ -195,6 +195,21 @@ define(['app/module', 'app/directive/directiveApi'
 
         }
 
+        // 点击加载更多
+        $scope.loadMore = function () {
+            $scope.pageIndex = 1;
+
+            $scope.loadMoreData = {pageIndex:$scope.pageIndex};
+
+            api.list('url',$scope.loadMoreData).success(function(res){
+
+                $scope.items = res;
+
+                $scope.pageIndex++;
+            });
+
+        }
+
     }]);
 
     //选择城市
