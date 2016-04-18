@@ -7,7 +7,6 @@ define ([
     'app/controller/user',
     'app/controller/site',
     'app/controller/message',
-    'app/controller/focus',
 ] , function () {
 
 })
