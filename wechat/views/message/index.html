@@ -24,15 +24,18 @@
                 <div class="row">
                     <div class="msg_u_img mr20 pr fl">
                         <img class="item_uimg rounded" src="/wechat/web/images/test.jpg" width="56" height="56">
-                        <i class="info_nb">12</i>
+                        <i class="info_nb" ng-if="item.receive_user_id == userInfo.id">{{item.sum_send}}</i>
                     </div>
                     <p style="width: 65%;" class="">
-                        <span class="fwb fs14 mr10 lh28">李小姐</span>
-                        <span class="identity sfz lh28">身份证</span>
-                        <span class="identity phone lh28">手机</span>
-                        <span class="dbl fs12 lh28 msg_text"><span class="mr20">[23岁 未婚]</span>第四幅国画丢分韩国幅国画丢分规划法规和使得法国斯蒂芬个的</span>
+                        <span class="fwb fs14 mr10 lh28" ng-if="item.info.real_name != '未知'">{{item.info.real_name | sex:item.sex :item.info.age}}</span>
+                        <span class="fwb fs14 mr10 lh28" ng-if="item.info.real_name == '未知'">会员ID:{{item.id}}</span>
+                        <span class="identity sfz lh28" ng-if="item.identity_pic.is_check == 1">身份证</span>
+                        <span class="identity phone lh28" ng-if="item.phone">手机</span>
+                        <span class="dbl fs12 lh28 msg_text">
+                            <span class="mr20" ng-if="item.info.age != '未知'">[{{item.info.age | timeToAge}}岁 {{item.info.is_marriage}}]</span>
+                            <span class="mr20" ng-if="item.info.age == '未知'">[{{item.info.age}} {{item.info.is_marriage}}]</span>{{item.message}}</span>
                     </p>
-                    <span class="send_time dbl">2016-03-20 11:01:33</span>
+                    <span class="send_time dbl">{{item.time | date:'yyyy-MM-dd HH:mm:ss'}}</span>
                 </div>
                 <ion-option-button class="button-assertive" ng-click="removeItem(item)">
                 删除

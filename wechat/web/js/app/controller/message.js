@@ -8,93 +8,23 @@ define(['app/module', 'app/directive/directiveApi'
     module.controller("message.index", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$ionicModal', '$ionicActionSheet', '$ionicLoading', function (api, $scope, $timeout, $ionicPopup, $ionicModal, $ionicActionSheet, $ionicLoading) {
 
         // 获取页面数据
-        $scope.items = [
-            {
-                id: 1,
-                name: "张三"
-            },
-            {
-                id: 2,
-                name: "李四"
-            },
-            {
-                id: 3,
-                name: "王二麻子"
-            },
-            {
-                id: 4,
-                name: "王二麻子"
-            },
-            {
-                id: 5,
-                name: "王二麻子"
-            },
-            {
-                id: 6,
-                name: "王二麻子"
-            },
-            {
-                id: 7,
-                name: "王二麻子"
-            },
-            {
-                id: 8,
-                name: "王二麻子"
-            },
-            {
-                id: 9,
-                name: "王二麻子"
-            },
-            {
-                id: 9,
-                name: "王二麻子"
-            },
-            {
-                id: 10,
-                name: "王二麻子"
-            },
-            {
-                id: 11,
-                name: "王二麻子"
-            },
-            {
-                id: 12,
-                name: "王二麻子"
-            },
-            {
-                id: 13,
-                name: "王二麻子"
-            },
-            {
-                id: 14,
-                name: "王二麻子"
-            },
-            {
-                id: 15,
-                name: "王二麻子"
-            },
-            {
-                id: 16,
-                name: "王二麻子"
-            },
-            {
-                id: 17,
-                name: "王二麻子"
-            },
-            {
-                id: 18,
-                name: "王二麻子"
-            },
-            {
-                id: 19,
-                name: "王二麻子"
-            },
-            {
-                id: 20,
-                name: "王二麻子"
+        api.list('/wap/message/message-list', []).success(function (res) {
+            $scope.items = res.data;
+            for (var i in $scope.items) {
+                $scope.items[i].info = JSON.parse($scope.items[i].info);
+                $scope.items[i].identity_pic = JSON.parse($scope.items[i].identity_pic);
             }
+        });
 
-        ]
+        // 获取当前用户信息
+        api.getUserInfo().success(function (res) {
+            if (res.data) {
+                $scope.userInfo = res.data;
+            } else {
+                $scope.userInfo = [];
+                console.log('没有获取到当前用户信息');
+            }
+        });
 
         $scope.isFollow = true;   // 是否有谁关注了我，有则显示小红点
 
@@ -106,14 +36,14 @@ define(['app/module', 'app/directive/directiveApi'
 
         // 删除操作
         $scope.removeItem = function (item) {
-            api.setMsgDisplay(item.id).success(function(res){
-                if(res.status){ // 删除成功
+            api.setMsgDisplay(item.id).success(function (res) {
+                if (res.status) { // 删除成功
                     $scope.items.splice($scope.items.indexOf(item), 1);
-                }else {
-                    $ionicPopup.alert({title:'删除失败！'});
+                } else {
+                    $ionicPopup.alert({title: '删除失败！'});
                 }
-            }).error(function(){
-                $ionicPopup.alert({title:'操作失败，请刷新页面重试！'});
+            }).error(function () {
+                $ionicPopup.alert({title: '操作失败，请刷新页面重试！'});
             })
 
         }
@@ -196,7 +126,7 @@ define(['app/module', 'app/directive/directiveApi'
         }
 
         // 领取红包
-        $scope.detail_bri = function (id,status) {
+        $scope.detail_bri = function (id, status) {
 
 
         }
@@ -204,49 +134,49 @@ define(['app/module', 'app/directive/directiveApi'
         // 测试数据
         $scope.historyList = [
             {
-                id:1,
-                send_user_id:1001,
-                headImgUrl:'/wechat/web/images/test.jpg',
-                type:'txt',
-                content:'你好你好你好啊，测试文本消息',
-                status:1,
-                display:1
+                id: 1,
+                send_user_id: 1001,
+                headImgUrl: '/wechat/web/images/test.jpg',
+                type: 'txt',
+                content: '你好你好你好啊，测试文本消息',
+                status: 1,
+                display: 1
             },
             {
-                id:2,
-                send_user_id:1001,
-                headImgUrl:'/wechat/web/images/test.jpg',
-                type:'pic',
-                content:'/wechat/web/images/test2.jpg',
-                status:3,
-                display:1
+                id: 2,
+                send_user_id: 1001,
+                headImgUrl: '/wechat/web/images/test.jpg',
+                type: 'pic',
+                content: '/wechat/web/images/test2.jpg',
+                status: 3,
+                display: 1
             },
             {
-                id:3,
-                send_user_id:1001,
-                headImgUrl:'/wechat/web/images/test.jpg',
-                type:'record',
-                content:'语音路径',
-                status:2,
-                display:1
+                id: 3,
+                send_user_id: 1001,
+                headImgUrl: '/wechat/web/images/test.jpg',
+                type: 'record',
+                content: '语音路径',
+                status: 2,
+                display: 1
 
             },
             {
-                id:4,
-                send_user_id:1001,
-                headImgUrl:'/wechat/web/images/test.jpg',
-                type:'bri',
-                content:'红包数据',
-                status:4,
-                display:1
+                id: 4,
+                send_user_id: 1001,
+                headImgUrl: '/wechat/web/images/test.jpg',
+                type: 'bri',
+                content: '红包数据',
+                status: 4,
+                display: 1
             }
 
         ]
 
         // 对方是否认证身份
-        $scope.auth_validate = function(receviceId){
+        $scope.auth_validate = function (receviceId) {
 
-            api.getUserAuthStatus(receviceId).success(function(res){
+            api.getUserAuthStatus(receviceId).success(function (res) {
 
                 // 显示警示语
                 $scope.u_auth_validate = res.status;
@@ -256,13 +186,13 @@ define(['app/module', 'app/directive/directiveApi'
 
 
         //  获取历史聊天数据
-       /* $scope.receiveId = ar.getQueryString('id')
-        api.list("/wap/message/message-history", {id: $scope.receiveId}).success(function (data) {
-            $scope.historyList = data;
+        /* $scope.receiveId = ar.getQueryString('id')
+         api.list("/wap/message/message-history", {id: $scope.receiveId}).success(function (data) {
+         $scope.historyList = data;
 
-        }).error(function () {
-            console.log('页面message.js出现错误，代码：/wap/chat/message-history');
-        })*/
+         }).error(function () {
+         console.log('页面message.js出现错误，代码：/wap/chat/message-history');
+         })*/
 
         // socket聊天
         requirejs(['chat/wechatInterface', 'chat/chat'], function (wx, chat) {
@@ -330,35 +260,35 @@ define(['app/module', 'app/directive/directiveApi'
                     }
                 });
 
-               /* // 上传图片相关回调
-                uploader.onWhenAddingFileFailed = function (item /!*{File|FileLikeObject}*!/, filter, options) {   // 当文件添加失败
-                    console.info('onWhenAddingFileFailed', item, filter, options);
-                };
-                uploader.onAfterAddingFile = function (fileItem) {   // 上传之后
-                    fileItem.uploader.queue[0].upload();
+                /* // 上传图片相关回调
+                 uploader.onWhenAddingFileFailed = function (item /!*{File|FileLikeObject}*!/, filter, options) {   // 当文件添加失败
+                 console.info('onWhenAddingFileFailed', item, filter, options);
+                 };
+                 uploader.onAfterAddingFile = function (fileItem) {   // 上传之后
+                 fileItem.uploader.queue[0].upload();
 
-                    console.info('onAfterAddingFile', fileItem);
+                 console.info('onAfterAddingFile', fileItem);
 
-                };
-                uploader.onBeforeUploadItem = function (item) {   // 上传之前
+                 };
+                 uploader.onBeforeUploadItem = function (item) {   // 上传之前
 
-                    console.info('onBeforeUploadItem', item);
+                 console.info('onBeforeUploadItem', item);
 
-                };
-                uploader.onProgressItem = function (fileItem, progress) {  // 文件上传进度
-                    console.info('onProgressItem', fileItem, progress);
-                };
-                uploader.onSuccessItem = function (fileItem, response, status, headers) {  // 上传成功
-                    console.info('onSuccessItem', fileItem, response, status, headers);
+                 };
+                 uploader.onProgressItem = function (fileItem, progress) {  // 文件上传进度
+                 console.info('onProgressItem', fileItem, progress);
+                 };
+                 uploader.onSuccessItem = function (fileItem, response, status, headers) {  // 上传成功
+                 console.info('onSuccessItem', fileItem, response, status, headers);
 
-                };
-                uploader.onErrorItem = function (fileItem, response, status, headers) {   // 上传出错
-                    console.info('onErrorItem', fileItem, response, status, headers);
-                };
+                 };
+                 uploader.onErrorItem = function (fileItem, response, status, headers) {   // 上传出错
+                 console.info('onErrorItem', fileItem, response, status, headers);
+                 };
 
-                uploader.onCompleteItem = function (fileItem, response, status, headers) {  // 上传结束
-                    console.info('onCompleteItem', fileItem, response, status, headers);
-                };*/
+                 uploader.onCompleteItem = function (fileItem, response, status, headers) {  // 上传结束
+                 console.info('onCompleteItem', fileItem, response, status, headers);
+                 };*/
 
 
                 //chat.sendMessage($scope.message, $scope.sendId, $scope.receiveId, 'send');

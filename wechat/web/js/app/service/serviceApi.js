@@ -28,7 +28,7 @@ define(['app/module'], function (module,config) {
          * @returns {*}
          */
         api.setMsgDisplay = function(msgId){
-            return $http.get('url',{params: {msgId: msgId}});
+            return $http.get('/wap/message/del',{params: {msgId: msgId}});
         }
 
         /**
