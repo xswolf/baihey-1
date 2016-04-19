@@ -133,6 +133,15 @@ define(['app/module', 'app/directive/directiveApi'
             $scope.detailBriModal.show();
         }
 
+        // 打开红包
+        $ionicModal.fromTemplateUrl('detaiOpenBriModal.html', {
+            scope: $scope,
+            animation: 'slide-in-up'
+        }).then(function (modal) {
+            $scope.detaiOpenBriModal = modal;
+        });
+
+
         // 测试数据
         $scope.historyList = [
             {

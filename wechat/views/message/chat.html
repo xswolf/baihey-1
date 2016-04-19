@@ -164,13 +164,29 @@
                 <img src="/wechat/web/images/test.jpg" >
             </span>
             <span class="bri_t">
-                <p class="bri_u_name">李小姐</p>
-                <p class="bri_u_name2">给你发了一个红包</p>
+                <p class="bri_u_name">李小姐的红包</p>
+                <p class="bri_u_name2">恭喜发财恭喜发财恭</p>
             </span>
             <span class="bri_btn">
-                <button class="button button-assertive ">拆开看看</button>
+                <button class="button button-assertive" ng-click="detaiOpenBriModal.show()">拆开看看</button>
             </span>
         </div>
+    </ion-modal-view>
+</script>
+
+<script id="detaiOpenBriModal.html" type="text/ng-template">
+    <ion-modal-view>
+        <ion-header-bar>
+            <button class="button button-icon ion-arrow-left-c" ng-click="detaiOpenBriModal.hide()"></button>
+            <title class="title">红包详情</title>
+        </ion-header-bar>
+        <ion-content>
+            <div class="openBri_bg">
+                <span class="openBri_uimg">
+                     <img src="/wechat/web/images/test.jpg" >
+                </span>
+            </div>
+        </ion-content>
     </ion-modal-view>
 </script>
 
@@ -207,7 +223,7 @@
 <script id="briberyModal.html" type="text/ng-template">
     <ion-modal-view ng-controller="message.childBriberyController">
         <ion-header-bar>
-            <a href="javascript:;" ng-click="briPageHide()" class="button button-icon ">关闭</a>
+            <a href="javascript:;" ng-click="briPageHide()" class="button button-icon">关闭</a>
             <title class="title">发红包</title>
         </ion-header-bar>
         <ion-content class="bribery has-header">

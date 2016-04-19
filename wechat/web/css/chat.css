@@ -555,3 +555,28 @@
     top: 2px;
     left: 6px
 }
+
+/* 打开红包，查看红包 */
+.openBri_bg{
+    background-color: #d84e43;
+    border-radius: 0 0 100% 100%;
+    min-height: 100px;
+    min-width: 320px;
+    width: 100%;
+    position: relative;
+}
+.openBri_bg .openBri_uimg{
+    border-radius: 50%;
+    bottom: -40px;
+    display: block;
+    height: 80px;
+    left: 40.5%;
+    overflow: hidden;
+    position: absolute;
+    width: 80px;
+}
+
+.openBri_bg .openBri_uimg img{
+    max-width: 100%;
+
+}
