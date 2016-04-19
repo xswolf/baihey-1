@@ -99,16 +99,18 @@ class UserController extends BaseController
 
         // 地区是否存cookie，否则存
         if (!isset($_COOKIE['bhy_u_city']) && !isset($_COOKIE['bhy_u_cityId'])) {
-            $html = Curl::getInstance()->curl_get('http://int.dpool.sina.com.cn/iplookup/iplookup.php?format=js&ip='.$_SERVER['REMOTE_ADDR'], '');
-            $jsonData = explode("=", $html);
-            $jsonAddress = substr($jsonData[1], 0, -1);
-            $jsonAddress = json_decode($jsonAddress);
-            $city = $jsonAddress->city;
-            if ($info = Area::getInstance()->getCityByName($city)) {
-                // 浏览器使用地区cookie
-                setcookie('bhy_u_city', json_encode($info['name']), YII_BEGIN_TIME + 3600 * 24 * 30, '/wap');
-                setcookie('bhy_u_cityId', $info['id'], YII_BEGIN_TIME + 3600 * 24 * 30, '/wap');
-                setcookie('bhy_u_cityPid', $info['parentId'], YII_BEGIN_TIME + 3600 * 24 * 30, '/wap');
+            $html = Curl::getInstance()->curl_get('http://int.dpool.sina.com.cn/iplookup/iplookup.php?format=js&ip=' . $_SERVER['REMOTE_ADDR'], '');
+            if ($html != -2) {
+                $jsonData = explode("=", $html);
+                $jsonAddress = substr($jsonData[1], 0, -1);
+                $jsonAddress = json_decode($jsonAddress);
+                $city = $jsonAddress->city;
+                if ($info = Area::getInstance()->getCityByName($city)) {
+                    // 浏览器使用地区cookie
+                    setcookie('bhy_u_city', json_encode($info['name']), YII_BEGIN_TIME + 3600 * 24 * 30, '/wap');
+                    setcookie('bhy_u_cityId', $info['id'], YII_BEGIN_TIME + 3600 * 24 * 30, '/wap');
+                    setcookie('bhy_u_cityPid', $info['parentId'], YII_BEGIN_TIME + 3600 * 24 * 30, '/wap');
+                }
             }
         }
         if (!isset($_COOKIE["bhy_u_name"]) && isset($user) && isset($user['username'])) {
