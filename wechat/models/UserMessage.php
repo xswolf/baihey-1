@@ -53,18 +53,18 @@ SELECT receive_user_id,COUNT(send_user_id) sum_send,MAX(TIME) TIME FROM bhy_user
         return $row;
     }
 
+    /**
+     * 删除
+     * @param array $where
+     * @return int
+     */
     public function messageDel($where = [])
     {
 
         $user_id = Cookie::getInstance()->getCookie('bhy_id');
-        $db = $this->getDb();
-        $row = $db
-            ->createCommand()
-            ->update(static::tableName(), ['status' => -1], ['receive_user_id' => $user_id, 'send_user_id' => $where['msgId']]);/*
-            ->update(static::tableName(), ['status' => -1], ['send_user_id' => $user_id, 'receive_user_id' => $where['msgId']]);*/
-        echo $db->createCommand()->getRawSql();
-            //->execute();
-        var_dump($row);
-        exit;
+        $row = $this->updateAll(['status' => 2], ['receive_user_id' => $user_id, 'send_user_id' => $where['msgId']]);
+        $row += $this->updateAll(['status' => 2], ['send_user_id' => $user_id, 'receive_user_id' => $where['msgId']]);
+
+        return $row;
     }
 }
