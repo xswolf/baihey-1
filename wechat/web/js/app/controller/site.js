@@ -40,6 +40,7 @@ define(['app/module', 'app/directive/directiveApi'
             $scope.searchForm.data.city = data.id;
             $scope.searchForm.data.cityName = data.name;
             $scope.searchForm.data.pageNum = 1;
+            $scope.pageLast = true;
             api.list("/wap/site/user-list", $scope.searchForm.data).success(function (res) {
                 $scope.userList = res.data;
                 for (var i in $scope.userList) {
@@ -93,6 +94,7 @@ define(['app/module', 'app/directive/directiveApi'
             $scope.moreSearchModal.hide();
             //console.log($scope.searchForm.data);
             $scope.searchForm.data.pageNum = 1;
+            $scope.pageLast = true;
             $scope.user = api.list("/wap/site/user-list", $scope.searchForm.data);
             $scope.user.success(function (res) {
                 $scope.userList = res.data;
@@ -136,18 +138,21 @@ define(['app/module', 'app/directive/directiveApi'
                     if (index == 0) {   // 全部
                         $scope.searchForm.data.sex = 'all';
                         $scope.searchForm.data.pageNum = 1;
+                        $scope.pageLast = true;
                         user = api.list("/wap/site/user-list", $scope.searchForm.data);
                     }
 
                     if (index == 1) {   //只看男
                         $scope.searchForm.data.sex = 1;
                         $scope.searchForm.data.pageNum = 1;
+                        $scope.pageLast = true;
                         user = api.list("/wap/site/user-list", $scope.searchForm.data);
                     }
 
                     if (index == 2) {   //只看女
                         $scope.searchForm.data.sex = 0;
                         $scope.searchForm.data.pageNum = 1;
+                        $scope.pageLast = true;
                         user = api.list("/wap/site/user-list", $scope.searchForm.data);
                     }
 
