@@ -118,17 +118,14 @@ define(['app/module', 'app/directive/directiveApi'
         });
 
         // 查看图片
-        $scope.detail_pic = function (id) {
-
-            $ionicModal.fromTemplateUrl('picSliderModal.html', {
-                scope: $scope,
-                animation: 'slide-in-up'
-            }).then(function (modal) {
-                $scope.picSliderModal = modal;
-            });
-
-            picSliderModal.show();
+        $scope.showPic = false;
+        $scope.detail_pic = function(id){
+            $scope.showPic = true;
         }
+        $scope.hidePicBox = function(){
+            $scope.showPic = false;
+        }
+
 
         // 播放语音
         $scope.detail_record = function (id) {
@@ -431,7 +428,8 @@ define(['app/module', 'app/directive/directiveApi'
 
     }]);
 
-
+    // 领取红包
     module.controller("message.childDetailBriController", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$ionicModal', function (api, $scope, $timeout, $ionicPopup, $ionicModal) {
+
     }]);
 })

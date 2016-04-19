@@ -28,23 +28,23 @@
             </ion-item>
             <!-- 固定item/ -->
 
+            <!-- 身份认证提示 -->
+            <div class="r_warning" ng-if="!u_auth_validate">
+                <p>
+                    <i class="ion-alert-circled assertive fs14 warning_ico"></i>王先生 | 会员123456 您好，对方还未在本站验证身份，需谨慎交流！
+                </p>
+            </div>
+
+            <!-- 红娘评价 -->
+            <div class="rated clearfix" ng-if="!u_maker_rated">
+
+                <p class="rated_t"><i class="icon-bhy-tips-01 cor13"></i>李小姐性格随和、有一颗善良的心，
+                    是一个懂得感恩、乐观向上的女孩。</p>
+                <p class="rated_maker">—— 红娘<a class="marker_name" href="javascript:;">郭禹杉</a>评价</p>
+            </div>
+
             <ion-item class="clearfix" ng-class="{true:'talk_item_u',false:'talk_item_m'}[sendId==vo.send_user_id]"
                       ng-repeat="vo in historyList track by vo.id">
-
-                <!-- 身份认证提示 -->
-                <div class="r_warning" ng-if="$index == 0 && !u_auth_validate">
-                    <p>
-                        <i class="ion-alert-circled assertive fs14 warning_ico"></i>王先生 | 会员123456 您好，对方还未在本站验证身份，需谨慎交流！
-                    </p>
-                </div>
-
-                <!-- 红娘评价 -->
-                <div class="rated clearfix" ng-if="$index == 0 && !u_maker_rated">
-
-                    <p class="rated_t"><i class="icon-bhy-tips-01 cor13"></i>李小姐性格随和、有一颗善良的心，
-                        是一个懂得感恩、乐观向上的女孩。</p>
-                    <p class="rated_maker">—— 红娘<a class="marker_name" href="javascript:;">郭禹杉</a>评价</p>
-                </div>
 
                 <!-- 时间 -->
                 <div class="s_date">
@@ -151,8 +151,21 @@
     </div>
 
     <input type="file" id="pic_fileInput" class="pic_fileInput" nv-file-select uploader="uploader" accept="image/*"/>
-
+    <div class="pic_zoom_layer chat_mask" ng-if="showPic" ng-cloak>
+        <div class="pic_zoom pa">
+            <div class="pic_z_c pr">
+                <div class="pic_z_c_s">
+                    <img alt="" src="/wechat/web/images/test2.jpg">
+                </div>
+            <span class="pic_closeBtn assertive-bg pa" ng-click="hidePicBox()">
+                <i class="ion-close-round"></i>
+            </span>
+            </div>
+        </div>
+    </div>
 </div>
+
+
 
 <script id="detailBriModal.html" type="text/ng-template">
     <ion-modal-view class="detailBg" ng-controller="message.childDetailBriController">
@@ -161,7 +174,7 @@
                 <i class="ion-close-round"></i>
             </span>
             <span class="bri_uimg">
-                <img src="/wechat/web/images/test.jpg" >
+                <img src="/wechat/web/images/test.jpg">
             </span>
             <span class="bri_t">
                 <p class="bri_u_name">李小姐的红包</p>
@@ -183,42 +196,34 @@
         <ion-content>
             <div class="openBri_bg">
                 <span class="openBri_uimg">
-                     <img src="/wechat/web/images/test.jpg" >
+                     <img src="/wechat/web/images/test.jpg">
                 </span>
+            </div>
+            <div class="openBri_con">
+                <p class="openBri_name">
+                    李小姐的红包
+                </p>
+                <p class="openBri_name2">
+                    恭喜发财恭喜发财恭
+                </p>
+
+                <p class="openBri_money">
+                    5.00元
+                </p>
+                <p class="openBri_disc">已存入账户，可用于发红包、提现。</p>
+
+                <div class="openBri_line">
+
+                </div>
+                <p class="openBri_account">
+                    <a href="javascript:;">
+                        查看我的红包账户
+                    </a>
+                </p>
             </div>
         </ion-content>
     </ion-modal-view>
 </script>
-
-<script id="picSliderModal.html" type="text/ng-template">
-
-    <ion-modal-view ng-controller="message.childBriberyController">
-
-        <ion-slide-box>
-            <ion-slide>
-                <img src="/wechat/web/images/test2.jpg">
-            </ion-slide>
-            <ion-slide>
-                <img src="/wechat/web/images/test1.jpg">
-            </ion-slide>
-            <ion-slide>
-                <img src="/wechat/web/images/test2.jpg">
-            </ion-slide>
-            <ion-slide>
-                <img src="/wechat/web/images/test1.jpg">
-            </ion-slide>
-            <ion-slide>
-                <img src="/wechat/web/images/test1.jpg">
-            </ion-slide>
-            <ion-slide>
-                <img src="/wechat/web/images/test2.jpg">
-            </ion-slide>
-        </ion-slide-box>
-
-    </ion-modal-view>
-
-</script>
-
 
 <script id="briberyModal.html" type="text/ng-template">
     <ion-modal-view ng-controller="message.childBriberyController">
@@ -246,6 +251,7 @@
                            value="塞钱进红包" ng-click="bri_submit()">
                 </div>
             </div>
+
         </ion-content>
     </ion-modal-view>
 </script>
