@@ -90,8 +90,8 @@ var ar = {
     // 设置localStorage
     setStorage : function (name , data) {
 
-        if ( typeof data == Object){
-            JSON.stringify(data);
+        if ( data instanceof Object){
+            data = JSON.stringify(data);
         }
         if (window.localStorage) {
             localStorage.setItem(name, data);
