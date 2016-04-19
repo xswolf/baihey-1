@@ -165,7 +165,8 @@ class User extends \common\models\Base
      */
     public function userList($where = [])
     {
-        $pageSize = 6;
+        $pageSize = isset($where['pageSize']) ? $where['pageSize'] : 6;
+        unset($where['pageSize']);
         // 查询条件处理
         $where = $this->getUserListWhere($where, $pageSize);
         $offset = $where['offset'];

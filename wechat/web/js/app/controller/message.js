@@ -7,6 +7,7 @@ define(['app/module', 'app/directive/directiveApi'
 
     module.controller("message.index", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$ionicModal', '$ionicActionSheet', '$ionicLoading', function (api, $scope, $timeout, $ionicPopup, $ionicModal, $ionicActionSheet, $ionicLoading) {
 
+        $scope.userInfo = {};
         // 获取页面数据
 
         // 获取localstorage消息记录
@@ -37,15 +38,7 @@ define(['app/module', 'app/directive/directiveApi'
             ar.setStorage('messageList' , $scope.messageList)
         });
 
-        // 获取当前用户信息
-        api.getUserInfo().success(function (res) {
-            if (res.data) {
-                $scope.userInfo = res.data;
-            } else {
-                $scope.userInfo = [];
-                console.log('没有获取到当前用户信息');
-            }
-        });
+        $scope.userInfo.id = ar.getCookie('bhy_user_id');
 
         $scope.isFollow = true;   // 是否有谁关注了我，有则显示小红点
 

@@ -28,7 +28,10 @@ define(['app/module', 'app/directive/directiveApi'
             $scope.cityId = 2;
             $scope.searchForm.data.city = 2
         }
+        // 默认查询条件,年龄范围，页码，页数
         $scope.searchForm.data.age = '18-28';
+        $scope.searchForm.data.pageNum = 1;
+        $scope.searchForm.data.pageSize = 6;
 
         // 地区选择查询广播
         $scope.$on('cityName', function (event, data) {
@@ -36,10 +39,10 @@ define(['app/module', 'app/directive/directiveApi'
             $scope.cityId = data.id;
             $scope.searchForm.data.city = data.id;
             api.list("/wap/site/user-list", $scope.searchForm.data).success(function (res) {
-                $scope.items = res.data;
-                for (var i in $scope.items) {
-                    $scope.items[i].info = JSON.parse($scope.items[i].info);
-                    $scope.items[i].identity_pic = JSON.parse($scope.items[i].identity_pic);
+                $scope.userList = res.data;
+                for (var i in $scope.userList) {
+                    $scope.userList[i].info = JSON.parse($scope.userList[i].info);
+                    $scope.userList[i].identity_pic = JSON.parse($scope.userList[i].identity_pic);
                 }
             })
         });
@@ -58,10 +61,10 @@ define(['app/module', 'app/directive/directiveApi'
         });
 
         api.list("/wap/site/user-list", $scope.searchForm.data).success(function (res) {
-            $scope.items = res.data;
-            for (var i in $scope.items) {
-                $scope.items[i].info = JSON.parse($scope.items[i].info);
-                $scope.items[i].identity_pic = JSON.parse($scope.items[i].identity_pic);
+            $scope.userList = res.data;
+            for (var i in $scope.userList) {
+                $scope.userList[i].info = JSON.parse($scope.userList[i].info);
+                $scope.userList[i].identity_pic = JSON.parse($scope.userList[i].identity_pic);
             }
         })
 
@@ -88,10 +91,10 @@ define(['app/module', 'app/directive/directiveApi'
             //console.log($scope.searchForm.data);
             $scope.user = api.list("/wap/site/user-list", $scope.searchForm.data);
             $scope.user.success(function (res) {
-                $scope.items = res.data;
-                for (var i in $scope.items) {
-                    $scope.items[i].info = JSON.parse($scope.items[i].info);
-                    $scope.items[i].identity_pic = JSON.parse($scope.items[i].identity_pic);
+                $scope.userList = res.data;
+                for (var i in $scope.userList) {
+                    $scope.userList[i].info = JSON.parse($scope.userList[i].info);
+                    $scope.userList[i].identity_pic = JSON.parse($scope.userList[i].identity_pic);
                 }
             })
         }
@@ -157,18 +160,18 @@ define(['app/module', 'app/directive/directiveApi'
                             inputPlaceholder: '请输入对方ID号'
                         }).then(function (res) {
                             api.list("/wap/site/user-list", {'id': res}).success(function (res) {
-                                $scope.items = res.data;
-                                $scope.items[0].info = JSON.parse($scope.items[0].info);
-                                $scope.items[i].identity_pic = JSON.parse($scope.items[i].identity_pic);
+                                $scope.userList = res.data;
+                                $scope.userList[0].info = JSON.parse($scope.userList[0].info);
+                                $scope.userList[i].identity_pic = JSON.parse($scope.userList[i].identity_pic);
                             })
                         });
                     }
                     if (user != undefined) {
                         user.success(function (res) {
-                            $scope.items = res.data;
-                            for (var i in $scope.items) {
-                                $scope.items[i].info = JSON.parse($scope.items[i].info);
-                                $scope.items[i].identity_pic = JSON.parse($scope.items[i].identity_pic);
+                            $scope.userList = res.data;
+                            for (var i in $scope.userList) {
+                                $scope.userList[i].info = JSON.parse($scope.userList[i].info);
+                                $scope.userList[i].identity_pic = JSON.parse($scope.userList[i].identity_pic);
                             }
                         })
                     }
@@ -185,15 +188,21 @@ define(['app/module', 'app/directive/directiveApi'
 
         // 点击加载更多
         $scope.loadMore = function () {
-            $scope.pageIndex = 1;
+            $scope.searchForm.data.pageNum++;
 
-            $scope.loadMoreData = {pageIndex:$scope.pageIndex};
+            api.list('/wap/site/user-list',$scope.searchForm.data).success(function(res){
 
-            api.list('/wap/site/user-list',$scope.loadMoreData).success(function(res){
+                if(res.data.length < $scope.searchForm.data.pageSize) {
+                    $scope.pageLast = false;
+                }
 
-                $scope.items = res;
+                for (var i in res.data) {
+                    res.data[i].info = JSON.parse(res.data[i].info);
+                    res.data[i].identity_pic = JSON.parse(res.data[i].identity_pic);
+                }
+                $scope.userList = $scope.userList.concat(res.data);
 
-                $scope.pageIndex++;
+
             });
 
         }

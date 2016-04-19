@@ -42,31 +42,31 @@
             </div>
 
 
-            <ion-item collection-repeat="item in items track by item.id" item="item" href="/wap/message/chat?id={{item.id}}">
+            <ion-item collection-repeat="user in userList track by user.id" item="item" href="/wap/message/chat?id={{user.id}}">
                 <div class="row">
-                    <div class="col col-25"><img class="item_uimg rounded" src="{{item.info.head_pic}}"></div>
+                    <div class="col col-25"><img class="item_uimg rounded" src="{{user.info.head_pic}}"></div>
 
                     <div class="col col-75">
                         <div class="row pl0">
                             <div class="col">
-                                <span class="fwb fs14" ng-if="item.info.real_name != '未知'">{{item.info.real_name | sex:item.sex :item.info.age}}</span>
-                                <span class="fwb fs14" ng-if="item.info.real_name == '未知'">会员ID:{{item.id}}</span>
-                                <span ng-if="item.info.age != '未知'" class="cor19 fs12">{{item.info.age | timeToAge}}岁</span> <span ng-if="item.info.height != '未知'"
-                                    class="cor19 fs12">{{item.info.height}}cm</span>
-                                <span ng-if="item.info.is_marriage != '未知'" class="cor19 fs12">{{item.info.is_marriage}}</span>
+                                <span class="fwb fs14" ng-if="user.info.real_name != '未知'">{{user.info.real_name | sex:user.sex :user.info.age}}</span>
+                                <span class="fwb fs14" ng-if="user.info.real_name == '未知'">会员ID:{{user.id}}</span>
+                                <span ng-if="user.info.age != '未知'" class="cor19 fs12">{{user.info.age | timeToAge}}岁</span> <span ng-if="user.info.height != '未知'"
+                                    class="cor19 fs12">{{user.info.height}}cm</span>
+                                <span ng-if="user.info.is_marriage != '未知'" class="cor19 fs12">{{user.info.is_marriage}}</span>
                             </div>
                             <div class="col-20"><label class="label-right fs12"><i
-                                    class="ion-android-pin mr5 positive"></i>{{item.info.local}}</label>
+                                    class="ion-android-pin mr5 positive"></i>{{user.info.local}}</label>
                             </div>
                         </div>
 
                         <div class="row pl0">
-                            <p class="col fs12"><span class="identity sfz"ng-if="item.identity_pic.is_check == 1">身份证</span> <span class="identity phone" ng-if="item.phone">手机</span> <span ng-if="item.info.level == 1" class="identity vip">vip</span> <span ng-if="item.info.level == 2" class="identity guest">贵宾</span> <span ng-if="item.info.level == 3" class="identity diamond">钻石</span></p>
+                            <p class="col fs12"><span class="identity sfz"ng-if="user.identity_pic.is_check == 1">身份证</span> <span class="identity phone" ng-if="user.phone">手机</span> <span ng-if="user.info.level == 1" class="identity vip">vip</span> <span ng-if="user.info.level == 2" class="identity guest">贵宾</span> <span ng-if="user.info.level == 3" class="identity diamond">钻石</span></p>
                         </div>
 
                         <div class="row pl0">
                             <div class="col">
-                                <p class="cor20 signature">{{item.personalized}}</p>
+                                <p class="cor20 signature">{{user.personalized}}</p>
                             </div>
                         </div>
                     </div>
@@ -74,7 +74,7 @@
             </ion-item>
         </ion-list>
         <ion-item style="padding: 0; border: 0;"  ng-if="pageLast">
-            <button style="margin: 0;" class="button button-block">点击加载更多</button>
+            <button style="margin: 0;" class="button button-block" ng-click="loadMore()">点击加载更多</button>
         </ion-item>
     </ion-content>
 
