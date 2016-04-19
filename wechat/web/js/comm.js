@@ -85,6 +85,26 @@ var ar = {
         }
 
         return false;
+    },
+
+    // 设置localStorage
+    setStorage : function (name , data) {
+        if (window.localStorage) {
+
+            localStorage.setItem(name, data);
+        } else {
+            console.log('浏览器不支持localStorage')
+        }
+    },
+
+    // 获取localStorage
+    getStorage : function (name) {
+
+        if (window.localStorage) {
+            localStorage.getItem(name);
+        } else {
+            console.log('浏览器不支持localStorage')
+        }
     }
 
 };
