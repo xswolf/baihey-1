@@ -36,7 +36,7 @@ define(['app/module', 'app/directive/directiveApi'
 
         // 删除操作
         $scope.removeItem = function (item) {
-            api.setMsgDisplay(item.id).success(function (res) {
+            api.setMsgDisplay(item.other).success(function (res) {
                 if (res.status) { // 删除成功
                     $scope.items.splice($scope.items.indexOf(item), 1);
                 } else {

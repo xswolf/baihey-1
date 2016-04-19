@@ -20,7 +20,7 @@
 
     <ion-content class="has-header has-footer bhy-has-footer message">
         <ion-list show-delete="shouldShowDelete">
-            <ion-item collection-repeat="item in items track by item.id" item="item" ng-click="chatHref(item.id)">
+            <ion-item collection-repeat="item in items track by item.id" item="item" ng-click="chatHref(item.other)">
                 <div class="row">
                     <div class="msg_u_img mr20 pr fl">
                         <img class="item_uimg rounded" src="/wechat/web/images/test.jpg" width="56" height="56">
@@ -28,7 +28,7 @@
                     </div>
                     <p style="width: 65%;" class="">
                         <span class="fwb fs14 mr10 lh28" ng-if="item.info.real_name != '未知'">{{item.info.real_name | sex:item.sex :item.info.age}}</span>
-                        <span class="fwb fs14 mr10 lh28" ng-if="item.info.real_name == '未知'">会员ID:{{item.id}}</span>
+                        <span class="fwb fs14 mr10 lh28" ng-if="item.info.real_name == '未知'">会员ID:{{item.other}}</span>
                         <span class="identity sfz lh28" ng-if="item.identity_pic.is_check == 1">身份证</span>
                         <span class="identity phone lh28" ng-if="item.phone">手机</span>
                         <span class="dbl fs12 lh28 msg_text">
