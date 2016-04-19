@@ -38,6 +38,7 @@ define(['app/module', 'app/directive/directiveApi'
             $scope.cityName = data.name;
             $scope.cityId = data.id;
             $scope.searchForm.data.city = data.id;
+            $scope.searchForm.data.cityName = data.name;
             $scope.searchForm.data.pageNum = 1;
             api.list("/wap/site/user-list", $scope.searchForm.data).success(function (res) {
                 $scope.userList = res.data;

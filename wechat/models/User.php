@@ -83,24 +83,24 @@ class User extends \common\models\Base
         // user_information表 数据处理
         $infoData['user_id'] = $id;
         $userInfo = [
-            'age'           => '未知',
-            'level'         => '未知',
-            'local'         => '未知',
-            'height'        => '未知',
-            'head_pic'      => '未知',
-            'real_name'     => '未知',
-            'identity_id'   => '未知',
-            'is_marriage'   => '未知',
+            'age' => '未知',
+            'level' => '未知',
+            'local' => '未知',
+            'height' => '未知',
+            'head_pic' => '未知',
+            'real_name' => '未知',
+            'identity_id' => '未知',
+            'is_marriage' => '未知',
         ];
         $userIdentity = [
-            'url1'           => '未知',
-            'url2'           => '未知',
-            'is_check'      => '未知',
-            'time'          => '未知',
+            'url1' => '未知',
+            'url2' => '未知',
+            'is_check' => '未知',
+            'time' => '未知',
         ];
-        $infoData['identity_pic']   = json_encode($userIdentity);
-        $infoData['info']           = json_encode($userInfo);
-        $infoData['city']           = 1;
+        $infoData['identity_pic'] = json_encode($userIdentity);
+        $infoData['info'] = json_encode($userInfo);
+        $infoData['city'] = 1;
 
         // user_information表 数据写入
         $info = $db->createCommand()
@@ -166,6 +166,11 @@ class User extends \common\models\Base
     public function userList($where = [])
     {
         $pageSize = isset($where['pageSize']) ? $where['pageSize'] : 6;
+        if (isset($where['cityName'])) {
+            setcookie('bhy_u_city', $where['cityName'], YII_BEGIN_TIME + 3600 * 24 * 30, '/wap');
+            setcookie('bhy_u_cityId', $where['city'], YII_BEGIN_TIME + 3600 * 24 * 30, '/wap');
+            unset($where['cityName']);
+        }
         unset($where['pageSize']);
         // 查询条件处理
         $where = $this->getUserListWhere($where, $pageSize);
