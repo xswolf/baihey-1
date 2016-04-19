@@ -42,8 +42,8 @@
             </div>
 
 
-            <ion-item collection-repeat="user in userList track by user.id" item="item" href="/wap/message/chat?id={{user.id}}">
-                <div class="row" ng-if="user.id != userInfo.id">
+            <ion-item collection-repeat="user in userList track by user.id" item="item" href="/wap/message/chat?id={{user.id}}" ng-if="user.id != userInfo.id">
+                <div class="row">
                     <div class="col col-25"><img class="item_uimg rounded" src="{{user.info.head_pic}}"></div>
 
                     <div class="col col-75">
