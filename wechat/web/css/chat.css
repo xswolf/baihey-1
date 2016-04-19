@@ -201,6 +201,44 @@
     vertical-align: top;
 }
 
+.chat .rated .rated_maker .marker_name{
+    color: #666;
+}
+
+
+.chat .rated{
+    background-color: #fffbed;
+    max-width: 320px;
+    margin: 0 auto;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #fef4d1;
+}
+
+.chat .rated .rated_l{
+    background: url("/wechat/web/images/rated_l.png") no-repeat;
+    width: 37px;
+    height: 78px;
+    display: block;
+    margin-right: 5px;
+}
+.chat .rated .rated_t{
+    text-overflow: clip;
+    white-space: normal;
+    font-size: 12px;
+    color: #9f9f9f;
+}
+.chat .rated .rated_t i{
+    font-size: 15px;
+    vertical-align: middle;
+    margin-right: 3px;
+}
+
+.chat .rated .rated_maker{
+    text-align: right;
+    font-size: 12px;
+}
+
 .ok_btn, .ok_btn:hover {
     color: #33cd5f;
     cursor: pointer;
@@ -432,4 +470,88 @@
 
 .voice {
     cursor: pointer;
+}
+.detailBg{
+    background: url("/wechat/web/images/bri_bg.png") no-repeat center;
+    width: 100%;
+    height: 281px;
+    background-color: rgba(0,0,0,0.4);
+}
+
+/* 领取红包detail */
+.bri_big{
+    background: url("/wechat/web/images/bri_big.png") no-repeat center;
+    width: 200px;
+    height: 249px;
+    margin: 43% auto;
+    position: relative;
+}
+.bri_big .bri_uimg{
+    display: block;
+    height: 50px;
+    left: 37%;
+    position: absolute;
+    top: 32px;
+    width: 50px;
+}
+
+.bri_big .bri_uimg img{
+    max-width: 100%;
+    border: 0;
+    border-radius: 50%;
+    -moz-border-radius: 50%;
+    -ms-border-radius: 50%;
+    -o-border-radius: 50%;
+    -webkit-border-radius: 50%;
+    -webkit-box-shadow: 0 3px 3px #a11914;
+    -moz-box-shadow: 0 3px 3px #a11914;
+    box-shadow: 0 3px 3px #a11914;
+}
+
+.bri_big .bri_t{
+    display: block;
+    max-width: 100px;
+    overflow: hidden;
+    height: 100px;
+    position: absolute;
+    top: 100px;
+    left: 50px;
+    color: #f8d856;
+    text-align: center;
+}
+
+.bri_big .bri_t .bri_u_name{
+
+}
+.bri_big .bri_t .bri_u_name2{
+    font-size: 12px;
+}
+.bri_big .bri_btn{
+    display: block;
+    position: absolute;
+    bottom: 20px;
+    left: 55px;
+}
+.bri_big .bri_closeBtn{
+    background-color: #ad1200;
+    color: #fff;
+    cursor: pointer;
+    display: block;
+    font-size: 16px;
+    height: 24px;
+    position: absolute;
+    right: -9px;
+    text-align: center;
+    top: -12px;
+    width: 24px;
+    border-radius: 50%;
+    -moz-border-radius: 50%;
+    -ms-border-radius: 50%;
+    -o-border-radius: 50%;
+    -webkit-border-radius: 50%;
+}
+.bri_big .bri_closeBtn i{
+    position: absolute;
+    top: 2px;
+    left: 6px
 }

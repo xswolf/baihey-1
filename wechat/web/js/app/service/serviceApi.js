@@ -41,6 +41,15 @@ define(['app/module'], function (module,config) {
         }
 
         /**
+         * 根据用户ID获取红娘评价
+         * @param receviceId
+         * @returns {*}
+         */
+        api.getUserMakerRated = function(receviceId){
+            return $http.get('url', {params: {recevice_user_id: receviceId}});
+        }
+
+        /**
          * 验证手机号是否存在
          * @param mobile
          * @returns {*}
