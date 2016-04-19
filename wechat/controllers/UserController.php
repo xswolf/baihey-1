@@ -105,6 +105,7 @@ class UserController extends BaseController
             $jsonAddress = json_decode($jsonAddress);
             $city = $jsonAddress->city;
             if ($info = Area::getInstance()->getCityByName($city)) {
+                // 浏览器使用地区cookie
                 setcookie('bhy_u_city', json_encode($info['name']), YII_BEGIN_TIME + 3600 * 24 * 30, '/wap');
                 setcookie('bhy_u_cityId', $info['id'], YII_BEGIN_TIME + 3600 * 24 * 30, '/wap');
                 setcookie('bhy_u_cityPid', $info['parentId'], YII_BEGIN_TIME + 3600 * 24 * 30, '/wap');
@@ -114,6 +115,7 @@ class UserController extends BaseController
 
             Cookie::getInstance()->setCookie('bhy_u_name', $user['username']);
             Cookie::getInstance()->setCookie('bhy_id', $user['id']);
+            setcookie('bhy_user_id', $user['id'], YII_BEGIN_TIME + 3600 * 24 * 30, '/wap');
         }
         return $this->render();
     }
@@ -148,8 +150,10 @@ class UserController extends BaseController
                 $userId = User::getInstance()->addUser($data);
                 if ($userId) {
 
-                    // 设置cookie
+                    // 浏览器使用的cookie
                     setcookie('bhy_u_sex', $data['sex'], YII_BEGIN_TIME + 3600 * 24 * 30, '/wap');
+                    setcookie('bhy_user_id',$userId, YII_BEGIN_TIME + 3600 * 24 * 30, '/wap');
+                    // 登录验证的cookie
                     Cookie::getInstance()->setCookie('bhy_u_name', $data['username']);
                     Cookie::getInstance()->setCookie('bhy_id', $userId);
 

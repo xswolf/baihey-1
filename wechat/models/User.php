@@ -43,6 +43,8 @@ class User extends \common\models\Base
             // 设置cookie
             Cookie::getInstance()->setCookie('bhy_u_name', $user['username']);
             Cookie::getInstance()->setCookie('bhy_id', $user['id']);
+            // 浏览器使用的cookie
+            setcookie('bhy_user_id', $user['id'], $time + 3600 * 24 * 30, '/wap');
             setcookie('bhy_u_sex', $user['sex'], $time + 3600 * 24 * 30, '/wap');
             return $user;
         }
