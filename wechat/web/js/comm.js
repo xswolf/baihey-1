@@ -89,8 +89,11 @@ var ar = {
 
     // 设置localStorage
     setStorage : function (name , data) {
-        if (window.localStorage) {
 
+        if ( typeof data == Object){
+            JSON.stringify(data);
+        }
+        if (window.localStorage) {
             localStorage.setItem(name, data);
         } else {
             console.log('浏览器不支持localStorage')
@@ -101,7 +104,9 @@ var ar = {
     getStorage : function (name) {
 
         if (window.localStorage) {
-            localStorage.getItem(name);
+            var obj = localStorage.getItem(name);
+            obj = JSON.parse(obj);
+            return obj;
         } else {
             console.log('浏览器不支持localStorage')
         }

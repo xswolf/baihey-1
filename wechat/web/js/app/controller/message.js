@@ -8,12 +8,23 @@ define(['app/module', 'app/directive/directiveApi'
     module.controller("message.index", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$ionicModal', '$ionicActionSheet', '$ionicLoading', function (api, $scope, $timeout, $ionicPopup, $ionicModal, $ionicActionSheet, $ionicLoading) {
 
         // 获取页面数据
+
+        // 获取localstorage消息记录
+        var messageList = ar.getStorage("messageList");
+
+        if (messageList != null){
+
+            $scope.messageList = messageList;
+        }
+
+        // 从服务器获取未看消息
         api.list('/wap/message/message-list', []).success(function (res) {
-            $scope.items = res.data;
-            for (var i in $scope.items) {
-                $scope.items[i].info = JSON.parse($scope.items[i].info);
-                $scope.items[i].identity_pic = JSON.parse($scope.items[i].identity_pic);
+            $scope.messageList = res.data;
+            for (var i in $scope.messageList) {
+                $scope.messageList[i].info = JSON.parse($scope.messageList[i].info);
+                $scope.messageList[i].identity_pic = JSON.parse($scope.messageList[i].identity_pic);
             }
+            ar.setStorage('messageList' , $scope.messageList)
         });
 
         // 获取当前用户信息
