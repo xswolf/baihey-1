@@ -167,7 +167,7 @@ class User extends \common\models\Base
     {
         $pageSize = isset($where['pageSize']) ? $where['pageSize'] : 6;
         if (isset($where['cityName'])) {
-            setcookie('bhy_u_city', $where['cityName'], YII_BEGIN_TIME + 3600 * 24 * 30, '/wap');
+            setcookie('bhy_u_city', json_encode($where['cityName']), YII_BEGIN_TIME + 3600 * 24 * 30, '/wap');
             setcookie('bhy_u_cityId', $where['city'], YII_BEGIN_TIME + 3600 * 24 * 30, '/wap');
             unset($where['cityName']);
         }
