@@ -99,7 +99,7 @@ class UserController extends BaseController
 
         // 地区是否存cookie，否则存
         if (!isset($_COOKIE['bhy_u_city']) && !isset($_COOKIE['bhy_u_cityId'])) {
-            $html = Curl::getInstance()->curl_get('http://int.dpool.sina.com.cn/iplookup/iplookup.php?format=js', '');
+            $html = Curl::getInstance()->curl_get('http://int.dpool.sina.com.cn/iplookup/iplookup.php?format=js&ip='.$_SERVER['REMOTE_ADDR'], '');
             $jsonData = explode("=", $html);
             $jsonAddress = substr($jsonData[1], 0, -1);
             $jsonAddress = json_decode($jsonAddress);
