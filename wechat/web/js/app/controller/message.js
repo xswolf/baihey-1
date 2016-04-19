@@ -221,13 +221,13 @@ define(['app/module', 'app/directive/directiveApi'
 
 
         //  获取历史聊天数据
-        /* $scope.receiveId = ar.getQueryString('id')
+         $scope.receiveId = ar.getQueryString('id')
          api.list("/wap/message/message-history", {id: $scope.receiveId}).success(function (data) {
          $scope.historyList = data;
 
          }).error(function () {
          console.log('页面message.js出现错误，代码：/wap/chat/message-history');
-         })*/
+         })
 
         // socket聊天
         requirejs(['chat/wechatInterface', 'chat/chat'], function (wx, chat) {
