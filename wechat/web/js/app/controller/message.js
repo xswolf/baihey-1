@@ -11,19 +11,29 @@ define(['app/module', 'app/directive/directiveApi'
 
         // 获取localstorage消息记录
         var messageList = ar.getStorage("messageList");
-
+        $scope.messageList = new Array();
         if (messageList != null){
-
             $scope.messageList = messageList;
         }
 
         // 从服务器获取未看消息
         api.list('/wap/message/message-list', []).success(function (res) {
-            $scope.messageList = res.data;
-            for (var i in $scope.messageList) {
-                $scope.messageList[i].info = JSON.parse($scope.messageList[i].info);
-                $scope.messageList[i].identity_pic = JSON.parse($scope.messageList[i].identity_pic);
+            var list = res.data;
+            for (var i in list) {
+                list[i].info = JSON.parse(list[i].info);
+                list[i].identity_pic = JSON.parse(list[i].identity_pic);
+                var flag = true;
+                for (var j in $scope.messageList){  // 相同消息合并
+                    if ($scope.messageList[j].receive_user_id == list[i].receive_user_id){
+                        $scope.messageList[j] = list[i];
+                        flag = false;
+                    }
+                }
+                if (flag){
+                    $scope.messageList.push(list[i]);
+                }
             }
+            console.log($scope.messageList)
             ar.setStorage('messageList' , $scope.messageList)
         });
 
