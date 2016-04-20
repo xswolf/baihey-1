@@ -12,6 +12,10 @@ use yii\db\Query;
  */
 class UserMessage extends \common\models\Base
 {
+
+    protected $_user_information_table = 'user_information';
+    protected $_user_table = 'user';
+
     /**
      * 查询消息列表
      * @param array $where
@@ -20,37 +24,28 @@ class UserMessage extends \common\models\Base
     public function messageList($where = [])
     {
 
-        $user_id = Cookie::getInstance()->getCookie('bhy_id');
+        $user_id = Cookie::getInstance()->getCookie('bhy_id')->value;
         $pageSize = 20;
         $where['pageNum'] = isset($where['pageNum']) ? $where['pageNum'] : 1;
         $offset = ($where['pageNum'] - 1) * $pageSize;
+        $condition = ['receive_user_id' => $user_id, 'status' => 2];
+        $userTable = \Yii::$app->getDb()->tablePrefix . $this->_user_table;
+        $userInformationTable = \Yii::$app->getDb()->tablePrefix . $this->_user_information_table;
 
-        $db = $this->getDb();
-        $row = $db->createCommand("
-SELECT u.username,u.sex,u.phone,i.info,i.identity_pic,c.* FROM bhy_user u INNER JOIN bhy_user_information i ON u.id=i.user_id
+        $result = (new Query())
+            ->select(['m.*', 'count(m.send_user_id) sumSend', 'u.id other', 'u.username', 'u.sex', 'u.phone', 'i.info', 'i.identity_pic'])
+            ->where($condition)
+            ->from(static::tableName() . ' m')
+            ->innerJoin($userTable . ' u', 'u.id=m.send_user_id')
+            ->innerJoin($userInformationTable . ' i', 'i.user_id=m.send_user_id')
+            ->groupBy('m.send_user_id')
+            ->orderBy('m.time desc')
+            ->limit($pageSize)
+            ->offset($offset);
+        //echo $result->createCommand()->getRawSql();exit;
+        $result = $result->all();
 
-INNER JOIN
-
-(
-SELECT m.id,m.send_user_id,m.receive_user_id,message,m.time,STATUS,tmp.sum_send, m.send_user_id other FROM bhy_user_message  m INNER JOIN (
-
-SELECT send_user_id,COUNT(send_user_id) sum_send,MAX(TIME) TIME FROM bhy_user_message WHERE receive_user_id = $user_id AND STATUS=2 GROUP BY send_user_id
-
-)tmp ON m.send_user_id = tmp.send_user_id AND m.time = tmp.time
-
-UNION ALL
-
-SELECT m.id,m.send_user_id,m.receive_user_id,message,m.time,STATUS,tmp.sum_send, m.receive_user_id other FROM bhy_user_message  m INNER JOIN (
-
-SELECT receive_user_id,COUNT(send_user_id) sum_send,MAX(TIME) TIME FROM bhy_user_message WHERE send_user_id = $user_id AND status != -1 GROUP BY receive_user_id
-
-)tmp ON m.receive_user_id = tmp.receive_user_id AND m.time = tmp.time
-
-) c ON u.id=c.other GROUP BY c.other ORDER BY time DESC limit $offset,$pageSize
-")->queryAll();
-        //var_dump($row);exit;
-
-        return $row;
+        return $result;
     }
 
     /**
