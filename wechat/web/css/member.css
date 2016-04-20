@@ -14,6 +14,11 @@
 .member {
   background-color: #f9f9f9;
 }
+.member_hdr {
+  padding-top: 20px;
+  margin-bottom: 10px;
+  position: relative;
+}
 .member_hdr .u_img {
   width: 75px;
   height: 75px;
@@ -43,4 +48,14 @@
 }
 .small_hdr_info .button {
   margin-top: 12px;
+}
+.hdr_tips {
+  margin-left: -16px;
+  width: 108%;
+  margin-top: 10px;
+  background-color: #69b1f3;
+}
+.hdr_tips .tips {
+  color: #fff;
+  padding: 5px 20%;
 }
