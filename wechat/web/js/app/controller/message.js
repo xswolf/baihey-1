@@ -6,7 +6,6 @@ define(['app/module', 'app/directive/directiveApi'
 ], function (module) {
 
     module.controller("message.index", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$ionicModal', '$ionicActionSheet', '$ionicLoading', function (api, $scope, $timeout, $ionicPopup, $ionicModal, $ionicActionSheet, $ionicLoading) {
-
         $scope.userInfo = {};
         // 获取页面数据
 
