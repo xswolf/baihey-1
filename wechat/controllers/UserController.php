@@ -151,13 +151,8 @@ class UserController extends BaseController
                 // 添加用户
                 $userId = User::getInstance()->addUser($data);
                 if ($userId) {
-
-                    // 浏览器使用的cookie
-                    setcookie('bhy_u_sex', $data['sex'], YII_BEGIN_TIME + 3600 * 24 * 30, '/wap');
-                    setcookie('bhy_user_id',$userId, YII_BEGIN_TIME + 3600 * 24 * 30, '/wap');
-                    // 登录验证的cookie
-                    Cookie::getInstance()->setCookie('bhy_u_name', $data['username']);
-                    Cookie::getInstance()->setCookie('bhy_id', $userId);
+                    // 模拟登录
+                    User::getInstance()->login($data['username'], $data['password']);
 
                     // 发送默认密码
                     \Yii::$app->messageApi->passwordMsg($data['username'], $data['password']);
