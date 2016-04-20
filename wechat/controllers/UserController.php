@@ -63,13 +63,11 @@ class UserController extends BaseController
         //判断是否点击提交
         if (\Yii::$app->request->get('username') && \Yii::$app->request->get('password')) {
 
-            if (User::getInstance()->login($this->get['username'], $this->get['password'])) {
+            if ($data = User::getInstance()->login($this->get['username'], $this->get['password'])) {
 
-                return $this->renderAjax(['status' => 1, 'msg' => '登录成功']);
-
+                return $this->renderAjax(['status' => 1, 'msg' => '登录成功', 'data' => $data]);
             } else {
-
-                return $this->renderAjax(['status' => 0, 'msg' => '登录失败']);
+                return $this->renderAjax(['status' => 0, 'msg' => '登录失败', 'data' => $data]);
             }
         }
 
@@ -134,24 +132,24 @@ class UserController extends BaseController
 
                 // 验证手机号是否存在
                 if (User::getInstance()->getUserByName($data['username'])) {
-                    return $this->renderAjax(['status' => 0, 'msg' => '手机号已存在']);
+                    return $this->renderAjax(['status' => 0, 'msg' => '手机号已存在', 'data' => []]);
                 }
 
                 // 添加用户
                 $userId = User::getInstance()->addUser($data);
                 if ($userId) {
                     // 模拟登录
-                    User::getInstance()->login($data['username'], $data['password']);
+                    $data = User::getInstance()->login($data['username'], $data['password']);
 
                     // 发送默认密码
                     \Yii::$app->messageApi->passwordMsg($data['username'], $data['password']);
 
-                    return $this->renderAjax(['status' => 1, 'msg' => '注册成功']);
+                    return $this->renderAjax(['status' => 1, 'msg' => '注册成功', 'data' => $data]);
                 } else {
-                    return $this->renderAjax(['status' => 0, 'msg' => '注册失败']);
+                    return $this->renderAjax(['status' => 0, 'msg' => '注册失败', 'data' => []]);
                 }
             } else {
-                return $this->renderAjax(['status' => 2, 'msg' => '验证码错误']);
+                return $this->renderAjax(['status' => 2, 'msg' => '验证码错误', 'data' => []]);
             }
         }
 

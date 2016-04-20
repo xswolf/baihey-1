@@ -25,7 +25,6 @@ class User extends \common\models\Base
      */
     public function login($userName, $password)
     {
-
         $condition = [
             'username' => $userName,
             'password' => md5(md5($password))
@@ -34,6 +33,7 @@ class User extends \common\models\Base
             $time = YII_BEGIN_TIME;
             $user->last_login_time = $time;
             $user->save(false);
+            $data = $this->getUserByName($userName);
             // 写入用户日志表
             $log['user_id'] = $user->id;
             $log['type'] = 1;
@@ -46,7 +46,8 @@ class User extends \common\models\Base
             // 浏览器使用的cookie
             setcookie('bhy_user_id', $user['id'], $time + 3600 * 24 * 30, '/wap');
             setcookie('bhy_u_sex', $user['sex'], $time + 3600 * 24 * 30, '/wap');
-            return $user;
+
+            return $data;
         }
 
         return false;
@@ -135,8 +136,10 @@ class User extends \common\models\Base
             ->select('*')
             ->from(static::tableName() . ' u')
             ->innerJoin($joinTable . ' i', "u.id=i.user_id")
-            ->where(['username' => $name])
-            ->one();
+            ->where(['u.username' => $name]);
+
+            //echo $row->createCommand()->getRawSql();exit;
+        $row = $row->one();
 
         if (!$row) {
             return null;

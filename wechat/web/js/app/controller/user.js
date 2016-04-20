@@ -119,6 +119,8 @@ define(['app/module', 'app/directive/directiveApi'
             var result = api.save('/wap/user/register', $scope.User);
             result.success(function (data) {
                 if (data.status == 1) {
+                    // 存储userInfo
+                    ar.setStorage('userInfo',data.data);
                     window.location.href = '/wap/site/index';
                 } else if(data.status == 2) {
                     $ionicPopup.alert({title: '验证码错误'});
@@ -159,6 +161,8 @@ define(['app/module', 'app/directive/directiveApi'
             api.save('/wap/user/login', $scope.User).success(function (data) {
 
                 if (data.status) {
+                    // 存储userInfo
+                    ar.setStorage('userInfo',data.data);
                     window.location.href = '/wap/site';
                 } else {
                     $ionicPopup.alert({title: '用户名或者密码错误'});
