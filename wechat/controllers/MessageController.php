@@ -33,7 +33,7 @@ class MessageController extends BaseController
 //            $this->redirect("/wap/user/login");
         }
 
-        $config = str_replace("\"", "'", json_encode(\Yii::$app->wechat->jsApiConfig([], true)));
+        $config = str_replace("\"", "'", json_encode(\Yii::$app->wechat->jsApiConfig([], false)));
         $this->assign('config', $config);
         $this->assign('id', \common\util\Cookie::getInstance()->getCookie('bhy_id'));
         return $this->render();

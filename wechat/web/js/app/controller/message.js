@@ -247,7 +247,14 @@ define(['app/module', 'app/directive/directiveApi'
             function sendMessage(serverId, sendId, toUser, type){
                 var flagTime = ar.timeStamp();
                 chat.sendMessage(serverId, sendId, toUser, type , flagTime);
-                $scope.historyList.push({message:serverId , send_user_id : sendId , receive_user_id:toUser , type:type,status:3 , time:flagTime})
+                var id = 0;
+                if ($scope.historyList == undefined || $scope.historyList.length == 0) { // 判断是否有聊天内容设置ID
+                    id = 1 ;
+                } else {
+                    id = $scope.historyList[$scope.historyList.length - 1].id + 1;
+                }
+
+                $scope.historyList.push({id:id,message:serverId , send_user_id : sendId , receive_user_id:toUser , type:type,status:3 , time:flagTime})
             }
 
             // 开始录音
@@ -366,15 +373,8 @@ define(['app/module', 'app/directive/directiveApi'
             chat.onMessageCallback = function (msg) {
                 var response = JSON.parse(msg.data);
 
-                if ($scope.historyList == undefined || $scope.historyList.length == 0) { // 判断是否有聊天内容设置ID
-                    response.id = 1
-                } else {
-                    response.id = $scope.historyList[$scope.historyList.length - 1].id + 1;
-                }
-
                 var setMessageStatus = function (response){
                     if ($scope.sendId == response.sendId){  //响应自己发送的消息
-                        console.log(1)
                         for (var i in $scope.historyList){
                             console.log(response.time +'=='+ $scope.historyList[i].time)
                             if(response.time == $scope.historyList[i].time && response.message == $scope.historyList[i].message){
@@ -382,16 +382,13 @@ define(['app/module', 'app/directive/directiveApi'
                                 $scope.historyList[i].status = 2;
                             }
                         }
-
                     }else{
-                        console.log(2)
                         $scope.historyList.push(response);
                     }
                 }
 
                 switch (response.type) {
                     case 'send': // 文字
-                        console.log($scope.historyList)
                         setMessageStatus(response);
                         break;
 

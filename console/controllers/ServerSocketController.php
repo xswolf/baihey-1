@@ -25,8 +25,8 @@ class ServerSocketController extends Controller {
     private $sjen = [ ];//接收数据的长度
     private $ar = [ ];//加密key
     private $n = [ ];
-    private $address = '120.76.84.162';
-//    private $address = '192.168.0.112';
+//    private $address = '120.76.84.162';
+    private $address = '192.168.0.112';
     private $port = 8080;
 
 
@@ -234,6 +234,7 @@ class ServerSocketController extends Controller {
                 return;
             }
             $ar['sendId'] = $g['sendId'];
+            $ar['time'] = $g['time'];
             $key = $g['receiveId'];
         }
         $this->send1( $k , $ar , $key );
@@ -250,9 +251,9 @@ class ServerSocketController extends Controller {
 
     //$k 发信息人的code $key接受人的 code
     function send1( $k , $ar , $key = 'all' ) {
+
         $ar['sendName'] = $key;
         $ar['code']     = $k;
-        $ar['time']     = $ar( 'time' );
         $str            = $this->code( json_encode( $ar ) );
         if ( $key == 'all' ) {
             $users = $this->users;
@@ -267,7 +268,6 @@ class ServerSocketController extends Controller {
                 socket_write( $v['socket'] , $str , strlen( $str ) );
             }
         } else {
-
             if ($ar['type'] ==  'send'){
                 $type = 1;
             }else if($ar['type'] ==  'record'){
@@ -276,7 +276,6 @@ class ServerSocketController extends Controller {
                 $type = 3;
             }
             // 写入数据库
-
             $ar['send_user_id'] = $ar['sendId'];
             $str        = $this->code( json_encode( $ar ) );
             $key_code        = $this->getReceived( $key );
