@@ -1,6 +1,7 @@
 <?php
 namespace wechat\controllers;
 
+use common\util\AutoAddress;
 use common\util\Cookie;
 use common\util\Curl;
 use wechat\models\Area;
@@ -94,24 +95,13 @@ class UserController extends BaseController
      */
     public function actionWelcome()
     {
-
         $user = $this->weChatMember();
 
         // 地区是否存cookie，否则存
         if (!isset($_COOKIE['bhy_u_city']) && !isset($_COOKIE['bhy_u_cityId'])) {
-            $html = Curl::getInstance()->curl_get('http://int.dpool.sina.com.cn/iplookup/iplookup.php?format=js&ip=' . $_SERVER['REMOTE_ADDR'], '');
-            if ($html != -2) {
-                $jsonData = explode("=", $html);
-                $jsonAddress = substr($jsonData[1], 0, -1);
-                $jsonAddress = json_decode($jsonAddress);
-                $city = $jsonAddress->city;
-                if ($info = Area::getInstance()->getCityByName($city)) {
-                    // 浏览器使用地区cookie
-                    setcookie('bhy_u_city', json_encode($info['name']), YII_BEGIN_TIME + 3600 * 24 * 30, '/wap');
-                    setcookie('bhy_u_cityId', $info['id'], YII_BEGIN_TIME + 3600 * 24 * 30, '/wap');
-                    setcookie('bhy_u_cityPid', $info['parentId'], YII_BEGIN_TIME + 3600 * 24 * 30, '/wap');
-                }
-            }
+
+            // 自动获取地区并存储cookie
+            AutoAddress::getInstance()->autoAddress();
         }
         if (!isset($_COOKIE["bhy_u_name"]) && isset($user) && isset($user['username'])) {
 
@@ -128,7 +118,6 @@ class UserController extends BaseController
      */
     public function actionRegister()
     {
-
         // 判断是否提交注册
         if (\Yii::$app->request->get('mobile')) {
 
@@ -156,13 +145,12 @@ class UserController extends BaseController
 
                     // 发送默认密码
                     \Yii::$app->messageApi->passwordMsg($data['username'], $data['password']);
+
                     return $this->renderAjax(['status' => 1, 'msg' => '注册成功']);
                 } else {
-
                     return $this->renderAjax(['status' => 0, 'msg' => '注册失败']);
                 }
             } else {
-
                 return $this->renderAjax(['status' => 2, 'msg' => '验证码错误']);
             }
         }
