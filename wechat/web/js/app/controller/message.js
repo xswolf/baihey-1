@@ -232,7 +232,7 @@ define(['app/module', 'app/directive/directiveApi'
         })
 
         // 实例化上传图片插件
-        $scope.uploader = new FileUploader({url: '/wap/file/upload.php'});
+        $scope.uploader = new FileUploader({url: '/wap/file/upload'});
 
         // socket聊天
         requirejs(['chat/wechatInterface', 'chat/chat'], function (wx, chat) {
@@ -244,7 +244,7 @@ define(['app/module', 'app/directive/directiveApi'
             chat.init($scope.sendId);
 
             // 发送消息函数
-            function sendMessage(serverId, sendId, toUser, type){
+            var sendMessage = function (serverId, sendId, toUser, type){
                 var flagTime = ar.timeStamp();
                 chat.sendMessage(serverId, sendId, toUser, type , flagTime);
                 var id = 0;
@@ -255,6 +255,7 @@ define(['app/module', 'app/directive/directiveApi'
                 }
 
                 $scope.historyList.push({id:id,message:serverId , send_user_id : sendId , receive_user_id:toUser , type:type,status:3 , time:flagTime})
+
             }
 
             // 开始录音
@@ -288,8 +289,6 @@ define(['app/module', 'app/directive/directiveApi'
                 ev.initEvent("click", true, true);
                 e.dispatchEvent(ev);
 
-
-
                 // 过滤器，限制用户只能上传图片
                 $scope.uploader.filters.push({
                     name: 'file-type-Res',
@@ -314,6 +313,7 @@ define(['app/module', 'app/directive/directiveApi'
                     }
                 });
 
+                var length = $scope.uploader.queue.length;
                 $scope.uploader.onSuccessItem = function (fileItem, response, status, headers) {  // 上传成功
                     console.info('onSuccessItem', fileItem, response, status, headers);
 
@@ -323,6 +323,7 @@ define(['app/module', 'app/directive/directiveApi'
                     console.info('onBeforeUploadItem', item);
 
                 };
+
                 $scope.uploader.onErrorItem = function (fileItem, response, status, headers) {   // 上传出错
                     console.info('onErrorItem', fileItem, response, status, headers);
                 };
@@ -334,37 +335,36 @@ define(['app/module', 'app/directive/directiveApi'
                 };
 
                 $scope.uploader.onAfterAddingFile = function (fileItem) {   // 上传之后
-                    // fileItem.uploader.queue[0].upload();
-                    console.info('onAfterAddingFile', fileItem);
+                    fileItem.uploader.queue[length].upload();
+                    //console.info('onAfterAddingFile', fileItem);
 
                 };
                 $scope.uploader.onBeforeUploadItem = function (item) {   // 上传之前
 
-                    console.info('onBeforeUploadItem', item);
+                    //console.info('onBeforeUploadItem', item);
                 };
 
                 $scope.uploader.onProgressItem = function (fileItem, progress) {  // 文件上传进度
 
-                    console.info('onProgressItem', fileItem, progress);
+                    //console.info('onProgressItem', fileItem, progress);
                 };
 
                 $scope.uploader.onSuccessItem = function (fileItem, response, status, headers) {  // 上传成功
 
-                    console.info('onSuccessItem', fileItem, response, status, headers);
+
+                    //console.info('onSuccessItem', fileItem, response, status, headers);
                 };
 
                 $scope.uploader.onErrorItem = function (fileItem, response, status, headers) {   // 上传出错
 
-                    console.info('onErrorItem', fileItem, response, status, headers);
+                    //console.info('onErrorItem', fileItem, response, status, headers);
                 };
 
                 $scope.uploader.onCompleteItem = function (fileItem, response, status, headers) {  // 上传结束
-
-                    console.info('onCompleteItem', fileItem, response, status, headers);
+                    console.log(response.path);
+                    sendMessage(response.path, $scope.sendId, $scope.receiveId, 'pic');
+                    //console.info('onCompleteItem', fileItem, response, status, headers);
                 };
-
-
-                //sendMessage($scope.message, $scope.sendId, $scope.receiveId, 'send');
 
             }
 
@@ -391,7 +391,9 @@ define(['app/module', 'app/directive/directiveApi'
                     case 'send': // 文字
                         setMessageStatus(response);
                         break;
-
+                    case 'pic': // 图片
+                        setMessageStatus(response);
+                        break;
                     case 'record': // 录音
                         wx.downloadVoice({
                             serverId: response.message, // 需要下载的音频的服务器端ID，由uploadVoice接口获得

@@ -9,9 +9,13 @@
 namespace wechat\controllers;
 
 
-class FileController extends BaseController{
+use common\util\File;
 
-    public function actionUpload(){
-        var_dump($_FILES);
+class FileController extends BaseController {
+
+    public function actionUpload() {
+        $file = new File();
+        $res  = $file->upload(__DIR__."/../../images/");
+        $this->renderAjax($res);
     }
 }

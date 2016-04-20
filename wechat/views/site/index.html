@@ -12,7 +12,7 @@
     <ion-content class="has-header has-footer bhy-has-footer site">
         <ion-list>
             <div class="row" ng-if="userInfo.info">
-                <div class="col col-25"><img class="item_uimg rounded" ng-if="userInfo.info.head_pic == '未知'" src="/wechat/web/images/u_noimg.jpg"><img class="item_uimg rounded" ng-if="userInfo.info.head_pic != '未知'" src="{{userInfo.info.head_pic}}"></div>
+                <div class="col col-25"><img class="item_uimg rounded" ng-if="userInfo.info.head_pic == '未知'" ng-src="/wechat/web/images/u_noimg.jpg"><img class="item_uimg rounded" ng-if="userInfo.info.head_pic != '未知'" ng-src="{{userInfo.info.head_pic}}"></div>
                 <div class="col col-75">
                     <div class="row pl0">
                         <div class="col" ng-if="userInfo.info.real_name != '未知'">会员{{userInfo.info.real_name}}，您好！</div>
@@ -27,7 +27,7 @@
                 </div>
             </div>
             <div class="row" ng-if="!userInfo.info">
-                <div class="col col-25"><img class="item_uimg rounded" src="/wechat/web/images/u_noimg.jpg"></div>
+                <div class="col col-25"><img class="item_uimg rounded" ng-src="/wechat/web/images/u_noimg.jpg"></div>
                 <div class="col col-75">
 
                     <div class="row pl0">
@@ -43,7 +43,7 @@
 
             <ion-item collection-repeat="user in userList track by user.id | user.id != userInfo.id " item="item" href="/wap/message/chat?id={{user.id}}&head_pic={{user.info.head_pic}}">
                 <div class="row">
-                    <div class="col col-25"><img class="item_uimg rounded" src="{{user.info.head_pic}}"></div>
+                    <div class="col col-25"><img class="item_uimg rounded" ng-src="{{user.info.head_pic}}"></div>
 
                     <div class="col col-75">
                         <div class="row pl0">
