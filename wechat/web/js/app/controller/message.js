@@ -154,7 +154,7 @@ define(['app/module', 'app/directive/directiveApi'
 
 
         // 测试数据
-        $scope.historyList = [
+        /*$scope.historyList = [
             {
                 id: 1,
                 send_user_id: 1001,
@@ -193,7 +193,7 @@ define(['app/module', 'app/directive/directiveApi'
                 display: 1
             }
 
-        ]
+        ]*/
 
         // 对方是否认证身份
         $scope.auth_validate = function (receviceId) {
@@ -223,7 +223,9 @@ define(['app/module', 'app/directive/directiveApi'
          $scope.historyList = data;
 
          }).error(function () {
-         console.log('页面message.js出现错误，代码：/wap/chat/message-history');
+
+            console.log('页面message.js出现错误，代码：/wap/chat/message-history');
+
          })
 
         // socket聊天
@@ -281,7 +283,6 @@ define(['app/module', 'app/directive/directiveApi'
                             api.resizeFile(item).then(function (blob_data) {
                                 var fd = new FormData();
                                 fd.append("imageFile", blob_data);
-
                                 console.log(fd);
                             }, function (err_reason) {
                                 console.log(err_reason);
@@ -291,6 +292,19 @@ define(['app/module', 'app/directive/directiveApi'
                         return true;
                     }
                 });
+
+                uploader.onSuccessItem = function (fileItem, response, status, headers) {  // 上传成功
+                    console.info('onSuccessItem', fileItem, response, status, headers);
+
+                };
+                uploader.onBeforeUploadItem = function (item) {   // 上传之前
+
+                    console.info('onBeforeUploadItem', item);
+
+                };
+                uploader.onErrorItem = function (fileItem, response, status, headers) {   // 上传出错
+                    console.info('onErrorItem', fileItem, response, status, headers);
+                };
 
                 /* // 上传图片相关回调
                  uploader.onWhenAddingFileFailed = function (item /!*{File|FileLikeObject}*!/, filter, options) {   // 当文件添加失败
