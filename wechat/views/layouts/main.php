@@ -21,7 +21,7 @@
 
         // 在页面未加载完毕之前显示的loading Html自定义内容
         var _LoadingHtml = '<div id="loadingDiv" style="position:absolute;left:0;width:100%;height:' + _PageHeight + 'px;top:0;background-color: rgba(255, 255, 255, 0.1);opacity:1;filter:alpha(opacity=100);z-index:10000;"><div style="position: absolute; cursor1: wait; left: ' + _LoadingLeft + 'px; top:' + _LoadingTop + 'px; width: auto; height: 28px;' +
-            '"><img src="/wechat/web/images/pageloading.gif"></div></div>';
+            '"><img src="/wechat/web/images/domLoading.gif"></div></div>';
 
 
         document.write(_LoadingHtml);
