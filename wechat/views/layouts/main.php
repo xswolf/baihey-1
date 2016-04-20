@@ -7,7 +7,7 @@
     <link href="/wechat/web/images/apple-touch-icon.png" rel="shortcut icon">
     <link href="/wechat/web/css/plugin/ionic/ionic.min.css" rel="stylesheet">
     <link href="/wechat/web/css/base.css" rel="stylesheet">
-    <link href="/wechat/web/css/index.less" rel="stylesheet">
+    <link href="/wechat/web/css/index.css" rel="stylesheet">
     <link href="/wechat/web/css/android.css" rel="stylesheet">
 </head>
 <script data-main="/wechat/web/js/app" src="/wechat/web/js/plugin/requirejs/require.js"></script>
