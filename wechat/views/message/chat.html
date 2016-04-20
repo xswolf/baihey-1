@@ -53,8 +53,8 @@
 
                 <!-- 头像 -->
                 <div class="talk_user">
-                    <img ng-if = "receiveId != vo.receiveId" ng-src="{{receiveHeadPic}}" alt="">
-                    <img ng-if = "receiveId == vo.sendId"  ng-src="{{sendHeadPic}}" alt="">
+                    <img ng-if = "receiveId != vo.receiveId" ng-src="{{receiveHeadPic}}" alt=".">
+                    <img ng-if = "receiveId == vo.sendId"  ng-src="{{sendHeadPic}}" alt=".">
                 </div>
 
                 <!-- 消息内容 -->
@@ -73,9 +73,9 @@
                         </div>
 
                         <!-- 图片 -->
-                        <div class="content normal" ng-click="detail_pic(vo.id)" ng-if="vo.type=='pic' || vo.message_type==3">
+                        <div class="content normal" ng-click="detail_pic(vo.message)" ng-if="vo.type=='pic' || vo.message_type==3">
                             <span class="pic">
-                                <img ng-src="{{vo.message}}">
+                                <img ng-src="{{vo.message}}" >
                             </span>
                         </div>
 
