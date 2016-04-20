@@ -51,6 +51,7 @@
 .mr20{margin-right:20px;}
 .mb15{margin-bottom:15px;}
 .m15_10{margin:15px auto 10px auto;}
+.mt5{ margin-top: 5px;}
 .mt10{ margin-top: 10px;}
 .mt15{ margin-top: 15px;}
 .mt20{ margin-top: 20px;}
@@ -93,6 +94,7 @@
 .cor19{color:#616161;}
 .cor20{color:#909090;}
 .cor21{color:#e4007f;}
+.cor22{color:#9f9696;}
 
 .fs11{ font-size: 11px;}
 .fs12{ font-size: 12px;}
@@ -136,6 +138,9 @@
 .form-group {  margin-bottom: 15px;}
 .fwb{ font-weight: bold;}
 .cp{ cursor: pointer;}
+.dib{ display: inline-block;}
+.sx{ padding: 3px;}
+
 /*清除浮动*/
 .clearfix:after{content:".";display:block;height:0;clear:both;visibility:hidden}
 

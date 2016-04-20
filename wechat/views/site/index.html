@@ -1,5 +1,5 @@
 <link href="/wechat/web/css/plugin/ionic/ionic-citypicker.css" rel="stylesheet">
-<div class="com_w_100" ng-controller="site.index" ng-cloak>
+<div class="com_w_100 bhy" ng-controller="site.index" ng-cloak>
     <ion-header>
         <div class="bar bar-header">
             <a href="javascript:;" ng-click="cityModal.show()" class="button button-icon "><i
@@ -14,7 +14,6 @@
             <div class="row" ng-if="userInfo.info">
                 <div class="col col-25"><img class="item_uimg rounded" ng-if="userInfo.info.head_pic == '未知'" src="/wechat/web/images/u_noimg.jpg"><img class="item_uimg rounded" ng-if="userInfo.info.head_pic != '未知'" src="{{userInfo.info.head_pic}}"></div>
                 <div class="col col-75">
-
                     <div class="row pl0">
                         <div class="col" ng-if="userInfo.info.real_name != '未知'">会员{{userInfo.info.real_name}}，您好！</div>
                         <div class="col" ng-if="userInfo.info.real_name == '未知'">会员ID:{{userInfo.id}}，您好！</div>
