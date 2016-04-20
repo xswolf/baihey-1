@@ -50,17 +50,10 @@ define(['app/module', 'app/directive/directiveApi'
         });
 
         // 获取当前用户信息
-        api.getUserInfo().success(function (res) {
-            if (res.data) {
-                $scope.userInfo = res.data;
-                $scope.userInfo.info = JSON.parse($scope.userInfo.info);
-                $scope.userInfo.identity_pic = JSON.parse($scope.userInfo.identity_pic);
-            } else {
-                $scope.userInfo = [];
-                console.log('没有获取到当前用户信息');
-            }
-
-        });
+        $scope.userInfo = [];
+        if(ar.getStorage('userInfo')) {
+            $scope.userInfo = ar.getStorage('userInfo');
+        }
 
         // 获取默认list
         api.list("/wap/site/user-list", $scope.searchForm.data).success(function (res) {
