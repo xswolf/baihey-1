@@ -252,7 +252,7 @@ class ServerSocketController extends Controller {
     function send1( $k , $ar , $key = 'all' ) {
         $ar['sendName'] = $key;
         $ar['code']     = $k;
-        $ar['time']     = date( 'm-d H:i:s' );
+        $ar['time']     = $ar( 'time' );
         $str            = $this->code( json_encode( $ar ) );
         if ( $key == 'all' ) {
             $users = $this->users;

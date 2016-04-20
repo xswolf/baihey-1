@@ -216,16 +216,20 @@ define(['app/module', 'app/directive/directiveApi'
         }
 
 
-        //  获取历史聊天数据
-         $scope.receiveId = ar.getQueryString('id')
-         api.list("/wap/message/message-history", {id: $scope.receiveId}).success(function (data) {
-         $scope.historyList = data;
+         //  获取历史聊天数据
+        $scope.receiveId = ar.getQueryString('id') // 获取接受者ID
 
-         }).error(function () {
+        $scope.receiveHeadPic = ar.getQueryString('head_pic');
+        $scope.sendHeadPic = ar.getQueryString('head_pic');
+
+        api.list("/wap/message/message-history", {id: $scope.receiveId}).success(function (data) {
+        $scope.historyList = data;
+
+        }).error(function () {
 
             console.log('页面message.js出现错误，代码：/wap/chat/message-history');
 
-         })
+        })
 
         // 实例化上传图片插件
         $scope.uploader = new FileUploader({url: '/wap/file/upload.php'});
@@ -239,6 +243,13 @@ define(['app/module', 'app/directive/directiveApi'
             // 初始化聊天
             chat.init($scope.sendId);
 
+            // 发送消息函数
+            function sendMessage(serverId, sendId, toUser, type){
+                var flagTime = ar.timeStamp();
+                chat.sendMessage(serverId, sendId, toUser, type , flagTime);
+                $scope.historyList.push({message:serverId , send_user_id : sendId , receive_user_id:toUser , type:type,status:3 , time:flagTime})
+            }
+
             // 开始录音
             $scope.start_record = function () {
                 wx.startRecord();
@@ -247,7 +258,9 @@ define(['app/module', 'app/directive/directiveApi'
             // 结束录音
             $scope.send_record = function () {
                 console.log('end');
-                wx.send_record($scope.sendId, $scope.receiveId);
+                wx.send_record($scope.sendId, $scope.receiveId , function (serverId,sendId, toUser ,type) {
+                    sendMessage(serverId, sendId, toUser, type);
+                });
             }
 
             // 发送文本消息调用接口
@@ -255,7 +268,7 @@ define(['app/module', 'app/directive/directiveApi'
 
                 if ($scope.message == '' || $scope.message == null) return;
 
-                chat.sendMessage($scope.message, $scope.sendId, $scope.receiveId, 'send');
+                sendMessage($scope.message, $scope.sendId, $scope.receiveId, 'send');
 
             }
 
@@ -344,7 +357,7 @@ define(['app/module', 'app/directive/directiveApi'
                 };
 
 
-                //chat.sendMessage($scope.message, $scope.sendId, $scope.receiveId, 'send');
+                //sendMessage($scope.message, $scope.sendId, $scope.receiveId, 'send');
 
             }
 
@@ -359,28 +372,27 @@ define(['app/module', 'app/directive/directiveApi'
                     response.id = $scope.historyList[$scope.historyList.length - 1].id + 1;
                 }
 
+                var setMessageStatus = function (response){
+                    if ($scope.sendId == response.sendId){  //响应自己发送的消息
+                        console.log(1)
+                        for (var i in $scope.historyList){
+                            console.log(response.time +'=='+ $scope.historyList[i].time)
+                            if(response.time == $scope.historyList[i].time && response.message == $scope.historyList[i].message){
+
+                                $scope.historyList[i].status = 2;
+                            }
+                        }
+
+                    }else{
+                        console.log(2)
+                        $scope.historyList.push(response);
+                    }
+                }
+
                 switch (response.type) {
                     case 'send': // 文字
-
-                        $scope.historyList.push(response);
-                        break;
-
-                    case 'pic': // 图片
-
-                        wx.downloadImage({
-                            serverId: response.message, // 需要下载的图片的服务器端ID，由uploadImage接口获得
-                            isShowProgressTips: 1, // 默认为1，显示进度提示
-                            success: function (res) {
-                                if (res.localId != null) {
-                                    //var img = '<img str="'+res.localId+'" />';
-                                    response.message = res.localId;
-                                    $scope.historyList.push(response);
-                                } else {
-                                    alert('没有图片url');
-                                }
-                            }
-                        });
-
+                        console.log($scope.historyList)
+                        setMessageStatus(response);
                         break;
 
                     case 'record': // 录音
@@ -405,6 +417,7 @@ define(['app/module', 'app/directive/directiveApi'
 
                         break;
                 }
+
                 $scope.scrollBot(); // 滚动至底部
                 $scope.$apply();
             }

@@ -21,7 +21,7 @@ var ar = {
 
     'timeStamp': function () { // 当前时间戳
 
-        return Date.parse(new Date());
+        return Date.parse(new Date())/1000;
     },
 
     'validateMobile': function (mobile) {

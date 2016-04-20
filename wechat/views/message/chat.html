@@ -43,7 +43,7 @@
                 <p class="rated_maker">—— 红娘<a class="marker_name" href="javascript:;">郭禹杉</a>评价</p>
             </div>
 
-            <ion-item class="clearfix" ng-class="{true:'talk_item_u',false:'talk_item_m'}[sendId==vo.send_user_id]"
+            <ion-item class="clearfix" ng-class="{true:'talk_item_u',false:'talk_item_m'}[sendId != vo.send_user_id]"
                       ng-repeat="vo in historyList track by vo.id">
 
                 <!-- 时间 -->
@@ -53,16 +53,16 @@
 
                 <!-- 头像 -->
                 <div class="talk_user">
-                    <img src="/wechat/web/images/test.jpg" alt="">
+                    <img ng-if = "receiveId != vo.receiveId" src="{{receiveHeadPic}}" alt="">
+                    <img ng-if = "receiveId == vo.sendId"  src="{{sendHeadPic}}" alt="">
                 </div>
 
                 <!-- 消息内容 -->
                 <div class="talk_r">
                     <div class="talk_con clearfix">
-
                         <!-- 文本 -->
-                        <div class="content normal" ng-if="vo.type=='txt'">
-                            <p>{{vo.content}}</p>
+                        <div class="content normal" ng-if="vo.type=='send' || vo.message_type==1">
+                            <p>{{vo.message}}</p>
                         </div>
 
                         <!-- 语音 -->
@@ -92,12 +92,12 @@
 
                         <!-- 送达 -->
                         <div class="status" ng-if="vo.status==1">
-                            <span class="delivered">送达</span>
+                            <span class="delivered">已读</span>
                         </div>
 
                         <!-- 已读 -->
                         <div class="status" ng-if="vo.status==2">
-                            <span class="read">已读</span>
+                            <span class="read">未读</span>
                         </div>
 
                         <!-- 发送中 -->
