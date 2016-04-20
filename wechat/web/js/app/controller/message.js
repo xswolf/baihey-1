@@ -33,7 +33,7 @@ define(['app/module', 'app/directive/directiveApi'
                     $scope.messageList.push(list[i]);
                 }
             }
-            console.log($scope.messageList)
+            //console.log($scope.messageList)
             ar.setStorage('messageList' , $scope.messageList)
         });
 
