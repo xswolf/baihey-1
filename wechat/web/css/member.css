@@ -3,6 +3,14 @@
     padding: 8px;
   }
 }
+@media screen and (max-width: 350px) {
+  .member_hdr .small_hdr_info {
+    display: block;
+  }
+  .member_hdr .hdr_info {
+    display: none;
+  }
+}
 .member {
   background-color: #f9f9f9;
 }
@@ -20,4 +28,19 @@
 }
 .member_hdr .u_info p.u_id {
   color: #9f9696;
+}
+.hdr_info_btn {
+  border: 1px solid #ddd;
+  width: 56px;
+  height: 36px;
+  line-height: 36px;
+  text-align: center;
+  background: #f9f9f9;
+  padding-left: 10px;
+}
+.small_hdr_info {
+  display: none;
+}
+.small_hdr_info .button {
+  margin-top: 12px;
 }
