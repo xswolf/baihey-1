@@ -1,9 +1,9 @@
 <link href="/wechat/web/css/plugin/ionic/ionic-citypicker.css" rel="stylesheet">
-<div class="com_w_100 bhy" ng-controller="site.index" ng-cloak>
+<div class="com_w_100 bhy" ng-controller="site.index">
     <ion-header>
         <div class="bar bar-header">
             <a href="javascript:;" ng-click="cityModal.show()" class="button button-icon "><i
-                    class="fs16 ion-android-pin positive mr5"></i>{{cityName}}<i
+                    class="fs16 ion-android-pin positive mr5"></i><span ng-bind="cityName"></span><i
                     class="ml5 fs14 ion-android-arrow-dropdown positive"></i></a>
             <a href="javascript:;" ng-click="search()" class="button button-icon">搜索</a>
         </div>
@@ -41,7 +41,7 @@
             </div>
 
 
-            <ion-item collection-repeat="user in userList track by user.id | user.id != userInfo.id " item="item" href="/wap/message/chat?id={{user.id}}&head_pic={{user.info.head_pic}}">
+            <ion-item collection-repeat="user in userList track by user.id | user.id != userInfo.id " item="item" href="/wap/message/chat?id={{user.id}}&head_pic={{user.info.head_pic}}" ng-init="finsh($last)">
                 <div class="row">
                     <div class="col col-25"><img class="item_uimg rounded" ng-src="{{user.info.head_pic}}"></div>
 

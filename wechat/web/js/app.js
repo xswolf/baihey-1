@@ -34,8 +34,7 @@ require(['angular','ionic'] , function (angular) {
         'use strict';
 
         angular.bootstrap(document,['webApp']);
-
     });
 
-})
+});
 

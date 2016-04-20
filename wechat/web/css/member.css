@@ -1,8 +1,10 @@
+@media screen and (max-width: 480px) {
+  .item {
+    padding: 8px;
+  }
+}
 .member {
   background-color: #f9f9f9;
-}
-.item {
-  padding: 8px;
 }
 .member_hdr .u_img {
   width: 75px;
