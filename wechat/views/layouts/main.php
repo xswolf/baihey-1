@@ -20,26 +20,26 @@
             _LoadingLeft = _PageWidth > 28 ? (_PageWidth - 28) / 2 : 0;
 
         // 在页面未加载完毕之前显示的loading Html自定义内容
-//        var _LoadingHtml = '<div id="loadingDiv" style="position:absolute;left:0;width:100%;height:' + _PageHeight + 'px;top:0;background-color: rgba(255, 255, 255, 0.1);opacity:1;filter:alpha(opacity=100);z-index:10000;"><div style="position: absolute; cursor1: wait; left: ' + _LoadingLeft + 'px; top:' + _LoadingTop + 'px; width: auto; height: 28px;' +
-//            '"><img src="/wechat/web/images/domLoading.gif"></div></div>';
-//
-//
-//        document.write(_LoadingHtml);
-//
-//        // 监听加载状态改变
-//        document.onreadystatechange = completeLoading;
-//
-//        // 加载状态为complete时移除loading效果
-//        function completeLoading() {
-//
-//            if (document.readyState == "complete") {
-//
-//                var loadingMask = document.getElementById('loadingDiv');
-//
-//                loadingMask.parentNode.removeChild(loadingMask);
-//
-//            }
-//        }
+        var _LoadingHtml = '<div id="loadingDiv" style="position:absolute;left:0;width:100%;height:' + _PageHeight + 'px;top:0;background-color: rgba(255, 255, 255, 0.1);opacity:1;filter:alpha(opacity=100);z-index:10000;"><div style="position: absolute; cursor1: wait; left: ' + _LoadingLeft + 'px; top:' + _LoadingTop + 'px; width: auto; height: 28px;' +
+            '"><img src="/wechat/web/images/domLoading.gif"></div></div>';
+
+
+        document.write(_LoadingHtml);
+
+        // 监听加载状态改变
+        document.onreadystatechange = completeLoading;
+
+        // 加载状态为complete时移除loading效果
+        function completeLoading() {
+
+            if (document.readyState == "complete") {
+
+                var loadingMask = document.getElementById('loadingDiv');
+
+                loadingMask.parentNode.removeChild(loadingMask);
+
+            }
+        }
 
 
     </script>
