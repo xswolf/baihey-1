@@ -228,6 +228,9 @@ define(['app/module', 'app/directive/directiveApi'
 
          })
 
+        // 实例化上传图片插件
+        $scope.uploader = new FileUploader({url: '/wap/file/upload.php'});
+
         // socket聊天
         requirejs(['chat/wechatInterface', 'chat/chat'], function (wx, chat) {
 
@@ -257,6 +260,8 @@ define(['app/module', 'app/directive/directiveApi'
 
             }
 
+
+
             // 发送图片
             $scope.send_pic = function () {
                 var e = document.getElementById("pic_fileInput");
@@ -264,13 +269,10 @@ define(['app/module', 'app/directive/directiveApi'
                 ev.initEvent("click", true, true);
                 e.dispatchEvent(ev);
 
-                // 实例化上传图片插件
-                var uploader = $scope.uploader = new FileUploader({
-                    url: '/wap/file/upload'
-                });
+
 
                 // 过滤器，限制用户只能上传图片
-                uploader.filters.push({
+                $scope.uploader.filters.push({
                     name: 'file-type-Res',
                     fn: function (item) {
 
@@ -293,48 +295,54 @@ define(['app/module', 'app/directive/directiveApi'
                     }
                 });
 
-                uploader.onSuccessItem = function (fileItem, response, status, headers) {  // 上传成功
+                $scope.uploader.onSuccessItem = function (fileItem, response, status, headers) {  // 上传成功
                     console.info('onSuccessItem', fileItem, response, status, headers);
 
                 };
-                uploader.onBeforeUploadItem = function (item) {   // 上传之前
+                $scope.uploader.onBeforeUploadItem = function (item) {   // 上传之前
 
                     console.info('onBeforeUploadItem', item);
 
                 };
-                uploader.onErrorItem = function (fileItem, response, status, headers) {   // 上传出错
+                $scope.uploader.onErrorItem = function (fileItem, response, status, headers) {   // 上传出错
                     console.info('onErrorItem', fileItem, response, status, headers);
                 };
 
-                /* // 上传图片相关回调
-                 uploader.onWhenAddingFileFailed = function (item /!*{File|FileLikeObject}*!/, filter, options) {   // 当文件添加失败
-                 console.info('onWhenAddingFileFailed', item, filter, options);
-                 };
-                 uploader.onAfterAddingFile = function (fileItem) {   // 上传之后
-                 fileItem.uploader.queue[0].upload();
+                // 上传图片相关回调
+                $scope.uploader.onWhenAddingFileFailed = function(item /*{File|FileLikeObject}*/, filter, options) {
 
-                 console.info('onAfterAddingFile', fileItem);
+                    console.info('onWhenAddingFileFailed', item, filter, options);
+                };
 
-                 };
-                 uploader.onBeforeUploadItem = function (item) {   // 上传之前
+                $scope.uploader.onAfterAddingFile = function (fileItem) {   // 上传之后
+                    // fileItem.uploader.queue[0].upload();
+                    console.info('onAfterAddingFile', fileItem);
 
-                 console.info('onBeforeUploadItem', item);
+                };
+                $scope.uploader.onBeforeUploadItem = function (item) {   // 上传之前
 
-                 };
-                 uploader.onProgressItem = function (fileItem, progress) {  // 文件上传进度
-                 console.info('onProgressItem', fileItem, progress);
-                 };
-                 uploader.onSuccessItem = function (fileItem, response, status, headers) {  // 上传成功
-                 console.info('onSuccessItem', fileItem, response, status, headers);
+                    console.info('onBeforeUploadItem', item);
+                };
 
-                 };
-                 uploader.onErrorItem = function (fileItem, response, status, headers) {   // 上传出错
-                 console.info('onErrorItem', fileItem, response, status, headers);
-                 };
+                $scope.uploader.onProgressItem = function (fileItem, progress) {  // 文件上传进度
 
-                 uploader.onCompleteItem = function (fileItem, response, status, headers) {  // 上传结束
-                 console.info('onCompleteItem', fileItem, response, status, headers);
-                 };*/
+                    console.info('onProgressItem', fileItem, progress);
+                };
+
+                $scope.uploader.onSuccessItem = function (fileItem, response, status, headers) {  // 上传成功
+
+                    console.info('onSuccessItem', fileItem, response, status, headers);
+                };
+
+                $scope.uploader.onErrorItem = function (fileItem, response, status, headers) {   // 上传出错
+
+                    console.info('onErrorItem', fileItem, response, status, headers);
+                };
+
+                $scope.uploader.onCompleteItem = function (fileItem, response, status, headers) {  // 上传结束
+
+                    console.info('onCompleteItem', fileItem, response, status, headers);
+                };
 
 
                 //chat.sendMessage($scope.message, $scope.sendId, $scope.receiveId, 'send');
