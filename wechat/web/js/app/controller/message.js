@@ -61,8 +61,8 @@ define(['app/module', 'app/directive/directiveApi'
 
         }
 
-        $scope.chatHref = function (id) {
-            window.location.href = '/wap/message/chat?id=' + id;
+        $scope.chatHref = function (id, head_pic) {
+            window.location.href = '/wap/message/chat?id=' + id + '&head_pic=' + head_pic;
         }
 
     }]);
