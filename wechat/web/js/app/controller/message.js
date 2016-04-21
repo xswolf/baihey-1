@@ -197,13 +197,15 @@ define(['app/module', 'app/directive/directiveApi'
 
             // 播放语音
             $scope.detail_record = function (id) {
+                alert(id);
                 wx.playVoice({
                     localId: id // 需要播放的音频的本地ID，由stopRecord接口获得
                 });
-
+                alert('播放结束')
                 // 监听播放结束
                 wx.onVoicePlayEnd({
                     success: function (res) {
+                        alert('播放结束！')
                         var localId = res.localId; // 返回音频的本地ID
                     }
 
