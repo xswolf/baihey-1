@@ -182,11 +182,11 @@ define(['app/module', 'app/directive/directiveApi'
             var messageList = ar.getStorage('messageList');
             for (var i in messageList){
                 if (messageList[i].send_user_id == $scope.receiveId){
-                    messageList[i].sunSend = 0;
+                    messageList[i].sumSend = 0;
                     messageList[i].status = 1;
                 }
             }
-            ar.setStorage('messageList');
+            ar.setStorage('messageList' , messageList);
         }).error(function () {
 
             console.log('页面message.js出现错误，代码：/wap/chat/message-history');
