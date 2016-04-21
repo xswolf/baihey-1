@@ -12,7 +12,7 @@ define(['app/module', 'app/directive/directiveApi'
         // 获取localstorage消息记录
         var messageList = ar.getStorage("messageList");
         $scope.messageList = new Array();
-        if (messageList != null){
+        if (messageList != null) {
             $scope.messageList = messageList;
         }
 
@@ -23,19 +23,19 @@ define(['app/module', 'app/directive/directiveApi'
                 list[i].info = JSON.parse(list[i].info);
                 list[i].identity_pic = JSON.parse(list[i].identity_pic);
                 var flag = true;
-                for (var j in $scope.messageList){  // 相同消息合并
-                    if ($scope.messageList[j].send_user_id == list[i].send_user_id){
+                for (var j in $scope.messageList) {  // 相同消息合并
+                    if ($scope.messageList[j].send_user_id == list[i].send_user_id) {
                         $scope.messageList[j] = list[i];
                         flag = false;
                         break;
                     }
                 }
-                if (flag){
+                if (flag) {
                     $scope.messageList.push(list[i]);
                 }
             }
             //console.log($scope.messageList)
-            ar.setStorage('messageList' , $scope.messageList)
+            ar.setStorage('messageList', $scope.messageList)
         });
 
         $scope.userInfo.id = ar.getCookie('bhy_user_id');
@@ -51,9 +51,9 @@ define(['app/module', 'app/directive/directiveApi'
         // 删除操作
         $scope.removeItem = function (item) {
             var message = ar.getStorage('messageList');
-            for(var i in message) {
-                if(message[i].send_user_id == item.send_user_id) {
-                    message.splice(i,1);
+            for (var i in message) {
+                if (message[i].send_user_id == item.send_user_id) {
+                    message.splice(i, 1);
                     break;
                 }
             }
@@ -64,8 +64,8 @@ define(['app/module', 'app/directive/directiveApi'
             });
         }
 
-        $scope.chatHref = function (id, head_pic) {
-            window.location.href = '/wap/message/chat?id=' + id + '&head_pic=' + head_pic;
+        $scope.chatHref = function (id, head_pic, real_name, sex, age) {
+            window.location.href = '/wap/message/chat?id=' + id + '&head_pic=' + head_pic + '&real_name=' + real_name + '&sex=' + sex + '&age=' + age;
         }
 
     }]);
@@ -121,11 +121,11 @@ define(['app/module', 'app/directive/directiveApi'
 
         // 查看图片
         $scope.showPic = false;
-        $scope.detail_pic = function(id){
+        $scope.detail_pic = function (id) {
             $scope.showPicAdd = id;
             $scope.showPic = true;
         }
-        $scope.hidePicBox = function(){
+        $scope.hidePicBox = function () {
             $scope.showPic = false;
         }
 
@@ -170,7 +170,7 @@ define(['app/module', 'app/directive/directiveApi'
         }
 
 
-         //  获取历史聊天数据
+        //  获取历史聊天数据
         $scope.receiveId = ar.getQueryString('id') // 获取接受者ID
 
         $scope.receiveHeadPic = ar.getQueryString('head_pic');
@@ -180,15 +180,15 @@ define(['app/module', 'app/directive/directiveApi'
         api.list("/wap/message/message-history", {id: $scope.receiveId}).success(function (data) {
 
             $scope.historyList == null ? $scope.historyList = data : $scope.historyList = $scope.historyList.concat(data);
-            ar.setStorage('chat_messageHistory' , $scope.historyList);
+            ar.setStorage('chat_messageHistory', $scope.historyList);
             var messageList = ar.getStorage('messageList');
-            for (var i in messageList){ // 设置消息列表一看状态
-                if (messageList[i].send_user_id == $scope.receiveId){
+            for (var i in messageList) { // 设置消息列表一看状态
+                if (messageList[i].send_user_id == $scope.receiveId) {
                     messageList[i].sumSend = 0;
                     messageList[i].status = 1;
                 }
             }
-            ar.setStorage('messageList' , messageList);
+            ar.setStorage('messageList', messageList);
         }).error(function () {
 
             console.log('页面message.js出现错误，代码：/wap/chat/message-history');
@@ -216,18 +216,26 @@ define(['app/module', 'app/directive/directiveApi'
             }
 
             // 发送消息函数
-            var sendMessage = function (serverId, sendId, toUser, type){
+            var sendMessage = function (serverId, sendId, toUser, type) {
                 var flagTime = ar.timeStamp();
-                chat.sendMessage(serverId, sendId, toUser, type , flagTime);
+                chat.sendMessage(serverId, sendId, toUser, type, flagTime);
                 var id = 0;
                 if ($scope.historyList == undefined || $scope.historyList.length == 0) { // 判断是否有聊天内容设置ID
-                    id = 1 ;
+                    id = 1;
                 } else {
                     id = $scope.historyList[$scope.historyList.length - 1].id + 1;
                 }
-                var message = {id:id,message:serverId , send_user_id : sendId , receive_user_id:toUser , type:type,status:3 , time:flagTime};
+                var message = {
+                    id: id,
+                    message: serverId,
+                    send_user_id: sendId,
+                    receive_user_id: toUser,
+                    type: type,
+                    status: 3,
+                    time: flagTime
+                };
                 $scope.historyList.push(message);
-                ar.setStorage('chat_messageHistory'  , $scope.historyList); // 每次发送消息后把消息放到浏览器端缓存
+                ar.setStorage('chat_messageHistory', $scope.historyList); // 每次发送消息后把消息放到浏览器端缓存
             }
 
             // 开始录音
@@ -238,7 +246,7 @@ define(['app/module', 'app/directive/directiveApi'
             // 结束录音
             $scope.send_record = function () {
                 console.log('end');
-                wx.send_record($scope.sendId, $scope.receiveId , function (serverId,sendId, toUser ,type) {
+                wx.send_record($scope.sendId, $scope.receiveId, function (serverId, sendId, toUser, type) {
                     sendMessage(serverId, sendId, toUser, type);
                 });
             }
@@ -251,7 +259,6 @@ define(['app/module', 'app/directive/directiveApi'
                 sendMessage($scope.message, $scope.sendId, $scope.receiveId, 'send');
 
             }
-
 
 
             // 发送图片
@@ -301,7 +308,7 @@ define(['app/module', 'app/directive/directiveApi'
                 };
 
                 // 上传图片相关回调
-                $scope.uploader.onWhenAddingFileFailed = function(item /*{File|FileLikeObject}*/, filter, options) {
+                $scope.uploader.onWhenAddingFileFailed = function (item /*{File|FileLikeObject}*/, filter, options) {
 
                     console.info('onWhenAddingFileFailed', item, filter, options);
                 };
@@ -345,19 +352,19 @@ define(['app/module', 'app/directive/directiveApi'
             chat.onMessageCallback = function (msg) {
                 var response = JSON.parse(msg.data);
 
-                var setMessageStatus = function (response){
-                    if ($scope.sendId == response.sendId){  //响应自己发送的消息
-                        for (var i in $scope.historyList){
-                            console.log(response.time +'=='+ $scope.historyList[i].time)
-                            if(response.time == $scope.historyList[i].time && response.message == $scope.historyList[i].message){
+                var setMessageStatus = function (response) {
+                    if ($scope.sendId == response.sendId) {  //响应自己发送的消息
+                        for (var i in $scope.historyList) {
+                            console.log(response.time + '==' + $scope.historyList[i].time)
+                            if (response.time == $scope.historyList[i].time && response.message == $scope.historyList[i].message) {
 
                                 $scope.historyList[i].status = 2;
                             }
                         }
-                    }else{
+                    } else {
                         $scope.historyList.push(response);
                     }
-                    ar.setStorage('chat_messageHistory'  , $scope.historyList); // 每次发送消息后把消息放到浏览器端缓存
+                    ar.setStorage('chat_messageHistory', $scope.historyList); // 每次发送消息后把消息放到浏览器端缓存
                 }
 
                 switch (response.type) {
