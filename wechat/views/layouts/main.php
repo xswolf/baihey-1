@@ -11,7 +11,10 @@
     <link href="/wechat/web/css/android.css" rel="stylesheet">
 </head>
 <script data-main="/wechat/web/js/app" src="/wechat/web/js/plugin/requirejs/require.js"></script>
-<body ng-cloak class="ng-cloak">
+<body >
+<div id="domLoading" class="domLoading">
+    <span><img src="/wechat/web/images/domLoading.gif"></span>
+</div>
 <?= $content ?>
 <div class="bar bar-footer bhy-footer com_w_100">
     <ul id="footer">
@@ -38,7 +41,7 @@
             </a>
         </li>
         <li class="me">
-            <a href="/wap/member/index" class="page">
+            <a href="/wap/member/main" class="page">
                 <i class="fs24 <?php echo \Yii::$app->controller->id == 'member' ? 'icon-bhy-user-online cor21' : 'icon-bhy-user-outline'; ?>"></i>
                 <p class="fs11 <?php echo \Yii::$app->controller->id == 'member' ? 'cor21' : ''; ?>">我</p>
             </a>

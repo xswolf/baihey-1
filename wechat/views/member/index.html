@@ -1,8 +1,7 @@
 <link href="/wechat/web/css/member.css" rel="stylesheet">
-<div class="com_w_100" ng-controller="member.index">
-
-    <ion-content class="has-footer member com_w_100">
-        <ion-list>
+<ion-content class="has-footer member com_w_100" ng-controller="member.index">
+    <ion-list>
+        <a ui-sref="information">
             <ion-item class="member_hdr">
                 <div class="fl u_img">
                     <img class="rounded" src="/wechat/web/images/test.jpg">
@@ -10,13 +9,13 @@
                 <div class="fl u_info ml10">
                     <p>
                         <strong class="fs14">张小姐</strong>
-                                <span class="ml5 cor22">
-                                    27岁
-                                    <span class="sx">|</span>
-                                    未婚
-                                    <span class="sx">|</span>
-                                    本科
-                                </span>
+                                        <span class="ml5 cor22">
+                                            27岁
+                                            <span class="sx">|</span>
+                                            未婚
+                                            <span class="sx">|</span>
+                                            本科
+                                        </span>
                     </p>
                     <p class="mt5">
                         <span class="identity sfz">身份证</span>
@@ -45,130 +44,127 @@
 
                 </div>
             </ion-item>
-            </a>
-            <ion-item class="personal_info" href="">
-                <div class="member_menu_i rounded per">
-                    <i class="icon-bhy-member-menu-01"></i>
-                </div>
-                <div class="menu_name">
-                    <p>个人动态</p>
-                </div>
-                <div class="menu_arrow">
-                    <i class="ion-ios-arrow-right"></i>
-                </div>
-            </ion-item>
-            <ion-item class="follow_info" href="">
-                <div class="member_menu_i rounded follow">
-                    <i class="icon-bhy-member-menu-02"></i>
-                </div>
-                <div class="menu_name">
-                    <p>谁关注了我</p>
-                </div>
-                <div class="menu_arrow">
-                    <i class="ion-ios-arrow-right"></i>
-                </div>
-            </ion-item>
-            <ion-item class="engagements_info" href="">
-                <div class="member_menu_i rounded eng">
-                    <i class="icon-bhy-member-menu-03"></i>
-                </div>
-                <div class="menu_name">
-                    <p>我的约会</p>
-                </div>
-                <div class="menu_arrow">
-                    <i class="ion-ios-arrow-right"></i>
-                </div>
-            </ion-item>
-            <ion-item class="marker_info" href="">
-                <div class="member_menu_i rounded marker">
-                    <i class="icon-bhy-member-menu-04"></i>
-                </div>
-                <div class="menu_name">
-                    <p>申请红娘服务</p>
-                </div>
-                <div class="menu_arrow">
-                    <i class="ion-ios-arrow-right"></i>
-                </div>
-            </ion-item>
-            <ion-item class="privacy_info" href="">
-                <div class="member_menu_i rounded privacy">
-                    <i class="icon-bhy-member-menu-05"></i>
-                </div>
-                <div class="menu_name">
-                    <p>隐私设置</p>
-                </div>
-                <div class="menu_arrow">
-                    <i class="ion-ios-arrow-right"></i>
-                </div>
-            </ion-item>
-            <ion-item class="security_info" href="">
-                <div class="member_menu_i rounded security">
-                    <i class="icon-bhy-member-menu-06"></i>
-                </div>
-                <div class="menu_name">
-                    <p>账户安全</p>
-                </div>
-                <div class="menu_arrow">
-                    <i class="ion-ios-arrow-right"></i>
-                </div>
-            </ion-item>
-            <ion-item class="honesty_info" href="">
-                <div class="member_menu_i rounded honesty">
-                    <i class="icon-bhy-member-menu-07"></i>
-                </div>
-                <div class="menu_name">
-                    <p>诚信认证</p>
-                </div>
-                <div class="menu_arrow">
-                    <i class="ion-ios-arrow-right"></i>
-                </div>
-            </ion-item>
-            <ion-item class="vip_info" href="">
-                <div class="member_menu_i rounded vip">
-                    <i class="icon-bhy-member-menu-08"></i>
-                </div>
-                <div class="menu_name">
-                    <p>会员中心</p>
-                </div>
-                <div class="menu_arrow">
-                    <i class="ion-ios-arrow-right"></i>
-                </div>
-            </ion-item>
-            <ion-item class="money_info" href="">
-                <div class="member_menu_i rounded money">
-                    <i class="icon-bhy-member-menu-09"></i>
-                </div>
-                <div class="menu_name">
-                    <p>嘉瑞红包</p>
-                </div>
-                <div class="menu_arrow">
-                    <i class="ion-ios-arrow-right"></i>
-                </div>
-            </ion-item>
-            <ion-item class="about_info" href="">
-                <div class="member_menu_i rounded about">
-                    <i class="icon-bhy-member-menu-10"></i>
-                </div>
-                <div class="menu_name">
-                    <p>关于嘉瑞</p>
-                </div>
-                <div class="menu_arrow">
-                    <i class="ion-ios-arrow-right"></i>
-                </div>
-            </ion-item>
-            <ion-item class="help_info" href="">
-                <div class="member_menu_i rounded help">
-                    <i class="icon-bhy-member-menu-11"></i>
-                </div>
-                <div class="menu_name">
-                    <p>帮助中心</p>
-                </div>
-                <div class="menu_arrow">
-                    <i class="ion-ios-arrow-right"></i>
-                </div>
-            </ion-item>
-        </ion-list>
-
-    </ion-content>
-
-</div>
+        </a>
+        <ion-item class="personal_info" href="">
+            <div class="member_menu_i rounded per">
+                <i class="icon-bhy-member-menu-01"></i>
+            </div>
+            <div class="menu_name">
+                <p>个人动态</p>
+            </div>
+            <div class="menu_arrow">
+                <i class="ion-ios-arrow-right"></i>
+            </div>
+        </ion-item>
+        <ion-item class="follow_info" href="">
+            <div class="member_menu_i rounded follow">
+                <i class="icon-bhy-member-menu-02"></i>
+            </div>
+            <div class="menu_name">
+                <p>谁关注了我</p>
+            </div>
+            <div class="menu_arrow">
+                <i class="ion-ios-arrow-right"></i>
+            </div>
+        </ion-item>
+        <ion-item class="engagements_info" href="">
+            <div class="member_menu_i rounded eng">
+                <i class="icon-bhy-member-menu-03"></i>
+            </div>
+            <div class="menu_name">
+                <p>我的约会</p>
+            </div>
+            <div class="menu_arrow">
+                <i class="ion-ios-arrow-right"></i>
+            </div>
+        </ion-item>
+        <ion-item class="marker_info" href="">
+            <div class="member_menu_i rounded marker">
+                <i class="icon-bhy-member-menu-04"></i>
+            </div>
+            <div class="menu_name">
+                <p>申请红娘服务</p>
+            </div>
+            <div class="menu_arrow">
+                <i class="ion-ios-arrow-right"></i>
+            </div>
+        </ion-item>
+        <ion-item class="privacy_info" href="">
+            <div class="member_menu_i rounded privacy">
+                <i class="icon-bhy-member-menu-05"></i>
+            </div>
+            <div class="menu_name">
+                <p>隐私设置</p>
+            </div>
+            <div class="menu_arrow">
+                <i class="ion-ios-arrow-right"></i>
+            </div>
+        </ion-item>
+        <ion-item class="security_info" href="">
+            <div class="member_menu_i rounded security">
+                <i class="icon-bhy-member-menu-06"></i>
+            </div>
+            <div class="menu_name">
+                <p>账户安全</p>
+            </div>
+            <div class="menu_arrow">
+                <i class="ion-ios-arrow-right"></i>
+            </div>
+        </ion-item>
+        <ion-item class="honesty_info" href="">
+            <div class="member_menu_i rounded honesty">
+                <i class="icon-bhy-member-menu-07"></i>
+            </div>
+            <div class="menu_name">
+                <p>诚信认证</p>
+            </div>
+            <div class="menu_arrow">
+                <i class="ion-ios-arrow-right"></i>
+            </div>
+        </ion-item>
+        <ion-item class="vip_info" href="">
+            <div class="member_menu_i rounded vip">
+                <i class="icon-bhy-member-menu-08"></i>
+            </div>
+            <div class="menu_name">
+                <p>会员中心</p>
+            </div>
+            <div class="menu_arrow">
+                <i class="ion-ios-arrow-right"></i>
+            </div>
+        </ion-item>
+        <ion-item class="money_info" href="">
+            <div class="member_menu_i rounded money">
+                <i class="icon-bhy-member-menu-09"></i>
+            </div>
+            <div class="menu_name">
+                <p>嘉瑞红包</p>
+            </div>
+            <div class="menu_arrow">
+                <i class="ion-ios-arrow-right"></i>
+            </div>
+        </ion-item>
+        <ion-item class="about_info" href="">
+            <div class="member_menu_i rounded about">
+                <i class="icon-bhy-member-menu-10"></i>
+            </div>
+            <div class="menu_name">
+                <p>关于嘉瑞</p>
+            </div>
+            <div class="menu_arrow">
+                <i class="ion-ios-arrow-right"></i>
+            </div>
+        </ion-item>
+        <ion-item class="help_info" href="">
+            <div class="member_menu_i rounded help">
+                <i class="icon-bhy-member-menu-11"></i>
+            </div>
+            <div class="menu_name">
+                <p>帮助中心</p>
+            </div>
+            <div class="menu_arrow">
+                <i class="ion-ios-arrow-right"></i>
+            </div>
+        </ion-item>
+    </ion-list>
+</ion-content>
