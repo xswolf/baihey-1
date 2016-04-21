@@ -5,7 +5,7 @@ define(['app/module'], function (module) {
 
     // 有时间戳计算年龄
     function getAge(time) {
-        return Math.floor((ar.timeStamp() / 1000 - time) / 365 / 24 / 3600);
+        return Math.floor((time - ar.timeStamp() / 1000) / 365 / 24 / 3600);
     }
     // 由时间戳计算年龄
     module.filter('timeToAge', function () {
