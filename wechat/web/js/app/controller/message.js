@@ -210,13 +210,7 @@ define(['app/module', 'app/directive/directiveApi'
                 wx.playVoice({
                     localId: id // 需要播放的音频的本地ID，由stopRecord接口获得
                 });
-                // 监听播放结束
-                wx.onVoicePlayEnd({
-                    success: function (res) {
-                        var localId = res.localId; // 返回音频的本地ID
-                    }
 
-                });
             }
 
             // 发送消息函数
