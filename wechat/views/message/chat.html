@@ -95,7 +95,7 @@
                             <span class="delivered">已读</span>
                         </div>
 
-                        <!-- 未读 -->
+                        <!-- 未读 自己发送的消息显示 或别人发的语言显示-->
                         <div class="status" ng-if="vo.status==2 && (sendId == vo.send_user_id || vo.message_type==2)">
                             <span class="read">未读</span>
                         </div>
