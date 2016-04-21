@@ -24,9 +24,10 @@ define(['app/module', 'app/directive/directiveApi'
                 list[i].identity_pic = JSON.parse(list[i].identity_pic);
                 var flag = true;
                 for (var j in $scope.messageList){  // 相同消息合并
-                    if ($scope.messageList[j].receive_user_id == list[i].receive_user_id){
+                    if ($scope.messageList[j].send_user_id == list[i].send_user_id){
                         $scope.messageList[j] = list[i];
                         flag = false;
+                        break;
                     }
                 }
                 if (flag){
