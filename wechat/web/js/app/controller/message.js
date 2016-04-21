@@ -127,13 +127,6 @@ define(['app/module', 'app/directive/directiveApi'
             $scope.showPic = false;
         }
 
-
-        // 播放语音
-        $scope.detail_record = function (id) {
-
-
-        }
-
         // 领取红包
         $ionicModal.fromTemplateUrl('detailBriModal.html', {
             scope: $scope,
@@ -201,6 +194,21 @@ define(['app/module', 'app/directive/directiveApi'
 
             // 初始化聊天
             chat.init($scope.sendId);
+
+            // 播放语音
+            $scope.detail_record = function (id) {
+                wx.playVoice({
+                    localId: id // 需要播放的音频的本地ID，由stopRecord接口获得
+                });
+
+                // 监听播放结束
+                wx.onVoicePlayEnd({
+                    success: function (res) {
+                        var localId = res.localId; // 返回音频的本地ID
+                    }
+
+                });
+            }
 
             // 发送消息函数
             var sendMessage = function (serverId, sendId, toUser, type){
@@ -357,19 +365,9 @@ define(['app/module', 'app/directive/directiveApi'
                         wx.downloadVoice({
                             serverId: response.message, // 需要下载的音频的服务器端ID，由uploadVoice接口获得
                             success: function (res) {
-                                wx.playVoice({
-                                    localId: res.localId // 需要播放的音频的本地ID，由stopRecord接口获得
-                                });
 
-                                // 监听播放结束
-                                wx.onVoicePlayEnd({
-                                    success: function (res) {
-                                        var localId = res.localId; // 返回音频的本地ID
-                                    }
-
-                                });
                                 response.message = res.localId;
-                                $scope.historyList.push(response);
+                                setMessageStatus(response);
                             }
                         });
 
