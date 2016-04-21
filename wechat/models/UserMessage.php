@@ -28,26 +28,26 @@ class UserMessage extends \common\models\Base
         $pageSize = 20;
         $where['pageNum'] = isset($where['pageNum']) ? $where['pageNum'] : 1;
         $offset = ($where['pageNum'] - 1) * $pageSize;
-        $condition = ['receive_user_id' => $user_id, 'status' => 2];
-        $userTable = \Yii::$app->getDb()->tablePrefix . $this->_user_table;
-        $userInformationTable = \Yii::$app->getDb()->tablePrefix . $this->_user_information_table;
+        $userTable = $this->getDb()->tablePrefix . $this->_user_table;
+        $userInformationTable = $this->getDb()->tablePrefix . $this->_user_information_table;
 
-        $result = (new Query())
-            ->select(['m.*', 'count(m.send_user_id) sumSend', 'u.id other', 'u.username', 'u.sex', 'u.phone', 'i.info', 'i.identity_pic'])
-            ->where($condition)
-            ->from(static::tableName() . ' m')
-            ->innerJoin($userTable . ' u', 'u.id=m.send_user_id')
-            ->innerJoin($userInformationTable . ' i', 'i.user_id=m.send_user_id')
-            ->groupBy('m.send_user_id')
-            ->orderBy('m.time desc')
-            ->limit($pageSize)
-            ->offset($offset);
-        //echo $result->createCommand()->getRawSql();exit;
-        $result = $result->all();
+        $result = $this->getDb()->createCommand("
+SELECT u.username,u.sex,u.phone,i.info,i.identity_pic,c.* FROM $userTable u INNER JOIN $userInformationTable i ON u.id=i.user_id
+INNER JOIN
+(
+SELECT m.id,m.send_user_id,m.receive_user_id,message,m.time,STATUS,tmp.sum_send, m.send_user_id other FROM bhy_user_message  m INNER JOIN (
+SELECT send_user_id,COUNT(send_user_id) sum_send,MAX(TIME) TIME FROM bhy_user_message WHERE receive_user_id = $user_id AND STATUS=2 GROUP BY send_user_id
+)tmp ON m.send_user_id = tmp.send_user_id AND m.time = tmp.time
+) c ON u.id=c.other GROUP BY c.other ORDER BY time DESC limit $offset,$pageSize
+")->queryAll();
 
         return $result;
     }
 
+    /**
+     * 获取最新消息总条数
+     * @return array|bool
+     */
     public function messageSum() {
         $user_id = Cookie::getInstance()->getCookie('bhy_id')->value;
         $condition = ['receive_user_id' => $user_id, 'status' => 2];
@@ -60,18 +60,4 @@ class UserMessage extends \common\models\Base
         return $result;
     }
 
-    /**
-     * 删除
-     * @param array $where
-     * @return int
-     */
-    public function messageDel($where = [])
-    {
-
-        $user_id = Cookie::getInstance()->getCookie('bhy_id');
-        $row = $this->updateAll(['status' => 2], ['receive_user_id' => $user_id, 'send_user_id' => $where['msgId']]);
-        $row += $this->updateAll(['status' => 2], ['send_user_id' => $user_id, 'receive_user_id' => $where['msgId']]);
-
-        return $row;
-    }
 }
