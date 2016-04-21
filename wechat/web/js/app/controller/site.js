@@ -53,6 +53,8 @@ define(['app/module', 'app/directive/directiveApi'
         $scope.userInfo = [];
         if(ar.getStorage('userInfo')) {
             $scope.userInfo = ar.getStorage('userInfo');
+            $scope.userInfo.info = JSON.parse($scope.userInfo.info);
+            $scope.userInfo.identity_pic = JSON.parse($scope.userInfo.identity_pic);
         }
 
         // 获取默认list
