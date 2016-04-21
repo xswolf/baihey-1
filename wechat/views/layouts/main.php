@@ -23,8 +23,14 @@
         </li>
         <li class="msg">
             <a href="/wap/message/index" class="page">
-                <i class="fs24 pr  <?php echo \Yii::$app->controller->id == 'message' ? 'ion-ios-chatbubble cor21' : 'ion-ios-chatbubble-outline'; ?>"><i
-                        class="msg-info-nb"><?php if(\common\util\Cookie::getInstance()->getCookie('bhy_u_name')) { $sum = \wechat\models\UserMessage::getInstance()->messageSum(); echo $sum['sumSend'];} ?></i></i>
+                <i class="fs24 pr  <?php echo \Yii::$app->controller->id == 'message' ? 'ion-ios-chatbubble cor21' : 'ion-ios-chatbubble-outline'; ?>">
+                    <?php if (\common\util\Cookie::getInstance()->getCookie('bhy_u_name')) { ?>
+                        <i class="msg-info-nb">
+                            <?php $sum = \wechat\models\UserMessage::getInstance()->messageSum();
+                            echo $sum['sumSend']; ?>
+                        </i>
+                    <?php } ?>
+                </i>
                 <p class="fs11 <?php echo \Yii::$app->controller->id == 'message' ? 'cor21' : ''; ?>">消息</p>
 
             </a>
