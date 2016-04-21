@@ -174,9 +174,11 @@ define(['app/module', 'app/directive/directiveApi'
         $scope.receiveHeadPic = ar.getQueryString('head_pic');
         $scope.sendHeadPic = ar.getQueryString('head_pic');
 
+        $scope.historyList = ar.getStorage('chat_messageHistory');
         api.list("/wap/message/message-history", {id: $scope.receiveId}).success(function (data) {
-        $scope.historyList = data;
 
+            $scope.historyList == null ? $scope.historyList = data : $scope.historyList = $scope.historyList.concat(data);
+            ar.setStorage('chat_messageHistory' , $scope.historyList);
         }).error(function () {
 
             console.log('页面message.js出现错误，代码：/wap/chat/message-history');
@@ -219,9 +221,9 @@ define(['app/module', 'app/directive/directiveApi'
                 } else {
                     id = $scope.historyList[$scope.historyList.length - 1].id + 1;
                 }
-
-                $scope.historyList.push({id:id,message:serverId , send_user_id : sendId , receive_user_id:toUser , type:type,status:3 , time:flagTime})
-
+                var message = {id:id,message:serverId , send_user_id : sendId , receive_user_id:toUser , type:type,status:3 , time:flagTime};
+                $scope.historyList.push(message);
+                ar.setStorage('chat_messageHistory'  , $scope.historyList); // 每次发送消息后把消息放到浏览器端缓存
             }
 
             // 开始录音
@@ -351,6 +353,7 @@ define(['app/module', 'app/directive/directiveApi'
                     }else{
                         $scope.historyList.push(response);
                     }
+                    ar.setStorage('chat_messageHistory'  , $scope.historyList); // 每次发送消息后把消息放到浏览器端缓存
                 }
 
                 switch (response.type) {

@@ -28,19 +28,14 @@ class Message extends Base {
      * @return mixed
      */
     public function getMessageHistory( $sendId , $receiveId ) {
-        $messageModel             = \common\models\Base::getInstance( "user_message" );
-        $where['receive_user_id'] = $receiveId;
-        $where['send_user_id']    = $sendId;
+        $table                    = 'user_message';
+        $messageModel             = \common\models\Base::getInstance( $table );
 
-        $where = $messageModel->processWhere( $where );
-        $where .= "or receive_user_id={$sendId} and send_user_id={$receiveId}";
+        $where = "receive_user_id={$sendId} and send_user_id={$receiveId} and status=2";
         $handle = $messageModel->Query()->where( $where )
             ->select( '*' );
-
-        $count = $handle->count();
-
-        $list = $handle->offset($count-6)->limit(6)->all();
-
+        $list = $handle->all();
+        \Yii::$app->db->createCommand("update bhy_{$table} set status=1 where {$where}")->execute();
         return $list;
     }
 
