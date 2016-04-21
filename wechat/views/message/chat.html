@@ -66,9 +66,9 @@
                         </div>
 
                         <!-- 语音 -->
-                        <div class="content normal voice" ng-click="detail_record(vo.id)" ng-if="vo.type=='record'">
+                        <div class="content normal voice" ng-click="detail_record('{{vo.message}}')" ng-if="vo.type=='record' || vo.message_type==2">
                             <div class="voice_con">
-                                <i class="icon-bhy-msg-voice voice_icon"></i>
+                                <i class="icon-bhy-msg-voice voice_icon">{{vo.message}}</i>
                             </div>
                         </div>
 
