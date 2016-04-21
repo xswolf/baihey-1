@@ -58,6 +58,7 @@ define(['app/module', 'app/directive/directiveApi'
         } else if(ar.getCookie('bhy_user_id')){
             api.list("/wap/user/get-user-info",[]).success(function (res) {
                 $scope.userInfo = res.data;
+                ar.setStorage('userInfo',res.data);
                 $scope.userInfo.info = JSON.parse($scope.userInfo.info);
                 $scope.userInfo.identity_pic = JSON.parse($scope.userInfo.identity_pic);
             });
