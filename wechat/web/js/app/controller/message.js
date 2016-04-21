@@ -153,49 +153,6 @@ define(['app/module', 'app/directive/directiveApi'
             $scope.detaiOpenBriModal = modal;
         });
 
-
-        // 测试数据
-        /*$scope.historyList = [
-            {
-                id: 1,
-                send_user_id: 1001,
-                headImgUrl: '/wechat/web/images/test.jpg',
-                type: 'txt',
-                content: '你好你好你好啊，测试文本消息',
-                status: 1,
-                display: 1
-            },
-            {
-                id: 2,
-                send_user_id: 1001,
-                headImgUrl: '/wechat/web/images/test.jpg',
-                type: 'pic',
-                content: '/wechat/web/images/test2.jpg',
-                status: 3,
-                display: 1
-            },
-            {
-                id: 3,
-                send_user_id: 1001,
-                headImgUrl: '/wechat/web/images/test.jpg',
-                type: 'record',
-                content: '语音路径',
-                status: 2,
-                display: 1
-
-            },
-            {
-                id: 4,
-                send_user_id: 1001,
-                headImgUrl: '/wechat/web/images/test.jpg',
-                type: 'bri',
-                content: '红包数据',
-                status: 4,
-                display: 1
-            }
-
-        ]*/
-
         // 对方是否认证身份
         $scope.auth_validate = function (receviceId) {
 

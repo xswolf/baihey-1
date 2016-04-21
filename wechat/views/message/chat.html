@@ -90,23 +90,23 @@
                             </div>
                         </div>
 
-                        <!-- 送达 -->
-                        <div class="status" ng-if="vo.status==1">
+                        <!-- 已读 -->
+                        <div class="status" ng-if="vo.status==1 && sendId == vo.send_user_id">
                             <span class="delivered">已读</span>
                         </div>
 
-                        <!-- 已读 -->
-                        <div class="status" ng-if="vo.status==2">
+                        <!-- 未读 -->
+                        <div class="status" ng-if="vo.status==2 && sendId == vo.send_user_id">
                             <span class="read">未读</span>
                         </div>
 
                         <!-- 发送中 -->
-                        <div class="status" ng-if="vo.status==3">
+                        <div class="status" ng-if="vo.status==3 && sendId == vo.send_user_id">
                             <img class="loading" src="/wechat/web/images/loading.gif">
                         </div>
 
                         <!-- 发送失败 -->
-                        <div class="status" ng-if="vo.status==4">
+                        <div class="status" ng-if="vo.status==4 && sendId == vo.send_user_id">
                             <span class="lost ion ion-alert "></span>
                         </div>
 
