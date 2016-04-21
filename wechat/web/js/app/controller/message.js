@@ -180,7 +180,7 @@ define(['app/module', 'app/directive/directiveApi'
             $scope.historyList == null ? $scope.historyList = data : $scope.historyList = $scope.historyList.concat(data);
             ar.setStorage('chat_messageHistory' , $scope.historyList);
             var messageList = ar.getStorage('messageList');
-            for (var i in messageList){
+            for (var i in messageList){ // 设置消息列表一看状态
                 if (messageList[i].send_user_id == $scope.receiveId){
                     messageList[i].sumSend = 0;
                     messageList[i].status = 1;
