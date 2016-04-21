@@ -55,6 +55,12 @@ define(['app/module', 'app/directive/directiveApi'
             $scope.userInfo = ar.getStorage('userInfo');
             $scope.userInfo.info = JSON.parse($scope.userInfo.info);
             $scope.userInfo.identity_pic = JSON.parse($scope.userInfo.identity_pic);
+        } else if(ar.getCookie('bhy_user_id')){
+            api.list("/wap/user/get-user-info",[]).success(function (res) {
+                $scope.userInfo = res.data;
+                $scope.userInfo.info = JSON.parse($scope.userInfo.info);
+                $scope.userInfo.identity_pic = JSON.parse($scope.userInfo.identity_pic);
+            });
         }
 
         // 获取默认list
