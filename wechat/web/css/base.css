@@ -180,11 +180,11 @@ input[type="number"]{-moz-appearance:textfield;}
 /* 字体图标 */
 @font-face {
     font-family: 'bhy-font';
-    src:    url('../fonts/icomoon.eot?8ecyiw');
-    src:    url('../fonts/icomoon.eot?8ecyiw#iefix') format('embedded-opentype'),
-    url('../fonts/icomoon.ttf?8ecyiw') format('truetype'),
-    url('../fonts/icomoon.woff?8ecyiw') format('woff'),
-    url('../fonts/icomoon.svg?8ecyiw#icomoon') format('svg');
+    src:    url('../fonts/icomoon.eot?i0kz3k');
+    src:    url('../fonts/icomoon.eot?i0kz3k#iefix') format('embedded-opentype'),
+    url('../fonts/icomoon.ttf?i0kz3k') format('truetype'),
+    url('../fonts/icomoon.woff?i0kz3k') format('woff'),
+    url('../fonts/icomoon.svg?i0kz3k#icomoon') format('svg');
     font-weight: normal;
     font-style: normal;
 }
@@ -206,6 +206,48 @@ input[type="number"]{-moz-appearance:textfield;}
 }
 
 
+.icon-bhy-member-menu-03:before {
+    content: "\e203";
+}
+.icon-bhy-member-menu-06:before {
+    content: "\e206";
+}
+.icon-bhy-member-menu-11:before {
+    content: "\e211";
+}
+.icon-bhy-member-menu-07:before {
+    content: "\e207";
+}
+.icon-bhy-member-menu-10:before {
+    content: "\e210";
+}
+.icon-bhy-member-menu-09:before {
+    content: "\e209";
+}
+.icon-bhy-member-menu-08:before {
+    content: "\e208";
+}
+.icon-bhy-member-menu-01:before {
+    content: "\e201";
+}
+.icon-bhy-member-menu-04:before {
+    content: "\e204";
+}
+.icon-bhy-member-menu-02:before {
+    content: "\e202";
+}
+.icon-bhy-member-menu-05:before {
+    content: "\e205";
+}
+.icon-bhy-tips-02:before {
+    content: "\e006";
+}
+.icon-bhy-tips-01:before {
+    content: "\e005";
+}
+.icon-bhy-msg-voice:before {
+    content: "\e004";
+}
 .icon-bhy-user-online:before {
     content: "\e001";
 }
@@ -215,9 +257,4 @@ input[type="number"]{-moz-appearance:textfield;}
 .icon-bhy-bribery:before {
     content: "\e003";
 }
-.icon-bhy-msg-voice:before {
-    content: "\e004";
-}
-.icon-bhy-tips-01:before {
-    content: "\e005";
-}
+
