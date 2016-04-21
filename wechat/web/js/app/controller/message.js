@@ -50,16 +50,18 @@ define(['app/module', 'app/directive/directiveApi'
 
         // 删除操作
         $scope.removeItem = function (item) {
-            api.setMsgDisplay(item.other).success(function (res) {
-                if (res.status) { // 删除成功
-                    $scope.items.splice($scope.items.indexOf(item), 1);
-                } else {
-                    $ionicPopup.alert({title: '删除失败！'});
+            var message = ar.getStorage('messageList');
+            for(var i in message) {
+                if(message[i].send_user_id == item.send_user_id) {
+                    message.splice(i,1);
+                    break;
                 }
-            }).error(function () {
-                $ionicPopup.alert({title: '操作失败，请刷新页面重试！'});
-            })
+            }
+            $scope.messageList = message;
+            ar.setStorage('messageList', $scope.messageList);
+            api.setMsgDisplay(item.other).success(function (res) {
 
+            });
         }
 
         $scope.chatHref = function (id, head_pic) {
