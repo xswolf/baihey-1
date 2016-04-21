@@ -48,6 +48,18 @@ class UserMessage extends \common\models\Base
         return $result;
     }
 
+    public function messageSum() {
+        $user_id = Cookie::getInstance()->getCookie('bhy_id')->value;
+        $condition = ['receive_user_id' => $user_id, 'status' => 2];
+        $result = (new Query())
+            ->select(['count(id) sumSend'])
+            ->where($condition)
+            ->from(static::tableName())
+            ->one();
+
+        return $result;
+    }
+
     /**
      * 删除
      * @param array $where
