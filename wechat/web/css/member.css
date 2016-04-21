@@ -1,5 +1,5 @@
-@media screen and (max-width: 480px) {
-  .item {
+@media screen and (max-width: 360px) {
+  .member_hdr {
     padding: 8px;
   }
 }
@@ -106,6 +106,7 @@
 }
 .member_menu_i.money i {
   margin-top: 3px;
+  margin-left: -1px;
 }
 .member_menu_i.about,
 .member_menu_i.help {
@@ -124,4 +125,15 @@
 .menu_name p {
   font-size: 16px;
   line-height: 24px;
+}
+.menu_arrow {
+  float: right;
+}
+.menu_arrow i {
+  font-size: 20px;
+  color: #9f9696;
+  margin-right: 6px;
+}
+.item .item-content {
+  padding: 16px;
 }
