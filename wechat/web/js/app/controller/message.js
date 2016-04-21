@@ -367,8 +367,7 @@ define(['app/module', 'app/directive/directiveApi'
                         wx.downloadVoice({
                             serverId: response.message, // 需要下载的音频的服务器端ID，由uploadVoice接口获得
                             success: function (res) {
-
-                                response.message = res.localId;
+                                //response.message = res.localId;
                                 setMessageStatus(response);
                             }
                         });
