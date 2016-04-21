@@ -220,6 +220,9 @@ class UserController extends BaseController
         }
     }
 
+    /**
+     * 获取关注我的总数
+     */
     public function actionGetSumFollow()
     {
         $data = User::getInstance()->getSumFollow();

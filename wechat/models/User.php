@@ -297,6 +297,10 @@ class User extends \common\models\Base
         return $where;
     }
 
+    /**
+     * 获取关注我的总数
+     * @return array|bool
+     */
     public function getSumFollow()
     {
         $user_id = Cookie::getInstance()->getCookie('bhy_id');
