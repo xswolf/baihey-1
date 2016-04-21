@@ -73,7 +73,7 @@
                         </div>
 
                         <!-- 图片 -->
-                        <div class="content normal" ng-click="detail_pic(vo.message)" ng-if="vo.type=='pic' || vo.message_type==3">
+                        <div class="content normal" ng-click="detail_pic('{{vo.message}}')" ng-if="vo.type=='pic' || vo.message_type==3">
                             <span class="pic">
                                 <img ng-src="{{vo.message}}" >
                             </span>
@@ -155,7 +155,7 @@
         <div class="pic_zoom pa">
             <div class="pic_z_c pr">
                 <div class="pic_z_c_s">
-                    <img alt="" src="/wechat/web/images/test2.jpg">
+                    <img alt="" src="{{showPicAdd}}">
                 </div>
             <span class="pic_closeBtn assertive-bg pa" ng-click="hidePicBox()">
                 <i class="ion-close-round"></i>

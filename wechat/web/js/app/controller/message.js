@@ -120,6 +120,7 @@ define(['app/module', 'app/directive/directiveApi'
         // 查看图片
         $scope.showPic = false;
         $scope.detail_pic = function(id){
+            $scope.showPicAdd = id;
             $scope.showPic = true;
         }
         $scope.hidePicBox = function(){
