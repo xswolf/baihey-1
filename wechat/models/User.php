@@ -296,4 +296,17 @@ class User extends \common\models\Base
         }
         return $where;
     }
+
+    public function getSumFollow()
+    {
+        $user_id = Cookie::getInstance()->getCookie('bhy_id');
+        $condition = ['follow_id' => $user_id];
+        $followTable = $this->getDb()->tablePrefix.'user_follow';
+        $row = (new Query())
+            ->select(['count(id) sumFollow'])
+            ->where($condition)
+            ->from($followTable)
+            ->one();
+        return $row;
+    }
 }

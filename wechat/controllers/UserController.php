@@ -220,4 +220,11 @@ class UserController extends BaseController
         }
     }
 
+    public function actionGetSumFollow()
+    {
+        $data = User::getInstance()->getSumFollow();
+
+        return $this->renderAjax(['status' => 1, 'data' => $data]);
+    }
+
 }

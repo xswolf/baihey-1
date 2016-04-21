@@ -40,7 +40,17 @@ define(['app/module', 'app/directive/directiveApi'
 
         $scope.userInfo.id = ar.getCookie('bhy_user_id');
 
-        $scope.isFollow = true;   // 是否有谁关注了我，有则显示小红点
+        // 是否有谁关注了我，有则显示小红点
+        $scope.isFollow = true;
+        api.getSumFollow().success(function (res) {
+            if (res.status) {
+                var sumFollow = ar.getStorage('sumFollow');
+                if (sumFollow >= res.data.sumFollow) {
+                    $scope.isFollow = false;
+                }
+                ar.setStorage('sumFollow', res.data.sumFollow);
+            }
+        });
 
         // 联系人pop窗口
         $scope.popShow = false;

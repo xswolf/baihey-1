@@ -117,6 +117,10 @@ define(['app/module'], function (module,config) {
             });
         },
 
+        api.getSumFollow = function () {
+            return $http.get('/wap/user/get-sum-follow');
+        }
+
         api.dataURItoBlob = function(dataURI) {
             // convert base64/URLEncoded data component to raw binary data held in a string
             var byteString;
