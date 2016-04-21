@@ -1,0 +1,20 @@
+CACHE MANIFEST
+#我是注释，这个文件名叫test.manifest
+CACHE:
+/wechat/web/js/plugin/angular/angular.min
+/wechat/web/js/plugin/angular/angular-animate.min
+/wechat/web/js/plugin/angular/angular-sanitize.min
+/wechat/web/js/plugin/angular/angular-ui-router.min
+/wechat/web/js/plugin/ionic/ionic.min
+/wechat/web/js/lugin/ionic/ionic-angular.min
+/wechat/web/css/plugin/ionic/ionic.min.css
+/wechat/web/css/base.css
+/wechat/web/css/index.less
+/wechat/web/css/android.css
+/wechat/web/js/plugin/requirejs/require.js
+/wechat/web/fonts/ionicons.ttf?v=2.0.1
+/wechat/web/fonts/icomoon.ttf?8ecyiw
+/wechat/web/fonts/ionicons.woff?v=2.0.1
+/wechat/web/fonts/icomoon.woff?8ecyiw
+/wechat/web/fonts/ionicons.woff
+/wechat/web/css/plugin/ionic/ionic-citypicker.css
