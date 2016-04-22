@@ -13,9 +13,6 @@ define([
     ionic.DomUtil.ready(function () {
         angular.element(document.querySelector('#domLoading'))
             .addClass('hide');
-        var menuSelected = ar.getCookie('bhy_menu');
-        angular.element(document.querySelector('#footer'))
-            .find('li');
     });
 
 })
