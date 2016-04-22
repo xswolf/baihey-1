@@ -247,9 +247,9 @@ class User extends \common\models\Base
                         $data['where']["json_extract(info,'$.height')"] = $this->getRangeWhere($val);
                         break;
 
-                    case 'year_income':
+                    /*case 'year_income':
                         $data['where']["json_extract(info,'$.year_income')"] = $this->getRangeWhere($val);
-                        break;
+                        break;*/
 
                     default:
                         $data['where']["json_extract(info,'$." . $key . "')"] = $val;
