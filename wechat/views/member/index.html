@@ -14,17 +14,17 @@
                                         <span class="ml5 cor22">
                                             {{userInfo.info.age | timeToAge}}岁
                                             <span class="sx">|</span>
-                                            未婚
+                                            {{userInfo.info.is_marriage | marriage}}
                                             <span class="sx">|</span>
-                                            本科
+                                            {{userInfo.info.education | education}}
                                         </span>
                     </p>
                     <p class="mt5">
-                        <span class="identity sfz">身份证</span>
-                        <span class="identity phone">手机</span>
-                        <span class="identity vip">vip</span>
-                        <span class="identity guest">贵宾</span>
-                        <span class="identity diamond">钻石</span>
+                        <span class="identity sfz" ng-if="userInfo.identity_pic.is_check == 1">身份证</span>
+                        <span class="identity phone" ng-if="userInfo.phone">手机</span>
+                        <span class="identity vip" ng-if="userInfo.info.level == 1">vip</span>
+                        <span class="identity guest" ng-if="userInfo.info.level == 2">贵宾</span>
+                        <span class="identity diamond" ng-if="userInfo.info.level == 3">钻石</span>
                     </p>
                     <p class="mt5 u_id">
                         ID：{{userInfo.id}}
@@ -38,7 +38,7 @@
                     </button>
                 </div>
                 <div class="hdr_tips fl pr clearfix">
-                    <p class="tips fl">
+                    <p class="tips fl" ng-if="userInfo.identity_pic.url1 == '未知'">
                         <i class="fl icon-bhy-tips-02 mr5 mt10"></i>
                         <span class="fl">您还未上传身份证！</span>
                         <i class="fr ion-ios-arrow-right fs20"></i>
