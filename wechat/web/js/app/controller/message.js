@@ -405,9 +405,12 @@ define(['app/module', 'app/directive/directiveApi'
 
         })
 
+
+
     }]);
 
     module.controller("message.childBriberyController", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$ionicModal', function (api, $scope, $timeout, $ionicPopup, $ionicModal) {
+        $scope.bri_message = '恭喜发财，大吉大利';
 
         $scope.btnStatus = true;
         $scope.money = 0;
@@ -425,24 +428,25 @@ define(['app/module', 'app/directive/directiveApi'
             }
         }
 
+
         // 发红包
         $scope.bri_submit = function () {
 
-            console.log($scope.briMessage);
             if ($scope.money == 0) {
                 $ionicPopup.alert({title: '红包金额不合法'});
                 return false;
             }
-            $scope.briFormData = {sendId: $scope.sendId, receiveId: $scope.receiveId, money: $scope.money,bri_message:$scope.briMessage};
+            $scope.briFormData = {sendId: $scope.sendId, receiveId: $scope.receiveId, money: $scope.money,bri_message:$scope.bri_message};
 
             api.save("/wap/message/send-bribery", $scope.briFormData).success(function (res) {
 
                 if (res.status == 1){
                     //成功，隐藏窗口
-                    //$scope.briPageHide();
+                    $scope.briPageHide();
                     $scope.sendMessage(res.message, $scope.sendId, $scope.receiveId, 'bribery');
                 }else{
                     alert('网络异常');
+                    console.log($scope.bri_message);
                 }
 
             });
