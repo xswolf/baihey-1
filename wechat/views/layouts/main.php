@@ -16,7 +16,7 @@
     <span><img src="/wechat/web/images/domLoading.gif"></span>
 </div>
 <?= $content ?>
-<div class="bar bar-footer bhy-footer com_w_100" ng-controller="footer" style="display: none;">
+<!--<div class="bar bar-footer bhy-footer com_w_100" ng-controller="footer" style="display: none;">
     <ul id="footer">
         <li class="home" ng-click="switchMenu('/index')">
             <a href="/wap/site/main#/idex" class="page">
@@ -28,13 +28,13 @@
             <a ui-sref="message" class="page">
                 <i class="fs24 pr" ng-class="{true:'ion-ios-chatbubble cor21',false:'ion-ios-chatbubble-outline'}[menu=='/message']" >
                     <?php
-                        if (\common\util\Cookie::getInstance()->getCookie('bhy_u_name')) {
+/*                        if (\common\util\Cookie::getInstance()->getCookie('bhy_u_name')) {
                             $sum = \wechat\models\UserMessage::getInstance()->messageSum();
-                            if($sum['sumSend'] > 0) { ?>
+                            if($sum['sumSend'] > 0) { */?>
                                 <i class="msg-info-nb">
-                                    <?php echo $sum['sumSend']; ?>
+                                    <?php /*echo $sum['sumSend']; */?>
                                 </i>
-                    <?php }} ?>
+                    <?php /*}} */?>
                 </i>
                 <p class="fs11" ng-class="{true:'cor21',false:''}[menu=='/message']">消息</p>
 
@@ -60,7 +60,7 @@
         </li>
 
     </ul>
-</div>
+</div>-->
 <!--[if lt IE 9]>
 <script src="/wechat/web/js/plugin/h5/html5.js"></script>
 <script src="/wechat/web/js/plugin/h5/excanvas.min.js"></script>

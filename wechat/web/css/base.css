@@ -286,5 +286,8 @@ input[type="number"]{-moz-appearance:textfield;}
     display: block;
 }
 .tab-item .icon-bhy-user-outline{
-    line-height: 40px;
+    line-height: 35px;
+}
+.tab-item.activated, .tab-item.active, .tab-item.tab-item-active{
+    color: #e4007f;
 }
