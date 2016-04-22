@@ -22,7 +22,7 @@ define(["app/module"],
                     templateUrl: "/wechat/views/member/index.html"
                 })
 
-            $urlRouterProvider.otherwise("/site_index");
+            $urlRouterProvider.otherwise("/index");
         })
     });
 
