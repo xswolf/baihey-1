@@ -66,5 +66,11 @@
 <script src="/wechat/web/js/plugin/h5/excanvas.min.js"></script>
 <script src="/wechat/web/js/plugin/h5/css3-mediaqueries.js"></script>
 <![endif]-->
+<script>
+    var getnewMessageCount = function () {
+
+    }
+    window.interval(getnewMessageCount , 10000);
+</script>
 </body>
 </html>
