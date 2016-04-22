@@ -57,7 +57,7 @@ class UserController extends BaseController
 
         // 判断是否自动登录
         if ($this->isLogin()) {
-            return $this->redirect('/wap/site');
+            return $this->redirect('/wap/site/main');
         }
 
         //判断是否点击提交

@@ -9,6 +9,9 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
 
     module.controller("member.index", ['app.serviceApi', '$scope', '$ionicPopup', function (api, $scope, $ionicPopup) {
 
+        $scope.userInfo = ar.getStorage('userInfo');
+        $scope.userInfo.info = JSON.parse($scope.userInfo.info);
+        $scope.userInfo.identity_pic = JSON.parse($scope.userInfo.identity_pic);
 
     }]);
 

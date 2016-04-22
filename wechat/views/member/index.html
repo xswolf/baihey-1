@@ -9,9 +9,10 @@
                 </div>
                 <div class="fl u_info ml10">
                     <p>
-                        <strong class="fs14">张小姐</strong>
+                        <strong class="fs14" ng-if="userInfo.info.real_name != '未知'">{{userInfo.info.real_name}}</strong>
+                        <strong class="fs14" ng-if="userInfo.info.real_name == '未知'">ID:{{userInfo.id}}</strong>
                                         <span class="ml5 cor22">
-                                            27岁
+                                            {{userInfo.info.age | timeToAge}}岁
                                             <span class="sx">|</span>
                                             未婚
                                             <span class="sx">|</span>
@@ -26,7 +27,7 @@
                         <span class="identity diamond">钻石</span>
                     </p>
                     <p class="mt5 u_id">
-                        ID：6511580
+                        ID：{{userInfo.id}}
                     </p>
                 </div>
                 <div class="small_hdr_info fr">
