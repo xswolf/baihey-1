@@ -227,7 +227,7 @@ define(['app/module', 'app/directive/directiveApi'
             }
 
             // 发送消息函数
-            var sendMessage = function (serverId, sendId, toUser, type) {
+            $scope.sendMessage = function (serverId, sendId, toUser, type) {
                 var flagTime = ar.timeStamp();
                 chat.sendMessage(serverId, sendId, toUser, type, flagTime);
                 var id = 0;
@@ -258,7 +258,7 @@ define(['app/module', 'app/directive/directiveApi'
             $scope.send_record = function () {
                 console.log('end');
                 wx.send_record($scope.sendId, $scope.receiveId, function (serverId, sendId, toUser, type) {
-                    sendMessage(serverId, sendId, toUser, type);
+                    $scope.sendMessage(serverId, sendId, toUser, type);
                 });
             }
 
@@ -267,7 +267,7 @@ define(['app/module', 'app/directive/directiveApi'
 
                 if ($scope.message == '' || $scope.message == null) return;
 
-                sendMessage($scope.message, $scope.sendId, $scope.receiveId, 'send');
+                $scope.sendMessage($scope.message, $scope.sendId, $scope.receiveId, 'send');
 
             }
 
@@ -352,7 +352,7 @@ define(['app/module', 'app/directive/directiveApi'
 
                 $scope.uploader.onCompleteItem = function (fileItem, response, status, headers) {  // 上传结束
                     console.log(response.path);
-                    sendMessage(response.path, $scope.sendId, $scope.receiveId, 'pic');
+                    $scope.sendMessage(response.path, $scope.sendId, $scope.receiveId, 'pic');
                     //console.info('onCompleteItem', fileItem, response, status, headers);
                 };
 
@@ -424,20 +424,25 @@ define(['app/module', 'app/directive/directiveApi'
             }
         }
 
-
         // 发红包
         $scope.bri_submit = function () {
             if ($scope.money == 0) {
                 $ionicPopup.alert({title: '红包金额不合法'});
                 return false;
             }
+            console.log($scope.briMessage)
+            $scope.briFormData = {sendId: $scope.sendId, receiveId: $scope.receiveId, money: $scope.money,bri_message:$scope.briMessage};
 
-            $scope.briFormData = [{sendId: $scope.sendId, receiveId: $scope.receiveId, money: $scope.money}];
+            api.save("/wap/message/send-bribery", $scope.briFormData).success(function (res) {
 
-            api.save(url, $scope.briFormData).success(function (res) {
+                if (res.status == 1){
+                    //成功，隐藏窗口
+                    //$scope.briPageHide();
+                    $scope.sendMessage(res.message, $scope.sendId, $scope.receiveId, 'bribery');
+                }else{
+                    alert('网络异常');
+                }
 
-                //成功，隐藏窗口
-                $scope.briPageHide();
             });
         }
 

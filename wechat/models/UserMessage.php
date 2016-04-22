@@ -1,6 +1,7 @@
 <?php
 namespace wechat\models;
 
+use common\models\Base;
 use common\util\Cookie;
 use yii\db\Query;
 
@@ -68,9 +69,24 @@ SELECT send_user_id,COUNT(send_user_id) sumSend,MAX(TIME) TIME FROM bhy_user_mes
     {
 
         $user_id = Cookie::getInstance()->getCookie('bhy_id');
-        $row = $this->updateAll(['status' => 1], ['receive_user_id' => $user_id, 'send_user_id' => $where['msgId']]);
+        $row     = $this->updateAll(['status' => 1], ['receive_user_id' => $user_id, 'send_user_id' => $where['msgId']]);
         //$row += $this->updateAll(['status' => 2], ['send_user_id' => $user_id, 'receive_user_id' => $where['msgId']]);
 
         return $row;
+    }
+
+    public function sendBribery($sendId, $receiveId, $money,$bri_message)
+    {
+        $model = Base::getInstance('user_bribery');
+        $model->send_user_id    = $sendId;
+        $model->receive_user_id = $receiveId;
+        $model->money           = $money;
+        $model->time            = time();
+        $model->status          = 1;
+        $model->bri_message     = $bri_message;
+        if($model->insert(true)){
+            return \Yii::$app->db->lastInsertID;
+        }
+        return false;
     }
 }

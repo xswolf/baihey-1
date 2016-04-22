@@ -26,7 +26,7 @@
         </li>
         <li class="msg" ng-click="switchMenu('/message')">
             <a ui-sref="message" class="page">
-                <i class="fs24 pr" ng-class="{true:'ion-ios-chatbubble cor21',false:'ion-ios-chatbubble-outline'}[menu=='/message']" >
+                <i class="fs24 pr"  id="sumSend" ng-class="{true:'ion-ios-chatbubble cor21',false:'ion-ios-chatbubble-outline'}[menu=='/message']" >
                     <?php
 /*                        if (\common\util\Cookie::getInstance()->getCookie('bhy_u_name')) {
                             $sum = \wechat\models\UserMessage::getInstance()->messageSum();
@@ -68,9 +68,31 @@
 <![endif]-->
 <script>
     var getnewMessageCount = function () {
-
+        doGet('/wap/message/get-message-sum');
     }
     window.setInterval(getnewMessageCount , 10000);
+    var xmlHttp;
+    function createxmlHttpRequest() {
+        if (window.ActiveXObject) {
+            xmlHttp = new ActiveXObject("Microsoft.XMLHTTP");
+        } else if (window.XMLHttpRequest) {
+            xmlHttp = new XMLHttpRequest();
+        }
+    }
+
+    var doGet = function(url) {
+        createxmlHttpRequest();
+        xmlHttp.open("GET",url);
+        xmlHttp.send(null);
+        xmlHttp.onreadystatechange = function() {
+            if ((xmlHttp.readyState == 4) && (xmlHttp.status == 200)) {
+                if(xmlHttp.responseText > 0) {
+                    document.getElementById("sumSend").innerHTML='<i class="msg-info-nb">' + xmlHttp.responseText +'</i>';
+                }
+            }
+        }
+    }
+    doGet('/wap/message/get-message-sum');
 </script>
 </body>
 </html>
