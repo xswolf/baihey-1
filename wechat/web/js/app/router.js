@@ -70,7 +70,16 @@ define(["app/module", 'app/service/serviceApi'],
                     });
                 $urlRouterProvider.otherwise("/main/index");
             }])
-            .controller('main', ['$scope', function ($scope) {
+            .controller('main', ['$scope','$location', function ($scope,$location) {
+
+                if($location.url().indexOf('/main/chat') || $location.url().indexOf('/main/information')){
+                    angular.element(document.querySelector('.tab-nav'))
+                        .addClass('hide');
+                }else {
+                    angular.element(document.querySelector('.tab-nav'))
+                        .removeClass('hide');
+                }
+
                 $scope.showMenu = function (show) {
                     if(show){
                         angular.element(document.querySelector('.tab-nav'))
