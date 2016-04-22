@@ -1,6 +1,9 @@
 .bhy-footer {
     display: none;
 }
+.tab-nav{
+    display: none;
+}
 
 .chat {
     background: #f9f9f9;
