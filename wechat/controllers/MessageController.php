@@ -96,11 +96,11 @@ class MessageController extends BaseController
         if (!$this->isLogin()) { // 未登录用户返回失败
             return $this->renderAjax(['status' => 0, 'message' => '用户未登录']);
         }
-
-        $sendId     = $this->get['sendId'];
-        $receiveId  = $this->get['receiveId'];
-        $money      = (float)$this->get['money'];
-        $briMessage = isset($this->get['bri_message']) ? $this->get['bri_message'] : '';
+        $get = \Yii::$app->request->get();
+        $sendId     = $get['sendId'];
+        $receiveId  = $get['receiveId'];
+        $money      = (float)$get['money'];
+        $briMessage = isset($get['bri_message']) ? $get['bri_message'] : '';
 
         if (\common\util\Cookie::getInstance()->getCookie("bhy_id") != $sendId){
             // 非自己登陆的账号
