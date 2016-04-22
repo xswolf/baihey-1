@@ -12,6 +12,12 @@ use yii\web\Cookie;
 class MessageController extends BaseController
 {
 
+    public function init()
+    {
+        if(!$this->isLogin()) {
+            return $this->redirect('/wap/user/login');
+        }
+    }
 
     /**
      * Displays homepage.
@@ -58,6 +64,19 @@ class MessageController extends BaseController
         $this->renderAjax(['status=>1', 'data' => $list]);
     }
 
+    /**
+     * 获取最新别人发送给当前用户的聊天总数
+     */
+    public function actionGetMessageSum()
+    {
+        $list = UserMessage::getInstance()->messageSum();
+        echo $list['sumSend'];
+        //$this->renderAjax(['status=>1', 'data' => $list['sumSend']]);
+    }
+
+    /**
+     * 修改聊天状态为已读
+     */
     public function actionDel()
     {
         if(isset($this->get)) {

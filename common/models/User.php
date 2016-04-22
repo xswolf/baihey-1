@@ -22,11 +22,12 @@ class User extends Base
 
     public function getUserById($id){
         $userTable = $this->tablePrefix.$this->tableName();
+        $userInformationTable = $this->tablePrefix.'user_information';
         $row = (new Query)
             ->select('*')
             ->from($userTable)
-            ->leftJoin($this->tablePrefix.'user_information',"$userTable.userID = ".$this->tablePrefix.'user_information.id')
-            ->where(['userID' => $id])
+            ->leftJoin($this->tablePrefix.'user_information',"$userTable.id = ".$userInformationTable.'user_id')
+            ->where(['id' => $id])
             ->one();
 
         if ($row === false) {
