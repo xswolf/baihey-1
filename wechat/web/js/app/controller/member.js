@@ -18,6 +18,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
     }]);
 
     module.controller("member.information", ['app.serviceApi', '$scope', '$ionicPopup', function (api, $scope, $ionicPopup) {
+        $scope.showMenu(false);
         $scope.imgList = [
             {id: 1},
             {id: 2},
