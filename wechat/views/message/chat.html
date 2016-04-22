@@ -3,7 +3,7 @@
 <div ng-controller="message.chat">
     <ion-header>
         <div class="bar bar-header bhy com_w_100">
-            <a class="button button-icon icon ion-arrow-left-c" href="/wap/message"></a>
+            <a class="button button-icon icon ion-arrow-left-c" href="/wap/message/index#message"></a>
             <h1 class="title">正在与 李小姐 聊天</h1>
             <button class="button button-icon" ng-click="addFollow()" ng-if="u_isFollow">关注</button>
         </div>
@@ -153,7 +153,7 @@
         <div class="pic_zoom pa">
             <div class="pic_z_c pr">
                 <div class="pic_z_c_s">
-                    <img alt="" src="{{showPicAdd}}">
+                    <img alt=""  ng-src="{{showPicAdd}}">
                 </div>
             <span class="pic_closeBtn assertive-bg pa" ng-click="hidePicBox()">
                 <i class="ion-close-round"></i>

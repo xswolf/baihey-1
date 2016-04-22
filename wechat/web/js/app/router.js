@@ -19,7 +19,7 @@ define(["app/module" , 'app/service/serviceApi'],
                     templateUrl : "/wechat/views/message/index.html"
                 })
                 .state('message_chat', { // 聊天页面
-                    url: "/message_chat?id",
+                    url: "/message_chat?id&head_pic",
                     templateUrl: "/wechat/views/message/chat.html",
                 })
                 .state('member', {

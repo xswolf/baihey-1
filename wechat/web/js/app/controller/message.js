@@ -183,9 +183,7 @@ define(['app/module', 'app/directive/directiveApi'
 
         //  获取历史聊天数据
         $scope.receiveId = $location.search().id // 获取接受者ID
-        $scope.receiveHeadPic = ar.getQueryString('head_pic');
-        $scope.sendHeadPic = ar.getQueryString('head_pic');
-
+        $scope.sendHeadPic = $scope.receiveHeadPic = $location.search().head_pic.replace(/~2F/g , "/");
         $scope.historyList = ar.getStorage('chat_messageHistory');
         api.list("/wap/message/message-history", {id: $scope.receiveId}).success(function (data) {
 
