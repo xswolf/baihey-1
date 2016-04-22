@@ -232,8 +232,10 @@ class User extends \common\models\Base
 
                     case 'age':
                         if (is_numeric($val)) {
-                            $age = $this->getTimestampByAge($val);
-                            $data['where']["json_extract(info,'$.age')"] = ['>=', $age];
+                            if ($val != 0){
+                                $age = $this->getTimestampByAge($val);
+                                $data['where']["json_extract(info,'$.age')"] = ['>=', $age];
+                            }
                         } else {
 
                             $age = explode('-', $val);
@@ -244,7 +246,9 @@ class User extends \common\models\Base
                         break;
 
                     case 'height':
-                        $data['where']["json_extract(info,'$.height')"] = $this->getRangeWhere($val);
+                        if($val != 0 ) {
+                            $data['where']["json_extract(info,'$.height')"] = $this->getRangeWhere($val);
+                        }
                         break;
 
                     /*case 'year_income':
@@ -252,7 +256,9 @@ class User extends \common\models\Base
                         break;*/
 
                     default:
-                        $data['where']["json_extract(info,'$." . $key . "')"] = $val;
+                        if($val != 0) {
+                            $data['where']["json_extract(info,'$." . $key . "')"] = $val;
+                        }
                         break;
                 }
             }
