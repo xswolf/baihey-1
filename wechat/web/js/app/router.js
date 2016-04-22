@@ -7,15 +7,22 @@ define(["app/module"],
             $stateProvider
                 .state('index', {
                     url: "/index",
-                    templateUrl: "/wechat/views/member/index.html"
+                    templateUrl: "/wechat/views/site/index.html"
                 })
-                .state('information', {
+                .state('member_information', {
                     url: "/information",
                     templateUrl: "/wechat/views/member/information.html"
 
-                });
+                }).state('message' , {
+                    url: "/message",
+                    templateUrl : "/wechat/views/message/index.html"
+                })
+                .state('member', {
+                    url: "/site_index",
+                    templateUrl: "/wechat/views/member/index.html"
+                })
 
-            $urlRouterProvider.otherwise("/index");
+            $urlRouterProvider.otherwise("/site_index");
         })
     });
 

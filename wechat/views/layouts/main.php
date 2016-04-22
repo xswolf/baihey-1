@@ -16,16 +16,17 @@
     <span><img src="/wechat/web/images/domLoading.gif"></span>
 </div>
 <?= $content ?>
+<div ui-view=""></div>
 <div class="bar bar-footer bhy-footer com_w_100">
     <ul id="footer">
         <li class="home">
-            <a href="/wap/site/index" class="page">
+            <a ui-sref="index" class="page">
                 <i class="fs24 <?php echo \Yii::$app->controller->id == 'site' ? 'ion-ios-home cor21' : 'ion-ios-home-outline'; ?>"></i>
                 <p class="fs11 <?php echo \Yii::$app->controller->id == 'site' ? 'cor21' : ''; ?>">首页</p>
             </a>
         </li>
         <li class="msg">
-            <a href="/wap/message/index" class="page">
+            <a ui-sref="message" class="page">
                 <i class="fs24 pr  <?php echo \Yii::$app->controller->id == 'message' ? 'ion-ios-chatbubble cor21' : 'ion-ios-chatbubble-outline'; ?>">
                     <?php
                         if (\common\util\Cookie::getInstance()->getCookie('bhy_u_name')) {
@@ -41,13 +42,13 @@
             </a>
         </li>
         <li class="me">
-            <a href="/wap/member/main" class="page">
+            <a ui-sref="member" class="page">
                 <i class="fs24 <?php echo \Yii::$app->controller->id == 'member' ? 'icon-bhy-user-online cor21' : 'icon-bhy-user-outline'; ?>"></i>
                 <p class="fs11 <?php echo \Yii::$app->controller->id == 'member' ? 'cor21' : ''; ?>">我</p>
             </a>
         </li>
         <li class="discovery">
-            <a href="/wap/discovery/index" class="page">
+            <a ui-sref="discovery" class="page">
                 <i class="fs24 <?php echo \Yii::$app->controller->id == 'discovery' ? 'ion-ios-eye cor21' : 'ion-ios-eye-outline'; ?>"></i>
                 <p class="fs11 <?php echo \Yii::$app->controller->id == 'discovery' ? 'cor21' : ''; ?>">发现</p>
             </a>
