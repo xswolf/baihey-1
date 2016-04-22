@@ -18,7 +18,6 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
     }]);
 
     module.controller("member.information", ['app.serviceApi', '$scope', '$ionicPopup', function (api, $scope, $ionicPopup) {
-
         $scope.imgList = [
             {id: 1},
             {id: 2},

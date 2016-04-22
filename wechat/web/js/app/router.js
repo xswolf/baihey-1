@@ -1,9 +1,9 @@
 /**
  * Created by Administrator on 2016/3/22.
  */
-define(["app/module" , 'app/service/serviceApi'],
+define(["app/module", 'app/service/serviceApi'],
     function (module) {
-        return module.config(["$stateProvider","$urlRouterProvider"  ,function ($stateProvider,$urlRouterProvider ) {
+        return module.config(["$stateProvider", "$urlRouterProvider", function ($stateProvider, $urlRouterProvider) {
             $stateProvider
                 .state('main', {
                     url: "/main",
@@ -14,7 +14,7 @@ define(["app/module" , 'app/service/serviceApi'],
                     url: "/index",
                     views: {
                         'main-tab': {
-                            templateUrl: "/wechat/views/site/index.html",
+                            templateUrl: "/wechat/views/site/index.html"
                         }
                     }
                 })
@@ -22,15 +22,15 @@ define(["app/module" , 'app/service/serviceApi'],
                     url: "/information",
                     views: {
                         'member-tab': {
-                            templateUrl: "/wechat/views/member/information.html",
+                            templateUrl: "/wechat/views/member/information.html"
                         }
                     }
                 })
-                .state('main.message' , {  // 消息首页
+                .state('main.message', {  // 消息首页
                     url: "/message",
                     views: {
                         'message-tab': {
-                            templateUrl: "/wechat/views/message/index.html",
+                            templateUrl: "/wechat/views/message/index.html"
                         }
                     }
                 })
@@ -38,7 +38,7 @@ define(["app/module" , 'app/service/serviceApi'],
                     url: "/chat?id&head_pic",
                     views: {
                         'message-tab': {
-                            templateUrl: "/wechat/views/message/chat.html",
+                            templateUrl: "/wechat/views/message/chat.html"
                         }
                     }
                 })
@@ -46,7 +46,7 @@ define(["app/module" , 'app/service/serviceApi'],
                     url: "/member",
                     views: {
                         'member-tab': {
-                            templateUrl: "/wechat/views/member/index.html",
+                            templateUrl: "/wechat/views/member/index.html"
                         }
                     }
                 })
@@ -54,7 +54,7 @@ define(["app/module" , 'app/service/serviceApi'],
                     url: "/discovery",
                     views: {
                         'discovery-tab': {
-                            templateUrl: "/wechat/views/discovery/index.html",
+                            templateUrl: "/wechat/views/discovery/index.html"
                         }
                     }
                 })
@@ -62,44 +62,10 @@ define(["app/module" , 'app/service/serviceApi'],
                     url: "/rendezvous",
                     views: {
                         'rendezvous-tab': {
-                            templateUrl: "/wechat/views/rendezvous/index.html",
+                            templateUrl: "/wechat/views/rendezvous/index.html"
                         }
                     }
-                })
-
-
-            $urlRouterProvider.otherwise("/main/index");
+                });
+                $urlRouterProvider.otherwise("/main/index");
         }])
     });
-
-
-/*
-define(["app/module"],
-    function (module) {
-        return module.run([
-                '$rootScope',
-                '$state',
-                '$stateParams',
-                function ($rootScope, $state, $stateParams) {
-                    $rootScope.$state = $state;
-                    $rootScope.$stateParams = $stateParams
-                }
-            ])
-            .config(function ($stateProvider, $urlRouterProvider, $locationProvider, $uiViewScrollProvider) {
-                //用于改变state时跳至顶部
-                $uiViewScrollProvider.useAnchorScroll();
-                // 默认进入先重定向
-                $urlRouterProvider.otherwise('/home');
-                $stateProvider
-                    .state('home', {
-                        //abstract: true,
-                        url: '/home',
-                        views: {
-                            'main@': {
-                                templateUrl: '../view/home.html'
-                            }
-                        }
-                    })
-            })
-    });
-*/
