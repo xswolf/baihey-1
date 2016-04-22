@@ -18,7 +18,7 @@ define(["app/module"],
                     templateUrl : "/wechat/views/message/index.html"
                 })
                 .state('member', {
-                    url: "/site_index",
+                    url: "/member_index",
                     templateUrl: "/wechat/views/member/index.html"
                 })
 
