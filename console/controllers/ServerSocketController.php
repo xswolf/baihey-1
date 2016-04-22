@@ -274,6 +274,8 @@ class ServerSocketController extends Controller {
                 $type = 2;
             }else if ($ar['type'] ==  'pic'){
                 $type = 3;
+            }else if ($ar['type'] ==  'bribery'){
+                $type = 4;
             }
             // 写入数据库
             $ar['send_user_id'] = $ar['sendId'];
