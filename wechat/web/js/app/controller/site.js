@@ -425,4 +425,10 @@ define(['app/module', 'app/directive/directiveApi'
 
     }]);
 
+    module.controller('footer', ['app.serviceApi', '$scope', '$location', function (api, $scope,$location){
+        $scope.menu = $location.url();
+        $scope.switchMenu = function(menu){
+            $scope.menu = menu;
+        }
+    }]);
 })
