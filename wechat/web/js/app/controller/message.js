@@ -402,6 +402,7 @@ define(['app/module', 'app/directive/directiveApi'
                 $scope.scrollBot(); // 滚动至底部
                 $scope.$apply();
             }
+
         })
 
     }]);
@@ -426,11 +427,12 @@ define(['app/module', 'app/directive/directiveApi'
 
         // 发红包
         $scope.bri_submit = function () {
+
+            console.log($scope.briMessage);
             if ($scope.money == 0) {
                 $ionicPopup.alert({title: '红包金额不合法'});
                 return false;
             }
-            console.log($scope.briMessage)
             $scope.briFormData = {sendId: $scope.sendId, receiveId: $scope.receiveId, money: $scope.money,bri_message:$scope.briMessage};
 
             api.save("/wap/message/send-bribery", $scope.briFormData).success(function (res) {
