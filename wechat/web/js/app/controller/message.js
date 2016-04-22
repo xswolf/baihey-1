@@ -81,8 +81,9 @@ define(['app/module', 'app/directive/directiveApi'
     }]);
 
 
-    module.controller("message.chat", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$ionicModal', '$ionicActionSheet', '$ionicLoading', '$ionicScrollDelegate', 'FileUploader', '$http', function (api, $scope, $timeout, $ionicPopup, $ionicModal, $ionicActionSheet, $ionicLoading, $ionicScrollDelegate, FileUploader, $http) {
+    module.controller("message.chat", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$ionicModal', '$ionicActionSheet', '$ionicLoading', '$ionicScrollDelegate', 'FileUploader', '$http','$location', function (api, $scope, $timeout, $ionicPopup, $ionicModal, $ionicActionSheet, $ionicLoading, $ionicScrollDelegate, FileUploader, $http , $location) {
 
+        $scope.sendId = ar.getCookie("bhy_user_id");
         $scope.multi = false;
         $scope.showMulti = function () {
             $scope.multi = !$scope.multi;
@@ -181,8 +182,7 @@ define(['app/module', 'app/directive/directiveApi'
 
 
         //  获取历史聊天数据
-        $scope.receiveId = ar.getQueryString('id') // 获取接受者ID
-
+        $scope.receiveId = $location.search().id // 获取接受者ID
         $scope.receiveHeadPic = ar.getQueryString('head_pic');
         $scope.sendHeadPic = ar.getQueryString('head_pic');
 

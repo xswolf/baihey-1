@@ -1,9 +1,9 @@
 /**
  * Created by Administrator on 2016/3/22.
  */
-define(["app/module"],
+define(["app/module" , 'app/service/serviceApi'],
     function (module) {
-        return module.config(function ($stateProvider,$urlRouterProvider) {
+        return module.config(["$stateProvider","$urlRouterProvider"  ,function ($stateProvider,$urlRouterProvider ) {
             $stateProvider
                 .state('index', {
                     url: "/index",
@@ -13,17 +13,26 @@ define(["app/module"],
                     url: "/member_information",
                     templateUrl: "/wechat/views/member/information.html"
 
-                }).state('message' , {
+                })
+                .state('message' , {  // 消息首页
                     url: "/message",
                     templateUrl : "/wechat/views/message/index.html"
+                })
+                .state('message_chat', { // 聊天页面
+                    url: "/message_chat?id",
+                    templateUrl: "/wechat/views/message/chat.html",
+                    resolve:{wx_config: function () {
+                        return 'a';
+                    }}
                 })
                 .state('member', {
                     url: "/member_index",
                     templateUrl: "/wechat/views/member/index.html"
                 })
 
+
             $urlRouterProvider.otherwise("/index");
-        })
+        }])
     });
 
 
