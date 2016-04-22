@@ -21,9 +21,6 @@ define(["app/module" , 'app/service/serviceApi'],
                 .state('message_chat', { // 聊天页面
                     url: "/message_chat?id",
                     templateUrl: "/wechat/views/message/chat.html",
-                    resolve:{wx_config: function () {
-                        return 'a';
-                    }}
                 })
                 .state('member', {
                     url: "/member_index",

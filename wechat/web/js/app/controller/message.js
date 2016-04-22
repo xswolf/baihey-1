@@ -212,7 +212,10 @@ define(['app/module', 'app/directive/directiveApi'
         requirejs(['chat/wechatInterface', 'chat/chat'], function (wx, chat) {
 
             // 配置微信
-            wx.setConfig($scope.wx_config);
+            api.wxConfig().success(function (data) {
+                wx.setConfig(data);
+            })
+
 
             // 初始化聊天
             chat.init($scope.sendId);

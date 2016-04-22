@@ -7,7 +7,7 @@ require.config({
     paths: {
         jquery: 'plugin/jquery/jquery',
         //angular: '//cdn.bootcss.com/ionic/1.2.4/js/ionic.bundle.min',
-        angular: 'plugin/angular/angular',
+        angular: 'plugin/angular/angular.min',
         angular_animate: 'plugin/angular/angular-animate.min',
         angular_sanitize: 'plugin/angular/angular-sanitize.min',
         angular_ui_router: 'plugin/angular/angular-ui-router.min',
