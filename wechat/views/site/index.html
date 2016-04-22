@@ -1,4 +1,4 @@
-<ion-view>
+<ion-view title="首页" class="padding">
 <link href="/wechat/web/css/plugin/ionic/ionic-citypicker.css" rel="stylesheet">
 <div class="com_w_100 bhy" ng-controller="site.index">
     <ion-header>
@@ -10,7 +10,7 @@
         </div>
     </ion-header>
 
-    <ion-content class="has-header has-footer bhy-has-footer site">
+    <ion-content class="has-header site">
         <ion-list>
             <div class="row" ng-if="userInfo.info">
                 <div class="col col-25"><img class="item_uimg rounded" ng-if="userInfo.info.head_pic == '未知'" ng-src="/wechat/web/images/u_noimg.jpg"><img class="item_uimg rounded" ng-if="userInfo.info.head_pic != '未知'" ng-src="{{userInfo.info.head_pic}}"></div>
@@ -42,7 +42,7 @@
             </div>
 
 
-            <ion-item collection-repeat="user in userList track by user.id | user.id != userInfo.id " item="item" ui-sref="message_chat({id:user.id,head_pic:user.info.head_pic})">
+            <ion-item collection-repeat="user in userList track by user.id | user.id != userInfo.id " item="item" ui-sref="main.message_chat({id:user.id,head_pic:user.info.head_pic})">
                 <div class="row">
                     <div class="col col-25"><img class="item_uimg rounded" ng-src="{{user.info.head_pic}}"></div>
 

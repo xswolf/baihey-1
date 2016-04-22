@@ -1,4 +1,4 @@
-<ion-view>
+<ion-view title="消息" class="padding">
 <div class="com_w_100" ng-controller="message.index">
     <ion-header>
         <div class="bar bar-header com_w_100 ">
@@ -18,7 +18,7 @@
         </div>
     </ion-header>
 
-    <ion-content class="has-header has-footer bhy-has-footer message">
+    <ion-content class="has-header bhy-has-footer message">
         <ion-list show-delete="shouldShowDelete">
             <ion-item collection-repeat="messageInfo in messageList track by messageInfo.id" item="item" ng-click="chatHref(messageInfo.other,messageInfo.info.head_pic,messageInfo.info.real_name,messageInfo.sex,messageInfo.info.age)">
                 <div class="row">

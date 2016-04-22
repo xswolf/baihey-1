@@ -217,7 +217,7 @@ input[type="number"]{-moz-appearance:textfield;}
     font-weight: normal;
     font-variant: normal;
     text-transform: none;
-    line-height: 1;
+    /*line-height: 1;*/
 
     /* Better Font Rendering =========== */
     -webkit-font-smoothing: antialiased;
@@ -277,3 +277,14 @@ input[type="number"]{-moz-appearance:textfield;}
     content: "\e003";
 }
 
+.tab-item i{
+    line-height: 32px;
+}
+.tab-item .tab-title{
+    font-size: 10px;
+    line-height: 14px;
+    display: block;
+}
+.tab-item .icon-bhy-user-outline{
+    line-height: 40px;
+}

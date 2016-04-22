@@ -16,7 +16,7 @@
     <span><img src="/wechat/web/images/domLoading.gif"></span>
 </div>
 <?= $content ?>
-<div class="bar bar-footer bhy-footer com_w_100" ng-controller="footer">
+<div class="bar bar-footer bhy-footer com_w_100" ng-controller="footer" style="display: none;">
     <ul id="footer">
         <li class="home" ng-click="switchMenu('/index')">
             <a href="/wap/site/main#/idex" class="page">
@@ -70,7 +70,7 @@
     var getnewMessageCount = function () {
 
     }
-    window.interval(getnewMessageCount , 10000);
+    window.setInterval(getnewMessageCount , 10000);
 </script>
 </body>
 </html>
