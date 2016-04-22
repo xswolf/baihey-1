@@ -20,7 +20,7 @@
 <div class="bar bar-footer bhy-footer com_w_100">
     <ul id="footer">
         <li class="home">
-            <a ui-sref="index" class="page">
+            <a href="/wap/site/main#/index" class="page">
                 <i class="fs24 <?php echo \Yii::$app->controller->id == 'site' ? 'ion-ios-home cor21' : 'ion-ios-home-outline'; ?>"></i>
                 <p class="fs11 <?php echo \Yii::$app->controller->id == 'site' ? 'cor21' : ''; ?>">首页</p>
             </a>

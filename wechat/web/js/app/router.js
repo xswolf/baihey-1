@@ -10,7 +10,7 @@ define(["app/module"],
                     templateUrl: "/wechat/views/site/index.html"
                 })
                 .state('member_information', {
-                    url: "/information",
+                    url: "/member_information",
                     templateUrl: "/wechat/views/member/information.html"
 
                 }).state('message' , {

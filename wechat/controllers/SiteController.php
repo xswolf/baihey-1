@@ -17,6 +17,12 @@ class SiteController extends BaseController
      *
      * @return mixed
      */
+    public function actionMain()
+    {
+
+        return $this->render();
+    }
+
     public function actionIndex()
     {
         return $this->render();

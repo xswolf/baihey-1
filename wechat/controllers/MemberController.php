@@ -14,11 +14,6 @@ class MemberController extends BaseController
      *
      * @return mixed
      */
-    public function actionMain()
-    {
-
-        return $this->render();
-    }
     public function actionIndex()
     {
 
