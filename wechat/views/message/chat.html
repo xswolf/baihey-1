@@ -78,11 +78,11 @@
                         </div>
 
                         <!-- 红包 -->
-                        <div class="content normal bri" ng-click="detail_bri(vo.id,vo.status)" ng-if="vo.type=='bri'">
+                        <div class="content normal bri" ng-click="detail_bri(vo.id,vo.status)" ng-if="vo.type=='bribery' || vo.message_type==4">
                             <div class="bri_con clearfix">
                                 <div class="icon-bhy-bribery bri_con_icon"></div>
                                 <div class="bri_con_txt">
-                                    <p>恭喜发财恭喜发财恭</p>
+                                    <p>{{}}</p>
                                     <p>领取红包</p>
                                 </div>
                             </div>
@@ -239,7 +239,7 @@
                 </label>
                 <label class="item item-input item-stacked-label">
                     <span class="input-label">留言</span>
-                    <input type="text" placeholder="恭喜发财"></label>
+                    <input type="text" data-ng-model="briMessage" placeholder="恭喜发财"></label>
                 <label class="item tac">
                     <span class="bri_money">{{money | currency:'￥'}}</span>
                 </label>

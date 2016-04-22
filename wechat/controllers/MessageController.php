@@ -2,6 +2,7 @@
 namespace wechat\controllers;
 
 use common\models\Message;
+use common\models\User;
 use wechat\models\UserMessage;
 use yii\web\Cookie;
 
@@ -51,7 +52,7 @@ class MessageController extends BaseController
     public function actionMessageHistory()
     {
         $sendId = \common\util\Cookie::getInstance()->getCookie('bhy_id');
-        $list = Message::getInstance()->getMessageHistory($sendId, $this->get['id']);
+        $list   = Message::getInstance()->getMessageHistory($sendId, \Yii::$app->request->get('id'));
         $this->renderAjax($list);
     }
 
@@ -79,11 +80,49 @@ class MessageController extends BaseController
      */
     public function actionDel()
     {
-        if(isset($this->get)) {
+        if (isset($this->get)) {
             $list = UserMessage::getInstance()->messageDel($this->get);
         } else {
             $list = 0;
         }
         $this->renderAjax(['status=>1', 'data' => $list]);
     }
+
+    /**
+     * 发送红包
+     */
+    public function actionSendBribery(){
+
+        if (!$this->isLogin()) { // 未登录用户返回失败
+            return $this->renderAjax(['status' => 0, 'message' => '用户未登录']);
+        }
+
+        $sendId     = $this->get['sendId'];
+        $receiveId  = $this->get['receiveId'];
+        $money      = (float)$this->get['money'];
+        $briMessage = isset($this->get['bri_message']) ? $this->get['bri_message'] : '';
+
+        if (\common\util\Cookie::getInstance()->getCookie("bhy_id") != $sendId){
+            // 非自己登陆的账号
+            return $this->renderAjax(['status' => -1, 'message' => '非法请求']);
+        }else if ($money<=0.01 || $money>200){
+            // 发送金额不符合要求
+            return $this->renderAjax(['status' => -2, 'message' => '非法请求']);
+        }
+
+        $userInfo = \wechat\models\User::getInstance()->getUserByName(\common\util\Cookie::getInstance()->getCookie( 'bhy_u_name' ));
+        if ($userInfo['balance'] < $money){
+            // 账户余额不够
+            return $this->renderAjax(['status' => -3, 'message' => '余额不够']);
+        }
+
+        if ($id = UserMessage::getInstance()->sendBribery($sendId,$receiveId,$money,$briMessage)) {
+            $this->renderAjax(['status' => 1, 'message' => $id]);
+        } else {
+            $this->renderAjax(['status' => 999, 'message' => '发送失败']);
+        }
+
+
+    }
+
 }
