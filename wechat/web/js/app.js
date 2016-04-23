@@ -12,7 +12,6 @@ require.config({
         angular_sanitize: 'plugin/angular/angular-sanitize.min',
         angular_ui_router: 'plugin/angular/angular-ui-router.min',
         angular_upload: 'plugin/angular/angular-file-upload.min',
-        angular_sortable: 'plugin/angular/ng-sortable.min',
         ionic:'plugin/ionic/ionic.min',
         ionic_angular:'plugin/ionic/ionic-angular.min',
         bootstrap:'plugin/bootstrap/bootstrap.min',

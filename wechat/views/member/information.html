@@ -1,21 +1,64 @@
 <ion-view>
-<ion-header-bar>
-    <a class="button button-icon icon ion-arrow-left-c" ui-sref="main.member" ng-click="showMenu(true)"></a>
-    <title class="title">我的资料</title>
-    <button class="button button-icon">预览</button>
-</ion-header-bar>
-<ion-content ng-controller="member.information">
-    <ion-list>
+    <link href="/wechat/web/css/member.css" rel="stylesheet">
+    <ion-header-bar>
+        <a class="button button-icon icon ion-arrow-left-c" ui-sref="main.member" ng-click="showMenu(true)"></a>
+        <title class="title">我的资料</title>
+        <button class="button button-icon">预览</button>
+    </ion-header-bar>
+    <ion-content ng-controller="member.information" class="bhy com_w_100" style="bottom: 0;">
+        <ion-list>
+            <!--<a title="Add card to column" ng-click="addNewCard(column)"><i class="ionic ion-plus-round addNewCard"></i></a>-->
+            <!--<a data-no-drag class=" removeCard pull-right btn btn-xs" ng-click="removeCard(column, card)"><span class="ionc ion-close-round"></span></a>-->
+            <div class="imgList_con">
+                <div class="imgList_handle clearfix">
+                    <div class="imgItem" ng-repeat="img in imgList">
+                        <img src="{{img.url}}">
+                        <span class="removepic">
+                            <i class="ionc ion-close-round"></i>
+                        </span>
+                        <span class="headpic" ng-if="img.headpic">头像</span>
+                    </div>
+                    <div class="imgItem addItem" >
+                       <a href="javascript:;" ng-click="addNewImg()">
+                        <img src="/wechat/web/images/addImg.png">
+                       </a>
+                    </div>
+                    <p class="tip">点击更换照片，最多可以上传12张照片</p>
+                </div>
+            </div>
 
-        <ul id="ul1">
-            <li><img src="/wechat/web/images/test/1.jpg" width="200" height="150" /></li>
-            <li><img src="/wechat/web/images/test/2.jpg" width="200" height="150" /></li>
-            <li><img src="/wechat/web/images/test/3.jpg" width="200" height="150" /></li>
-            <li><img src="/wechat/web/images/test/4.jpg" width="200" height="150" /></li>
-            <li><img src="/wechat/web/images/test/5.jpg" width="200" height="150" /></li>
-            <li><img src="/wechat/web/images/test/6.jpg" width="200" height="150" /></li>
-        </ul>
+            <ion-item style="padding: 5px 15px">
+                <p>
+                    <span class="identity sfz" >身份证</span>
+                    <span class="identity phone" >手机</span>
+                    <span class="identity vip" >vip</span>
+                    <span class="identity guest" >贵宾</span>
+                    <span class="identity diamond" >钻石</span>
+                    <span class="ml10">
+                        鸡
+                        <span class="sx">|</span>
+                        天秤座
+                    </span>
+                </p>
+            </ion-item>
+            <ion-item>
+                <div class="info_l fl">
+                    <p>个人动态</p>
+                    <p>12</p>
+                </div>
+                <div class="info_c fl">
+                    <p class="dyn_img_list">
+                        <img class="dyn_img" src="/wechat/web/images/test/1.jpg">
+                        <img class="dyn_img" src="/wechat/web/images/test/2.jpg">
+                        <img class="dyn_img" src="/wechat/web/images/test/3.jpg">
+                        <img class="dyn_img" src="/wechat/web/images/test/4.jpg">
+                    </p>
 
-    </ion-list>
-</ion-content>
+                </div>
+                <div class="info_r fr">
+                    <i class="ionc ion-ios-arrow-right"></i>
+                </div>
+            </ion-item>
+        </ion-list>
+    </ion-content>
 </ion-view>

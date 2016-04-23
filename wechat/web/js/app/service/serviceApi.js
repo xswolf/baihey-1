@@ -1,8 +1,8 @@
 /**
  * Created by Administrator on 2016/3/23.
  */
-define(['app/module'], function (module,config) {
-    module.factory('app.serviceApi', ['$http','$q', function ($http,$q) {
+define(['app/module'], function (module, config) {
+    module.factory('app.serviceApi', ['$http', '$q', function ($http, $q) {
 
         var api = {};
 
@@ -19,7 +19,7 @@ define(['app/module'], function (module,config) {
          * 获取当前用户信息
          * @returns {HttpPromise}
          */
-        api.getUserInfo = function() {
+        api.getUserInfo = function () {
             return $http.get('/wap/user/get-user-info');
         }
 
@@ -27,8 +27,8 @@ define(['app/module'], function (module,config) {
          * 删除消息列表item
          * @returns {*}
          */
-        api.setMsgDisplay = function(msgId){
-            return $http.get('/wap/message/del',{params: {msgId: msgId}});
+        api.setMsgDisplay = function (msgId) {
+            return $http.get('/wap/message/del', {params: {msgId: msgId}});
         }
 
         /**
@@ -36,7 +36,7 @@ define(['app/module'], function (module,config) {
          * @param receviceId
          * @returns {*}
          */
-        api.getUserAuthStatus = function(receviceId){
+        api.getUserAuthStatus = function (receviceId) {
             return $http.get('url', {params: {recevice_user_id: receviceId}});
         }
 
@@ -45,7 +45,7 @@ define(['app/module'], function (module,config) {
          * @param receviceId
          * @returns {*}
          */
-        api.getUserMakerRated = function(receviceId){
+        api.getUserMakerRated = function (receviceId) {
             return $http.get('url', {params: {recevice_user_id: receviceId}});
         }
 
@@ -87,7 +87,7 @@ define(['app/module'], function (module,config) {
                 method: 'POST',
                 url: url,
                 headers: {
-                    'Content-Type':'application/json'
+                    'Content-Type': 'application/json'
                     //'X-CSRF-Token':'bzFrQUtlbHU3AS8SGAweRyt1CAInMkElCXMRCzIoH0AGS1MSJjwFPg=='
                 },
                 params: formData
@@ -109,7 +109,7 @@ define(['app/module'], function (module,config) {
          * @param params
          * @returns {*}
          */
-        api.list = function (url , params){
+        api.list = function (url, params) {
             return $http({
                 method: 'POST',
                 url: url,
@@ -120,78 +120,79 @@ define(['app/module'], function (module,config) {
         /**
          * 获取关注我的总数
          */
-        api.getSumFollow = function () {
-            return $http.get('/wap/user/get-sum-follow');
-        },
+            api.getSumFollow = function () {
+                return $http.get('/wap/user/get-sum-follow');
+            },
 
-        api.dataURItoBlob = function(dataURI) {
-            // convert base64/URLEncoded data component to raw binary data held in a string
-            var byteString;
-            if (dataURI.split(',')[0].indexOf('base64') >= 0)
-                byteString = atob(dataURI.split(',')[1]);
-            else
-                byteString = unescape(dataURI.split(',')[1]);
+            api.dataURItoBlob = function (dataURI) {
+                // convert base64/URLEncoded data component to raw binary data held in a string
+                var byteString;
+                if (dataURI.split(',')[0].indexOf('base64') >= 0)
+                    byteString = atob(dataURI.split(',')[1]);
+                else
+                    byteString = unescape(dataURI.split(',')[1]);
 
-            // separate out the mime component
-            var mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
+                // separate out the mime component
+                var mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
 
-            // write the bytes of the string to a typed array
-            var ia = new Uint8Array(byteString.length);
-            for (var i = 0; i < byteString.length; i++) {
-                ia[i] = byteString.charCodeAt(i);
-            }
+                // write the bytes of the string to a typed array
+                var ia = new Uint8Array(byteString.length);
+                for (var i = 0; i < byteString.length; i++) {
+                    ia[i] = byteString.charCodeAt(i);
+                }
 
-            return new Blob([ia], {
-                type: mimeString
-            });
-        },
+                return new Blob([ia], {
+                    type: mimeString
+                });
+            },
 
-        api.resizeFile = function(file) {
-            var deferred = $q.defer();
-            var img = document.createElement("img");
-            try {
-                var reader = new FileReader();
-                reader.onload = function(e) {
-                    img.src = e.target.result;
+            api.resizeFile = function (file) {
+                var deferred = $q.defer();
+                var img = document.createElement("img");
+                try {
+                    var reader = new FileReader();
+                    reader.onload = function (e) {
+                        img.src = e.target.result;
 
-                    //resize the image using canvas
-                    var canvas = document.createElement("canvas");
-                    var ctx = canvas.getContext("2d");
-                    ctx.drawImage(img, 0, 0);
-                    var MAX_WIDTH = 800;
-                    var MAX_HEIGHT = 800;
-                    var width = img.width;
-                    var height = img.height;
-                    if (width > height) {
-                        if (width > MAX_WIDTH) {
-                            height *= MAX_WIDTH / width;
-                            width = MAX_WIDTH;
+                        //resize the image using canvas
+                        var canvas = document.createElement("canvas");
+                        var ctx = canvas.getContext("2d");
+                        ctx.drawImage(img, 0, 0);
+                        var MAX_WIDTH = 800;
+                        var MAX_HEIGHT = 800;
+                        var width = img.width;
+                        var height = img.height;
+                        if (width > height) {
+                            if (width > MAX_WIDTH) {
+                                height *= MAX_WIDTH / width;
+                                width = MAX_WIDTH;
+                            }
+                        } else {
+                            if (height > MAX_HEIGHT) {
+                                width *= MAX_HEIGHT / height;
+                                height = MAX_HEIGHT;
+                            }
                         }
-                    } else {
-                        if (height > MAX_HEIGHT) {
-                            width *= MAX_HEIGHT / height;
-                            height = MAX_HEIGHT;
-                        }
-                    }
-                    canvas.width = width;
-                    canvas.height = height;
-                    var ctx = canvas.getContext("2d");
-                    ctx.drawImage(img, 0, 0, width, height);
+                        canvas.width = width;
+                        canvas.height = height;
+                        var ctx = canvas.getContext("2d");
+                        ctx.drawImage(img, 0, 0, width, height);
 
-                    //change the dataUrl to blob data for uploading to server
-                    var dataURL = canvas.toDataURL('image/jpeg');
-                    var blob = ar.dataURItoBlob(dataURL);
+                        //change the dataUrl to blob data for uploading to server
+                        var dataURL = canvas.toDataURL('image/jpeg');
+                        var blob = ar.dataURItoBlob(dataURL);
 
-                    deferred.resolve(blob);
-                };
-                reader.readAsDataURL(file);
-            } catch (e) {
-                deferred.resolve(e);
+                        deferred.resolve(blob);
+                    };
+                    reader.readAsDataURL(file);
+                } catch (e) {
+                    deferred.resolve(e);
+                }
+                return deferred.promise;
+
             }
-            return deferred.promise;
-
-        }
 
         return api;
     }])
 });
+
