@@ -20,8 +20,13 @@ define(function(){
         this.socket.send('&message=' + chat.esc(message) + '&receiveId='+toUser+'&type='+type+'&sendId='+sendId+"&time="+time);
     }
 
+    chat.close = function () {
+        this.socket.close();
+    }
+
     // 初始化
     chat.init = function (name) {
+        this.socket = null;
         if (this.socket == null){
             this.socket = this.so();
             this.name = name;

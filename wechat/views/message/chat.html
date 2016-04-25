@@ -3,7 +3,7 @@
 <div ng-controller="message.chat">
     <ion-header>
         <div class="bar bar-header bhy com_w_100">
-            <a class="button button-icon icon ion-arrow-left-c" ui-sref="main.message" ng-click="showMenu(true)"></a>
+            <a class="button button-icon icon ion-arrow-left-c" ui-sref="main.message" ng-click="chat.close();showMenu(true)"></a>
             <h1 class="title">正在与 {{real_name | sex:sex:age}} 聊天</h1>
             <button class="button button-icon" ng-click="addFollow()" ng-if="u_isFollow">关注</button>
         </div>

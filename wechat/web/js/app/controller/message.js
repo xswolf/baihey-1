@@ -247,7 +247,7 @@ define(['app/module', 'app/directive/directiveApi'
 
             // 初始化聊天
             chat.init($scope.sendId);
-
+            $scope.chat = chat;
             // 播放语音
             $scope.detail_record = function (id) {
                 wx.playVoice({
