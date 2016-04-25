@@ -121,6 +121,14 @@
 .cor22{color:#9f9696;}
 .cor23{color:#fad085;}
 .cor24{color:#f4af37;}
+.cor25{color:#61cffd;}
+.cor26{color:#1eaeea;}
+.cor27{color:#feb44b;}
+.cor28{color:#f09c26;}
+.cor29{color:#20a987;}
+.cor30{color:#109675;}
+.cor31{color:#ff9292;}
+.cor32{color:#f06c6c;}
 
 .fs11{ font-size: 11px;}
 .fs12{ font-size: 12px;}
@@ -210,11 +218,11 @@ input[type="number"]{-moz-appearance:textfield;}
 /* 字体图标 */
 @font-face {
     font-family: 'bhy-font';
-    src:    url('../fonts/icomoon.eot?anaf8a');
-    src:    url('../fonts/icomoon.eot?anaf8a#iefix') format('embedded-opentype'),
-    url('../fonts/icomoon.ttf?anaf8a') format('truetype'),
-    url('../fonts/icomoon.woff?anaf8a') format('woff'),
-    url('../fonts/icomoon.svg?anaf8a#icomoon') format('svg');
+    src:    url('../fonts/icomoon.eot?l2ia1b');
+    src:    url('../fonts/icomoon.eot?l2ia1b#iefix') format('embedded-opentype'),
+    url('../fonts/icomoon.ttf?l2ia1b') format('truetype'),
+    url('../fonts/icomoon.woff?l2ia1b') format('woff'),
+    url('../fonts/icomoon.svg?l2ia1b#icomoon') format('svg');
     font-weight: normal;
     font-style: normal;
 }
@@ -235,6 +243,15 @@ input[type="number"]{-moz-appearance:textfield;}
     -moz-osx-font-smoothing: grayscale;
 }
 
+.icon-bhy-member-food:before {
+    content: "\e215";
+}
+.icon-bhy-member-zuji-01:before {
+    content: "\e214";
+}
+.icon-bhy-member-zuji:before {
+    content: "\e214";
+}
 .icon-bhy-member-birthday:before {
     content: "\e213";
 }
