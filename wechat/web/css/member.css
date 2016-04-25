@@ -138,7 +138,8 @@
   padding: 16px;
 }
 /* information */
-.infomation .list {
+.infomation .list,
+.dynamic .list {
   background-color: #f9f9f9;
 }
 .infomation .idt {
@@ -208,7 +209,7 @@
 }
 .info_l .dyn_nb {
   font-size: 16px;
-  text-align: center;
+  padding-right: 20px;
 }
 .info_c {
   float: left;
@@ -364,4 +365,45 @@
 .member_t {
   padding: 8px 0 0 16px;
   background-color: #f9f9f9;
+}
+/* dynamic */
+.dyn_u_img {
+  float: left;
+  width: 20%;
+}
+.dyn_u_img img {
+  width: 100%;
+  height: 100%;
+  vertical-align: middle;
+}
+.dyn_con {
+  float: left;
+  margin-left: 15px;
+  width: 74%;
+}
+.dyn_con .dyn_con_name {
+  border-bottom: 1px solid #ededed;
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+}
+.dyn_con_t p {
+  text-overflow: inherit;
+  white-space: normal;
+}
+.dyn_con_p {
+  margin-top: 10px;
+}
+.dyn_con_p .pic {
+  width: 30%;
+  float: left;
+  display: block;
+  margin-right: 5%;
+}
+.dyn_con_p span:last-child {
+  margin-right: 0;
+}
+.dyn_con_p .pic img {
+  max-width: 100%;
+  max-height: 100%;
+  vertical-align: middle;
 }

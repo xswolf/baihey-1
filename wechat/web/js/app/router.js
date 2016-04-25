@@ -28,6 +28,14 @@ define(["app/module", 'app/service/serviceApi'],
                         }
                     }
                 })
+                .state('main.member_dynamic', {
+                    url: "/dynamic",
+                    views: {
+                        'member-tab': {
+                            templateUrl: "/wechat/views/member/dynamic.html"
+                        }
+                    }
+                })
                 .state('main.message', {  // 消息首页
                     cache: false,
                     url: "/message",

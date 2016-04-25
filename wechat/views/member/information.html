@@ -1,7 +1,7 @@
 <ion-view>
     <link href="/wechat/web/css/member.css" rel="stylesheet">
     <ion-header-bar>
-        <a class="button button-icon icon ion-arrow-left-c" ui-sref="main.member" ng-click="showMenu(true)"></a>
+        <button class="button button-icon icon ion-arrow-left-c" ui-sref="main.member" ng-click="showMenu(true)"></button>
         <title class="title">我的资料</title>
         <button class="button button-icon">预览</button>
     </ion-header-bar>
@@ -39,7 +39,7 @@
                     </span>
                 </p>
             </ion-item>
-            <ion-item href="">
+            <ion-item ui-sref="main.member_dynamic">
                 <div class="info_l">
                     <p>个人动态</p>
                     <p class="dyn_nb">12</p>
