@@ -29,6 +29,7 @@ define(["app/module", 'app/service/serviceApi'],
                         }
                     })
                     .state('main.message', {  // 消息首页
+                        cache: false,
                         url: "/message",
                         views: {
                             'message-tab': {
