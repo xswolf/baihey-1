@@ -427,7 +427,7 @@ define(['app/module', 'app/directive/directiveApi'
                     $scope.briPageHide();
                     $scope.sendMessage(res.message, $scope.sendId, $scope.receiveId, 'bribery');
                 }else{
-                    alert('网络异常');
+                    alert('余额不够');
                     console.log($scope.briFormData);
                 }
 
