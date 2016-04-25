@@ -124,7 +124,7 @@ var ar = {
             if (data == undefined || data.length == 0) { // 判断是否有聊天内容设置ID
                 id = 1;
             } else {
-                id = data[data.length - 1].id + 1;
+                id = parseInt(data[data.length - 1].id) + 1;
             }
             return id;
         }
