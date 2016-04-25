@@ -2,7 +2,7 @@
  * Created by Administrator on 2016/3/22.
  */
 define(["app/module", 'app/service/serviceApi'],
-    function (module) {
+    function (module,api) {
         return module.config(["$stateProvider", "$urlRouterProvider", function ($stateProvider, $urlRouterProvider) {
                 $stateProvider
                     .state('main', {
@@ -72,7 +72,9 @@ define(["app/module", 'app/service/serviceApi'],
                 $urlRouterProvider.otherwise("/main/index");
             }])
             .controller('main', ['$scope','$location', function ($scope,$location) {
-
+                api.getMessageNumber('url').success(function(res){
+                    $scope.msgNumber = res;
+                })
                 $scope.showMenu = function (show) {
                     if(show){
                         angular.element(document.querySelector('.tab-nav'))
