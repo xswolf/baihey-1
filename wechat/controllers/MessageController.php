@@ -56,7 +56,8 @@ class MessageController extends BaseController
      */
     public function actionMessageList()
     {
-        $list = UserMessage::getInstance()->messageList($this->get);
+        $sendId = \common\util\Cookie::getInstance()->getCookie('bhy_id');
+        $list = UserMessage::getInstance()->messageList($this->get,$sendId);
         $this->renderAjax(['status=>1', 'data' => $list]);
     }
 
