@@ -74,10 +74,6 @@ define(['app/module', 'app/directive/directiveApi'
             });
         }
 
-        $scope.chatHref = function (id, head_pic, real_name, sex, age) {
-            window.location.href = '/wap/message/chat?id=' + id + '&head_pic=' + head_pic + '&real_name=' + real_name + '&sex=' + sex + '&age=' + age;
-        }
-
     }]);
 
 
