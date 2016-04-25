@@ -12,6 +12,7 @@ define(function(){
             da = da.replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/\"/g, '&quot;');
             return encodeURIComponent(da);
         },
+        flag : true,
         socket : null
     };
 
@@ -20,8 +21,14 @@ define(function(){
         this.socket.send('&message=' + chat.esc(message) + '&receiveId='+toUser+'&type='+type+'&sendId='+sendId+"&time="+time);
     }
 
+    chat.close = function () {
+        this.flag = false;
+        this.socket.close();
+    }
+
     // 初始化
     chat.init = function (name) {
+        this.socket = null;
         if (this.socket == null){
             this.socket = this.so();
             this.name = name;
@@ -46,6 +53,9 @@ define(function(){
         socket.onclose = function () {
             this.socket = null;
             socket.close();
+            if (chat.flag){
+                location.reload()
+            }
             console.log('socket close');
         };
 

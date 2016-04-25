@@ -144,6 +144,7 @@ define(['app/module', 'app/directive/directiveApi'
             $scope.detailBriModal = modal;
         });
         $scope.detail_bri = function (briMessage) {
+            briMessage = briMessage.replace(/&quot;/g , "\"");
             var json = JSON.parse(briMessage);
             $scope.openBri = json;
             // 判断红包是否被领取过
@@ -246,7 +247,7 @@ define(['app/module', 'app/directive/directiveApi'
 
             // 初始化聊天
             chat.init($scope.sendId);
-
+            $scope.chat = chat;
             // 播放语音
             $scope.detail_record = function (id) {
                 wx.playVoice({
@@ -346,7 +347,7 @@ define(['app/module', 'app/directive/directiveApi'
                 var response = JSON.parse(msg.data);
 
                 var setMessageStatus = function (response) {
-                    if (response.type=='madd' || response.type=='remove') return;
+                    if (response.type=='madd' || response.type=='remove' || response.type=='add') return;
                     if ($scope.sendId == response.sendId) {  // 响应自己发送的消息
                         for (var i in $scope.historyList) {
                             console.log(response.time +"=="+ $scope.historyList[i].time +"=="+  response.message +"=="+ $scope.historyList[i].message);
@@ -376,13 +377,12 @@ define(['app/module', 'app/directive/directiveApi'
                         });
                         break;
 
-                    default : // 红包
+                    default :
                         setMessageStatus(response);
+                        $scope.scrollBot(); // 滚动至底部
+                        //$scope.$apply();
                         break;
                 }
-
-                $scope.scrollBot(); // 滚动至底部
-                $scope.$apply();
             }
 
         })
@@ -427,7 +427,7 @@ define(['app/module', 'app/directive/directiveApi'
                     $scope.briPageHide();
                     $scope.sendMessage(res.message, $scope.sendId, $scope.receiveId, 'bribery');
                 }else{
-                    alert('网络异常');
+                    alert('余额不够');
                     console.log($scope.briFormData);
                 }
 

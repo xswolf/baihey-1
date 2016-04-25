@@ -190,6 +190,7 @@ define(['app/module'], function (module) {
 
     module.filter('briMessage',function () {
         return function (input) {
+            input = input.replace(/&quot;/g , "\"");
             var json =  JSON.parse(input);
             console.log(json)
             return json.bri_message;
