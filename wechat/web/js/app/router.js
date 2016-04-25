@@ -73,7 +73,7 @@ define(["app/module", 'app/service/serviceApi'],
             }])
             .controller('main', ['$scope','$location','app.serviceApi', function ($scope,$location,api) {
                 api.getMessageNumber().success(function(res){
-                    $scope.msgNumber = res.data;
+                    $scope.msgNumber = parseInt(res.data);
                 })
                 $scope.showMenu = function (show) {
                     if(show){
