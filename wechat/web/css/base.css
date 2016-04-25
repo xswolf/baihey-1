@@ -61,6 +61,9 @@
 .p14{padding:14px;}
 .mar_r8{margin-right:8px;}
 .mar_r_23{margin-right:23px;}
+.mr3{margin-right:3px;}
+.mr5{margin-right:5px;}
+.mr10{margin-right:10px;}
 .mr15{margin-right:15px;}
 .mr30{margin-right:30px;}
 .mr30{margin-right:30px;}
@@ -79,8 +82,8 @@
 .mt30{ margin-top: 30px;}
 .mt40{ margin-top: 40px;}
 .mt50{ margin-top: 50px;}
-.mr5{margin-right:5px;}
-.mr10{margin-right:10px;}
+
+
 .ml5{ margin-left: 5px;}
 .ml10{ margin-left: 10px;}
 .ml15{ margin-left: 15px;}
@@ -116,6 +119,8 @@
 .cor20{color:#909090;}
 .cor21{color:#e4007f;}
 .cor22{color:#9f9696;}
+.cor23{color:#fad085;}
+.cor24{color:#f4af37;}
 
 .fs11{ font-size: 11px;}
 .fs12{ font-size: 12px;}
@@ -161,6 +166,7 @@
 .cp{ cursor: pointer;}
 .dib{ display: inline-block;}
 .sx{ padding: 3px;}
+.vam{ vertical-align: middle;}
 
 /*清除浮动*/
 .clearfix:after{content:".";display:block;height:0;clear:both;visibility:hidden}
@@ -204,11 +210,11 @@ input[type="number"]{-moz-appearance:textfield;}
 /* 字体图标 */
 @font-face {
     font-family: 'bhy-font';
-    src:    url('../fonts/icomoon.eot?i0kz3k');
-    src:    url('../fonts/icomoon.eot?i0kz3k#iefix') format('embedded-opentype'),
-    url('../fonts/icomoon.ttf?i0kz3k') format('truetype'),
-    url('../fonts/icomoon.woff?i0kz3k') format('woff'),
-    url('../fonts/icomoon.svg?i0kz3k#icomoon') format('svg');
+    src:    url('../fonts/icomoon.eot?anaf8a');
+    src:    url('../fonts/icomoon.eot?anaf8a#iefix') format('embedded-opentype'),
+    url('../fonts/icomoon.ttf?anaf8a') format('truetype'),
+    url('../fonts/icomoon.woff?anaf8a') format('woff'),
+    url('../fonts/icomoon.svg?anaf8a#icomoon') format('svg');
     font-weight: normal;
     font-style: normal;
 }
@@ -229,7 +235,12 @@ input[type="number"]{-moz-appearance:textfield;}
     -moz-osx-font-smoothing: grayscale;
 }
 
-
+.icon-bhy-member-birthday:before {
+    content: "\e213";
+}
+.icon-bhy-member-woman:before {
+    content: "\e212";
+}
 .icon-bhy-member-menu-03:before {
     content: "\e203";
 }

@@ -16,22 +16,22 @@
                         </span>
                         <span class="headpic" ng-if="img.headpic">头像</span>
                     </div>
-                    <div class="imgItem addItem" >
-                       <a href="javascript:;" ng-click="addNewImg()">
-                        <img src="/wechat/web/images/addImg.png">
-                       </a>
+                    <div class="imgItem addItem">
+                        <a href="javascript:;" ng-click="addNewImg()">
+                            <img src="/wechat/web/images/addImg.png">
+                        </a>
                     </div>
                     <div class="tip fl w100">点击更换照片，最多可以上传12张照片</div>
                 </div>
             </div>
 
-            <ion-item style="padding: 5px 15px">
+            <ion-item class="idt mt10">
                 <p>
-                    <span class="identity sfz" >身份证</span>
-                    <span class="identity phone" >手机</span>
-                    <span class="identity vip" >vip</span>
-                    <span class="identity guest" >贵宾</span>
-                    <span class="identity diamond" >钻石</span>
+                    <span class="identity sfz">身份证</span>
+                    <span class="identity phone">手机</span>
+                    <span class="identity vip">vip</span>
+                    <span class="identity guest">贵宾</span>
+                    <span class="identity diamond">钻石</span>
                     <span class="ml10">
                         鸡
                         <span class="sx">|</span>
@@ -39,7 +39,7 @@
                     </span>
                 </p>
             </ion-item>
-            <ion-item>
+            <ion-item href="">
                 <div class="info_l">
                     <p>个人动态</p>
                     <p class="dyn_nb">12</p>
@@ -57,7 +57,7 @@
                     <i class="ionc ion-ios-arrow-right"></i>
                 </div>
             </ion-item>
-            <ion-item class="mb10">
+            <ion-item class="mb10" href="">
                 <div class="info_l">
                     <p>个人签名</p>
                 </div>
@@ -68,16 +68,159 @@
                     <i class="ionc ion-ios-arrow-right"></i>
                 </div>
             </ion-item>
-            <ion-item></ion-item>
-            <ion-item></ion-item>
-            <ion-item></ion-item>
-            <ion-item></ion-item>
-            <ion-item></ion-item>
-            <ion-item></ion-item>
-            <ion-item></ion-item>
-            <ion-item></ion-item>
-            <ion-item></ion-item>
-            <ion-item></ion-item>
+            <ion-item class="idv mb10" href="">
+                <div class="info_c">
+                    <p>
+                        <i class="icon ion-android-alert fs16 mr5 energized vam"></i>
+                        <span class="vam">诚信认证：您还未上传有效身份证明、婚姻证明、学历证明、资产证明~</span>
+                    </p>
+                </div>
+                <div class="info_r">
+                    <i class="ionc ion-ios-arrow-right"></i>
+                </div>
+            </ion-item>
+            <ion-item>
+                <div class="info_l">
+                    <p>性别</p>
+                </div>
+                <div class="info_c">
+                    <p><i class="mr5 icon icon-bhy-member-woman cor13 vam"></i>女</p>
+                </div>
+            </ion-item>
+            <ion-item href="">
+                <div class="info_l">
+                    <p>真实姓名</p>
+                </div>
+                <div class="info_c">
+                    <p><span class="cor21 mr10">立即填写</span><span class="fs12 cor20">保密，只有您自己可以看到</span></p>
+                </div>
+                <div class="info_r">
+                    <i class="ionc ion-ios-arrow-right"></i>
+                </div>
+            </ion-item>
+            <ion-item class="brithday">
+                <div class="info_l">
+                    <p>出生年月</p>
+                </div>
+                <div class="info_c">
+                    <p><i class="icon-bhy-member-birthday cor23 vam mr5"></i><span class="mr10">1991-08-04</span><span class="mr10">羊</span><span>狮子座</span></p>
+                </div>
+            </ion-item>
+            <ion-item>
+                <div class="info_l">
+                    <p>身高</p>
+                </div>
+                <div class="info_c">
+                    <p>165cm</p>
+                </div>
+            </ion-item>
+            <ion-item href="">
+                <div class="info_l">
+                    <p>婚姻状况</p>
+                </div>
+                <div class="info_c">
+                    <p>未婚</p>
+                </div>
+                <div class="info_r">
+                    <i class="ionc ion-ios-arrow-right"></i>
+                </div>
+            </ion-item>
+            <ion-item href="">
+                <div class="info_l">
+                    <p>学历</p>
+                </div>
+                <div class="info_c">
+                    <p>
+                        <!--<i class="icon ion-university positive fs16 mr5 vam"></i>-->
+                        本科
+                    </p>
+                </div>
+                <div class="info_r">
+                    <i class="ionc ion-ios-arrow-right"></i>
+                </div>
+            </ion-item>
+            <ion-item href="">
+                <div class="info_l">
+                    <p>职业</p>
+                </div>
+                <div class="info_c">
+                    <p><span class="cor21">立即填写</span></p>
+                </div>
+                <div class="info_r">
+                    <i class="ionc ion-ios-arrow-right"></i>
+                </div>
+            </ion-item>
+            <ion-item href="">
+                <div class="info_l">
+                    <p>地区</p>
+                </div>
+                <div class="info_c">
+                    <p><span>重庆市</span><span>渝中区</span></p>
+                </div>
+                <div class="info_r">
+                    <i class="ionc ion-ios-arrow-right"></i>
+                </div>
+            </ion-item>
+            <ion-item href="">
+                <div class="info_l">
+                    <p>常出没地</p>
+                </div>
+                <div class="info_c">
+                    <p>观音桥、大坪、南坪</p>
+                </div>
+                <div class="info_r">
+                    <i class="ionc ion-ios-arrow-right"></i>
+                </div>
+            </ion-item>
+
+            <ion-item href="" class="mt10 mb10">
+                <div class="info_l">
+                    <p>礼物</p>
+                </div>
+                <div class="info_c">
+                    <p class="gift_t">我有<span>3</span>个喜欢的礼物</p>
+                    <p class="gift_list mt10">
+                        <img class="gift_img" src="/wechat/web/images/test/gift1.jpg">
+                        <img class="gift_img" src="/wechat/web/images/test/gift1.jpg">
+                        <img class="gift_img" src="/wechat/web/images/test/gift1.jpg">
+                    </p>
+                </div>
+                <div class="info_r">
+                    <i class="ionc ion-ios-arrow-right"></i>
+                </div>
+            </ion-item>
+            <ion-item href="">
+                <div class="info_l">
+                    <p>微信号</p>
+                </div>
+                <div class="info_c">
+                    <p><span class="cor21 mr10">立即填写</span></p>
+                </div>
+                <div class="info_r">
+                    <i class="ionc ion-ios-arrow-right"></i>
+                </div>
+            </ion-item>
+            <ion-item href="">
+                <div class="info_l">
+                    <p>QQ号</p>
+                </div>
+                <div class="info_c">
+                    <p><span class="cor21 mr10">立即填写</span></p>
+                </div>
+                <div class="info_r">
+                    <i class="ionc ion-ios-arrow-right"></i>
+                </div>
+            </ion-item>
+            <div class="hobby">
+                <div class="hobby_bg">
+                    <img src="/wechat/web/images/info_hobby_bg.jpg">
+                </div>
+                <div class="hobby_t">
+                    <p>
+                        <span>填出真正的自己，总有一位会关注您！</span>
+                    </p>
+                </div>
+            </div>
         </ion-list>
     </ion-content>
 </ion-view>
