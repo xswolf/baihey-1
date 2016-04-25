@@ -427,7 +427,7 @@ define(['app/module', 'app/directive/directiveApi'
                         });
                         break;
 
-                    case 'bribery' :　// 红包
+                    case 'bribery' : // 红包
                         setMessageStatus(response);
                         break;
                 }
