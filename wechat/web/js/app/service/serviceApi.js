@@ -117,6 +117,10 @@ define(['app/module'], function (module, config) {
             });
         },
 
+        api.getMessageNumber = function () {
+            return $http.get('/wap/message/get-message-sum');
+        }
+
         /**
          * 获取关注我的总数
          */

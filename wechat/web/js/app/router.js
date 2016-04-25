@@ -72,8 +72,8 @@ define(["app/module", 'app/service/serviceApi'],
                 $urlRouterProvider.otherwise("/main/index");
             }])
             .controller('main', ['$scope','$location','app.serviceApi', function ($scope,$location,api) {
-                api.getMessageNumber('url').success(function(res){
-                    $scope.msgNumber = res;
+                api.getMessageNumber().success(function(res){
+                    $scope.msgNumber = res.data;
                 })
                 $scope.showMenu = function (show) {
                     if(show){

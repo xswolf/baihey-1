@@ -69,8 +69,8 @@ class MessageController extends BaseController
     {
         $user_id = \common\util\Cookie::getInstance()->getCookie('bhy_id');
         $list    = UserMessage::getInstance()->messageSum($user_id);
-        echo $list['sumSend'];
-        //$this->renderAjax(['status=>1', 'data' => $list['sumSend']]);
+        //echo $list['sumSend'];
+        $this->renderAjax(['status=>1', 'data' => $list['sumSend']]);
     }
 
     /**
