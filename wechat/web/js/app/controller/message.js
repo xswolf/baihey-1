@@ -380,7 +380,7 @@ define(['app/module', 'app/directive/directiveApi'
                     default :
                         setMessageStatus(response);
                         $scope.scrollBot(); // 滚动至底部
-                        $scope.$apply();
+                        //$scope.$apply();
                         break;
                 }
             }
