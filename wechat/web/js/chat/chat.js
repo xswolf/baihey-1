@@ -12,6 +12,7 @@ define(function(){
             da = da.replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/\"/g, '&quot;');
             return encodeURIComponent(da);
         },
+        flag : true,
         socket : null
     };
 
@@ -21,6 +22,7 @@ define(function(){
     }
 
     chat.close = function () {
+        this.flag = false;
         this.socket.close();
     }
 
@@ -51,6 +53,9 @@ define(function(){
         socket.onclose = function () {
             this.socket = null;
             socket.close();
+            if (chat.flag){
+                location.reload()
+            }
             console.log('socket close');
         };
 
