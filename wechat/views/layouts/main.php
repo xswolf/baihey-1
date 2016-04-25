@@ -66,33 +66,5 @@
 <script src="/wechat/web/js/plugin/h5/excanvas.min.js"></script>
 <script src="/wechat/web/js/plugin/h5/css3-mediaqueries.js"></script>
 <![endif]-->
-<script>
-    var getnewMessageCount = function () {
-        doGet('/wap/message/get-message-sum');
-    }
-    window.setInterval(getnewMessageCount , 10000);
-    var xmlHttp;
-    function createxmlHttpRequest() {
-        if (window.ActiveXObject) {
-            xmlHttp = new ActiveXObject("Microsoft.XMLHTTP");
-        } else if (window.XMLHttpRequest) {
-            xmlHttp = new XMLHttpRequest();
-        }
-    }
-
-    var doGet = function(url) {
-        createxmlHttpRequest();
-        xmlHttp.open("GET",url);
-        xmlHttp.send(null);
-        xmlHttp.onreadystatechange = function() {
-            if ((xmlHttp.readyState == 4) && (xmlHttp.status == 200)) {
-                if(xmlHttp.responseText > 0) {
-                    document.getElementById("sumSend").innerHTML='<i class="msg-info-nb">' + xmlHttp.responseText +'</i>';
-                }
-            }
-        }
-    }
-    doGet('/wap/message/get-message-sum');
-</script>
 </body>
 </html>
