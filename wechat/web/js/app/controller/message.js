@@ -144,6 +144,7 @@ define(['app/module', 'app/directive/directiveApi'
             $scope.detailBriModal = modal;
         });
         $scope.detail_bri = function (briMessage) {
+            briMessage = briMessage.replace(/&quot;/g , "\"");
             var json = JSON.parse(briMessage);
             $scope.openBri = json;
             // 判断红包是否被领取过
