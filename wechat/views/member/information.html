@@ -6,14 +6,12 @@
         <button class="button button-icon">预览</button>
     </ion-header-bar>
     <ion-content ng-controller="member.information" class="bhy com_w_100" style="bottom: 0;">
-        <ion-list>
-            <!--<a title="Add card to column" ng-click="addNewCard(column)"><i class="ionic ion-plus-round addNewCard"></i></a>-->
-            <!--<a data-no-drag class=" removeCard pull-right btn btn-xs" ng-click="removeCard(column, card)"><span class="ionc ion-close-round"></span></a>-->
+        <ion-list class="infomation">
             <div class="imgList_con">
                 <div class="imgList_handle clearfix">
                     <div class="imgItem" ng-repeat="img in imgList">
                         <img src="{{img.url}}">
-                        <span class="removepic">
+                        <span class="removepic" ng-click="removeImg($index)">
                             <i class="ionc ion-close-round"></i>
                         </span>
                         <span class="headpic" ng-if="img.headpic">头像</span>
@@ -23,7 +21,7 @@
                         <img src="/wechat/web/images/addImg.png">
                        </a>
                     </div>
-                    <p class="tip">点击更换照片，最多可以上传12张照片</p>
+                    <div class="tip fl w100">点击更换照片，最多可以上传12张照片</div>
                 </div>
             </div>
 
@@ -42,23 +40,44 @@
                 </p>
             </ion-item>
             <ion-item>
-                <div class="info_l fl">
+                <div class="info_l">
                     <p>个人动态</p>
-                    <p>12</p>
+                    <p class="dyn_nb">12</p>
                 </div>
-                <div class="info_c fl">
-                    <p class="dyn_img_list">
+                <div class="info_c">
+                    <div class="dyn_img_list">
                         <img class="dyn_img" src="/wechat/web/images/test/1.jpg">
                         <img class="dyn_img" src="/wechat/web/images/test/2.jpg">
                         <img class="dyn_img" src="/wechat/web/images/test/3.jpg">
                         <img class="dyn_img" src="/wechat/web/images/test/4.jpg">
-                    </p>
+                    </div>
 
                 </div>
-                <div class="info_r fr">
+                <div class="info_r mt10">
                     <i class="ionc ion-ios-arrow-right"></i>
                 </div>
             </ion-item>
+            <ion-item class="mb10">
+                <div class="info_l">
+                    <p>个人签名</p>
+                </div>
+                <div class="info_c">
+                    <p>这人很懒，什么也没留下~</p>
+                </div>
+                <div class="info_r">
+                    <i class="ionc ion-ios-arrow-right"></i>
+                </div>
+            </ion-item>
+            <ion-item></ion-item>
+            <ion-item></ion-item>
+            <ion-item></ion-item>
+            <ion-item></ion-item>
+            <ion-item></ion-item>
+            <ion-item></ion-item>
+            <ion-item></ion-item>
+            <ion-item></ion-item>
+            <ion-item></ion-item>
+            <ion-item></ion-item>
         </ion-list>
     </ion-content>
 </ion-view>

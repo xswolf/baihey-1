@@ -34,8 +34,8 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
                 {'id': 11, 'url': '/wechat/web/images/test/2.jpg','headpic':0}
             ];
 
-        $scope.removeImg = function (img) {
-            $scope.imgList.splice(img, 1);
+        $scope.removeImg = function (index) {
+            $scope.imgList.splice(index, 1);
         };
 
         $scope.addNewImg = function () {

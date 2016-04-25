@@ -446,7 +446,7 @@ define(['app/module', 'app/directive/directiveApi'
                     $scope.sendMessage(res.message, $scope.sendId, $scope.receiveId, 'bribery');
                 }else{
                     alert('网络异常');
-                    console.log($scope.bri_message);
+                    console.log($scope.briFormData);
                 }
 
             });
