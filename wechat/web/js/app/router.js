@@ -2,7 +2,7 @@
  * Created by Administrator on 2016/3/22.
  */
 define(["app/module", 'app/service/serviceApi'],
-    function (module,api) {
+    function (module) {
         return module.config(["$stateProvider", "$urlRouterProvider", function ($stateProvider, $urlRouterProvider) {
                 $stateProvider
                     .state('main', {
@@ -71,7 +71,7 @@ define(["app/module", 'app/service/serviceApi'],
                     });
                 $urlRouterProvider.otherwise("/main/index");
             }])
-            .controller('main', ['$scope','$location', function ($scope,$location) {
+            .controller('main', ['$scope','$location','app.serviceApi', function ($scope,$location,api) {
                 api.getMessageNumber('url').success(function(res){
                     $scope.msgNumber = res;
                 })
