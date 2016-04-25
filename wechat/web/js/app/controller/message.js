@@ -258,12 +258,7 @@ define(['app/module', 'app/directive/directiveApi'
             // 发送消息函数
             $scope.sendMessage = function (serverId, sendId, toUser, type) {
                 var flagTime = ar.timeStamp();
-                var id = 0;
-                if ($scope.historyList == undefined || $scope.historyList.length == 0) { // 判断是否有聊天内容设置ID
-                    id = 1;
-                } else {
-                    id = $scope.historyList[$scope.historyList.length - 1].id + 1;
-                }
+                var id = ar.getId($scope.historyList);
                 var message = {
                     id: id,
                     message: serverId,
@@ -332,51 +327,9 @@ define(['app/module', 'app/directive/directiveApi'
                     }
                 });
 
-                var length = $scope.uploader.queue.length;
                 $scope.uploader.onSuccessItem = function (fileItem, response, status, headers) {  // 上传成功
                     console.info('onSuccessItem', fileItem, response, status, headers);
 
-                };
-                $scope.uploader.onBeforeUploadItem = function (item) {   // 上传之前
-
-                    console.info('onBeforeUploadItem', item);
-
-                };
-
-                $scope.uploader.onErrorItem = function (fileItem, response, status, headers) {   // 上传出错
-                    console.info('onErrorItem', fileItem, response, status, headers);
-                };
-
-                // 上传图片相关回调
-                $scope.uploader.onWhenAddingFileFailed = function (item /*{File|FileLikeObject}*/, filter, options) {
-
-                    console.info('onWhenAddingFileFailed', item, filter, options);
-                };
-
-                $scope.uploader.onAfterAddingFile = function (fileItem) {   // 上传之后
-                    fileItem.uploader.queue[length].upload();
-                    //console.info('onAfterAddingFile', fileItem);
-
-                };
-                $scope.uploader.onBeforeUploadItem = function (item) {   // 上传之前
-
-                    //console.info('onBeforeUploadItem', item);
-                };
-
-                $scope.uploader.onProgressItem = function (fileItem, progress) {  // 文件上传进度
-
-                    //console.info('onProgressItem', fileItem, progress);
-                };
-
-                $scope.uploader.onSuccessItem = function (fileItem, response, status, headers) {  // 上传成功
-
-
-                    //console.info('onSuccessItem', fileItem, response, status, headers);
-                };
-
-                $scope.uploader.onErrorItem = function (fileItem, response, status, headers) {   // 上传出错
-
-                    //console.info('onErrorItem', fileItem, response, status, headers);
                 };
 
                 $scope.uploader.onCompleteItem = function (fileItem, response, status, headers) {  // 上传结束
@@ -393,6 +346,7 @@ define(['app/module', 'app/directive/directiveApi'
                 var response = JSON.parse(msg.data);
 
                 var setMessageStatus = function (response) {
+                    if (response.type=='madd' || response.type=='remove') return;
                     if ($scope.sendId == response.sendId) {  // 响应自己发送的消息
                         for (var i in $scope.historyList) {
                             console.log(response.time +"=="+ $scope.historyList[i].time +"=="+  response.message +"=="+ $scope.historyList[i].message);
@@ -403,18 +357,13 @@ define(['app/module', 'app/directive/directiveApi'
                             }
                         }
                     } else {
+                        response.id = ar.getId($scope.historyList);
                         $scope.historyList.push(response);
                     }
                     ar.setStorage('chat_messageHistory' + $scope.receiveId , $scope.historyList); // 每次发送消息后把消息放到浏览器端缓存
                 }
 
                 switch (response.type) {
-                    case 'send': // 文字
-                        setMessageStatus(response);
-                        break;
-                    case 'pic': // 图片
-                        setMessageStatus(response);
-                        break;
                     case 'record': // 录音
                         wx.downloadVoice({
                             serverId: response.message, // 需要下载的音频的服务器端ID，由uploadVoice接口获得
@@ -427,7 +376,7 @@ define(['app/module', 'app/directive/directiveApi'
                         });
                         break;
 
-                    case 'bribery' : // 红包
+                    default : // 红包
                         setMessageStatus(response);
                         break;
                 }
