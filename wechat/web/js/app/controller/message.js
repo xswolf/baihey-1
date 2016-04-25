@@ -347,7 +347,7 @@ define(['app/module', 'app/directive/directiveApi'
                 var response = JSON.parse(msg.data);
 
                 var setMessageStatus = function (response) {
-                    if (response.type=='madd' || response.type=='remove') return;
+                    if (response.type=='madd' || response.type=='remove' || response.type=='add') return;
                     if ($scope.sendId == response.sendId) {  // 响应自己发送的消息
                         for (var i in $scope.historyList) {
                             console.log(response.time +"=="+ $scope.historyList[i].time +"=="+  response.message +"=="+ $scope.historyList[i].message);
