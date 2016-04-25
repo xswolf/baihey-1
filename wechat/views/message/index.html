@@ -20,7 +20,8 @@
 
     <ion-content class="has-header bhy-has-footer message">
         <ion-list show-delete="shouldShowDelete">
-            <ion-item collection-repeat="messageInfo in messageList track by messageInfo.id" item="item" ng-click="chatHref(messageInfo.other,messageInfo.info.head_pic,messageInfo.info.real_name,messageInfo.sex,messageInfo.info.age)">
+            <ion-item collection-repeat="messageInfo in messageList track by messageInfo.id" item="item"
+                      ui-sref="main.message_chat({id:messageInfo.id,head_pic:messageInfo.info.head_pic,real_name:messageInfo.info.real_name,sex:messageInfo.sex,age:messageInfo.info.age})" ng-click="chatHref(messageInfo.other,messageInfo.info.head_pic,messageInfo.info.real_name,messageInfo.sex,messageInfo.info.age)">
                 <div class="row">
                     <div class="msg_u_img mr20 pr fl">
                         <img class="item_uimg rounded" ng-src="{{messageInfo.info.head_pic}}" width="56" height="56">
