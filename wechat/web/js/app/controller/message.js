@@ -377,13 +377,12 @@ define(['app/module', 'app/directive/directiveApi'
                         });
                         break;
 
-                    default : // 红包
+                    default :
                         setMessageStatus(response);
+                        $scope.scrollBot(); // 滚动至底部
+                        $scope.$apply();
                         break;
                 }
-
-                $scope.scrollBot(); // 滚动至底部
-                $scope.$apply();
             }
 
         })
