@@ -143,8 +143,25 @@ define(['app/module', 'app/directive/directiveApi'
         }).then(function (modal) {
             $scope.detailBriModal = modal;
         });
-        $scope.detail_bri = function (id, status) {
-            $scope.detailBriModal.show();
+        $scope.detail_bri = function (briMessage) {
+            var json = JSON.parse(briMessage);
+            $scope.openBri = json;
+            // 判断红包是否被领取过
+            api.list('/wap/message/bribery-status' , {bribery_id:json.id}).success(function (res) {
+                if ($scope.sendId == res.receive_user_id){  // 别人发的红包才能领取，自己不能领取自己的
+                    if (res.status == 0){
+                        $scope.detailBriModal.show();
+                    }else if (res.status ==1 ) {
+                        $scope.openBribery();
+                    }else{
+                        alert('红包已经失效')
+                    }
+                }else{
+                    alert('自己不能领取自己的红包')
+                }
+
+            })
+
         }
 
         // 打开红包
@@ -154,6 +171,19 @@ define(['app/module', 'app/directive/directiveApi'
         }).then(function (modal) {
             $scope.detaiOpenBriModal = modal;
         });
+
+        $scope.openBribery = function () {
+            api.save('/wap/message/open-bribery' , {bribery_id:$scope.openBri.id}).success(function (res) {
+                if(res.status == 1) {
+                    $scope.detaiOpenBriModal.show();
+                }else if (res.status == -1){
+                    $scope.detaiOpenBriModal.show();
+                }else{
+                    alert('异常情况');
+                }
+                $scope.detailBriModal.hide();
+            })
+        }
 
         // 对方是否认证身份
         $scope.auth_validate = function (receviceId) {
@@ -178,13 +208,16 @@ define(['app/module', 'app/directive/directiveApi'
 
 
         //  获取历史聊天数据
-        $scope.receiveId = $location.search().id // 获取接受者ID
+        $scope.receiveId   = $location.search().id // 获取接受者ID
+        $scope.real_name   = $location.search().real_name;
+        $scope.sex         = $location.search().sex;
+        $scope.age         = $location.search().age;
         $scope.sendHeadPic = $scope.receiveHeadPic = $location.search().head_pic.replace(/~2F/g , "/");
-        $scope.historyList = ar.getStorage('chat_messageHistory');
+        $scope.historyList = ar.getStorage('chat_messageHistory' + $scope.receiveId);
         api.list("/wap/message/message-history", {id: $scope.receiveId}).success(function (data) {
 
             $scope.historyList == null ? $scope.historyList = data : $scope.historyList = $scope.historyList.concat(data);
-            ar.setStorage('chat_messageHistory', $scope.historyList);
+            ar.setStorage('chat_messageHistory' + $scope.receiveId, $scope.historyList);
             var messageList = ar.getStorage('messageList');
             for (var i in messageList) { // 设置消息列表一看状态
                 if (messageList[i].send_user_id == $scope.receiveId) {
@@ -225,7 +258,6 @@ define(['app/module', 'app/directive/directiveApi'
             // 发送消息函数
             $scope.sendMessage = function (serverId, sendId, toUser, type) {
                 var flagTime = ar.timeStamp();
-                chat.sendMessage(serverId, sendId, toUser, type, flagTime);
                 var id = 0;
                 if ($scope.historyList == undefined || $scope.historyList.length == 0) { // 判断是否有聊天内容设置ID
                     id = 1;
@@ -242,7 +274,8 @@ define(['app/module', 'app/directive/directiveApi'
                     time: flagTime
                 };
                 $scope.historyList.push(message);
-                ar.setStorage('chat_messageHistory', $scope.historyList); // 每次发送消息后把消息放到浏览器端缓存
+                ar.setStorage('chat_messageHistory' + toUser, $scope.historyList); // 每次发送消息后把消息放到浏览器端缓存
+                chat.sendMessage(serverId, sendId, toUser, type, flagTime);
             }
 
             // 开始录音
@@ -360,9 +393,10 @@ define(['app/module', 'app/directive/directiveApi'
                 var response = JSON.parse(msg.data);
 
                 var setMessageStatus = function (response) {
-                    if ($scope.sendId == response.sendId) {  //响应自己发送的消息
+                    if ($scope.sendId == response.sendId) {  // 响应自己发送的消息
                         for (var i in $scope.historyList) {
-                            console.log(response.time + '==' + $scope.historyList[i].time)
+                            console.log(response.time +"=="+ $scope.historyList[i].time +"=="+  response.message +"=="+ $scope.historyList[i].message);
+                            response.message = response.message.replace(/&quot;/g , "\"");
                             if (response.time == $scope.historyList[i].time && response.message == $scope.historyList[i].message) {
 
                                 $scope.historyList[i].status = 2;
@@ -371,7 +405,7 @@ define(['app/module', 'app/directive/directiveApi'
                     } else {
                         $scope.historyList.push(response);
                     }
-                    ar.setStorage('chat_messageHistory', $scope.historyList); // 每次发送消息后把消息放到浏览器端缓存
+                    ar.setStorage('chat_messageHistory' + $scope.receiveId , $scope.historyList); // 每次发送消息后把消息放到浏览器端缓存
                 }
 
                 switch (response.type) {
@@ -391,7 +425,10 @@ define(['app/module', 'app/directive/directiveApi'
                                 $scope.$apply();
                             }
                         });
+                        break;
 
+                    case 'bribery' :　// 红包
+                        setMessageStatus(response);
                         break;
                 }
 

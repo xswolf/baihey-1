@@ -70,18 +70,35 @@ SELECT send_user_id,COUNT(send_user_id) sumSend,MAX(TIME) TIME FROM bhy_user_mes
         return $row;
     }
 
+    /**
+     * 发送红包
+     * @param $sendId
+     * @param $receiveId
+     * @param $money
+     * @param $bri_message
+     * @return bool|string
+     * @throws \Exception
+     */
     public function sendBribery($sendId, $receiveId, $money, $bri_message)
     {
+        $tran = \Yii::$app->db->beginTransaction();
         $model = Base::getInstance('user_bribery');
         $model->send_user_id = $sendId;
         $model->receive_user_id = $receiveId;
         $model->money = $money;
         $model->time = time();
-        $model->status = 1;
+        $model->status = 0;
         $model->bri_message = $bri_message;
-        if ($model->insert(true)) {
-            return \Yii::$app->db->lastInsertID;
+        if ($model->insert(true) ) {
+            $id  = \Yii::$app->db->lastInsertID;
+            if ( User::getInstance()->changeBalance($sendId , $money)){
+                $tran->commit();
+            }
+
+            return $id;
         }
+
+        $tran->rollBack();
         return false;
     }
 }

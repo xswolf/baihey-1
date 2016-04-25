@@ -4,7 +4,7 @@
     <ion-header>
         <div class="bar bar-header bhy com_w_100">
             <a class="button button-icon icon ion-arrow-left-c" ui-sref="main.message" ng-click="showMenu(true)"></a>
-            <h1 class="title">正在与 李小姐 聊天</h1>
+            <h1 class="title">正在与 {{real_name | sex:sex:age}} 聊天</h1>
             <button class="button button-icon" ng-click="addFollow()" ng-if="u_isFollow">关注</button>
         </div>
     </ion-header>
@@ -78,11 +78,11 @@
                         </div>
 
                         <!-- 红包 -->
-                        <div class="content normal bri" ng-click="detail_bri(vo.id,vo.status)" ng-if="vo.type=='bribery' || vo.message_type==4">
+                        <div class="content normal bri" ng-click="detail_bri(vo.message)" ng-if="vo.type=='bribery' || vo.message_type==4">
                             <div class="bri_con clearfix">
                                 <div class="icon-bhy-bribery bri_con_icon"></div>
                                 <div class="bri_con_txt">
-                                    <p>{{}}</p>
+                                    <p>{{vo.message | briMessage }}</p>
                                     <p>领取红包</p>
                                 </div>
                             </div>
@@ -175,11 +175,11 @@
                 <img src="/wechat/web/images/test.jpg">
             </span>
             <span class="bri_t">
-                <p class="bri_u_name">李小姐的红包</p>
-                <p class="bri_u_name2">恭喜发财恭喜发财恭</p>
+                <p class="bri_u_name">{{real_name|sex:sex:age}}的红包</p>
+                <p class="bri_u_name2">{{openBri.bri_message}}</p>
             </span>
             <span class="bri_btn">
-                <button class="button button-assertive" ng-click="detaiOpenBriModal.show()">拆开看看</button>
+                <button class="button button-assertive" ng-click="openBribery()">拆开看看</button>
             </span>
         </div>
     </ion-modal-view>
@@ -199,14 +199,14 @@
             </div>
             <div class="openBri_con">
                 <p class="openBri_name">
-                    李小姐的红包
+                    {{real_name|sex:sex:age}}的红包
                 </p>
                 <p class="openBri_name2">
-                    恭喜发财恭喜发财恭
+                    {{openBri.bri_message}}
                 </p>
 
                 <p class="openBri_money">
-                    5.00元
+                    {{openBri.money|currency:"￥"}}元
                 </p>
                 <p class="openBri_disc">已存入账户，可用于发红包、提现。</p>
 

@@ -3,6 +3,7 @@ namespace wechat\controllers;
 
 use common\models\Message;
 use common\models\User;
+use wechat\models\UserBribery;
 use wechat\models\UserMessage;
 use yii\web\Cookie;
 
@@ -47,7 +48,7 @@ class MessageController extends BaseController
     public function actionMessageHistory()
     {
         $sendId = \common\util\Cookie::getInstance()->getCookie('bhy_id');
-        $list = Message::getInstance()->getMessageHistory($sendId, \Yii::$app->request->get('id'));
+        $list   = Message::getInstance()->getMessageHistory($sendId, \Yii::$app->request->get('id'));
         $this->renderAjax($list);
     }
 
@@ -57,7 +58,7 @@ class MessageController extends BaseController
     public function actionMessageList()
     {
         $sendId = \common\util\Cookie::getInstance()->getCookie('bhy_id');
-        $list = UserMessage::getInstance()->messageList($this->get,$sendId);
+        $list   = UserMessage::getInstance()->messageList($this->get, $sendId);
         $this->renderAjax(['status=>1', 'data' => $list]);
     }
 
@@ -67,7 +68,7 @@ class MessageController extends BaseController
     public function actionGetMessageSum()
     {
         $user_id = \common\util\Cookie::getInstance()->getCookie('bhy_id');
-        $list = UserMessage::getInstance()->messageSum($user_id);
+        $list    = UserMessage::getInstance()->messageSum($user_id);
         echo $list['sumSend'];
         //$this->renderAjax(['status=>1', 'data' => $list['sumSend']]);
     }
@@ -79,7 +80,7 @@ class MessageController extends BaseController
     {
         if (isset($this->get)) {
             $user_id = Cookie::getInstance()->getCookie('bhy_id');
-            $list = UserMessage::getInstance()->messageDel($this->get, $user_id);
+            $list    = UserMessage::getInstance()->messageDel($this->get, $user_id);
         } else {
             $list = 0;
         }
@@ -95,10 +96,10 @@ class MessageController extends BaseController
         if (!$this->isLogin()) { // 未登录用户返回失败
             return $this->renderAjax(['status' => 0, 'message' => '用户未登录']);
         }
-        $get = \Yii::$app->request->get();
-        $sendId = $get['sendId'];
-        $receiveId = $get['receiveId'];
-        $money = (float)$get['money'];
+        $get        = \Yii::$app->request->get();
+        $sendId     = $get['sendId'];
+        $receiveId  = $get['receiveId'];
+        $money      = (float)$get['money'];
         $briMessage = isset($get['bri_message']) ? $get['bri_message'] : '';
 
         if (\common\util\Cookie::getInstance()->getCookie("bhy_id") != $sendId) {
@@ -116,12 +117,36 @@ class MessageController extends BaseController
         }
 
         if ($id = UserMessage::getInstance()->sendBribery($sendId, $receiveId, $money, $briMessage)) {
-            $this->renderAjax(['status' => 1, 'message' => $id]);
+            $this->renderAjax(['status' => 1, 'message' => json_encode(["id" => $id, "bri_message" => $briMessage, "money" => $money])]);
         } else {
             $this->renderAjax(['status' => 999, 'message' => '发送失败']);
         }
 
+    }
 
+    /**
+     * 领取红包
+     */
+    public function actionOpenBribery()
+    {
+
+        $get       = \Yii::$app->request->get();
+        $briberyId = $get['bribery_id'];
+        $result    = \wechat\models\User::getInstance()->openBribery($briberyId);
+
+        $this->renderAjax(['status' => $result]);
+    }
+
+    /**
+     *查看当前选中红包状态
+     */
+    public function actionBriberyStatus()
+    {
+
+        $get       = \Yii::$app->request->get();
+        $briberyId = $get['bribery_id'];
+        $bribery   = UserBribery::findOne($briberyId);
+        $this->renderAjax(['status'=>$bribery->status , 'receive_user_id'=>$bribery->receive_user_id]);
     }
 
 }
