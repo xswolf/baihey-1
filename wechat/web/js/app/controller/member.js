@@ -9,6 +9,14 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
 
     module.controller("member.index", ['app.serviceApi', '$scope', '$ionicPopup', function (api, $scope, $ionicPopup) {
 
+        // 判断是否登录
+        api.getLoginStatus().success(function(res) {
+            if(!res.status) {
+                location.href = '/wap/user/login';
+                return false;
+            }
+        });
+
         /* $scope.userInfo = ar.getStorage('userInfo');
          $scope.userInfo.info = JSON.parse($scope.userInfo.info);
          $scope.userInfo.identity_pic = JSON.parse($scope.userInfo.identity_pic);
