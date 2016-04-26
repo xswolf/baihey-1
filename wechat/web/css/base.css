@@ -319,7 +319,7 @@ input[type="number"]{-moz-appearance:textfield;}
     display: block;
 }
 .tab-item .icon-bhy-user-outline{
-    line-height: 35px;
+    line-height: 38px;
 }
 .tab-item.activated, .tab-item.active, .tab-item.tab-item-active{
     color: #e4007f;

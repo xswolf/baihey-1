@@ -6,9 +6,9 @@
            个人动态
        </title>
     </ion-header-bar>
-    <ion-content class="dynamic com_w_100 bhy">
+    <ion-content class="dynamic com_w_100 bhy" ng-controller="member.dynamic">
         <ion-list>
-            <ion-item class="mt10" href="">
+            <ion-item class="mt10" ng-repeat="dyn in dynamic.list">
                 <div class="dyn_u_img">
                     <img src="/wechat/web/images/test.jpg">
                 </div>
@@ -30,26 +30,38 @@
                         <p>岁的法国和私人谈话人挺好让他怀仁堂和人挺好让他和人挺好让他和人挺好让他，让他让他他人好，对方，发过去如果， </p>
                     </div>
                     <div class="dyn_con_p clearfix">
-                        <span class="pic">
-                            <img src="/wechat/web/images/test/1.jpg">
+                        <span class="pic" ng-repeat="img in dyn.imgList">
+                            <img src="{{img.src}}" ng-click="shouBigImage('{{img.src}}')">
                         </span>
-                        <span class="pic">
-                            <img src="/wechat/web/images/test/2.jpg">
+                    </div>
+                    <div class="dyn_con_b clearfix">
+                        <span class="fl">
+                            1258浏览
                         </span>
-                        <span class="pic">
-                             <img src="/wechat/web/images/test/3.jpg">
+                         <span class="fr ml15 cp">
+                            <i class="ion-chatbubble-working fs20 vam"></i>
+                             <span class="vam">{{dyn.commentNumber}}</span>
+                        </span>
+                        <span class="fr cp" ng-class="{true:'cor21',false:''}[dynamic.like]" ng-click="dynamic.clickLike">
+                            <i class="ion-thumbsup fs20 vam"></i>
+                            <span class="vam">{{dyn.likeNumber}}</span>
                         </span>
 
                     </div>
-                    <div class="dyn_con_b">
-                        <span>
-                            1258浏览
-                        </span>
-                        <span><i></i></span>
-                        <span><i></i></span>
-                    </div>
                 </div>
             </ion-item>
+            <ion-item style="padding: 0;"  ng-if="dynamic.pageLast">
+                <button style="margin: 0;" class="button button-block" ng-click="dynamic.loadMore()">点击加载更多</button>
+            </ion-item>
         </ion-list>
+        <div id="rightDisplay" ng-if="bigImage" class="popover-backdrop"
+             style="position: fixed;top: 0;left: 0;z-index: 99999; width: 100%;height: 100%;"
+             ng-click="hideBigImage()">
+            <img class="img-responsive"
+                 style="position: absolute;top: 50%;left: 50%;z-index: 99999;display: block;margin-top: -100px;
+         margin-left: -100px;height: 200px;width: 200px; box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);"
+                 src="{{Url}}"/>
+        </div>
     </ion-content>
+
 </ion-view>
