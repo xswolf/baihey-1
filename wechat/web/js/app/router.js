@@ -23,7 +23,7 @@ define(["app/module", 'app/service/serviceApi'],
                             $rootScope.messageList.push(list[i]);
                         }
                     }
-                    console.log($rootScope.messageList)
+                    //console.log($rootScope.messageList)
                     ar.setStorage('messageList', $rootScope.messageList)
                 });
             }
