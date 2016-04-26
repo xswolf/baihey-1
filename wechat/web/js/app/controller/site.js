@@ -2,7 +2,7 @@
  * Created by NSK. on 2016/4/5/0005.
  */
 define(['app/module', 'app/directive/directiveApi'
-    , 'app/service/serviceApi', 'app/filter/filterApi', 'config/city'
+    , 'app/service/serviceApi', 'app/filter/filterApi', 'config/city', 'config/occupation'
 ], function (module) {
 
     module.controller("site.index", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$ionicModal', '$ionicActionSheet', '$ionicLoading', function (api, $scope, $timeout, $ionicPopup, $ionicModal, $ionicActionSheet, $ionicLoading) {
@@ -51,14 +51,14 @@ define(['app/module', 'app/directive/directiveApi'
 
         // 获取当前用户信息
         $scope.userInfo = [];
-        if(ar.getStorage('userInfo')) {
+        if (ar.getStorage('userInfo')) {
             $scope.userInfo = ar.getStorage('userInfo');
             $scope.userInfo.info = JSON.parse($scope.userInfo.info);
             $scope.userInfo.identity_pic = JSON.parse($scope.userInfo.identity_pic);
-        } else if(ar.getCookie('bhy_user_id')){
-            api.list("/wap/user/get-user-info",[]).success(function (res) {
+        } else if (ar.getCookie('bhy_user_id')) {
+            api.list("/wap/user/get-user-info", []).success(function (res) {
                 $scope.userInfo = res.data;
-                ar.setStorage('userInfo',res.data);
+                ar.setStorage('userInfo', res.data);
                 $scope.userInfo.info = JSON.parse($scope.userInfo.info);
                 $scope.userInfo.identity_pic = JSON.parse($scope.userInfo.identity_pic);
             });
@@ -203,9 +203,9 @@ define(['app/module', 'app/directive/directiveApi'
         $scope.loadMore = function () {
             $scope.searchForm.data.pageNum++;
 
-            api.list('/wap/site/user-list',$scope.searchForm.data).success(function(res){
+            api.list('/wap/site/user-list', $scope.searchForm.data).success(function (res) {
 
-                if(res.data.length < $scope.searchForm.data.pageSize) {
+                if (res.data.length < $scope.searchForm.data.pageSize) {
                     $scope.pageLast = false;
                 }
 
@@ -266,135 +266,6 @@ define(['app/module', 'app/directive/directiveApi'
         $scope.provinces = provines;
         $scope.citys = citys;
 
-        /*$scope.provinces = [
-         {
-         id: 1,
-         name: '重庆市'
-         },
-         {
-         id: 2,
-         name: '北京市'
-
-         },
-         {
-         id: 3,
-         name: '上海市'
-         },
-         {
-         id: 4,
-         name: '天津市'
-         },
-         {
-         id: 5,
-         name: '广东省'
-         },
-         {
-         id: 6,
-         name: '四川省'
-         },
-         {
-         id: 7,
-         name: '浙江省'
-         },
-         {
-         id: 8,
-         name: '辽宁省'
-         },
-         {
-         id: 9,
-         name: '吉林省'
-         },
-         {
-         id: 10,
-         name: '陕西省'
-         }
-         ,
-         {
-         id: 11,
-         name: '陕西省'
-         }
-         ,
-         {
-         id: 12,
-         name: '陕西省'
-         }
-         ,
-         {
-         id: 13,
-         name: '陕西省'
-         }
-         ,
-         {
-         id: 14,
-         name: '陕西省'
-         }
-         ,
-         {
-         id: 15,
-         name: '陕西省'
-         }
-         ,
-         {
-         id: 16,
-         name: '陕西省'
-         }
-         ,
-         {
-         id: 17,
-         name: '陕西省'
-         }
-         ,
-         {
-         id: 18,
-         name: '陕西省'
-         }
-         ,
-         {
-         id: 19,
-         name: '陕西省'
-         }
-
-         ]
-
-
-         $scope.citys = [
-         {
-         id: 11,
-         parent: 1,
-         name: '重庆市'
-         },
-         {
-         id: 21,
-         parent: 2,
-         name: '北京市'
-         },
-         {
-         id: 31,
-         parent: 3,
-         name: '上海市'
-         },
-         {
-         id: 41,
-         parent: 4,
-         name: '天津市'
-         },
-         {
-         id: 51,
-         parent: 5,
-         name: '广州市'
-         },
-         {
-         id: 52,
-         parent: 5,
-         name: '深圳市'
-         },
-         {
-         id: 53,
-         parent: 5,
-         name: '东莞市'
-         }
-         ];
-         */
     }]);
 
     // 高级搜索
@@ -405,6 +276,8 @@ define(['app/module', 'app/directive/directiveApi'
         $scope.searchForm = {};
 
         $scope.searchForm.sex = 'all';
+        // 职业赋值
+        $scope.occupations = occupation;
 
         $scope.searchForm.clickSex = function (value) {
             $scope.searchForm.sex = value;
@@ -425,9 +298,9 @@ define(['app/module', 'app/directive/directiveApi'
 
     }]);
 
-    module.controller('footer', ['app.serviceApi', '$scope', '$location', function (api, $scope,$location){
+    module.controller('footer', ['app.serviceApi', '$scope', '$location', function (api, $scope, $location) {
         $scope.menu = $location.url();
-        $scope.switchMenu = function(menu){
+        $scope.switchMenu = function (menu) {
             $scope.menu = menu;
         }
     }]);
