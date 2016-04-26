@@ -3,6 +3,42 @@
  */
 define(["app/module", 'app/service/serviceApi'],
     function (module) {
+        module.run(['$rootScope', '$state' ,'$timeout', 'app.serviceApi', function($rootScope, $state ,$timeout, api){
+            var messageList = function () {
+                api.list('/wap/message/message-list', []).success(function (res) {
+                    $rootScope.messageList = [];
+                    var list = res.data;
+                    for (var i in list) {
+                        list[i].info = JSON.parse(list[i].info);
+                        list[i].identity_pic = JSON.parse(list[i].identity_pic);
+                        var flag = true;
+                        for (var j in $rootScope.messageList) {  // 相同消息合并
+                            if ($rootScope.messageList[j].send_user_id == list[i].send_user_id) {
+                                $rootScope.messageList[j] = list[i];
+                                flag = false;
+                                break;
+                            }
+                        }
+                        if (flag) {
+                            $rootScope.messageList.push(list[i]);
+                        }
+                    }
+                    console.log($rootScope.messageList)
+                    ar.setStorage('messageList', $rootScope.messageList)
+                });
+            }
+            $rootScope.$on('$stateChangeStart', function(evt, next) {
+                if (next.url == '/message') {
+                    messageList();
+                    $rootScope.handle = setInterval(function () {
+                        messageList();
+                    }, 2000);
+                }else{
+                    clearInterval($rootScope.handle)
+                }
+
+            })
+        }]);
         return module.config(["$stateProvider", "$urlRouterProvider", "$ionicConfigProvider", function ($stateProvider, $urlRouterProvider, $ionicConfigProvider) {
                 $ionicConfigProvider.templates.maxPrefetch(0);
                 $stateProvider
@@ -44,7 +80,16 @@ define(["app/module", 'app/service/serviceApi'],
                             'message-tab': {
                                 templateUrl: "/wechat/views/message/index.html"
                             }
+                        },
+
+                        data: {
+                            flag: true,
+                        },
+
+                        onExit: function ($state) {
+                            $state.current.data.flag = false;
                         }
+
                     })
                     .state('main.message_chat', { // 聊天页面
                         cache: false,

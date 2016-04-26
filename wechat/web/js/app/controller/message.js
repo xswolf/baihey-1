@@ -5,7 +5,7 @@ define(['app/module', 'app/directive/directiveApi'
     , 'app/service/serviceApi', 'comm'
 ], function (module) {
 
-    module.controller("message.index", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$ionicModal', '$ionicActionSheet', '$ionicLoading', function (api, $scope, $timeout, $ionicPopup, $ionicModal, $ionicActionSheet, $ionicLoading) {
+    module.controller("message.index", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$ionicModal', '$ionicActionSheet', '$ionicLoading','$state', function (api, $scope, $timeout, $ionicPopup, $ionicModal, $ionicActionSheet, $ionicLoading,$state) {
 
         // 判断是否登录
         api.getLoginStatus().success(function(res) {
@@ -26,34 +26,38 @@ define(['app/module', 'app/directive/directiveApi'
         }
 
         // 从服务器获取未看消息
-        $scope.listMessage = function() {
-            api.list('/wap/message/message-list', []).success(function (res) {
-                var list = res.data;
-                for (var i in list) {
-                    list[i].info = JSON.parse(list[i].info);
-                    list[i].identity_pic = JSON.parse(list[i].identity_pic);
-                    var flag = true;
-                    for (var j in $scope.messageList) {  // 相同消息合并
-                        if ($scope.messageList[j].send_user_id == list[i].send_user_id) {
-                            $scope.messageList[j] = list[i];
-                            flag = false;
-                            break;
-                        }
-                    }
-                    if (flag) {
-                        $scope.messageList.push(list[i]);
-                    }
-                }
-                //console.log($scope.messageList)
-                ar.setStorage('messageList', $scope.messageList)
-            });
-        }
+        //$scope.listMessage = function() {
+            //api.list('/wap/message/message-list', []).success(function (res) {
+            //    var list = res.data;
+            //    for (var i in list) {
+            //        list[i].info = JSON.parse(list[i].info);
+            //        list[i].identity_pic = JSON.parse(list[i].identity_pic);
+            //        var flag = true;
+            //        for (var j in $scope.messageList) {  // 相同消息合并
+            //            if ($scope.messageList[j].send_user_id == list[i].send_user_id) {
+            //                $scope.messageList[j] = list[i];
+            //                flag = false;
+            //                break;
+            //            }
+            //        }
+            //        if (flag) {
+            //            $scope.messageList.push(list[i]);
+            //        }
+            //    }
+            //    //console.log($scope.messageList)
+            //    ar.setStorage('messageList', $scope.messageList)
+            //});
+        //}
 
         // 定时任务10秒取一次最新消息列表
-        $scope.listMessage();
-        setInterval(function() {
-            $scope.listMessage();
-        },10000);
+        //if ( $state.current.data.flag ) {
+        //    $scope.listMessage();
+        //    setInterval(function () {
+        //        $scope.listMessage();
+        //    }, 2000);
+        //}else{
+        //    $timeout($scope.listMessage , 1000)
+        //}
 
         $scope.userInfo.id = ar.getCookie('bhy_user_id');
 
