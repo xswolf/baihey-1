@@ -399,7 +399,7 @@
   display: block;
   margin-right: 5%;
 }
-.dyn_con_p span:last-child {
+.dyn_con_p a:last-child {
   margin-right: 0;
 }
 .dyn_con_p .pic img {

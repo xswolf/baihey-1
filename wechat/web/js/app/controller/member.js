@@ -3,7 +3,7 @@
  */
 
 define(['app/module', 'app/router', 'app/directive/directiveApi'
-    , 'app/service/serviceApi'
+    , 'app/service/serviceApi', ''
 ], function (module) {
 
 
@@ -46,6 +46,23 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
 
 
     module.controller("member.dynamic", ['app.serviceApi', '$scope', '$ionicPopup', function (api, $scope, $ionicPopup) {
+
+        $scope.showMenu(false);
+
+        requirejs(['klass', 'photoswipe'], function (klass, PhotoSwipe) {
+
+            document.addEventListener('DOMContentLoaded', function () {
+
+                console.log(111);
+
+                var
+                    options = {},
+                    instance = PhotoSwipe.attach(window.document.querySelectorAll('.pic'), options);
+
+            }, false);
+
+        })
+
 
         $scope.dynamic = [];
 
@@ -92,10 +109,10 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
         $scope.dynamic.pageLast = true;  // 是否还有更多数据
         $scope.dynamic.like = true; // 当前登录用户是否已对该条动态点赞
 
-        $scope.dynamic.clickLike = function(){ // 点赞
-            if($scope.dynamic.like){  // 如果已点赞，说明是再次点击，点赞数-1，相应样式变化
+        $scope.dynamic.clickLike = function () { // 点赞
+            if ($scope.dynamic.like) {  // 如果已点赞，说明是再次点击，点赞数-1，相应样式变化
                 $scope.dynamic.like = !$scope.dynamic.like;
-                 // 点赞数-1
+                // 点赞数-1
             }
         };
 

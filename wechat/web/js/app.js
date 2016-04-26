@@ -6,6 +6,7 @@ require.config({
     baseUrl: '/wechat/web/js/',
     paths: {
         jquery: 'plugin/jquery/jquery',
+        jquery_1_8_3: 'plugin/jquery/jquery_1.8.3.min',
         //angular: '//cdn.bootcss.com/ionic/1.2.4/js/ionic.bundle.min',
         angular: 'plugin/angular/angular.min',
         angular_animate: 'plugin/angular/angular-animate.min',
@@ -17,7 +18,9 @@ require.config({
         bootstrap:'plugin/bootstrap/bootstrap.min',
         amezeui: 'plugin/amezeui/amazeui.min',
         comm: 'comm',
-        config:'config'
+        config:'config',
+        photoswipe:'plugin/photoswipe/code.photoswipe-3.0.5.min',
+        klass:'plugin/photoswipe/klass.min'
     },
     shim:{
         angular:{
