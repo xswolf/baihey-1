@@ -241,7 +241,7 @@ define(['app/module', 'app/directive/directiveApi'
 
             // 配置微信
             api.wxConfig().success(function (data) {
-                wx.setConfig(data);
+                wx.setConfig(JSON.parse(data.config));
             })
 
 
