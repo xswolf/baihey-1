@@ -3,19 +3,19 @@
  */
 
 define(['app/module', 'app/router', 'app/directive/directiveApi'
-    , 'app/service/serviceApi', ''
+    , 'app/service/serviceApi'
 ], function (module) {
 
 
     module.controller("member.index", ['app.serviceApi', '$scope', '$ionicPopup', function (api, $scope, $ionicPopup) {
 
-        // 判断是否登录
-        api.getLoginStatus().success(function(res) {
-            if(!res.status) {
+       /* // 判断是否登录
+        api.getLoginStatus().success(function (res) {
+            if (!res.status) {
                 location.href = '/wap/user/login';
                 return false;
             }
-        });
+        });*/
 
         /* $scope.userInfo = ar.getStorage('userInfo');
          $scope.userInfo.info = JSON.parse($scope.userInfo.info);
@@ -57,20 +57,14 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
 
         $scope.showMenu(false);
 
-        requirejs(['klass', 'photoswipe'], function (klass, PhotoSwipe) {
+        requirejs(['jquery'], function ($) {
+            requirejs(['klass', 'photoswipe'], function (klass, PhotoSwipe) {
 
-            document.addEventListener('DOMContentLoaded', function () {
-
-                console.log(111);
-
-                var
-                    options = {},
-                    instance = PhotoSwipe.attach(window.document.querySelectorAll('.pic'), options);
-
-            }, false);
-
+                $(document).ready(function () {
+                    var myPhotoSwipe = $(".dyn_con_p a").photoSwipe({enableMouseWheel: false, enableKeyboard: false,allowRotationOnUserZoom:true});
+                });
+            })
         })
-
 
         $scope.dynamic = [];
 

@@ -5818,7 +5818,7 @@
 					window.location.hash = this.settings.jQueryMobileDialogHash;
 				}
 				else{
-					this.currentHistoryHashValue = 'PhotoSwipe' + new Date().getTime().toString();
+					this.currentHistoryHashValue = '?PhotoSwipe' + new Date().getTime().toString();
 					window.location.hash = this.currentHistoryHashValue;
 				}
 								

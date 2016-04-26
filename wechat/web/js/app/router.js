@@ -73,6 +73,14 @@ define(["app/module", 'app/service/serviceApi'],
                             }
                         }
                     })
+                    .state('main.member_signature', {
+                        url: "/signature",
+                        views: {
+                            'member-tab': {
+                                templateUrl: "/wechat/views/member/signature.html"
+                            }
+                        }
+                    })
                     .state('main.message', {  // 消息首页
                         cache: false,
                         url: "/message",
@@ -124,7 +132,7 @@ define(["app/module", 'app/service/serviceApi'],
                             }
                         }
                     });
-                $urlRouterProvider.otherwise("/main/index");
+                //$urlRouterProvider.otherwise("/main/index");
             }])
             .controller('main', ['$scope', '$location', 'app.serviceApi', function ($scope, $location, api) {
                 if (ar.getCookie('bhy_user_id') > 0) {

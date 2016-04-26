@@ -8,12 +8,12 @@ define(['app/module', 'app/directive/directiveApi'
     module.controller("message.index", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$ionicModal', '$ionicActionSheet', '$ionicLoading','$state', function (api, $scope, $timeout, $ionicPopup, $ionicModal, $ionicActionSheet, $ionicLoading,$state) {
 
         // 判断是否登录
-        api.getLoginStatus().success(function(res) {
+        /*api.getLoginStatus().success(function(res) {
             if(!res.status) {
                 location.href = '/wap/user/login';
                 return false;
             }
-        });
+        });*/
 
         $scope.userInfo = {};
         // 获取页面数据
