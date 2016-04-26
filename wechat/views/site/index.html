@@ -288,29 +288,7 @@
                                 </div>
                                 <select ng-model="searchForm.data.occupation">
                                     <option value="0" selected>不限</option>
-                                    <option value="1">学生</option>
-                                    <option value="2">计算机/互联网</option>
-                                    <option value="3">通信/电子</option>
-                                    <option value="4">生产/制造</option>
-                                    <option value="5">销售</option>
-                                    <option value="6">广告/市场</option>
-                                    <option value="7">传媒/艺术</option>
-                                    <option value="8">商贸/采购</option>
-                                    <option value="9">客户服务</option>
-                                    <option value="10">人事/行政</option>
-                                    <option value="11">高级管理</option>
-                                    <option value="12">交通运输</option>
-                                    <option value="13">物流/仓储</option>
-                                    <option value="14">政府机构</option>
-                                    <option value="15">教育/科研</option>
-                                    <option value="16">服务业</option>
-                                    <option value="17">建筑/房地产</option>
-                                    <option value="18">法律</option>
-                                    <option value="19">财会/审计</option>
-                                    <option value="20">生物/制药</option>
-                                    <option value="21">医疗/护理</option>
-                                    <option value="22">金融/银行/保险</option>
-                                    <option value="23">咨询/顾问</option>
+                                    <option ng-repeat="occupation in occupations track by occupation.id" value="{{occupation.id}}">{{occupation.name}}</option>
                                 </select>
                             </label>
                         </div>

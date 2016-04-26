@@ -2,7 +2,7 @@
  * Created by NSK. on 2016/4/5/0005.
  */
 define(['app/module', 'app/directive/directiveApi'
-    , 'app/service/serviceApi', 'app/filter/filterApi', 'config/city'
+    , 'app/service/serviceApi', 'app/filter/filterApi', 'config/city', 'config/occupation'
 ], function (module) {
 
     module.controller("site.index", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$ionicModal', '$ionicActionSheet', '$ionicLoading', function (api, $scope, $timeout, $ionicPopup, $ionicModal, $ionicActionSheet, $ionicLoading) {
@@ -405,6 +405,7 @@ define(['app/module', 'app/directive/directiveApi'
         $scope.searchForm = {};
 
         $scope.searchForm.sex = 'all';
+        $scope.occupations = occupation;
 
         $scope.searchForm.clickSex = function (value) {
             $scope.searchForm.sex = value;
