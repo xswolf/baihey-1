@@ -153,6 +153,24 @@ class User extends \common\models\Base
         return $row;
     }
 
+    public function getUserById($id){
+        $joinTable = \Yii::$app->getDb()->tablePrefix . $this->_user_information_table;
+        $row       = (new Query())
+            ->select('*')
+            ->from(static::tableName() . ' u')
+            ->innerJoin($joinTable . ' i', "u.id=i.user_id")
+            ->where(['u.id' => $id]);
+
+        //echo $row->createCommand()->getRawSql();exit;
+        $row = $row->one();
+
+        if (!$row) {
+            return null;
+        }
+
+        return $row;
+    }
+
     /**
      * 用户操作日志
      */

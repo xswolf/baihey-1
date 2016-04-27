@@ -39,7 +39,7 @@ define(["app/module", 'app/service/serviceApi'],
 
             })
         }]);
-        return module.config(["$stateProvider", "$urlRouterProvider", "$ionicConfigProvider", function ($stateProvider, $urlRouterProvider, $ionicConfigProvider) {
+        return module.config(["$stateProvider", "$urlRouterProvider", "$ionicConfigProvider" , function ($stateProvider, $urlRouterProvider, $ionicConfigProvider ) {
                 $ionicConfigProvider.templates.maxPrefetch(0);
                 $stateProvider
                     .state('main', {
@@ -88,16 +88,7 @@ define(["app/module", 'app/service/serviceApi'],
                             'message-tab': {
                                 templateUrl: "/wechat/views/message/index.html"
                             }
-                        },
-
-                        data: {
-                            flag: true,
-                        },
-
-                        onExit: function ($state) {
-                            $state.current.data.flag = false;
                         }
-
                     })
                     .state('main.message_chat', { // 聊天页面
                         cache: false,
