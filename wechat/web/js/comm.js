@@ -127,7 +127,8 @@ var ar = {
                 id = parseInt(data[data.length - 1].id) + 1;
             }
             return id;
-        }
+        },
+
 
     }
     ;

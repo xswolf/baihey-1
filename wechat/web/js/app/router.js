@@ -97,6 +97,40 @@ define(["app/module", 'app/service/serviceApi'],
                             'message-tab': {
                                 templateUrl: "/wechat/views/message/chat.html"
                             }
+                        },
+
+                        onExit : function ($rootScope) {
+
+                            var messageList = ar.getStorage("messageList");
+                            var flag = true;
+                            var i  = 0;
+
+                            if (messageList != undefined && messageList != '') {
+                                for (i in messageList) {
+                                    if (messageList[i].receive_user_id == $rootScope.receiveUserInfo.id) {
+                                        if ($rootScope.historyList != undefined && $rootScope.historyList != null ){
+                                            messageList[i].message = $rootScope.historyList[$rootScope.historyList.length-1].message
+                                        }
+                                        flag = false;
+                                    }
+                                }
+                            }
+                            if (flag){
+                                $rootScope.receiveUserInfo.info = JSON.parse($rootScope.receiveUserInfo.info);
+                                $rootScope.receiveUserInfo.identity_pic = JSON.parse($rootScope.receiveUserInfo.identity_pic);
+                                $rootScope.receiveUserInfo.receive_user_id = $rootScope.receiveUserInfo.id;
+                                $rootScope.receiveUserInfo.other = $rootScope.receiveUserInfo.id;
+                                $rootScope.receiveUserInfo.send_user_id    = $rootScope.receiveUserInfo.send_user_id;
+                                if ($rootScope.historyList != undefined && $rootScope.historyList != null ){
+                                    $rootScope.receiveUserInfo.message = $rootScope.historyList[$rootScope.historyList.length-1].message
+                                }
+
+                                messageList.push($rootScope.receiveUserInfo);
+                            }
+
+
+                            ar.setStorage('messageList' , messageList);
+
                         }
                     })
                     .state('main.member', {

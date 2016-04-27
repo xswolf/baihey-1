@@ -76,7 +76,7 @@ define(['app/module', 'app/directive/directiveApi'
     }]);
 
 
-    module.controller("message.chat", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$ionicModal', '$ionicActionSheet', '$ionicLoading', '$ionicScrollDelegate', 'FileUploader', '$http','$location', function (api, $scope, $timeout, $ionicPopup, $ionicModal, $ionicActionSheet, $ionicLoading, $ionicScrollDelegate, FileUploader, $http , $location) {
+    module.controller("message.chat", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$ionicModal', '$ionicActionSheet', '$ionicLoading', '$ionicScrollDelegate', 'FileUploader', '$http','$location','$rootScope', function (api, $scope, $timeout, $ionicPopup, $ionicModal, $ionicActionSheet, $ionicLoading, $ionicScrollDelegate, FileUploader, $http , $location,$rootScope) {
         $scope.showMenu(false);
         $scope.sendId = ar.getCookie("bhy_user_id");
         $scope.multi = false;
@@ -206,7 +206,6 @@ define(['app/module', 'app/directive/directiveApi'
             })
         }
 
-
         //  获取历史聊天数据
         $scope.receiveId   = $location.search().id // 获取接受者ID
         $scope.real_name   = $location.search().real_name;
@@ -214,11 +213,15 @@ define(['app/module', 'app/directive/directiveApi'
         $scope.age         = $location.search().age;
         $scope.sendHeadPic = $scope.receiveHeadPic = $location.search().head_pic.replace(/~2F/g , "/");
         $scope.historyList = ar.getStorage('chat_messageHistory' + $scope.receiveId);
+        api.getUserInfo($scope.receiveId).success(function (res) {
+            $rootScope.receiveUserInfo = res.data;
+        });
         api.list("/wap/message/message-history", {id: $scope.receiveId}).success(function (data) {
 
-            $scope.historyList == null ? $scope.historyList = data : $scope.historyList = $scope.historyList.concat(data);
+            $rootScope.historyList = $scope.historyList == null ? $scope.historyList = data : $scope.historyList = $scope.historyList.concat(data);
             ar.setStorage('chat_messageHistory' + $scope.receiveId, $scope.historyList);
             var messageList = ar.getStorage('messageList');
+
             for (var i in messageList) { // 设置消息列表一看状态
                 if (messageList[i].send_user_id == $scope.receiveId) {
                     messageList[i].sumSend = 0;
@@ -360,6 +363,7 @@ define(['app/module', 'app/directive/directiveApi'
                         response.id = ar.getId($scope.historyList);
                         $scope.historyList.push(response);
                     }
+                    $rootScope.historyList = $scope.historyList;
                     ar.setStorage('chat_messageHistory' + $scope.receiveId , $scope.historyList); // 每次发送消息后把消息放到浏览器端缓存
                 }
 
