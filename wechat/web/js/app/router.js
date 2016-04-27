@@ -107,7 +107,7 @@ define(["app/module", 'app/service/serviceApi'],
 
                             if (messageList != undefined && messageList != '') {
                                 for (i in messageList) {
-                                    if (messageList[i].receive_user_id == $rootScope.receiveUserInfo.id) {
+                                    if (messageList[i].receive_user_id == $rootScope.receiveUserInfo.id || messageList[i].send_user_id == $rootScope.receiveUserInfo.id) {
                                         if ($rootScope.historyList != undefined && $rootScope.historyList.length>0 ){
 
                                             messageList[i].message = $rootScope.historyList[$rootScope.historyList.length-1].message
