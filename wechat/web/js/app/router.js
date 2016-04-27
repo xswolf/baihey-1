@@ -6,7 +6,7 @@ define(["app/module", 'app/service/serviceApi'],
         module.run(['$rootScope', '$state' ,'$timeout', 'app.serviceApi', function($rootScope, $state ,$timeout, api){
             var messageList = function () {
                 api.list('/wap/message/message-list', []).success(function (res) {
-                    $rootScope.messageList = [];
+                    $rootScope.messageList = ar.getStorage('messageList') ? ar.getStorage('messageList') : [];
                     var list = res.data;
                     for (var i in list) {
                         list[i].info = JSON.parse(list[i].info);
