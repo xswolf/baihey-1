@@ -330,8 +330,11 @@ define(['app/module', 'app/directive/directiveApi'
                     }
                 });
 
-                $scope.uploader.onSuccessItem = function (fileItem, response, status, headers) {  // 上传成功
-                    console.info('onSuccessItem', fileItem, response, status, headers);
+
+
+                $scope.uploader.onAfterAddingFile = function (fileItem) {   // 上传之后
+                    fileItem.uploader.queue[length].upload();
+                    //console.info('onAfterAddingFile', fileItem);
 
                 };
 
