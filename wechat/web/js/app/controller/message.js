@@ -35,7 +35,7 @@ define(['app/module', 'app/directive/directiveApi'
         $scope.listMessage();
         setInterval(function () {
             $scope.listMessage();
-        }, 5000);
+        }, 2000);
 
         $scope.userInfo.id = ar.getCookie('bhy_user_id');
 

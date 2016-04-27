@@ -32,7 +32,7 @@ define(["app/module", 'app/service/serviceApi'],
                     messageList();
                     $rootScope.handle = setInterval(function () {
                         messageList();
-                    }, 10000);
+                    }, 5000);
                 }else{
                     clearInterval($rootScope.handle)
                 }
