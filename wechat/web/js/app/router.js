@@ -109,6 +109,7 @@ define(["app/module", 'app/service/serviceApi'],
                                 for (i in messageList) {
                                     if (messageList[i].receive_user_id == $rootScope.receiveUserInfo.id) {
                                         if ($rootScope.historyList != undefined && $rootScope.historyList.length>0 ){
+
                                             messageList[i].message = $rootScope.historyList[$rootScope.historyList.length-1].message
                                         }
                                         flag = false;
@@ -121,7 +122,7 @@ define(["app/module", 'app/service/serviceApi'],
                                 $rootScope.receiveUserInfo.receive_user_id = $rootScope.receiveUserInfo.id;
                                 $rootScope.receiveUserInfo.other = $rootScope.receiveUserInfo.id;
                                 $rootScope.receiveUserInfo.send_user_id    = $rootScope.receiveUserInfo.send_user_id;
-                                if ($rootScope.historyList != undefined && $rootScope.historyList != null ){
+                                if ($rootScope.historyList != undefined && $rootScope.historyList.length>0){
                                     $rootScope.receiveUserInfo.message = $rootScope.historyList[$rootScope.historyList.length-1].message
                                 }
 
