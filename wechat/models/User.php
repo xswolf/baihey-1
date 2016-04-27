@@ -35,14 +35,14 @@ class User extends \common\models\Base
             'password' => md5(md5($password))
         ];
         if ($user = $this->findOne($condition)) {
-            $time                  = YII_BEGIN_TIME;
+            $time = YII_BEGIN_TIME;
             $user->last_login_time = $time;
             $user->save(false);
             $data = $this->getUserByName($userName);
             // 写入用户日志表
             $log['user_id'] = $user->id;
-            $log['type']    = 1;
-            $log['time']    = $time;
+            $log['type'] = 1;
+            $log['time'] = $time;
             $this->userLog($log);
 
             // 设置cookie
@@ -68,13 +68,13 @@ class User extends \common\models\Base
     public function addUser($data)
     {
 
-        $db          = $this->getDb();
+        $db = $this->getDb();
         $transaction = $db->beginTransaction();// 启动事件
 
         // 数据处理
-        $data['password']        = md5(md5($data['password']));
-        $time                    = YII_BEGIN_TIME;
-        $data['reg_time']        = $time;
+        $data['password'] = md5(md5($data['password']));
+        $time = YII_BEGIN_TIME;
+        $data['reg_time'] = $time;
         $data['last_login_time'] = $time;
 
         // user表 数据写入
@@ -87,26 +87,36 @@ class User extends \common\models\Base
         }
 
         // user_information表 数据处理
-        $infoData['user_id']      = $id;
-        $userInfo                 = [
-            'age' => '未知',
-            'level' => '未知',
-            'local' => '未知',
-            'height' => '未知',
-            'head_pic' => '未知',
-            'real_name' => '未知',
-            'identity_id' => '未知',
-            'is_marriage' => '未知',
+        $infoData['user_id'] = $id;
+        $userInfo = [
+            'age'           => '未知',// 出生年月时间戳
+            'level'         => '未知',// vip等级
+            'local'         => '未知',// 当地地区（地区切换使用）
+            'height'        => '未知',// 身高
+            'head_pic'      => '未知',// 头像
+            'real_name'     => '未知',// 真实姓名
+            'identity_id'   => '未知',// 省份证号码
+            'is_marriage'   => '未知',// 婚姻状况
+            'is_child'      => '未知',// 子女状况
+            'education'     => '未知',// 学历
+            'year_income'   => '未知',// 年收入
+            'is_purchase'   => '未知',// 购房状况
+            'is_car'        => '未知',// 购车状况
+            'occupation'    => '未知',// 职业
+            'zodiac'        => '未知',// 属相生肖
+            'constellation' => '未知',// 星座
+            'nation'        => '未知',// 民族
         ];
-        $userIdentity             = [
-            'url1' => '未知',
-            'url2' => '未知',
-            'is_check' => '未知',
-            'time' => '未知',
+        // 身份证照片
+        $userIdentity = [
+            'url1'      => '未知',// 正面
+            'url2'      => '未知',// 反面
+            'is_check'  => '未知',// 审核状态1通过，0未通过
+            'time'      => '未知',// 时间
         ];
         $infoData['identity_pic'] = json_encode($userIdentity);
-        $infoData['info']         = json_encode($userInfo);
-        $infoData['city']         = 1;
+        $infoData['info'] = json_encode($userInfo);
+        $infoData['city'] = 1;
 
         // user_information表 数据写入
         $info = $db->createCommand()
@@ -118,8 +128,8 @@ class User extends \common\models\Base
             $transaction->commit();
             // 写入用户日志表
             $log['user_id'] = $id;
-            $log['type']    = 2;
-            $log['time']    = $time;
+            $log['type'] = 2;
+            $log['time'] = $time;
             $this->userLog($log);
         } else {
 
@@ -137,7 +147,7 @@ class User extends \common\models\Base
     public function getUserByName($name)
     {
         $joinTable = \Yii::$app->getDb()->tablePrefix . $this->_user_information_table;
-        $row       = (new Query())
+        $row = (new Query())
             ->select('*')
             ->from(static::tableName() . ' u')
             ->innerJoin($joinTable . ' i', "u.id=i.user_id")
@@ -153,9 +163,10 @@ class User extends \common\models\Base
         return $row;
     }
 
-    public function getUserById($id){
+    public function getUserById($id)
+    {
         $joinTable = \Yii::$app->getDb()->tablePrefix . $this->_user_information_table;
-        $row       = (new Query())
+        $row = (new Query())
             ->select('*')
             ->from(static::tableName() . ' u')
             ->innerJoin($joinTable . ' i', "u.id=i.user_id")
@@ -177,11 +188,11 @@ class User extends \common\models\Base
     public function userLog($log)
     {
 
-        $userLog          = \common\models\Base::getInstance('user_log');
+        $userLog = \common\models\Base::getInstance('user_log');
         $userLog->user_id = $log['user_id'];
-        $userLog->type    = $log['type'];
-        $userLog->time    = $log['time'];
-        $userLog->ip      = ip2long($_SERVER["REMOTE_ADDR"]);
+        $userLog->type = $log['type'];
+        $userLog->time = $log['time'];
+        $userLog->ip = ip2long($_SERVER["REMOTE_ADDR"]);
         return $userLog->insert(false);
     }
 
@@ -199,7 +210,7 @@ class User extends \common\models\Base
         }
         unset($where['pageSize']);
         // 查询条件处理
-        $where  = $this->getUserListWhere($where, $pageSize);
+        $where = $this->getUserListWhere($where, $pageSize);
         $offset = $where['offset'];
 
         $condition = $this->processWhere($where['where']);
@@ -230,7 +241,7 @@ class User extends \common\models\Base
 
         if (isset($where['id']) && is_numeric($where['id'])) {
 
-            $data['offset']      = ($where['pageNum'] - 1) * $pageSize;
+            $data['offset'] = ($where['pageNum'] - 1) * $pageSize;
             $data['where']['id'] = $where['id'];
         } else {
 
@@ -256,14 +267,14 @@ class User extends \common\models\Base
                     case 'age':
                         if (is_numeric($val)) {
                             if ($val != 0) {
-                                $age                                         = $this->getTimestampByAge($val);
+                                $age = $this->getTimestampByAge($val);
                                 $data['where']["json_extract(info,'$.age')"] = ['>=', $age];
                             }
                         } else {
 
-                            $age                                         = explode('-', $val);
-                            $age1                                        = $this->getTimestampByAge($age[0]);
-                            $age2                                        = $this->getTimestampByAge($age[1]);
+                            $age = explode('-', $val);
+                            $age1 = $this->getTimestampByAge($age[0]);
+                            $age2 = $this->getTimestampByAge($age[1]);
                             $data['where']["json_extract(info,'$.age')"] = ['between' => [$age2, $age1]];
                         }
                         break;
@@ -286,7 +297,7 @@ class User extends \common\models\Base
                 }
             }
         }
-        $data['where']['is_show']                         = 1;
+        $data['where']['is_show'] = 1;
         $data['where']["json_extract(info,'$.head_pic')"] = ['!=' => '未知'];
 
         return $data;
@@ -300,9 +311,9 @@ class User extends \common\models\Base
     public function getTimestampByAge($age)
     {
 
-        $time         = time();
-        $year         = date('Y', $time) - $age;
-        $date         = date('-m-d');
+        $time = time();
+        $year = date('Y', $time) - $age;
+        $date = date('-m-d');
         $ageTimestamp = strtotime($year . $date);
         //$date = date('Y-m-d',$ageTimestamp);
         return $ageTimestamp;
@@ -320,7 +331,7 @@ class User extends \common\models\Base
             $where = ['>=', $data];
         } else {
 
-            $data  = explode('-', $data);
+            $data = explode('-', $data);
             $where = ['between' => [$data[0], $data[1]]];
         }
         return $where;
@@ -332,10 +343,10 @@ class User extends \common\models\Base
      */
     public function getSumFollow()
     {
-        $user_id     = Cookie::getInstance()->getCookie('bhy_id');
-        $condition   = ['follow_id' => $user_id];
+        $user_id = Cookie::getInstance()->getCookie('bhy_id');
+        $condition = ['follow_id' => $user_id];
         $followTable = $this->getDb()->tablePrefix . 'user_follow';
-        $row         = (new Query())
+        $row = (new Query())
             ->select(['count(id) sumFollow'])
             ->where($condition)
             ->from($followTable)
@@ -353,7 +364,7 @@ class User extends \common\models\Base
     public function changeBalance($uid, $money)
     {
 
-        $user          = User::findOne($uid);
+        $user = User::findOne($uid);
         $user->balance = $user->balance - $money;
         return $user->save();
     }
@@ -366,7 +377,7 @@ class User extends \common\models\Base
      */
     public function openBribery($briberyId)
     {
-        $tran    = \Yii::$app->db->beginTransaction();
+        $tran = \Yii::$app->db->beginTransaction();
         $bribery = UserBribery::findOne($briberyId);
         if ($bribery->status == 1) return -1; // 红包已经领取
 
