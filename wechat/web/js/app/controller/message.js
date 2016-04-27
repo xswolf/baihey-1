@@ -43,11 +43,11 @@ define(['app/module', 'app/directive/directiveApi'
         $scope.isFollow = true;
         api.getSumFollow().success(function (res) {
             if (res.status) {
-                var sumFollow = ar.getStorage('sumFollow');
+                var sumFollow = ar.getStorage('sumFollow') ? ar.getStorage('sumFollow') : 0;
                 if (sumFollow >= res.data.sumFollow) {
                     $scope.isFollow = false;
                 }
-                ar.setStorage('sumFollow', res.data.sumFollow);
+                ar.setStorage('NewSumFollow', res.data.sumFollow);
             }
         });
 
@@ -79,6 +79,7 @@ define(['app/module', 'app/directive/directiveApi'
     module.controller("message.chat", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$ionicModal', '$ionicActionSheet', '$ionicLoading', '$ionicScrollDelegate', 'FileUploader', '$http','$location','$rootScope', function (api, $scope, $timeout, $ionicPopup, $ionicModal, $ionicActionSheet, $ionicLoading, $ionicScrollDelegate, FileUploader, $http , $location,$rootScope) {
         $scope.showMenu(false);
         $scope.sendId = ar.getCookie("bhy_user_id");
+        $scope.receiveId = $location.search().id;
         $scope.multi = false;
         $scope.showMulti = function () {
             $scope.multi = !$scope.multi;
@@ -98,19 +99,25 @@ define(['app/module', 'app/directive/directiveApi'
             }
         }
 
+        $scope.followData = [];
+        $scope.followData.user_id = $scope.sendId;
+        $scope.followData.follow_id = $scope.receiveId;
         // 是否已关注对方， 已关注则不显示关注按钮。
         $scope.u_isFollow = true;
+        api.getStatus('/wap/follow/get-follow-status', $scope.followData).success(function (res) {
+            if(res.data) {
+                $scope.u_isFollow = false;
+            }
+        });
 
         // 加关注
         $scope.addFollow = function () {
-
-            $scope.followData = [{sendId: $scope.sendId}, {receiveId: $scope.receiveId}];
-
-            api.save(url, $scope.followData).success(function (res) {
-
-                // 成功，提示
-                $ionicPopup.alert({title: '加关注成功'});
-
+            api.save('/wap/follow/add-follow', $scope.followData).success(function (res) {
+                if(res.data) {
+                    $scope.u_isFollow = false;
+                    // 成功，提示
+                    $ionicPopup.alert({title: '加关注成功'});
+                }
             });
         }
 
@@ -207,7 +214,7 @@ define(['app/module', 'app/directive/directiveApi'
         }
 
         //  获取历史聊天数据
-        $scope.receiveId   = $location.search().id // 获取接受者ID
+        $scope.receiveId   = $location.search().id;// 获取接受者ID
         $scope.real_name   = $location.search().real_name;
         $scope.sex         = $location.search().sex;
         $scope.age         = $location.search().age;
@@ -331,8 +338,9 @@ define(['app/module', 'app/directive/directiveApi'
                 });
 
 
-
+                var length = $scope.uploader.queue.length;
                 $scope.uploader.onAfterAddingFile = function (fileItem) {   // 上传之后
+
                     fileItem.uploader.queue[length].upload();
                     //console.info('onAfterAddingFile', fileItem);
 

@@ -99,6 +99,23 @@ define(['app/module'], function (module, config) {
         }
 
         /**
+         * 获取状态
+         * @param url
+         * @returns {HttpPromise}
+         */
+        api.getStatus = function (url, formData) {
+            return $http({
+                method: 'POST',
+                url: url,
+                headers: {
+                    'Content-Type': 'application/json'
+                    //'X-CSRF-Token':'bzFrQUtlbHU3AS8SGAweRyt1CAInMkElCXMRCzIoH0AGS1MSJjwFPg=='
+                },
+                params: formData
+            });
+        }
+
+        /**
          * 获取微信配置
          * @param wx
          * @returns {*}
@@ -135,7 +152,7 @@ define(['app/module'], function (module, config) {
          * 获取关注我的总数
          */
         api.getSumFollow = function () {
-            return $http.get('/wap/user/get-sum-follow');
+            return $http.get('/wap/follow/get-sum-follow');
         },
 
         api.dataURItoBlob = function (dataURI) {
