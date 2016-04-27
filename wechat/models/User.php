@@ -338,23 +338,6 @@ class User extends \common\models\Base
     }
 
     /**
-     * 获取关注我的总数
-     * @return array|bool
-     */
-    public function getSumFollow()
-    {
-        $user_id = Cookie::getInstance()->getCookie('bhy_id');
-        $condition = ['follow_id' => $user_id];
-        $followTable = $this->getDb()->tablePrefix . 'user_follow';
-        $row = (new Query())
-            ->select(['count(id) sumFollow'])
-            ->where($condition)
-            ->from($followTable)
-            ->one();
-        return $row;
-    }
-
-    /**
      * 修改余额
      * @param $uid
      * @param $money
