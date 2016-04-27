@@ -9,13 +9,13 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
     // 我
     module.controller("member.index", ['app.serviceApi', '$scope', '$ionicPopup', function (api, $scope, $ionicPopup) {
 
-       /* // 判断是否登录
-        api.getLoginStatus().success(function (res) {
-            if (!res.status) {
-                location.href = '/wap/user/login';
-                return false;
-            }
-        });*/
+        /* // 判断是否登录
+         api.getLoginStatus().success(function (res) {
+         if (!res.status) {
+         location.href = '/wap/user/login';
+         return false;
+         }
+         });*/
 
         /* $scope.userInfo = ar.getStorage('userInfo');
          $scope.userInfo.info = JSON.parse($scope.userInfo.info);
@@ -63,7 +63,11 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
             requirejs(['klass', 'photoswipe'], function (klass, PhotoSwipe) {
 
                 $(document).ready(function () {
-                    var myPhotoSwipe = $(".dyn_con_p a").photoSwipe({enableMouseWheel: false, enableKeyboard: false,allowRotationOnUserZoom:true});
+                    var myPhotoSwipe = $(".dyn_con_p a").photoSwipe({
+                        enableMouseWheel: false,
+                        enableKeyboard: false,
+                        allowRotationOnUserZoom: true
+                    });
                 });
             })
         })
@@ -131,7 +135,22 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
 
         $scope.showMenu(false);
 
+        $scope.formData = [];
+        $scope.saveData = function () {
+            if ($scope.personalized == '' || typeof($scope.personalized) == 'undefined') {
+                if (confirm('您还未填写个性签名，确定保存吗？')) {
+                    window.location.hash = '/main/information';  //跳转
+                } else {
+                    return false;
+                }
+            } else {
+                $scope.formData.personalized = $scope.personalized;
+                api.save(url, $scope.formData).success(function (res) {
+                    // 保存
+                })
+            }
 
+        }
 
     }]);
 
@@ -140,10 +159,21 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
 
         $scope.showMenu(false);
 
-        $scope.user = [];
-        $scope.user.sex = 0;  // 用户性别 女
-
-
+        $scope.sex = 0;  // 用户性别
+        $scope.saveData = function () {
+            if ($scope.real_name == '' || typeof($scope.real_name) == 'undefined') {
+                if (confirm('检测到您还未填写真实姓名，确定放弃吗？')) {
+                    window.location.hash = '/main/information';  //跳转
+                } else {
+                    return false;
+                }
+            } else {
+                $scope.formData.real_name = $scope.real_name;
+                api.save(url, $scope.formData).success(function (res) {
+                    // 保存
+                })
+            }
+        }
     }]);
 
     // 出生年月
@@ -151,8 +181,30 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
 
         $scope.showMenu(false);
 
+        $scope.formData = [];
+        $scope.age = '年龄';
+        $scope.zodic = {id: 0, name: '生肖'};
+        $scope.constellation = {id: 0, name: '星座'};
+        $scope.birthdayChange = function () {
+            $scope.age = ar.getAgeByBirthday(ar.DateTimeToDate($scope.birthday)) + '岁';
+            $scope.zodic = ar.getZodicByBirthday(ar.DateTimeToDate($scope.birthday));
+            $scope.constellation = ar.getConstellationByBirthday(ar.DateTimeToDate($scope.birthday));
+        }
 
+        $scope.formData.age = ar.getTimestampByBirthday(ar.DateTimeToDate($scope.birthday)); // 年龄时间戳
+        $scope.formData.zodic = $scope.zodic.id; // 生肖ID 详见comm.js
+        $scope.formData.constellation = $scope.constellation.id; // 星座ID 详见comm.js
 
+        $scope.saveData = function () {
+            console.log(1111);
+            if ($scope.age < 18) {
+                $ionicPopup.alert({title: '如果您未满18岁，请退出本站，谢谢合作！'});
+                return false;
+            }
+            api.save(url, $scope.formData).success(function (res) {
+                // 保存
+            })
+        }
 
     }]);
 
@@ -163,13 +215,16 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
 
 
 
+        $scope.saveData = function(){
+
+        }
+
     }]);
 
     // 婚姻状况
     module.controller("member.is_marriage", ['app.serviceApi', '$scope', '$ionicPopup', function (api, $scope, $ionicPopup) {
 
         $scope.showMenu(false);
-
 
 
     }]);
@@ -180,14 +235,12 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
         $scope.showMenu(false);
 
 
-
     }]);
 
     // 职业
     module.controller("member.occupation", ['app.serviceApi', '$scope', '$ionicPopup', function (api, $scope, $ionicPopup) {
 
         $scope.showMenu(false);
-
 
 
     }]);
@@ -198,14 +251,12 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
         $scope.showMenu(false);
 
 
-
     }]);
 
     // 常出没地
     module.controller("member.haunt_address", ['app.serviceApi', '$scope', '$ionicPopup', function (api, $scope, $ionicPopup) {
 
         $scope.showMenu(false);
-
 
 
     }]);
@@ -216,14 +267,12 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
         $scope.showMenu(false);
 
 
-
     }]);
 
     // QQ号
     module.controller("member.qq_number", ['app.serviceApi', '$scope', '$ionicPopup', function (api, $scope, $ionicPopup) {
 
         $scope.showMenu(false);
-
 
 
     }]);

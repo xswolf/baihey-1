@@ -3,7 +3,7 @@
  */
 define(["app/module", 'app/service/serviceApi'],
     function (module) {
-        module.run(['$rootScope', '$state' ,'$timeout', 'app.serviceApi', function($rootScope, $state ,$timeout, api){
+        module.run(['$rootScope', '$state', '$timeout', 'app.serviceApi', function ($rootScope, $state, $timeout, api) {
             var messageList = function () {
                 api.list('/wap/message/message-list', []).success(function (res) {
                     $rootScope.messageList = ar.getStorage('messageList') ? ar.getStorage('messageList') : [];
@@ -27,19 +27,19 @@ define(["app/module", 'app/service/serviceApi'],
                     ar.setStorage('messageList', $rootScope.messageList)
                 });
             }
-            $rootScope.$on('$stateChangeStart', function(evt, next) {
+            $rootScope.$on('$stateChangeStart', function (evt, next) {
                 if (next.url == '/message') {
                     messageList();
                     $rootScope.handle = setInterval(function () {
                         messageList();
                     }, 5000);
-                }else{
+                } else {
                     clearInterval($rootScope.handle)
                 }
 
             })
         }]);
-        return module.config(["$stateProvider", "$urlRouterProvider", "$ionicConfigProvider" , function ($stateProvider, $urlRouterProvider, $ionicConfigProvider ) {
+        return module.config(["$stateProvider", "$urlRouterProvider", "$ionicConfigProvider", function ($stateProvider, $urlRouterProvider, $ionicConfigProvider) {
                 $ionicConfigProvider.templates.maxPrefetch(0);
                 $stateProvider
                     .state('main', {
@@ -76,7 +76,8 @@ define(["app/module", 'app/service/serviceApi'],
                         url: "/signature",
                         views: {
                             'member-tab': {
-                                templateUrl: "/wechat/views/member/signature.html"
+                                templateUrl: "/wechat/views/member/signature.html",
+                                controller: 'member.signature'
                             }
                         }
                     })
@@ -84,7 +85,8 @@ define(["app/module", 'app/service/serviceApi'],
                         url: "/real_name",
                         views: {
                             'member-tab': {
-                                templateUrl: "/wechat/views/member/real_name.html"
+                                templateUrl: "/wechat/views/member/real_name.html",
+                                controller: 'member.real_name'
                             }
                         }
                     })
@@ -92,7 +94,8 @@ define(["app/module", 'app/service/serviceApi'],
                         url: "/age",
                         views: {
                             'member-tab': {
-                                templateUrl: "/wechat/views/member/age.html"
+                                templateUrl: "/wechat/views/member/age.html",
+                                controller: 'member.age'
                             }
                         }
                     })
@@ -100,7 +103,8 @@ define(["app/module", 'app/service/serviceApi'],
                         url: "/height",
                         views: {
                             'member-tab': {
-                                templateUrl: "/wechat/views/member/height.html"
+                                templateUrl: "/wechat/views/member/height.html",
+                                controller: 'member.height'
                             }
                         }
                     })
@@ -178,38 +182,38 @@ define(["app/module", 'app/service/serviceApi'],
                             }
                         },
 
-                        onExit : function ($rootScope) {
+                        onExit: function ($rootScope) {
 
                             var messageList = ar.getStorage("messageList");
                             var flag = true;
-                            var i  = 0;
+                            var i = 0;
 
                             if (messageList != undefined && messageList != '') {
                                 for (i in messageList) {
                                     if (messageList[i].receive_user_id == $rootScope.receiveUserInfo.id || messageList[i].send_user_id == $rootScope.receiveUserInfo.id) {
-                                        if ($rootScope.historyList != undefined && $rootScope.historyList.length>0 ){
+                                        if ($rootScope.historyList != undefined && $rootScope.historyList.length > 0) {
 
-                                            messageList[i].message = $rootScope.historyList[$rootScope.historyList.length-1].message
+                                            messageList[i].message = $rootScope.historyList[$rootScope.historyList.length - 1].message
                                         }
                                         flag = false;
                                     }
                                 }
                             }
-                            if (flag){
+                            if (flag) {
                                 $rootScope.receiveUserInfo.info = JSON.parse($rootScope.receiveUserInfo.info);
                                 $rootScope.receiveUserInfo.identity_pic = JSON.parse($rootScope.receiveUserInfo.identity_pic);
                                 $rootScope.receiveUserInfo.receive_user_id = $rootScope.receiveUserInfo.id;
                                 $rootScope.receiveUserInfo.other = $rootScope.receiveUserInfo.id;
-                                $rootScope.receiveUserInfo.send_user_id    = $rootScope.receiveUserInfo.send_user_id;
-                                if ($rootScope.historyList != undefined && $rootScope.historyList.length>0){
-                                    $rootScope.receiveUserInfo.message = $rootScope.historyList[$rootScope.historyList.length-1].message
+                                $rootScope.receiveUserInfo.send_user_id = $rootScope.receiveUserInfo.send_user_id;
+                                if ($rootScope.historyList != undefined && $rootScope.historyList.length > 0) {
+                                    $rootScope.receiveUserInfo.message = $rootScope.historyList[$rootScope.historyList.length - 1].message
                                 }
 
                                 messageList.push($rootScope.receiveUserInfo);
                             }
 
 
-                            ar.setStorage('messageList' , messageList);
+                            ar.setStorage('messageList', messageList);
 
                         }
                     })
