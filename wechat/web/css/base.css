@@ -156,6 +156,9 @@
 .mr0{margin-right: 0 !important;}
 .pl0{padding-left: 0 !important;}
 .pr0{padding-right: 0 !important;}
+.bhy_item{ padding: 8px 16px;}
+.bhy_textarea{ min-height: 80px}
+.ti24{text-indent: 24px}
 
 .bor_r_n{border-right:none;}
 .bor_b_n{border-bottom:none;}

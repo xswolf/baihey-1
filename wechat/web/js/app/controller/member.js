@@ -6,7 +6,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
     , 'app/service/serviceApi'
 ], function (module) {
 
-
+    // 我
     module.controller("member.index", ['app.serviceApi', '$scope', '$ionicPopup', function (api, $scope, $ionicPopup) {
 
        /* // 判断是否登录
@@ -25,6 +25,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
 
     }]);
 
+    // 资料首页
     module.controller("member.information", ['app.serviceApi', '$scope', '$ionicPopup', function (api, $scope, $ionicPopup) {
         $scope.showMenu(false);
         $scope.imgList =
@@ -52,11 +53,12 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
 
     }]);
 
-
+    // 个人动态
     module.controller("member.dynamic", ['app.serviceApi', '$scope', '$ionicPopup', function (api, $scope, $ionicPopup) {
 
         $scope.showMenu(false);
 
+        // 图片放大查看插件
         requirejs(['jquery'], function ($) {
             requirejs(['klass', 'photoswipe'], function (klass, PhotoSwipe) {
 
@@ -122,17 +124,110 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
 
         }
 
-        $scope.bigImage = false;    //初始默认大图是隐藏的
-        $scope.hideBigImage = function () {
-            $scope.bigImage = false;
-        };
+    }]);
 
-        $scope.shouBigImage = function (imageName) {  //传递一个参数（图片的URl）
-            $scope.Url = imageName;                   //$scope定义一个变量Url，这里会在大图出现后再次点击隐藏大图使用
-            $scope.bigImage = true;                   //显示大图
-        };
+    // 个性签名
+    module.controller("member.signature", ['app.serviceApi', '$scope', '$ionicPopup', function (api, $scope, $ionicPopup) {
+
+        $scope.showMenu(false);
+
+
 
     }]);
+
+    // 真实姓名
+    module.controller("member.real_name", ['app.serviceApi', '$scope', '$ionicPopup', function (api, $scope, $ionicPopup) {
+
+        $scope.showMenu(false);
+
+        $scope.user = [];
+        $scope.user.sex = 0;  // 用户性别 女
+
+
+    }]);
+
+    // 出生年月
+    module.controller("member.age", ['app.serviceApi', '$scope', '$ionicPopup', function (api, $scope, $ionicPopup) {
+
+        $scope.showMenu(false);
+
+
+
+
+    }]);
+
+    // 身高
+    module.controller("member.height", ['app.serviceApi', '$scope', '$ionicPopup', function (api, $scope, $ionicPopup) {
+
+        $scope.showMenu(false);
+
+
+
+    }]);
+
+    // 婚姻状况
+    module.controller("member.is_marriage", ['app.serviceApi', '$scope', '$ionicPopup', function (api, $scope, $ionicPopup) {
+
+        $scope.showMenu(false);
+
+
+
+    }]);
+
+    // 学历
+    module.controller("member.education", ['app.serviceApi', '$scope', '$ionicPopup', function (api, $scope, $ionicPopup) {
+
+        $scope.showMenu(false);
+
+
+
+    }]);
+
+    // 职业
+    module.controller("member.occupation", ['app.serviceApi', '$scope', '$ionicPopup', function (api, $scope, $ionicPopup) {
+
+        $scope.showMenu(false);
+
+
+
+    }]);
+
+    // 地区
+    module.controller("member.address", ['app.serviceApi', '$scope', '$ionicPopup', function (api, $scope, $ionicPopup) {
+
+        $scope.showMenu(false);
+
+
+
+    }]);
+
+    // 常出没地
+    module.controller("member.haunt_address", ['app.serviceApi', '$scope', '$ionicPopup', function (api, $scope, $ionicPopup) {
+
+        $scope.showMenu(false);
+
+
+
+    }]);
+
+    // 微信号
+    module.controller("member.wechat_number", ['app.serviceApi', '$scope', '$ionicPopup', function (api, $scope, $ionicPopup) {
+
+        $scope.showMenu(false);
+
+
+
+    }]);
+
+    // QQ号
+    module.controller("member.qq_number", ['app.serviceApi', '$scope', '$ionicPopup', function (api, $scope, $ionicPopup) {
+
+        $scope.showMenu(false);
+
+
+
+    }]);
+
     return module;
 })
 

@@ -138,8 +138,10 @@
   padding: 16px;
 }
 /* information */
-.infomation .list,
-.dynamic .list {
+.m_bg {
+  bottom: 0;
+}
+.m_bg .list {
   background-color: #f9f9f9;
 }
 .infomation .idt {
@@ -399,7 +401,7 @@
   display: block;
   margin-right: 5%;
 }
-.dyn_con_p a:last-child {
+.dyn_con_p span:last-child {
   margin-right: 0;
 }
 .dyn_con_p .pic img {
@@ -411,4 +413,11 @@
   margin-top: 10px;
   font-size: 12px;
   color: #999;
+}
+.m_b_bg img {
+  max-width: 100%;
+}
+.m_tips p {
+  color: #fc6ea2;
+  font-size: 12px;
 }

@@ -47,7 +47,6 @@ define(["app/module", 'app/service/serviceApi'],
                         abstract: true,
                         templateUrl: "main.html",
                         controller: 'main'
-
                     })
                     .state('main.index', {   // 首页
                         url: "/index",
@@ -78,6 +77,86 @@ define(["app/module", 'app/service/serviceApi'],
                         views: {
                             'member-tab': {
                                 templateUrl: "/wechat/views/member/signature.html"
+                            }
+                        }
+                    })
+                    .state('main.member_real_name', {
+                        url: "/real_name",
+                        views: {
+                            'member-tab': {
+                                templateUrl: "/wechat/views/member/real_name.html"
+                            }
+                        }
+                    })
+                    .state('main.member_age', {
+                        url: "/age",
+                        views: {
+                            'member-tab': {
+                                templateUrl: "/wechat/views/member/age.html"
+                            }
+                        }
+                    })
+                    .state('main.member_height', {
+                        url: "/height",
+                        views: {
+                            'member-tab': {
+                                templateUrl: "/wechat/views/member/height.html"
+                            }
+                        }
+                    })
+                    .state('main.member_is_marriage', {
+                        url: "/is_marriage",
+                        views: {
+                            'member-tab': {
+                                templateUrl: "/wechat/views/member/is_marriage.html"
+                            }
+                        }
+                    })
+                    .state('main.member_education', {
+                        url: "/education",
+                        views: {
+                            'member-tab': {
+                                templateUrl: "/wechat/views/member/education.html"
+                            }
+                        }
+                    })
+                    .state('main.member_occupation', {
+                        url: "/occupation",
+                        views: {
+                            'member-tab': {
+                                templateUrl: "/wechat/views/member/occupation.html"
+                            }
+                        }
+                    })
+                    .state('main.member_address', {
+                        url: "/address",
+                        views: {
+                            'member-tab': {
+                                templateUrl: "/wechat/views/member/address.html"
+                            }
+                        }
+                    })
+                    .state('main.member_haunt_address', {
+                        url: "/address",
+                        views: {
+                            'member-tab': {
+                                templateUrl: "/wechat/views/member/address.html"
+                            }
+                        }
+                    })
+                    .state('main.member_wechat_number', {
+                        url: "/wechat_number",
+                        views: {
+                            'member-tab': {
+                                templateUrl: "/wechat/views/member/wechat_number.html"
+                            }
+                        }
+                    })
+                    .state('main.member_qq_number', {
+                        url: "/wechat_number",
+                        views: {
+                            'member-tab': {
+                                templateUrl: "/wechat/views/member/qq_number.html"
                             }
                         }
                     })
