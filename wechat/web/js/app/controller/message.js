@@ -331,8 +331,9 @@ define(['app/module', 'app/directive/directiveApi'
                 });
 
 
-
+                var length = $scope.uploader.queue.length;
                 $scope.uploader.onAfterAddingFile = function (fileItem) {   // 上传之后
+
                     fileItem.uploader.queue[length].upload();
                     //console.info('onAfterAddingFile', fileItem);
 
