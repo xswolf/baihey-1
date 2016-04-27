@@ -7,6 +7,7 @@ define(['app/module', 'app/directive/directiveApi'
 
     module.controller("message.index", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$ionicModal', '$ionicActionSheet', '$ionicLoading','$state', function (api, $scope, $timeout, $ionicPopup, $ionicModal, $ionicActionSheet, $ionicLoading,$state) {
 
+        $timeout($scope.sumSend);
         // 判断是否登录
         /*api.getLoginStatus().success(function(res) {
             if(!res.status) {
@@ -24,7 +25,7 @@ define(['app/module', 'app/directive/directiveApi'
         if (messageList != null) {
             $scope.messageList = messageList;
         }
-        console.log($scope.messageList)
+        //console.log($scope.messageList)
         // 从服务器获取未看消息
         $scope.listMessage = function() {
             $scope.messageList = ar.getStorage("messageList");
@@ -34,7 +35,7 @@ define(['app/module', 'app/directive/directiveApi'
         $scope.listMessage();
         setInterval(function () {
             $scope.listMessage();
-        }, 2000);
+        }, 5000);
 
         $scope.userInfo.id = ar.getCookie('bhy_user_id');
 
