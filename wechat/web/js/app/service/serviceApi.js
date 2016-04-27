@@ -100,7 +100,12 @@ define(['app/module'], function (module, config) {
          * @returns {*}
          */
         api.wxConfig = function () {
-            return $http.get('../chat/config');
+            signUrl = "http://wechat.baihey.com/wap/site/main";
+            return $http({
+                method:'POST',
+                url:'../chat/config',
+                params:{url:signUrl}
+            });
         }
 
         /**

@@ -684,7 +684,7 @@ class Wechat extends Component
      * @return array
      * @throws HttpException
      */
-    public function jsApiConfig(array $config = [], $debug = YII_DEBUG)
+    public function jsApiConfig(array $config = [], $debug = YII_DEBUG , $url = "")
     {
         $data = [
             'jsapi_ticket' => $this->getJsApiTicket(),
@@ -693,6 +693,9 @@ class Wechat extends Component
             'url' => explode('#', Yii::$app->getRequest()->getAbsoluteUrl())[0]
         ];
 
+        if ($url != ""){
+            $data['url']  = $url;
+        }
 
         return array_merge([
             'debug' => $debug,
