@@ -18,9 +18,9 @@ require.config({
         bootstrap:'plugin/bootstrap/bootstrap.min',
         amezeui: 'plugin/amezeui/amazeui.min',
         comm: 'comm',
-        config:'config',
         photoswipe:'plugin/photoswipe/code.photoswipe-3.0.5.min',
-        klass:'plugin/photoswipe/klass.min'
+        klass:'plugin/photoswipe/klass.min',
+        info_data: 'config/infoData'
     },
     shim:{
         angular:{
@@ -33,7 +33,7 @@ require.config({
 });
 
 require(['angular','ionic'] , function (angular) {
-    require(['angular_animate','ionic_angular','angular_sanitize','angular_ui_router','comm',"app/controller/listController",'angular_upload'],function(comm){
+    require(['angular_animate','ionic_angular','angular_sanitize','angular_ui_router','comm','info_data',"app/controller/listController",'angular_upload'],function(comm){
         'use strict';
 
         angular.bootstrap(document,['webApp']);

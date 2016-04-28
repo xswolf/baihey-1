@@ -222,11 +222,11 @@ input[type="number"]{-moz-appearance:textfield;}
 /* 字体图标 */
 @font-face {
     font-family: 'bhy-font';
-    src:    url('../fonts/icomoon.eot?l2ia1b');
-    src:    url('../fonts/icomoon.eot?l2ia1b#iefix') format('embedded-opentype'),
-    url('../fonts/icomoon.ttf?l2ia1b') format('truetype'),
-    url('../fonts/icomoon.woff?l2ia1b') format('woff'),
-    url('../fonts/icomoon.svg?l2ia1b#icomoon') format('svg');
+    src:    url('../fonts/icomoon.eot?qswkyr');
+    src:    url('../fonts/icomoon.eot?qswkyr#iefix') format('embedded-opentype'),
+    url('../fonts/icomoon.ttf?qswkyr') format('truetype'),
+    url('../fonts/icomoon.woff?qswkyr') format('woff'),
+    url('../fonts/icomoon.svg?qswkyr#icomoon') format('svg');
     font-weight: normal;
     font-style: normal;
 }
@@ -247,13 +247,251 @@ input[type="number"]{-moz-appearance:textfield;}
     -moz-osx-font-smoothing: grayscale;
 }
 
+.icon-bhy-idt:before {
+    content: "\e101";
+}
+.icon-bhy-edit:before {
+    content: "\e102";
+}
+.icon-bhy-picture:before {
+    content: "\e103";
+}
+.icon-bhy-marr:before {
+    content: "\e104";
+}
+.icon-bhy-edu:before {
+    content: "\e105";
+}
+.icon-bhy-estate .path1:before {
+    content: "\e106";
+    color: rgb(212, 76, 76);
+}
+.icon-bhy-estate .path2:before {
+    content: "\e107";
+    margin-left: -1em;
+    color: rgb(212, 76, 76);
+}
+.icon-bhy-estate .path3:before {
+    content: "\e108";
+    margin-left: -1em;
+    color: rgb(212, 47, 47);
+}
+.icon-bhy-estate .path4:before {
+    content: "\e109";
+    margin-left: -1em;
+    color: rgb(212, 47, 47);
+}
+.icon-bhy-estate .path5:before {
+    content: "\e10a";
+    margin-left: -1em;
+    color: rgb(212, 47, 47);
+}
+.icon-bhy-reviewed:before {
+    content: "\e90a";
+}
+.icon-bhy-agree:before {
+    content: "\e90b";
+}
+.icon-bhy-rec-bag:before {
+    content: "\e90c";
+}
+.icon-bhy-send-bag:before {
+    content: "\e90d";
+}
+.icon-bhy-withdraw:before {
+    content: "\e90e";
+}
+.icon-bhy-legal:before {
+    content: "\e90f";
+}
+.icon-bhy-rules:before {
+    content: "\e910";
+}
+.icon-bhy-legal2:before {
+    content: "\e911";
+}
+.icon-bhy-release:before {
+    content: "\e912";
+}
+.icon-bhy-memeng:before {
+    content: "\e913";
+}
+.icon-bhy-receng:before {
+    content: "\e914";
+}
+.icon-bhy-ent:before {
+    content: "\e915";
+}
+.icon-bhy-food:before {
+    content: "\e916";
+}
+.icon-bhy-tour:before {
+    content: "\e917";
+}
+.icon-bhy-moves:before {
+    content: "\e918";
+}
+.icon-bhy-other:before {
+    content: "\e919";
+}
+.icon-bhy-notsex:before {
+    content: "\e91a";
+}
+.icon-bhy-man:before {
+    content: "\e91b";
+}
+.icon-bhy-woman:before {
+    content: "\e91c";
+}
+.icon-bhy-setout:before {
+    content: "\e91d";
+}
+.icon-bhy-destination:before {
+    content: "\e91e";
+}
+.icon-bhy-seout-time:before {
+    content: "\e91f";
+}
+.icon-bhy-destination-time:before {
+    content: "\e920";
+}
+.icon-bhy-cost:before {
+    content: "\e921";
+}
+.icon-bhy-nomoney:before {
+    content: "\e922";
+}
+.icon-bhy-mytreat:before {
+    content: "\e923";
+}
+.icon-bhy-yourtreat:before {
+    content: "\e924";
+}
+.icon-bhy-AA:before {
+    content: "\e925";
+}
+.icon-bhy-flowers:before {
+    content: "\e926";
+}
+.icon-bhy-ornament:before {
+    content: "\e927";
+}
+.icon-bhy-occupation-01:before {
+    content: "\e301";
+    color: #fcb057;
+}
+.icon-bhy-occupation-02:before {
+    content: "\e302";
+    color: #73cb81;
+}
+.icon-bhy-occupation-03:before {
+    content: "\e303";
+    color: #76c6ff;
+}
+.icon-bhy-occupation-04:before {
+    content: "\e304";
+    color: #bde4ff;
+}
+.icon-bhy-occupation-05:before {
+    content: "\e305";
+    color: #9ebbbe;
+}
+.icon-bhy-occupation-06:before {
+    content: "\e306";
+    color: #e78a8a;
+}
+.icon-bhy-occupation-07:before {
+    content: "\e307";
+    color: #6cdce6;
+}
+.icon-bhy-occupation-08:before {
+    content: "\e308";
+    color: #f86b6b;
+}
+.icon-bhy-occupation-09:before {
+    content: "\e309";
+    color: #78bef0;
+}
+.icon-bhy-occupation-10:before {
+    content: "\e310";
+    color:#ef8ed0;
+}
+.icon-bhy-occupation-11:before {
+    content: "\e311";
+    color: #ec6c6c;
+}
+.icon-bhy-occupation-12:before {
+    content: "\e312";
+    color: #73d182;
+}
+.icon-bhy-occupation-13:before {
+    content: "\e313";
+    color: #76c6ff;
+}
+.icon-bhy-occupation-14:before {
+    content: "\e314";
+    color: #bde4ff;
+}
+.icon-bhy-occupation-15:before {
+    content: "\e315";
+    color: #ecbd86;
+}
+.icon-bhy-occupation-16:before {
+    content: "\e316";
+    color: #76c6ff;
+}
+.icon-bhy-occupation-17:before {
+    content: "\e317";
+    color: #e97070;
+}
+.icon-bhy-occupation-18:before {
+    content: "\e318";
+    color: #73d182;
+}
+.icon-bhy-occupation-19:before {
+    content: "\e319";
+    color: #e97070;
+}
+.icon-bhy-occupation-20:before {
+    content: "\e320";
+    color: #f08e1a;
+}
+.icon-bhy-occupation-21:before {
+    content: "\e321";
+    color: #73d182;
+}
+.icon-bhy-occupation-22:before {
+    content: "\e322";
+    color: #f88383;
+}
+.icon-bhy-occupation-23:before {
+    content: "\e323";
+    color: #99682e;
+}
+.icon-bhy-occupation-24:before {
+    content: "\e324";
+    color: #f08e1a;
+}
+.icon-bhy-occupation-25:before {
+    content: "\e325";
+    color: #bde4ff;
+}
+.icon-bhy-occupation-26:before {
+    content: "\e326";
+    color: #73d182;
+}
+.icon-bhy-occupation-27:before {
+    content: "\e327";
+    color: #76c6ff;
+}
+.icon-bhy-occupation-28:before {
+    content: "\e328";
+    color: #b6b6b6;
+}
 .icon-bhy-member-food:before {
     content: "\e215";
 }
 .icon-bhy-member-zuji-01:before {
-    content: "\e214";
-}
-.icon-bhy-member-zuji:before {
     content: "\e214";
 }
 .icon-bhy-member-birthday:before {

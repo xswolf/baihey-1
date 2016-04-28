@@ -214,14 +214,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
 
         $scope.height = "";
 
-        $scope.heightModel = [];
-
-        for (var i = 140; i <= 260; i++) {
-            $scope.heightModel.push({
-                'id': i,
-                'name': i + '厘米'
-            })
-        }
+        $scope.heightModel = config_infoData.height;
 
         $scope.heightSelect = function (val) {
             $scope.height = val;
@@ -251,6 +244,30 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
 
         $scope.showMenu(false);
 
+        $scope.marriage = "";
+
+        $scope.marriageModel = config_infoData.marriage;
+
+        $scope.marriageSelect = function (val) {
+            $scope.marriage = val;
+        }
+
+        $scope.saveData = function () {
+
+            if ($scope.marriage == '' || typeof($scope.marriage) == 'undefined') {
+                if (confirm('检测到您还未选择婚姻状况，确定放弃吗？')) {
+                    window.location.hash = '/main/information';  //跳转
+                } else {
+                    return false;
+                }
+            }else {
+                api.save(url, $scope.marriage).success(function (res) {
+                    // 保存
+                })
+            }
+
+
+        }
 
     }]);
 
@@ -259,13 +276,60 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
 
         $scope.showMenu(false);
 
+        $scope.education = "";
 
+        $scope.educationModel = config_infoData.education;
+
+        $scope.educationSelect = function (val) {
+            $scope.education = val;
+        }
+
+        $scope.saveData = function () {
+
+            if ($scope.education == '' || typeof($scope.education) == 'undefined') {
+                if (confirm('检测到您还未选择学历，确定放弃吗？')) {
+                    window.location.hash = '/main/information';  //跳转
+                } else {
+                    return false;
+                }
+            }else {
+                api.save(url, $scope.education).success(function (res) {
+                    // 保存
+                })
+            }
+
+        }
     }]);
 
     // 职业
     module.controller("member.occupation", ['app.serviceApi', '$scope', '$ionicPopup', function (api, $scope, $ionicPopup) {
 
         $scope.showMenu(false);
+
+        $scope.education = "";
+
+        $scope.educationModel = config_infoData.education;
+
+        $scope.educationSelect = function (val) {
+            $scope.education = val;
+        }
+
+        $scope.saveData = function () {
+
+            if ($scope.education == '' || typeof($scope.education) == 'undefined') {
+                if (confirm('检测到您还未选择学历，确定放弃吗？')) {
+                    window.location.hash = '/main/information';  //跳转
+                } else {
+                    return false;
+                }
+            }else {
+                api.save(url, $scope.education).success(function (res) {
+                    // 保存
+                })
+            }
+
+
+        }
 
 
     }]);

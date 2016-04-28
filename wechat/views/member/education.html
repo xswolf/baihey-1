@@ -4,31 +4,27 @@
         <button class="button button-icon icon ion-arrow-left-c" ui-sref="main.member_information"
                 ng-click="showMenu(false)"></button>
         <title class="title">学历</title>
-        <button class="button button-icon cor21">保存</button>
+        <button class="button button-icon cor21" ng-click="saveData()">保存</button>
     </ion-header-bar>
-    <ion-content class="bhy com_w_100 m_bg" ng-controller="member.education">
+    <ion-content class="bhy com_w_100 m_bg">
         <ion-list>
             <div class="item item-divider">
                 嘉瑞 ● 实名制婚恋网
             </div>
             <div class="item item-text-wrap">
 
-                <label class="item item-input mb20">
-                    <input type="text" placeholder="真实姓名一旦填写不可更改">
+                <label class="item item-input item-select">
+                    <div class="input-label">
+                        学历
+                    </div>
+                    <select ng-model="education" ng-change="educationSelect(this.education)">
+                        <option value="">请选择</option>
+                        <option value="{{e.id}}" ng-repeat="e in educationModel">{{e.name}}</option>
+                    </select>
                 </label>
 
-                <label class="m_tips">
-                    <p class="fwb">温馨提示：</p>
-                    <p class="ti24">您的真实姓名将不会展现在网页中，只是验证您真实身份的一个重要依据，希望您如实填写！</p>
-                </label>
-
-                <!-- 男 -->
-                <div ng-if="user.sex == 1" class="m_b_bg w100 mt20">
-                    <img src="/wechat/web/images/member/real_name_bg1.png">
-                </div>
-                <!-- 女 -->
-                <div ng-if="user.sex == 0" class="m_b_bg w100 mt20 tar">
-                    <img src="/wechat/web/images/member/real_name_bg0.png">
+                <div class="m_b_bg w100 mt20 tar">
+                    <img src="/wechat/web/images/member/education_bg.png">
                 </div>
             </div>
 

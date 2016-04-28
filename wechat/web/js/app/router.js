@@ -112,7 +112,8 @@ define(["app/module", 'app/service/serviceApi'],
                         url: "/is_marriage",
                         views: {
                             'member-tab': {
-                                templateUrl: "/wechat/views/member/is_marriage.html"
+                                templateUrl: "/wechat/views/member/is_marriage.html",
+                                controller:'member.is_marriage'
                             }
                         }
                     })
@@ -120,7 +121,8 @@ define(["app/module", 'app/service/serviceApi'],
                         url: "/education",
                         views: {
                             'member-tab': {
-                                templateUrl: "/wechat/views/member/education.html"
+                                templateUrl: "/wechat/views/member/education.html",
+                                controller:'member.education'
                             }
                         }
                     })
@@ -128,7 +130,8 @@ define(["app/module", 'app/service/serviceApi'],
                         url: "/occupation",
                         views: {
                             'member-tab': {
-                                templateUrl: "/wechat/views/member/occupation.html"
+                                templateUrl: "/wechat/views/member/occupation.html",
+                                controller:'member.occupation'
                             }
                         }
                     })
