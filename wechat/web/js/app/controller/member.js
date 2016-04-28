@@ -196,7 +196,6 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
         $scope.formData.constellation = $scope.constellation.id; // 星座ID 详见comm.js
 
         $scope.saveData = function () {
-            console.log(1111);
             if ($scope.age < 18) {
                 $ionicPopup.alert({title: '如果您未满18岁，请退出本站，谢谢合作！'});
                 return false;
@@ -213,9 +212,35 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
 
         $scope.showMenu(false);
 
+        $scope.height = "";
 
+        $scope.heightModel = [];
 
-        $scope.saveData = function(){
+        for (var i = 140; i <= 260; i++) {
+            $scope.heightModel.push({
+                'id': i,
+                'name': i + '厘米'
+            })
+        }
+
+        $scope.heightSelect = function (val) {
+            $scope.height = val;
+        }
+
+        $scope.saveData = function () {
+
+            if ($scope.height == '' || typeof($scope.height) == 'undefined') {
+                if (confirm('检测到您还选择身高，确定放弃吗？')) {
+                    window.location.hash = '/main/information';  //跳转
+                } else {
+                    return false;
+                }
+            }else {
+                api.save(url, $scope.height).success(function (res) {
+                    // 保存
+                })
+            }
+
 
         }
 

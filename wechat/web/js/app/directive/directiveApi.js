@@ -13,25 +13,6 @@ define(['app/module'], function (module) {
         }
     });
 
-    module.directive("height", function () {
-        return {
-            restrict: "EA",
-            replace: true,
-            template: function (tElement, tAttrs) {
-                var ageHtml = "",
-                    ageMin = 140,
-                    ageMax = 260;
-                for (ageMin; ageMin <= ageMax; ageMin++) {
-                    ageHtml += '<option value="';
-                    ageHtml += ageMin;
-                    ageHtml += '">';
-                    ageHtml += ageMin;
-                    ageHtml += '</option>';
-                }
-                return ageHtml;
-            }
-        }
-    });
 
 })
 
