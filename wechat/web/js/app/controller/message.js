@@ -372,7 +372,7 @@ define(['app/module', 'app/directive/directiveApi'
                             console.log(response.time +"=="+ $scope.historyList[i].time +" | "+  response.message +"=="+ $scope.historyList[i].message);
                             response.message = response.message.replace(/&quot;/g , "\"");
                             if (response.time == $scope.historyList[i].time && (response.message == $scope.historyList[i].message || response.type == 'pic')) {
-
+                                $scope.historyList[i].message = response.message;
                                 $scope.historyList[i].status = 2;
                             }
                         }
