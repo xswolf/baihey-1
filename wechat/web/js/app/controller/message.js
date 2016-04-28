@@ -2,7 +2,7 @@
  * Created by NSK. on 2016/4/5/0005.
  */
 define(['app/module', 'app/directive/directiveApi'
-    , 'app/service/serviceApi', 'comm'
+    , 'app/service/serviceApi','app/directive/FileCanvas', 'comm'
 ], function (module) {
 
     module.controller("message.index", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$ionicModal', '$ionicActionSheet', '$ionicLoading','$state', function (api, $scope, $timeout, $ionicPopup, $ionicModal, $ionicActionSheet, $ionicLoading,$state) {
@@ -278,8 +278,13 @@ define(['app/module', 'app/directive/directiveApi'
                     status: 3,
                     time: flagTime
                 };
-                $scope.historyList.push(message);
-                ar.setStorage('chat_messageHistory' + toUser, $scope.historyList); // 每次发送消息后把消息放到浏览器端缓存
+                if (serverId != 'view' && type == 'pic'){}else {
+                    $scope.historyList.push(message);
+                    ar.setStorage('chat_messageHistory' + toUser, $scope.historyList); // 每次发送消息后把消息放到浏览器端缓存
+                }
+                if (type == 'pic' && serverId == 'view'){
+                    return;
+                }
                 chat.sendMessage(serverId, sendId, toUser, type, flagTime);
             }
 
@@ -338,17 +343,17 @@ define(['app/module', 'app/directive/directiveApi'
                 });
 
 
-                var length = $scope.uploader.queue.length;
+                $scope.picLength = $scope.uploader.queue.length;
                 $scope.uploader.onAfterAddingFile = function (fileItem) {   // 上传之后
-
-                    fileItem.uploader.queue[length].upload();
+                    $scope.sendMessage('view', $scope.sendId, $scope.receiveId, 'pic'); // 假发送，便于预览图片
+                    fileItem.uploader.queue[$scope.picLength].upload();
                     //console.info('onAfterAddingFile', fileItem);
 
                 };
 
                 $scope.uploader.onCompleteItem = function (fileItem, response, status, headers) {  // 上传结束
                     console.log(response.path);
-                    $scope.sendMessage(response.path, $scope.sendId, $scope.receiveId, 'pic');
+                    $scope.sendMessage(response.path, $scope.sendId, $scope.receiveId, 'pic');  // 真实发送
                     //console.info('onCompleteItem', fileItem, response, status, headers);
                 };
 
@@ -361,11 +366,12 @@ define(['app/module', 'app/directive/directiveApi'
 
                 var setMessageStatus = function (response) {
                     if (response.type=='madd' || response.type=='remove' || response.type=='add') return;
+
                     if ($scope.sendId == response.sendId) {  // 响应自己发送的消息
                         for (var i in $scope.historyList) {
-                            console.log(response.time +"=="+ $scope.historyList[i].time +"=="+  response.message +"=="+ $scope.historyList[i].message);
+                            console.log(response.time +"=="+ $scope.historyList[i].time +" | "+  response.message +"=="+ $scope.historyList[i].message);
                             response.message = response.message.replace(/&quot;/g , "\"");
-                            if (response.time == $scope.historyList[i].time && response.message == $scope.historyList[i].message) {
+                            if (response.time == $scope.historyList[i].time && (response.message == $scope.historyList[i].message || response.type == 'pic')) {
 
                                 $scope.historyList[i].status = 2;
                             }

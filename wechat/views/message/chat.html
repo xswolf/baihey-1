@@ -73,7 +73,8 @@
                         <!-- 图片 -->
                         <div class="content normal" ng-click="detail_pic('{{vo.message}}')" ng-if="vo.type=='pic' || vo.message_type==3">
                             <span class="pic">
-                                <img ng-src="{{vo.message}}" >
+                                <img ng-if="vo.message != 'view'" ng-src="{{vo.message}}" >
+                                <div ng-if="vo.message == 'view'" ng-show="uploader.isHTML5" ng-thumb="{ file: uploader.queue, height: 100 }"></div>
                             </span>
                         </div>
 
