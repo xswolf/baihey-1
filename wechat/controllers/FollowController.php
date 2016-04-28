@@ -66,4 +66,24 @@ class FollowController extends BaseController
 
         return $this->renderAjax(['status' => 1, 'data' => $data]);
     }
+
+    /**
+     * 取消关注
+     */
+    public function actionDelFollow()
+    {
+        $data = UserFollow::getInstance()->delFollow($this->get);
+
+        return $this->renderAjax(['status' => 1, 'data' => $data]);
+    }
+
+    /**
+     * 拉黑
+     */
+    public function actionBlackFollow()
+    {
+        $data = UserFollow::getInstance()->blackFollow($this->get);
+
+        return $this->renderAjax(['status' => 1, 'data' => $data]);
+    }
 }

@@ -68,12 +68,16 @@ class UserFollow extends Base
      */
     public function getFollowStatus($where)
     {
-        $row = (new Query())
-            ->select(['status'])
-            ->where($where)
-            ->from(static::tableName())
-            ->one();
-        return $row;
+        if(isset($where['user_id'])) {
+            $row = (new Query())
+                ->select(['status'])
+                ->where($where)
+                ->from(static::tableName())
+                ->one();
+            return $row;
+        } else {
+            return false;
+        }
     }
 
     /**
@@ -95,6 +99,44 @@ class UserFollow extends Base
             return false;
         }
 
+    }
+
+    /**
+     * 取消关注
+     * @param $where
+     * @return bool
+     * @throws \Exception
+     */
+    public function delFollow($where)
+    {
+        if($this->getFollowStatus($where)) {
+            $follow = $this->getInstance();
+            $follow->user_id = $where['user_id'];
+            $follow->follow_id = $where['follow_id'];
+            $follow->status = 2;
+            return $follow->insert(false);
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * 拉黑
+     * @param $where
+     * @return bool
+     * @throws \Exception
+     */
+    public function blackFollow($where)
+    {
+        if($this->getFollowStatus($where)) {
+            $follow = $this->getInstance();
+            $follow->user_id = $where['user_id'];
+            $follow->follow_id = $where['follow_id'];
+            $follow->status = 0;
+            return $follow->insert(false);
+        } else {
+            return false;
+        }
     }
 
 }
