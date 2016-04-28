@@ -85,6 +85,12 @@ define(['app/module', 'app/directive/directiveApi'
             $scope.multi = !$scope.multi;
         }
 
+        // 显示时间函数
+        $scope.isLongTime = function (time , index) {
+            if (index<2) return false;
+            return time - $scope.historyList[index-1].time > 300
+        }
+
         $scope.scrollBot = function () {
             $ionicScrollDelegate.scrollBottom(true);
         }
