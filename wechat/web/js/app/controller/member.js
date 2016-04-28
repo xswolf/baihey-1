@@ -306,31 +306,34 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
 
         $scope.showMenu(false);
 
-        $scope.education = "";
+        $scope.bodyHeight = document.body.scrollHeight;
+        if ($scope.bodyHeight == 0) $scope.bodyHeight = window.screen.height;
+        $scope.scrollStyle = {
+            'height': ($scope.bodyHeight - 44) + 'px'
+        }
 
-        $scope.educationModel = config_infoData.education;
+        $scope.occupationModel = config_infoData.occupation;
 
-        $scope.educationSelect = function (val) {
-            $scope.education = val;
+        $scope.selected_bigo = function (item) {
+            $scope.occupation = item.children;
         }
 
         $scope.saveData = function () {
 
-            if ($scope.education == '' || typeof($scope.education) == 'undefined') {
+            if ($scope.occupation == '' || typeof($scope.occupation) == 'undefined') {
                 if (confirm('检测到您还未选择学历，确定放弃吗？')) {
                     window.location.hash = '/main/information';  //跳转
                 } else {
                     return false;
                 }
             }else {
-                api.save(url, $scope.education).success(function (res) {
+                api.save(url, $scope.occupation).success(function (res) {
                     // 保存
                 })
             }
 
 
         }
-
 
     }]);
 

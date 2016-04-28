@@ -7,22 +7,21 @@
         <button class="button button-icon cor21" ng-click="saveData()">保存</button>
     </ion-header-bar>
     <ion-content class="bhy com_w_100 m_bg">
-        <ion-scroll zooming="false"
-                    ng-style="scrollStyle" style="border-right: 1px solid #ccc;">
+        <ion-scroll zooming="false" style="border-right: 1px solid #ccc;" ng-style="scrollStyle" class="fl w50">
             <ion-list style="height: 3000px;">
-                <ion-item ng-repeat="province in provinces track by province.id" item="province"
-                          class="item tac" ng-class="{true:'selected',flase:''}[pvId == province.id]"
-                          href="#" ng-click="selected_pv({{province.id}})">
-                    {{province.name}}
+                <ion-item ng-repeat="o in occupationModel"
+                          class="item"
+                          ng-click="selected_bigo({{o}})">
+                    <i class="icon icon-bhy-occupation-{{o.icon}}"></i>
+                    {{o.name}}
                 </ion-item>
             </ion-list>
         </ion-scroll>
-        <ion-scroll zooming="false" ng-style="scrollStyle">
+        <ion-scroll zooming="false" class="fl w50" ng-style="scrollStyle">
             <ion-list class="city" style="height: 3000px;">
-                <ion-item ng-repeat="city in citys track by city.id" item="city" class="item tac"
-                          ng-if="pvId == city.parentId" ng-click="selected_city({{city.id}})"
-                          ng-class="{true:'selected',flase:''}[cityId == city.id]" href="#">
-                    {{city.name}} <i class="ml25 ion-ios-checkmark-outline"></i>
+                <ion-item ng-repeat="occ in occupation" ng-click="selected_smallo({{occ.id}})" class="item">
+                    <span class="fl">{{occ.name}}</span>
+                    <i class="fr ml25 ion-ios-checkmark-outline"></i>
                 </ion-item>
             </ion-list>
         </ion-scroll>
