@@ -1,5 +1,6 @@
 <?php
 namespace wechat\controllers;
+
 use common\util\Cookie;
 use common\models\UserFollow;
 
@@ -12,6 +13,28 @@ use common\models\UserFollow;
  */
 class FollowController extends BaseController
 {
+
+    /**
+     * 关注列表
+     */
+    public function actionFollowList()
+    {
+        $user_id = Cookie::getInstance()->getCookie('bhy_id');
+        $data = UserFollow::getInstance()->getFollowList('follow', $user_id, $this->get);
+
+        return $this->renderAjax(['status' => 1, 'data' => $data]);
+    }
+
+    /**
+     * 被关注列表
+     */
+    public function actionFollowedList()
+    {
+        $user_id = Cookie::getInstance()->getCookie('bhy_id');
+        $data = UserFollow::getInstance()->getFollowList('followed', $user_id, $this->get);
+
+        return $this->renderAjax(['status' => 1, 'data' => $data]);
+    }
 
     /**
      * 获取关注我的总数

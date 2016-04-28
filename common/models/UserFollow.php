@@ -15,6 +15,35 @@ class UserFollow extends Base
 {
 
     /**
+     * 根据类型$type获取关注列表或被关注列表
+     * @param $type follow关注列表，followed被关注列表
+     * @param $user_id
+     * @param $where
+     * @return $this|array
+     */
+    public function getFollowList($type, $user_id, $where)
+    {
+        $pageSize   = isset($where['pageSize']) ? $where['pageSize'] : 6;
+        $pageNum    = isset($where['pageNum']) ? $where['pageNum'] : 1;
+        $offset     = ($pageNum - 1) * $pageSize;
+        if($type == 'follow') {
+            $condition = ['user_id' => $user_id];
+        } else {
+            $condition = ['follow_id' => $user_id];
+        }
+        $result = (new Query())->select(['*'])
+            ->where($condition)
+            ->from(static::tableName())
+            ->orderBy('time desc')
+            ->limit($pageSize)
+            ->offset($offset);
+
+        //echo $result->createCommand()->getRawSql();
+        $result = $result->all();
+        return $result;
+    }
+
+    /**
      * 获取关注我的总数
      * @return array|bool
      */
