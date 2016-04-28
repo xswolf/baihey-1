@@ -265,6 +265,7 @@ define(['app/module', 'app/directive/directiveApi'
             $scope.chat = chat;
             // 播放语音
             $scope.detail_record = function (id) {
+                alert(id)
                 wx.playVoice({
                     localId: id // 需要播放的音频的本地ID，由stopRecord接口获得
                 });
