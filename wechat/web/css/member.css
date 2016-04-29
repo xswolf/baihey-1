@@ -421,3 +421,10 @@
   color: #fc6ea2;
   font-size: 12px;
 }
+/* occupation */
+.occupation .selected .o_l {
+  color: #76c6ff;
+}
+.occupation .selected .o_r {
+  color: #e82a94;
+}

@@ -160,12 +160,12 @@
 .bhy_item{ padding: 8px 16px;}
 .bhy_textarea{ min-height: 80px}
 .ti24{text-indent: 24px}
-
 .bor_r_n{border-right:none;}
 .bor_b_n{border-bottom:none;}
 .bor_l_n{border-left:none;}
 .bor_t_n{border-top:none;}
 .bor_r_1{ border-right: 1px solid #a2a2a2;}
+.bor_r_1c{ border-right: 1px solid #ccc;}
 .pd5{ padding: 0 5px;}
 .cbh{clear:both;}
 

@@ -139,7 +139,8 @@ define(["app/module", 'app/service/serviceApi'],
                         url: "/address",
                         views: {
                             'member-tab': {
-                                templateUrl: "/wechat/views/member/address.html"
+                                templateUrl: "/wechat/views/member/address.html",
+                                controller:'member.address'
                             }
                         }
                     })

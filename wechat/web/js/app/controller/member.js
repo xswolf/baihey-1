@@ -3,7 +3,7 @@
  */
 
 define(['app/module', 'app/router', 'app/directive/directiveApi'
-    , 'app/service/serviceApi'
+    , 'app/service/serviceApi', 'config/area'
 ], function (module) {
 
     // 我
@@ -227,7 +227,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
                 } else {
                     return false;
                 }
-            }else {
+            } else {
                 api.save(url, $scope.height).success(function (res) {
                     // 保存
                 })
@@ -259,7 +259,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
                 } else {
                     return false;
                 }
-            }else {
+            } else {
                 api.save(url, $scope.marriage).success(function (res) {
                     // 保存
                 })
@@ -291,7 +291,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
                 } else {
                     return false;
                 }
-            }else {
+            } else {
                 api.save(url, $scope.education).success(function (res) {
                     // 保存
                 })
@@ -305,6 +305,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
 
         $scope.showMenu(false);
 
+        // 获取文档高度以适应ion-scroll
         $scope.bodyHeight = document.body.scrollHeight;
         if ($scope.bodyHeight == 0) $scope.bodyHeight = window.screen.height;
         $scope.scrollStyle = {
@@ -313,25 +314,41 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
 
         $scope.occupationModel = config_infoData.occupation;
 
+        // 用户职业
+        $scope.useroccBig = 1;  // 职业大类
+        $scope.useroccSmall = 1; // 职业小类
+
+        // 如用户未填写职业，默认加载小类数据
+        $scope.occupation = $scope.occupationModel[0].children;
+
+
         $scope.selected_bigo = function (item) {
             $scope.occupation = item.children;
+            $scope.big_selected = true;
+            $scope.useroccBig = item.id;
+        }
+
+        $scope.selected_smallo = function (item) {
+            $scope.useroccSmall = item.id;
         }
 
         $scope.saveData = function () {
-
-            if ($scope.occupation == '' || typeof($scope.occupation) == 'undefined') {
-                if (confirm('检测到您还未选择学历，确定放弃吗？')) {
+            if ($scope.useroccBig == 0) {
+                if (confirm('检测到您还未选择职业，确定放弃吗？')) {
                     window.location.hash = '/main/information';  //跳转
                 } else {
                     return false;
                 }
-            }else {
-                api.save(url, $scope.occupation).success(function (res) {
-                    // 保存
-                })
+            } else {
+                if ($scope.useroccSmall == 0) {
+                    $ionicPopup.alert({title: '请选择工作岗位'});
+                    return false;
+                } else {
+                    api.save(url, $scope.occupation).success(function (res) {
+                        // 保存
+                    })
+                }
             }
-
-
         }
 
     }]);
@@ -341,6 +358,72 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
 
         $scope.showMenu(false);
 
+        // 加载数据
+        $scope.province = provines;
+        $scope.province.splice(0, 0, {id: '0', name: '请选择'});
+        $scope.city = [
+            {id: '0', name: '请选择'}
+        ];
+        $scope.area = [
+            {id: '0', name: '请选择'}
+        ];
+
+        // 用户数据
+        $scope.formData = [];
+        $scope.formData.userprovince = 0;
+        $scope.formData.usercity = 0;
+        $scope.formData.userarea = 0;
+
+        // 默认数据
+        $scope.pro = '0';
+        $scope.cit = '0';
+        $scope.are = '0';
+
+        // 选择省
+        $scope.provinceSelect = function (pro) {
+            $scope.city = [{id: '0', name: '请选择'}];  // 清空数组
+            $scope.area = [{id: '0', name: '请选择'}]; // 清空数组
+            angular.forEach(citys, function (data, i) {
+                if (citys[i].parentId == pro) {
+                    $scope.city.push(citys[i]);
+                }
+            });
+            $scope.formData.usercity = '0';
+            $scope.formData.userarea = '0';
+            $scope.formData.userprovince = pro;
+        }
+
+        // 选择市
+        $scope.citySelect = function (cit) {
+            $scope.area = [{id: '0', name: '请选择'}]; // 清空数组
+            angular.forEach(area, function (data, i) {
+                if (area[i].parentId == cit) {
+                    $scope.area.push(area[i]);
+                }
+            });
+            $scope.formData.userarea = '0';
+            $scope.formData.usercity = cit;
+        }
+
+        // 选择区
+        $scope.areaSelect = function (are) {
+            $scope.formData.userarea = are;
+        }
+
+        $scope.saveData = function () {
+            if ($scope.formData.userprovince == '0') {
+                if (confirm('检测到您还未选择地区，确定放弃吗？')) {
+                    window.location.hash = '/main/information';  //跳转
+                } else {
+                    return false;
+                }
+            } else {
+                api.save(url, $scope.formData).success(function (res) {
+                    // 保存
+
+                })
+            }
+        }
 
     }]);
 
