@@ -145,10 +145,11 @@ define(["app/module", 'app/service/serviceApi'],
                         }
                     })
                     .state('main.member_haunt_address', {
-                        url: "/address",
+                        url: "/haunt_address",
                         views: {
                             'member-tab': {
-                                templateUrl: "/wechat/views/member/address.html"
+                                templateUrl: "/wechat/views/member/haunt_address.html",
+                                controller:'member.haunt_address'
                             }
                         }
                     })
@@ -156,7 +157,8 @@ define(["app/module", 'app/service/serviceApi'],
                         url: "/wechat_number",
                         views: {
                             'member-tab': {
-                                templateUrl: "/wechat/views/member/wechat_number.html"
+                                templateUrl: "/wechat/views/member/wechat_number.html",
+                                controller:'member.wechat_number'
                             }
                         }
                     })

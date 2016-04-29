@@ -431,6 +431,21 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
     module.controller("member.haunt_address", ['app.serviceApi', '$scope', '$ionicPopup', function (api, $scope, $ionicPopup) {
 
         $scope.showMenu(false);
+        $scope.formData = [];
+        $scope.saveData = function () {
+            if ($scope.formData.haunt_address == '' || typeof($scope.formData.haunt_address) == 'undefined') {
+                if (confirm('检测到您还未填写常出没地，确定放弃吗？')) {
+                    window.location.hash = '/main/information';  //跳转
+                } else {
+                    return false;
+                }
+            } else {
+                api.save(url, $scope.formData.haunt_address).success(function (res) {
+                    // 保存
+
+                })
+            }
+        }
 
 
     }]);
