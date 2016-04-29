@@ -88,13 +88,12 @@ class UserFollow extends Base
      */
     public function addFollow($where)
     {
-        if(!$this->getFollowStatus($where)) {
-            $follow = $this->getInstance();
-            $follow->user_id = $where['user_id'];
-            $follow->follow_id = $where['follow_id'];
-            $follow->time = YII_BEGIN_TIME;
-            $follow->status = 1;
-            return $follow->insert(false);
+        if(!$this->findOne($where)) {
+            $this->user_id = $where['user_id'];
+            $this->follow_id = $where['follow_id'];
+            $this->time = YII_BEGIN_TIME;
+            $this->status = 1;
+            return $this->insert(false);
         } else {
             return false;
         }
@@ -109,15 +108,9 @@ class UserFollow extends Base
      */
     public function delFollow($where)
     {
-        if($this->getFollowStatus($where)) {
-            $follow = $this->getInstance();
-            $follow->user_id = $where['user_id'];
-            $follow->follow_id = $where['follow_id'];
-            $follow->status = 2;
-            return $follow->insert(false);
-        } else {
-            return false;
-        }
+        $follow = $this->findOne($where);
+        $follow->status = 2;
+        return $follow->save(false);
     }
 
     /**
@@ -128,15 +121,9 @@ class UserFollow extends Base
      */
     public function blackFollow($where)
     {
-        if($this->getFollowStatus($where)) {
-            $follow = $this->getInstance();
-            $follow->user_id = $where['user_id'];
-            $follow->follow_id = $where['follow_id'];
-            $follow->status = 0;
-            return $follow->insert(false);
-        } else {
-            return false;
-        }
+        $follow = $this->findOne($where);
+        $follow->status = 0;
+        return $follow->save(false);
     }
 
 }

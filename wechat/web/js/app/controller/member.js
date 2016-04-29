@@ -137,15 +137,14 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
 
         $scope.formData = [];
         $scope.saveData = function () {
-            if ($scope.personalized == '' || typeof($scope.personalized) == 'undefined') {
+            if ($scope.formData.personalized == '' || typeof($scope.formData.personalized) == 'undefined') {
                 if (confirm('您还未填写个性签名，确定保存吗？')) {
                     window.location.hash = '/main/information';  //跳转
                 } else {
                     return false;
                 }
             } else {
-                $scope.formData.personalized = $scope.personalized;
-                api.save(url, $scope.formData).success(function (res) {
+                api.save('/wap/member/save-data', $scope.formData).success(function (res) {
                     // 保存
                 })
             }

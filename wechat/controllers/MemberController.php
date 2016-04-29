@@ -1,5 +1,6 @@
 <?php
 namespace wechat\controllers;
+use common\models\UserInformation;
 
 
 /**
@@ -19,12 +20,18 @@ class MemberController extends BaseController
 
         return $this->render();
     }
+
     public function actionInformation()
     {
 
         return $this->render();
     }
 
+    public function actionSaveData()
+    {
+        $user_id = \common\util\Cookie::getInstance()->getCookie('bhy_id');
 
+        UserInformation::getInstance()->saveData($user_id, $this->get);
+    }
 
 }
