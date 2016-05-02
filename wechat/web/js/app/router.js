@@ -163,10 +163,20 @@ define(["app/module", 'app/service/serviceApi'],
                         }
                     })
                     .state('main.member_qq_number', {
-                        url: "/wechat_number",
+                        url: "/qq_number",
                         views: {
                             'member-tab': {
-                                templateUrl: "/wechat/views/member/qq_number.html"
+                                templateUrl: "/wechat/views/member/qq_number.html",
+                                controller:'member.qq_number'
+                            }
+                        }
+                    })
+                    .state('main.member_been_address', {
+                        url: "/been_address",
+                        views: {
+                            'member-tab': {
+                                templateUrl: "/wechat/views/member/been_address.html",
+                                controller:'member.been_address'
                             }
                         }
                     })

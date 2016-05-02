@@ -1,0 +1,34 @@
+<ion-view>
+    <link href="/wechat/web/css/member.css" rel="stylesheet">
+    <ion-header-bar class="com_w_100 bhy">
+        <button class="button button-icon icon ion-arrow-left-c" ui-sref="main.member_information"
+                ng-click="showMenu(false)"></button>
+        <title class="title" style="font-weight: inherit;">我去过的地方</title>
+        <button class="button button-icon cor21" ng-click="saveData()">保存</button>
+    </ion-header-bar>
+    <ion-content class="bhy com_w_100 m_bg">
+        <ion-list>
+            <ion-item class="bhy_item_b mt10 mb10">
+                <ion-scroll zooming="false" direction="x" scrollbar-x="false" scrollbar-y="false" class="addr_top_box fl">
+                   <span class="hob_addr_flag" ng-repeat="useraddr in formData.userAddrList">
+                        <i class="ion-location hob_addr_icon"></i>
+                        <span class="hob_addr_name">{{useraddr.addrName}}</span>
+                    </span>
+                </ion-scroll>
+                <p class="addr_top_search">
+                    <input type="text" placeholder="搜索国家/城市" class="addr_top_searchInput">
+                </p>
+            </ion-item>
+            <p class="pl16 cor20">
+                热门推荐
+            </p>
+            <ion-item class="item-checkbox" ng-repeat="addr in addrList">
+                <label class="checkbox">
+                    <input type="checkbox" ng-value="{{addr.id}}" ng-checked="addrChecked({{addr}})">
+                </label>
+                <i class="icon ion-location fs16 cor26"></i>
+                {{addr.name}}
+            </ion-item>
+        </ion-list>
+    </ion-content>
+</ion-view>

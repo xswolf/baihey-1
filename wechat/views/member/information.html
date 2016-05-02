@@ -1,5 +1,6 @@
 <ion-view>
     <link href="/wechat/web/css/member.css" rel="stylesheet">
+    <link href="/wechat/web/css/plugin/bootstrap/css/font-awesome.min.css" rel="stylesheet">
     <ion-header-bar>
         <button class="button button-icon icon ion-arrow-left-c" ui-sref="main.member" ng-click="showMenu(true)"></button>
         <title class="title">我的资料</title>
@@ -221,7 +222,7 @@
                     </div>
                 </div>
             </div>
-            <ion-item href="" class="hob_item">
+            <ion-item ui-sref="main.member_been_address" class="hob_item">
                 <div class="info_l hob">
                     <p>我去过的地方(7)</p>
                 </div>
@@ -230,26 +231,33 @@
                 </div>
                 <div class="info_c hob">
                     <div class="hob_addr clearfix">
-                        <span class="icon-bhy-member-zuji-01 hob_addr_i1">
-                            <span class="hob_addr_t">北京</span>
+                        <span class="hob_addr_flag">
+                            <i class="ion-location hob_addr_icon"></i>
+                            <span class="hob_addr_name">北京</span>
                         </span>
-                        <span class="icon-bhy-member-zuji-01 hob_addr_i1">
-                            <span class="hob_addr_t">北京</span>
+                        <span class="hob_addr_flag">
+                            <i class="ion-location hob_addr_icon"></i>
+                            <span class="hob_addr_name">重庆</span>
                         </span>
-                        <span class="icon-bhy-member-zuji-01 hob_addr_i1">
-                            <span class="hob_addr_t">北京</span>
+                        <span class="hob_addr_flag">
+                            <i class="ion-location hob_addr_icon"></i>
+                            <span class="hob_addr_name">上海</span>
                         </span>
-                        <span class="icon-bhy-member-zuji-01 hob_addr_i1">
-                            <span class="hob_addr_t">北京</span>
+                        <span class="hob_addr_flag">
+                            <i class="ion-location hob_addr_icon"></i>
+                            <span class="hob_addr_name">澳大利亚</span>
                         </span>
-                        <span class="icon-bhy-member-zuji-01 hob_addr_i1">
-                            <span class="hob_addr_t">北京</span>
+                        <span class="hob_addr_flag">
+                            <i class="ion-location hob_addr_icon"></i>
+                            <span class="hob_addr_name">墨西哥</span>
                         </span>
-                        <span class="icon-bhy-member-zuji-01 hob_addr_i1">
-                            <span class="hob_addr_t">北京</span>
+                        <span class="hob_addr_flag">
+                            <i class="ion-location hob_addr_icon"></i>
+                            <span class="hob_addr_name">北京</span>
                         </span>
-                        <span class="icon-bhy-member-zuji-01 hob_addr_i1">
-                            <span class="hob_addr_t">北京</span>
+                        <span class="hob_addr_flag">
+                            <i class="ion-location hob_addr_icon"></i>
+                            <span class="hob_addr_name">北京</span>
                         </span>
                     </div>
                 </div>
@@ -263,20 +271,25 @@
                 </div>
                 <div class="info_c hob">
                     <div class="hob_addr clearfix">
-                        <span class="icon-bhy-member-zuji-01 hob_addr_i2">
-                            <span class="hob_addr_t">北京</span>
+                        <span class="hob_addr_flag f2">
+                            <i class="ion-location hob_addr_icon"></i>
+                            <span class="hob_addr_name">北京</span>
                         </span>
-                        <span class="icon-bhy-member-zuji-01 hob_addr_i2">
-                            <span class="hob_addr_t">北京</span>
+                        <span class="hob_addr_flag f2">
+                            <i class="ion-location hob_addr_icon"></i>
+                            <span class="hob_addr_name">北京</span>
                         </span>
-                        <span class="icon-bhy-member-zuji-01 hob_addr_i2">
-                            <span class="hob_addr_t">北京</span>
+                        <span class="hob_addr_flag f2">
+                            <i class="ion-location hob_addr_icon"></i>
+                            <span class="hob_addr_name">北京</span>
                         </span>
-                        <span class="icon-bhy-member-zuji-01 hob_addr_i2">
-                            <span class="hob_addr_t">北京</span>
+                        <span class="hob_addr_flag f2">
+                            <i class="ion-location hob_addr_icon"></i>
+                            <span class="hob_addr_name">北京</span>
                         </span>
-                        <span class="icon-bhy-member-zuji-01 hob_addr_i2">
-                            <span class="hob_addr_t">北京</span>
+                        <span class="hob_addr_flag f2">
+                            <i class="ion-location hob_addr_icon"></i>
+                            <span class="hob_addr_name">北京</span>
                         </span>
 
                     </div>
@@ -366,32 +379,29 @@
                 </div>
                 <div class="info_c hob mb10">
                     <div class="hob_food clearfix">
-                        <span class="icon-bhy-member-food hob_food_i">
-                            <span class="hob_food_t">爱吃甜</span>
+                        <span class="hob_food_flag">
+                            <i class=" icon-food hob_food_icon"></i>
+                            <span class="hob_food_name">爱吃甜</span>
                         </span>
-                        <span class="icon-bhy-member-food hob_food_i">
-                            <span class="hob_food_t">爱吃辣</span>
+                        <span class="hob_food_flag">
+                            <i class=" icon-food hob_food_icon"></i>
+                            <span class="hob_food_name">爱吃辣</span>
                         </span>
-                        <span class="icon-bhy-member-food hob_food_i">
-                            <span class="hob_food_t">寿司</span>
+                        <span class="hob_food_flag">
+                            <i class=" icon-food hob_food_icon"></i>
+                            <span class="hob_food_name">寿司</span>
                         </span>
-                        <span class="icon-bhy-member-food hob_food_i">
-                            <span class="hob_food_t">火锅</span>
+                        <span class="hob_food_flag">
+                            <i class=" icon-food hob_food_icon"></i>
+                            <span class="hob_food_name">火锅</span>
                         </span>
-                        <span class="icon-bhy-member-food hob_food_i">
-                            <span class="hob_food_t">川菜</span>
+                        <span class="hob_food_flag">
+                            <i class=" icon-food hob_food_icon"></i>
+                            <span class="hob_food_name">哈根达斯</span>
                         </span>
-                        <span class="icon-bhy-member-food hob_food_i">
-                            <span class="hob_food_t">炸鸡</span>
-                        </span>
-                        <span class="icon-bhy-member-food hob_food_i">
-                            <span class="hob_food_t">啤酒</span>
-                        </span>
-                        <span class="icon-bhy-member-food hob_food_i">
-                            <span class="hob_food_t">烤串</span>
-                        </span>
-                        <span class="icon-bhy-member-food hob_food_i">
-                            <span class="hob_food_t">面条</span>
+                        <span class="hob_food_flag">
+                            <i class=" icon-food hob_food_icon"></i>
+                            <span class="hob_food_name">冰棍</span>
                         </span>
                     </div>
                 </div>

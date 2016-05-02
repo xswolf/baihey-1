@@ -455,6 +455,21 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
 
         $scope.showMenu(false);
 
+        $scope.formData = [];
+        $scope.saveData = function () {
+            if ($scope.formData.wechat == '' || typeof($scope.formData.wechat) == 'undefined') {
+                if (confirm('检测到您还未填写微信号，确定放弃吗？')) {
+                    window.location.hash = '/main/information';  //跳转
+                } else {
+                    return false;
+                }
+            } else {
+                api.save(url, $scope.formData.wechat).success(function (res) {
+                    // 保存
+
+                })
+            }
+        }
 
     }]);
 
@@ -463,6 +478,79 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
 
         $scope.showMenu(false);
 
+        $scope.formData = [];
+        $scope.saveData = function () {
+            if ($scope.formData.qq == '' || typeof($scope.formData.qq) == 'undefined') {
+                if (confirm('检测到您还未填写QQ号，确定放弃吗？')) {
+                    window.location.hash = '/main/information';  //跳转
+                } else {
+                    return false;
+                }
+            } else {
+                api.save(url, $scope.formData.qq).success(function (res) {
+                    // 保存
+
+                })
+            }
+        }
+
+    }]);
+
+    // 去过的地方
+    module.controller("member.been_address", ['app.serviceApi', '$scope', '$ionicPopup', function (api, $scope, $ionicPopup) {
+
+        $scope.showMenu(false);
+
+        $scope.formData = [];
+
+        $scope.addrList = [
+            {id: 0, name: '北京'},
+            {id: 1, name: '上海'},
+            {id: 2, name: '张家界'},
+            {id: 3, name: '九寨沟'},
+            {id: 4, name: '马尔代夫'},
+            {id: 5, name: '三亚'},
+            {id: 6, name: '鼓浪屿'},
+            {id: 7, name: '丽江'},
+            {id: 8, name: '西双版纳'},
+            {id: 9, name: '西藏'},
+            {id: 10, name: '重庆'}
+        ]
+
+        $scope.formData.userAddrList = [
+            {id: 0, addrId: 4, addrName: '马尔代夫'},
+            {id: 0, addrId: 6, addrName: '鼓浪屿'},
+            {id: 0, addrId: 7, addrName: '丽江'},
+            {id: 0, addrId: 1, addrName: '上海'},
+            {id: 0, addrId: 3, addrName: '九寨沟'}
+        ]
+
+        $scope.addrChecked = function (item) {
+            var isChecked = false;
+            angular.forEach($scope.formData.userAddrList, function (data, i) {
+                if (item.id == $scope.formData.userAddrList[i].addrId) {
+                    isChecked = true;
+                }else {
+                    isChecked = false;
+                }
+            });
+            return isChecked;
+        }
+
+        $scope.saveData = function () {
+            if ($scope.formData.qq == '' || typeof($scope.formData.qq) == 'undefined') {
+                if (confirm('检测到您还未填写QQ号，确定放弃吗？')) {
+                    window.location.hash = '/main/information';  //跳转
+                } else {
+                    return false;
+                }
+            } else {
+                api.save(url, $scope.formData.qq).success(function (res) {
+                    // 保存
+
+                })
+            }
+        }
 
     }]);
 
