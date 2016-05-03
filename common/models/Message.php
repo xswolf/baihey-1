@@ -56,7 +56,7 @@ class Message extends Base {
         $this->receive_user_id = $receiveId;
         $this->message         = $messageContent;
         $this->message_type    = $type;
-        $this->time            = time();
+        $this->create_time     = time();
         $this->status          = $status;
 
         return $this->insert(true);
