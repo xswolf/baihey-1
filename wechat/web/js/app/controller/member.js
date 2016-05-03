@@ -561,14 +561,11 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
         }
 
         $scope.removeSelection = function (item) {
-            for (var i = 0; i < $scope.addrList.length; i++) {
-                if ($scope.addrList[i].name == item.name) {
-                    $scope.addrList[i].userAddr = 0;
-                    angular.element(document.querySelector('#check' + item.id))
-                        .prop('checked', false);
-                }
-            }
+            updateSelected('remove', item);
+            angular.element(document.querySelector('#check' + item.id))
+                .prop('checked', false);
         }
+
         var arr = [
             {id: 0, name: '北京', hot: 1, userAddr: 0},
             {id: 1, name: '上海', hot: 1, userAddr: 0},
@@ -593,19 +590,16 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
             {id: 20, name: '威尼斯', hot: 0, userAddr: 0}
         ];
 
-        $scope.addrList = $filter('filter')($scope.addrList, {hot:1});
+        $scope.addrList = $filter('filter')($scope.addrList, {hot: 1});
 
-        $scope.search = function () {
-
-            $scope.$watch('formData.searchAddr', function (newValue,oldValue, scope) {    // 使用过滤器过滤数据
-                if (newValue == '' || typeof(newValue) == 'undefined') {
-                    $scope.addrList = arr;
-                    $scope.addrList = $filter('filter')($scope.addrList, {hot:1});
-                }else{
-                    $scope.addrList = $filter('filter')($scope.addrList, {hot:1||0});
-                    $scope.addrList = $filter('filter')($scope.addrList, $scope.formData.searchAddr);
-                }
-            });
+        $scope.search = function (value) {
+            if (value == '' || typeof(value) == 'undefined') {
+                $scope.addrList = arr;
+                $scope.addrList = $filter('filter')($scope.addrList, {hot: 1});
+            } else {
+                $scope.addrList = $filter('filter')($scope.addrList, {hot: 1 || 0});
+                $scope.addrList = $filter('filter')($scope.addrList, value);
+            }
         }
 
     }]);
