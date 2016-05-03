@@ -13,9 +13,12 @@ define(['app/module'], function (module) {
         }
     });
 
-    module.directive("setFocus", function () {
-        return function(scope, element){
-            element[0].focus();
+    module.directive("beenAddress", function () {
+        return {
+            restrict: "EA",
+            link: function ($scope, element) {
+
+            }
         };
     });
 

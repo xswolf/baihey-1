@@ -9,14 +9,15 @@
     <ion-content class="bhy com_w_100 m_bg">
         <ion-list>
             <ion-item class="bhy_item_b mt10 mb10">
-                <ion-scroll zooming="false" direction="x" scrollbar-x="false" scrollbar-y="false" class="addr_top_box fl">
-                   <span class="hob_addr_flag" ng-repeat="useraddr in formData.userAddrList">
+                <ion-scroll zooming="false" direction="x" scrollbar-x="false" scrollbar-y="false"
+                            class="addr_top_box fl">
+                   <span class="hob_addr_flag" ng-repeat="addr in addrList" ng-if="addr.userAddr==1" ng-click="removeSelection({{addr}})">
                         <i class="ion-location hob_addr_icon"></i>
-                        <span class="hob_addr_name">{{useraddr.addrName}}</span>
+                        <span class="hob_addr_name">{{addr.name}}</span>
                     </span>
                 </ion-scroll>
                 <p class="addr_top_search">
-                    <input type="text" placeholder="搜索国家/城市" class="addr_top_searchInput">
+                    <input type="text" ng-model="formData.searchAddr" placeholder="搜索国家/城市" class="addr_top_searchInput" ng-change="search()">
                 </p>
             </ion-item>
             <p class="pl16 cor20">
@@ -24,10 +25,14 @@
             </p>
             <ion-item class="item-checkbox" ng-repeat="addr in addrList">
                 <label class="checkbox">
-                    <input type="checkbox" ng-value="{{addr.id}}" ng-checked="addrChecked({{addr}})">
+                    <input type="checkbox" id="check{{addr.id}}" ng-value="{{addr.id}}" ng-checked="{{addr.userAddr}}"
+                           ng-click="updateSelection($event,{{addr}})">
                 </label>
                 <i class="icon ion-location fs16 cor26"></i>
                 {{addr.name}}
+            </ion-item>
+            <ion-item ng-if="!addrList.length">
+                <p class="tac">暂无相关数据</p>
             </ion-item>
         </ion-list>
     </ion-content>
