@@ -63,7 +63,8 @@
                     <p>个性签名</p>
                 </div>
                 <div class="info_c">
-                    <p>这人很懒，什么也没留下~</p>
+                    <p ng-if="userInfo.personalized == null">这人很懒，什么也没留下~</p>
+                    <p ng-if="userInfo.personalized != null">{{userInfo.personalized}}</p>
                 </div>
                 <div class="info_r">
                     <i class="ionc ion-ios-arrow-right"></i>
@@ -85,10 +86,11 @@
                     <p>性别</p>
                 </div>
                 <div class="info_c">
-                    <p><i class="mr5 icon icon-bhy-member-woman cor13 vam"></i>女</p>
+                    <p ng-if="userInfo.sex == 0"><i class="mr5 icon icon-bhy-member-woman cor13 vam"></i>女</p>
+                    <p ng-if="userInfo.sex == 1"><i class="mr5 icon icon-bhy-member-man cor13 vam"></i>男</p>
                 </div>
             </ion-item>
-            <ion-item ui-sref="main.member_real_name">
+            <ion-item ng-if="userInfo.info.real_name == '未知'" ui-sref="main.member_real_name">
                 <div class="info_l">
                     <p>真实姓名</p>
                 </div>
@@ -97,6 +99,14 @@
                 </div>
                 <div class="info_r">
                     <i class="ionc ion-ios-arrow-right"></i>
+                </div>
+            </ion-item>
+            <ion-item ng-if="userInfo.info.real_name != '未知'">
+                <div class="info_l">
+                    <p>真实姓名</p>
+                </div>
+                <div class="info_c">
+                    <p><span class="cor21 mr10">{{userInfo.info.real_name}}</span><span class="fs12 cor20">保密，只有您自己可以看到</span></p>
                 </div>
             </ion-item>
             <ion-item class="brithday" ui-sref="main.member_age">

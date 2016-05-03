@@ -21,6 +21,8 @@ class UserInformation extends Base
                 case 'personalized':
                     $userInformation->personalized = $where['personalized'];
                     break;
+                default:
+
             }
             return $userInformation->save(false);
         }

@@ -28,6 +28,9 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
     // 资料首页
     module.controller("member.information", ['app.serviceApi', '$scope', '$ionicPopup', function (api, $scope, $ionicPopup) {
         $scope.showMenu(false);
+        $scope.userInfo = ar.getStorage('userInfo');
+        $scope.userInfo.info = JSON.parse($scope.userInfo.info);
+        $scope.userInfo.identity_pic = JSON.parse($scope.userInfo.identity_pic);
         $scope.imgList =
             [
                 {'id': 0, 'url': '/wechat/web/images/test/5.jpg', 'headpic': 1},
@@ -134,8 +137,10 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
     module.controller("member.signature", ['app.serviceApi', '$scope', '$ionicPopup', function (api, $scope, $ionicPopup) {
 
         $scope.showMenu(false);
+        $scope.userInfo = ar.getStorage('userInfo');
 
         $scope.formData = [];
+        $scope.formData.personalized = $scope.userInfo.personalized;
         $scope.saveData = function () {
             if ($scope.formData.personalized == '' || typeof($scope.formData.personalized) == 'undefined') {
                 if (confirm('您还未填写个性签名，确定保存吗？')) {
@@ -146,6 +151,8 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
             } else {
                 api.save('/wap/member/save-data', $scope.formData).success(function (res) {
                     // 保存
+                    $scope.userInfo.personalized = $scope.formData.personalized;
+                    ar.setStorage('userInfo', $scope.userInfo);
                 })
             }
 
@@ -157,18 +164,21 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
     module.controller("member.real_name", ['app.serviceApi', '$scope', '$ionicPopup', function (api, $scope, $ionicPopup) {
 
         $scope.showMenu(false);
+        $scope.userInfo = ar.getStorage('userInfo');
+        $scope.userInfo.info = JSON.parse($scope.userInfo.info);
 
+        $scope.formData = [];
+        $scope.formData.real_name = $scope.userInfo.info.real_name;
         $scope.sex = 0;  // 用户性别
         $scope.saveData = function () {
-            if ($scope.real_name == '' || typeof($scope.real_name) == 'undefined') {
+            if ($scope.formData.real_name == '' || typeof($scope.formData.real_name) == 'undefined') {
                 if (confirm('检测到您还未填写真实姓名，确定放弃吗？')) {
                     window.location.hash = '/main/information';  //跳转
                 } else {
                     return false;
                 }
             } else {
-                $scope.formData.real_name = $scope.real_name;
-                api.save(url, $scope.formData).success(function (res) {
+                api.save('/wap/member/save-data', $scope.formData).success(function (res) {
                     // 保存
                 })
             }
