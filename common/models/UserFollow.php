@@ -34,7 +34,7 @@ class UserFollow extends Base
         $result = (new Query())->select(['*'])
             ->where($condition)
             ->from(static::tableName())
-            ->orderBy('time desc')
+            ->orderBy('create_time desc')
             ->limit($pageSize)
             ->offset($offset);
 
@@ -91,7 +91,7 @@ class UserFollow extends Base
         if(!$this->findOne($where)) {
             $this->user_id = $where['user_id'];
             $this->follow_id = $where['follow_id'];
-            $this->time = YII_BEGIN_TIME;
+            $this->create_time = YII_BEGIN_TIME;
             $this->status = 1;
             return $this->insert(false);
         } else {

@@ -109,10 +109,10 @@ class User extends \common\models\Base
         ];
         // 身份证照片
         $userIdentity = [
-            'url1'      => '未知',// 正面
-            'url2'      => '未知',// 反面
-            'is_check'  => '未知',// 审核状态1通过，0未通过
-            'time'      => '未知',// 时间
+            'url1'          => '未知',// 正面
+            'url2'          => '未知',// 反面
+            'is_check'      => '未知',// 审核状态1通过，0未通过
+            'create_time'   => '未知',// 时间
         ];
         $infoData['identity_pic'] = json_encode($userIdentity);
         $infoData['info'] = json_encode($userInfo);

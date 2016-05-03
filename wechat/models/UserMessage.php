@@ -32,10 +32,10 @@ class UserMessage extends \common\models\Base
         $sql = "SELECT u.username,u.sex,u.phone,i.info,i.identity_pic,c.* FROM $userTable u INNER JOIN $userInformationTable i ON u.id=i.user_id
 INNER JOIN
 (
-SELECT m.id,m.send_user_id,m.receive_user_id,message,m.time,STATUS,tmp.sumSend, m.send_user_id other FROM bhy_user_message  m INNER JOIN (
-SELECT send_user_id,COUNT(send_user_id) sumSend,MAX(TIME) TIME FROM bhy_user_message WHERE receive_user_id = $user_id AND STATUS=2 GROUP BY send_user_id
-)tmp ON m.send_user_id = tmp.send_user_id AND m.time = tmp.time
-) c ON u.id=c.other GROUP BY c.other ORDER BY time DESC limit $offset,$pageSize";
+SELECT m.id,m.send_user_id,m.receive_user_id,message,m.create_time,STATUS,tmp.sumSend, m.send_user_id other FROM bhy_user_message  m INNER JOIN (
+SELECT send_user_id,COUNT(send_user_id) sumSend,MAX(create_time) create_time FROM bhy_user_message WHERE receive_user_id = $user_id AND STATUS=2 GROUP BY send_user_id
+)tmp ON m.send_user_id = tmp.send_user_id AND m.create_time = tmp.create_time
+) c ON u.id=c.other GROUP BY c.other ORDER BY create_time DESC limit $offset,$pageSize";
         $result = $this->getDb()->createCommand($sql)->queryAll();
 
         return $result;
