@@ -513,96 +513,89 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
 
         $scope.formData = [];
 
-        $scope.addrList = [
-            {id: 0, name: '北京', hot: 1, userAddr: 0},
-            {id: 1, name: '上海', hot: 1, userAddr: 0},
-            {id: 2, name: '张家界', hot: 1, userAddr: 1},
-            {id: 3, name: '九寨沟', hot: 1, userAddr: 0},
-            {id: 4, name: '马尔代夫', hot: 1, userAddr: 0},
-            {id: 5, name: '三亚', hot: 1, userAddr: 1},
-            {id: 6, name: '鼓浪屿', hot: 1, userAddr: 1},
-            {id: 7, name: '丽江', hot: 1, userAddr: 0},
-            {id: 8, name: '西双版纳', hot: 1, userAddr: 1},
-            {id: 9, name: '西藏', hot: 1, userAddr: 0},
-            {id: 10, name: '重庆', hot: 1, userAddr: 0},
-            {id: 11, name: '黄山', hot: 0, userAddr: 0},
-            {id: 12, name: '峨眉山', hot: 0, userAddr: 0},
-            {id: 13, name: '拉斯维加斯', hot: 0, userAddr: 0},
-            {id: 14, name: '纽约', hot: 0, userAddr: 0},
-            {id: 15, name: '巴黎', hot: 0, userAddr: 0},
-            {id: 16, name: '三峡', hot: 0, userAddr: 0},
-            {id: 17, name: '埃及', hot: 0, userAddr: 0},
-            {id: 18, name: '澳大利亚', hot: 0, userAddr: 0},
-            {id: 19, name: '巴厘岛', hot: 0, userAddr: 0},
-            {id: 20, name: '威尼斯', hot: 0, userAddr: 0}
-        ];
+        $scope.formData.userAddrIdList = [];  // 用户已选择的地区，ID数据集，存数据库
+        $scope.formData.userAddrList = [];    // 用户已选择的地区，name数据集，展示用
 
-        var updateSelected = function (action, item) {
-            if (action == 'add') {
-                for (var i = 0; i < $scope.addrList.length; i++) {
-                    if ($scope.addrList[i].name == item.name) {
-                        $scope.addrList[i].userAddr = 1;
-                    }
-                }
+        $scope.addrList = [
+            {id: 0, name: '北京', hot: 1},
+            {id: 1, name: '上海', hot: 1},
+            {id: 2, name: '张家界', hot: 1},
+            {id: 3, name: '九寨沟', hot: 1},
+            {id: 4, name: '马尔代夫', hot: 1},
+            {id: 5, name: '三亚', hot: 1},
+            {id: 6, name: '鼓浪屿', hot: 1},
+            {id: 7, name: '丽江', hot: 1},
+            {id: 8, name: '西双版纳', hot: 1},
+            {id: 9, name: '西藏', hot: 1},
+            {id: 10, name: '重庆', hot: 1},
+            {id: 11, name: '黄山', hot: 0},
+            {id: 12, name: '峨眉山', hot: 0},
+            {id: 13, name: '拉斯维加斯', hot: 0},
+            {id: 14, name: '纽约', hot: 0},
+            {id: 15, name: '巴黎', hot: 0},
+            {id: 16, name: '三峡', hot: 0},
+            {id: 17, name: '埃及', hot: 0},
+            {id: 18, name: '澳大利亚', hot: 0},
+            {id: 19, name: '巴厘岛', hot: 0},
+            {id: 20, name: '威尼斯', hot: 0}
+        ];
+        var arr = [
+            {id: 0, name: '北京', hot: 1},
+            {id: 1, name: '上海', hot: 1},
+            {id: 2, name: '张家界', hot: 1},
+            {id: 3, name: '九寨沟', hot: 1},
+            {id: 4, name: '马尔代夫', hot: 1},
+            {id: 5, name: '三亚', hot: 1},
+            {id: 6, name: '鼓浪屿', hot: 1},
+            {id: 7, name: '丽江', hot: 1},
+            {id: 8, name: '西双版纳', hot: 1},
+            {id: 9, name: '西藏', hot: 1},
+            {id: 10, name: '重庆', hot: 1},
+            {id: 11, name: '黄山', hot: 0},
+            {id: 12, name: '峨眉山', hot: 0},
+            {id: 13, name: '拉斯维加斯', hot: 0},
+            {id: 14, name: '纽约', hot: 0},
+            {id: 15, name: '巴黎', hot: 0},
+            {id: 16, name: '三峡', hot: 0},
+            {id: 17, name: '埃及', hot: 0},
+            {id: 18, name: '澳大利亚', hot: 0},
+            {id: 19, name: '巴厘岛', hot: 0},
+            {id: 20, name: '威尼斯', hot: 0}
+        ];
+        var updateSelected = function (action, id, name) {
+            if (action == 'add' && $scope.formData.userAddrIdList.indexOf(id) == -1) {
+                $scope.formData.userAddrIdList.push(id);
+                $scope.formData.userAddrList.push(name);
             }
-            if (action == 'remove') {
-                for (var i = 0; i < $scope.addrList.length; i++) {
-                    if ($scope.addrList[i].name == item.name) {
-                        $scope.addrList[i].userAddr = 0;
-                    }
-                }
+            if (action == 'remove' && $scope.formData.userAddrIdList.indexOf(id) != -1) {
+                var idx = $scope.formData.userAddrIdList.indexOf(id);
+                $scope.formData.userAddrIdList.splice(idx, 1);
+                $scope.formData.userAddrList.splice(idx, 1);
             }
         }
 
-        $scope.updateSelection = function ($event, item) {
+        $scope.updateSelection = function ($event, id) {
             var checkbox = $event.target;
             var action = (checkbox.checked ? 'add' : 'remove');
-            updateSelected(action, item);
+            updateSelected(action, id, checkbox.name);
         }
 
-        $scope.removeSelection = function (item) {
-            updateSelected('remove', item);
-            angular.element(document.querySelector('#check' + item.id))
-                .prop('checked', false);
+        $scope.isSelected = function (id) {
+            return $scope.formData.userAddrIdList.indexOf(id) >= 0;
         }
 
-        var arr = [
-            {id: 0, name: '北京', hot: 1, userAddr: 0},
-            {id: 1, name: '上海', hot: 1, userAddr: 0},
-            {id: 2, name: '张家界', hot: 1, userAddr: 1},
-            {id: 3, name: '九寨沟', hot: 1, userAddr: 0},
-            {id: 4, name: '马尔代夫', hot: 1, userAddr: 0},
-            {id: 5, name: '三亚', hot: 1, userAddr: 1},
-            {id: 6, name: '鼓浪屿', hot: 1, userAddr: 1},
-            {id: 7, name: '丽江', hot: 1, userAddr: 0},
-            {id: 8, name: '西双版纳', hot: 1, userAddr: 1},
-            {id: 9, name: '西藏', hot: 1, userAddr: 0},
-            {id: 10, name: '重庆', hot: 1, userAddr: 0},
-            {id: 11, name: '黄山', hot: 0, userAddr: 0},
-            {id: 12, name: '峨眉山', hot: 0, userAddr: 0},
-            {id: 13, name: '拉斯维加斯', hot: 0, userAddr: 0},
-            {id: 14, name: '纽约', hot: 0, userAddr: 0},
-            {id: 15, name: '巴黎', hot: 0, userAddr: 0},
-            {id: 16, name: '三峡', hot: 0, userAddr: 0},
-            {id: 17, name: '埃及', hot: 0, userAddr: 0},
-            {id: 18, name: '澳大利亚', hot: 0, userAddr: 0},
-            {id: 19, name: '巴厘岛', hot: 0, userAddr: 0},
-            {id: 20, name: '威尼斯', hot: 0, userAddr: 0}
-        ];
-
-        $scope.addrList = $filter('filter')($scope.addrList, {hot: 1});
-
+        // 关键字搜索
         $scope.search = function (value) {
             if (value == '' || typeof(value) == 'undefined') {
                 $scope.addrList = arr;
                 $scope.addrList = $filter('filter')($scope.addrList, {hot: 1});
             } else {
-                $scope.addrList = $filter('filter')($scope.addrList, {hot: 1 || 0});
-                $scope.addrList = $filter('filter')($scope.addrList, value);
+                $scope.addrList = $filter('filter')($scope.addrList, {name:value,hot:1||0});
             }
         }
 
-    }]);
+    }
+    ]);
 
     return module;
 })
