@@ -86,7 +86,7 @@ SELECT send_user_id,COUNT(send_user_id) sumSend,MAX(TIME) TIME FROM bhy_user_mes
         $model->send_user_id = $sendId;
         $model->receive_user_id = $receiveId;
         $model->money = $money;
-        $model->time = time();
+        $model->create_time = time();
         $model->status = 0;
         $model->bri_message = $bri_message;
         if ($model->insert(true) ) {
