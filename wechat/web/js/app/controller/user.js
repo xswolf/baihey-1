@@ -163,7 +163,7 @@ define(['app/module', 'app/directive/directiveApi'
                 if (data.status) {
                     // 存储userInfo
                     ar.setStorage('userInfo',data.data);
-                    window.location.href = '/wap/site/main';
+                    window.location.href = '/wap/site/main#/main/index';
                 } else {
                     $ionicPopup.alert({title: '用户名或者密码错误'});
                 }

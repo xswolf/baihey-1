@@ -168,7 +168,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
         $scope.userInfo.info = JSON.parse($scope.userInfo.info);
 
         $scope.formData = [];
-        $scope.formData.real_name = $scope.userInfo.info.real_name;
+        $scope.formData.real_name = $scope.userInfo.info.real_name != '未知' ? $scope.userInfo.info.real_name : '';
         $scope.sex = 0;  // 用户性别
         $scope.saveData = function () {
             if ($scope.formData.real_name == '' || typeof($scope.formData.real_name) == 'undefined') {
@@ -180,6 +180,9 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
             } else {
                 api.save('/wap/member/save-data', $scope.formData).success(function (res) {
                     // 保存
+                    $scope.userInfo.info.real_name = $scope.formData.real_name;
+                    $scope.userInfo.info = JSON.stringify($scope.userInfo.info);
+                    ar.setStorage('userInfo', $scope.userInfo);
                 })
             }
         }
@@ -220,26 +223,32 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
     module.controller("member.height", ['app.serviceApi', '$scope', '$ionicPopup', function (api, $scope, $ionicPopup) {
 
         $scope.showMenu(false);
+        $scope.userInfo = ar.getStorage('userInfo');
+        $scope.userInfo.info = JSON.parse($scope.userInfo.info);
 
-        $scope.height = "";
+        $scope.formData = [];
+        $scope.formData.height = $scope.userInfo.info.height;
 
         $scope.heightModel = config_infoData.height;
 
         $scope.heightSelect = function (val) {
-            $scope.height = val;
+            $scope.formData.height = val;
         }
 
         $scope.saveData = function () {
 
-            if ($scope.height == '' || typeof($scope.height) == 'undefined') {
+            if ($scope.formData.height == '' || typeof($scope.formData.height) == 'undefined') {
                 if (confirm('检测到您还选择身高，确定放弃吗？')) {
                     window.location.hash = '/main/information';  //跳转
                 } else {
                     return false;
                 }
             } else {
-                api.save(url, $scope.height).success(function (res) {
+                api.save('/wap/member/save-data', $scope.formData).success(function (res) {
                     // 保存
+                    $scope.userInfo.info.height = $scope.formData.height;
+                    $scope.userInfo.info = JSON.stringify($scope.userInfo.info);
+                    ar.setStorage('userInfo', $scope.userInfo);
                 })
             }
 

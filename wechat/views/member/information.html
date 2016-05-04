@@ -117,12 +117,23 @@
                     <p><i class="icon-bhy-member-birthday cor23 vam mr5"></i><span class="mr10">1991-08-04</span><span class="mr10">羊</span><span>狮子座</span></p>
                 </div>
             </ion-item>
-            <ion-item ui-sref="main.member_height">
+            <ion-item  ng-if="userInfo.info.height == '未知'" ui-sref="main.member_height">
                 <div class="info_l">
                     <p>身高</p>
                 </div>
                 <div class="info_c">
-                    <p>165cm</p>
+                    <p>立即填写</p>
+                </div>
+                <div class="info_r">
+                    <i class="ionc ion-ios-arrow-right"></i>
+                </div>
+            </ion-item>
+            <ion-item ng-if="userInfo.info.height != '未知'">
+                <div class="info_l">
+                    <p>身高</p>
+                </div>
+                <div class="info_c">
+                    <p>{{userInfo.info.height}}</p>
                 </div>
             </ion-item>
             <ion-item ui-sref="main.member_is_marriage" >
