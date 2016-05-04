@@ -292,9 +292,8 @@
 .hob_addr .hob_addr_i2,
 .hob_movie dl,
 .hob_food .hob_food_i {
-  float: left;
+  display: inline-block;
   position: relative;
-  display: block;
 }
 .hob_addr,
 .hob_food,
@@ -333,6 +332,7 @@
 }
 .hob_movie {
   padding-left: 15px;
+  width: 105%;
 }
 .hob_movie dl {
   margin-bottom: 0;
@@ -342,6 +342,10 @@
 .hob_movie dl dt {
   width: 50px;
   height: 73px;
+}
+.hob_movie dl dd {
+  overflow: hidden;
+  max-width: 50px;
 }
 .hob_movie dl dt img {
   width: 100%;

@@ -144,6 +144,7 @@
 
 .fwn{font-weight:normal;}
 .tal{text-align:left}
+.toe{text-overflow: ellipsis;}
 .com_w_100{width:100%;min-width:320px;}
 .w100{width: 100%;}
 .w50{width: 50%;}

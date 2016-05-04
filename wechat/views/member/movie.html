@@ -11,12 +11,12 @@
             <ion-item class="bhy_item_b mt10 mb10">
                 <ion-scroll delegate-handle="small" zooming="false" direction="x" scrollbar-x="false" scrollbar-y="false"
                             class="addr_top_box" style="width: 100%; max-width: 100%;">
-                   <span class="hob_sport_flag" ng-repeat="userMovie in formData.userMovieList" >
+                   <span class="hob_movie_flag" ng-repeat="userMovie in formData.userMovieList" >
                         <i class="bhy-icon-moves hob_sport_icon"></i>
                         <span class="hob_sport_name">{{userMovie}}</span>
                     </span>
                 </ion-scroll>
-                <p class="mt5 pb10 cor4" ng-if="!formData.userSportsList.length">请在下方选择您喜欢的电影</p>
+                <p class="mt5 pb10 cor4" ng-if="!formData.userMovieList.length">请在下方选择您喜欢的电影</p>
             </ion-item>
             <p class="pl16 cor20">
                 热门推荐

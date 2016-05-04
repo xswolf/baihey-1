@@ -911,7 +911,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
     }
     ]);
 
-    // 喜欢的运动
+    // 喜欢的电影
     module.controller("member.movie", ['app.serviceApi', '$scope', '$ionicPopup', '$ionicScrollDelegate', function (api, $scope, $ionicPopup, $ionicScrollDelegate) {
 
         $scope.showMenu(false);
