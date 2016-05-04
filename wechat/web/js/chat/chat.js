@@ -54,7 +54,8 @@ define(function(){
             this.socket = null;
             socket.close();
             if (chat.flag){
-                location.reload()
+                chat.init(chat.name);
+                //location.reload()
             }
             console.log('socket close');
         };
