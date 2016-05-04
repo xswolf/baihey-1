@@ -191,7 +191,7 @@ class User extends \common\models\Base
         $userLog = \common\models\Base::getInstance('user_log');
         $userLog->user_id = $log['user_id'];
         $userLog->type = $log['type'];
-        $userLog->time = $log['time'];
+        $userLog->create_time = $log['time'];
         $userLog->ip = ip2long($_SERVER["REMOTE_ADDR"]);
         return $userLog->insert(false);
     }
