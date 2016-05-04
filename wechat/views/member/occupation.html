@@ -12,7 +12,7 @@
                 <ion-item ng-repeat="o in occupationModel"
                           class="item" ng-class="{'{{o.id}}':'selected'}[useroccBig]"
                           ng-click="selected_bigo({{o}})">
-                    <i class="icon icon-bhy-occupation-{{o.icon}} vam"></i>
+                    <i class="icon bhy-icon-occupation-{{o.icon}} vam"></i>
                    <span class="o_l">{{o.name}}</span>
                 </ion-item>
             </ion-list>

@@ -9,9 +9,9 @@
     <ion-content class="bhy com_w_100 m_bg">
         <ion-list>
             <ion-item class="bhy_item_b mt10 mb10">
-                <ion-scroll zooming="false" direction="x" scrollbar-x="false" scrollbar-y="false"
+                <ion-scroll delegate-handle="small" zooming="false" direction="x" scrollbar-x="false" scrollbar-y="false"
                             class="addr_top_box fl">
-                   <span class="hob_addr_flag" ng-repeat="userAddr in formData.userAddrList" >
+                   <span class="hob_addr_flag f2" ng-repeat="userAddr in formData.userAddrList" >
                         <i class="ion-location hob_addr_icon"></i>
                         <span class="hob_addr_name">{{userAddr}}</span>
                     </span>
@@ -29,11 +29,11 @@
                 </span>
             </div>
             <ion-item class="item-checkbox" ng-if="typeTab==1" ng-repeat="addro in addrListOne track by addro.id">
-                <label class="checkbox">
+                <label class="checkbox checkbox-energized">
                     <input type="checkbox" id="{{addro.id}}" name="{{addro.name}}" ng-checked="isSelected({{addro.id}})"
                            ng-click="updateSelection($event,{{addro.id}})">
                 </label>
-                <i class="icon ion-location fs16 cor26"></i>
+                <i class="icon ion-location fs16 cor28"></i>
                 {{addro.name}}
             </ion-item>
             <ion-item class="item-checkbox" ng-if="typeTab==2" ng-repeat="addrt in addrListTwo track by addrt.id">
@@ -41,7 +41,7 @@
                     <input type="checkbox" id="{{addrt.id}}" name="{{addrt.name}}" ng-checked="isSelected({{addrt.id}})"
                            ng-click="updateSelection($event,{{addrt.id}})">
                 </label>
-                <i class="icon ion-location fs16 cor26"></i>
+                <i class="icon ion-location fs16 cor28"></i>
                 {{addrt.name}}
             </ion-item>
             <ion-item class="item-checkbox" ng-if="typeTab==3" ng-repeat="addrthr in addrListThree track by addrthr.id">
@@ -49,7 +49,7 @@
                     <input type="checkbox" id="{{addrthr.id}}" name="{{addrthr.name}}" ng-checked="isSelected({{addrthr.id}})"
                            ng-click="updateSelection($event,{{addrthr.id}})">
                 </label>
-                <i class="icon ion-location fs16 cor26"></i>
+                <i class="icon ion-location fs16 cor28"></i>
                 {{addrthr.name}}
             </ion-item>
             <ion-item ng-if="!addrListOne.length || !addrListTwo.length || !addrListThree.length">

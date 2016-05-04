@@ -189,6 +189,24 @@ define(["app/module", 'app/service/serviceApi'],
                             }
                         }
                     })
+                    .state('main.member_sports', {
+                        url: "/sports",
+                        views: {
+                            'member-tab': {
+                                templateUrl: "/wechat/views/member/sports.html",
+                                controller:'member.sports'
+                            }
+                        }
+                    })
+                    .state('main.member_movie', {
+                        url: "/movie",
+                        views: {
+                            'member-tab': {
+                                templateUrl: "/wechat/views/member/movie.html",
+                                controller:'member.movie'
+                            }
+                        }
+                    })
                     .state('main.message', {  // 消息首页
                         cache: false,
                         url: "/message",

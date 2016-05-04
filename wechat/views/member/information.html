@@ -86,8 +86,8 @@
                     <p>性别</p>
                 </div>
                 <div class="info_c">
-                    <p ng-if="userInfo.sex == 0"><i class="mr5 icon icon-bhy-member-woman cor13 vam"></i>女</p>
-                    <p ng-if="userInfo.sex == 1"><i class="mr5 icon icon-bhy-member-man cor13 vam"></i>男</p>
+                    <p ng-if="userInfo.sex == 0"><i class="mr5 icon bhy-icon-member-woman cor13 vam"></i>女</p>
+                    <p ng-if="userInfo.sex == 1"><i class="mr5 icon bhy-icon-member-man cor13 vam"></i>男</p>
                 </div>
             </ion-item>
             <ion-item ng-if="userInfo.info.real_name == '未知'" ui-sref="main.member_real_name">
@@ -114,7 +114,7 @@
                     <p>出生年月</p>
                 </div>
                 <div class="info_c">
-                    <p><i class="icon-bhy-member-birthday cor23 vam mr5"></i><span class="mr10">1991-08-04</span><span class="mr10">羊</span><span>狮子座</span></p>
+                    <p><i class="bhy-icon-member-birthday cor23 vam mr5"></i><span class="mr10">1991-08-04</span><span class="mr10">羊</span><span>狮子座</span></p>
                 </div>
             </ion-item>
             <ion-item  ng-if="userInfo.info.height == '未知'" ui-sref="main.member_height">
@@ -293,7 +293,7 @@
             </ion-item>
             <ion-item ui-sref="main.member_want_address" class="hob_item">
                 <div class="info_l hob">
-                    <p>最近想去的地方(5)</p>
+                    <p>想去的地方(5)</p>
                 </div>
                 <div class="info_r">
                     <i class="ionc ion-ios-arrow-right"></i>
@@ -325,7 +325,7 @@
                 </div>
             </ion-item>
 
-            <ion-item href="" class="hob_item">
+            <ion-item ui-sref="main.member_sports" class="hob_item">
                 <div class="info_l hob">
                     <p>喜欢的运动(4)</p>
                 </div>
@@ -333,30 +333,38 @@
                     <i class="ionc ion-ios-arrow-right"></i>
                 </div>
                 <div class="info_c hob">
-                    <div class="hob_addr clearfix">
-                        <span class="icon-bhy-member-zuji-01 hob_addr_i2">
-                            <span class="hob_addr_t">北京</span>
+                    <div class="hob_sport clearfix">
+                        <span class="hob_sport_flag">
+                            <i class="bhy-icon-moves hob_sport_icon"></i>
+                            <span class="hob_sport_name">跑步</span>
                         </span>
-                        <span class="icon-bhy-member-zuji-01 hob_addr_i2">
-                            <span class="hob_addr_t">北京</span>
+                         <span class="hob_sport_flag">
+                            <i class="bhy-icon-moves hob_sport_icon"></i>
+                            <span class="hob_sport_name">羽毛球</span>
                         </span>
-                        <span class="icon-bhy-member-zuji-01 hob_addr_i2">
-                            <span class="hob_addr_t">北京</span>
+                         <span class="hob_sport_flag">
+                            <i class="bhy-icon-moves hob_sport_icon"></i>
+                            <span class="hob_sport_name">篮球</span>
                         </span>
-                        <span class="icon-bhy-member-zuji-01 hob_addr_i2">
-                            <span class="hob_addr_t">北京</span>
+                         <span class="hob_sport_flag">
+                            <i class="bhy-icon-moves hob_sport_icon"></i>
+                            <span class="hob_sport_name">骑行</span>
                         </span>
-                        <span class="icon-bhy-member-zuji-01 hob_addr_i2">
-                            <span class="hob_addr_t">北京</span>
+                         <span class="hob_sport_flag">
+                            <i class="bhy-icon-moves hob_sport_icon"></i>
+                            <span class="hob_sport_name">健身</span>
                         </span>
-
+                        <span class="hob_sport_flag">
+                            <i class="bhy-icon-moves hob_sport_icon"></i>
+                            <span class="hob_sport_name">游泳</span>
+                        </span>
                     </div>
                 </div>
             </ion-item>
 
-            <ion-item href="" class="hob_item">
+            <ion-item ui-sref="main.member_movie" class="hob_item">
                 <div class="info_l hob">
-                    <p>最近想看的电影(8)</p>
+                    <p>想看的电影(8)</p>
                 </div>
                 <div class="info_r">
                     <i class="ionc ion-ios-arrow-right"></i>

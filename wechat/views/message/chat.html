@@ -36,7 +36,7 @@
             <!-- 红娘评价 -->
             <div class="rated clearfix" ng-if="!u_maker_rated">
 
-                <p class="rated_t"><i class="icon-bhy-tips-01 cor13"></i>李小姐性格随和、有一颗善良的心，
+                <p class="rated_t"><i class="bhy-icon-tips-01 cor13"></i>李小姐性格随和、有一颗善良的心，
                     是一个懂得感恩、乐观向上的女孩。</p>
                 <p class="rated_maker">—— 红娘<a class="marker_name" href="javascript:;">郭禹杉</a>评价</p>
             </div>
@@ -66,7 +66,7 @@
                         <!-- 语音 -->
                         <div class="content normal voice" ng-click="detail_record('{{vo.message}}')" ng-if="vo.type=='record' || vo.message_type==2">
                             <div class="voice_con">
-                                <i class="icon-bhy-msg-voice voice_icon"></i>
+                                <i class="bhy-icon-msg-voice voice_icon"></i>
                             </div>
                         </div>
 
@@ -81,7 +81,7 @@
                         <!-- 红包 -->
                         <div class="content normal bri" ng-click="detail_bri(vo.message)" ng-if="vo.type=='bribery' || vo.message_type==4">
                             <div class="bri_con clearfix">
-                                <div class="icon-bhy-bribery bri_con_icon"></div>
+                                <div class="bhy-icon-bribery bri_con_icon"></div>
                                 <div class="bri_con_txt">
                                     <p>{{vo.message | briMessage }}</p>
                                     <p>领取红包</p>

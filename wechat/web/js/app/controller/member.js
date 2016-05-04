@@ -28,9 +28,9 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
     // 资料首页
     module.controller("member.information", ['app.serviceApi', '$scope', '$ionicPopup', function (api, $scope, $ionicPopup) {
         $scope.showMenu(false);
-        $scope.userInfo = ar.getStorage('userInfo');
-        $scope.userInfo.info = JSON.parse($scope.userInfo.info);
-        $scope.userInfo.identity_pic = JSON.parse($scope.userInfo.identity_pic);
+        /* $scope.userInfo = ar.getStorage('userInfo');
+         $scope.userInfo.info = JSON.parse($scope.userInfo.info);
+         $scope.userInfo.identity_pic = JSON.parse($scope.userInfo.identity_pic);*/
         $scope.imgList =
             [
                 {'id': 0, 'url': '/wechat/web/images/test/5.jpg', 'headpic': 1},
@@ -268,7 +268,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
         $scope.formData.is_marriage = $scope.userInfo.info.is_marriage;
 
         $scope.marriageModel = config_infoData.marriage;
-console.log($scope.marriageModel);
+        console.log($scope.marriageModel);
         $scope.marriageSelect = function (val) {
             console.log(val);
             $scope.formData.is_marriage = val;
@@ -523,7 +523,7 @@ console.log($scope.marriageModel);
     }]);
 
     // 去过的地方
-    module.controller("member.been_address", ['app.serviceApi', '$scope', '$ionicPopup', '$filter', function (api, $scope, $ionicPopup, $filter) {
+    module.controller("member.been_address", ['app.serviceApi', '$scope', '$ionicPopup', '$filter', '$ionicScrollDelegate', function (api, $scope, $ionicPopup, $filter, $ionicScrollDelegate) {
 
         $scope.showMenu(false);
 
@@ -582,11 +582,13 @@ console.log($scope.marriageModel);
             if (action == 'add' && $scope.formData.userAddrIdList.indexOf(id) == -1) {
                 $scope.formData.userAddrIdList.push(id);
                 $scope.formData.userAddrList.push(name);
+                $scope.scrollSmallToBottom();
             }
             if (action == 'remove' && $scope.formData.userAddrIdList.indexOf(id) != -1) {
                 var idx = $scope.formData.userAddrIdList.indexOf(id);
                 $scope.formData.userAddrIdList.splice(idx, 1);
                 $scope.formData.userAddrList.splice(idx, 1);
+                $scope.scrollSmallToTop();
             }
         }
 
@@ -600,25 +602,35 @@ console.log($scope.marriageModel);
             return $scope.formData.userAddrIdList.indexOf(id) >= 0;
         }
 
+        // 横向滚动至底部
+        $scope.scrollSmallToBottom = function () {
+            $ionicScrollDelegate.$getByHandle('small').scrollBottom();
+        };
+
+        // 横向滚动至顶部
+        $scope.scrollSmallToTop = function () {
+            $ionicScrollDelegate.$getByHandle('small').scrollTop();
+        };
+
         // 关键字搜索
         $scope.search = function (value) {
             if (value == '' || typeof(value) == 'undefined') {
                 $scope.addrList = arr;
                 $scope.addrList = $filter('filter')($scope.addrList);
             } else {
-                $scope.addrList = $filter('filter')($scope.addrList, {name:value});
+                $scope.addrList = $filter('filter')($scope.addrList, {name: value});
             }
         }
 
         // 保存
-        $scope.saveData = function(){
-            if($scope.formData.userAddrIdList.length <= 0){
+        $scope.saveData = function () {
+            if ($scope.formData.userAddrIdList.length <= 0) {
                 if (confirm('检测到您还未选择去过的地方，确定放弃吗？')) {
                     window.location.hash = '/main/information';  //跳转
                 } else {
                     return false;
                 }
-            }else {
+            } else {
                 api.save(url, $scope.formData.userAddrIdList).success(function (res) {
                     // 保存
 
@@ -629,8 +641,8 @@ console.log($scope.marriageModel);
     }
     ]);
 
-    // 去过的地方
-    module.controller("member.want_address", ['app.serviceApi', '$scope', '$ionicPopup', '$filter', function (api, $scope, $ionicPopup, $filter) {
+    // 最近想去的地方
+    module.controller("member.want_address", ['app.serviceApi', '$scope', '$ionicPopup', '$filter', '$ionicScrollDelegate', function (api, $scope, $ionicPopup, $filter, $ionicScrollDelegate) {
 
         $scope.showMenu(false);
 
@@ -689,11 +701,13 @@ console.log($scope.marriageModel);
             if (action == 'add' && $scope.formData.userAddrIdList.indexOf(id) == -1) {
                 $scope.formData.userAddrIdList.push(id);
                 $scope.formData.userAddrList.push(name);
+                $scope.scrollSmallToBottom();
             }
             if (action == 'remove' && $scope.formData.userAddrIdList.indexOf(id) != -1) {
                 var idx = $scope.formData.userAddrIdList.indexOf(id);
                 $scope.formData.userAddrIdList.splice(idx, 1);
                 $scope.formData.userAddrList.splice(idx, 1);
+                $scope.scrollSmallToTop();
             }
         }
 
@@ -707,19 +721,29 @@ console.log($scope.marriageModel);
             return $scope.formData.userAddrIdList.indexOf(id) >= 0;
         }
 
+        // 横向滚动至底部
+        $scope.scrollSmallToBottom = function () {
+            $ionicScrollDelegate.$getByHandle('small').scrollBottom();
+        };
+
+        // 横向滚动至顶部
+        $scope.scrollSmallToTop = function () {
+            $ionicScrollDelegate.$getByHandle('small').scrollTop();
+        };
+
         // 关键字搜索
         $scope.search = function (value) {
             if (value == '' || typeof(value) == 'undefined') {
                 $scope.addrList = arr;
                 $scope.addrList = $filter('filter')($scope.addrList);
             } else {
-                $scope.addrList = $filter('filter')($scope.addrList, {name:value});
+                $scope.addrList = $filter('filter')($scope.addrList, {name: value});
             }
         }
         $scope.typeTab = 1;
 
         // 本地（重庆）
-        $scope.addrListOne =[
+        $scope.addrListOne = [
             {id: 1, name: '解放碑', hot: 1},
             {id: 2, name: '朝天门', hot: 1},
             {id: 3, name: '南山', hot: 1},
@@ -784,20 +808,100 @@ console.log($scope.marriageModel);
             {id: 8000015, name: '纽约', hot: 1}
         ];
 
-        $scope.showTab = function(tab){
+        $scope.showTab = function (tab) {
             $scope.typeTab = tab;
         }
 
         // 保存
-        $scope.saveData = function(){
-            if($scope.formData.userAddrIdList.length <= 0){
+        $scope.saveData = function () {
+            if ($scope.formData.userAddrIdList.length <= 0) {
                 if (confirm('检测到您还未选择去过的地方，确定放弃吗？')) {
                     window.location.hash = '/main/information';  //跳转
                 } else {
                     return false;
                 }
-            }else {
+            } else {
                 api.save(url, $scope.formData.userAddrIdList).success(function (res) {
+                    // 保存
+
+                })
+            }
+        }
+    }
+    ]);
+
+    // 喜欢的运动
+    module.controller("member.sports", ['app.serviceApi', '$scope', '$ionicPopup', '$ionicScrollDelegate', function (api, $scope, $ionicPopup, $ionicScrollDelegate) {
+
+        $scope.showMenu(false);
+
+        $scope.formData = [];
+
+        $scope.formData.userSportsIdList = [];
+        $scope.formData.userSportsList = [];
+
+        $scope.sportsList = [
+            {id: 1, name: '跑步'},
+            {id: 2, name: '游泳'},
+            {id: 3, name: '骑行'},
+            {id: 4, name: '登山'},
+            {id: 5, name: '兵乓球'},
+            {id: 6, name: '篮球'},
+            {id: 7, name: '足球'},
+            {id: 8, name: '羽毛球'},
+            {id: 9, name: '滑雪'},
+            {id: 10, name: '攀岩'},
+            {id: 11, name: '户外'},
+            {id: 12, name: '高尔夫'}
+        ];
+
+
+        var updateSelected = function (action, id, name) {
+            if (action == 'add' && $scope.formData.userSportsIdList.indexOf(id) == -1) {
+                $scope.formData.userSportsIdList.push(id);
+                $scope.formData.userSportsList.push(name);
+                $scope.scrollSmallToBottom();
+            }
+            if (action == 'remove' && $scope.formData.userSportsIdList.indexOf(id) != -1) {
+                var idx = $scope.formData.userSportsIdList.indexOf(id);
+                $scope.formData.userSportsIdList.splice(idx, 1);
+                $scope.formData.userSportsList.splice(idx, 1);
+                $scope.scrollSmallToTop();
+            }
+        }
+
+        $scope.updateSelection = function ($event, id) {
+            var checkbox = $event.target;
+            var action = (checkbox.checked ? 'add' : 'remove');
+            updateSelected(action, id, checkbox.name);
+        }
+
+        // 判断是否选中
+        $scope.isSelected = function (id) {
+            return $scope.formData.userSportsIdList.indexOf(id) >= 0;
+        }
+
+        // 横向滚动至底部
+        $scope.scrollSmallToBottom = function () {
+            $ionicScrollDelegate.$getByHandle('small').scrollBottom();
+        };
+
+        // 横向滚动至顶部
+        $scope.scrollSmallToTop = function () {
+            $ionicScrollDelegate.$getByHandle('small').scrollTop();
+        };
+
+
+        // 保存
+        $scope.saveData = function () {
+            if ($scope.formData.userSportsIdList.length <= 0) {
+                if (confirm('检测到您还未选择喜欢的运动，确定放弃吗？')) {
+                    window.location.hash = '/main/information';  //跳转
+                } else {
+                    return false;
+                }
+            } else {
+                api.save(url, $scope.formData.userSportsIdList).success(function (res) {
                     // 保存
 
                 })
@@ -807,6 +911,89 @@ console.log($scope.marriageModel);
     }
     ]);
 
+    // 喜欢的运动
+    module.controller("member.movie", ['app.serviceApi', '$scope', '$ionicPopup', '$ionicScrollDelegate', function (api, $scope, $ionicPopup, $ionicScrollDelegate) {
+
+        $scope.showMenu(false);
+
+        $scope.formData = [];
+
+        $scope.formData.userMovieIdList = [];
+        $scope.formData.userMovieList = [];
+
+        $scope.movieList = [
+            {id: 1, name: '美人鱼', img: '/wechat/web/images/test/movie1.jpg'},
+            {id: 2, name: '飞鹰艾迪', img: '/wechat/web/images/test/movie2.jpg'},
+            {id: 3, name: '喜乐长安', img: '/wechat/web/images/test/movie3.jpg'},
+            {id: 4, name: '恐怖将映', img: '/wechat/web/images/test/movie4.gif'},
+            {id: 5, name: '寻找心中的你', img: '/wechat/web/images/test/movie5.jpg'},
+            {id: 6, name: '半熟少女', img: '/wechat/web/images/test/movie6.jpg'},
+            {id: 7, name: '功夫熊猫', img: '/wechat/web/images/test/movie7.jpg'},
+            {id: 8, name: '谍影特工', img: '/wechat/web/images/test/movie8.jpg'},
+            {id: 9, name: '北京遇上西雅图之不二情书', img: '/wechat/web/images/test/movie3.jpg'},
+            {id: 10, name: '唐人街探案', img: '/wechat/web/images/test/movie7.jpg'},
+            {id: 11, name: '复仇者联盟2：奥创纪元', img: '/wechat/web/images/test/movie2.jpg'},
+            {id: 12, name: '灰姑娘', img: '/wechat/web/images/test/movie1.jpg'},
+            {id: 13, name: '西游记之大圣归来', img: '/wechat/web/images/test/movie5.jpg'},
+            {id: 14, name: '叶问3', img: '/wechat/web/images/test/movie6.jpg'},
+            {id: 15, name: '侏罗纪世界', img: '/wechat/web/images/test/movie8.jpg'}
+        ];
+
+
+        var updateSelected = function (action, id, name) {
+            if (action == 'add' && $scope.formData.userMovieIdList.indexOf(id) == -1) {
+                $scope.formData.userMovieIdList.push(id);
+                $scope.formData.userMovieList.push(name);
+                $scope.scrollSmallToBottom();
+            }
+            if (action == 'remove' && $scope.formData.userMovieIdList.indexOf(id) != -1) {
+                var idx = $scope.formData.userMovieIdList.indexOf(id);
+                $scope.formData.userMovieIdList.splice(idx, 1);
+                $scope.formData.userMovieList.splice(idx, 1);
+                $scope.scrollSmallToTop();
+            }
+        }
+
+        $scope.updateSelection = function ($event, id) {
+            var checkbox = $event.target;
+            var action = (checkbox.checked ? 'add' : 'remove');
+            updateSelected(action, id, checkbox.name);
+        }
+
+        // 判断是否选中
+        $scope.isSelected = function (id) {
+            return $scope.formData.userMovieIdList.indexOf(id) >= 0;
+        }
+
+        // 横向滚动至底部
+        $scope.scrollSmallToBottom = function () {
+            $ionicScrollDelegate.$getByHandle('small').scrollBottom();
+        };
+
+        // 横向滚动至顶部
+        $scope.scrollSmallToTop = function () {
+            $ionicScrollDelegate.$getByHandle('small').scrollTop();
+        };
+
+
+        // 保存
+        $scope.saveData = function () {
+            if ($scope.formData.userMovieIdList.length <= 0) {
+                if (confirm('检测到您还未选择喜欢的运动，确定放弃吗？')) {
+                    window.location.hash = '/main/information';  //跳转
+                } else {
+                    return false;
+                }
+            } else {
+                api.save(url, $scope.formData.userMovieIdList).success(function (res) {
+                    // 保存
+
+                })
+            }
+        }
+
+    }
+    ]);
     return module;
 })
 

@@ -42,7 +42,7 @@
         </li>
         <li class="member" ng-click="switchMenu('/member_index')">
             <a ui-sref="member" class="page">
-                <i class="fs24" ng-class="{true:'icon-bhy-user-online cor21',false:'icon-bhy-user-outline'}[menu=='/member_index']" ></i>
+                <i class="fs24" ng-class="{true:'bhy-icon-user-online cor21',false:'bhy-icon-user-outline'}[menu=='/member_index']" ></i>
                 <p class="fs11" ng-class="{true:'cor21',false:''}[menu=='/member_index']">我</p>
             </a>
         </li>
