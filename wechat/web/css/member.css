@@ -304,6 +304,9 @@
 .hob_addr_flag {
   background-color: #61cffd;
 }
+.hob_delicacy_flag {
+  background-color: #61cffd;
+}
 .hob_addr_flag,
 .hob_food_flag,
 .hob_sport_flag {
@@ -332,7 +335,7 @@
 }
 .hob_movie {
   padding-left: 15px;
-  width: 105%;
+  width: 101%;
 }
 .hob_movie dl {
   margin-bottom: 0;
@@ -470,6 +473,13 @@
   color: #feb44b;
   background-color: #fff;
 }
-.sports .item .hob_sport_flag {
+.sports .item .hob_sport_flag,
+.delicacy .item .hob_food_flag {
   float: none;
+}
+/* mate */
+.mateText {
+  resize: none;
+  width: 100%;
+  min-height: 100px;
 }

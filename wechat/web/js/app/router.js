@@ -56,7 +56,7 @@ define(["app/module", 'app/service/serviceApi'],
                             }
                         }
                     })
-                    .state('main.member_information', {
+                    .state('main.member_information', {   // 资料
                         url: "/information",
                         views: {
                             'member-tab': {
@@ -64,7 +64,7 @@ define(["app/module", 'app/service/serviceApi'],
                             }
                         }
                     })
-                    .state('main.member_dynamic', {
+                    .state('main.member_dynamic', {   // 个人动态
                         url: "/dynamic",
                         views: {
                             'member-tab': {
@@ -72,7 +72,7 @@ define(["app/module", 'app/service/serviceApi'],
                             }
                         }
                     })
-                    .state('main.member_signature', {
+                    .state('main.member_signature', {  //  个性签名
                         url: "/signature",
                         views: {
                             'member-tab': {
@@ -81,7 +81,7 @@ define(["app/module", 'app/service/serviceApi'],
                             }
                         }
                     })
-                    .state('main.member_real_name', {
+                    .state('main.member_real_name', {   //  真实姓名
                         url: "/real_name",
                         views: {
                             'member-tab': {
@@ -90,7 +90,7 @@ define(["app/module", 'app/service/serviceApi'],
                             }
                         }
                     })
-                    .state('main.member_age', {
+                    .state('main.member_age', {    //  年龄
                         url: "/age",
                         views: {
                             'member-tab': {
@@ -99,7 +99,7 @@ define(["app/module", 'app/service/serviceApi'],
                             }
                         }
                     })
-                    .state('main.member_height', {
+                    .state('main.member_height', {      // 身高
                         url: "/height",
                         views: {
                             'member-tab': {
@@ -108,7 +108,7 @@ define(["app/module", 'app/service/serviceApi'],
                             }
                         }
                     })
-                    .state('main.member_is_marriage', {
+                    .state('main.member_is_marriage', {    // 婚姻状况
                         url: "/is_marriage",
                         views: {
                             'member-tab': {
@@ -117,7 +117,7 @@ define(["app/module", 'app/service/serviceApi'],
                             }
                         }
                     })
-                    .state('main.member_education', {
+                    .state('main.member_education', {    // 学历
                         url: "/education",
                         views: {
                             'member-tab': {
@@ -126,7 +126,7 @@ define(["app/module", 'app/service/serviceApi'],
                             }
                         }
                     })
-                    .state('main.member_occupation', {
+                    .state('main.member_occupation', {   // 职业
                         url: "/occupation",
                         views: {
                             'member-tab': {
@@ -135,7 +135,7 @@ define(["app/module", 'app/service/serviceApi'],
                             }
                         }
                     })
-                    .state('main.member_address', {
+                    .state('main.member_address', {    // 地区
                         url: "/address",
                         views: {
                             'member-tab': {
@@ -144,7 +144,7 @@ define(["app/module", 'app/service/serviceApi'],
                             }
                         }
                     })
-                    .state('main.member_haunt_address', {
+                    .state('main.member_haunt_address', {   // 常出没地
                         url: "/haunt_address",
                         views: {
                             'member-tab': {
@@ -153,7 +153,7 @@ define(["app/module", 'app/service/serviceApi'],
                             }
                         }
                     })
-                    .state('main.member_wechat_number', {
+                    .state('main.member_wechat_number', {   // 微信号
                         url: "/wechat_number",
                         views: {
                             'member-tab': {
@@ -162,7 +162,7 @@ define(["app/module", 'app/service/serviceApi'],
                             }
                         }
                     })
-                    .state('main.member_qq_number', {
+                    .state('main.member_qq_number', {    //  QQ号
                         url: "/qq_number",
                         views: {
                             'member-tab': {
@@ -171,7 +171,7 @@ define(["app/module", 'app/service/serviceApi'],
                             }
                         }
                     })
-                    .state('main.member_been_address', {
+                    .state('main.member_been_address', {   // 去过的地方
                         url: "/been_address",
                         views: {
                             'member-tab': {
@@ -180,7 +180,7 @@ define(["app/module", 'app/service/serviceApi'],
                             }
                         }
                     })
-                    .state('main.member_want_address', {
+                    .state('main.member_want_address', {   // 想去的地方
                         url: "/want_address",
                         views: {
                             'member-tab': {
@@ -189,7 +189,7 @@ define(["app/module", 'app/service/serviceApi'],
                             }
                         }
                     })
-                    .state('main.member_sports', {
+                    .state('main.member_sports', {   // 喜欢的运动
                         url: "/sports",
                         views: {
                             'member-tab': {
@@ -198,12 +198,102 @@ define(["app/module", 'app/service/serviceApi'],
                             }
                         }
                     })
-                    .state('main.member_movie', {
+                    .state('main.member_movie', {  // 喜欢的电影
                         url: "/movie",
                         views: {
                             'member-tab': {
                                 templateUrl: "/wechat/views/member/movie.html",
                                 controller:'member.movie'
+                            }
+                        }
+                    })
+                    .state('main.member_delicacy', {   // 喜欢的美食
+                        url: "/delicacy",
+                        views: {
+                            'member-tab': {
+                                templateUrl: "/wechat/views/member/delicacy.html",
+                                controller:'member.delicacy'
+                            }
+                        }
+                    })
+                    .state('main.member_mate', {  // 未来伴侣的期望
+                        url: "/mate",
+                        views: {
+                            'member-tab': {
+                                templateUrl: "/wechat/views/member/mate.html",
+                                controller:'member.mate'
+                            }
+                        }
+                    })
+                    .state('main.member_children', {  // 子女状况
+                        url: "/children",
+                        views: {
+                            'member-tab': {
+                                templateUrl: "/wechat/views/member/children.html",
+                                controller:'member.children'
+                            }
+                        }
+                    })
+                    .state('main.member_nation', {  // 民族
+                        url: "/nation",
+                        views: {
+                            'member-tab': {
+                                templateUrl: "/wechat/views/member/nation.html",
+                                controller:'member.nation'
+                            }
+                        }
+                    })
+                    .state('main.member_work', {  // 工作单位
+                        url: "/work",
+                        views: {
+                            'member-tab': {
+                                templateUrl: "/wechat/views/member/work.html",
+                                controller:'member.work'
+                            }
+                        }
+                    })
+                    .state('main.member_salary', {  // 年收入
+                        url: "/salary",
+                        views: {
+                            'member-tab': {
+                                templateUrl: "/wechat/views/member/salary.html",
+                                controller:'member.salary'
+                            }
+                        }
+                    })
+                    .state('main.member_house', {  // 购房情况
+                        url: "/house",
+                        views: {
+                            'member-tab': {
+                                templateUrl: "/wechat/views/member/house.html",
+                                controller:'member.house'
+                            }
+                        }
+                    })
+                    .state('main.member_car', {  // 购车情况
+                        url: "/car",
+                        views: {
+                            'member-tab': {
+                                templateUrl: "/wechat/views/member/car.html",
+                                controller:'member.car'
+                            }
+                        }
+                    })
+                    .state('main.member_blood', {  // 血型
+                        url: "/blood",
+                        views: {
+                            'member-tab': {
+                                templateUrl: "/wechat/views/member/blood.html",
+                                controller:'member.blood'
+                            }
+                        }
+                    })
+                    .state('main.member_school', {  // 毕业院校
+                        url: "/school",
+                        views: {
+                            'member-tab': {
+                                templateUrl: "/wechat/views/member/school.html",
+                                controller:'member.school'
                             }
                         }
                     })

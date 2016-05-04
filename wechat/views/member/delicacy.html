@@ -1,0 +1,38 @@
+<ion-view>
+    <link href="/wechat/web/css/member.css" rel="stylesheet">
+    <link href="/wechat/web/css/plugin/bootstrap/css/font-awesome.min.css" rel="stylesheet">
+    <ion-header-bar class="com_w_100 bhy">
+        <button class="button button-icon icon ion-arrow-left-c" ui-sref="main.member_information"
+                ng-click="showMenu(false)"></button>
+        <title class="title">喜欢的美食</title>
+        <button class="button button-icon cor21" ng-click="saveData()">保存</button>
+    </ion-header-bar>
+    <ion-content class="bhy com_w_100 m_bg delicacy">
+        <ion-list>
+            <ion-item class="bhy_item_b mt10 mb10">
+                <ion-scroll delegate-handle="small" zooming="false" direction="x" scrollbar-x="false" scrollbar-y="false"
+                            class="addr_top_box" style="width: 100%; max-width: 100%;">
+                   <span class="hob_food_flag" ng-repeat="userDelicacy in formData.userDelicacyList" >
+                        <i class="icon-food fs12"></i>
+                        <span class="hob_sport_name">{{userDelicacy}}</span>
+                    </span>
+                </ion-scroll>
+                <p class="mt5 pb10 cor4" ng-if="!formData.userDelicacyList.length">请在下方选择您喜欢的美食</p>
+            </ion-item>
+            <p class="pl16 cor20">
+                热门推荐
+            </p>
+            <ion-item class="item-checkbox" ng-repeat="delicacy in delicacyList">
+                <label class="checkbox checkbox-balanced">
+                    <input type="checkbox" id="{{delicacy.id}}" name="{{delicacy.name}}" ng-checked="isSelected({{delicacy.id}})"
+                           ng-click="updateSelection($event,{{delicacy.id}})">
+                </label>
+                <i class="icon-food cor32 fs14"></i>
+                {{delicacy.name}}
+            </ion-item>
+            <ion-item ng-if="!delicacyList.length">
+                <p class="tac">暂无相关数据</p>
+            </ion-item>
+        </ion-list>
+    </ion-content>
+</ion-view>
