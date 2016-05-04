@@ -28,9 +28,9 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
     // 资料首页
     module.controller("member.information", ['app.serviceApi', '$scope', '$ionicPopup', function (api, $scope, $ionicPopup) {
         $scope.showMenu(false);
-        $scope.userInfo = ar.getStorage('userInfo');
-        $scope.userInfo.info = JSON.parse($scope.userInfo.info);
-        $scope.userInfo.identity_pic = JSON.parse($scope.userInfo.identity_pic);
+        //$scope.userInfo = ar.getStorage('userInfo');
+        //$scope.userInfo.info = JSON.parse($scope.userInfo.info);
+        //$scope.userInfo.identity_pic = JSON.parse($scope.userInfo.identity_pic);
         $scope.imgList =
             [
                 {'id': 0, 'url': '/wechat/web/images/test/5.jpg', 'headpic': 1},
@@ -588,9 +588,203 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
         $scope.search = function (value) {
             if (value == '' || typeof(value) == 'undefined') {
                 $scope.addrList = arr;
-                $scope.addrList = $filter('filter')($scope.addrList, {hot: 1});
+                $scope.addrList = $filter('filter')($scope.addrList);
             } else {
-                $scope.addrList = $filter('filter')($scope.addrList, {name:value,hot:1||0});
+                $scope.addrList = $filter('filter')($scope.addrList, {name:value});
+            }
+        }
+
+        // 保存
+        $scope.saveData = function(){
+            if($scope.formData.userAddrIdList.length <= 0){
+                if (confirm('检测到您还未选择去过的地方，确定放弃吗？')) {
+                    window.location.hash = '/main/information';  //跳转
+                } else {
+                    return false;
+                }
+            }else {
+                api.save(url, $scope.formData.userAddrIdList).success(function (res) {
+                    // 保存
+
+                })
+            }
+        }
+
+    }
+    ]);
+
+    // 去过的地方
+    module.controller("member.want_address", ['app.serviceApi', '$scope', '$ionicPopup', '$filter', function (api, $scope, $ionicPopup, $filter) {
+
+        $scope.showMenu(false);
+
+        $scope.formData = [];
+
+        $scope.formData.userAddrIdList = [];  // 用户已选择的地区，ID数据集，存数据库
+        $scope.formData.userAddrList = [];    // 用户已选择的地区，name数据集，展示用
+
+        $scope.addrList = [
+            {id: 0, name: '解放碑', hot: 1},
+            {id: 1, name: '朝天门', hot: 1},
+            {id: 2, name: '南山', hot: 1},
+            {id: 3, name: '歌乐山', hot: 1},
+            {id: 4, name: '仙女山', hot: 1},
+            {id: 5, name: '武隆', hot: 1},
+            {id: 6, name: '云阳龙缸', hot: 1},
+            {id: 7, name: '金佛山', hot: 1},
+            {id: 8, name: '桃花源', hot: 1},
+            {id: 9, name: '黑山谷', hot: 1},
+            {id: 10, name: '大足石刻', hot: 1},
+            {id: 11, name: '金刀峡', hot: 0},
+            {id: 12, name: '洋人街', hot: 0},
+            {id: 13, name: '四面山', hot: 0},
+            {id: 14, name: '缙云山', hot: 0},
+            {id: 15, name: '小三峡', hot: 0},
+            {id: 16, name: '桂园', hot: 0},
+            {id: 17, name: '渣滓洞', hot: 0},
+            {id: 18, name: '白公馆', hot: 0},
+            {id: 19, name: '洪崖洞', hot: 0},
+            {id: 20, name: '茶山竹海', hot: 0}
+        ];
+        var arr = [
+            {id: 0, name: '北京', hot: 1},
+            {id: 1, name: '上海', hot: 1},
+            {id: 2, name: '张家界', hot: 1},
+            {id: 3, name: '九寨沟', hot: 1},
+            {id: 4, name: '马尔代夫', hot: 1},
+            {id: 5, name: '三亚', hot: 1},
+            {id: 6, name: '鼓浪屿', hot: 1},
+            {id: 7, name: '丽江', hot: 1},
+            {id: 8, name: '西双版纳', hot: 1},
+            {id: 9, name: '西藏', hot: 1},
+            {id: 10, name: '重庆', hot: 1},
+            {id: 11, name: '黄山', hot: 0},
+            {id: 12, name: '峨眉山', hot: 0},
+            {id: 13, name: '拉斯维加斯', hot: 0},
+            {id: 14, name: '纽约', hot: 0},
+            {id: 15, name: '巴黎', hot: 0},
+            {id: 16, name: '三峡', hot: 0},
+            {id: 17, name: '埃及', hot: 0},
+            {id: 18, name: '澳大利亚', hot: 0},
+            {id: 19, name: '巴厘岛', hot: 0},
+            {id: 20, name: '威尼斯', hot: 0}
+        ];
+        var updateSelected = function (action, id, name) {
+            if (action == 'add' && $scope.formData.userAddrIdList.indexOf(id) == -1) {
+                $scope.formData.userAddrIdList.push(id);
+                $scope.formData.userAddrList.push(name);
+            }
+            if (action == 'remove' && $scope.formData.userAddrIdList.indexOf(id) != -1) {
+                var idx = $scope.formData.userAddrIdList.indexOf(id);
+                $scope.formData.userAddrIdList.splice(idx, 1);
+                $scope.formData.userAddrList.splice(idx, 1);
+            }
+        }
+
+        $scope.updateSelection = function ($event, id) {
+            var checkbox = $event.target;
+            var action = (checkbox.checked ? 'add' : 'remove');
+            updateSelected(action, id, checkbox.name);
+        }
+
+        $scope.isSelected = function (id) {
+            return $scope.formData.userAddrIdList.indexOf(id) >= 0;
+        }
+
+        // 关键字搜索
+        $scope.search = function (value) {
+            if (value == '' || typeof(value) == 'undefined') {
+                $scope.addrList = arr;
+                $scope.addrList = $filter('filter')($scope.addrList);
+            } else {
+                $scope.addrList = $filter('filter')($scope.addrList, {name:value});
+            }
+        }
+        $scope.typeTab = 1;
+
+        // 本地（重庆）
+        $scope.addrListOne =[
+            {id: 1, name: '解放碑', hot: 1},
+            {id: 2, name: '朝天门', hot: 1},
+            {id: 3, name: '南山', hot: 1},
+            {id: 4, name: '歌乐山', hot: 1},
+            {id: 5, name: '仙女山', hot: 1},
+            {id: 6, name: '武隆', hot: 1},
+            {id: 7, name: '云阳龙缸', hot: 1},
+            {id: 8, name: '金佛山', hot: 1},
+            {id: 9, name: '桃花源', hot: 1},
+            {id: 10, name: '黑山谷', hot: 1},
+            {id: 11, name: '大足石刻', hot: 1},
+            {id: 12, name: '金刀峡', hot: 0},
+            {id: 13, name: '洋人街', hot: 0},
+            {id: 14, name: '四面山', hot: 0},
+            {id: 15, name: '缙云山', hot: 0},
+            {id: 16, name: '小三峡', hot: 0},
+            {id: 17, name: '桂园', hot: 0},
+            {id: 18, name: '渣滓洞', hot: 0},
+            {id: 19, name: '白公馆', hot: 0},
+            {id: 20, name: '洪崖洞', hot: 0},
+            {id: 21, name: '茶山竹海', hot: 0}
+        ];
+
+        // 省外
+        $scope.addrListTwo = [
+            {id: 1000001, name: '北京', hot: 1},
+            {id: 1000002, name: '西藏', hot: 1},
+            {id: 1000003, name: '拉萨', hot: 1},
+            {id: 1000004, name: '张家界', hot: 1},
+            {id: 1000005, name: '九寨沟', hot: 1},
+            {id: 1000006, name: '神农架', hot: 1},
+            {id: 1000007, name: '成都', hot: 1},
+            {id: 1000008, name: '趵突泉', hot: 1},
+            {id: 1000009, name: '鼓浪屿', hot: 1},
+            {id: 1000010, name: '三亚', hot: 1},
+            {id: 1000011, name: '青岛', hot: 0},
+            {id: 1000012, name: '新疆', hot: 0},
+            {id: 1000013, name: '华山', hot: 0},
+            {id: 1000014, name: '黄山', hot: 0},
+            {id: 1000015, name: '凤凰古镇', hot: 0},
+            {id: 1000016, name: '千岛湖', hot: 0},
+            {id: 1000017, name: '泰山', hot: 0},
+            {id: 1000018, name: '上海', hot: 1}
+        ];
+
+        // 国外
+        $scope.addrListThree = [
+            {id: 8000001, name: '巴黎', hot: 1},
+            {id: 8000002, name: '威尼斯', hot: 1},
+            {id: 8000003, name: '东京', hot: 1},
+            {id: 8000004, name: '首尔', hot: 1},
+            {id: 8000005, name: '曼谷', hot: 1},
+            {id: 8000006, name: '拉斯维加斯', hot: 1},
+            {id: 8000007, name: '冰岛', hot: 1},
+            {id: 8000008, name: '喜马拉雅山', hot: 1},
+            {id: 8000009, name: '珠穆朗玛峰', hot: 1},
+            {id: 8000010, name: '马尔代夫', hot: 1},
+            {id: 8000011, name: '普吉岛', hot: 0},
+            {id: 8000012, name: '巴厘岛', hot: 0},
+            {id: 8000013, name: '新加坡', hot: 0},
+            {id: 8000014, name: '济州岛', hot: 0},
+            {id: 8000015, name: '纽约', hot: 1}
+        ];
+
+        $scope.showTab = function(tab){
+            $scope.typeTab = tab;
+        }
+
+        // 保存
+        $scope.saveData = function(){
+            if($scope.formData.userAddrIdList.length <= 0){
+                if (confirm('检测到您还未选择去过的地方，确定放弃吗？')) {
+                    window.location.hash = '/main/information';  //跳转
+                } else {
+                    return false;
+                }
+            }else {
+                api.save(url, $scope.formData.userAddrIdList).success(function (res) {
+                    // 保存
+
+                })
             }
         }
 

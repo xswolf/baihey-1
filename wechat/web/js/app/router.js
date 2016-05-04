@@ -180,6 +180,15 @@ define(["app/module", 'app/service/serviceApi'],
                             }
                         }
                     })
+                    .state('main.member_want_address', {
+                        url: "/want_address",
+                        views: {
+                            'member-tab': {
+                                templateUrl: "/wechat/views/member/want_address.html",
+                                controller:'member.want_address'
+                            }
+                        }
+                    })
                     .state('main.message', {  // 消息首页
                         cache: false,
                         url: "/message",

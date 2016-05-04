@@ -1,0 +1,60 @@
+<ion-view>
+    <link href="/wechat/web/css/member.css" rel="stylesheet">
+    <ion-header-bar class="com_w_100 bhy">
+        <button class="button button-icon icon ion-arrow-left-c" ui-sref="main.member_information"
+                ng-click="showMenu(false)"></button>
+        <title class="title">最近想去的地方</title>
+        <button class="button button-icon cor21" ng-click="saveData()">保存</button>
+    </ion-header-bar>
+    <ion-content class="bhy com_w_100 m_bg">
+        <ion-list>
+            <ion-item class="bhy_item_b mt10 mb10">
+                <ion-scroll zooming="false" direction="x" scrollbar-x="false" scrollbar-y="false"
+                            class="addr_top_box fl">
+                   <span class="hob_addr_flag" ng-repeat="userAddr in formData.userAddrList" >
+                        <i class="ion-location hob_addr_icon"></i>
+                        <span class="hob_addr_name">{{userAddr}}</span>
+                    </span>
+                </ion-scroll>
+                <p class="addr_top_search">
+                    <input type="text" ng-model="formData.searchAddr" placeholder="搜索国家/城市" class="addr_top_searchInput" ng-change="search(this.formData.searchAddr)">
+                </p>
+            </ion-item>
+            <div class="pl16 cor20 clearfix hr_30">
+                <span class="fl">热门推荐</span>
+                <span class="fr addr_type_tab">
+                    <span ng-class="{1:'cur'}[typeTab]" ng-click="showTab(1)">重庆</span>
+                    <span ng-class="{2:'cur'}[typeTab]" ng-click="showTab(2)">省外</span>
+                    <span ng-class="{3:'cur'}[typeTab]" ng-click="showTab(3)">国外</span>
+                </span>
+            </div>
+            <ion-item class="item-checkbox" ng-if="typeTab==1" ng-repeat="addro in addrListOne track by addro.id">
+                <label class="checkbox">
+                    <input type="checkbox" id="{{addro.id}}" name="{{addro.name}}" ng-checked="isSelected({{addro.id}})"
+                           ng-click="updateSelection($event,{{addro.id}})">
+                </label>
+                <i class="icon ion-location fs16 cor26"></i>
+                {{addro.name}}
+            </ion-item>
+            <ion-item class="item-checkbox" ng-if="typeTab==2" ng-repeat="addrt in addrListTwo track by addrt.id">
+                <label class="checkbox">
+                    <input type="checkbox" id="{{addrt.id}}" name="{{addrt.name}}" ng-checked="isSelected({{addrt.id}})"
+                           ng-click="updateSelection($event,{{addrt.id}})">
+                </label>
+                <i class="icon ion-location fs16 cor26"></i>
+                {{addrt.name}}
+            </ion-item>
+            <ion-item class="item-checkbox" ng-if="typeTab==3" ng-repeat="addrthr in addrListThree track by addrthr.id">
+                <label class="checkbox">
+                    <input type="checkbox" id="{{addrthr.id}}" name="{{addrthr.name}}" ng-checked="isSelected({{addrthr.id}})"
+                           ng-click="updateSelection($event,{{addrthr.id}})">
+                </label>
+                <i class="icon ion-location fs16 cor26"></i>
+                {{addrthr.name}}
+            </ion-item>
+            <ion-item ng-if="!addrListOne.length || !addrListTwo.length || !addrListThree.length">
+                <p class="tac">暂无相关数据</p>
+            </ion-item>
+        </ion-list>
+    </ion-content>
+</ion-view>

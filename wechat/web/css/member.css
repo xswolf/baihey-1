@@ -447,3 +447,17 @@
   width: 100%;
   text-overflow: ellipsis;
 }
+.addr_type_tab span {
+  display: block;
+  float: left;
+  height: 34px;
+  line-height: 34px;
+  margin: -5px 0 0;
+  padding: 0 15px;
+  text-align: center;
+  cursor: pointer;
+}
+.addr_type_tab span.cur {
+  color: #4ec1ff;
+  background-color: #fff;
+}
