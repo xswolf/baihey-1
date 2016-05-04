@@ -28,9 +28,9 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
     // 资料首页
     module.controller("member.information", ['app.serviceApi', '$scope', '$ionicPopup', function (api, $scope, $ionicPopup) {
         $scope.showMenu(false);
-        //$scope.userInfo = ar.getStorage('userInfo');
-        //$scope.userInfo.info = JSON.parse($scope.userInfo.info);
-        //$scope.userInfo.identity_pic = JSON.parse($scope.userInfo.identity_pic);
+        $scope.userInfo = ar.getStorage('userInfo');
+        $scope.userInfo.info = JSON.parse($scope.userInfo.info);
+        $scope.userInfo.identity_pic = JSON.parse($scope.userInfo.identity_pic);
         $scope.imgList =
             [
                 {'id': 0, 'url': '/wechat/web/images/test/5.jpg', 'headpic': 1},
@@ -261,26 +261,33 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
     module.controller("member.is_marriage", ['app.serviceApi', '$scope', '$ionicPopup', function (api, $scope, $ionicPopup) {
 
         $scope.showMenu(false);
+        $scope.userInfo = ar.getStorage('userInfo');
+        $scope.userInfo.info = JSON.parse($scope.userInfo.info);
 
-        $scope.marriage = "";
+        $scope.formData = [];
+        $scope.formData.is_marriage = $scope.userInfo.info.is_marriage;
 
         $scope.marriageModel = config_infoData.marriage;
-
+console.log($scope.marriageModel);
         $scope.marriageSelect = function (val) {
-            $scope.marriage = val;
+            console.log(val);
+            $scope.formData.is_marriage = val;
         }
 
         $scope.saveData = function () {
 
-            if ($scope.marriage == '' || typeof($scope.marriage) == 'undefined') {
+            if ($scope.formData.is_marriage == '' || typeof($scope.formData.is_marriage) == 'undefined') {
                 if (confirm('检测到您还未选择婚姻状况，确定放弃吗？')) {
                     window.location.hash = '/main/information';  //跳转
                 } else {
                     return false;
                 }
             } else {
-                api.save(url, $scope.marriage).success(function (res) {
+                api.save('/wap/member/save-data', $scope.formData).success(function (res) {
                     // 保存
+                    $scope.userInfo.info.is_marriage = $scope.formData.is_marriage;
+                    $scope.userInfo.info = JSON.stringify($scope.userInfo.info);
+                    ar.setStorage('userInfo', $scope.userInfo);
                 })
             }
 

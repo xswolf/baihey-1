@@ -3,6 +3,7 @@
  */
 var config_infoData = {
     'height': config_heightLink(140),
+
     'marriage': [{
         id: 1,
         name: '未婚'
@@ -13,6 +14,7 @@ var config_infoData = {
         id: 3,
         name: '丧偶'
     }],
+
     'education': [{
         id: 1,
         name: '初中'
@@ -32,6 +34,21 @@ var config_infoData = {
         id: 6,
         name: '博士及以上'
     }],
+
+    'child': [{
+        id: 1,
+        name: '无小孩'
+    }, {
+        id: 2,
+        name: '有小孩跟自己'
+    }, {
+        id: 3,
+        name: '有小孩跟对方'
+    }, {
+        id: 4,
+        name: '有小孩已独立'
+    }],
+
     'occupation': [
         {
             id: 1,

@@ -33,17 +33,11 @@ define(['app/module'], function (module) {
     // 返回婚姻状况
     module.filter('marriage', function () {
         return function (input, arr) {
-            switch(input) {
-                case 1:
-                    return '未婚';break;
-                case 2:
-                    return '离异';break;
-                case 3:
-                    return '丧偶';break;
-                case 4:
-                    return '已婚';break;
-                default :
-                    return '未知';
+            var infoData = config_infoData.marriage;
+            for(var i in infoData) {
+                if(infoData[i].id == parseInt(input)) {
+                    return infoData[i].name;
+                }
             }
         }
     });
@@ -51,27 +45,11 @@ define(['app/module'], function (module) {
     // 返回学历
     module.filter('education', function () {
         return function (input, arr) {
-            switch(input) {
-                case 1:
-                    return '高中以下';break;
-                case 2:
-                    return '高中/中专';break;
-                case 3:
-                    return '大专';break;
-                case 4:
-                    return '本科';break;
-                case 5:
-                    return '双学士';break;
-                case 6:
-                    return '硕士';break;
-                case 7:
-                    return '硕士研究生';break;
-                case 8:
-                    return '博士';break;
-                case 9:
-                    return '博士后';break;
-                default :
-                    return '未知';
+            var infoData = config_infoData.education;
+            for(var i in infoData) {
+                if(infoData[i].id == parseInt(input)) {
+                    return infoData[i].name;
+                }
             }
         }
     });
@@ -79,17 +57,11 @@ define(['app/module'], function (module) {
     // 返回子女状态
     module.filter('child', function () {
         return function (input, arr) {
-            switch(input) {
-                case 1:
-                    return '无小孩';break;
-                case 2:
-                    return '有小孩跟自己';break;
-                case 3:
-                    return '有小孩跟对方';break;
-                case 4:
-                    return '有小孩已独立';break;
-                default :
-                    return '未知';
+            var infoData = config_infoData.child;
+            for(var i in infoData) {
+                if(infoData[i].id == parseInt(input)) {
+                    return infoData[i].name;
+                }
             }
         }
     });
@@ -97,7 +69,7 @@ define(['app/module'], function (module) {
     // 返回年薪
     module.filter('yearIncome', function () {
         return function (input, arr) {
-            switch(input) {
+            switch(parseInt(input)) {
                 case 1:
                     return '1万以下';break;
                 case 2:
@@ -129,7 +101,7 @@ define(['app/module'], function (module) {
     // 返回购房状态
     module.filter('purchase', function () {
         return function (input, arr) {
-            switch(input) {
+            switch(parseInt(input)) {
                 case 1:
                     return '有房';break;
                 case 2:
@@ -143,7 +115,7 @@ define(['app/module'], function (module) {
     // 返回购车状态
     module.filter('car', function () {
         return function (input, arr) {
-            switch(input) {
+            switch(parseInt(input)) {
                 case 1:
                     return '有车';break;
                 case 2:
@@ -159,7 +131,7 @@ define(['app/module'], function (module) {
     // 返回职业
     module.filter('occupation', function () {
         return function (input, arr) {
-            switch(input) {
+            switch(parseInt(input)) {
                 case 1:
                     return '学生';break;
                 case 2:
