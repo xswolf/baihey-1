@@ -155,14 +155,25 @@
                     <p>{{userInfo.info.is_marriage | marriage}}</p>
                 </div>
             </ion-item>
-            <ion-item ui-sref="main.member_education">
+            <ion-item ng-if="userInfo.info.education == '未知'" ui-sref="main.member_education">
+                <div class="info_l">
+                    <p>学历</p>
+                </div>
+                <div class="info_c">
+                    <p><span class="cor21">立即填写</span></p>
+                </div>
+                <div class="info_r">
+                    <i class="ionc ion-ios-arrow-right"></i>
+                </div>
+            </ion-item>
+            <ion-item ng-if="userInfo.info.education != '未知'">
                 <div class="info_l">
                     <p>学历</p>
                 </div>
                 <div class="info_c">
                     <p>
-                        <!--<i class="icon ion-university positive fs16 mr5 vam"></i>-->
-                        本科
+                        <i class="icon ion-university positive fs16 mr5 vam"></i>
+                        {{userInfo.info.education | education}}
                     </p>
                 </div>
                 <div class="info_r">

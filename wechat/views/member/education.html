@@ -17,7 +17,7 @@
                     <div class="input-label">
                         学历
                     </div>
-                    <select ng-model="education" ng-change="educationSelect(this.education)">
+                    <select ng-model="formData.education" ng-change="educationSelect(this.formData.education)">
                         <option value="">请选择</option>
                         <option value="{{e.id}}" ng-repeat="e in educationModel">{{e.name}}</option>
                     </select>

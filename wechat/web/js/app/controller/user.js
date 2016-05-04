@@ -121,7 +121,7 @@ define(['app/module', 'app/directive/directiveApi'
                 if (data.status == 1) {
                     // 存储userInfo
                     ar.setStorage('userInfo',data.data);
-                    window.location.href = '/wap/site/index';
+                    window.location.href = '/wap/site/main#/main/index';
                 } else if(data.status == 2) {
                     $ionicPopup.alert({title: '验证码错误'});
                 } else {
@@ -150,9 +150,7 @@ define(['app/module', 'app/directive/directiveApi'
             $scope.User.winHeight = {
                 'height': document.documentElement.clientHeight + 'px'
             }
-
         }
-
 
         $scope.User.login = function () {
 
@@ -185,11 +183,8 @@ define(['app/module', 'app/directive/directiveApi'
                 $ionicPopup.alert({title: '请输入您的密码'});
                 return false;
             }
-
             return true;
         }
-
-
     }])
 
     //找回密码

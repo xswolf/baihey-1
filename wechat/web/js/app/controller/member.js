@@ -153,6 +153,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
                     // 保存
                     $scope.userInfo.personalized = $scope.formData.personalized;
                     ar.setStorage('userInfo', $scope.userInfo);
+                    window.location.hash = '/main/information';
                 })
             }
 
@@ -183,6 +184,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
                     $scope.userInfo.info.real_name = $scope.formData.real_name;
                     $scope.userInfo.info = JSON.stringify($scope.userInfo.info);
                     ar.setStorage('userInfo', $scope.userInfo);
+                    window.location.hash = '/main/information';
                 })
             }
         }
@@ -249,6 +251,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
                     $scope.userInfo.info.height = $scope.formData.height;
                     $scope.userInfo.info = JSON.stringify($scope.userInfo.info);
                     ar.setStorage('userInfo', $scope.userInfo);
+                    window.location.hash = '/main/information';
                 })
             }
 
@@ -268,9 +271,8 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
         $scope.formData.is_marriage = $scope.userInfo.info.is_marriage;
 
         $scope.marriageModel = config_infoData.marriage;
-        console.log($scope.marriageModel);
+
         $scope.marriageSelect = function (val) {
-            console.log(val);
             $scope.formData.is_marriage = val;
         }
 
@@ -288,6 +290,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
                     $scope.userInfo.info.is_marriage = $scope.formData.is_marriage;
                     $scope.userInfo.info = JSON.stringify($scope.userInfo.info);
                     ar.setStorage('userInfo', $scope.userInfo);
+                    window.location.hash = '/main/information';
                 })
             }
 
@@ -300,26 +303,33 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
     module.controller("member.education", ['app.serviceApi', '$scope', '$ionicPopup', function (api, $scope, $ionicPopup) {
 
         $scope.showMenu(false);
+        $scope.userInfo = ar.getStorage('userInfo');
+        $scope.userInfo.info = JSON.parse($scope.userInfo.info);
 
-        $scope.education = "";
+        $scope.formData = [];
+        $scope.formData.education = $scope.userInfo.info.education;
 
         $scope.educationModel = config_infoData.education;
 
         $scope.educationSelect = function (val) {
-            $scope.education = val;
+            $scope.formData.education = val;
         }
 
         $scope.saveData = function () {
 
-            if ($scope.education == '' || typeof($scope.education) == 'undefined') {
+            if ($scope.formData.education == '' || typeof($scope.formData.education) == 'undefined') {
                 if (confirm('检测到您还未选择学历，确定放弃吗？')) {
                     window.location.hash = '/main/information';  //跳转
                 } else {
                     return false;
                 }
             } else {
-                api.save(url, $scope.education).success(function (res) {
+                api.save('/wap/member/save-data', $scope.formData).success(function (res) {
                     // 保存
+                    $scope.userInfo.info.education = $scope.formData.education;
+                    $scope.userInfo.info = JSON.stringify($scope.userInfo.info);
+                    ar.setStorage('userInfo', $scope.userInfo);
+                    window.location.hash = '/main/information';
                 })
             }
 
