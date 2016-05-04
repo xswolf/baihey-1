@@ -34,9 +34,9 @@
                     <span class="identity guest" ng-if="userInfo.info.level == 2">贵宾</span>
                     <span class="identity diamond" ng-if="userInfo.info.level == 3">钻石</span>
                     <span class="ml10">
-                        鸡
+                        {{userInfo.info.zodiac | zodiac}}
                         <span class="sx">|</span>
-                        天秤座
+                        {{userInfo.info.constellation | constellation}}
                     </span>
                 </p>
             </ion-item>

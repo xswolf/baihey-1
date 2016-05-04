@@ -49,6 +49,101 @@ var config_infoData = {
         name: '有小孩已独立'
     }],
 
+    'purchase': [{
+        id: 1,
+        name: '有房'
+    }, {
+        id: 2,
+        name: '无房'
+    }],
+
+    'car': [{
+        id: 1,
+        name: '有车'
+    }, {
+        id: 2,
+        name: '无车'
+    }, {
+        id: 3,
+        name: '有豪车'
+    }],
+
+    'zodiac': [{
+        id: 1,
+        name: '子鼠'
+    }, {
+        id: 2,
+        name: '丑牛'
+    }, {
+        id: 3,
+        name: '寅虎'
+    }, {
+        id: 4,
+        name: '卯兔'
+    }, {
+        id: 5,
+        name: '辰龙'
+    }, {
+        id: 6,
+        name: '巳蛇'
+    }, {
+        id: 7,
+        name: '午马'
+    }, {
+        id: 8,
+        name: '未羊'
+    }, {
+        id: 9,
+        name: '申猴'
+    }, {
+        id: 10,
+        name: '酉鸡'
+    }, {
+        id: 11,
+        name: '戌狗'
+    }, {
+        id: 12,
+        name: '亥猪'
+    }],
+
+    'constellation': [{
+        id: 1,
+        name: '水瓶座'
+    }, {
+        id: 2,
+        name: '双鱼座'
+    }, {
+        id: 3,
+        name: '白羊座'
+    }, {
+        id: 4,
+        name: '金牛座'
+    }, {
+        id: 5,
+        name: '双子座'
+    }, {
+        id: 6,
+        name: '巨蟹座'
+    }, {
+        id: 7,
+        name: '狮子座'
+    }, {
+        id: 8,
+        name: '处女座'
+    }, {
+        id: 9,
+        name: '天秤座'
+    }, {
+        id: 10,
+        name: '天蝎座'
+    }, {
+        id: 11,
+        name: '射手座'
+    }, {
+        id: 12,
+        name: '摩羯座'
+    }],
+
     'occupation': [
         {
             id: 1,

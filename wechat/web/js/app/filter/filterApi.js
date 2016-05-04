@@ -101,13 +101,11 @@ define(['app/module'], function (module) {
     // 返回购房状态
     module.filter('purchase', function () {
         return function (input, arr) {
-            switch(parseInt(input)) {
-                case 1:
-                    return '有房';break;
-                case 2:
-                    return '无房';break;
-                default :
-                    return '未知';
+            var infoData = config_infoData.purchase;
+            for(var i in infoData) {
+                if(infoData[i].id == parseInt(input)) {
+                    return infoData[i].name;
+                }
             }
         }
     });
@@ -115,15 +113,11 @@ define(['app/module'], function (module) {
     // 返回购车状态
     module.filter('car', function () {
         return function (input, arr) {
-            switch(parseInt(input)) {
-                case 1:
-                    return '有车';break;
-                case 2:
-                    return '无车';break;
-                case 3:
-                    return '有豪车';break;
-                default :
-                    return '未知';
+            var infoData = config_infoData.car;
+            for(var i in infoData) {
+                if(infoData[i].id == parseInt(input)) {
+                    return infoData[i].name;
+                }
             }
         }
     });
@@ -131,31 +125,35 @@ define(['app/module'], function (module) {
     // 返回职业
     module.filter('occupation', function () {
         return function (input, arr) {
-            switch(parseInt(input)) {
-                case 1:
-                    return '学生';break;
-                case 2:
-                    return '计算机/互联网';break;
-                case 3:
-                    return '通信/电子';break;
-                case 4:
-                    return '生产/制造';break;
-                case 5:
-                    return '销售';break;
-                case 6:
-                    return '广告/市场';break;
-                case 7:
-                    return '传媒/艺术';break;
-                case 8:
-                    return '商贸/采购';break;
-                case 9:
-                    return '客户服务';break;
-                case 10:
-                    return '人事/行政';break;
-                case 11:
-                    return '100万以上';break;
-                default :
-                    return '未知';
+            var infoData = config_infoData.occupation;
+            for(var i in infoData) {
+                if(infoData[i].id == parseInt(input)) {
+                    return infoData[i].name;
+                }
+            }
+        }
+    });
+
+    // 返回生肖属相
+    module.filter('zodiac', function () {
+        return function (input, arr) {
+            var infoData = config_infoData.zodiac;
+            for(var i in infoData) {
+                if(infoData[i].id == parseInt(input)) {
+                    return infoData[i].name;
+                }
+            }
+        }
+    });
+
+    // 返回星座
+    module.filter('constellation', function () {
+        return function (input, arr) {
+            var infoData = config_infoData.constellation;
+            for(var i in infoData) {
+                if(infoData[i].id == parseInt(input)) {
+                    return infoData[i].name;
+                }
             }
         }
     });
