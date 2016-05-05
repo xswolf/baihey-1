@@ -458,25 +458,31 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
         $scope.userInfo = ar.getStorage('userInfo');
 
         // 加载数据
-        $scope.province = provines;
+        $scope.provinceList = provines;
 
         // 用户数据
+        /* $scope.formData = [];
+         $scope.formData.userprovince = $scope.userInfo.province != 'null' ? $scope.userInfo.province : '0';
+         $scope.formData.usercity = $scope.userInfo.city != 'null' ? $scope.userInfo.city : '0';
+         $scope.formData.userarea = $scope.userInfo.area != 'null' ? $scope.userInfo.area : '0';*/
+
+        // 初始化用户数据
         $scope.formData = [];
-        $scope.formData.userprovince = $scope.userInfo.province != 'null' ? $scope.userInfo.province : '0';
-        $scope.formData.usercity = $scope.userInfo.city != 'null' ? $scope.userInfo.city : '0';
-        $scope.formData.userarea = $scope.userInfo.area != 'null' ? $scope.userInfo.area : '0';
+        $scope.formData.userprovince = "0";
+        $scope.formData.usercity = "0";
+        $scope.formData.userarea = "0";
 
         $scope.address = function (name, pro) {
             if (name == 'citys') {
                 angular.forEach(citys, function (data, i) {
                     if (citys[i].parentId == pro) {
-                        $scope.city.push(citys[i]);
+                        $scope.cityList.push(citys[i]);
                     }
                 });
             } else {
                 angular.forEach(area, function (data, i) {
                     if (area[i].parentId == pro) {
-                        $scope.area.push(area[i]);
+                        $scope.areaList.push(area[i]);
                     }
                 });
             }
@@ -484,50 +490,28 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
 
         // 选择省
         $scope.provinceSelect = function (pro) {
-            $scope.city = [{id: '0', name: '请选择'}];  // 清空数组
-            $scope.area = [{id: '0', name: '请选择'}]; // 清空数组
+            $scope.formData.usercity = "0";
+            $scope.formData.userarea = "0";
+            $scope.cityList = [];  // 清空数组
+            $scope.areaList = []; // 清空数组
             $scope.address('citys', pro);
-            $scope.formData.usercity = '0';
-            $scope.formData.userarea = '0';
-            $scope.formData.userprovince = pro;
         }
 
         // 选择市
         $scope.citySelect = function (cit) {
-            $scope.area = [{id: '0', name: '请选择'}]; // 清空数组
+            $scope.areaList = []; // 清空数组
             $scope.address('area', cit);
-            $scope.formData.userarea = '0';
-            $scope.formData.usercity = cit;
-        }
-
-        // 选择区
-        $scope.areaSelect = function (are) {
-            $scope.formData.userarea = are;
-        }
-
-        if ($scope.are > 0) {
-            $scope.address('citys', $scope.formData.userprovince);
-            $scope.formData.userprovince = $scope.formData.userprovince;
-            $scope.address('area', $scope.formData.usercity);
-            $scope.formData.usercity = $scope.formData.usercity;
-            $scope.formData.userarea = $scope.formData.userarea;
-        } else if ($scope.cit > 0) {
-            $scope.address('citys', $scope.formData.userprovince);
-            $scope.formData.userprovince = $scope.formData.userprovince;
-            $scope.address('area', $scope.formData.usercity);
-            $scope.formData.usercity = $scope.formData.usercity;
-            $scope.formData.userarea = 0;
-        } else {
-            $scope.address('citys', $scope.formData.userprovince);
-            $scope.formData.userprovince = $scope.formData.userprovince;
-            $scope.address('area', $scope.formData.usercity);
-            $scope.formData.usercity = 0;
-            $scope.formData.userarea = 0;
-
+            if (cit == "0") {
+                $scope.formData.userarea = "0";
+            }
         }
 
         $scope.saveData = function () {
-            if ($scope.formData.userprovince == '0') {
+
+            console.log($scope.formData);    // 你需要的数据
+            return false;
+
+            if ($scope.formData.userprovince == "0") {
                 if (confirm('检测到您还未选择地区，确定放弃吗？')) {
                     window.location.hash = '/main/information';  //跳转
                 } else {
@@ -550,18 +534,18 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
                 api.save('/wap/member/save-data', $scope.addressData).success(function (res) {
                     // 保存
                     $scope.userInfo.province = $scope.formData.userprovince;
-                     if($scope.formData.usercity > 0) {
-                     $scope.userInfo.city = $scope.formData.usercity;
-                     } else {
-                     $scope.userInfo.city = null;
-                     }
-                     if($scope.formData.userarea > 0) {
-                     $scope.userInfo.area = $scope.formData.userarea;
-                     } else {
-                     $scope.userInfo.area = null;
-                     }
-                     ar.setStorage('userInfo', $scope.userInfo);
-                     window.location.hash = '/main/information';
+                    if ($scope.formData.usercity > 0) {
+                        $scope.userInfo.city = $scope.formData.usercity;
+                    } else {
+                        $scope.userInfo.city = null;
+                    }
+                    if ($scope.formData.userarea > 0) {
+                        $scope.userInfo.area = $scope.formData.userarea;
+                    } else {
+                        $scope.userInfo.area = null;
+                    }
+                    ar.setStorage('userInfo', $scope.userInfo);
+                    window.location.hash = '/main/information';
                 })
             }
         }
