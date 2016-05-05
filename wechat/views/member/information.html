@@ -2,22 +2,25 @@
     <link href="/wechat/web/css/member.css" rel="stylesheet">
     <link href="/wechat/web/css/plugin/bootstrap/css/font-awesome.min.css" rel="stylesheet">
     <ion-header-bar>
-        <button class="button button-icon icon ion-arrow-left-c" ui-sref="main.member" ng-click="showMenu(true)"></button>
+        <button class="button button-icon icon ion-arrow-left-c" ui-sref="main.member"
+                ng-click="showMenu(true)"></button>
         <title class="title">我的资料</title>
         <button class="button button-icon">预览</button>
     </ion-header-bar>
     <ion-content ng-controller="member.information" class="bhy com_w_100 infomation m_bg">
-        <ion-list >
+        <ion-list>
             <div class="imgList_con">
                 <div class="imgList_handle clearfix">
                     <div class="imgItem" ng-repeat="img in imgList">
-                        <img src="{{img.url}}">
+                        <span>
+                            <img src="{{img.url}}">
+                        </span>
                         <span class="removepic" ng-click="removeImg($index)">
                             <i class="ionc ion-close-round"></i>
                         </span>
                         <span class="headpic" ng-if="img.headpic">头像</span>
                     </div>
-                    <div class="imgItem addItem">
+                    <div ng-if="imgList.length<12" class="imgItem addItem">
                         <a href="javascript:;" ng-click="addNewImg()">
                             <img src="/wechat/web/images/addImg.png">
                         </a>
@@ -25,7 +28,8 @@
                     <div class="tip fl w100">点击更换照片，最多可以上传12张照片</div>
                 </div>
             </div>
-
+            <input id="pic_fileInput" type="file" nv-file-select="" uploader="uploader"
+                   style="visibility: hidden; display: none;" accept="image/*">
             <ion-item class="idt mt10">
                 <p>
                     <span class="identity sfz" ng-if="userInfo.identity_pic.is_check == 1">身份证</span>
@@ -106,7 +110,8 @@
                     <p>真实姓名</p>
                 </div>
                 <div class="info_c">
-                    <p><span class="cor21 mr10">{{userInfo.info.real_name}}</span><span class="fs12 cor20">保密，只有您自己可以看到</span></p>
+                    <p><span class="cor21 mr10">{{userInfo.info.real_name}}</span><span
+                            class="fs12 cor20">保密，只有您自己可以看到</span></p>
                 </div>
             </ion-item>
             <ion-item class="brithday" ui-sref="main.member_age">
@@ -114,10 +119,11 @@
                     <p>出生年月</p>
                 </div>
                 <div class="info_c">
-                    <p><i class="bhy-icon-member-birthday cor23 vam mr5"></i><span class="mr10">1991-08-04</span><span class="mr10">羊</span><span>狮子座</span></p>
+                    <p><i class="bhy-icon-member-birthday cor23 vam mr5"></i><span class="mr10">1991-08-04</span><span
+                            class="mr10">羊</span><span>狮子座</span></p>
                 </div>
             </ion-item>
-            <ion-item  ng-if="userInfo.info.height == '未知'" ui-sref="main.member_height">
+            <ion-item ng-if="userInfo.info.height == '未知'" ui-sref="main.member_height">
                 <div class="info_l">
                     <p>身高</p>
                 </div>
@@ -136,7 +142,7 @@
                     <p>{{userInfo.info.height}}</p>
                 </div>
             </ion-item>
-            <ion-item ng-if="userInfo.info.is_marriage == '未知'" ui-sref="main.member_is_marriage" >
+            <ion-item ng-if="userInfo.info.is_marriage == '未知'" ui-sref="main.member_is_marriage">
                 <div class="info_l">
                     <p>婚姻状况</p>
                 </div>
@@ -147,7 +153,7 @@
                     <i class="ionc ion-ios-arrow-right"></i>
                 </div>
             </ion-item>
-            <ion-item ng-if="userInfo.info.is_marriage != '未知'" >
+            <ion-item ng-if="userInfo.info.is_marriage != '未知'">
                 <div class="info_l">
                     <p>婚姻状况</p>
                 </div>
@@ -378,7 +384,8 @@
                     <i class="ionc ion-ios-arrow-right"></i>
                 </div>
                 <div class="info_c hob">
-                    <ion-scroll delegate-handle="small" zooming="false" direction="x" scrollbar-x="false" scrollbar-y="false" class="hob_movie clearfix">
+                    <ion-scroll delegate-handle="small" zooming="false" direction="x" scrollbar-x="false"
+                                scrollbar-y="false" class="hob_movie clearfix">
                         <dl>
                             <dt><img src="/wechat/web/images/test/movie1.jpg"></dt>
                             <dd class="fs12 tac cor25 lh24 toe">美人鱼</dd>

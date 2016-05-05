@@ -13,14 +13,6 @@ define(['app/module'], function (module) {
         }
     });
 
-    module.directive("beenAddress", function () {
-        return {
-            restrict: "EA",
-            link: function ($scope, element) {
-
-            }
-        };
-    });
 
 })
 
