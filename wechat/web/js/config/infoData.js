@@ -558,7 +558,6 @@ var config_infoData = {
         {id: 5, name: 'RH型'}
     ]
 
-
 };
 
 function config_heightLink(min) {

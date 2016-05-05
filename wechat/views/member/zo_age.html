@@ -1,0 +1,41 @@
+<ion-view>
+    <link href="/wechat/web/css/member.css" rel="stylesheet">
+    <ion-header-bar class="com_w_100 bhy">
+        <button class="button button-icon icon ion-arrow-left-c" ui-sref="main.member_information"
+                ng-click="showMenu(false)"></button>
+        <title class="title">年龄要求</title>
+        <button class="button button-icon cor21" ng-click="saveData()">保存</button>
+    </ion-header-bar>
+    <ion-content class="bhy com_w_100 m_bg">
+        <ion-list>
+            <div class="item item-divider">
+                嘉瑞 ● 实名制婚恋网
+            </div>
+            <div class="item item-text-wrap">
+
+                <label class="item item-input item-select">
+                    <div class="input-label">
+                        最小年龄
+                    </div>
+                    <select ng-model="formData.zo_ageMin" ng-change="zo_ageMinSelect(this.formData.zo_ageMin)" >
+                        <option value="{{a}}" ng-repeat="a in zo_ageMinList">{{a}}岁</option>
+                    </select>
+                </label>
+
+                <label class="item item-input item-select">
+                    <div class="input-label">
+                        最大年龄
+                    </div>
+                    <select ng-model="formData.zo_ageMax">
+                        <option value="0">不限</option>
+                        <option value="{{a}}" ng-repeat="a in zo_ageMaxList">{{a}}岁</option>
+                    </select>
+                </label>
+                <div class="m_b_bg w100 mt20 tal">
+                    <img src="/wechat/web/images/member/children_bg.png">
+                </div>
+            </div>
+
+        </ion-list>
+    </ion-content>
+</ion-view>

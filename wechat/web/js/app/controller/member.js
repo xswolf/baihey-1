@@ -1144,16 +1144,16 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
         $scope.formData = [];
 
         $scope.childrenList = [
-            {id:1,name:'无小孩'},
-            {id:2,name:'一个男孩（跟随对方）'},
-            {id:3,name:'一个女孩（跟随对方）'},
-            {id:4,name:'一个男孩（跟随自己）'},
-            {id:5,name:'一个女孩（跟随自己）'},
-            {id:6,name:'两个及以上（跟随对方）'},
-            {id:7,name:'两个及以上（跟随自己）'}
+            {id: 1, name: '无小孩'},
+            {id: 2, name: '一个男孩（跟随对方）'},
+            {id: 3, name: '一个女孩（跟随对方）'},
+            {id: 4, name: '一个男孩（跟随自己）'},
+            {id: 5, name: '一个女孩（跟随自己）'},
+            {id: 6, name: '两个及以上（跟随对方）'},
+            {id: 7, name: '两个及以上（跟随自己）'}
         ];
 
-        $scope.childrenSelect = function(children){
+        $scope.childrenSelect = function (children) {
             $scope.formData.children = children;
         }
 
@@ -1184,7 +1184,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
 
         $scope.nationList = config_infoData.nation;
 
-        $scope.nationSelect = function(nation){
+        $scope.nationSelect = function (nation) {
             $scope.formData.nation = nation;
         }
 
@@ -1240,7 +1240,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
 
         $scope.salaryList = config_infoData.salary;
 
-        $scope.salarySelect = function(salary){
+        $scope.salarySelect = function (salary) {
             $scope.formData.salary = salary;
         }
 
@@ -1270,7 +1270,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
 
         $scope.houseList = config_infoData.house;
 
-        $scope.houseSelect = function(house){
+        $scope.houseSelect = function (house) {
             $scope.formData.house = house;
         }
 
@@ -1300,7 +1300,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
 
         $scope.carList = config_infoData.car;
 
-        $scope.carSelect = function(car){
+        $scope.carSelect = function (car) {
             $scope.formData.car = car;
         }
 
@@ -1330,7 +1330,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
 
         $scope.bloodList = config_infoData.blood;
 
-        $scope.bloodSelect = function(blood){
+        $scope.bloodSelect = function (blood) {
             $scope.formData.blood = blood;
         }
 
@@ -1377,8 +1377,237 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
         }
     }]);
 
+    // 择偶标准-年龄
+    module.controller("member.zo_age", ['app.serviceApi', '$scope', '$ionicPopup', function (api, $scope, $ionicPopup) {
 
+        $scope.showMenu(false);
 
+        $scope.formData = [];
+
+        $scope.formData.zo_ageMax = "0";   // 最大年龄
+        $scope.formData.zo_ageMin = "18";   // 最小年龄
+        $scope.zo_ageMaxList = [];
+        $scope.zo_ageMinList = [];
+        for (var i = 18; i <= 99; i++) {
+            $scope.zo_ageMinList.push(i);
+            $scope.zo_ageMaxList.push(i);
+        }
+        $scope.zo_ageMinSelect = function (ageMin) {
+            $scope.zo_ageMaxList = [];
+            if (ageMin >= $scope.formData.zo_ageMax) {
+                $scope.formData.zo_ageMax = "0";
+            }
+            for (var i = ageMin; i <= 99; i++) {
+                $scope.zo_ageMaxList.push(i);
+            }
+        }
+
+        // 保存
+        $scope.saveData = function () {
+
+            api.save(url, $scope.formData).success(function (res) {
+                // 保存
+
+            })
+        }
+    }]);
+
+    // 择偶标准-身高
+    module.controller("member.zo_height", ['app.serviceApi', '$scope', '$ionicPopup', function (api, $scope, $ionicPopup) {
+
+        $scope.showMenu(false);
+
+        $scope.formData = [];
+
+        $scope.formData.zo_heightMax = "0";   // 最大年龄
+        $scope.formData.zo_heightMin = "140";   // 最小年龄
+        $scope.zo_heightMaxList = [];
+        $scope.zo_heightMinList = [];
+        for (var i = 140; i <= 260; i++) {
+            $scope.zo_heightMinList.push(i);
+            $scope.zo_heightMaxList.push(i);
+        }
+        $scope.zo_heightMinSelect = function (heightMin) {
+            $scope.zo_heightMaxList = [];
+            if (heightMin >= $scope.formData.zo_heightMax) {
+                $scope.formData.zo_heightMax = "0";
+            }
+            for (var i = heightMin; i <= 260; i++) {
+                $scope.zo_heightMaxList.push(i);
+            }
+        }
+
+        // 保存
+        $scope.saveData = function () {
+
+            api.save(url, $scope.formData).success(function (res) {
+                // 保存
+
+            })
+        }
+    }]);
+
+    // 择偶标准-学历
+    module.controller("member.zo_education", ['app.serviceApi', '$scope', '$ionicPopup', function (api, $scope, $ionicPopup) {
+
+        $scope.showMenu(false);
+
+        $scope.formData = [];
+
+        $scope.formData.zo_education = "";   // 学历
+        $scope.zo_educationList = config_infoData.education;
+
+        // 保存
+        $scope.saveData = function () {
+            if ($scope.formData.zo_education == "") {
+                if (confirm('检测到您还未选择学历要求，确定放弃吗？')) {
+                    window.location.hash = '/main/information';  //跳转
+                } else {
+                    return false;
+                }
+            } else {
+                api.save(url, $scope.formData).success(function (res) {
+                    // 保存
+
+                })
+            }
+        }
+    }]);
+
+    // 择偶标准-婚姻状况
+    module.controller("member.zo_marriage", ['app.serviceApi', '$scope', '$ionicPopup', function (api, $scope, $ionicPopup) {
+
+        $scope.showMenu(false);
+
+        $scope.formData = [];
+
+        $scope.formData.zo_education = "";   // 学历
+        $scope.zo_educationList = config_infoData.education;
+
+        // 保存
+        $scope.saveData = function () {
+            if ($scope.formData.zo_education == "") {
+                if (confirm('检测到您还未选择学历要求，确定放弃吗？')) {
+                    window.location.hash = '/main/information';  //跳转
+                } else {
+                    return false;
+                }
+            } else {
+                api.save(url, $scope.formData).success(function (res) {
+                    // 保存
+
+                })
+            }
+        }
+    }]);
+
+    // 择偶标准-购房情况
+    module.controller("member.zo_house", ['app.serviceApi', '$scope', '$ionicPopup', function (api, $scope, $ionicPopup) {
+
+        $scope.showMenu(false);
+
+        $scope.formData = [];
+
+        $scope.formData.zo_education = "";   // 学历
+        $scope.zo_educationList = config_infoData.education;
+
+        // 保存
+        $scope.saveData = function () {
+            if ($scope.formData.zo_education == "") {
+                if (confirm('检测到您还未选择学历要求，确定放弃吗？')) {
+                    window.location.hash = '/main/information';  //跳转
+                } else {
+                    return false;
+                }
+            } else {
+                api.save(url, $scope.formData).success(function (res) {
+                    // 保存
+
+                })
+            }
+        }
+    }]);
+
+    // 择偶标准-购车情况
+    module.controller("member.zo_car", ['app.serviceApi', '$scope', '$ionicPopup', function (api, $scope, $ionicPopup) {
+
+        $scope.showMenu(false);
+
+        $scope.formData = [];
+
+        $scope.formData.zo_education = "";   // 学历
+        $scope.zo_educationList = config_infoData.education;
+
+        // 保存
+        $scope.saveData = function () {
+            if ($scope.formData.zo_education == "") {
+                if (confirm('检测到您还未选择学历要求，确定放弃吗？')) {
+                    window.location.hash = '/main/information';  //跳转
+                } else {
+                    return false;
+                }
+            } else {
+                api.save(url, $scope.formData).success(function (res) {
+                    // 保存
+
+                })
+            }
+        }
+    }]);
+
+    // 择偶标准-属相
+    module.controller("member.zo_zodiac", ['app.serviceApi', '$scope', '$ionicPopup', function (api, $scope, $ionicPopup) {
+
+        $scope.showMenu(false);
+
+        $scope.formData = [];
+
+        $scope.formData.zo_education = "";   // 学历
+        $scope.zo_educationList = config_infoData.education;
+
+        // 保存
+        $scope.saveData = function () {
+            if ($scope.formData.zo_education == "") {
+                if (confirm('检测到您还未选择学历要求，确定放弃吗？')) {
+                    window.location.hash = '/main/information';  //跳转
+                } else {
+                    return false;
+                }
+            } else {
+                api.save(url, $scope.formData).success(function (res) {
+                    // 保存
+
+                })
+            }
+        }
+    }]);
+
+    // 择偶标准-星座
+    module.controller("member.zo_constellation", ['app.serviceApi', '$scope', '$ionicPopup', function (api, $scope, $ionicPopup) {
+
+        $scope.showMenu(false);
+
+        $scope.formData = [];
+
+        $scope.formData.zo_education = "";   // 学历
+        $scope.zo_educationList = config_infoData.education;
+
+        // 保存
+        $scope.saveData = function () {
+            if ($scope.formData.zo_education == "") {
+                if (confirm('检测到您还未选择学历要求，确定放弃吗？')) {
+                    window.location.hash = '/main/information';  //跳转
+                } else {
+                    return false;
+                }
+            } else {
+                api.save(url, $scope.formData).success(function (res) {
+                    // 保存
+
+                })
+            }
+        }
+    }]);
     return module;
 })
 

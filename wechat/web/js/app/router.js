@@ -113,7 +113,7 @@ define(["app/module", 'app/service/serviceApi'],
                         views: {
                             'member-tab': {
                                 templateUrl: "/wechat/views/member/is_marriage.html",
-                                controller:'member.is_marriage'
+                                controller: 'member.is_marriage'
                             }
                         }
                     })
@@ -122,7 +122,7 @@ define(["app/module", 'app/service/serviceApi'],
                         views: {
                             'member-tab': {
                                 templateUrl: "/wechat/views/member/education.html",
-                                controller:'member.education'
+                                controller: 'member.education'
                             }
                         }
                     })
@@ -131,7 +131,7 @@ define(["app/module", 'app/service/serviceApi'],
                         views: {
                             'member-tab': {
                                 templateUrl: "/wechat/views/member/occupation.html",
-                                controller:'member.occupation'
+                                controller: 'member.occupation'
                             }
                         }
                     })
@@ -140,7 +140,7 @@ define(["app/module", 'app/service/serviceApi'],
                         views: {
                             'member-tab': {
                                 templateUrl: "/wechat/views/member/address.html",
-                                controller:'member.address'
+                                controller: 'member.address'
                             }
                         }
                     })
@@ -149,7 +149,7 @@ define(["app/module", 'app/service/serviceApi'],
                         views: {
                             'member-tab': {
                                 templateUrl: "/wechat/views/member/haunt_address.html",
-                                controller:'member.haunt_address'
+                                controller: 'member.haunt_address'
                             }
                         }
                     })
@@ -158,7 +158,7 @@ define(["app/module", 'app/service/serviceApi'],
                         views: {
                             'member-tab': {
                                 templateUrl: "/wechat/views/member/wechat_number.html",
-                                controller:'member.wechat_number'
+                                controller: 'member.wechat_number'
                             }
                         }
                     })
@@ -167,7 +167,7 @@ define(["app/module", 'app/service/serviceApi'],
                         views: {
                             'member-tab': {
                                 templateUrl: "/wechat/views/member/qq_number.html",
-                                controller:'member.qq_number'
+                                controller: 'member.qq_number'
                             }
                         }
                     })
@@ -176,7 +176,7 @@ define(["app/module", 'app/service/serviceApi'],
                         views: {
                             'member-tab': {
                                 templateUrl: "/wechat/views/member/been_address.html",
-                                controller:'member.been_address'
+                                controller: 'member.been_address'
                             }
                         }
                     })
@@ -185,7 +185,7 @@ define(["app/module", 'app/service/serviceApi'],
                         views: {
                             'member-tab': {
                                 templateUrl: "/wechat/views/member/want_address.html",
-                                controller:'member.want_address'
+                                controller: 'member.want_address'
                             }
                         }
                     })
@@ -194,7 +194,7 @@ define(["app/module", 'app/service/serviceApi'],
                         views: {
                             'member-tab': {
                                 templateUrl: "/wechat/views/member/sports.html",
-                                controller:'member.sports'
+                                controller: 'member.sports'
                             }
                         }
                     })
@@ -203,7 +203,7 @@ define(["app/module", 'app/service/serviceApi'],
                         views: {
                             'member-tab': {
                                 templateUrl: "/wechat/views/member/movie.html",
-                                controller:'member.movie'
+                                controller: 'member.movie'
                             }
                         }
                     })
@@ -212,7 +212,7 @@ define(["app/module", 'app/service/serviceApi'],
                         views: {
                             'member-tab': {
                                 templateUrl: "/wechat/views/member/delicacy.html",
-                                controller:'member.delicacy'
+                                controller: 'member.delicacy'
                             }
                         }
                     })
@@ -221,7 +221,7 @@ define(["app/module", 'app/service/serviceApi'],
                         views: {
                             'member-tab': {
                                 templateUrl: "/wechat/views/member/mate.html",
-                                controller:'member.mate'
+                                controller: 'member.mate'
                             }
                         }
                     })
@@ -230,7 +230,7 @@ define(["app/module", 'app/service/serviceApi'],
                         views: {
                             'member-tab': {
                                 templateUrl: "/wechat/views/member/children.html",
-                                controller:'member.children'
+                                controller: 'member.children'
                             }
                         }
                     })
@@ -239,7 +239,7 @@ define(["app/module", 'app/service/serviceApi'],
                         views: {
                             'member-tab': {
                                 templateUrl: "/wechat/views/member/nation.html",
-                                controller:'member.nation'
+                                controller: 'member.nation'
                             }
                         }
                     })
@@ -248,7 +248,7 @@ define(["app/module", 'app/service/serviceApi'],
                         views: {
                             'member-tab': {
                                 templateUrl: "/wechat/views/member/work.html",
-                                controller:'member.work'
+                                controller: 'member.work'
                             }
                         }
                     })
@@ -257,7 +257,7 @@ define(["app/module", 'app/service/serviceApi'],
                         views: {
                             'member-tab': {
                                 templateUrl: "/wechat/views/member/salary.html",
-                                controller:'member.salary'
+                                controller: 'member.salary'
                             }
                         }
                     })
@@ -266,7 +266,7 @@ define(["app/module", 'app/service/serviceApi'],
                         views: {
                             'member-tab': {
                                 templateUrl: "/wechat/views/member/house.html",
-                                controller:'member.house'
+                                controller: 'member.house'
                             }
                         }
                     })
@@ -275,7 +275,7 @@ define(["app/module", 'app/service/serviceApi'],
                         views: {
                             'member-tab': {
                                 templateUrl: "/wechat/views/member/car.html",
-                                controller:'member.car'
+                                controller: 'member.car'
                             }
                         }
                     })
@@ -284,7 +284,7 @@ define(["app/module", 'app/service/serviceApi'],
                         views: {
                             'member-tab': {
                                 templateUrl: "/wechat/views/member/blood.html",
-                                controller:'member.blood'
+                                controller: 'member.blood'
                             }
                         }
                     })
@@ -293,7 +293,79 @@ define(["app/module", 'app/service/serviceApi'],
                         views: {
                             'member-tab': {
                                 templateUrl: "/wechat/views/member/school.html",
-                                controller:'member.school'
+                                controller: 'member.school'
+                            }
+                        }
+                    })
+                    .state('main.member_zo_age', {  // 择偶标准-年龄
+                        url: "/zo_age",
+                        views: {
+                            'member-tab': {
+                                templateUrl: "/wechat/views/member/zo_age.html",
+                                controller: 'member.zo_age'
+                            }
+                        }
+                    })
+                    .state('main.member_zo_height', {  // 择偶标准-身高
+                        url: "/zo_height",
+                        views: {
+                            'member-tab': {
+                                templateUrl: "/wechat/views/member/zo_height.html",
+                                controller: 'member.zo_height'
+                            }
+                        }
+                    })
+                    .state('main.member_zo_education', {  // 择偶标准-学历
+                        url: "/zo_education",
+                        views: {
+                            'member-tab': {
+                                templateUrl: "/wechat/views/member/zo_education.html",
+                                controller: 'member.zo_education'
+                            }
+                        }
+                    })
+                    .state('main.member_zo_marriage', {  // 择偶标准-婚姻状况
+                        url: "/zo_marriage",
+                        views: {
+                            'member-tab': {
+                                templateUrl: "/wechat/views/member/zo_marriage.html",
+                                controller: 'member.zo_marriage'
+                            }
+                        }
+                    })
+                    .state('main.member_zo_house', {  // 择偶标准-购房情况
+                        url: "/zo_house",
+                        views: {
+                            'member-tab': {
+                                templateUrl: "/wechat/views/member/zo_house.html",
+                                controller: 'member.zo_house'
+                            }
+                        }
+                    })
+                    .state('main.member_zo_car', {  // 择偶标准-购车情况
+                        url: "/zo_car",
+                        views: {
+                            'member-tab': {
+                                templateUrl: "/wechat/views/member/zo_car.html",
+                                controller: 'member.zo_car'
+                            }
+                        }
+                    })
+                    .state('main.member_zo_zodiac', {  // 择偶标准-属相
+                        url: "/zo_zodiac",
+                        views: {
+                            'member-tab': {
+                                templateUrl: "/wechat/views/member/zo_zodiac.html",
+                                controller: 'member.zo_zodiac'
+                            }
+                        }
+                    })
+                    .state('main.member_zo_constellation', {  // 择偶标准-星座
+                        url: "/zo_constellation",
+                        views: {
+                            'member-tab': {
+                                templateUrl: "/wechat/views/member/zo_constellation.html",
+                                controller: 'member.zo_constellation'
                             }
                         }
                     })
