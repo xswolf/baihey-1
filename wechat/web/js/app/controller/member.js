@@ -1131,12 +1131,24 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
 
         $scope.formData = [];
 
-        $scope.formData.mateText = "";
+        $scope.childrenList = [
+            {id:1,name:'无小孩'},
+            {id:2,name:'一个男孩（跟随对方）'},
+            {id:3,name:'一个女孩（跟随对方）'},
+            {id:4,name:'一个男孩（跟随自己）'},
+            {id:5,name:'一个女孩（跟随自己）'},
+            {id:6,name:'两个及以上（跟随对方）'},
+            {id:7,name:'两个及以上（跟随自己）'}
+        ];
+
+        $scope.childrenSelect = function(children){
+            $scope.formData.children = children;
+        }
 
         // 保存
         $scope.saveData = function () {
-            if (ar.trim($scope.formData.mateText) == "") {
-                if (confirm('检测到您还未填写任何内容，确定放弃吗？')) {
+            if ($scope.formData.children == "" || typeof($scope.formData.children) == 'undefined') {
+                if (confirm('检测到您还未选择子女状况，确定放弃吗？')) {
                     window.location.hash = '/main/information';  //跳转
                 } else {
                     return false;
@@ -1148,6 +1160,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
                 })
             }
         }
+
     }]);
 
     // 民族
@@ -1157,12 +1170,16 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
 
         $scope.formData = [];
 
-        $scope.formData.mateText = "";
+        $scope.nationList = config_infoData.nation;
+
+        $scope.nationSelect = function(nation){
+            $scope.formData.nation = nation;
+        }
 
         // 保存
         $scope.saveData = function () {
-            if (ar.trim($scope.formData.mateText) == "") {
-                if (confirm('检测到您还未填写任何内容，确定放弃吗？')) {
+            if ($scope.formData.nation == "" || typeof($scope.formData.nation) == 'undefined') {
+                if (confirm('检测到您还未选择民族，确定放弃吗？')) {
                     window.location.hash = '/main/information';  //跳转
                 } else {
                     return false;
@@ -1183,12 +1200,12 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
 
         $scope.formData = [];
 
-        $scope.formData.mateText = "";
+        $scope.formData.work = "";
 
         // 保存
         $scope.saveData = function () {
-            if (ar.trim($scope.formData.mateText) == "") {
-                if (confirm('检测到您还未填写任何内容，确定放弃吗？')) {
+            if (ar.trim($scope.formData.work) == "") {
+                if (confirm('检测到您还未填写工作单位，确定放弃吗？')) {
                     window.location.hash = '/main/information';  //跳转
                 } else {
                     return false;
@@ -1209,12 +1226,16 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
 
         $scope.formData = [];
 
-        $scope.formData.mateText = "";
+        $scope.salaryList = config_infoData.salary;
+
+        $scope.salarySelect = function(salary){
+            $scope.formData.salary = salary;
+        }
 
         // 保存
         $scope.saveData = function () {
-            if (ar.trim($scope.formData.mateText) == "") {
-                if (confirm('检测到您还未填写任何内容，确定放弃吗？')) {
+            if ($scope.formData.salary == "" || typeof($scope.formData.salary) == 'undefined') {
+                if (confirm('检测到您还未选择年收入，确定放弃吗？')) {
                     window.location.hash = '/main/information';  //跳转
                 } else {
                     return false;
@@ -1235,12 +1256,16 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
 
         $scope.formData = [];
 
-        $scope.formData.mateText = "";
+        $scope.houseList = config_infoData.house;
+
+        $scope.houseSelect = function(house){
+            $scope.formData.house = house;
+        }
 
         // 保存
         $scope.saveData = function () {
-            if (ar.trim($scope.formData.mateText) == "") {
-                if (confirm('检测到您还未填写任何内容，确定放弃吗？')) {
+            if ($scope.formData.house == "" || typeof($scope.formData.house) == 'undefined') {
+                if (confirm('检测到您还未选择购房情况，确定放弃吗？')) {
                     window.location.hash = '/main/information';  //跳转
                 } else {
                     return false;
@@ -1261,12 +1286,16 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
 
         $scope.formData = [];
 
-        $scope.formData.mateText = "";
+        $scope.carList = config_infoData.car;
+
+        $scope.carSelect = function(car){
+            $scope.formData.car = car;
+        }
 
         // 保存
         $scope.saveData = function () {
-            if (ar.trim($scope.formData.mateText) == "") {
-                if (confirm('检测到您还未填写任何内容，确定放弃吗？')) {
+            if ($scope.formData.car == "" || typeof($scope.formData.car) == 'undefined') {
+                if (confirm('检测到您还未选择购车情况，确定放弃吗？')) {
                     window.location.hash = '/main/information';  //跳转
                 } else {
                     return false;
@@ -1287,12 +1316,16 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
 
         $scope.formData = [];
 
-        $scope.formData.mateText = "";
+        $scope.bloodList = config_infoData.blood;
+
+        $scope.bloodSelect = function(blood){
+            $scope.formData.blood = blood;
+        }
 
         // 保存
         $scope.saveData = function () {
-            if (ar.trim($scope.formData.mateText) == "") {
-                if (confirm('检测到您还未填写任何内容，确定放弃吗？')) {
+            if ($scope.formData.blood == "" || typeof($scope.formData.blood) == 'undefined') {
+                if (confirm('检测到您还未选择血型，确定放弃吗？')) {
                     window.location.hash = '/main/information';  //跳转
                 } else {
                     return false;
@@ -1313,12 +1346,12 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
 
         $scope.formData = [];
 
-        $scope.formData.mateText = "";
+        $scope.formData.school = "";
 
         // 保存
         $scope.saveData = function () {
-            if (ar.trim($scope.formData.mateText) == "") {
-                if (confirm('检测到您还未填写任何内容，确定放弃吗？')) {
+            if (ar.trim($scope.formData.school) == "") {
+                if (confirm('检测到您还未填写毕业院校，确定放弃吗？')) {
                     window.location.hash = '/main/information';  //跳转
                 } else {
                     return false;

@@ -148,7 +148,7 @@ var config_infoData = {
         {
             id: 1,
             name: '销售',
-            icon:'01',
+            icon: '01',
             children: [
                 {id: 1, name: '销售总监'},
                 {id: 2, name: '销售经理'},
@@ -165,7 +165,7 @@ var config_infoData = {
         {
             id: 2,
             name: '计算机/互联网',
-            icon:'03',
+            icon: '03',
             children: [
                 {id: 1, name: 'IT技术总监'},
                 {id: 2, name: 'IT技术经理'},
@@ -182,7 +182,7 @@ var config_infoData = {
         {
             id: 3,
             name: '客户服务',
-            icon:'02',
+            icon: '02',
             children: [
                 {id: 1, name: '客服经理'},
                 {id: 2, name: '客服主管'},
@@ -195,7 +195,7 @@ var config_infoData = {
         {
             id: 4,
             name: '学生',
-            icon:'22',
+            icon: '22',
             children: [
                 {id: 1, name: '大一'},
                 {id: 2, name: '大二'},
@@ -209,7 +209,7 @@ var config_infoData = {
         {
             id: 5,
             name: '通信/电子',
-            icon:'04',
+            icon: '04',
             children: [
                 {id: 1, name: '通信技术'},
                 {id: 2, name: '电子技术'},
@@ -219,7 +219,7 @@ var config_infoData = {
         {
             id: 6,
             name: '生产/制造',
-            icon:'05',
+            icon: '05',
             children: [
                 {id: 1, name: '工厂经理'},
                 {id: 2, name: '工程师'},
@@ -237,7 +237,7 @@ var config_infoData = {
         {
             id: 7,
             name: '物流/仓储',
-            icon:'06',
+            icon: '06',
             children: [
                 {id: 1, name: '物流经理'},
                 {id: 2, name: '物流主管'},
@@ -255,7 +255,7 @@ var config_infoData = {
         {
             id: 8,
             name: '商贸/采购',
-            icon:'07',
+            icon: '07',
             children: [
                 {id: 1, name: '商务经理'},
                 {id: 2, name: '商务专员'},
@@ -271,7 +271,7 @@ var config_infoData = {
         {
             id: 9,
             name: '人事/行政',
-            icon:'08',
+            icon: '08',
             children: [
                 {id: 1, name: '人事总监'},
                 {id: 2, name: '人事经理'},
@@ -290,7 +290,7 @@ var config_infoData = {
         {
             id: 10,
             name: '高级管理',
-            icon:'09',
+            icon: '09',
             children: [
                 {id: 1, name: '总经理'},
                 {id: 2, name: '副总经理'},
@@ -304,7 +304,7 @@ var config_infoData = {
         {
             id: 11,
             name: '广告/市场',
-            icon:'10',
+            icon: '10',
             children: [
                 {id: 1, name: '广告客户经理'},
                 {id: 2, name: '广告客户专员'},
@@ -328,7 +328,7 @@ var config_infoData = {
         {
             id: 12,
             name: '传媒/艺术',
-            icon:'11',
+            icon: '11',
             children: [
                 {id: 1, name: '主编'},
                 {id: 2, name: '编辑'},
@@ -354,7 +354,7 @@ var config_infoData = {
         {
             id: 13,
             name: '交通运输',
-            icon:'12',
+            icon: '12',
             children: [
                 {id: 1, name: '飞行员'},
                 {id: 2, name: '空乘人员'},
@@ -370,7 +370,7 @@ var config_infoData = {
         {
             id: 14,
             name: '政府机构',
-            icon:'13',
+            icon: '13',
             children: [
                 {id: 1, name: '部门领导'},
                 {id: 2, name: '行政人员'},
@@ -384,7 +384,7 @@ var config_infoData = {
         {
             id: 15,
             name: '教育/科研',
-            icon:'13',
+            icon: '13',
             children: [
                 {id: 1, name: '教授'},
                 {id: 2, name: '讲师/助教'},
@@ -402,7 +402,7 @@ var config_infoData = {
         {
             id: 16,
             name: '服务业',
-            icon:'14',
+            icon: '14',
             children: [
                 {id: 1, name: '餐饮管理'},
                 {id: 2, name: '厨师'},
@@ -425,7 +425,7 @@ var config_infoData = {
         {
             id: 17,
             name: '建筑/房地产',
-            icon:'15',
+            icon: '15',
             children: [
                 {id: 1, name: '建筑师'},
                 {id: 2, name: '工程师'},
@@ -440,7 +440,7 @@ var config_infoData = {
         {
             id: 18,
             name: '法律',
-            icon:'16',
+            icon: '16',
             children: [
                 {id: 1, name: '律师'},
                 {id: 2, name: '律师助理'},
@@ -453,7 +453,7 @@ var config_infoData = {
         {
             id: 19,
             name: '财会/审计',
-            icon:'17',
+            icon: '17',
             children: [
                 {id: 1, name: '财务总监'},
                 {id: 2, name: '财务经理'},
@@ -470,7 +470,7 @@ var config_infoData = {
         {
             id: 20,
             name: '生物/制药',
-            icon:'18',
+            icon: '18',
             children: [
                 {id: 1, name: '生物工程'},
                 {id: 2, name: '药品生产'},
@@ -484,7 +484,7 @@ var config_infoData = {
         {
             id: 21,
             name: '医疗/护理',
-            icon:'19',
+            icon: '19',
             children: [
                 {id: 1, name: '医疗管理'},
                 {id: 2, name: '医生'},
@@ -498,7 +498,7 @@ var config_infoData = {
         {
             id: 22,
             name: '金融/银行/保险',
-            icon:'20',
+            icon: '20',
             children: [
                 {id: 1, name: '投资'},
                 {id: 2, name: '保险'},
@@ -511,7 +511,7 @@ var config_infoData = {
         {
             id: 23,
             name: '咨询/顾问',
-            icon:'21',
+            icon: '21',
             children: [
                 {id: 1, name: '专业顾问'},
                 {id: 2, name: '咨询经理'},
@@ -520,7 +520,45 @@ var config_infoData = {
                 {id: 5, name: '其他'},
             ]
         },
+    ],
+    'nation': [
+        {id: 1, name: '汉族'},
+        {id: 2, name: '藏族'},
+        {id: 3, name: '朝鲜族'},
+        {id: 4, name: '蒙古族'},
+        {id: 5, name: '回族'},
+        {id: 6, name: '满族'},
+        {id: 7, name: '维吾尔族'},
+        {id: 8, name: '壮族'},
+        {id: 9, name: '彝族'},
+        {id: 10, name: '苗族'},
+        {id: 11, name: '其他'}
+    ],
+    'salary': [
+        {id: 1, name: '3-5万'},
+        {id: 2, name: '6-9万'},
+        {id: 3, name: '10-15万'},
+        {id: 4, name: '16-25万'},
+        {id: 5, name: '100万以上'}
+    ],
+    'house': [
+        {id: 1, name: '已购房'},
+        {id: 2, name: '未购房'},
+        {id: 3, name: '与父母同住'}
+    ],
+    'car': [
+        {id: 1, name: '已购车'},
+        {id: 2, name: '未购车'}
+    ],
+    'blood': [
+        {id: 1, name: 'A型'},
+        {id: 2, name: 'B型'},
+        {id: 3, name: 'AB型'},
+        {id: 4, name: 'O型'},
+        {id: 5, name: 'RH型'}
     ]
+
+
 };
 
 function config_heightLink(min) {

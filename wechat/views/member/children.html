@@ -13,12 +13,18 @@
             </div>
             <div class="item item-text-wrap">
 
-                <label class="item item-input mb20">
-                    <textarea class="mateText" ng-model="formData.mateText" maxlength="300" placeholder="写下你对未来的她（他）有什么期望，限300字"></textarea>
+                <label class="item item-input item-select">
+                    <div class="input-label">
+                        子女状况
+                    </div>
+                    <select ng-model="formData.children" ng-change="childrenSelect(formData.children)" >
+                        <option value="">请选择</option>
+                        <option value="{{c.id}}" ng-repeat="c in childrenList">{{c.name}}</option>
+                    </select>
                 </label>
 
-                <div class="m_b_bg w100 mt20 tar">
-                    <img src="/wechat/web/images/member/mate_bg.png">
+                <div class="m_b_bg w100 mt20 tal">
+                    <img src="/wechat/web/images/member/children_bg.png">
                 </div>
             </div>
 
