@@ -31,6 +31,15 @@ class UserInformation extends Base
                     }
                     break;
 
+                case 'occupation':
+                    $_user_information_table = static::tableName();
+                    $arr = explode('-', $where['occupation']);
+                    $sql = "UPDATE {$_user_information_table} SET info = JSON_REPLACE(info,'$.occupation','".$arr[0]."'), info = JSON_REPLACE(info,'$.children_occupation','".$arr[1]."') WHERE user_id={$user_id}";
+                    if($this->getDb()->createCommand($sql)->query()){
+                        $row = true;
+                    }
+                    break;
+
                 default:
                     $_user_information_table = static::tableName();
                     $sql = "UPDATE {$_user_information_table} SET info = JSON_REPLACE(info,'$.".key($where)."','".$where[key($where)]."') WHERE user_id={$user_id}";

@@ -340,6 +340,12 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
     module.controller("member.occupation", ['app.serviceApi', '$scope', '$ionicPopup', function (api, $scope, $ionicPopup) {
 
         $scope.showMenu(false);
+        $scope.userInfo = ar.getStorage('userInfo');
+        $scope.userInfo.info = JSON.parse($scope.userInfo.info);
+
+        $scope.formData = [];
+        $scope.occupation = $scope.userInfo.info.occupation != '未知' ? $scope.userInfo.info.occupation : 1;
+        $scope.children_occupation = $scope.userInfo.info.children_occupation != '未知' ? $scope.userInfo.info.children_occupation : 1;
 
         // 获取文档高度以适应ion-scroll
         $scope.bodyHeight = document.body.scrollHeight;
@@ -351,11 +357,11 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
         $scope.occupationModel = config_infoData.occupation;
 
         // 用户职业
-        $scope.useroccBig = 1;  // 职业大类
-        $scope.useroccSmall = 1; // 职业小类
+        $scope.useroccBig = $scope.occupation;  // 职业大类
+        $scope.useroccSmall = $scope.children_occupation; // 职业小类
 
         // 如用户未填写职业，默认加载小类数据
-        $scope.occupation = $scope.occupationModel[0].children;
+        $scope.occupation = $scope.occupationModel[$scope.occupation-1].children;
 
 
         $scope.selected_bigo = function (item) {
@@ -380,8 +386,14 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
                     $ionicPopup.alert({title: '请选择工作岗位'});
                     return false;
                 } else {
-                    api.save(url, $scope.occupation).success(function (res) {
+                    $scope.formData.occupation = $scope.useroccBig+'-'+$scope.useroccSmall;
+                    api.save('/wap/member/save-data', $scope.formData).success(function (res) {
                         // 保存
+                        $scope.userInfo.info.occupation = $scope.useroccBig;
+                        $scope.userInfo.info.children_occupation = $scope.useroccSmall;
+                        $scope.userInfo.info = JSON.stringify($scope.userInfo.info);
+                        ar.setStorage('userInfo', $scope.userInfo);
+                        window.location.hash = '/main/information';
                     })
                 }
             }

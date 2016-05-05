@@ -89,23 +89,24 @@ class User extends \common\models\Base
         // user_information表 数据处理
         $infoData['user_id'] = $id;
         $userInfo = [
-            'age'           => '未知',// 出生年月时间戳
-            'level'         => '未知',// vip等级
-            'local'         => '未知',// 当地地区（地区切换使用）
-            'height'        => '未知',// 身高
-            'head_pic'      => '未知',// 头像
-            'real_name'     => '未知',// 真实姓名
-            'identity_id'   => '未知',// 省份证号码
-            'is_marriage'   => '未知',// 婚姻状况
-            'is_child'      => '未知',// 子女状况
-            'education'     => '未知',// 学历
-            'year_income'   => '未知',// 年收入
-            'is_purchase'   => '未知',// 购房状况
-            'is_car'        => '未知',// 购车状况
-            'occupation'    => '未知',// 职业
-            'zodiac'        => '未知',// 属相生肖
-            'constellation' => '未知',// 星座
-            'nation'        => '未知',// 民族
+            'age'                   => '未知',// 出生年月时间戳
+            'level'                 => '未知',// vip等级
+            'local'                 => '未知',// 当地地区（地区切换使用）
+            'height'                => '未知',// 身高
+            'head_pic'              => '未知',// 头像
+            'real_name'             => '未知',// 真实姓名
+            'identity_id'           => '未知',// 省份证号码
+            'is_marriage'           => '未知',// 婚姻状况
+            'is_child'              => '未知',// 子女状况
+            'education'             => '未知',// 学历
+            'year_income'           => '未知',// 年收入
+            'is_purchase'           => '未知',// 购房状况
+            'is_car'                => '未知',// 购车状况
+            'occupation'            => '未知',// 职业
+            'children_occupation'   => '未知',// 子职业
+            'zodiac'                => '未知',// 属相生肖
+            'constellation'         => '未知',// 星座
+            'nation'                => '未知',// 民族
         ];
         // 身份证照片
         $userIdentity = [
@@ -249,14 +250,9 @@ class User extends \common\models\Base
 
                 switch ($key) {
                     case 'city':
+                    case 'sex' :
                         if (is_numeric($val)) {
-                            $data['where']['city'] = $val;
-                        }
-                        break;
-
-                    case 'sex':
-                        if (is_numeric($val)) {
-                            $data['where']['sex'] = $val;
+                            $data['where'][$key] = $val;
                         }
                         break;
 
@@ -284,10 +280,6 @@ class User extends \common\models\Base
                             $data['where']["json_extract(info,'$.height')"] = $this->getRangeWhere($val);
                         }
                         break;
-
-                    /*case 'year_income':
-                        $data['where']["json_extract(info,'$.year_income')"] = $this->getRangeWhere($val);
-                        break;*/
 
                     default:
                         if ($val != 0) {
