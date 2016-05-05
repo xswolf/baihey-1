@@ -40,6 +40,21 @@ class UserInformation extends Base
                     }
                     break;
 
+                case 'address':
+                    $_user_information_table = static::tableName();
+                    $arr = explode('-', $where['address']);
+                    if($arr[2]) {
+                        $sql = "UPDATE {$_user_information_table} SET province = {$arr[0]}, city = {$arr[1]}, area = {$arr[2]} WHERE user_id={$user_id}";
+                    } elseif($arr[1]) {
+                        $sql = "UPDATE {$_user_information_table} SET province = {$arr[0]}, city = {$arr[1]}, area = null WHERE user_id={$user_id}";
+                    } else {
+                        $sql = "UPDATE {$_user_information_table} SET province = {$arr[0]}, city = null, area = null WHERE user_id={$user_id}";
+                    }
+                    if($this->getDb()->createCommand($sql)->query()){
+                        $row = true;
+                    }
+                    break;
+
                 default:
                     $_user_information_table = static::tableName();
                     $sql = "UPDATE {$_user_information_table} SET info = JSON_REPLACE(info,'$.".key($where)."','".$where[key($where)]."') WHERE user_id={$user_id}";

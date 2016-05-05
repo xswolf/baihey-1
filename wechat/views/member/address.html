@@ -17,7 +17,8 @@
                     <div class="input-label">
                         省
                     </div>
-                    <select ng-model="pro" ng-change="provinceSelect(this.pro)" id="province">
+                    <select ng-model="formData.userprovince" ng-change="provinceSelect(this.formData.userprovince)" id="province">
+                        <option value="0">请选择</option>
                         <option value="{{p.id}}" ng-repeat="p in province">{{p.name}}</option>
                     </select>
                 </label>
@@ -26,7 +27,8 @@
                     <div class="input-label">
                         市/区
                     </div>
-                    <select ng-model="cit" ng-change="citySelect(this.cit)" id="city">
+                    <select ng-model="formData.usercity" ng-change="citySelect(this.formData.usercity)" id="city">
+                        <option value="0">请选择</option>
                         <option value="{{c.id}}" ng-repeat="c in city">{{c.name}}</option>
                     </select>
                 </label>
@@ -35,7 +37,8 @@
                     <div class="input-label">
                         区/镇
                     </div>
-                    <select ng-model="are" ng-change="areaSelect(this.are)" id="area">
+                    <select ng-model="formData.userarea" ng-change="areaSelect(this.formData.userarea)" id="area">
+                        <option value="0">请选择</option>
                         <option value="{{a.id}}" ng-repeat="a in area">{{a.name}}</option>
                     </select>
                 </label>

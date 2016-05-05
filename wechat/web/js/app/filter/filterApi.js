@@ -128,7 +128,11 @@ define(['app/module'], function (module) {
             var infoData = config_infoData.occupation;
             for(var i in infoData) {
                 if(infoData[i].id == parseInt(input)) {
-                    return infoData[i].name;
+                    for(var j in infoData[i].children) {
+                        if(infoData[i].children[j].id == parseInt(arr)) {
+                            return infoData[i].name + '-' + infoData[i].children[j].name;
+                        }
+                    }
                 }
             }
         }

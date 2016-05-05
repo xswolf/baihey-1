@@ -187,8 +187,11 @@
                 <div class="info_l">
                     <p>职业</p>
                 </div>
-                <div class="info_c">
+                <div ng-if="userInfo.info.occupation == '未知'" class="info_c">
                     <p><span class="cor21">立即填写</span></p>
+                </div>
+                <div ng-if="userInfo.info.occupation != '未知'" class="info_c">
+                    <p><span>{{userInfo.info.occupation | occupation : userInfo.info.children_occupation}}</span></p>
                 </div>
                 <div class="info_r">
                     <i class="ionc ion-ios-arrow-right"></i>

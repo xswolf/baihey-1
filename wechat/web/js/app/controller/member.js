@@ -26,12 +26,12 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
     }]);
 
     // 资料首页
-    module.controller("member.information", ['app.serviceApi', '$scope', '$ionicPopup','FileUploader','$ionicLoading', function (api, $scope, $ionicPopup,FileUploader,$ionicLoading) {
+    module.controller("member.information", ['app.serviceApi', '$scope', '$ionicPopup', 'FileUploader', '$ionicLoading', function (api, $scope, $ionicPopup, FileUploader, $ionicLoading) {
         $scope.showMenu(false);
-        /* $scope.userInfo = ar.getStorage('userInfo');
-         $scope.userInfo.info = JSON.parse($scope.userInfo.info);
-         $scope.userInfo.identity_pic = JSON.parse($scope.userInfo.identity_pic);*/
-        $scope.formData =[];
+        $scope.userInfo = ar.getStorage('userInfo');
+        $scope.userInfo.info = JSON.parse($scope.userInfo.info);
+        $scope.userInfo.identity_pic = JSON.parse($scope.userInfo.identity_pic);
+        $scope.formData = [];
 
         // 实例化上传图片插件
         var uploader = $scope.uploader = new FileUploader({
@@ -57,13 +57,13 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
             $scope.imgList.splice(index, 1);
         };
 
-        $scope.showLoading = function(progress) {
+        $scope.showLoading = function (progress) {
             $ionicLoading.show({
-                template: '<p class="tac">上传中...</p><p class="tac">'+progress+'%</p>'
+                template: '<p class="tac">上传中...</p><p class="tac">' + progress + '%</p>'
             });
         };
 
-        $scope.hideLoading = function(){
+        $scope.hideLoading = function () {
             $ionicLoading.hide();
         }
 
@@ -84,20 +84,20 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
                 }
             });
 
-            uploader.onAfterAddingFile = function(fileItem) {  // 选择文件后
+            uploader.onAfterAddingFile = function (fileItem) {  // 选择文件后
                 fileItem.upload();   // 上传
             };
-            uploader.onProgressItem = function(fileItem, progress) {   //进度条
+            uploader.onProgressItem = function (fileItem, progress) {   //进度条
                 $scope.showLoading(progress);    // 显示loading
             };
-            uploader.onSuccessItem = function(fileItem, response, status, headers) {  // 上传成功
-                $scope.imgList.push({id:12,url:response.path,headpic:0});
+            uploader.onSuccessItem = function (fileItem, response, status, headers) {  // 上传成功
+                $scope.imgList.push({id: 12, url: response.path, headpic: 0});
             };
-            uploader.onErrorItem = function(fileItem, response, status, headers) {  // 上传出错
-                $ionicPopup.alert({title:'上传图片出错！'});
+            uploader.onErrorItem = function (fileItem, response, status, headers) {  // 上传出错
+                $ionicPopup.alert({title: '上传图片出错！'});
                 $scope.hideLoading();  // 隐藏loading
             };
-            uploader.onCompleteItem = function(fileItem, response, status, headers) {  // 上传结束
+            uploader.onCompleteItem = function (fileItem, response, status, headers) {  // 上传结束
                 $scope.hideLoading();  // 隐藏loading
             };
 
@@ -455,37 +455,38 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
     module.controller("member.address", ['app.serviceApi', '$scope', '$ionicPopup', function (api, $scope, $ionicPopup) {
 
         $scope.showMenu(false);
+        $scope.userInfo = ar.getStorage('userInfo');
 
         // 加载数据
         $scope.province = provines;
-        $scope.province.splice(0, 0, {id: '0', name: '请选择'});
-        $scope.city = [
-            {id: '0', name: '请选择'}
-        ];
-        $scope.area = [
-            {id: '0', name: '请选择'}
-        ];
 
         // 用户数据
         $scope.formData = [];
-        $scope.formData.userprovince = 0;
-        $scope.formData.usercity = 0;
-        $scope.formData.userarea = 0;
+        $scope.formData.userprovince = $scope.userInfo.province != 'null' ? $scope.userInfo.province : '0';
+        $scope.formData.usercity = $scope.userInfo.city != 'null' ? $scope.userInfo.city : '0';
+        $scope.formData.userarea = $scope.userInfo.area != 'null' ? $scope.userInfo.area : '0';
 
-        // 默认数据
-        $scope.pro = '0';
-        $scope.cit = '0';
-        $scope.are = '0';
+        $scope.address = function (name, pro) {
+            if (name == 'citys') {
+                angular.forEach(citys, function (data, i) {
+                    if (citys[i].parentId == pro) {
+                        $scope.city.push(citys[i]);
+                    }
+                });
+            } else {
+                angular.forEach(area, function (data, i) {
+                    if (area[i].parentId == pro) {
+                        $scope.area.push(area[i]);
+                    }
+                });
+            }
+        }
 
         // 选择省
         $scope.provinceSelect = function (pro) {
             $scope.city = [{id: '0', name: '请选择'}];  // 清空数组
             $scope.area = [{id: '0', name: '请选择'}]; // 清空数组
-            angular.forEach(citys, function (data, i) {
-                if (citys[i].parentId == pro) {
-                    $scope.city.push(citys[i]);
-                }
-            });
+            $scope.address('citys', pro);
             $scope.formData.usercity = '0';
             $scope.formData.userarea = '0';
             $scope.formData.userprovince = pro;
@@ -494,11 +495,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
         // 选择市
         $scope.citySelect = function (cit) {
             $scope.area = [{id: '0', name: '请选择'}]; // 清空数组
-            angular.forEach(area, function (data, i) {
-                if (area[i].parentId == cit) {
-                    $scope.area.push(area[i]);
-                }
-            });
+            $scope.address('area', cit);
             $scope.formData.userarea = '0';
             $scope.formData.usercity = cit;
         }
@@ -506,6 +503,27 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
         // 选择区
         $scope.areaSelect = function (are) {
             $scope.formData.userarea = are;
+        }
+
+        if ($scope.are > 0) {
+            $scope.address('citys', $scope.formData.userprovince);
+            $scope.formData.userprovince = $scope.formData.userprovince;
+            $scope.address('area', $scope.formData.usercity);
+            $scope.formData.usercity = $scope.formData.usercity;
+            $scope.formData.userarea = $scope.formData.userarea;
+        } else if ($scope.cit > 0) {
+            $scope.address('citys', $scope.formData.userprovince);
+            $scope.formData.userprovince = $scope.formData.userprovince;
+            $scope.address('area', $scope.formData.usercity);
+            $scope.formData.usercity = $scope.formData.usercity;
+            $scope.formData.userarea = 0;
+        } else {
+            $scope.address('citys', $scope.formData.userprovince);
+            $scope.formData.userprovince = $scope.formData.userprovince;
+            $scope.address('area', $scope.formData.usercity);
+            $scope.formData.usercity = 0;
+            $scope.formData.userarea = 0;
+
         }
 
         $scope.saveData = function () {
@@ -516,9 +534,34 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
                     return false;
                 }
             } else {
-                api.save(url, $scope.formData).success(function (res) {
+                $scope.addressData = [];
+                $scope.addressData.address = $scope.formData.userprovince;
+                if ($scope.formData.usercity > 0) {
+                    $scope.addressData.address += '-' + $scope.formData.usercity;
+                } else {
+                    $scope.addressData.address += '-0';
+                }
+                if ($scope.formData.userarea > 0) {
+                    $scope.addressData.address += '-' + $scope.formData.userarea;
+                } else {
+                    $scope.addressData.address += '-0';
+                }
+                console.log($scope.addressData);
+                api.save('/wap/member/save-data', $scope.addressData).success(function (res) {
                     // 保存
-
+                    $scope.userInfo.province = $scope.formData.userprovince;
+                     if($scope.formData.usercity > 0) {
+                     $scope.userInfo.city = $scope.formData.usercity;
+                     } else {
+                     $scope.userInfo.city = null;
+                     }
+                     if($scope.formData.userarea > 0) {
+                     $scope.userInfo.area = $scope.formData.userarea;
+                     } else {
+                     $scope.userInfo.area = null;
+                     }
+                     ar.setStorage('userInfo', $scope.userInfo);
+                     window.location.hash = '/main/information';
                 })
             }
         }
