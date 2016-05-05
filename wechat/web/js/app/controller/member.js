@@ -361,7 +361,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
         $scope.useroccSmall = $scope.children_occupation; // 职业小类
 
         // 如用户未填写职业，默认加载小类数据
-        $scope.occupation = $scope.occupationModel[$scope.occupation-1].children;
+        $scope.occupation = $scope.occupationModel[$scope.occupation - 1].children;
 
 
         $scope.selected_bigo = function (item) {
@@ -386,7 +386,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
                     $ionicPopup.alert({title: '请选择工作岗位'});
                     return false;
                 } else {
-                    $scope.formData.occupation = $scope.useroccBig+'-'+$scope.useroccSmall;
+                    $scope.formData.occupation = $scope.useroccBig + '-' + $scope.useroccSmall;
                     api.save('/wap/member/save-data', $scope.formData).success(function (res) {
                         // 保存
                         $scope.userInfo.info.occupation = $scope.useroccBig;
@@ -1143,15 +1143,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
 
         $scope.formData = [];
 
-        $scope.childrenList = [
-            {id: 1, name: '无小孩'},
-            {id: 2, name: '一个男孩（跟随对方）'},
-            {id: 3, name: '一个女孩（跟随对方）'},
-            {id: 4, name: '一个男孩（跟随自己）'},
-            {id: 5, name: '一个女孩（跟随自己）'},
-            {id: 6, name: '两个及以上（跟随对方）'},
-            {id: 7, name: '两个及以上（跟随自己）'}
-        ];
+        $scope.childrenList = config_infoData.children;
 
         $scope.childrenSelect = function (children) {
             $scope.formData.children = children;
@@ -1481,24 +1473,45 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
 
         $scope.formData = [];
 
-        $scope.formData.zo_education = "";   // 学历
-        $scope.zo_educationList = config_infoData.education;
+        $scope.isSelectedNull = false;
+        $scope.marriageList = config_infoData.marriage;
+
+        $scope.formData.userMarriageIDList = [1, 2];   //用户数据  未婚、离异
+
+        // 点击不限
+        $scope.SelectedNull = function ($event) {
+            if ($event.target.checked) {     // 选中不限
+                $scope.isSelectedNull = true;
+                $scope.formData.userMarriageIDList = [];
+            } else {
+                $scope.isSelectedNull = false;
+            }
+        }
+
+        $scope.selected = function ($event, id) {
+            var idx = $scope.formData.userMarriageIDList.indexOf(id);
+            if ($event.target.checked && idx == -1) {
+                $scope.formData.userMarriageIDList.push(id);
+            }
+            if (!$event.target.checked && idx != -1) {
+                $scope.formData.userMarriageIDList.splice(idx, 1);
+            }
+        }
+
+        // 判断是否选中
+        $scope.isSelected = function (id) {
+            return $scope.formData.userMarriageIDList.indexOf(id) >= 0;
+        }
 
         // 保存
         $scope.saveData = function () {
-            if ($scope.formData.zo_education == "") {
-                if (confirm('检测到您还未选择学历要求，确定放弃吗？')) {
-                    window.location.hash = '/main/information';  //跳转
-                } else {
-                    return false;
-                }
-            } else {
-                api.save(url, $scope.formData).success(function (res) {
-                    // 保存
 
-                })
-            }
+            api.save(url, $scope.formData).success(function (res) {
+
+            })
+
         }
+
     }]);
 
     // 择偶标准-购房情况
@@ -1508,23 +1521,16 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
 
         $scope.formData = [];
 
-        $scope.formData.zo_education = "";   // 学历
-        $scope.zo_educationList = config_infoData.education;
+        $scope.formData.zo_house = "0";   // 学历 默认不限
+        $scope.zo_houseList = config_infoData.house;
 
         // 保存
         $scope.saveData = function () {
-            if ($scope.formData.zo_education == "") {
-                if (confirm('检测到您还未选择学历要求，确定放弃吗？')) {
-                    window.location.hash = '/main/information';  //跳转
-                } else {
-                    return false;
-                }
-            } else {
-                api.save(url, $scope.formData).success(function (res) {
-                    // 保存
 
-                })
-            }
+            api.save(url, $scope.formData).success(function (res) {
+                // 保存
+
+            })
         }
     }]);
 
@@ -1535,23 +1541,16 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
 
         $scope.formData = [];
 
-        $scope.formData.zo_education = "";   // 学历
-        $scope.zo_educationList = config_infoData.education;
+        $scope.formData.zo_car = "";   // 学历
+        $scope.zo_carList = config_infoData.car;
 
         // 保存
         $scope.saveData = function () {
-            if ($scope.formData.zo_education == "") {
-                if (confirm('检测到您还未选择学历要求，确定放弃吗？')) {
-                    window.location.hash = '/main/information';  //跳转
-                } else {
-                    return false;
-                }
-            } else {
-                api.save(url, $scope.formData).success(function (res) {
-                    // 保存
 
-                })
-            }
+            api.save(url, $scope.formData).success(function (res) {
+                // 保存
+
+            })
         }
     }]);
 
@@ -1562,24 +1561,45 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
 
         $scope.formData = [];
 
-        $scope.formData.zo_education = "";   // 学历
-        $scope.zo_educationList = config_infoData.education;
+        $scope.isSelectedNull = false;
+        $scope.zodiacList = config_infoData.zodiac;
+
+        $scope.formData.userZodiacIDList = [1, 2];   //用户数据  鼠、牛
+
+        // 点击不限
+        $scope.SelectedNull = function ($event) {
+            if ($event.target.checked) {     // 选中不限
+                $scope.isSelectedNull = true;
+                $scope.formData.userZodiacIDList = [];
+            } else {
+                $scope.isSelectedNull = false;
+            }
+        }
+
+        $scope.selected = function ($event, id) {
+            var idx = $scope.formData.userZodiacIDList.indexOf(id);
+            if ($event.target.checked && idx == -1) {
+                $scope.formData.userZodiacIDList.push(id);
+            }
+            if (!$event.target.checked && idx != -1) {
+                $scope.formData.userZodiacIDList.splice(idx, 1);
+            }
+        }
+
+        // 判断是否选中
+        $scope.isSelected = function (id) {
+            return $scope.formData.userZodiacIDList.indexOf(id) >= 0;
+        }
 
         // 保存
         $scope.saveData = function () {
-            if ($scope.formData.zo_education == "") {
-                if (confirm('检测到您还未选择学历要求，确定放弃吗？')) {
-                    window.location.hash = '/main/information';  //跳转
-                } else {
-                    return false;
-                }
-            } else {
-                api.save(url, $scope.formData).success(function (res) {
-                    // 保存
 
-                })
-            }
+            api.save(url, $scope.formData).success(function (res) {
+
+            })
+
         }
+
     }]);
 
     // 择偶标准-星座
@@ -1589,24 +1609,45 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
 
         $scope.formData = [];
 
-        $scope.formData.zo_education = "";   // 学历
-        $scope.zo_educationList = config_infoData.education;
+        $scope.isSelectedNull = false;
+        $scope.constellationList = config_infoData.constellation;
+
+        $scope.formData.userConstellationIDList = [7, 9];   //用户数据  狮子座、天秤座
+
+        // 点击不限
+        $scope.SelectedNull = function ($event) {
+            if ($event.target.checked) {     // 选中不限
+                $scope.isSelectedNull = true;
+                $scope.formData.userConstellationIDList = [];
+            } else {
+                $scope.isSelectedNull = false;
+            }
+        }
+
+        $scope.selected = function ($event, id) {
+            var idx = $scope.formData.userConstellationIDList.indexOf(id);
+            if ($event.target.checked && idx == -1) {
+                $scope.formData.userConstellationIDList.push(id);
+            }
+            if (!$event.target.checked && idx != -1) {
+                $scope.formData.userConstellationIDList.splice(idx, 1);
+            }
+        }
+
+        // 判断是否选中
+        $scope.isSelected = function (id) {
+            return $scope.formData.userConstellationIDList.indexOf(id) >= 0;
+        }
 
         // 保存
         $scope.saveData = function () {
-            if ($scope.formData.zo_education == "") {
-                if (confirm('检测到您还未选择学历要求，确定放弃吗？')) {
-                    window.location.hash = '/main/information';  //跳转
-                } else {
-                    return false;
-                }
-            } else {
-                api.save(url, $scope.formData).success(function (res) {
-                    // 保存
 
-                })
-            }
+            api.save(url, $scope.formData).success(function (res) {
+
+            })
+
         }
+
     }]);
     return module;
 })

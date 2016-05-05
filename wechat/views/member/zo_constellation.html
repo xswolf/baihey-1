@@ -8,26 +8,18 @@
     </ion-header-bar>
     <ion-content class="bhy com_w_100 m_bg">
         <ion-list>
-            <div class="item item-divider">
-                嘉瑞 ● 实名制婚恋网
-            </div>
-            <div class="item item-text-wrap">
-
-                <label class="item item-input item-select">
-                    <div class="input-label">
-                        最低学历要求
-                    </div>
-                    <select ng-model="formData.zo_education">
-                        <option value="">请选择</option>
-                        <option value="{{e.id}}" ng-repeat="e in zo_educationList">{{e.name}}</option>
-                    </select>
+            <ion-item class="item-checkbox">
+                <label class="checkbox">
+                    <input type="checkbox" value="0" ng-click="SelectedNull($event)">
                 </label>
-
-                <div class="m_b_bg w100 mt20 tal">
-                    <img src="/wechat/web/images/member/children_bg.png">
-                </div>
-            </div>
-
+                不限
+            </ion-item>
+            <ion-item class="item-checkbox" ng-repeat="c in constellationList">
+                <label class="checkbox">
+                    <input type="checkbox" value="{{c.id}}" ng-checked="isSelected({{c.id}})" ng-disabled="isSelectedNull" ng-click="selected($event,{{c.id}})">
+                </label>
+                {{c.name}}
+            </ion-item>
         </ion-list>
     </ion-content>
 </ion-view>

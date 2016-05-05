@@ -70,40 +70,40 @@ var config_infoData = {
 
     'zodiac': [{
         id: 1,
-        name: '子鼠'
+        name: '鼠'
     }, {
         id: 2,
-        name: '丑牛'
+        name: '牛'
     }, {
         id: 3,
-        name: '寅虎'
+        name: '虎'
     }, {
         id: 4,
-        name: '卯兔'
+        name: '兔'
     }, {
         id: 5,
-        name: '辰龙'
+        name: '龙'
     }, {
         id: 6,
-        name: '巳蛇'
+        name: '蛇'
     }, {
         id: 7,
-        name: '午马'
+        name: '马'
     }, {
         id: 8,
-        name: '未羊'
+        name: '羊'
     }, {
         id: 9,
-        name: '申猴'
+        name: '猴'
     }, {
         id: 10,
-        name: '酉鸡'
+        name: '鸡'
     }, {
         id: 11,
-        name: '戌狗'
+        name: '狗'
     }, {
         id: 12,
-        name: '亥猪'
+        name: '猪'
     }],
 
     'constellation': [{
@@ -556,6 +556,15 @@ var config_infoData = {
         {id: 3, name: 'AB型'},
         {id: 4, name: 'O型'},
         {id: 5, name: 'RH型'}
+    ],
+    'children': [
+        {id: 1, name: '无小孩'},
+        {id: 2, name: '一个男孩（跟随对方）'},
+        {id: 3, name: '一个女孩（跟随对方）'},
+        {id: 4, name: '一个男孩（跟随自己）'},
+        {id: 5, name: '一个女孩（跟随自己）'},
+        {id: 6, name: '两个及以上（跟随对方）'},
+        {id: 7, name: '两个及以上（跟随自己）'}
     ]
 
 };

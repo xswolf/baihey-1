@@ -3,7 +3,7 @@
     <ion-header-bar class="com_w_100 bhy">
         <button class="button button-icon icon ion-arrow-left-c" ui-sref="main.member_information"
                 ng-click="showMenu(false)"></button>
-        <title class="title">属相要求</title>
+        <title class="title">购车要求</title>
         <button class="button button-icon cor21" ng-click="saveData()">保存</button>
     </ion-header-bar>
     <ion-content class="bhy com_w_100 m_bg">
@@ -15,11 +15,11 @@
 
                 <label class="item item-input item-select">
                     <div class="input-label">
-                        最低学历要求
+                        购车要求
                     </div>
-                    <select ng-model="formData.zo_education">
-                        <option value="">请选择</option>
-                        <option value="{{e.id}}" ng-repeat="e in zo_educationList">{{e.name}}</option>
+                    <select ng-model="formData.zo_car">
+                        <option value="0">不限</option>
+                        <option value="{{c.id}}" ng-repeat="c in zo_carList | limitTo:2">{{c.name}}</option>
                     </select>
                 </label>
 
