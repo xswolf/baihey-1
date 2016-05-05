@@ -53,7 +53,11 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
                 {'id': 11, 'url': '/wechat/web/images/test/2.jpg', 'headpic': 0}
             ];
 
+        // 删除照片
         $scope.removeImg = function (index) {
+
+            // 删除操作 api.getXXX
+
             $scope.imgList.splice(index, 1);
         };
 
