@@ -472,6 +472,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
         $scope.formData.usercity = "0";
         $scope.formData.userarea = "0";
 
+        // 地区联动
         $scope.address = function (name, pro) {
             if (name == 'citys') {
                 angular.forEach(citys, function (data, i) {
@@ -492,14 +493,14 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
         $scope.provinceSelect = function (pro) {
             $scope.formData.usercity = "0";
             $scope.formData.userarea = "0";
-            $scope.cityList = [];  // 清空数组
-            $scope.areaList = []; // 清空数组
+            $scope.cityList = [];  // 清空数组 市
+            $scope.areaList = []; // 清空数组 区
             $scope.address('citys', pro);
         }
 
         // 选择市
         $scope.citySelect = function (cit) {
-            $scope.areaList = []; // 清空数组
+            $scope.areaList = []; // 清空数组 区
             $scope.address('area', cit);
             if (cit == "0") {
                 $scope.formData.userarea = "0";
