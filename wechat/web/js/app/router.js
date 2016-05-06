@@ -369,6 +369,15 @@ define(["app/module", 'app/service/serviceApi'],
                             }
                         }
                     })
+                    .state('main.member_preview', {  // 预览资料
+                        url: "/preview",
+                        views: {
+                            'member-tab': {
+                                templateUrl: "/wechat/views/member/preview.html",
+                                controller: 'member.preview'
+                            }
+                        }
+                    })
                     .state('main.message', {  // 消息首页
                         cache: false,
                         url: "/message",
@@ -475,7 +484,7 @@ define(["app/module", 'app/service/serviceApi'],
                     $scope.userInfo.info = JSON.parse($scope.userInfo.info);
                     $scope.userInfo.identity_pic = JSON.parse($scope.userInfo.identity_pic);
                 } else {
-                    alert(11111);
+                    //alert(11111);
                 }
                 //$scope.userInfo = [{}];
 

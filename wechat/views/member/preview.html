@@ -2,10 +2,9 @@
     <link href="/wechat/web/css/member.css" rel="stylesheet">
     <link href="/wechat/web/css/plugin/bootstrap/css/font-awesome.min.css" rel="stylesheet">
     <ion-header-bar>
-        <button class="button button-icon icon ion-arrow-left-c" ui-sref="main.member"
+        <button class="button button-icon icon ion-arrow-left-c" ui-sref="main.member_information"
                 ng-click="showMenu(true)"></button>
-        <title class="title">我的资料</title>
-        <button class="button button-icon" ui-sref="main.member_preview">预览</button>
+        <title class="title">张小姐</title>
     </ion-header-bar>
     <ion-content ng-controller="member.information" class="bhy com_w_100 infomation m_bg">
         <ion-list>
@@ -15,17 +14,7 @@
                         <span>
                             <img src="{{img.url}}">
                         </span>
-                        <span class="removepic" ng-click="removeImg($index)">
-                            <i class="ionc ion-close-round"></i>
-                        </span>
-                        <span class="headpic" ng-if="img.headpic">头像</span>
                     </div>
-                    <div ng-if="imgList.length<12" class="imgItem addItem">
-                        <a href="javascript:;" ng-click="addNewImg()">
-                            <img src="/wechat/web/images/addImg.png">
-                        </a>
-                    </div>
-                    <div class="tip fl w100">点击更换照片，最多可以上传12张照片</div>
                 </div>
             </div>
             <input id="pic_fileInput" type="file" nv-file-select="" uploader="uploader"
@@ -62,27 +51,13 @@
                     <i class="ionc ion-ios-arrow-right"></i>
                 </div>
             </ion-item>
-            <ion-item class="mb10" ui-sref="main.member_signature">
+            <ion-item class="mb10">
                 <div class="info_l">
                     <p>个性签名</p>
                 </div>
                 <div class="info_c">
                     <p ng-if="userInfo.personalized == null">这人很懒，什么也没留下~</p>
                     <p ng-if="userInfo.personalized != null">{{userInfo.personalized}}</p>
-                </div>
-                <div class="info_r">
-                    <i class="ionc ion-ios-arrow-right"></i>
-                </div>
-            </ion-item>
-            <ion-item class="idv mb10" href="">
-                <div class="info_c">
-                    <p>
-                        <i class="icon ion-android-alert fs16 mr5 energized vam"></i>
-                        <span class="vam">诚信认证：您还未上传有效身份证明、婚姻证明、学历证明、资产证明~</span>
-                    </p>
-                </div>
-                <div class="info_r">
-                    <i class="ionc ion-ios-arrow-right"></i>
                 </div>
             </ion-item>
             <ion-item>
@@ -94,27 +69,16 @@
                     <p ng-if="userInfo.sex == 1"><i class="mr5 icon bhy-icon-member-man cor13 vam"></i>男</p>
                 </div>
             </ion-item>
-            <ion-item ng-if="userInfo.info.real_name == '未知'" ui-sref="main.member_real_name">
+            <ion-item>
                 <div class="info_l">
                     <p>真实姓名</p>
                 </div>
                 <div class="info_c">
-                    <p><span class="cor21 mr10">立即填写</span><span class="fs12 cor20">保密，只有您自己可以看到</span></p>
+                    <p>张**</p>
                 </div>
-                <div class="info_r">
-                    <i class="ionc ion-ios-arrow-right"></i>
-                </div>
+
             </ion-item>
-            <ion-item ng-if="userInfo.info.real_name != '未知'">
-                <div class="info_l">
-                    <p>真实姓名</p>
-                </div>
-                <div class="info_c">
-                    <p><span class="cor21 mr10">{{userInfo.info.real_name}}</span><span
-                            class="fs12 cor20">保密，只有您自己可以看到</span></p>
-                </div>
-            </ion-item>
-            <ion-item class="brithday" ui-sref="main.member_age">
+            <ion-item class="brithday">
                 <div class="info_l">
                     <p>出生年月</p>
                 </div>
@@ -123,89 +87,44 @@
                             class="mr10">羊</span><span>狮子座</span></p>
                 </div>
             </ion-item>
-            <ion-item ng-if="userInfo.info.height == '未知'" ui-sref="main.member_height">
+            <ion-item>
                 <div class="info_l">
                     <p>身高</p>
                 </div>
                 <div class="info_c">
-                    <p><span class="cor21">立即填写</span></p>
-                </div>
-                <div class="info_r">
-                    <i class="ionc ion-ios-arrow-right"></i>
+                    <p>165厘米</p>
                 </div>
             </ion-item>
-            <ion-item ng-if="userInfo.info.height != '未知'">
-                <div class="info_l">
-                    <p>身高</p>
-                </div>
-                <div class="info_c">
-                    <p>{{userInfo.info.height}}</p>
-                </div>
-            </ion-item>
-            <ion-item ng-if="userInfo.info.is_marriage == '未知'" ui-sref="main.member_is_marriage">
+            <ion-item >
                 <div class="info_l">
                     <p>婚姻状况</p>
                 </div>
                 <div class="info_c">
-                    <p><span class="cor21">立即填写</span></p>
-                </div>
-                <div class="info_r">
-                    <i class="ionc ion-ios-arrow-right"></i>
+                    <p class="null">未知</p>
                 </div>
             </ion-item>
-            <ion-item ng-if="userInfo.info.is_marriage != '未知'">
-                <div class="info_l">
-                    <p>婚姻状况</p>
-                </div>
-                <div class="info_c">
-                    <p>{{userInfo.info.is_marriage | marriage}}</p>
-                </div>
-            </ion-item>
-            <ion-item ng-if="userInfo.info.education == '未知'" ui-sref="main.member_education">
+            <ion-item>
                 <div class="info_l">
                     <p>学历</p>
                 </div>
                 <div class="info_c">
-                    <p><span class="cor21">立即填写</span></p>
-                </div>
-                <div class="info_r">
-                    <i class="ionc ion-ios-arrow-right"></i>
+                    <p class="null">未知</p>
                 </div>
             </ion-item>
-            <ion-item ng-if="userInfo.info.education != '未知'">
-                <div class="info_l">
-                    <p>学历</p>
-                </div>
-                <div class="info_c">
-                    <p>
-                        <i class="icon ion-university positive fs16 mr5 vam"></i>
-                        {{userInfo.info.education | education}}
-                    </p>
-                </div>
-            </ion-item>
-            <ion-item ui-sref="main.member_occupation">
+            <ion-item>
                 <div class="info_l">
                     <p>职业</p>
                 </div>
-                <div ng-if="userInfo.info.occupation == '未知'" class="info_c">
-                    <p><span class="cor21">立即填写</span></p>
-                </div>
-                <div ng-if="userInfo.info.occupation != '未知'" class="info_c">
-                    <p><span>{{userInfo.info.occupation | occupation : userInfo.info.children_occupation}}</span></p>
-                </div>
-                <div class="info_r">
-                    <i class="ionc ion-ios-arrow-right"></i>
+                <div class="info_c">
+                    <p class="null">未知</p>
                 </div>
             </ion-item>
-            <ion-item ui-sref="main.member_address">
+            <ion-item>
                 <div class="info_l">
                     <p>地区</p>
                 </div>
                 <div class="info_c">
                     <p><span>重庆市</span><span>渝中区</span></p>
-                </div>
-                <div class="info_r">
-                    <i class="ionc ion-ios-arrow-right"></i>
                 </div>
             </ion-item>
             <ion-item ui-sref="main.member_haunt_address">
@@ -214,9 +133,6 @@
                 </div>
                 <div class="info_c">
                     <p>观音桥、大坪、南坪</p>
-                </div>
-                <div class="info_r">
-                    <i class="ionc ion-ios-arrow-right"></i>
                 </div>
             </ion-item>
 
@@ -236,44 +152,30 @@
                     <i class="ionc ion-ios-arrow-right"></i>
                 </div>
             </ion-item>-->
-            <ion-item ui-sref="main.member_wechat_number">
+            <ion-item>
                 <div class="info_l">
                     <p>微信号</p>
                 </div>
                 <div class="info_c">
-                    <p><span class="cor21 mr10">立即填写</span></p>
-                </div>
-                <div class="info_r">
-                    <i class="ionc ion-ios-arrow-right"></i>
+                    <p>******</p>
                 </div>
             </ion-item>
-            <ion-item ui-sref="main.member_qq_number">
+            <ion-item>
                 <div class="info_l">
                     <p>QQ号</p>
                 </div>
                 <div class="info_c">
-                    <p><span class="cor21 mr10">立即填写</span></p>
-                </div>
-                <div class="info_r">
-                    <i class="ionc ion-ios-arrow-right"></i>
+                    <p>******</p>
                 </div>
             </ion-item>
             <div class="hobby">
                 <div class="hobby_bg">
                     <img src="/wechat/web/images/info_hobby_bg.jpg">
                 </div>
-                <div class="hobby_t">
-                    <div class="h_t_b tac">
-                        <span class="h_t_t">填出真正的自己，总有一位会关注您！</span>
-                    </div>
-                </div>
             </div>
-            <ion-item ui-sref="main.member_been_address" class="hob_item">
+            <ion-item class="hob_item">
                 <div class="info_l hob">
-                    <p>我去过的地方(7)</p>
-                </div>
-                <div class="info_r">
-                    <i class="ionc ion-ios-arrow-right"></i>
+                    <p>她去过的地方(7)</p>
                 </div>
                 <div class="info_c hob">
                     <div class="hob_addr clearfix">
@@ -308,12 +210,9 @@
                     </div>
                 </div>
             </ion-item>
-            <ion-item ui-sref="main.member_want_address" class="hob_item">
+            <ion-item class="hob_item">
                 <div class="info_l hob">
-                    <p>想去的地方(5)</p>
-                </div>
-                <div class="info_r">
-                    <i class="ionc ion-ios-arrow-right"></i>
+                    <p>她想去的地方(5)</p>
                 </div>
                 <div class="info_c hob">
                     <div class="hob_addr clearfix">
@@ -337,17 +236,13 @@
                             <i class="ion-location hob_addr_icon"></i>
                             <span class="hob_addr_name">北京</span>
                         </span>
-
                     </div>
                 </div>
             </ion-item>
 
-            <ion-item ui-sref="main.member_sports" class="hob_item">
+            <ion-item class="hob_item">
                 <div class="info_l hob">
-                    <p>喜欢的运动(4)</p>
-                </div>
-                <div class="info_r">
-                    <i class="ionc ion-ios-arrow-right"></i>
+                    <p>她喜欢的运动(4)</p>
                 </div>
                 <div class="info_c hob">
                     <div class="hob_sport clearfix">
@@ -379,12 +274,9 @@
                 </div>
             </ion-item>
 
-            <ion-item ui-sref="main.member_movie" class="hob_item">
+            <ion-item class="hob_item">
                 <div class="info_l hob">
                     <p>想看的电影(8)</p>
-                </div>
-                <div class="info_r">
-                    <i class="ionc ion-ios-arrow-right"></i>
                 </div>
                 <div class="info_c hob">
                     <ion-scroll delegate-handle="small" zooming="false" direction="x" scrollbar-x="false"
@@ -437,12 +329,9 @@
                 </div>
             </ion-item>
 
-            <ion-item ui-sref="main.member_delicacy" class="hob_item">
+            <ion-item class="hob_item">
                 <div class="info_l hob">
                     <p>喜欢的美食(9)</p>
-                </div>
-                <div class="info_r">
-                    <i class="ionc ion-ios-arrow-right"></i>
                 </div>
                 <div class="info_c hob mb10">
                     <div class="hob_food clearfix">
@@ -473,197 +362,146 @@
                     </div>
                 </div>
             </ion-item>
-            <ion-item ui-sref="main.member_mate">
+            <ion-item>
                 <div class="info_l mate">
-                    <p>对未来伴侣的期望</p>
+                    <p>她对未来伴侣的期望</p>
                 </div>
                 <div class="info_c mate">
-                    <p><span class="cor21 mr10">立即填写</span></p>
-                </div>
-                <div class="info_r">
-                    <i class="ionc ion-ios-arrow-right"></i>
+                    <p class="null">未知</p>
                 </div>
             </ion-item>
             <ion-item class="member_t">
                 <p>详细资料</p>
             </ion-item>
-            <ion-item ui-sref="main.member_children">
+            <ion-item>
                 <div class="info_l">
                     <p>子女状况</p>
                 </div>
                 <div class="info_c">
                     <p>无小孩</p>
                 </div>
-                <div class="info_r">
-                    <i class="ionc ion-ios-arrow-right"></i>
-                </div>
             </ion-item>
-            <ion-item ui-sref="main.member_nation">
+            <ion-item>
                 <div class="info_l">
                     <p>民族</p>
                 </div>
                 <div class="info_c">
                     <p>汉族</p>
                 </div>
-                <div class="info_r">
-                    <i class="ionc ion-ios-arrow-right"></i>
-                </div>
             </ion-item>
-            <ion-item ui-sref="main.member_work">
+            <ion-item>
                 <div class="info_l">
                     <p>工作单位</p>
                 </div>
                 <div class="info_c">
-                    <p><span class="cor21 mr10">立即填写</span></p>
-                </div>
-                <div class="info_r">
-                    <i class="ionc ion-ios-arrow-right"></i>
+                    <p class="null">未知</p>
                 </div>
             </ion-item>
-            <ion-item ui-sref="main.member_salary">
+            <ion-item>
                 <div class="info_l">
                     <p>年收入</p>
                 </div>
                 <div class="info_c">
-                    <p><span class="cor21 mr10">立即填写</span></p>
-                </div>
-                <div class="info_r">
-                    <i class="ionc ion-ios-arrow-right"></i>
+                    <p class="null">未知</p>
                 </div>
             </ion-item>
-            <ion-item ui-sref="main.member_house">
+            <ion-item>
                 <div class="info_l">
                     <p>购房情况</p>
                 </div>
                 <div class="info_c">
-                    <p><span class="cor21 mr10">立即填写</span></p>
-                </div>
-                <div class="info_r">
-                    <i class="ionc ion-ios-arrow-right"></i>
+                    <p>未购房</p>
                 </div>
             </ion-item>
-            <ion-item ui-sref="main.member_car">
+            <ion-item>
                 <div class="info_l">
                     <p>购车情况</p>
                 </div>
                 <div class="info_c">
-                    <p><span class="cor21 mr10">立即填写</span></p>
-                </div>
-                <div class="info_r">
-                    <i class="ionc ion-ios-arrow-right"></i>
+                    <p>未购车</p>
                 </div>
             </ion-item>
-            <ion-item ui-sref="main.member_blood">
+            <ion-item>
                 <div class="info_l">
                     <p>血型</p>
                 </div>
                 <div class="info_c">
-                    <p><span class="cor21 mr10">立即填写</span></p>
-                </div>
-                <div class="info_r">
-                    <i class="ionc ion-ios-arrow-right"></i>
+                    <p>O型</p>
                 </div>
             </ion-item>
-            <ion-item ui-sref="main.member_school">
+            <ion-item>
                 <div class="info_l">
                     <p>毕业院校</p>
                 </div>
                 <div class="info_c">
-                    <p>重庆工商大学</p>
-                </div>
-                <div class="info_r">
-                    <i class="ionc ion-ios-arrow-right"></i>
+                    <p class="null">未知</p>
                 </div>
             </ion-item>
             <ion-item class="member_t">
                 <p>择偶标准</p>
             </ion-item>
-            <ion-item ui-sref="main.member_zo_age">
+            <ion-item>
                 <div class="info_l">
                     <p>年龄</p>
                 </div>
                 <div class="info_c">
                     <p>18-24岁</p>
                 </div>
-                <div class="info_r">
-                    <i class="ionc ion-ios-arrow-right"></i>
-                </div>
             </ion-item>
-            <ion-item ui-sref="main.member_zo_height">
+            <ion-item>
                 <div class="info_l">
                     <p>身高</p>
                 </div>
                 <div class="info_c">
                     <p>170-185厘米</p>
                 </div>
-                <div class="info_r">
-                    <i class="ionc ion-ios-arrow-right"></i>
-                </div>
             </ion-item>
-            <ion-item ui-sref="main.member_zo_education">
+            <ion-item>
                 <div class="info_l">
                     <p>学历</p>
                 </div>
                 <div class="info_c">
                     <p>不限</p>
                 </div>
-                <div class="info_r">
-                    <i class="ionc ion-ios-arrow-right"></i>
-                </div>
             </ion-item>
-            <ion-item ui-sref="main.member_zo_marriage">
+            <ion-item>
                 <div class="info_l">
                     <p>婚姻状况</p>
                 </div>
                 <div class="info_c">
                     <p>未婚</p>
                 </div>
-                <div class="info_r">
-                    <i class="ionc ion-ios-arrow-right"></i>
-                </div>
             </ion-item>
-            <ion-item ui-sref="main.member_zo_house">
+            <ion-item>
                 <div class="info_l">
                     <p>购房情况</p>
                 </div>
                 <div class="info_c">
                     <p>已购房</p>
                 </div>
-                <div class="info_r">
-                    <i class="ionc ion-ios-arrow-right"></i>
-                </div>
             </ion-item>
-            <ion-item ui-sref="main.member_zo_car">
+            <ion-item>
                 <div class="info_l">
                     <p>购车情况</p>
                 </div>
                 <div class="info_c">
                     <p>不限</p>
                 </div>
-                <div class="info_r">
-                    <i class="ionc ion-ios-arrow-right"></i>
-                </div>
             </ion-item>
-            <ion-item ui-sref="main.member_zo_zodiac">
+            <ion-item>
                 <div class="info_l">
                     <p>属相</p>
                 </div>
                 <div class="info_c">
                     <p>牛</p>
                 </div>
-                <div class="info_r">
-                    <i class="ionc ion-ios-arrow-right"></i>
-                </div>
             </ion-item>
-            <ion-item ui-sref="main.member_zo_constellation" class="mb30">
+            <ion-item class="mb30">
                 <div class="info_l">
                     <p>星座</p>
                 </div>
                 <div class="info_c">
                     <p>不限</p>
-                </div>
-                <div class="info_r">
-                    <i class="ionc ion-ios-arrow-right"></i>
                 </div>
             </ion-item>
 

@@ -229,6 +229,9 @@
 .info_c p {
   color: #434343;
 }
+.info_c p.null {
+  color: #999999;
+}
 .info_c .dyn_img_list .dyn_img,
 .info_c .gift_list .gift_img {
   width: 40px;

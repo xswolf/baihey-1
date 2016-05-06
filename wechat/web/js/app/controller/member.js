@@ -1687,6 +1687,14 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
         }
 
     }]);
+
+    // 预览资料
+    module.controller("member.preview", ['app.serviceApi', '$scope', '$ionicPopup', 'FileUploader', '$ionicLoading', function (api, $scope, $ionicPopup, FileUploader, $ionicLoading) {
+
+
+
+    }]);
+
     return module;
 })
 
