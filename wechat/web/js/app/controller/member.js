@@ -17,20 +17,12 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
          }
          });*/
 
-        /* $scope.userInfo = ar.getStorage('userInfo');
-         $scope.userInfo.info = JSON.parse($scope.userInfo.info);
-         $scope.userInfo.identity_pic = JSON.parse($scope.userInfo.identity_pic);
-         */
-        $scope.userInfo = [{}];
 
     }]);
 
     // 资料首页
     module.controller("member.information", ['app.serviceApi', '$scope', '$ionicPopup', 'FileUploader', '$ionicLoading', function (api, $scope, $ionicPopup, FileUploader, $ionicLoading) {
         $scope.showMenu(false);
-        $scope.userInfo = ar.getStorage('userInfo');
-        $scope.userInfo.info = JSON.parse($scope.userInfo.info);
-        $scope.userInfo.identity_pic = JSON.parse($scope.userInfo.identity_pic);
         $scope.formData = [];
 
         // 实例化上传图片插件
@@ -191,7 +183,6 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
     module.controller("member.signature", ['app.serviceApi', '$scope', '$ionicPopup', function (api, $scope, $ionicPopup) {
 
         $scope.showMenu(false);
-        $scope.userInfo = ar.getStorage('userInfo');
 
         $scope.formData = [];
         $scope.formData.personalized = $scope.userInfo.personalized;
@@ -206,8 +197,8 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
                 api.save('/wap/member/save-data', $scope.formData).success(function (res) {
                     // 保存
                     $scope.userInfo.personalized = $scope.formData.personalized;
-                    ar.setStorage('userInfo', $scope.userInfo);
-                    window.location.hash = '/main/information';
+                    //$scope.upUserStorage('personalized',$scope.formData.personalized,'wu');
+                    $scope.setUserStorage();
                 })
             }
 
@@ -219,8 +210,6 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
     module.controller("member.real_name", ['app.serviceApi', '$scope', '$ionicPopup', function (api, $scope, $ionicPopup) {
 
         $scope.showMenu(false);
-        $scope.userInfo = ar.getStorage('userInfo');
-        $scope.userInfo.info = JSON.parse($scope.userInfo.info);
 
         $scope.formData = [];
         $scope.formData.real_name = $scope.userInfo.info.real_name != '未知' ? $scope.userInfo.info.real_name : '';
@@ -236,9 +225,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
                 api.save('/wap/member/save-data', $scope.formData).success(function (res) {
                     // 保存
                     $scope.userInfo.info.real_name = $scope.formData.real_name;
-                    $scope.userInfo.info = JSON.stringify($scope.userInfo.info);
-                    ar.setStorage('userInfo', $scope.userInfo);
-                    window.location.hash = '/main/information';
+                    $scope.setUserStorage();
                 })
             }
         }
@@ -279,8 +266,6 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
     module.controller("member.height", ['app.serviceApi', '$scope', '$ionicPopup', function (api, $scope, $ionicPopup) {
 
         $scope.showMenu(false);
-        $scope.userInfo = ar.getStorage('userInfo');
-        $scope.userInfo.info = JSON.parse($scope.userInfo.info);
 
         $scope.formData = [];
         $scope.formData.height = $scope.userInfo.info.height;
@@ -303,9 +288,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
                 api.save('/wap/member/save-data', $scope.formData).success(function (res) {
                     // 保存
                     $scope.userInfo.info.height = $scope.formData.height;
-                    $scope.userInfo.info = JSON.stringify($scope.userInfo.info);
-                    ar.setStorage('userInfo', $scope.userInfo);
-                    window.location.hash = '/main/information';
+                    $scope.setUserStorage();
                 })
             }
 
@@ -318,8 +301,6 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
     module.controller("member.is_marriage", ['app.serviceApi', '$scope', '$ionicPopup', function (api, $scope, $ionicPopup) {
 
         $scope.showMenu(false);
-        $scope.userInfo = ar.getStorage('userInfo');
-        $scope.userInfo.info = JSON.parse($scope.userInfo.info);
 
         $scope.formData = [];
         $scope.formData.is_marriage = $scope.userInfo.info.is_marriage;
@@ -342,9 +323,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
                 api.save('/wap/member/save-data', $scope.formData).success(function (res) {
                     // 保存
                     $scope.userInfo.info.is_marriage = $scope.formData.is_marriage;
-                    $scope.userInfo.info = JSON.stringify($scope.userInfo.info);
-                    ar.setStorage('userInfo', $scope.userInfo);
-                    window.location.hash = '/main/information';
+                    $scope.setUserStorage();
                 })
             }
 
@@ -357,8 +336,6 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
     module.controller("member.education", ['app.serviceApi', '$scope', '$ionicPopup', function (api, $scope, $ionicPopup) {
 
         $scope.showMenu(false);
-        $scope.userInfo = ar.getStorage('userInfo');
-        $scope.userInfo.info = JSON.parse($scope.userInfo.info);
 
         $scope.formData = [];
         $scope.formData.education = $scope.userInfo.info.education;
@@ -381,9 +358,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
                 api.save('/wap/member/save-data', $scope.formData).success(function (res) {
                     // 保存
                     $scope.userInfo.info.education = $scope.formData.education;
-                    $scope.userInfo.info = JSON.stringify($scope.userInfo.info);
-                    ar.setStorage('userInfo', $scope.userInfo);
-                    window.location.hash = '/main/information';
+                    $scope.setUserStorage();
                 })
             }
 
@@ -394,8 +369,6 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
     module.controller("member.occupation", ['app.serviceApi', '$scope', '$ionicPopup', function (api, $scope, $ionicPopup) {
 
         $scope.showMenu(false);
-        $scope.userInfo = ar.getStorage('userInfo');
-        $scope.userInfo.info = JSON.parse($scope.userInfo.info);
 
         $scope.formData = [];
         $scope.occupation = $scope.userInfo.info.occupation != '未知' ? $scope.userInfo.info.occupation : 1;
@@ -445,9 +418,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
                         // 保存
                         $scope.userInfo.info.occupation = $scope.useroccBig;
                         $scope.userInfo.info.children_occupation = $scope.useroccSmall;
-                        $scope.userInfo.info = JSON.stringify($scope.userInfo.info);
-                        ar.setStorage('userInfo', $scope.userInfo);
-                        window.location.hash = '/main/information';
+                        $scope.setUserStorage();
                     })
                 }
             }
@@ -459,39 +430,30 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
     module.controller("member.address", ['app.serviceApi', '$scope', '$ionicPopup', function (api, $scope, $ionicPopup) {
 
         $scope.showMenu(false);
-        $scope.userInfo = ar.getStorage('userInfo');
 
         // 加载数据
         $scope.provinceList = provines;
 
         // 用户数据
-        /* $scope.formData = [];
+         $scope.formData = [];
          $scope.formData.userprovince = $scope.userInfo.province != 'null' ? $scope.userInfo.province : '0';
          $scope.formData.usercity = $scope.userInfo.city != 'null' ? $scope.userInfo.city : '0';
-         $scope.formData.userarea = $scope.userInfo.area != 'null' ? $scope.userInfo.area : '0';*/
-
-        // 初始化用户数据
-        $scope.formData = [];
-        $scope.formData.userprovince = "0";
-        $scope.formData.usercity = "0";
-        $scope.formData.userarea = "0";
+         $scope.formData.userarea = $scope.userInfo.area != 'null' ? $scope.userInfo.area : '0';
 
         // 地区联动
-        $scope.address = function (name, pro) {
-            if (name == 'citys') {
-                angular.forEach(citys, function (data, i) {
-                    if (citys[i].parentId == pro) {
-                        $scope.cityList.push(citys[i]);
-                    }
-                });
-            } else {
-                angular.forEach(area, function (data, i) {
-                    if (area[i].parentId == pro) {
-                        $scope.areaList.push(area[i]);
-                    }
-                });
+        $scope.cityList = [];
+        $scope.areaList = [];
+        var address = function (name, pro) {
+            var arr = name == 'city' ? citys : area;
+            if (pro == null || pro == undefined || pro == 0) return null;
+            for ( var i in arr){
+                if (arr[i].parentId == pro) {
+                    eval('$scope.' + name + 'List.push(arr[i])');
+                }
             }
         }
+        address('city', $scope.formData.userprovince);
+        address('area', $scope.formData.usercity);
 
         // 选择省
         $scope.provinceSelect = function (pro) {
@@ -499,23 +461,19 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
             $scope.formData.userarea = "0";
             $scope.cityList = [];  // 清空数组 市
             $scope.areaList = []; // 清空数组 区
-            $scope.address('citys', pro);
+            address('city', pro);
         }
 
         // 选择市
         $scope.citySelect = function (cit) {
             $scope.areaList = []; // 清空数组 区
-            $scope.address('area', cit);
+            address('area', cit);
             if (cit == "0") {
                 $scope.formData.userarea = "0";
             }
         }
 
         $scope.saveData = function () {
-
-            console.log($scope.formData);    // 你需要的数据
-            return false;
-
             if ($scope.formData.userprovince == "0") {
                 if (confirm('检测到您还未选择地区，确定放弃吗？')) {
                     window.location.hash = '/main/information';  //跳转
@@ -535,7 +493,6 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
                 } else {
                     $scope.addressData.address += '-0';
                 }
-                console.log($scope.addressData);
                 api.save('/wap/member/save-data', $scope.addressData).success(function (res) {
                     // 保存
                     $scope.userInfo.province = $scope.formData.userprovince;
@@ -549,8 +506,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
                     } else {
                         $scope.userInfo.area = null;
                     }
-                    ar.setStorage('userInfo', $scope.userInfo);
-                    window.location.hash = '/main/information';
+                    $scope.setUserStorage();
                 })
             }
         }
