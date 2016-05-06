@@ -378,6 +378,24 @@ define(["app/module", 'app/service/serviceApi'],
                             }
                         }
                     })
+                    .state('main.member_follow', {  // 我-谁关注了我
+                        url: "/follow",
+                        views: {
+                            'member-tab': {
+                                templateUrl: "/wechat/views/member/follow.html",
+                                controller: 'member.follow'
+                            }
+                        }
+                    })
+                    .state('main.user_info', {  // 查看用户资料
+                        url: "/user_info{userId}{tempUrl}",
+                        views: {
+                            'main-tab': {
+                                templateUrl: "/wechat/views/site/user_info.html",
+                                controller: 'site.user_info'
+                            }
+                        }
+                    })
                     .state('main.message', {  // 消息首页
                         cache: false,
                         url: "/message",
@@ -470,16 +488,6 @@ define(["app/module", 'app/service/serviceApi'],
                 } else {
                     $scope.msgNumber = 0;
                 }
-                $scope.showMenu = function (show) {
-                    if (show) {
-                        angular.element(document.querySelector('.tab-nav'))
-                            .removeClass('hide');
-                    } else {
-                        angular.element(document.querySelector('.tab-nav'))
-                            .addClass('hide');
-                    }
-                }
-
                 $scope.upUserStorage = function(name,value,type) {
                     if(type == 'wu') {
                         eval('$scope.userInfo.' + name + ' = ' + value);

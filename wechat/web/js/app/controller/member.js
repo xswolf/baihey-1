@@ -22,7 +22,6 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
 
     // 资料首页
     module.controller("member.information", ['app.serviceApi', '$scope', '$ionicPopup', 'FileUploader', '$ionicLoading', function (api, $scope, $ionicPopup, FileUploader, $ionicLoading) {
-        $scope.showMenu(false);
         $scope.formData = [];
 
         // 实例化上传图片插件
@@ -48,9 +47,14 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
         // 删除照片
         $scope.removeImg = function (index) {
 
-            // 删除操作 api.getXXX
+            if(confirm("是否删除？")){
+                // 删除操作 api.getXXX
+                $scope.imgList.splice(index, 1);
+            }else{
+                return false;
+            }
 
-            $scope.imgList.splice(index, 1);
+
         };
 
         $scope.showLoading = function (progress) {
@@ -104,8 +108,6 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
 
     // 个人动态
     module.controller("member.dynamic", ['app.serviceApi', '$scope', '$ionicPopup', function (api, $scope, $ionicPopup) {
-
-        $scope.showMenu(false);
 
         // 图片放大查看插件
         requirejs(['jquery'], function ($) {
@@ -182,8 +184,6 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
     // 个性签名
     module.controller("member.signature", ['app.serviceApi', '$scope', '$ionicPopup', function (api, $scope, $ionicPopup) {
 
-        $scope.showMenu(false);
-
         $scope.formData = [];
         $scope.formData.personalized = $scope.userInfo.personalized;
         $scope.saveData = function () {
@@ -209,8 +209,6 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
     // 真实姓名
     module.controller("member.real_name", ['app.serviceApi', '$scope', '$ionicPopup', function (api, $scope, $ionicPopup) {
 
-        $scope.showMenu(false);
-
         $scope.formData = [];
         $scope.formData.real_name = $scope.userInfo.info.real_name != '未知' ? $scope.userInfo.info.real_name : '';
         $scope.sex = 0;  // 用户性别
@@ -233,8 +231,6 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
 
     // 出生年月
     module.controller("member.age", ['app.serviceApi', '$scope', '$ionicPopup', function (api, $scope, $ionicPopup) {
-
-        $scope.showMenu(false);
 
         $scope.formData = [];
         $scope.age = '年龄';
@@ -264,8 +260,6 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
 
     // 身高
     module.controller("member.height", ['app.serviceApi', '$scope', '$ionicPopup', function (api, $scope, $ionicPopup) {
-
-        $scope.showMenu(false);
 
         $scope.formData = [];
         $scope.formData.height = $scope.userInfo.info.height;
@@ -300,8 +294,6 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
     // 婚姻状况
     module.controller("member.is_marriage", ['app.serviceApi', '$scope', '$ionicPopup', function (api, $scope, $ionicPopup) {
 
-        $scope.showMenu(false);
-
         $scope.formData = [];
         $scope.formData.is_marriage = $scope.userInfo.info.is_marriage;
 
@@ -335,8 +327,6 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
     // 学历
     module.controller("member.education", ['app.serviceApi', '$scope', '$ionicPopup', function (api, $scope, $ionicPopup) {
 
-        $scope.showMenu(false);
-
         $scope.formData = [];
         $scope.formData.education = $scope.userInfo.info.education;
 
@@ -367,8 +357,6 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
 
     // 职业
     module.controller("member.occupation", ['app.serviceApi', '$scope', '$ionicPopup', function (api, $scope, $ionicPopup) {
-
-        $scope.showMenu(false);
 
         $scope.formData = [];
         $scope.occupation = $scope.userInfo.info.occupation != '未知' ? $scope.userInfo.info.occupation : 1;
@@ -428,8 +416,6 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
 
     // 地区
     module.controller("member.address", ['app.serviceApi', '$scope', '$ionicPopup', function (api, $scope, $ionicPopup) {
-
-        $scope.showMenu(false);
 
         // 加载数据
         $scope.provinceList = provines;
@@ -516,7 +502,6 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
     // 常出没地
     module.controller("member.haunt_address", ['app.serviceApi', '$scope', '$ionicPopup', function (api, $scope, $ionicPopup) {
 
-        $scope.showMenu(false);
         $scope.formData = [];
         $scope.saveData = function () {
             if ($scope.formData.haunt_address == '' || typeof($scope.formData.haunt_address) == 'undefined') {
@@ -539,8 +524,6 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
     // 微信号
     module.controller("member.wechat_number", ['app.serviceApi', '$scope', '$ionicPopup', function (api, $scope, $ionicPopup) {
 
-        $scope.showMenu(false);
-
         $scope.formData = [];
         $scope.saveData = function () {
             if ($scope.formData.wechat == '' || typeof($scope.formData.wechat) == 'undefined') {
@@ -562,8 +545,6 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
     // QQ号
     module.controller("member.qq_number", ['app.serviceApi', '$scope', '$ionicPopup', function (api, $scope, $ionicPopup) {
 
-        $scope.showMenu(false);
-
         $scope.formData = [];
         $scope.saveData = function () {
             if ($scope.formData.qq == '' || typeof($scope.formData.qq) == 'undefined') {
@@ -584,8 +565,6 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
 
     // 去过的地方
     module.controller("member.been_address", ['app.serviceApi', '$scope', '$ionicPopup', '$filter', '$ionicScrollDelegate', function (api, $scope, $ionicPopup, $filter, $ionicScrollDelegate) {
-
-        $scope.showMenu(false);
 
         $scope.formData = [];
 
@@ -703,8 +682,6 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
 
     // 最近想去的地方
     module.controller("member.want_address", ['app.serviceApi', '$scope', '$ionicPopup', '$filter', '$ionicScrollDelegate', function (api, $scope, $ionicPopup, $filter, $ionicScrollDelegate) {
-
-        $scope.showMenu(false);
 
         $scope.formData = [];
 
@@ -893,8 +870,6 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
     // 喜欢的运动
     module.controller("member.sports", ['app.serviceApi', '$scope', '$ionicPopup', '$ionicScrollDelegate', function (api, $scope, $ionicPopup, $ionicScrollDelegate) {
 
-        $scope.showMenu(false);
-
         $scope.formData = [];
 
         $scope.formData.userSportsIdList = [];
@@ -973,8 +948,6 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
 
     // 喜欢的电影
     module.controller("member.movie", ['app.serviceApi', '$scope', '$ionicPopup', '$ionicScrollDelegate', '$filter', function (api, $scope, $ionicPopup, $ionicScrollDelegate, $filter) {
-
-        $scope.showMenu(false);
 
         $scope.formData = [];
 
@@ -1071,8 +1044,6 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
     // 喜欢的电影
     module.controller("member.delicacy", ['app.serviceApi', '$scope', '$ionicPopup', '$ionicScrollDelegate', '$filter', function (api, $scope, $ionicPopup, $ionicScrollDelegate, $filter) {
 
-        $scope.showMenu(false);
-
         $scope.formData = [];
 
         $scope.formData.userDelicacyIdList = [];
@@ -1151,8 +1122,6 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
     // 对未来伴侣的期望
     module.controller("member.mate", ['app.serviceApi', '$scope', '$ionicPopup', function (api, $scope, $ionicPopup) {
 
-        $scope.showMenu(false);
-
         $scope.formData = [];
 
         $scope.formData.mateText = "";
@@ -1176,8 +1145,6 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
 
     // 子女状况
     module.controller("member.children", ['app.serviceApi', '$scope', '$ionicPopup', function (api, $scope, $ionicPopup) {
-
-        $scope.showMenu(false);
 
         $scope.formData = [];
 
@@ -1208,8 +1175,6 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
     // 民族
     module.controller("member.nation", ['app.serviceApi', '$scope', '$ionicPopup', function (api, $scope, $ionicPopup) {
 
-        $scope.showMenu(false);
-
         $scope.formData = [];
 
         $scope.nationList = config_infoData.nation;
@@ -1238,8 +1203,6 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
     // 工作单位
     module.controller("member.work", ['app.serviceApi', '$scope', '$ionicPopup', function (api, $scope, $ionicPopup) {
 
-        $scope.showMenu(false);
-
         $scope.formData = [];
 
         $scope.formData.work = "";
@@ -1263,8 +1226,6 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
 
     // 年收入
     module.controller("member.salary", ['app.serviceApi', '$scope', '$ionicPopup', function (api, $scope, $ionicPopup) {
-
-        $scope.showMenu(false);
 
         $scope.formData = [];
 
@@ -1294,8 +1255,6 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
     // 购房情况
     module.controller("member.house", ['app.serviceApi', '$scope', '$ionicPopup', function (api, $scope, $ionicPopup) {
 
-        $scope.showMenu(false);
-
         $scope.formData = [];
 
         $scope.houseList = config_infoData.house;
@@ -1323,8 +1282,6 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
 
     // 购车情况
     module.controller("member.car", ['app.serviceApi', '$scope', '$ionicPopup', function (api, $scope, $ionicPopup) {
-
-        $scope.showMenu(false);
 
         $scope.formData = [];
 
@@ -1354,8 +1311,6 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
     // 血型
     module.controller("member.blood", ['app.serviceApi', '$scope', '$ionicPopup', function (api, $scope, $ionicPopup) {
 
-        $scope.showMenu(false);
-
         $scope.formData = [];
 
         $scope.bloodList = config_infoData.blood;
@@ -1384,8 +1339,6 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
     // 毕业院校
     module.controller("member.school", ['app.serviceApi', '$scope', '$ionicPopup', function (api, $scope, $ionicPopup) {
 
-        $scope.showMenu(false);
-
         $scope.formData = [];
 
         $scope.formData.school = "";
@@ -1409,8 +1362,6 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
 
     // 择偶标准-年龄
     module.controller("member.zo_age", ['app.serviceApi', '$scope', '$ionicPopup', function (api, $scope, $ionicPopup) {
-
-        $scope.showMenu(false);
 
         $scope.formData = [];
 
@@ -1445,8 +1396,6 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
     // 择偶标准-身高
     module.controller("member.zo_height", ['app.serviceApi', '$scope', '$ionicPopup', function (api, $scope, $ionicPopup) {
 
-        $scope.showMenu(false);
-
         $scope.formData = [];
 
         $scope.formData.zo_heightMax = "0";   // 最大年龄
@@ -1480,8 +1429,6 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
     // 择偶标准-学历
     module.controller("member.zo_education", ['app.serviceApi', '$scope', '$ionicPopup', function (api, $scope, $ionicPopup) {
 
-        $scope.showMenu(false);
-
         $scope.formData = [];
 
         $scope.formData.zo_education = "";   // 学历
@@ -1506,8 +1453,6 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
 
     // 择偶标准-婚姻状况
     module.controller("member.zo_marriage", ['app.serviceApi', '$scope', '$ionicPopup', function (api, $scope, $ionicPopup) {
-
-        $scope.showMenu(false);
 
         $scope.formData = [];
 
@@ -1555,8 +1500,6 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
     // 择偶标准-购房情况
     module.controller("member.zo_house", ['app.serviceApi', '$scope', '$ionicPopup', function (api, $scope, $ionicPopup) {
 
-        $scope.showMenu(false);
-
         $scope.formData = [];
 
         $scope.formData.zo_house = "0";   // 学历 默认不限
@@ -1575,8 +1518,6 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
     // 择偶标准-购车情况
     module.controller("member.zo_car", ['app.serviceApi', '$scope', '$ionicPopup', function (api, $scope, $ionicPopup) {
 
-        $scope.showMenu(false);
-
         $scope.formData = [];
 
         $scope.formData.zo_car = "";   // 学历
@@ -1594,8 +1535,6 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
 
     // 择偶标准-属相
     module.controller("member.zo_zodiac", ['app.serviceApi', '$scope', '$ionicPopup', function (api, $scope, $ionicPopup) {
-
-        $scope.showMenu(false);
 
         $scope.formData = [];
 
@@ -1643,8 +1582,6 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
     // 择偶标准-星座
     module.controller("member.zo_constellation", ['app.serviceApi', '$scope', '$ionicPopup', function (api, $scope, $ionicPopup) {
 
-        $scope.showMenu(false);
-
         $scope.formData = [];
 
         $scope.isSelectedNull = false;
@@ -1689,10 +1626,44 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
     }]);
 
     // 预览资料
-    module.controller("member.preview", ['app.serviceApi', '$scope', '$ionicPopup', 'FileUploader', '$ionicLoading', function (api, $scope, $ionicPopup, FileUploader, $ionicLoading) {
+    module.controller("member.preview", ['app.serviceApi', '$scope', '$ionicPopup', '$ionicLoading', function (api, $scope, $ionicPopup, $ionicLoading) {
+        // 图片放大查看插件
+        requirejs(['jquery'], function ($) {
+            requirejs(['klass', 'photoswipe'], function (klass, PhotoSwipe) {
+
+                $(document).ready(function () {
+                    var myPhotoSwipe = $(".imgItem a").photoSwipe({
+                        enableMouseWheel: false,
+                        enableKeyboard: false,
+                        allowRotationOnUserZoom: true
+                    });
+                });
+            })
+        })
 
 
+    }]);
 
+    // 谁关注了我
+    module.controller("member.follow", ['app.serviceApi', '$scope', '$ionicPopup', 'FileUploader', '$ionicLoading','$ionicListDelegate', function (api, $scope, $ionicPopup, FileUploader, $ionicLoading,$ionicListDelegate) {
+        $scope.followList = [
+            {id:1,realName:'张三',marriage:'未婚',age:'29',height:'180',house:'有房',car:'有车'},
+            {id:1,realName:'李四',marriage:'未婚',age:'35',height:'165',house:'有房',car:0},
+            {id:1,realName:'王武',marriage:'未婚',age:'41',height:'170',house:0,car:0},
+            {id:1,realName:'谭善',marriage:'未婚',age:'34',height:'175',house:'有房',car:0},
+            {id:1,realName:'赵四',marriage:'未婚',age:'24',height:'170',house:'有房',car:0}
+        ];
+
+        $scope.removeItem = function($index,item){
+            if(confirm("确认删除？")){
+                // 删除操作
+
+                $scope.followList.splice($index, 1)
+
+            }else{
+                return false;
+            }
+        }
     }]);
 
     return module;

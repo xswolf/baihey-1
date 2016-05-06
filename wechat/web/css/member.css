@@ -134,7 +134,7 @@
   color: #9f9696;
   margin-right: 6px;
 }
-.item .item-content {
+.member .item .item-content {
   padding: 16px;
 }
 /* information */
@@ -423,7 +423,7 @@
   width: 30%;
   float: left;
   display: block;
-  margin-right: 5%;
+  margin-right: 3%;
 }
 .dyn_con_p span:last-child {
   margin-right: 0;
@@ -494,4 +494,8 @@
   resize: none;
   width: 100%;
   min-height: 100px;
+}
+/* follow */
+.follow .item-content {
+  padding-right: 8px;
 }
