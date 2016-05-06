@@ -31,7 +31,7 @@ class MemberController extends BaseController
     {
         $user_id = \common\util\Cookie::getInstance()->getCookie('bhy_id');
 
-        UserInformation::getInstance()->saveData($user_id, $this->get);
+        UserInformation::getInstance()->updateUserInfo($user_id, $this->get);
     }
 
 }

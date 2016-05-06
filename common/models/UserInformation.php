@@ -14,58 +14,41 @@ class UserInformation extends Base
 {
 
     /**
-     * 保存数据（目前用于资料子页面）
+     * 更新用户数据（目前用于资料子页面）
      * @param $user_id
-     * @param $where
+     * @param $data array
      * @return bool
      */
-    public function saveData($user_id, $where)
+    public function updateUserInfo($user_id, $data)
     {
-        $row = false;
-        if ($where && $this->findOne($user_id)) {
+        if ($data && $this->findOne($user_id)) {
+            $_user_information_table = static::tableName();// 表名
 
-            switch (key($where)) {
-                case 'personalized':
-                    if($this->updateAll(['personalized' => $where['personalized']], ['user_id' => $user_id])) {
-                        $row = true;
-                    }
+            switch (key($data)) {
+                case 'personalized':// 个性签名
+                    $sql = "UPDATE {$_user_information_table} SET personalized = {$data['personalized']} WHERE user_id={$user_id}";
                     break;
 
-                case 'occupation':
-                    $_user_information_table = static::tableName();
-                    $arr = explode('-', $where['occupation']);
+                case 'occupation':// 职业
+                    $arr = explode('-', $data['occupation']);
                     $sql = "UPDATE {$_user_information_table} SET info = JSON_REPLACE(info,'$.occupation','".$arr[0]."'), info = JSON_REPLACE(info,'$.children_occupation','".$arr[1]."') WHERE user_id={$user_id}";
-                    if($this->getDb()->createCommand($sql)->query()){
-                        $row = true;
-                    }
                     break;
 
-                case 'address':
-                    $_user_information_table = static::tableName();
-                    $arr = explode('-', $where['address']);
-                    if($arr[2]) {
-                        $sql = "UPDATE {$_user_information_table} SET province = {$arr[0]}, city = {$arr[1]}, area = {$arr[2]} WHERE user_id={$user_id}";
-                    } elseif($arr[1]) {
-                        $sql = "UPDATE {$_user_information_table} SET province = {$arr[0]}, city = {$arr[1]}, area = null WHERE user_id={$user_id}";
-                    } else {
-                        $sql = "UPDATE {$_user_information_table} SET province = {$arr[0]}, city = null, area = null WHERE user_id={$user_id}";
-                    }
-                    if($this->getDb()->createCommand($sql)->query()){
-                        $row = true;
-                    }
+                case 'address':// 地区
+                    $arr = explode('-', $data['address']);
+                    $arr[2] = $arr[2] ? $arr[2] : 0;
+                    $arr[1] = $arr[1] ? $arr[1] : 0;
+                    $sql = "UPDATE {$_user_information_table} SET province = {$arr[0]}, city = {$arr[1]}, area = {$arr[2]} WHERE user_id={$user_id}";
                     break;
 
                 default:
-                    $_user_information_table = static::tableName();
-                    $sql = "UPDATE {$_user_information_table} SET info = JSON_REPLACE(info,'$.".key($where)."','".$where[key($where)]."') WHERE user_id={$user_id}";
-                    if($this->getDb()->createCommand($sql)->query()){
-                        $row = true;
-                    }
+                    $sql = "UPDATE {$_user_information_table} SET info = JSON_REPLACE(info,'$.".key($data)."','".$data[key($data)]."') WHERE user_id={$user_id}";
                     break;
             }
+
+            $row = $this->getDb()->createCommand($sql)->execute();
         }
 
         return $row;
-
     }
 }

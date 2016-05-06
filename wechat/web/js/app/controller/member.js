@@ -506,7 +506,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
                     } else {
                         $scope.userInfo.area = null;
                     }
-                    $scope.setUserStorage();
+                    //$scope.setUserStorage();
                 })
             }
         }
