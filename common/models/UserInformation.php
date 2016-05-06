@@ -21,6 +21,7 @@ class UserInformation extends Base
      */
     public function updateUserInfo($user_id, $data)
     {
+        $row = false;
         if ($data && $this->findOne($user_id)) {
             $_user_information_table = static::tableName();// 表名
 

@@ -138,6 +138,31 @@ define(['app/module'], function (module) {
         }
     });
 
+    // 返回地址
+    module.filter('address', function() {
+        return function (input, arr1, arr2) {
+            arr2 = arr2 ? getAddress(area, arr2) : '';
+            arr1 = arr1 ? getAddress(citys, arr1) : '';
+            input = getAddress(provines, input);
+            if(arr2 != '') {
+                return input + '-' + arr1 + '-' + arr2;
+            } else if(arr1 != '') {
+                return input + '-' + arr1;
+            } else {
+                return input;
+            }
+        }
+    });
+
+    // 返回地区名
+    var getAddress = function(address,pro) {
+        for(var i in address) {
+            if(address[i].id == pro) {
+                return address[i].name;
+            }
+        }
+    }
+
     // 返回生肖属相
     module.filter('zodiac', function () {
         return function (input, arr) {

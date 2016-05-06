@@ -201,8 +201,11 @@
                 <div class="info_l">
                     <p>地区</p>
                 </div>
+                <div ng-if="userInfo.province == '0'" class="info_c">
+                    <p><span class="cor21">立即填写</span></p>
+                </div>
                 <div class="info_c">
-                    <p><span>重庆市</span><span>渝中区</span></p>
+                    <p><span>{{userInfo.province | address : userInfo.city :userInfo.area}}</span></p>
                 </div>
                 <div class="info_r">
                     <i class="ionc ion-ios-arrow-right"></i>
