@@ -480,14 +480,6 @@ define(["app/module", 'app/service/serviceApi'],
                     }
                 }
 
-                if($scope.userInfo = ar.getStorage('userInfo')) {
-                    $scope.userInfo.info = JSON.parse($scope.userInfo.info);
-                    $scope.userInfo.identity_pic = JSON.parse($scope.userInfo.identity_pic);
-                } else {
-                    //alert(11111);
-                }
-                //$scope.userInfo = [{}];
-
                 $scope.upUserStorage = function(name,value,type) {
                     if(type == 'wu') {
                         eval('$scope.userInfo.' + name + ' = ' + value);
@@ -496,11 +488,22 @@ define(["app/module", 'app/service/serviceApi'],
                     }
                 }
 
+                var getUserStorage = function() {
+                    $scope.userInfo.info = JSON.parse($scope.userInfo.info);
+                    $scope.userInfo.identity_pic = JSON.parse($scope.userInfo.identity_pic);
+                }
+
                 $scope.setUserStorage = function() {
                     $scope.userInfo.info = JSON.stringify($scope.userInfo.info);
                     $scope.userInfo.identity_pic = JSON.stringify($scope.userInfo.identity_pic);
                     ar.setStorage('userInfo', $scope.userInfo);
                     window.location.hash = '/main/information';
+                    getUserStorage();
                 }
+
+                if($scope.userInfo = ar.getStorage('userInfo')) {
+                    getUserStorage();
+                }
+                //$scope.userInfo = [{}];
             }])
     });
