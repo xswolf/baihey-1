@@ -1,13 +1,12 @@
 <ion-view hide-tabs="true">
     <link href="/wechat/web/css/member.css" rel="stylesheet">
     <ion-header-bar class="com_w_100 bhy">
-        <button class="button button-icon icon ion-arrow-left-c" ui-sref="main.member"
-                ng-click="showMenu(false)"></button>
+        <button class="button button-icon icon ion-arrow-left-c" ui-sref="main.member"></button>
         <title class="title">谁关注了我</title>
     </ion-header-bar>
     <ion-content class="bhy com_w_100 m_bg follow">
         <ion-list show-delete="shouldShowDelete">
-            <ion-item class="item-avatar" ui-sref="main.user_info({userId:1,tempUrl:'/follow'})" ng-repeat="f in followList">
+            <ion-item class="item-avatar" ui-sref="main.user_info({userId:1,tempUrl:'/main/follow'})" ng-repeat="f in followList">
                 <img src="/wechat/web/images/test/6.jpg">
                 <h2 class="clearfix">
                     <span class="fl">{{f.realName}}</span>
@@ -17,6 +16,20 @@
                 <ion-option-button class="button-assertive" ng-click="removeItem($index,f)">
                     删除
                 </ion-option-button>
+            </ion-item>
+        </ion-list>
+
+        <!-- 判断userVIP -->
+        <ion-list>
+            <ion-item>
+                <div class="No_Vip">
+
+                    <img src="/wechat/web/images/test.jpg">
+
+                    <p> Hi，张先生</p>
+                    <p>目前还没有人关注您哦</p>
+
+                </div>
             </ion-item>
         </ion-list>
     </ion-content>

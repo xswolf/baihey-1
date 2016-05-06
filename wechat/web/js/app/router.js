@@ -388,7 +388,7 @@ define(["app/module", 'app/service/serviceApi'],
                         }
                     })
                     .state('main.user_info', {  // 查看用户资料
-                        url: "/user_info{userId}{tempUrl}",
+                        url: "/user_info?userId&tempUrl",
                         views: {
                             'main-tab': {
                                 templateUrl: "/wechat/views/site/user_info.html",
