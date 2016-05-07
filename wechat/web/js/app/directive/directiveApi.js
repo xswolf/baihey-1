@@ -13,7 +13,7 @@ define(['app/module'], function (module) {
         }
     });
 
-    module.directive('hideTabs', function($rootScope) {
+    /*module.directive('hideTabs', function($rootScope) {
         return {
             restrict: 'A',
             link: function(scope, element, attributes) {
@@ -26,6 +26,23 @@ define(['app/module'], function (module) {
                 scope.$on('$ionicView.beforeLeave', function() {
                     $rootScope.hideTabs = false;
                 });
+            }
+        };
+    });*/
+
+    module.directive('hideTabs', function($rootScope) {
+        return {
+            restrict: 'AE',
+            link:function($scope){
+
+                $rootScope.hideTabs = 'tabs-item-hide';
+
+                $scope.$on('$destroy',function(){
+
+                    $rootScope.hideTabs = ' ';
+
+                })
+
             }
         };
     });

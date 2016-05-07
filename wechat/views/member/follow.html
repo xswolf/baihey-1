@@ -1,4 +1,4 @@
-<ion-view hide-tabs="true">
+<ion-view hide-tabs>
     <link href="/wechat/web/css/member.css" rel="stylesheet">
     <ion-header-bar class="com_w_100 bhy">
         <button class="button button-icon icon ion-arrow-left-c" ui-sref="main.member"></button>
@@ -6,7 +6,7 @@
     </ion-header-bar>
     <ion-content class="bhy com_w_100 m_bg follow">
         <ion-list show-delete="shouldShowDelete">
-            <ion-item class="item-avatar" ui-sref="main.user_info({userId:1,tempUrl:'/main/follow'})" ng-repeat="f in followList">
+            <ion-item class="item-avatar" ui-sref="main.user_info({userId:1,tempUrl:'main.member_follow'})" ng-repeat="f in followList">
                 <img src="/wechat/web/images/test/6.jpg">
                 <h2 class="clearfix">
                     <span class="fl">{{f.realName}}</span>
@@ -20,7 +20,7 @@
         </ion-list>
 
         <!-- 判断userVIP -->
-        <ion-list>
+        <ion-list ng-if="0">
             <ion-item>
                 <div class="No_Vip">
 

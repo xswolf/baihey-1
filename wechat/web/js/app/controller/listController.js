@@ -9,9 +9,4 @@ define([
     'app/controller/member'
 ], function () {
 
-    ionic.DomUtil.ready(function () {
-        angular.element(document.querySelector('#domLoading'))
-            .addClass('hide');
-    });
-
 })

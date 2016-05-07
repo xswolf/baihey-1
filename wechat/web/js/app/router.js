@@ -3,7 +3,7 @@
  */
 define(["app/module", 'app/service/serviceApi'],
     function (module) {
-        module.run(['$rootScope', '$state', '$timeout', 'app.serviceApi', function ($rootScope, $state, $timeout, api) {
+        module.run(['$rootScope', '$state', '$timeout', 'app.serviceApi', '$ionicLoading', function ($rootScope, $state, $timeout, api, $ionicLoading) {
             var messageList = function () {
                 api.list('/wap/message/message-list', []).success(function (res) {
                     $rootScope.messageList = ar.getStorage('messageList') ? ar.getStorage('messageList') : [];
@@ -37,10 +37,23 @@ define(["app/module", 'app/service/serviceApi'],
                     clearInterval($rootScope.handle)
                 }
 
-            })
+            });
+            // 页面开始加载
+            $rootScope
+                .$on('$stateChangeStart',
+                    function (event, toState, toParams, fromState, fromParams) {
+                        $ionicLoading.show();
+                    });
+            // 页面加载成功
+            $rootScope
+                .$on('$stateChangeSuccess',
+                    function (event, toState, toParams, fromState, fromParams) {
+                        $ionicLoading.hide();
+                    });
         }]);
         return module.config(["$stateProvider", "$urlRouterProvider", "$ionicConfigProvider", function ($stateProvider, $urlRouterProvider, $ionicConfigProvider) {
                 $ionicConfigProvider.templates.maxPrefetch(0);
+                $ionicConfigProvider.tabs.position("bottom");
                 $stateProvider
                     .state('main', {
                         url: "/main",
@@ -51,7 +64,7 @@ define(["app/module", 'app/service/serviceApi'],
                     .state('main.index', {   // 首页
                         url: "/index",
                         views: {
-                            'main-tab': {
+                            'home-tab': {
                                 templateUrl: "/wechat/views/site/index.html"
                             }
                         }
@@ -390,7 +403,7 @@ define(["app/module", 'app/service/serviceApi'],
                     .state('main.user_info', {  // 查看用户资料
                         url: "/user_info?userId&tempUrl",
                         views: {
-                            'main-tab': {
+                            'home-tab': {
                                 templateUrl: "/wechat/views/site/user_info.html",
                                 controller: 'site.user_info'
                             }
@@ -488,20 +501,20 @@ define(["app/module", 'app/service/serviceApi'],
                 } else {
                     $scope.msgNumber = 0;
                 }
-                $scope.upUserStorage = function(name,value,type) {
-                    if(type == 'wu') {
+                $scope.upUserStorage = function (name, value, type) {
+                    if (type == 'wu') {
                         eval('$scope.userInfo.' + name + ' = ' + value);
                     } else {
-                        eval('$scope.userInfo.' + type + '.'+ name + ' = ' + value);
+                        eval('$scope.userInfo.' + type + '.' + name + ' = ' + value);
                     }
                 }
 
-                var getUserStorage = function() {
+                var getUserStorage = function () {
                     $scope.userInfo.info = JSON.parse($scope.userInfo.info);
                     $scope.userInfo.identity_pic = JSON.parse($scope.userInfo.identity_pic);
                 }
 
-                $scope.setUserStorage = function() {
+                $scope.setUserStorage = function () {
                     $scope.userInfo.info = JSON.stringify($scope.userInfo.info);
                     $scope.userInfo.identity_pic = JSON.stringify($scope.userInfo.identity_pic);
                     ar.setStorage('userInfo', $scope.userInfo);
@@ -509,7 +522,7 @@ define(["app/module", 'app/service/serviceApi'],
                     getUserStorage();
                 }
 
-                if($scope.userInfo = ar.getStorage('userInfo')) {
+                if ($scope.userInfo = ar.getStorage('userInfo')) {
                     getUserStorage();
                 }
                 //$scope.userInfo = [{}];

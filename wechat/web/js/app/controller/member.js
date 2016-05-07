@@ -47,10 +47,10 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
         // 删除照片
         $scope.removeImg = function (index) {
 
-            if(confirm("是否删除？")){
+            if (confirm("是否删除？")) {
                 // 删除操作 api.getXXX
                 $scope.imgList.splice(index, 1);
-            }else{
+            } else {
                 return false;
             }
 
@@ -421,10 +421,10 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
         $scope.provinceList = provines;
 
         // 用户数据
-         $scope.formData = [];
-         $scope.formData.userprovince = $scope.userInfo.province != 'null' ? $scope.userInfo.province : '0';
-         $scope.formData.usercity = $scope.userInfo.city != 'null' ? $scope.userInfo.city : '0';
-         $scope.formData.userarea = $scope.userInfo.area != 'null' ? $scope.userInfo.area : '0';
+        $scope.formData = [];
+        $scope.formData.userprovince = $scope.userInfo.province != 'null' ? $scope.userInfo.province : '0';
+        $scope.formData.usercity = $scope.userInfo.city != 'null' ? $scope.userInfo.city : '0';
+        $scope.formData.userarea = $scope.userInfo.area != 'null' ? $scope.userInfo.area : '0';
 
         // 地区联动
         $scope.cityList = [];
@@ -432,7 +432,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
         var address = function (name, pro) {
             var arr = name == 'city' ? citys : area;
             if (pro == null || pro == undefined || pro == 0) return null;
-            for ( var i in arr){
+            for (var i in arr) {
                 if (arr[i].parentId == pro) {
                     eval('$scope.' + name + 'List.push(arr[i])');
                 }
@@ -1645,22 +1645,22 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
     }]);
 
     // 谁关注了我
-    module.controller("member.follow", ['app.serviceApi', '$scope', '$ionicPopup', 'FileUploader', '$ionicLoading','$ionicListDelegate', function (api, $scope, $ionicPopup, FileUploader, $ionicLoading,$ionicListDelegate) {
+    module.controller("member.follow", ['app.serviceApi', '$scope', '$ionicPopup', '$ionicLoading', function (api, $scope, $ionicPopup, $ionicLoading) {
         $scope.followList = [
-            {id:1,realName:'张三',marriage:'未婚',age:'29',height:'180',house:'有房',car:'有车'},
-            {id:1,realName:'李四',marriage:'未婚',age:'35',height:'165',house:'有房',car:0},
-            {id:1,realName:'王武',marriage:'未婚',age:'41',height:'170',house:0,car:0},
-            {id:1,realName:'谭善',marriage:'未婚',age:'34',height:'175',house:'有房',car:0},
-            {id:1,realName:'赵四',marriage:'未婚',age:'24',height:'170',house:'有房',car:0}
+            {id: 1, realName: '张三', marriage: '未婚', age: '29', height: '180', house: '有房', car: '有车'},
+            {id: 1, realName: '李四', marriage: '未婚', age: '35', height: '165', house: '有房', car: 0},
+            {id: 1, realName: '王武', marriage: '未婚', age: '41', height: '170', house: 0, car: 0},
+            {id: 1, realName: '谭善', marriage: '未婚', age: '34', height: '175', house: '有房', car: 0},
+            {id: 1, realName: '赵四', marriage: '未婚', age: '24', height: '170', house: '有房', car: 0}
         ];
 
-        $scope.removeItem = function($index,item){
-            if(confirm("确认删除？")){
+        $scope.removeItem = function ($index, item) {
+            if (confirm("确认删除？")) {
                 // 删除操作
 
                 $scope.followList.splice($index, 1)
 
-            }else{
+            } else {
                 return false;
             }
         }

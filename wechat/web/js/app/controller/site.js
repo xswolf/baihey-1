@@ -307,12 +307,15 @@ define(['app/module', 'app/directive/directiveApi'
 
 
     // 查看用户资料
-    module.controller("site.user_info", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$ionicModal', '$ionicActionSheet', '$ionicLoading','$stateParams', function (api, $scope, $timeout, $ionicPopup, $ionicModal, $ionicActionSheet, $ionicLoading,$stateParams) {
+    module.controller("site.user_info", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$ionicModal', '$ionicActionSheet', '$ionicLoading', '$state', '$stateParams', function (api, $scope, $timeout, $ionicPopup, $ionicModal, $ionicActionSheet, $ionicLoading, $state, $stateParams) {
 
-        $scope.skip = function(){
-            window.location.hash = $stateParams.tempUrl;
+        //$scope.skip = function () {
+        //    $window.location.hash = $stateParams.tempUrl;
+        //}
+
+        $scope.jump = function () {
+            $state.go($stateParams.tempUrl);
         }
-
 
 
     }]);
