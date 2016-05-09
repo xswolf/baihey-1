@@ -1673,11 +1673,137 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
 
         $scope.userId = $stateParams.userId;
 
-
         $scope.jump = function () {
             $state.go($stateParams.tempUrl);
         }
 
+
+    }]);
+
+    // 隐私设置
+    module.controller("member.privacy", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', function (api, $scope, $timeout, $ionicPopup) {
+
+    }]);
+
+    // 隐私设置-照片权限
+    module.controller("member.privacy_pic", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', function (api, $scope, $timeout, $ionicPopup) {
+
+    }]);
+
+    // 隐私设置-个人动态权限
+    module.controller("member.privacy_per", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', function (api, $scope, $timeout, $ionicPopup) {
+
+    }]);
+
+    // 隐私设置-微信显示权限
+    module.controller("member.privacy_wechat", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', function (api, $scope, $timeout, $ionicPopup) {
+
+    }]);
+
+    // 隐私设置-QQ显示权限
+    module.controller("member.privacy_qq", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', function (api, $scope, $timeout, $ionicPopup) {
+
+    }]);
+
+    // 隐私设置-黑名单
+    module.controller("member.privacy_black", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', function (api, $scope, $timeout, $ionicPopup) {
+
+    }]);
+
+    // 账户安全
+    module.controller("member.security", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', function (api, $scope, $timeout, $ionicPopup) {
+
+    }]);
+
+    // 账户安全-密码修改
+    module.controller("member.security_pass", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', function (api, $scope, $timeout, $ionicPopup) {
+
+    }]);
+
+    // 账户安全-手机绑定
+    module.controller("member.security_phone", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', function (api, $scope, $timeout, $ionicPopup) {
+
+        $scope.User = [];
+
+        $scope.User.codeBtn = '获取验证码';
+
+        function validatePhone(phone) {
+
+            if (!ar.validateMobile(phone)) {  // 验证手机格式
+                $ionicPopup.alert({title: '手机号码格式不正确'});
+                return false;
+            }
+
+            api.getMobileIsExist(phone).success(function (data) {
+                if (!data.status) {
+                    $ionicPopup.alert({title: data.msg});
+                    return true;
+                } else {
+                    return false;
+                }
+            })
+
+            return true;
+        }
+
+        // 开始计时
+        $scope.User.startTime = function () {
+            $scope.User.max_time -= 1;
+            $scope.User.codeBtn = "重新发送" + $scope.User.max_time;
+            $scope.$apply();
+        }
+
+        // 结束计时，还原文字
+        $scope.User.endTime = function () {
+            $scope.User.codeSwitch = false;
+            $scope.User.codeCls = false;
+            $scope.User.codeBtn = '获取验证码';
+            clearInterval($scope.User.timer);
+            $scope.$apply();
+        }
+
+        // 获取验证码
+        $scope.User.getCode = function () {
+
+            if (!validatePhone($scope.User.mobile)) return;
+
+            //计时
+            $scope.User.codeSwitch = true;
+            $scope.User.codeCls = true;
+            $scope.User.max_time = 60;
+            $scope.User.timer = setInterval($scope.User.startTime, 1000);
+            setTimeout($scope.User.endTime, $scope.User.max_time * 1000);
+
+            // 发送验证码
+            api.sendCodeMsg($scope.User.mobile).success(function (data) {
+
+                if (!data.status) {
+                    $ionicPopup.alert({title: '短信发送失败，请稍后重试。'});
+                    return false;
+                }
+            });
+
+
+        }
+    }]);
+
+    // 账户安全-微信绑定
+    module.controller("member.security_wechat", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', function (api, $scope, $timeout, $ionicPopup) {
+
+    }]);
+
+    // 账户安全-QQ绑定
+    module.controller("member.security_qq", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', function (api, $scope, $timeout, $ionicPopup) {
+
+    }]);
+
+    // 诚信认证
+    module.controller("member.honesty", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', function (api, $scope, $timeout, $ionicPopup) {
+
+    }]);
+
+    // 诚信认证-身份认证
+    module.controller("member.honesty_sfz", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', function (api, $scope, $timeout, $ionicPopup) {
 
     }]);
 

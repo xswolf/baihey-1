@@ -40,13 +40,13 @@ define(["app/module", 'app/service/serviceApi'],
             });
             // 页面开始加载
             $rootScope
-                .$on('$viewContentLoading',
+                .$on('$stateChangeStart',
                     function (event, toState, toParams, fromState, fromParams) {
                         $ionicLoading.show();
                     });
             // 页面加载成功
             $rootScope
-                .$on('$viewContentLoaded',
+                .$on('$stateChangeSuccess',
                     function (event, toState, toParams, fromState, fromParams) {
                         $ionicLoading.hide();
                     });
@@ -405,6 +405,123 @@ define(["app/module", 'app/service/serviceApi'],
                             'member-tab': {
                                 templateUrl: "/wechat/views/member/user_info.html",
                                 controller: 'member.user_info'
+                            }
+                        }
+                    })
+                    .state('main.member_privacy', {  // 隐私设置
+                        url: "/privacy",
+                        views: {
+                            'member-tab': {
+                                templateUrl: "/wechat/views/member/privacy.html",
+                                controller: 'member.privacy'
+                            }
+                        }
+                    })
+                    .state('main.member_privacy_pic', {  // 隐私设置-照片权限
+                        url: "/privacy_pic",
+                        views: {
+                            'member-tab': {
+                                templateUrl: "/wechat/views/member/privacy_pic.html",
+                                controller: 'member.privacy_pic'
+                            }
+                        }
+                    })
+                    .state('main.member_privacy_per', {  // 隐私设置-个人动态权限
+                        url: "/privacy_per",
+                        views: {
+                            'member-tab': {
+                                templateUrl: "/wechat/views/member/privacy_per.html",
+                                controller: 'member.privacy_per'
+                            }
+                        }
+                    })
+                    .state('main.member_privacy_wechat', {  // 隐私设置-微信显示权限
+                        url: "/privacy_wechat",
+                        views: {
+                            'member-tab': {
+                                templateUrl: "/wechat/views/member/privacy_wechat.html",
+                                controller: 'member.privacy_wechat'
+                            }
+                        }
+                    })
+                    .state('main.member_privacy_qq', {  // 隐私设置-QQ显示权限
+                        url: "/privacy_qq",
+                        views: {
+                            'member-tab': {
+                                templateUrl: "/wechat/views/member/privacy_qq.html",
+                                controller: 'member.privacy_qq'
+                            }
+                        }
+                    })
+                    .state('main.member_privacy_black', {  // 隐私设置-黑名单
+                        url: "/privacy_black",
+                        views: {
+                            'member-tab': {
+                                templateUrl: "/wechat/views/member/privacy_black.html",
+                                controller: 'member.privacy_black'
+                            }
+                        }
+                    })
+                    .state('main.member_security', {  // 账户安全
+                        url: "/security",
+                        views: {
+                            'member-tab': {
+                                templateUrl: "/wechat/views/member/security.html",
+                                controller: 'member.security'
+                            }
+                        }
+                    })
+                    .state('main.member_security_pass', {  // 账户安全-密码修改
+                        url: "/security_pass",
+                        views: {
+                            'member-tab': {
+                                templateUrl: "/wechat/views/member/security_pass.html",
+                                controller: 'member.security_pass'
+                            }
+                        }
+                    })
+                    .state('main.member_security_phone', {  // 账户安全-手机绑定
+                        url: "/security_phone",
+                        views: {
+                            'member-tab': {
+                                templateUrl: "/wechat/views/member/security_phone.html",
+                                controller: 'member.security_phone'
+                            }
+                        }
+                    })
+                    .state('main.member_security_wechat', {  // 账户安全-微信绑定
+                        url: "/security_wechat",
+                        views: {
+                            'member-tab': {
+                                templateUrl: "/wechat/views/member/security_wechat.html",
+                                controller: 'member.security_wechat'
+                            }
+                        }
+                    })
+                    .state('main.member_security_qq', {  // 账户安全-QQ绑定
+                        url: "/security_qq",
+                        views: {
+                            'member-tab': {
+                                templateUrl: "/wechat/views/member/security_qq.html",
+                                controller: 'member.security_qq'
+                            }
+                        }
+                    })
+                    .state('main.member_honesty', {  // 诚信认证
+                        url: "/honesty",
+                        views: {
+                            'member-tab': {
+                                templateUrl: "/wechat/views/member/honesty.html",
+                                controller: 'member.honesty'
+                            }
+                        }
+                    })
+                    .state('main.member_honesty_sfz', {  // 诚信认证-身份认证
+                        url: "/honesty_sfz",
+                        views: {
+                            'member-tab': {
+                                templateUrl: "/wechat/views/member/honesty_sfz.html",
+                                controller: 'member.honesty_sfz'
                             }
                         }
                     })

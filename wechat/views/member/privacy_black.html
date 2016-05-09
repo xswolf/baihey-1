@@ -1,0 +1,19 @@
+<ion-view hide-tabs>
+    <link href="/wechat/web/css/member.css" rel="stylesheet">
+    <ion-header-bar class="com_w_100 bhy">
+        <button class="button button-icon icon ion-arrow-left-c" ui-sref="main.member_privacy"></button>
+        <title class="title">黑名单</title>
+    </ion-header-bar>
+    <ion-content class="bhy com_w_100 m_bg">
+        <ion-list show-delete="shouldShowDelete">
+            <ion-item class="item item-avatar" ui-sref="#">
+                <img src="/wechat/web/images/test.jpg">
+                <h2>李女士 <span class="identity sfz">身份证</span> <span class="identity phone">手机</span> <span class="identity vip">vip</span> <span class="identity guest">贵宾</span> <span class="identity diamond">钻石</span></h2>
+                <p>拉黑时间 2016-05-08 16:18:21</p>
+                <ion-option-button class="button-assertive" ng-click="removeItem($index,f)">
+                    解除
+                </ion-option-button>
+            </ion-item>
+        </ion-list>
+    </ion-content>
+</ion-view>

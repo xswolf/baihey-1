@@ -1,0 +1,24 @@
+<ion-view hide-tabs>
+    <link href="/wechat/web/css/member.css" rel="stylesheet">
+    <ion-header-bar class="com_w_100 bhy">
+        <button class="button button-icon icon ion-arrow-left-c" ui-sref="main.member_security"></button>
+        <title class="title">密码修改</title>
+        <button class="button button-icon cor21" ng-click="saveData()">保存</button>
+    </ion-header-bar>
+    <ion-content class="bhy com_w_100 m_bg security">
+        <ion-list>
+            <ion-item class="item item-input">
+                <span class="input-label">旧密码</span>
+                <input type="text" placeholder="请输入旧密码">
+            </ion-item>
+            <ion-item class="item item-input">
+                <span class="input-label">新密码</span>
+                <input type="text" placeholder="请输入新密码">
+            </ion-item>
+            <ion-item class="item item-input">
+                <span class="input-label">确认密码</span>
+                <input type="text" placeholder="请再次输入新密码">
+            </ion-item>
+        </ion-list>
+    </ion-content>
+</ion-view>

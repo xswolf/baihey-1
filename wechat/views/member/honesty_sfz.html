@@ -1,0 +1,51 @@
+<ion-view hide-tabs>
+    <link href="/wechat/web/css/member.css" rel="stylesheet">
+    <link href="/wechat/web/css/plugin/bootstrap/css/font-awesome.min.css" rel="stylesheet">
+    <ion-header-bar class="com_w_100 bhy">
+        <button class="button button-icon icon ion-arrow-left-c" ui-sref="main.member_honesty"></button>
+        <title class="title">身份认证</title>
+        <button class="button button-icon cor21" ng-click="saveData()">保存</button>
+    </ion-header-bar>
+    <ion-content class="bhy com_w_100 m_bg honesty">
+        <div class="card">
+            <div class="item item-divider">
+                请您上传身份证照片（正反两面）
+            </div>
+            <div class="item item-text-wrap">
+                <div class="upload_box">
+                    <span class="upload_text">
+                        <p class="tac">
+                            <i class="icon ion-plus-round upload_icon"></i>
+                        </p>
+                        <p class="tac">
+                            <span class="upload_title">身份证正面</span>
+                        </p>
+                    </span>
+                </div>
+                <div class="upload_box">
+                    <span class="upload_text">
+                        <p class="tac">
+                            <i class="icon ion-plus-round upload_icon"></i>
+                        </p>
+                        <p class="tac">
+                            <span class="upload_title">身份证反面</span>
+                        </p>
+                    </span>
+                </div>
+                <input id="ml_idCard" type="file" nv-file-select uploader="uploader"
+                       style="visibility: hidden; display: none;" accept="image/*" >
+                <input id="re_idCard" type="file" nv-file-select uploader="uploader"
+                       style="visibility: hidden; display: none;" accept="image/*" >
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="item item-divider">
+                请您填写身份证信息
+            </div>
+            <div class="item item-text-wrap">
+                This is a basic Card with some text.
+            </div>
+        </div>
+    </ion-content>
+</ion-view>

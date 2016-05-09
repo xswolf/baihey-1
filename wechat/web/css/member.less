@@ -78,23 +78,21 @@
   width: 95%;
 }
 
-.member_menu_i{
+.member_menu_i,.privacy_menu_i,.security_menu_i{
   float: left;
   width: 24px;
   height: 24px;
   text-align: center;
 }
-.member_menu_i i{
+.member_menu_i i,.privacy_menu_i i,.security_menu_i i{
   color: #fff;
   display: block;
   font-size: 18px;
-  margin-top: 4px;
+  margin: 2px;
 
 }
 .member_menu_i.per{
   background: #f17272;
-
-
 }
 .member_menu_i.follow{
   background: #b34ab4;
@@ -107,6 +105,24 @@
 }
 .member_menu_i.privacy{
   background: #6db9ff;
+}
+.privacy_menu_i.pic,.security_menu_i.pass{
+  background: #f08e1a;
+}
+.privacy_menu_i.per,.security_menu_i.phone{
+  background: #f17272;
+}
+.privacy_menu_i.wx,.security_menu_i.wx{
+  background: #64c041;
+}
+.privacy_menu_i.qq,.security_menu_i.qq{
+  background: #6db9ff;
+}
+.privacy_menu_i.black{
+  background: #9e9e9e;
+}
+.security_menu_i.weibo{
+  background: #fd4359;
 }
 .member_menu_i.security{
   background: #64c041;
@@ -181,7 +197,7 @@
   color: #9f9696;
   margin-right: 6px;
 }
-.member .item .item-content{
+.member .item .item-content,.privacy .item-content,.security .item-content,.honesty .item-content{
   padding: 16px;
 }
 
@@ -570,3 +586,25 @@
 .follow .item-content{
   padding-right: 8px;
 }
+
+
+/* honesty_sfz */
+.upload_box{
+  float: left;
+  background-color: #F1F1F1;
+  width: 40%;
+  margin: 5%;
+  padding: 10px;
+}
+.upload_box .upload_text{
+  display: block;
+  min-width: 87px;
+  min-height: 46px;
+}
+.upload_box .upload_text .upload_icon{
+    font-size: 24px;
+}
+.upload_box .upload_text .upload_title{
+    font-size: 14px;
+}
+

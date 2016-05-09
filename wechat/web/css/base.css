@@ -235,11 +235,11 @@ input[type="number"]{-moz-appearance:textfield;}
 /* 字体图标 */
 @font-face {
     font-family: 'bhy-font';
-    src:    url('../fonts/icomoon.eot?qswkyr');
-    src:    url('../fonts/icomoon.eot?qswkyr#iefix') format('embedded-opentype'),
-    url('../fonts/icomoon.ttf?qswkyr') format('truetype'),
-    url('../fonts/icomoon.woff?qswkyr') format('woff'),
-    url('../fonts/icomoon.svg?qswkyr#icomoon') format('svg');
+    src:    url('../fonts/icomoon.eot?6p7ue2');
+    src:    url('../fonts/icomoon.eot?6p7ue2#iefix') format('embedded-opentype'),
+    url('../fonts/icomoon.ttf?6p7ue2') format('truetype'),
+    url('../fonts/icomoon.woff?6p7ue2') format('woff'),
+    url('../fonts/icomoon.svg?6p7ue2#icomoon') format('svg');
     font-weight: normal;
     font-style: normal;
 }
@@ -501,6 +501,15 @@ input[type="number"]{-moz-appearance:textfield;}
     content: "\e328";
     color: #b6b6b6;
 }
+.bhy-icon-member-qq:before {
+    content: "\e400";
+}
+.bhy-icon-member-blacklist:before {
+    content: "\e402";
+}
+.bhy-icon-member-wechat:before {
+    content: "\e401";
+}
 .bhy-icon-member-food:before {
     content: "\e215";
 }
@@ -564,6 +573,7 @@ input[type="number"]{-moz-appearance:textfield;}
 .bhy-icon-bribery:before {
     content: "\e003";
 }
+
 
 .tab-item i{
     line-height: 32px;
