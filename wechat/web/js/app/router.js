@@ -40,13 +40,13 @@ define(["app/module", 'app/service/serviceApi'],
             });
             // 页面开始加载
             $rootScope
-                .$on('$stateChangeStart',
+                .$on('$viewContentLoading',
                     function (event, toState, toParams, fromState, fromParams) {
                         $ionicLoading.show();
                     });
             // 页面加载成功
             $rootScope
-                .$on('$stateChangeSuccess',
+                .$on('$viewContentLoaded',
                     function (event, toState, toParams, fromState, fromParams) {
                         $ionicLoading.hide();
                     });
@@ -57,7 +57,6 @@ define(["app/module", 'app/service/serviceApi'],
                 $stateProvider
                     .state('main', {
                         url: "/main",
-                        abstract: true,
                         templateUrl: "main.html",
                         controller: 'main'
                     })
