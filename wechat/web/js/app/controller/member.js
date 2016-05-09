@@ -26,7 +26,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
 
         // 实例化上传图片插件
         var uploader = $scope.uploader = new FileUploader({
-            url: '/wap/file/upload'
+            url: '/wap/file/thumb-photo'
         });
 
         $scope.imgList =
@@ -91,7 +91,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
                 $scope.showLoading(progress);    // 显示loading
             };
             uploader.onSuccessItem = function (fileItem, response, status, headers) {  // 上传成功
-                $scope.imgList.push({id: 12, url: response.path, headpic: 0});
+                $scope.imgList.push({id: 12, url: response.thumb_path, headpic: 0});
             };
             uploader.onErrorItem = function (fileItem, response, status, headers) {  // 上传出错
                 $ionicPopup.alert({title: '上传图片出错！'});
