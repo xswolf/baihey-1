@@ -1666,6 +1666,21 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
         }
     }]);
 
+    // 查看用户资料
+    module.controller("member.user_info", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$ionicModal', '$ionicActionSheet', '$ionicLoading', '$state', '$stateParams', function (api, $scope, $timeout, $ionicPopup, $ionicModal, $ionicActionSheet, $ionicLoading, $state, $stateParams) {
+
+        console.info($state,$stateParams);
+
+        $scope.userId = $stateParams.userId;
+
+
+        $scope.jump = function () {
+            $state.go($stateParams.tempUrl);
+        }
+
+
+    }]);
+
     return module;
 })
 

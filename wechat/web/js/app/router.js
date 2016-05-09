@@ -399,12 +399,12 @@ define(["app/module", 'app/service/serviceApi'],
                             }
                         }
                     })
-                    .state('main.user_info', {  // 查看用户资料
+                    .state('main.member_user_info', {  // 查看用户资料
                         url: "/user_info?userId&tempUrl",
                         views: {
-                            'home-tab': {
-                                templateUrl: "/wechat/views/site/user_info.html",
-                                controller: 'site.user_info'
+                            'member-tab': {
+                                templateUrl: "/wechat/views/member/user_info.html",
+                                controller: 'member.user_info'
                             }
                         }
                     })
