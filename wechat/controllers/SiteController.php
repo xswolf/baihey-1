@@ -25,7 +25,9 @@ class SiteController extends BaseController
 
     public function actionIndex()
     {
-        return $this->render();
+       echo "<script>";
+        echo "location.href='/wap/site/main#/main/index'";
+       echo "</script>";
     }
 
     /**
