@@ -58,18 +58,16 @@ class File
      */
     public function thumbPhoto($data)
     {
-        if ($data['status'] == 1) {
-            $image      = new Image();
-            $folder     = __DIR__ . "/../..";
-            $date_time  = date('Ymd');
-            $time       = time();
-            $rand       = rand(1, 100000000);
-            $url        = "/images/upload/" . $date_time . '/' . $time . $rand . '.' . $data['extension'];
-            $image->open($folder . $data['path']);
-            //另存固定宽度是240的压缩图片
-            $image->thumb(240, 240, $image::IMAGE_THUMB_FIXED)->save($folder . $url);
-            return ['status' => 1, 'info' => '上传成功', 'pic_path' => $data['path'], 'thumb_path' => $url, 'time' => $data['time']];
-        }
-        return ['status' => -1, 'info' => '压缩失败!~'];
+        $image      = new Image();
+        $folder     = __DIR__ . "/../..";
+        $date_time  = date('Ymd');
+        $time       = time();
+        $rand       = rand(1, 100000000);
+        $url        = "/images/upload/" . $date_time . '/' . $time . $rand . '.' . $data['extension'];
+        $image->open($folder . $data['path']);
+        //另存固定宽度是200的压缩图片
+        $image->thumb(200, 200, $image::IMAGE_THUMB_FIXED)->save($folder . $url);
+
+        return ['status' => 1, 'info' => '上传成功', 'pic_path' => $data['path'], 'thumb_path' => $url, 'time' => $data['time']];
     }
 }

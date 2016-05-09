@@ -28,15 +28,17 @@ class FileController extends BaseController {
      * 相册上传+缩略图
      */
     public function actionThumbPhoto() {
-        $user_id    = Cookie::getInstance()->getCookie('bhy_id');
-        $file       = new File();
-        $res        = $file->upload(__DIR__."/../../images/");
-        $data       = $file->thumbPhoto($res);
-        $id = UserPhoto::getInstance()->addPhoto($user_id, $data);
-        if($id) {
-            $data['id'] = $id;
-        } else {
-            $data = ['status' => -1, 'info' => '保存失败!~'];
+        $user_id = Cookie::getInstance()->getCookie('bhy_id');
+        $file    = new File();
+        $res     = $file->upload(__DIR__."/../../images/");// 原图上传
+        $data    = (1 == $res['status']) ? $file->thumbPhoto($res) : $res;// 原图压缩
+        // 保存数据
+        if(1 == $data['status']) {
+            if($id = UserPhoto::getInstance()->addPhoto($user_id, $data)) {
+                $data['id'] = $id;
+            } else {
+                $data = ['status' => -1, 'info' => '保存失败!~'];
+            }
         }
         $this->renderAjax($data);
     }
