@@ -43,6 +43,7 @@ define(["app/module", 'app/service/serviceApi'],
                 .$on('$stateChangeStart',
                     function (event, toState, toParams, fromState, fromParams) {
                         $ionicLoading.show();
+                        //console.info(event, toState, toParams, fromState, fromParams)
                     });
             // 页面加载成功
             $rootScope
@@ -57,6 +58,7 @@ define(["app/module", 'app/service/serviceApi'],
                 $stateProvider
                     .state('main', {
                         url: "/main",
+                        abstract: true,
                         templateUrl: "main.html",
                         controller: 'main'
                     })
@@ -552,12 +554,39 @@ define(["app/module", 'app/service/serviceApi'],
                             }
                         }
                     })
-                    .state('main.member_bribery', {  // 诚信认证-房产认证
+                    .state('main.member_bribery', {  // 嘉瑞红包
                         url: "/bribery",
                         views: {
                             'member-tab': {
                                 templateUrl: "/wechat/views/member/bribery.html",
                                 controller: 'member.bribery'
+                            }
+                        }
+                    })
+                    .state('main.member_bribery_rec', {  // 嘉瑞红包-收到的红包
+                        url: "/bribery_rec",
+                        views: {
+                            'member-tab': {
+                                templateUrl: "/wechat/views/member/bribery_rec.html",
+                                controller: 'member.bribery_rec'
+                            }
+                        }
+                    })
+                    .state('main.member_bribery_send', {  // 嘉瑞红包-发出的红包
+                        url: "/bribery_send",
+                        views: {
+                            'member-tab': {
+                                templateUrl: "/wechat/views/member/bribery_send.html",
+                                controller: 'member.bribery_send'
+                            }
+                        }
+                    })
+                    .state('main.member_bribery_withdraw', {  // 嘉瑞红包-红包提现
+                        url: "/bribery_withdraw",
+                        views: {
+                            'member-tab': {
+                                templateUrl: "/wechat/views/member/bribery_withdraw.html",
+                                controller: 'member.bribery_withdraw'
                             }
                         }
                     })

@@ -1818,23 +1818,35 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
     }]);
 
     // 诚信认证-身份认证
-    module.controller("member.honesty_sfz", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', function (api, $scope, $timeout, $ionicPopup) {
-
+    module.controller("member.honesty_sfz", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup','FileUploader', function (api, $scope, $timeout, $ionicPopup,FileUploader) {
+        // 实例化上传图片插件
+        var uploader = $scope.uploader = new FileUploader({
+            url: '/wap/file/thumb-photo'
+        });
     }]);
 
     // 诚信认证-婚姻认证
-    module.controller("member.honesty_marr", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', function (api, $scope, $timeout, $ionicPopup) {
-
+    module.controller("member.honesty_marr", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup','FileUploader', function (api, $scope, $timeout, $ionicPopup,FileUploader) {
+        // 实例化上传图片插件
+        var uploader = $scope.uploader = new FileUploader({
+            url: '/wap/file/thumb-photo'
+        });
     }]);
 
     // 诚信认证-学历认证
-    module.controller("member.honesty_edu", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', function (api, $scope, $timeout, $ionicPopup) {
-
+    module.controller("member.honesty_edu", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup','FileUploader', function (api, $scope, $timeout, $ionicPopup,FileUploader) {
+        // 实例化上传图片插件
+        var uploader = $scope.uploader = new FileUploader({
+            url: '/wap/file/thumb-photo'
+        });
     }]);
 
     // 诚信认证-房产认证
-    module.controller("member.honesty_housing", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', function (api, $scope, $timeout, $ionicPopup) {
-
+    module.controller("member.honesty_housing", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup','FileUploader', function (api, $scope, $timeout, $ionicPopup,FileUploader) {
+        // 实例化上传图片插件
+        var uploader = $scope.uploader = new FileUploader({
+            url: '/wap/file/thumb-photo'
+        });
     }]);
 
     // 嘉瑞红包
@@ -1842,6 +1854,46 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
 
 
     }]);
+
+    // 嘉瑞红包-收到的红包
+    module.controller("member.bribery_rec", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', function (api, $scope, $timeout, $ionicPopup) {
+
+        $scope.items = [];
+        $scope.loadMore = function() {
+            //$scope.$broadcast('scroll.infiniteScrollComplete');
+           /* $http.get('/more-items').success(function(items) {
+                useItems(items);
+                $scope.$broadcast('scroll.infiniteScrollComplete');
+            });*/
+        };
+        $scope.$on('$stateChangeSuccess', function() {
+            $scope.loadMore();
+        });
+
+    }]);
+
+    // 嘉瑞红包-发出的红包
+    module.controller("member.bribery_send", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', function (api, $scope, $timeout, $ionicPopup) {
+        $scope.items = [];
+        $scope.loadMore = function() {
+            //$scope.$broadcast('scroll.infiniteScrollComplete');
+            /*$http.get('/more-items').success(function(items) {
+                useItems(items);
+                $scope.$broadcast('scroll.infiniteScrollComplete');
+            });*/
+        };
+        $scope.$on('$stateChangeSuccess', function() {
+            $scope.loadMore();
+        });
+
+    }]);
+
+    // 嘉瑞红包-红包提现
+    module.controller("member.bribery_withdraw", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', function (api, $scope, $timeout, $ionicPopup) {
+
+
+    }]);
+
 
 
     return module;
