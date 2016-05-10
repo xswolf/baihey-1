@@ -343,6 +343,23 @@ var ar = {
                 ageHtml += '</option>';
             }
             return ageHtml;
+        },
+
+        /**
+         * 通过id遍历获取对象
+         * @param arr
+         * @param id
+         * @returns {*}
+         */
+        getObjById : function(arr, id) {
+            if(id == '0' || id == 'null') {
+                return '0';
+            }
+            for(var i in arr) {
+                if(arr[i].id == id) {
+                    return arr[i];
+                }
+            }
         }
 
     }

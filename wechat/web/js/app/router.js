@@ -640,6 +640,12 @@ define(["app/module", 'app/service/serviceApi'],
 
                 if ($scope.userInfo = ar.getStorage('userInfo')) {
                     getUserStorage();
+                } else {
+                    api.list("/wap/user/get-user-info", []).success(function (res) {
+                        $scope.userInfo = res.data;
+                        ar.setStorage('userInfo', res.data);
+                        getUserStorage();
+                    });
                 }
                 //$scope.userInfo = [{}];
             }])

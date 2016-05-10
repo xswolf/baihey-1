@@ -423,9 +423,9 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
         // 用户数据
         var local = '';
         $scope.formData = [];
-        $scope.formData.userprovince = {id:$scope.userInfo.province , name:''};
-        $scope.formData.usercity = {id:$scope.userInfo.city , name:''};
-        $scope.formData.userarea = {id:$scope.userInfo.area , name:''};
+        $scope.formData.userprovince = ar.getObjById(provines,$scope.userInfo.province);
+        $scope.formData.usercity = ar.getObjById(citys,$scope.userInfo.city);
+        $scope.formData.userarea = ar.getObjById(area,$scope.userInfo.area);
 
         // 地区联动
         $scope.cityList = [];
@@ -439,8 +439,8 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
                 }
             }
         }
-        address('city', $scope.formData.userprovince);
-        address('area', $scope.formData.usercity);
+        address('city', $scope.formData.userprovince.id);
+        address('area', $scope.formData.usercity.id);
 
         // 选择省
         $scope.provinceSelect = function (pro) {
@@ -489,17 +489,17 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
                 }
                 api.save('/wap/member/save-data', $scope.addressData).success(function (res) {
                     // 保存
-                    $scope.userInfo.local = local;
-                    $scope.userInfo.province = $scope.formData.userprovince;
-                    if ($scope.formData.usercity > 0) {
-                        $scope.userInfo.city = $scope.formData.usercity;
+                    $scope.userInfo.info.local = local;
+                    $scope.userInfo.province = $scope.formData.userprovince.id;
+                    if ($scope.formData.usercity.id > 0) {
+                        $scope.userInfo.city = $scope.formData.usercity.id;
                     } else {
-                        $scope.userInfo.city = null;
+                        $scope.userInfo.city = '0';
                     }
-                    if ($scope.formData.userarea > 0) {
-                        $scope.userInfo.area = $scope.formData.userarea;
+                    if ($scope.formData.userarea.id > 0) {
+                        $scope.userInfo.area = $scope.formData.userarea.id;
                     } else {
-                        $scope.userInfo.area = null;
+                        $scope.userInfo.area = '0';
                     }
                     $scope.setUserStorage();
                 })
