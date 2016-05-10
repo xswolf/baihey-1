@@ -215,8 +215,11 @@
                 <div class="info_l">
                     <p>常出没地</p>
                 </div>
-                <div class="info_c">
-                    <p>观音桥、大坪、南坪</p>
+                <div ng-if="userInfo.info.haunt_address == '未知'" class="info_c">
+                    <p><span class="cor21 mr10">立即填写</span></p>
+                </div>
+                <div ng-if="userInfo.info.haunt_address != '未知'" class="info_c">
+                    <p><span>{{userInfo.info.haunt_address}}</span></p>
                 </div>
                 <div class="info_r">
                     <i class="ionc ion-ios-arrow-right"></i>

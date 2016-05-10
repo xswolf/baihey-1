@@ -109,6 +109,7 @@ class User extends \common\models\Base
             'nation'                => '未知',// 民族
             'wechat'                => '未知',// 微信
             'qq'                    => '未知',// QQ
+            'haunt_address'         => '未知',// 常出没地
         ];
         // 身份证照片
         $userIdentity = [

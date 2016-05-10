@@ -6,7 +6,6 @@ define(['app/module', 'app/directive/directiveApi'
 ], function (module) {
 
     module.controller("site.index", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$ionicModal', '$ionicActionSheet', '$ionicLoading', function (api, $scope, $timeout, $ionicPopup, $ionicModal, $ionicActionSheet, $ionicLoading) {
-
         $scope.searchForm = {
             data: {}
         }
@@ -50,8 +49,8 @@ define(['app/module', 'app/directive/directiveApi'
         });
 
         // 获取当前用户信息
-        $scope.userInfo = [];
-        if (ar.getStorage('userInfo')) {
+
+        /*if (ar.getStorage('userInfo')) {
             $scope.userInfo = ar.getStorage('userInfo');
             $scope.userInfo.info = JSON.parse($scope.userInfo.info);
             $scope.userInfo.identity_pic = JSON.parse($scope.userInfo.identity_pic);
@@ -62,7 +61,7 @@ define(['app/module', 'app/directive/directiveApi'
                 $scope.userInfo.info = JSON.parse($scope.userInfo.info);
                 $scope.userInfo.identity_pic = JSON.parse($scope.userInfo.identity_pic);
             });
-        }
+        }*/
 
         // 获取默认list
         api.list("/wap/site/user-list", $scope.searchForm.data).success(function (res) {

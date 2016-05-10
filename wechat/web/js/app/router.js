@@ -661,6 +661,7 @@ define(["app/module", 'app/service/serviceApi'],
                     }
                 }
 
+                $scope.userInfo = [];
                 var getUserStorage = function () {
                     $scope.userInfo.info = JSON.parse($scope.userInfo.info);
                     $scope.userInfo.identity_pic = JSON.parse($scope.userInfo.identity_pic);
@@ -676,7 +677,7 @@ define(["app/module", 'app/service/serviceApi'],
 
                 if ($scope.userInfo = ar.getStorage('userInfo')) {
                     getUserStorage();
-                } else {
+                } else if(ar.getCookie('bhy_user_id')) {
                     api.list("/wap/user/get-user-info", []).success(function (res) {
                         $scope.userInfo = res.data;
                         ar.setStorage('userInfo', res.data);
