@@ -423,9 +423,9 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
         // 用户数据
         var local = '';
         $scope.formData = [];
-        $scope.formData.userprovince = $scope.userInfo.province;
-        $scope.formData.usercity = $scope.userInfo.city;
-        $scope.formData.userarea = $scope.userInfo.area;
+        $scope.formData.userprovince = {id:$scope.userInfo.province , name:''};
+        $scope.formData.usercity = {id:$scope.userInfo.city , name:''};
+        $scope.formData.userarea = {id:$scope.userInfo.area , name:''};
 
         // 地区联动
         $scope.cityList = [];
