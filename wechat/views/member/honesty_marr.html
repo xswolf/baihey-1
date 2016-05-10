@@ -3,13 +3,13 @@
     <link href="/wechat/web/css/plugin/bootstrap/css/font-awesome.min.css" rel="stylesheet">
     <ion-header-bar class="com_w_100 bhy">
         <button class="button button-icon icon ion-arrow-left-c" ui-sref="main.member_honesty"></button>
-        <title class="title">身份认证</title>
+        <title class="title">婚姻认证</title>
         <button class="button button-icon cor21" ng-click="saveData()">保存</button>
     </ion-header-bar>
     <ion-content class="bhy com_w_100 m_bg honesty">
         <div class="card">
             <div class="item item-divider">
-                请您上传身份证照片（正反两面）
+                请您上传户口簿、离婚证照片
             </div>
             <div class="item item-text-wrap">
                 <div class="upload_box">
@@ -18,7 +18,7 @@
                             <i class="icon ion-plus-round upload_icon"></i>
                         </p>
                         <p class="tac">
-                            <span class="upload_title">身份证正面</span>
+                            <span class="upload_title">添加照片</span>
                         </p>
                     </span>
                 </div>
@@ -28,7 +28,7 @@
                             <i class="icon ion-plus-round upload_icon"></i>
                         </p>
                         <p class="tac">
-                            <span class="upload_title">身份证反面</span>
+                            <span class="upload_title">添加照片</span>
                         </p>
                     </span>
                 </div>
@@ -39,24 +39,5 @@
             </div>
         </div>
 
-        <div class="card">
-            <div class="item item-divider">
-                请您填写身份证信息
-            </div>
-            <div class="item item-text-wrap ">
-                <label class="item item-input">
-                    <span class="input-label">真实姓名</span>
-                    <input type="text" placeholder="请输入您的真实姓名">
-                </label>
-                <label class="item item-input">
-                    <span class="input-label">身份证号码</span>
-                    <input type="text" placeholder="请输入您的身份证号码">
-                </label>
-                <label class="item item-input">
-                    <span class="input-label">身份证地址</span>
-                    <input type="text" placeholder="请输入您的身份证地址">
-                </label>
-            </div>
-        </div>
     </ion-content>
 </ion-view>

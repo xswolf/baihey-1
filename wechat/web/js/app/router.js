@@ -525,6 +525,42 @@ define(["app/module", 'app/service/serviceApi'],
                             }
                         }
                     })
+                    .state('main.member_honesty_marr', {  // 诚信认证-婚姻认证
+                        url: "/honesty_marr",
+                        views: {
+                            'member-tab': {
+                                templateUrl: "/wechat/views/member/honesty_marr.html",
+                                controller: 'member.honesty_marr'
+                            }
+                        }
+                    })
+                    .state('main.member_honesty_edu', {  // 诚信认证-学历认证
+                        url: "/honesty_edu",
+                        views: {
+                            'member-tab': {
+                                templateUrl: "/wechat/views/member/honesty_edu.html",
+                                controller: 'member.honesty_edu'
+                            }
+                        }
+                    })
+                    .state('main.member_honesty_housing', {  // 诚信认证-房产认证
+                        url: "/honesty_housing",
+                        views: {
+                            'member-tab': {
+                                templateUrl: "/wechat/views/member/honesty_housing.html",
+                                controller: 'member.honesty_housing'
+                            }
+                        }
+                    })
+                    .state('main.member_bribery', {  // 诚信认证-房产认证
+                        url: "/bribery",
+                        views: {
+                            'member-tab': {
+                                templateUrl: "/wechat/views/member/bribery.html",
+                                controller: 'member.bribery'
+                            }
+                        }
+                    })
                     .state('main.message', {  // 消息首页
                         cache: false,
                         url: "/message",

@@ -1820,6 +1820,28 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
 
     }]);
 
+    // 诚信认证-婚姻认证
+    module.controller("member.honesty_marr", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', function (api, $scope, $timeout, $ionicPopup) {
+
+    }]);
+
+    // 诚信认证-学历认证
+    module.controller("member.honesty_edu", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', function (api, $scope, $timeout, $ionicPopup) {
+
+    }]);
+
+    // 诚信认证-房产认证
+    module.controller("member.honesty_housing", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', function (api, $scope, $timeout, $ionicPopup) {
+
+    }]);
+
+    // 嘉瑞红包
+    module.controller("member.bribery", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', function (api, $scope, $timeout, $ionicPopup) {
+
+
+    }]);
+
+
     return module;
 })
 
