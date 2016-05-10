@@ -13,7 +13,9 @@ return [
             'password' => 'jrbh*2016', //数据库密码
             'charset' => 'utf8',
             'tablePrefix' => 'bhy_',   //加入前缀名称fc_
-
+            'attributes' => [
+                PDO::ATTR_PERSISTENT => false,
+            ],
         ],
 
         'view' => [
