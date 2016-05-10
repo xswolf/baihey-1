@@ -421,10 +421,11 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
         $scope.provinceList = provines;
 
         // 用户数据
+        var local = '';
         $scope.formData = [];
-        $scope.formData.userprovince = $scope.userInfo.province != 'null' ? $scope.userInfo.province : '0';
-        $scope.formData.usercity = $scope.userInfo.city != 'null' ? $scope.userInfo.city : '0';
-        $scope.formData.userarea = $scope.userInfo.area != 'null' ? $scope.userInfo.area : '0';
+        $scope.formData.userprovince = $scope.userInfo.province;
+        $scope.formData.usercity = $scope.userInfo.city;
+        $scope.formData.userarea = $scope.userInfo.area;
 
         // 地区联动
         $scope.cityList = [];
@@ -447,16 +448,23 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
             $scope.formData.userarea = "0";
             $scope.cityList = [];  // 清空数组 市
             $scope.areaList = []; // 清空数组 区
-            address('city', pro);
+            address('city', pro.id);
+            local = pro.name;
         }
 
         // 选择市
         $scope.citySelect = function (cit) {
             $scope.areaList = []; // 清空数组 区
-            address('area', cit);
+            address('area', cit.id);
             if (cit == "0") {
                 $scope.formData.userarea = "0";
             }
+            local = cit.name;
+        }
+
+        // 选择区
+        $scope.areaSelect = function(are) {
+            local = are.name;
         }
 
         $scope.saveData = function () {
@@ -468,19 +476,20 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
                 }
             } else {
                 $scope.addressData = [];
-                $scope.addressData.address = $scope.formData.userprovince;
-                if ($scope.formData.usercity > 0) {
-                    $scope.addressData.address += '-' + $scope.formData.usercity;
+                $scope.addressData.address = $scope.formData.userprovince.id;
+                if ($scope.formData.usercity.id > 0) {
+                    $scope.addressData.address += '-' + $scope.formData.usercity.id;
                 } else {
                     $scope.addressData.address += '-0';
                 }
-                if ($scope.formData.userarea > 0) {
-                    $scope.addressData.address += '-' + $scope.formData.userarea;
+                if ($scope.formData.userarea.id > 0) {
+                    $scope.addressData.address += '-' + $scope.formData.userarea.id + '-' + local;
                 } else {
-                    $scope.addressData.address += '-0';
+                    $scope.addressData.address += '-0' + '-' + local;
                 }
                 api.save('/wap/member/save-data', $scope.addressData).success(function (res) {
                     // 保存
+                    $scope.userInfo.local = local;
                     $scope.userInfo.province = $scope.formData.userprovince;
                     if ($scope.formData.usercity > 0) {
                         $scope.userInfo.city = $scope.formData.usercity;
@@ -525,6 +534,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
     module.controller("member.wechat_number", ['app.serviceApi', '$scope', '$ionicPopup', function (api, $scope, $ionicPopup) {
 
         $scope.formData = [];
+        $scope.formData.wechat = $scope.userInfo.info.wechat;
         $scope.saveData = function () {
             if ($scope.formData.wechat == '' || typeof($scope.formData.wechat) == 'undefined') {
                 if (confirm('检测到您还未填写微信号，确定放弃吗？')) {
@@ -533,9 +543,10 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
                     return false;
                 }
             } else {
-                api.save(url, $scope.formData.wechat).success(function (res) {
+                api.save('/wap/member/save-data', $scope.formData).success(function (res) {
                     // 保存
-
+                    $scope.userInfo.info.wechat = $scope.formData.wechat;
+                    $scope.setUserStorage();
                 })
             }
         }
@@ -546,17 +557,19 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
     module.controller("member.qq_number", ['app.serviceApi', '$scope', '$ionicPopup', function (api, $scope, $ionicPopup) {
 
         $scope.formData = [];
+        $scope.formData.qq = $scope.userInfo.info.qq;
         $scope.saveData = function () {
-            if ($scope.formData.qq == '' || typeof($scope.formData.qq) == 'undefined') {
+            if ($scope.formData.qq == '' || typeof($scope.formData) == 'undefined') {
                 if (confirm('检测到您还未填写QQ号，确定放弃吗？')) {
                     window.location.hash = '/main/information';  //跳转
                 } else {
                     return false;
                 }
             } else {
-                api.save(url, $scope.formData.qq).success(function (res) {
+                api.save('/wap/member/save-data', $scope.formData.qq).success(function (res) {
                     // 保存
-
+                    $scope.userInfo.info.qq = $scope.formData.qq;
+                    $scope.setUserStorage();
                 })
             }
         }
@@ -1163,7 +1176,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
                     return false;
                 }
             } else {
-                api.save(url, $scope.formData).success(function (res) {
+                api.save('/wap/member/save-data', $scope.formData).success(function (res) {
                     // 保存
 
                 })
@@ -1192,7 +1205,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
                     return false;
                 }
             } else {
-                api.save(url, $scope.formData).success(function (res) {
+                api.save('/wap/member/save-data', $scope.formData).success(function (res) {
                     // 保存
 
                 })
@@ -1216,7 +1229,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
                     return false;
                 }
             } else {
-                api.save(url, $scope.formData).success(function (res) {
+                api.save('/wap/member/save-data', $scope.formData).success(function (res) {
                     // 保存
 
                 })
@@ -1244,7 +1257,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
                     return false;
                 }
             } else {
-                api.save(url, $scope.formData).success(function (res) {
+                api.save('/wap/member/save-data', $scope.formData).success(function (res) {
                     // 保存
 
                 })
@@ -1272,7 +1285,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
                     return false;
                 }
             } else {
-                api.save(url, $scope.formData).success(function (res) {
+                api.save('/wap/member/save-data', $scope.formData).success(function (res) {
                     // 保存
 
                 })
@@ -1300,7 +1313,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
                     return false;
                 }
             } else {
-                api.save(url, $scope.formData).success(function (res) {
+                api.save('/wap/member/save-data', $scope.formData).success(function (res) {
                     // 保存
 
                 })
@@ -1328,7 +1341,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
                     return false;
                 }
             } else {
-                api.save(url, $scope.formData).success(function (res) {
+                api.save('/wap/member/save-data', $scope.formData).success(function (res) {
                     // 保存
 
                 })
@@ -1352,7 +1365,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
                     return false;
                 }
             } else {
-                api.save(url, $scope.formData).success(function (res) {
+                api.save('/wap/member/save-data', $scope.formData).success(function (res) {
                     // 保存
 
                 })

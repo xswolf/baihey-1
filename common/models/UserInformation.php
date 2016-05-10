@@ -39,7 +39,7 @@ class UserInformation extends Base
                     $arr = explode('-', $data['address']);
                     $arr[2] = $arr[2] ? $arr[2] : 0;
                     $arr[1] = $arr[1] ? $arr[1] : 0;
-                    $sql = "UPDATE {$_user_information_table} SET province = {$arr[0]}, city = {$arr[1]}, area = {$arr[2]} WHERE user_id={$user_id}";
+                    $sql = "UPDATE {$_user_information_table} SET province = {$arr[0]}, city = {$arr[1]}, area = {$arr[2]},info = JSON_REPLACE(info,'$.local','".$arr[3]."')  WHERE user_id={$user_id}";
                     break;
 
                 default:
