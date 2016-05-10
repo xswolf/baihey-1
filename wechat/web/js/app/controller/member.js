@@ -534,7 +534,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
     module.controller("member.wechat_number", ['app.serviceApi', '$scope', '$ionicPopup', function (api, $scope, $ionicPopup) {
 
         $scope.formData = [];
-        $scope.formData.wechat = $scope.userInfo.info.wechat;
+        $scope.formData.wechat = $scope.userInfo.info.wechat != '未知' ? $scope.userInfo.info.wechat : '';
         $scope.saveData = function () {
             if ($scope.formData.wechat == '' || typeof($scope.formData.wechat) == 'undefined') {
                 if (confirm('检测到您还未填写微信号，确定放弃吗？')) {
@@ -557,7 +557,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
     module.controller("member.qq_number", ['app.serviceApi', '$scope', '$ionicPopup', function (api, $scope, $ionicPopup) {
 
         $scope.formData = [];
-        $scope.formData.qq = $scope.userInfo.info.qq;
+        $scope.formData.qq = $scope.userInfo.info.qq != '未知' ? $scope.userInfo.info.qq : '';
         $scope.saveData = function () {
             if ($scope.formData.qq == '' || typeof($scope.formData) == 'undefined') {
                 if (confirm('检测到您还未填写QQ号，确定放弃吗？')) {
@@ -566,7 +566,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
                     return false;
                 }
             } else {
-                api.save('/wap/member/save-data', $scope.formData.qq).success(function (res) {
+                api.save('/wap/member/save-data', $scope.formData).success(function (res) {
                     // 保存
                     $scope.userInfo.info.qq = $scope.formData.qq;
                     $scope.setUserStorage();

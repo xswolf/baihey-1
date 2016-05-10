@@ -243,8 +243,11 @@
                 <div class="info_l">
                     <p>微信号</p>
                 </div>
-                <div class="info_c">
+                <div ng-if="userInfo.info.wechat == '未知'" class="info_c">
                     <p><span class="cor21 mr10">立即填写</span></p>
+                </div>
+                <div ng-if="userInfo.info.wechat != '未知'" class="info_c">
+                    <p><span>{{userInfo.info.wechat}}</span></p>
                 </div>
                 <div class="info_r">
                     <i class="ionc ion-ios-arrow-right"></i>
@@ -254,8 +257,11 @@
                 <div class="info_l">
                     <p>QQ号</p>
                 </div>
-                <div class="info_c">
+                <div ng-if="userInfo.info.qq == '未知'" class="info_c">
                     <p><span class="cor21 mr10">立即填写</span></p>
+                </div>
+                <div ng-if="userInfo.info.qq != '未知'" class="info_c">
+                    <p><span>{{userInfo.info.qq}}</span></p>
                 </div>
                 <div class="info_r">
                     <i class="ionc ion-ios-arrow-right"></i>

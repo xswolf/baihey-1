@@ -107,6 +107,8 @@ class User extends \common\models\Base
             'zodiac'                => '未知',// 属相生肖
             'constellation'         => '未知',// 星座
             'nation'                => '未知',// 民族
+            'wechat'                => '未知',// 微信
+            'qq'                    => '未知',// QQ
         ];
         // 身份证照片
         $userIdentity = [
