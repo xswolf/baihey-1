@@ -73,6 +73,16 @@ class Config {
                     ],
                 ]
 
+            ],
+            'config'=>[
+                'name'=>'网址配置',
+                'url'=>'javascript:;',
+                'children'=>[
+                    'list'=>[
+                        'name'=>'列表',
+                        'url'=>'',
+                    ]
+                ]
             ]
     ];
 
