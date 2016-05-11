@@ -1894,7 +1894,24 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
 
     }]);
 
+    // 嘉瑞红包-选择银行卡
+    module.controller("member.bank_card", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', function (api, $scope, $timeout, $ionicPopup) {
 
+        $scope.formData = [];
+
+        $scope.formData.userBankCardList = [
+            {id:1,name:'中国农业银行','type':'储蓄卡',cardNumber:'6228480470845947715','ad':'农业银行（7715）'},
+            {id:2,name:'中国工商银行','type':'储蓄卡',cardNumber:'1565248947890794255','ad':'工商银行（4255）'},
+            {id:3,name:'中国建设银行','type':'储蓄卡',cardNumber:'3875317856415236881','ad':'建设银行（6881）'}
+        ]
+
+    }]);
+
+    // 嘉瑞红包-新卡提现
+    module.controller("member.add_bank_card", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', function (api, $scope, $timeout, $ionicPopup) {
+
+
+    }]);
 
     return module;
 })

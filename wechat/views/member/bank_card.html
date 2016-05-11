@@ -1,3 +1,18 @@
 <ion-view hide-tabs="true">
-
+    <link href="/wechat/web/css/member.css" rel="stylesheet">
+    <ion-header-bar class="com_w_100 bhy">
+        <button class="button button-icon icon ion-arrow-left-c" ui-sref="main.member_bribery_withdraw"></button>
+        <title class="title">选择银行卡</title>
+    </ion-header-bar>
+    <ion-content class="bhy com_w_100 m_bg">
+        <div class="list">
+            <p class="padding cor5 mb0 pl16">到账银行卡{{formData.clientSide}}</p>
+            <ion-radio ng-repeat="bankCard in formData.userBankCardList" ng-value="bankCard.id" ng-model="formData.clientSide">
+                {{ bankCard.ad }}
+            </ion-radio>
+            <ion-item ui-sref="main.member_add_bank_card">
+                使用新卡提现
+            </ion-item>
+        </div>
+    </ion-content>
 </ion-view>

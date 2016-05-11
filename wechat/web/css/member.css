@@ -579,3 +579,7 @@
   background: none;
   border: 0;
 }
+/* bank_card */
+.bankCard_t {
+  text-decoration: none;
+}

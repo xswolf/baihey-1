@@ -590,6 +590,24 @@ define(["app/module", 'app/service/serviceApi'],
                             }
                         }
                     })
+                    .state('main.member_bank_card', {  // 嘉瑞红包-选择银行卡
+                        url: "/bank_card",
+                        views: {
+                            'member-tab': {
+                                templateUrl: "/wechat/views/member/bank_card.html",
+                                controller: 'member.bank_card'
+                            }
+                        }
+                    })
+                    .state('main.member_add_bank_card', {  // 嘉瑞红包-新卡提现
+                        url: "/add_bank_card",
+                        views: {
+                            'member-tab': {
+                                templateUrl: "/wechat/views/member/add_bank_card.html",
+                                controller: 'member.add_bank_card'
+                            }
+                        }
+                    })
                     .state('main.message', {  // 消息首页
                         cache: false,
                         url: "/message",
