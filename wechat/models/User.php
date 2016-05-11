@@ -197,6 +197,8 @@ class User extends \common\models\Base
         $userLog->type = $log['type'];
         $userLog->create_time = $log['time'];
         $userLog->ip = ip2long($_SERVER["REMOTE_ADDR"]);
+        var_dump($_SERVER['REMOTE_ADDR']);
+        var_dump($userLog);exit;
         return $userLog->insert(false);
     }
 
