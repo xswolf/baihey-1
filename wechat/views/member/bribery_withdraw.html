@@ -1,17 +1,25 @@
 <ion-view hide-tabs="true">
     <link href="/wechat/web/css/member.css" rel="stylesheet">
     <link href="/wechat/web/css/plugin/bootstrap/css/font-awesome.min.css" rel="stylesheet">
-    <ion-header-bar class="com_w_100 bhy">
-        <button class="button button-icon icon ion-arrow-left-c" ui-sref="main.member_bribery"></button>
+    <ion-header-bar class="com_w_100 bhy assertive-bg cor23">
+        <button class="button button-icon icon ion-arrow-left-c cor23" ui-sref="main.member_bribery"></button>
         <title class="title">红包提现</title>
     </ion-header-bar>
     <ion-content class="bhy com_w_100 m_bg bribery padding">
-        <ion-list>
-            <div class="card">
-                <div class="item item-text-wrap">
-                    <span></span>
-                </div>
+        <div class="card">
+            <label class="item item-input">
+                <span class="input-label">到账银行卡</span>
+                <a ui-sref="#">农业银行（9913）</a>
+            </label>
+            <label class="item item-input">
+                <span class="input-label">提现金额</span>
+                ￥<input type="number">
+            </label>
+            <div class="item item-divider" style="font-weight: inherit;">
+                余额￥15.50，<a>全部提现</a>
             </div>
-        </ion-list>
+        </div>
+        <p class="tac cor5">24小时内到账</p>
+        <button class="button button-block button-balanced">提现</button>
     </ion-content>
 </ion-view>

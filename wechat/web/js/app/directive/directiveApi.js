@@ -20,13 +20,11 @@ define(['app/module'], function (module) {
                 scope.$on('$ionicView.beforeEnter', function() {
                     scope.$watch(attributes.hideTabs, function(value){
                         $rootScope.hideTabs = value;
-                        console.log('hide');
                     });
                 });
                 scope.$on('$ionicView.beforeLeave', function() {
                     scope.$watch(attributes.hideTabs, function(value){
                         $rootScope.hideTabs = false;
-                        console.log('show');
                     });
                 });
             }
