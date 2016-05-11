@@ -11,12 +11,9 @@
         <ion-list>
             <div class="imgList_con">
                 <div class="imgList_handle clearfix">
-                    <div class="imgItem" ng-repeat="img in imgList">
+                    <div class="imgItem" ng-repeat="img in imgList" ng-click="moreImg($index,img)">
                         <span>
                             <img src="{{img.thumb_path}}">
-                        </span>
-                        <span class="removepic" ng-click="removeImg($index)">
-                            <i class="ionc ion-close-round"></i>
                         </span>
                         <span class="headpic" ng-if="img.headpic">头像</span>
                     </div>

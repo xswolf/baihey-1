@@ -21,7 +21,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
     }]);
 
     // 资料首页
-    module.controller("member.information", ['app.serviceApi', '$scope', '$ionicPopup', 'FileUploader', '$ionicLoading', function (api, $scope, $ionicPopup, FileUploader, $ionicLoading) {
+    module.controller("member.information", ['app.serviceApi', '$scope', '$ionicPopup', 'FileUploader', '$ionicLoading','$ionicActionSheet', function (api, $scope, $ionicPopup, FileUploader, $ionicLoading,$ionicActionSheet) {
         $scope.formData = [];
 
         // 实例化上传图片插件
@@ -34,27 +34,6 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
         api.list('/wap/member/photo-list', []).success(function (res) {
             $scope.imgList = res.data;
         });
-
-        // 删除照片
-        $scope.removeImg = function (index) {
-
-            if (confirm("是否删除？")) {
-                // 删除操作 api.getXXX
-                var id = $scope.imgList[index].id;
-                api.save('/wap/member/del-photo', {'id': id}).success(function (res) {
-                    $scope.imgList.splice(index, 1);
-                    /*if ($scope.formData.head_pic == $scope.imgList[index].thumb_path) {
-                        $scope.userInfo.info.head_pic = '未知';
-                        $scope.setUserStorage();
-                    }*/
-                });
-
-            } else {
-                return false;
-            }
-
-
-        };
 
         $scope.showLoading = function (progress) {
             $ionicLoading.show({
@@ -76,7 +55,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
                 name: 'file-type-Res',
                 fn: function (item) {
                     if (!ar.msg_file_res_img(item)) {   // 验证文件是否是图片格式
-                        $ionicPopup.alert({title: '只能发送图片类型的文件！'});
+                        $ionicPopup.alert({title: '只能上传图片类型的文件！'});
                         return false;
                     }
                     return true;
@@ -90,7 +69,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
                 $scope.showLoading(progress);    // 显示loading
             };
             uploader.onSuccessItem = function (fileItem, response, status, headers) {  // 上传成功
-                $scope.imgList.push({id: 12, url: response.thumb_path, headpic: 0});
+                $scope.imgList.push({id: response.id, thumb_path: response.thumb_path, headpic: 0});
             };
             uploader.onErrorItem = function (fileItem, response, status, headers) {  // 上传出错
                 $ionicPopup.alert({title: '上传图片出错！'});
@@ -102,6 +81,36 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
 
         }
 
+        // 点击img，功能
+        $scope.moreImg = function(index,img){
+            var hideSheet = $ionicActionSheet.show({
+                buttons: [
+                    { text: '设为头像' }
+                ],
+                destructiveText: '删除',
+                titleText: '操作照片',
+                cancelText: '取消',
+                destructiveButtonClicked:function(){  // 点击删除
+                    if (confirm("确认删除该照片？")) {
+                        // 删除操作
+                        var id = $scope.imgList[index].id;
+                        api.save('/wap/member/del-photo', {'id': id}).success(function (res) {
+                            $scope.imgList.splice(index, 1);
+                            hideSheet();
+                        });
+
+                    } else {
+                        return false;
+                    }
+                },
+                buttonClicked: function(index) {
+                    if(index == 0){   // 设置头像
+
+                    }
+                    return true;
+                }
+            });
+        }
 
     }]);
 
