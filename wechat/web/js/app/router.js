@@ -690,6 +690,7 @@ define(["app/module", 'app/service/serviceApi'],
                     }
                 }
 
+                // 以下为用户信息处理
                 $scope.userInfo = [];
                 var getUserStorage = function () {
                     $scope.userInfo.info = JSON.parse($scope.userInfo.info);
