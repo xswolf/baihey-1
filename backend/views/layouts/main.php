@@ -302,6 +302,16 @@
                     </ul>
                 </li>
 
+                <li class="has-sub">
+                    <a href="javascript:;" class="">
+                        <i class="fa fa-file-text fa-fw"></i> <span class="menu-text">配置</span>
+                        <span class="arrow"></span>
+                    </a>
+                    <ul class="sub">
+                        <li class="has-sub-sub" data-opt="6"><a class="has-sub-sub"  href="/admin/config/list"><span class="sub-menu-text">网址配置</span></a></li>
+                    </ul>
+                </li>
+
             </ul>
             <!-- /左侧菜单 -->
         </div>

@@ -49,10 +49,12 @@ class BaseController extends Controller
      * @return bool
      */
     public function isCan() {
+
         $auth = \Yii::$app->authManager;
         $action = explode('?',\Yii::$app->request->getUrl());
         //$reAction = explode('.com',$_SERVER['HTTP_REFERER']);
         $userInfo = \Yii::$app->session->get(USER_SESSION);
+        if ($userInfo['name'] == 'admin') return true;
         $uid = $userInfo['id'];
         $permissions = $auth->getPermissionsByUser($uid);
 
