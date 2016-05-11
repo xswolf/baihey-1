@@ -9,7 +9,10 @@
 namespace common\models;
 
 use Yii;
-class UserPhoto extends Base{
+use yii\db\Query;
+
+class UserPhoto extends Base
+{
 
     /**
      * 新增相片
@@ -18,9 +21,10 @@ class UserPhoto extends Base{
      * @return bool
      * @throws \Exception
      */
-    public function addPhoto($user_id, $data) {
+    public function addPhoto($user_id, $data)
+    {
         // 个人相册不得多于12张
-        if(12 >= $this->find(['user_id' => $user_id])->count('id')) {
+        if (12 >= $this->find(['user_id' => $user_id])->count('id')) {
             $this->user_id = $user_id;
             $this->pic_path = $data['pic_path'];
             $this->thumb_path = $data['thumb_path'];
@@ -31,5 +35,28 @@ class UserPhoto extends Base{
         } else {
             return false;
         }
+    }
+
+    /**
+     * 获取相册列表
+     * @param $user_id
+     * @return $this|array
+     */
+    public function getPhotoList($user_id)
+    {
+        $result = (new Query())->select(['*'])
+            ->where(['user_id' => $user_id])
+            ->from(static::tableName())
+            ->orderBy('update_time desc, is_head desc')
+            ->limit(12);
+
+        $result = $result->all();
+        return $result;
+    }
+
+    public function delPhoto($where)
+    {
+        $row = $this->deleteAll(['id' => $where['id']]);
+        return $row;
     }
 }

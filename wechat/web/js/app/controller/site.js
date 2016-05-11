@@ -48,21 +48,6 @@ define(['app/module', 'app/directive/directiveApi'
             })
         });
 
-        // 获取当前用户信息
-
-        /*if (ar.getStorage('userInfo')) {
-            $scope.userInfo = ar.getStorage('userInfo');
-            $scope.userInfo.info = JSON.parse($scope.userInfo.info);
-            $scope.userInfo.identity_pic = JSON.parse($scope.userInfo.identity_pic);
-        } else if (ar.getCookie('bhy_user_id')) {
-            api.list("/wap/user/get-user-info", []).success(function (res) {
-                $scope.userInfo = res.data;
-                ar.setStorage('userInfo', res.data);
-                $scope.userInfo.info = JSON.parse($scope.userInfo.info);
-                $scope.userInfo.identity_pic = JSON.parse($scope.userInfo.identity_pic);
-            });
-        }*/
-
         // 获取默认list
         api.list("/wap/site/user-list", $scope.searchForm.data).success(function (res) {
             $scope.userList = res.data;

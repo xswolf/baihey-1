@@ -29,27 +29,26 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
             url: '/wap/file/thumb-photo'
         });
 
-        $scope.imgList =
-            [
-                {'id': 0, 'url': '/wechat/web/images/test/5.jpg', 'headpic': 1},
-                {'id': 1, 'url': '/wechat/web/images/test/1.jpg', 'headpic': 0},
-                {'id': 2, 'url': '/wechat/web/images/test/2.jpg', 'headpic': 0},
-                {'id': 3, 'url': '/wechat/web/images/test/3.jpg', 'headpic': 0},
-                {'id': 4, 'url': '/wechat/web/images/test/4.jpg', 'headpic': 0},
-                {'id': 5, 'url': '/wechat/web/images/test/5.jpg', 'headpic': 0},
-                {'id': 6, 'url': '/wechat/web/images/test/6.jpg', 'headpic': 0},
-                {'id': 8, 'url': '/wechat/web/images/test/3.jpg', 'headpic': 0},
-                {'id': 9, 'url': '/wechat/web/images/test/4.jpg', 'headpic': 0},
-                {'id': 10, 'url': '/wechat/web/images/test/6.jpg', 'headpic': 0},
-                {'id': 11, 'url': '/wechat/web/images/test/2.jpg', 'headpic': 0}
-            ];
+        $scope.formData = [];
+        $scope.imgList = [];
+        api.list('/wap/member/photo-list', []).success(function (res) {
+            $scope.imgList = res.data;
+        });
 
         // 删除照片
         $scope.removeImg = function (index) {
 
             if (confirm("是否删除？")) {
                 // 删除操作 api.getXXX
-                $scope.imgList.splice(index, 1);
+                var id = $scope.imgList[index].id;
+                api.save('/wap/member/del-photo', {'id': id}).success(function (res) {
+                    $scope.imgList.splice(index, 1);
+                    /*if ($scope.formData.head_pic == $scope.imgList[index].thumb_path) {
+                        $scope.userInfo.info.head_pic = '未知';
+                        $scope.setUserStorage();
+                    }*/
+                });
+
             } else {
                 return false;
             }
@@ -197,7 +196,6 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
                 api.save('/wap/member/save-data', $scope.formData).success(function (res) {
                     // 保存
                     $scope.userInfo.personalized = $scope.formData.personalized;
-                    //$scope.upUserStorage('personalized',$scope.formData.personalized,'wu');
                     $scope.setUserStorage();
                 })
             }
@@ -423,9 +421,9 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
         // 用户数据
         var local = '';
         $scope.formData = [];
-        $scope.formData.userprovince = ar.getObjById(provines,$scope.userInfo.province);
-        $scope.formData.usercity = ar.getObjById(citys,$scope.userInfo.city);
-        $scope.formData.userarea = ar.getObjById(area,$scope.userInfo.area);
+        $scope.formData.userprovince = ar.getObjById(provines, $scope.userInfo.province);
+        $scope.formData.usercity = ar.getObjById(citys, $scope.userInfo.city);
+        $scope.formData.userarea = ar.getObjById(area, $scope.userInfo.area);
 
         // 地区联动
         $scope.cityList = [];
@@ -463,7 +461,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
         }
 
         // 选择区
-        $scope.areaSelect = function(are) {
+        $scope.areaSelect = function (are) {
             local = are.name;
         }
 
@@ -1660,7 +1658,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
     }]);
 
     // 谁关注了我
-    module.controller("member.follow", ['app.serviceApi', '$scope', '$ionicPopup', '$ionicLoading','$state','$stateParams', function (api, $scope, $ionicPopup, $ionicLoading,$state,$stateParams) {
+    module.controller("member.follow", ['app.serviceApi', '$scope', '$ionicPopup', '$ionicLoading', '$state', '$stateParams', function (api, $scope, $ionicPopup, $ionicLoading, $state, $stateParams) {
         $scope.followList = [
             {id: 1, realName: '张三', marriage: '未婚', age: '29', height: '180', house: '有房', car: '有车'},
             {id: 2, realName: '李四', marriage: '未婚', age: '35', height: '165', house: '有房', car: 0},
@@ -1684,7 +1682,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
     // 查看用户资料
     module.controller("member.user_info", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$ionicModal', '$ionicActionSheet', '$ionicLoading', '$state', '$stateParams', function (api, $scope, $timeout, $ionicPopup, $ionicModal, $ionicActionSheet, $ionicLoading, $state, $stateParams) {
 
-        console.info($state,$stateParams);
+        console.info($state, $stateParams);
 
         $scope.userId = $stateParams.userId;
 
@@ -1818,7 +1816,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
     }]);
 
     // 诚信认证-身份认证
-    module.controller("member.honesty_sfz", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup','FileUploader', function (api, $scope, $timeout, $ionicPopup,FileUploader) {
+    module.controller("member.honesty_sfz", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', 'FileUploader', function (api, $scope, $timeout, $ionicPopup, FileUploader) {
         // 实例化上传图片插件
         var uploader = $scope.uploader = new FileUploader({
             url: '/wap/file/thumb-photo'
@@ -1826,7 +1824,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
     }]);
 
     // 诚信认证-婚姻认证
-    module.controller("member.honesty_marr", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup','FileUploader', function (api, $scope, $timeout, $ionicPopup,FileUploader) {
+    module.controller("member.honesty_marr", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', 'FileUploader', function (api, $scope, $timeout, $ionicPopup, FileUploader) {
         // 实例化上传图片插件
         var uploader = $scope.uploader = new FileUploader({
             url: '/wap/file/thumb-photo'
@@ -1834,7 +1832,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
     }]);
 
     // 诚信认证-学历认证
-    module.controller("member.honesty_edu", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup','FileUploader', function (api, $scope, $timeout, $ionicPopup,FileUploader) {
+    module.controller("member.honesty_edu", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', 'FileUploader', function (api, $scope, $timeout, $ionicPopup, FileUploader) {
         // 实例化上传图片插件
         var uploader = $scope.uploader = new FileUploader({
             url: '/wap/file/thumb-photo'
@@ -1842,7 +1840,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
     }]);
 
     // 诚信认证-房产认证
-    module.controller("member.honesty_housing", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup','FileUploader', function (api, $scope, $timeout, $ionicPopup,FileUploader) {
+    module.controller("member.honesty_housing", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', 'FileUploader', function (api, $scope, $timeout, $ionicPopup, FileUploader) {
         // 实例化上传图片插件
         var uploader = $scope.uploader = new FileUploader({
             url: '/wap/file/thumb-photo'
@@ -1859,14 +1857,14 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
     module.controller("member.bribery_rec", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', function (api, $scope, $timeout, $ionicPopup) {
 
         $scope.items = [];
-        $scope.loadMore = function() {
+        $scope.loadMore = function () {
             //$scope.$broadcast('scroll.infiniteScrollComplete');
-           /* $http.get('/more-items').success(function(items) {
-                useItems(items);
-                $scope.$broadcast('scroll.infiniteScrollComplete');
-            });*/
+            /* $http.get('/more-items').success(function(items) {
+             useItems(items);
+             $scope.$broadcast('scroll.infiniteScrollComplete');
+             });*/
         };
-        $scope.$on('$stateChangeSuccess', function() {
+        $scope.$on('$stateChangeSuccess', function () {
             $scope.loadMore();
         });
 
@@ -1875,14 +1873,14 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
     // 嘉瑞红包-发出的红包
     module.controller("member.bribery_send", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', function (api, $scope, $timeout, $ionicPopup) {
         $scope.items = [];
-        $scope.loadMore = function() {
+        $scope.loadMore = function () {
             //$scope.$broadcast('scroll.infiniteScrollComplete');
             /*$http.get('/more-items').success(function(items) {
-                useItems(items);
-                $scope.$broadcast('scroll.infiniteScrollComplete');
-            });*/
+             useItems(items);
+             $scope.$broadcast('scroll.infiniteScrollComplete');
+             });*/
         };
-        $scope.$on('$stateChangeSuccess', function() {
+        $scope.$on('$stateChangeSuccess', function () {
             $scope.loadMore();
         });
 
@@ -1900,9 +1898,9 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
         $scope.formData = [];
 
         $scope.formData.userBankCardList = [
-            {id:1,name:'中国农业银行','type':'储蓄卡',cardNumber:'6228480470845947715','ad':'农业银行（7715）'},
-            {id:2,name:'中国工商银行','type':'储蓄卡',cardNumber:'1565248947890794255','ad':'工商银行（4255）'},
-            {id:3,name:'中国建设银行','type':'储蓄卡',cardNumber:'3875317856415236881','ad':'建设银行（6881）'}
+            {id: 1, name: '中国农业银行', 'type': '储蓄卡', cardNumber: '6228480470845947715', 'ad': '农业银行（7715）'},
+            {id: 2, name: '中国工商银行', 'type': '储蓄卡', cardNumber: '1565248947890794255', 'ad': '工商银行（4255）'},
+            {id: 3, name: '中国建设银行', 'type': '储蓄卡', cardNumber: '3875317856415236881', 'ad': '建设银行（6881）'}
         ]
 
     }]);
