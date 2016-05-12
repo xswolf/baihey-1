@@ -164,7 +164,8 @@
 .member .item .item-content,
 .privacy .item-content,
 .security .item-content,
-.honesty .item-content {
+.honesty .item-content,
+.infomation .item-content{
   padding: 16px;
 }
 /* information */

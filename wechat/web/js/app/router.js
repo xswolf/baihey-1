@@ -678,15 +678,25 @@ define(["app/module", 'app/service/serviceApi'],
                             }
                         }
                     })
-                    .state('main.discovery', {
+                    .state('main.discovery', {       // 发现
                         url: "/discovery",
                         views: {
                             'discovery-tab': {
-                                templateUrl: "/wechat/views/discovery/index.html"
+                                templateUrl: "/wechat/views/discovery/index.html",
+                                controller:'discovery.index'
                             }
                         }
                     })
-                    .state('main.rendezvous', {
+                    .state('main.discovery_single', {       // 发现-个人
+                        url: "/discovery_single?userId",
+                        views: {
+                            'discovery-tab': {
+                                templateUrl: "/wechat/views/discovery/single.html",
+                                controller:'discovery.single'
+                            }
+                        }
+                    })
+                    .state('main.rendezvous', {     // 约会
                         url: "/rendezvous",
                         views: {
                             'rendezvous-tab': {

@@ -1,0 +1,76 @@
+<ion-view hide-tabs="true">
+    <link href="/wechat/web/css/discovery.css" rel="stylesheet">
+    <link href="/wechat/web/css/plugin/photoswipe/photoswipe.css" rel="stylesheet">
+    <ion-header-bar class="com_w_100 bhy">
+        <a class="button button-icon icon ion-arrow-left-c" ui-sref="main.discovery"></a>
+        <title class="title">
+            张小姐的个人动态
+        </title>
+    </ion-header-bar>
+    <ion-content class="com_w_100 bhy has-header discovery">
+        <ion-list>
+            <ion-item class="mt10">
+                <div class="dis_u_img">
+                    <img src="/wechat/web/images/test.jpg">
+                </div>
+                <div class="dis_con clearfix">
+                    <div class="dis_con_name">
+                        <p>
+                            <span class="fl fs16 fwb">{{dis.name}}</span>
+                            <span class="fr fs12 cor5">{{dis.time}}</span>
+                        </p>
+                        <p class="mt10">
+                            <span class="identity sfz">身份证</span>
+                            <span class="identity phone">手机</span>
+                            <span class="identity vip">vip</span>
+                            <span class="identity guest">贵宾</span>
+                            <span class="identity diamond">钻石</span>
+                        </p>
+                    </div>
+                    <div class="dis_con_t">
+                        <p>{{dis.content}}</p>
+                    </div>
+                    <div class="dis_con_p clearfix">
+                        <a class="pic" ng-repeat="img in dis.imgList" href="{{img.url}}" >
+                            <img src="{{img.url}}">
+                        </a>
+                    </div>
+                    <div class="dis_con_b clearfix">
+                        <span class="fl">
+                            {{dis.browseNumber}}浏览
+                        </span>
+                         <span class="fr ml15 cp">
+                            <i class="ion-chatbubble-working fs20 vam"></i>
+                             <span class="vam">{{dis.commentNumber}}</span>
+                        </span>
+                        <span class="fr cp" ng-class="{true:'cor21',false:''}[user.userLike]" ng-click="clickLike(dis.likeNumber)">
+                            <i class="ion-thumbsup fs20 vam"></i>
+                            <span class="vam">{{dis.likeNumber}}</span>
+                        </span>
+
+                    </div>
+                </div>
+            </ion-item>
+        </ion-list>
+        <ion-list>
+            <ion-item class="item-avatar comment" ng-repeat="comment in commentList">
+                <img src="{{comment.headPic}}">
+                <h2><span class="fl">{{comment.name}}</span><span class="fr comment_time">{{comment.time}}</span></h2>
+                <p>{{comment.content}}</p>
+            </ion-item>
+        </ion-list>
+    </ion-content>
+    <ion-footer-bar align-title="left" class="bar-light comment_footer">
+        <div class="buttons">
+            <button class="button button-icon icon ion-happy energized" id="expression"></button>
+        </div>
+        <div class="title"><input type="text" id="comment_textInput" placeholder="说点什么吧！"></div>
+        <div class="buttons" ng-click="doSomething()">
+            <label class="private" ng-click="checkPrivate()">
+                <i class="cor24" ng-class="{true:'ion-android-checkbox-outline',false:'ion-android-checkbox-outline-blank'}[user.private]"></i>
+                <span class="cor4">私密</span>
+            </label>
+            <button class="button button-icon" id="publish" >发表</button>
+        </div>
+    </ion-footer-bar>
+</ion-view>

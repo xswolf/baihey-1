@@ -33,7 +33,7 @@ require.config({
 });
 
 require(['angular','ionic'] , function (angular) {
-    require(['angular_animate','ionic_angular','angular_sanitize','angular_ui_router','comm','info_data',"app/controller/listController",'angular_upload'],function(comm){
+    require(['angular_animate','ionic_angular','angular_sanitize','angular_ui_router','comm','info_data',"app/controller/listController",'angular_upload'],function(){
         'use strict';
 
         angular.bootstrap(document,['webApp']);
