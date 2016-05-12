@@ -9,11 +9,16 @@
 namespace backend\controllers;
 
 
+use yii\db\Query;
+
 class ConfigController extends BaseController
 {
 
     public function actionList(){
 
+        $list = (new Query())->from(\Yii::$app->db->tablePrefix.'config')->select("*")->all();
+
+        $this->assign('list' , $list);
 
         return $this->render();
     }
