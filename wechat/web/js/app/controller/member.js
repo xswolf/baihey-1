@@ -21,7 +21,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
     }]);
 
     // 资料首页
-    module.controller("member.information", ['app.serviceApi', '$scope', '$ionicPopup', 'FileUploader', '$ionicLoading','$ionicActionSheet', function (api, $scope, $ionicPopup, FileUploader, $ionicLoading,$ionicActionSheet) {
+    module.controller("member.information", ['app.serviceApi', '$scope', '$ionicPopup', 'FileUploader', '$ionicLoading', '$ionicActionSheet', function (api, $scope, $ionicPopup, FileUploader, $ionicLoading, $ionicActionSheet) {
         $scope.formData = [];
 
         // 实例化上传图片插件
@@ -82,15 +82,15 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
         }
 
         // 点击img，功能
-        $scope.moreImg = function(index,img){
+        $scope.moreImg = function (index, img) {
             var hideSheet = $ionicActionSheet.show({
                 buttons: [
-                    { text: '设为头像' }
+                    {text: '设为头像'}
                 ],
                 destructiveText: '删除',
                 titleText: '操作照片',
                 cancelText: '取消',
-                destructiveButtonClicked:function(){  // 点击删除
+                destructiveButtonClicked: function () {  // 点击删除
                     if (confirm("确认删除该照片？")) {
                         // 删除操作
                         var id = $scope.imgList[index].id;
@@ -103,8 +103,8 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
                         return false;
                     }
                 },
-                buttonClicked: function(index) {
-                    if(index == 0){   // 设置头像
+                buttonClicked: function (index) {
+                    if (index == 0) {   // 设置头像
 
                     }
                     return true;
@@ -1917,6 +1917,33 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
     // 嘉瑞红包-新卡提现
     module.controller("member.add_bank_card", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', function (api, $scope, $timeout, $ionicPopup) {
 
+
+    }]);
+
+    // 嘉瑞红包-发红包
+    module.controller("member.bribery_award", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup','$ionicModal', function (api, $scope, $timeout, $ionicPopup,$ionicModal) {
+
+        $ionicModal.fromTemplateUrl('selectUser.html', {
+            scope: $scope,
+            animation: 'slide-in-up'
+        }).then(function(modal) {
+            $scope.modal = modal;
+        });
+        $scope.openModal = function() {
+            $scope.modal.show();
+        };
+        $scope.closeModal = function() {
+            $scope.modal.hide();
+        };
+
+        $scope.bri_submit = function () {
+            $scope.openModal();
+        }
+
+    }]);
+
+    // 嘉瑞红包-发红包-选择我关注的好友
+    module.controller("member.bribery_selectUser", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', function (api, $scope, $timeout, $ionicPopup) {
 
     }]);
 

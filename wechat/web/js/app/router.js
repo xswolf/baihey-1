@@ -608,6 +608,15 @@ define(["app/module", 'app/service/serviceApi'],
                             }
                         }
                     })
+                    .state('main.member_bribery_award', {  // 嘉瑞红包-发红包
+                        url: "/bribery_award",
+                        views: {
+                            'member-tab': {
+                                templateUrl: "/wechat/views/member/bribery_award.html",
+                                controller: 'member.bribery_award'
+                            }
+                        }
+                    })
                     .state('main.message', {  // 消息首页
                         cache: false,
                         url: "/message",
