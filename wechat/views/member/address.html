@@ -18,7 +18,7 @@
                         省
                     </div>
                     <select ng-model="formData.userprovince" ng-options="p as p.name for p in provinceList" ng-change="provinceSelect(this.formData.userprovince)" id="province">
-                        <option value="">请选择</option>
+                        <option value="0">请选择</option>
                     </select>
                 </label>
 
@@ -27,7 +27,7 @@
                         市/区
                     </div>
                     <select ng-model="formData.usercity" ng-options="c as c.name for c in cityList" ng-change="citySelect(this.formData.usercity)" id="city">
-                        <option value="">请选择</option>
+                        <option value="0">请选择</option>
                     </select>
                 </label>
 
@@ -36,7 +36,7 @@
                         区/镇
                     </div>
                     <select ng-model="formData.userarea" ng-options="a as a.name for a in areaList" ng-change="areaSelect(this.formData.userarea)" id="area">
-                        <option value="">请选择</option>
+                        <option value="0">请选择</option>
                     </select>
                 </label>
                 <div class="m_b_bg w100 mt20 tar">

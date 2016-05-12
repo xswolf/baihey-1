@@ -17,8 +17,8 @@
                     <div class="input-label">
                         子女状况
                     </div>
-                    <select ng-model="formData.children" ng-change="childrenSelect(formData.children)" >
-                        <option value="">请选择</option>
+                    <select ng-model="formData.is_child" ng-change="childrenSelect(formData.is_child)" >
+                        <option value="0">请选择</option>
                         <option value="{{c.id}}" ng-repeat="c in childrenList">{{c.name}}</option>
                     </select>
                 </label>

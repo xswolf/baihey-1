@@ -39,9 +39,12 @@ class UserInformation extends Base
                     $arr = explode('-', $data['address']);
                     $arr[2] = $arr[2] ? $arr[2] : 0;
                     $arr[1] = $arr[1] ? $arr[1] : 0;
-                    $sql = "UPDATE {$_user_information_table} SET province = {$arr[0]}, city = {$arr[1]}, area = {$arr[2]},info = JSON_REPLACE(info,'$.local','".$arr[3]."')  WHERE user_id={$user_id}";
+                    $sql = "UPDATE {$_user_information_table} SET info = JSON_REPLACE(info,'$.age','".$arr[0]."'), info = JSON_REPLACE(info,'$.zodiac','".$arr[1]."'), info = JSON_REPLACE(info,'$.constellation','".$arr[2]."') WHERE user_id={$user_id}";
                     break;
 
+                case 'age':// 年龄
+                    $arr = explode('-', $data['age']);
+                    $sql = "UPDATE {$_user_information_table} SET province = {$arr[0]}, city = {$arr[1]}, area = {$arr[2]},info = JSON_REPLACE(info,'$.local','".$arr[3]."')  WHERE user_id={$user_id}";
                 default:
                     $sql = "UPDATE {$_user_information_table} SET info = JSON_REPLACE(info,'$.".key($data)."','".$data[key($data)]."') WHERE user_id={$user_id}";
                     break;

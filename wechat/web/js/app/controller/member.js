@@ -258,10 +258,11 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
             $scope.constellation = ar.getConstellationByBirthday(ar.DateTimeToDate($scope.birthday));
         }
 
-        $scope.formData.age = ar.getTimestampByBirthday(ar.DateTimeToDate($scope.birthday)); // 年龄时间戳
+        /*$scope.formData.age = ar.getTimestampByBirthday(ar.DateTimeToDate($scope.birthday)); // 年龄时间戳
         $scope.formData.zodic = $scope.zodic.id; // 生肖ID 详见comm.js
-        $scope.formData.constellation = $scope.constellation.id; // 星座ID 详见comm.js
+        $scope.formData.constellation = $scope.constellation.id; // 星座ID 详见comm.js*/
 
+        $scope.formData.age = ar.getTimestampByBirthday(ar.DateTimeToDate($scope.birthday)) + '-' + $scope.zodic.id + '-' + $scope.constellation.id;
         $scope.saveData = function () {
             if ($scope.age < 18) {
                 $ionicPopup.alert({title: '如果您未满18岁，请退出本站，谢谢合作！'});
@@ -269,6 +270,10 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
             }
             api.save(url, $scope.formData).success(function (res) {
                 // 保存
+                $scope.userInfo.info.age = ar.getTimestampByBirthday(ar.DateTimeToDate($scope.birthday));
+                $scope.userInfo.info.zodiac = $scope.zodic.id;
+                $scope.userInfo.info.constellation = $scope.constellation.id;
+                $scope.setUserStorage();
             })
         }
 
@@ -1178,16 +1183,16 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
     module.controller("member.children", ['app.serviceApi', '$scope', '$ionicPopup', function (api, $scope, $ionicPopup) {
 
         $scope.formData = [];
-
+        $scope.formData.is_child = $scope.userInfo.info.is_child != '未知' ? $scope.userInfo.info.is_child : '0';
         $scope.childrenList = config_infoData.children;
 
         $scope.childrenSelect = function (children) {
-            $scope.formData.children = children;
+            $scope.formData.is_child = children;
         }
 
         // 保存
         $scope.saveData = function () {
-            if ($scope.formData.children == "" || typeof($scope.formData.children) == 'undefined') {
+            if ($scope.formData.is_child == "" || typeof($scope.formData.is_child) == 'undefined') {
                 if (confirm('检测到您还未选择子女状况，确定放弃吗？')) {
                     window.location.hash = '/main/information';  //跳转
                 } else {
@@ -1196,7 +1201,8 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
             } else {
                 api.save('/wap/member/save-data', $scope.formData).success(function (res) {
                     // 保存
-
+                    $scope.userInfo.info.is_child = $scope.formData.is_child;
+                    $scope.setUserStorage();
                 })
             }
         }

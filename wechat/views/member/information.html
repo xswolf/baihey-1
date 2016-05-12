@@ -111,13 +111,24 @@
                             class="fs12 cor20">保密，只有您自己可以看到</span></p>
                 </div>
             </ion-item>
-            <ion-item class="brithday" ui-sref="main.member_age">
+            <ion-item class="brithday" ng-if="userInfo.info.age == '未知'" ui-sref="main.member_age">
                 <div class="info_l">
                     <p>出生年月</p>
                 </div>
                 <div class="info_c">
-                    <p><i class="bhy-icon-member-birthday cor23 vam mr5"></i><span class="mr10">1991-08-04</span><span
-                            class="mr10">羊</span><span>狮子座</span></p>
+                    <p><span class="cor21">立即填写</span></p>
+                </div>
+                <div class="info_r">
+                    <i class="ionc ion-ios-arrow-right"></i>
+                </div>
+            </ion-item>
+            <ion-item class="brithday" ng-if="userInfo.info.age != '未知'" ui-sref="main.member_age">
+                <div class="info_l">
+                    <p>出生年月</p>
+                </div>
+                <div class="info_c">
+                    <p><i class="bhy-icon-member-birthday cor23 vam mr5"></i><span class="mr10">{{userInfo.info.age | date:'yyyy-MM-dd'}}</span><span
+                            class="mr10">{{userInfo.info.zodiac | zodiac}}</span><span>{{userInfo.info.constellation | constellation}}</span></p>
                 </div>
             </ion-item>
             <ion-item ng-if="userInfo.info.height == '未知'" ui-sref="main.member_height">
@@ -500,8 +511,11 @@
                 <div class="info_l">
                     <p>子女状况</p>
                 </div>
-                <div class="info_c">
-                    <p>无小孩</p>
+                <div ng-if="userInfo.info.is_child == '未知'" class="info_c">
+                    <p><span class="cor21 mr10">立即填写</span></p>
+                </div>
+                <div ng-if="userInfo.info.is_child != '未知'" class="info_c">
+                    <p><span>{{userInfo.info.is_child | child}}</span></p>
                 </div>
                 <div class="info_r">
                     <i class="ionc ion-ios-arrow-right"></i>
