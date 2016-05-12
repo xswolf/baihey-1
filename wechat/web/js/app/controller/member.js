@@ -31,9 +31,13 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
 
         $scope.formData = [];
         $scope.imgList = [];
-        api.list('/wap/member/photo-list', []).success(function (res) {
-            $scope.imgList = res.data;
-        });
+        var head_id = 0;
+        var getImgList = function () {
+            api.list('/wap/member/photo-list', []).success(function (res) {
+                $scope.imgList = res.data;
+            });
+        }
+        getImgList();
 
         $scope.showLoading = function (progress) {
             $ionicLoading.show({
@@ -103,9 +107,14 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
                         return false;
                     }
                 },
-                buttonClicked: function (index) {
-                    if (index == 0) {   // 设置头像
-
+                buttonClicked: function () {
+                    if (index != 0) {   // 设置头像
+                        api.save('/wap/member/set-head', {'id': index}).success(function (res) {
+                            $scope.imgList[head_id].is_head = 0;
+                            $scope.imgList[index].is_head = 1;
+                            head_id = index;
+                            hideSheet();
+                        });
                     }
                     return true;
                 }
@@ -1921,18 +1930,18 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
     }]);
 
     // 嘉瑞红包-发红包
-    module.controller("member.bribery_award", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup','$ionicModal', function (api, $scope, $timeout, $ionicPopup,$ionicModal) {
+    module.controller("member.bribery_award", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$ionicModal', function (api, $scope, $timeout, $ionicPopup, $ionicModal) {
 
         $ionicModal.fromTemplateUrl('selectUser.html', {
             scope: $scope,
             animation: 'slide-in-up'
-        }).then(function(modal) {
+        }).then(function (modal) {
             $scope.modal = modal;
         });
-        $scope.openModal = function() {
+        $scope.openModal = function () {
             $scope.modal.show();
         };
-        $scope.closeModal = function() {
+        $scope.closeModal = function () {
             $scope.modal.hide();
         };
 

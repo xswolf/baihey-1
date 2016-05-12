@@ -15,7 +15,7 @@
                         <span>
                             <img src="{{img.thumb_path}}">
                         </span>
-                        <span class="headpic" ng-if="img.headpic">头像</span>
+                        <span class="headpic" ng-if="img.is_head == 1">头像</span>
                     </div>
                     <div ng-if="imgList.length<12" class="imgItem addItem">
                         <a href="javascript:;" ng-click="addNewImg()">

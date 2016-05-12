@@ -1,5 +1,6 @@
 <?php
 namespace wechat\controllers;
+
 use common\models\UserInformation;
 use common\models\UserPhoto;
 
@@ -46,13 +47,26 @@ class MemberController extends BaseController
         $user_id = \common\util\Cookie::getInstance()->getCookie('bhy_id');
 
         $list = UserPhoto::getInstance()->getPhotoList($user_id);
-        $this->renderAjax(['status=>1' , 'data'=>$list] );
+        $this->renderAjax(['status=>1', 'data' => $list]);
     }
 
+    /**
+     * 删除相片
+     */
     public function actionDelPhoto()
     {
         $list = UserPhoto::getInstance()->delPhoto($this->get);
-        $this->renderAjax(['status=>1' , 'data'=>$list] );
+        $this->renderAjax(['status=>1', 'data' => $list]);
+    }
+
+    /**
+     * 设置头像并返回列表
+     */
+    public function actionSetHead()
+    {
+        $user_id = \common\util\Cookie::getInstance()->getCookie('bhy_id');
+        $list = UserPhoto::getInstance()->setHeadPic($user_id, $this->get);
+        $this->renderAjax(['status=>1', 'data' => $list]);
     }
 
 }
