@@ -258,6 +258,16 @@ define(['app/module', 'app/directive/directiveApi'
             $scope.searchForm.data = mass;
         });
         $scope.searchForm = {};
+        $scope.salary = config_infoData.salary;
+        $scope.house = config_infoData.house;
+        $scope.marriage = config_infoData.marriage;
+        $scope.education = config_infoData.education;
+        $scope.children = config_infoData.children;
+        $scope.house = config_infoData.house;
+        $scope.car = config_infoData.car;
+        $scope.zodiac = config_infoData.zodiac;
+        $scope.constellation = config_infoData.constellation;
+        $scope.nation = config_infoData.nation;
 
         $scope.searchForm.sex = 'all';
         // 职业赋值

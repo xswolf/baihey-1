@@ -47,7 +47,7 @@ class UserPhoto extends Base
         $result = (new Query())->select(['*'])
             ->where(['user_id' => $user_id])
             ->from(static::tableName())
-            ->orderBy('is_head desc, update_time desc')
+            ->orderBy('is_head desc, update_time asc')
             ->limit(12);
 
         $result = $result->all();
@@ -65,6 +65,12 @@ class UserPhoto extends Base
         return $row;
     }
 
+    /**
+     * 设置头像
+     * @param $user_id
+     * @param $where
+     * @return int
+     */
     public function setHeadPic($user_id, $where) {
         $this->updateAll(['is_head' => 0],['user_id' => $user_id, 'is_head' => 1]);
         $row = $this->updateAll(['is_head' => 1],['id' => $where['id']]);

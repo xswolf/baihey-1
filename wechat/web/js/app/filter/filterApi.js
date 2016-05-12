@@ -57,7 +57,7 @@ define(['app/module'], function (module) {
     // 返回子女状态
     module.filter('child', function () {
         return function (input, arr) {
-            var infoData = config_infoData.child;
+            var infoData = config_infoData.children;
             for(var i in infoData) {
                 if(infoData[i].id == parseInt(input)) {
                     return infoData[i].name;
@@ -69,31 +69,11 @@ define(['app/module'], function (module) {
     // 返回年薪
     module.filter('yearIncome', function () {
         return function (input, arr) {
-            switch(parseInt(input)) {
-                case 1:
-                    return '1万以下';break;
-                case 2:
-                    return '1万-3万';break;
-                case 3:
-                    return '3万-5万';break;
-                case 4:
-                    return '5万-7万';break;
-                case 5:
-                    return '7万-10万';break;
-                case 6:
-                    return '10万-15万';break;
-                case 7:
-                    return '15万-20万';break;
-                case 8:
-                    return '20万-25万';break;
-                case 9:
-                    return '25万-50万';break;
-                case 10:
-                    return '50万-100万';break;
-                case 11:
-                    return '100万以上';break;
-                default :
-                    return '未知';
+            var infoData = config_infoData.salary;
+            for(var i in infoData) {
+                if(infoData[i].id == parseInt(input)) {
+                    return infoData[i].name;
+                }
             }
         }
     });
@@ -101,7 +81,7 @@ define(['app/module'], function (module) {
     // 返回购房状态
     module.filter('purchase', function () {
         return function (input, arr) {
-            var infoData = config_infoData.purchase;
+            var infoData = config_infoData.house;
             for(var i in infoData) {
                 if(infoData[i].id == parseInt(input)) {
                     return infoData[i].name;

@@ -4,145 +4,50 @@
 var config_infoData = {
     'height': config_heightLink(140),
 
-    'marriage': [{
-        id: 1,
-        name: '未婚'
-    }, {
-        id: 2,
-        name: '离异'
-    }, {
-        id: 3,
-        name: '丧偶'
-    }],
+    'marriage': [
+        {id: 1, name: '未婚'},
+        {id: 2, name: '离异'},
+        {id: 3, name: '丧偶'}
+    ],
 
-    'education': [{
-        id: 1,
-        name: '初中'
-    }, {
-        id: 2,
-        name: '高中'
-    }, {
-        id: 3,
-        name: '大专'
-    }, {
-        id: 4,
-        name: '本科'
-    }, {
-        id: 5,
-        name: '硕士'
-    }, {
-        id: 6,
-        name: '博士及以上'
-    }],
+    'education': [
+        {id: 1, name: '初中'},
+        {id: 2, name: '高中'},
+        {id: 3, name: '大专'},
+        {id: 4, name: '本科'},
+        {id: 5, name: '硕士'},
+        {id: 6, name: '博士及以上'}
+    ],
 
-    'child': [{
-        id: 1,
-        name: '无小孩'
-    }, {
-        id: 2,
-        name: '有小孩跟自己'
-    }, {
-        id: 3,
-        name: '有小孩跟对方'
-    }, {
-        id: 4,
-        name: '有小孩已独立'
-    }],
+    'zodiac': [
+        {id: 1, name: '鼠'},
+        {id: 2, name: '牛'},
+        {id: 3, name: '虎'},
+        {id: 4, name: '兔'},
+        {id: 5, name: '龙'},
+        {id: 6, name: '蛇'},
+        {id: 7, name: '马'},
+        {id: 8, name: '羊'},
+        {id: 9, name: '猴'},
+        {id: 10, name: '鸡'},
+        {id: 11, name: '狗'},
+        {id: 12, name: '猪'}
+    ],
 
-    'purchase': [{
-        id: 1,
-        name: '有房'
-    }, {
-        id: 2,
-        name: '无房'
-    }],
-
-    'car': [{
-        id: 1,
-        name: '有车'
-    }, {
-        id: 2,
-        name: '无车'
-    }, {
-        id: 3,
-        name: '有豪车'
-    }],
-
-    'zodiac': [{
-        id: 1,
-        name: '鼠'
-    }, {
-        id: 2,
-        name: '牛'
-    }, {
-        id: 3,
-        name: '虎'
-    }, {
-        id: 4,
-        name: '兔'
-    }, {
-        id: 5,
-        name: '龙'
-    }, {
-        id: 6,
-        name: '蛇'
-    }, {
-        id: 7,
-        name: '马'
-    }, {
-        id: 8,
-        name: '羊'
-    }, {
-        id: 9,
-        name: '猴'
-    }, {
-        id: 10,
-        name: '鸡'
-    }, {
-        id: 11,
-        name: '狗'
-    }, {
-        id: 12,
-        name: '猪'
-    }],
-
-    'constellation': [{
-        id: 1,
-        name: '水瓶座'
-    }, {
-        id: 2,
-        name: '双鱼座'
-    }, {
-        id: 3,
-        name: '白羊座'
-    }, {
-        id: 4,
-        name: '金牛座'
-    }, {
-        id: 5,
-        name: '双子座'
-    }, {
-        id: 6,
-        name: '巨蟹座'
-    }, {
-        id: 7,
-        name: '狮子座'
-    }, {
-        id: 8,
-        name: '处女座'
-    }, {
-        id: 9,
-        name: '天秤座'
-    }, {
-        id: 10,
-        name: '天蝎座'
-    }, {
-        id: 11,
-        name: '射手座'
-    }, {
-        id: 12,
-        name: '摩羯座'
-    }],
+    'constellation': [
+        {id: 1, name: '水瓶座'},
+        {id: 2, name: '双鱼座'},
+        {id: 3, name: '白羊座'},
+        {id: 4, name: '金牛座'},
+        {id: 5, name: '双子座'},
+        {id: 6, name: '巨蟹座'},
+        {id: 7, name: '狮子座'},
+        {id: 8, name: '处女座'},
+        {id: 9, name: '天秤座'},
+        {id: 10, name: '天蝎座'},
+        {id: 11, name: '射手座'},
+        {id: 12, name: '摩羯座'}
+    ],
 
     'occupation': [
         {

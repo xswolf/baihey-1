@@ -195,10 +195,7 @@
                                 </div>
                                 <select ng-model="searchForm.data.is_marriage">
                                     <option value="0" selected>不限</option>
-                                    <option value="1">未婚</option>
-                                    <option value="2">离异</option>
-                                    <option value="3">丧偶</option>
-                                    <option value="4">已婚</option>
+                                    <option value="{{c.id}}" ng-repeat="c in marriage">{{c.name}}</option>
                                 </select>
                             </label>
                         </div>
@@ -209,10 +206,7 @@
                                 </div>
                                 <select ng-model="searchForm.data.is_child">
                                     <option value="0" selected>不限</option>
-                                    <option value="1">无小孩</option>
-                                    <option value="2">有小孩跟自己</option>
-                                    <option value="3">有小孩跟对方</option>
-                                    <option value="4">有小孩已独立</option>
+                                    <option value="{{c.id}}" ng-repeat="c in children">{{c.name}}</option>
                                 </select>
                             </label>
                         </div>
@@ -223,15 +217,7 @@
                                 </div>
                                 <select ng-model="searchForm.data.education">
                                     <option value="0" selected>不限</option>
-                                    <option value="1">高中以下</option>
-                                    <option value="2">高中/中专</option>
-                                    <option value="3">大专</option>
-                                    <option value="4">本科</option>
-                                    <option value="5">双学士</option>
-                                    <option value="6">硕士</option>
-                                    <option value="7">硕士研究生</option>
-                                    <option value="8">博士</option>
-                                    <option value="9">博士后</option>
+                                    <option value="{{c.id}}" ng-repeat="c in education">{{c.name}}</option>
                                 </select>
                             </label>
                         </div>
@@ -242,17 +228,7 @@
                                 </div>
                                 <select ng-model="searchForm.data.year_income">
                                     <option value="0" selected>不限</option>
-                                    <option value="1">1万以下</option>
-                                    <option value="2">1万-3万</option>
-                                    <option value="3">3万-5万</option>
-                                    <option value="4">5万-7万</option>
-                                    <option value="5">7万-10万</option>
-                                    <option value="6">10万-15万</option>
-                                    <option value="7">15万-20万</option>
-                                    <option value="8">20万-25万</option>
-                                    <option value="9">25万-50万</option>
-                                    <option value="10">50万-100万</option>
-                                    <option value="11">100万以上</option>
+                                    <option value="{{c.id}}" ng-repeat="c in salary">{{c.name}}</option>
                                 </select>
                             </label>
                         </div>
@@ -263,8 +239,7 @@
                                 </div>
                                 <select ng-model="searchForm.data.is_purchase">
                                     <option value="0" selected>不限</option>
-                                    <option value="1">有房</option>
-                                    <option value="2">无房</option>
+                                    <option value="{{c.id}}" ng-repeat="c in house">{{c.name}}</option>
                                 </select>
                             </label>
                         </div>
@@ -275,9 +250,7 @@
                                 </div>
                                 <select ng-model="searchForm.data.is_car">
                                     <option value="0" selected>不限</option>
-                                    <option value="1">有车</option>
-                                    <option value="2">无车</option>
-                                    <option value="3">有豪车</option>
+                                    <option value="{{c.id}}" ng-repeat="c in car">{{c.name}}</option>
                                 </select>
                             </label>
                         </div>
@@ -299,18 +272,7 @@
                                 </div>
                                 <select ng-model="searchForm.data.zodiac">
                                     <option value="0" selected>不限</option>
-                                    <option value="1">子鼠</option>
-                                    <option value="2">丑牛</option>
-                                    <option value="3">寅虎</option>
-                                    <option value="4">卯兔</option>
-                                    <option value="5">辰龙</option>
-                                    <option value="6">巳蛇</option>
-                                    <option value="7">午马</option>
-                                    <option value="8">未羊</option>
-                                    <option value="9">申猴</option>
-                                    <option value="10">酉鸡</option>
-                                    <option value="11">戌狗</option>
-                                    <option value="12">亥猪</option>
+                                    <option value="{{c.id}}" ng-repeat="c in zodiac">{{c.name}}</option>
                                 </select>
                             </label>
                         </div>
@@ -321,18 +283,7 @@
                                 </div>
                                 <select ng-model="searchForm.data.constellation">
                                     <option value="0" selected>不限</option>
-                                    <option value="1">白羊座</option>
-                                    <option value="2">金牛座</option>
-                                    <option value="3">双子座</option>
-                                    <option value="4">巨蟹座</option>
-                                    <option value="5">狮子座</option>
-                                    <option value="6">处女座</option>
-                                    <option value="7">天秤座</option>
-                                    <option value="8">天蝎座</option>
-                                    <option value="9">射手座</option>
-                                    <option value="10">摩羯座</option>
-                                    <option value="11">水瓶座</option>
-                                    <option value="12">双鱼座</option>
+                                    <option value="{{c.id}}" ng-repeat="c in constellation">{{c.name}}</option>
                                 </select>
                             </label>
                         </div>
@@ -343,7 +294,8 @@
                                 </div>
                                 <select ng-model="searchForm.data.nation">
                                     <option value="0" selected>不限</option>
-                                    <option value="1">汉族</option>
+                                    <option value="{{c.id}}" ng-repeat="c in nation">{{c.name}}</option>
+                                    <!--<option value="1">汉族</option>
                                     <option value="2">基诺族</option>
                                     <option value="3">珞巴族</option>
                                     <option value="4">门巴族</option>
@@ -398,7 +350,7 @@
                                     <option value="53">维吾尔族</option>
                                     <option value="54">藏族</option>
                                     <option value="55">回族</option>
-                                    <option value="56">蒙古族</option>
+                                    <option value="56">蒙古族</option>-->
                                 </select>
                             </label>
                         </div>
