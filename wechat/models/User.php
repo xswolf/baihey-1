@@ -95,7 +95,7 @@ class User extends \common\models\Base
             'height'                => '未知',// 身高
             'head_pic'              => '未知',// 头像
             'real_name'             => '未知',// 真实姓名
-            'identity_id'           => '未知',// 省份证号码
+            'identity_id'           => '未知',// 身份证号码
             'is_marriage'           => '未知',// 婚姻状况
             'is_child'              => '未知',// 子女状况
             'education'             => '未知',// 学历
@@ -110,6 +110,18 @@ class User extends \common\models\Base
             'wechat'                => '未知',// 微信
             'qq'                    => '未知',// QQ
             'haunt_address'         => '未知',// 常出没地
+            'work'                  => '未知',// 工作单位
+            'blood'                 => '未知',// 血型
+            'school'                => '未知',// 学校
+            // 择偶标准
+            'zo_age'                => '18-0',// 年龄
+            'zo_height'             => '140-0',// 最小身高
+            'zo_education'          => '未知',// 最小学历
+            'zo_marriage'           => '未知',// 婚姻状况
+            'zo_house'              => '未知',// 购房
+            'zo_car'                => '未知',// 购车
+            'zo_zodiac'             => '未知',// 属相
+            'zo_constellation'      => '未知',// 星座
         ];
         // 身份证照片
         $userIdentity = [

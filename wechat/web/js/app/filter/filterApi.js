@@ -8,6 +8,31 @@ define(['app/module'], function (module) {
         return Math.floor((time - ar.timeStamp() / 1000) / 365 / 24 / 3600);
     }
 
+    // 返回配置名
+    var getConfigName = function(config,pro) {
+        if(0 == pro) {
+            return '不限';
+        }
+        for(var i in config) {
+            if(config[i].id == pro) {
+                return config[i].name;
+            }
+        }
+    }
+
+    // 返回多项名
+    var getMoreName = function(input,config) {
+        if(!input) {
+            return '不限';
+        }
+        var info = input.split('-');
+        var name = '';
+        for(var i in info) {
+            name += getConfigName(config,parseInt(info[i])) + ' ';
+        }
+        return name;
+    }
+
     // 由时间戳计算年龄
     module.filter('timeToAge', function () {
         return function (input, args1, args2) {
@@ -81,6 +106,9 @@ define(['app/module'], function (module) {
     // 返回购房状态
     module.filter('purchase', function () {
         return function (input, arr) {
+            if(input == 0) {
+                return '不限';
+            }
             var infoData = config_infoData.house;
             for(var i in infoData) {
                 if(infoData[i].id == parseInt(input)) {
@@ -93,6 +121,9 @@ define(['app/module'], function (module) {
     // 返回购车状态
     module.filter('car', function () {
         return function (input, arr) {
+            if(input == 0) {
+                return '不限';
+            }
             var infoData = config_infoData.car;
             for(var i in infoData) {
                 if(infoData[i].id == parseInt(input)) {
@@ -164,6 +195,63 @@ define(['app/module'], function (module) {
                     return infoData[i].name;
                 }
             }
+        }
+    });
+
+    // 返回民族
+    module.filter('nation', function () {
+        return function (input, arr) {
+            var infoData = config_infoData.nation;
+            for(var i in infoData) {
+                if(infoData[i].id == parseInt(input)) {
+                    return infoData[i].name;
+                }
+            }
+        }
+    });
+
+    // 返回血型
+    module.filter('blood', function () {
+        return function (input, arr) {
+            var infoData = config_infoData.blood;
+            for(var i in infoData) {
+                if(infoData[i].id == parseInt(input)) {
+                    return infoData[i].name;
+                }
+            }
+        }
+    });
+
+    // 返回择偶年龄
+    module.filter('zo_age', function () {
+        return function (input, arr) {
+            var info = input.split('-');
+            if(info[1] == '0') {
+                return info[0]+'-'+'不限';
+            } else {
+                return input;
+            }
+        }
+    });
+
+    // 返回择偶婚姻状况
+    module.filter('zo_marriage', function () {
+        return function (input, arr) {
+            return getMoreName(input,config_infoData.marriage);
+        }
+    });
+
+    // 返回择偶属相
+    module.filter('zo_zodiac', function () {
+        return function (input, arr) {
+            return getMoreName(input,config_infoData.zodiac);
+        }
+    });
+
+    // 返回择偶星座
+    module.filter('zo_constellation', function () {
+        return function (input, arr) {
+            return getMoreName(input,config_infoData.constellation);
         }
     });
 

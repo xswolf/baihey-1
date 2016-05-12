@@ -520,23 +520,34 @@
                     <i class="ionc ion-ios-arrow-right"></i>
                 </div>
             </ion-item>
-            <ion-item ui-sref="main.member_nation">
+            <ion-item ng-if="userInfo.info.nation == '未知'" ui-sref="main.member_nation">
                 <div class="info_l">
                     <p>民族</p>
                 </div>
                 <div class="info_c">
-                    <p>汉族</p>
+                    <p><span class="cor21">立即填写</span></p>
                 </div>
                 <div class="info_r">
                     <i class="ionc ion-ios-arrow-right"></i>
+                </div>
+            </ion-item>
+            <ion-item ng-if="userInfo.info.nation != '未知'">
+                <div class="info_l">
+                    <p>民族</p>
+                </div>
+                <div class="info_c">
+                    <p>{{userInfo.info.nation | nation}}</p>
                 </div>
             </ion-item>
             <ion-item ui-sref="main.member_work">
                 <div class="info_l">
                     <p>工作单位</p>
                 </div>
-                <div class="info_c">
+                <div class="info_c" ng-if="userInfo.info.work == '未知'">
                     <p><span class="cor21 mr10">立即填写</span></p>
+                </div>
+                <div class="info_c" ng-if="userInfo.info.work != '未知'">
+                    <p>{{userInfo.info.work}}</p>
                 </div>
                 <div class="info_r">
                     <i class="ionc ion-ios-arrow-right"></i>
@@ -546,8 +557,11 @@
                 <div class="info_l">
                     <p>年收入</p>
                 </div>
-                <div class="info_c">
+                <div class="info_c" ng-if="userInfo.info.year_income == '未知'">
                     <p><span class="cor21 mr10">立即填写</span></p>
+                </div>
+                <div class="info_c" ng-if="userInfo.info.year_income != '未知'">
+                    <p>{{userInfo.info.year_income | yearIncome}}</p>
                 </div>
                 <div class="info_r">
                     <i class="ionc ion-ios-arrow-right"></i>
@@ -557,8 +571,11 @@
                 <div class="info_l">
                     <p>购房情况</p>
                 </div>
-                <div class="info_c">
+                <div class="info_c" ng-if="userInfo.info.is_purchase == '未知'">
                     <p><span class="cor21 mr10">立即填写</span></p>
+                </div>
+                <div class="info_c" ng-if="userInfo.info.is_purchase != '未知'">
+                    <p>{{userInfo.info.is_purchase | purchase}}</p>
                 </div>
                 <div class="info_r">
                     <i class="ionc ion-ios-arrow-right"></i>
@@ -568,8 +585,11 @@
                 <div class="info_l">
                     <p>购车情况</p>
                 </div>
-                <div class="info_c">
+                <div class="info_c" ng-if="userInfo.info.is_car == '未知'">
                     <p><span class="cor21 mr10">立即填写</span></p>
+                </div>
+                <div class="info_c" ng-if="userInfo.info.is_car != '未知'">
+                    <p>{{userInfo.info.is_car | car}}</p>
                 </div>
                 <div class="info_r">
                     <i class="ionc ion-ios-arrow-right"></i>
@@ -579,8 +599,11 @@
                 <div class="info_l">
                     <p>血型</p>
                 </div>
-                <div class="info_c">
+                <div class="info_c" ng-if="userInfo.info.blood == '未知'">
                     <p><span class="cor21 mr10">立即填写</span></p>
+                </div>
+                <div class="info_c" ng-if="userInfo.info.blood != '未知'">
+                    <p>{{userInfo.info.blood | blood}}</p>
                 </div>
                 <div class="info_r">
                     <i class="ionc ion-ios-arrow-right"></i>
@@ -590,8 +613,11 @@
                 <div class="info_l">
                     <p>毕业院校</p>
                 </div>
-                <div class="info_c">
-                    <p>重庆工商大学</p>
+                <div class="info_c" ng-if="userInfo.info.school == '未知'">
+                    <p><span class="cor21 mr10">立即填写</span></p>
+                </div>
+                <div class="info_c" ng-if="userInfo.info.school != '未知'">
+                    <p>{{userInfo.info.school}}</p>
                 </div>
                 <div class="info_r">
                     <i class="ionc ion-ios-arrow-right"></i>
@@ -605,7 +631,7 @@
                     <p>年龄</p>
                 </div>
                 <div class="info_c">
-                    <p>18-24岁</p>
+                    <p>{{userInfo.info.zo_age | zo_age}}岁</p>
                 </div>
                 <div class="info_r">
                     <i class="ionc ion-ios-arrow-right"></i>
@@ -616,7 +642,7 @@
                     <p>身高</p>
                 </div>
                 <div class="info_c">
-                    <p>170-185厘米</p>
+                    <p>{{userInfo.info.zo_height | zo_age}}厘米</p>
                 </div>
                 <div class="info_r">
                     <i class="ionc ion-ios-arrow-right"></i>
@@ -626,8 +652,11 @@
                 <div class="info_l">
                     <p>学历</p>
                 </div>
-                <div class="info_c">
-                    <p>不限</p>
+                <div class="info_c" ng-if="userInfo.info.zo_education == '未知'">
+                    <p><span class="cor21 mr10">立即填写</span></p>
+                </div>
+                <div class="info_c" ng-if="userInfo.info.zo_education != '未知'">
+                    <p>{{userInfo.info.zo_education | education}}</p>
                 </div>
                 <div class="info_r">
                     <i class="ionc ion-ios-arrow-right"></i>
@@ -637,8 +666,11 @@
                 <div class="info_l">
                     <p>婚姻状况</p>
                 </div>
-                <div class="info_c">
-                    <p>未婚</p>
+                <div class="info_c" ng-if="userInfo.info.zo_marriage == '未知'">
+                    <p><span class="cor21 mr10">立即填写</span></p>
+                </div>
+                <div class="info_c" ng-if="userInfo.info.zo_marriage != '未知'">
+                    <p>{{userInfo.info.zo_marriage | zo_marriage}}</p>
                 </div>
                 <div class="info_r">
                     <i class="ionc ion-ios-arrow-right"></i>
@@ -648,8 +680,11 @@
                 <div class="info_l">
                     <p>购房情况</p>
                 </div>
-                <div class="info_c">
-                    <p>已购房</p>
+                <div class="info_c" ng-if="userInfo.info.zo_house == '未知'">
+                    <p><span class="cor21 mr10">立即填写</span></p>
+                </div>
+                <div class="info_c" ng-if="userInfo.info.zo_house != '未知'">
+                    <p>{{userInfo.info.zo_house | purchase}}</p>
                 </div>
                 <div class="info_r">
                     <i class="ionc ion-ios-arrow-right"></i>
@@ -659,8 +694,11 @@
                 <div class="info_l">
                     <p>购车情况</p>
                 </div>
-                <div class="info_c">
-                    <p>不限</p>
+                <div class="info_c" ng-if="userInfo.info.zo_car == '未知'">
+                    <p><span class="cor21 mr10">立即填写</span></p>
+                </div>
+                <div class="info_c" ng-if="userInfo.info.zo_car != '未知'">
+                    <p>{{userInfo.info.zo_car | car}}</p>
                 </div>
                 <div class="info_r">
                     <i class="ionc ion-ios-arrow-right"></i>
@@ -670,8 +708,11 @@
                 <div class="info_l">
                     <p>属相</p>
                 </div>
-                <div class="info_c">
-                    <p>牛</p>
+                <div class="info_c" ng-if="userInfo.info.zo_zodiac == '未知'">
+                    <p><span class="cor21 mr10">立即填写</span></p>
+                </div>
+                <div class="info_c" ng-if="userInfo.info.zo_zodiac != '未知'">
+                    <p>{{userInfo.info.zo_zodiac | zo_zodiac}}</p>
                 </div>
                 <div class="info_r">
                     <i class="ionc ion-ios-arrow-right"></i>
@@ -681,8 +722,11 @@
                 <div class="info_l">
                     <p>星座</p>
                 </div>
-                <div class="info_c">
-                    <p>不限</p>
+                <div class="info_c" ng-if="userInfo.info.zo_constellation == '未知'">
+                    <p><span class="cor21 mr10">立即填写</span></p>
+                </div>
+                <div class="info_c" ng-if="userInfo.info.zo_constellation != '未知'">
+                    <p>{{userInfo.info.zo_constellation | zo_constellation}}</p>
                 </div>
                 <div class="info_r">
                     <i class="ionc ion-ios-arrow-right"></i>

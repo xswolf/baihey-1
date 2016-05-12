@@ -1192,7 +1192,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
 
         // 保存
         $scope.saveData = function () {
-            if ($scope.formData.is_child == "" || typeof($scope.formData.is_child) == 'undefined') {
+            if ($scope.formData.is_child == "0" || typeof($scope.formData.is_child) == 'undefined') {
                 if (confirm('检测到您还未选择子女状况，确定放弃吗？')) {
                     window.location.hash = '/main/information';  //跳转
                 } else {
@@ -1213,7 +1213,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
     module.controller("member.nation", ['app.serviceApi', '$scope', '$ionicPopup', function (api, $scope, $ionicPopup) {
 
         $scope.formData = [];
-
+        $scope.formData.nation = $scope.userInfo.info.nation != '未知' ? $scope.userInfo.info.nation : '0';
         $scope.nationList = config_infoData.nation;
 
         $scope.nationSelect = function (nation) {
@@ -1222,7 +1222,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
 
         // 保存
         $scope.saveData = function () {
-            if ($scope.formData.nation == "" || typeof($scope.formData.nation) == 'undefined') {
+            if ($scope.formData.nation == "0" || typeof($scope.formData.nation) == 'undefined') {
                 if (confirm('检测到您还未选择民族，确定放弃吗？')) {
                     window.location.hash = '/main/information';  //跳转
                 } else {
@@ -1231,7 +1231,8 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
             } else {
                 api.save('/wap/member/save-data', $scope.formData).success(function (res) {
                     // 保存
-
+                    $scope.userInfo.info.nation = $scope.formData.nation;
+                    $scope.setUserStorage();
                 })
             }
         }
@@ -1241,8 +1242,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
     module.controller("member.work", ['app.serviceApi', '$scope', '$ionicPopup', function (api, $scope, $ionicPopup) {
 
         $scope.formData = [];
-
-        $scope.formData.work = "";
+        $scope.formData.work = $scope.userInfo.info.work != '未知' ? $scope.userInfo.info.work : '';
 
         // 保存
         $scope.saveData = function () {
@@ -1255,7 +1255,8 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
             } else {
                 api.save('/wap/member/save-data', $scope.formData).success(function (res) {
                     // 保存
-
+                    $scope.userInfo.info.work = $scope.formData.work;
+                    $scope.setUserStorage();
                 })
             }
         }
@@ -1265,16 +1266,16 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
     module.controller("member.salary", ['app.serviceApi', '$scope', '$ionicPopup', function (api, $scope, $ionicPopup) {
 
         $scope.formData = [];
-
+        $scope.formData.year_income = $scope.userInfo.info.year_income != '未知' ? $scope.userInfo.info.year_income : '';
         $scope.salaryList = config_infoData.salary;
 
         $scope.salarySelect = function (salary) {
-            $scope.formData.salary = salary;
+            $scope.formData.year_income = salary;
         }
 
         // 保存
         $scope.saveData = function () {
-            if ($scope.formData.salary == "" || typeof($scope.formData.salary) == 'undefined') {
+            if ($scope.formData.year_income == "" || typeof($scope.formData.year_income) == 'undefined') {
                 if (confirm('检测到您还未选择年收入，确定放弃吗？')) {
                     window.location.hash = '/main/information';  //跳转
                 } else {
@@ -1283,7 +1284,8 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
             } else {
                 api.save('/wap/member/save-data', $scope.formData).success(function (res) {
                     // 保存
-
+                    $scope.userInfo.info.year_income = $scope.formData.year_income;
+                    $scope.setUserStorage();
                 })
             }
         }
@@ -1293,16 +1295,16 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
     module.controller("member.house", ['app.serviceApi', '$scope', '$ionicPopup', function (api, $scope, $ionicPopup) {
 
         $scope.formData = [];
-
+        $scope.formData.is_purchase = $scope.userInfo.info.is_purchase != '未知' ? $scope.userInfo.info.is_purchase : '';
         $scope.houseList = config_infoData.house;
 
         $scope.houseSelect = function (house) {
-            $scope.formData.house = house;
+            $scope.formData.is_purchase = house;
         }
 
         // 保存
         $scope.saveData = function () {
-            if ($scope.formData.house == "" || typeof($scope.formData.house) == 'undefined') {
+            if ($scope.formData.is_purchase == "" || typeof($scope.formData.is_purchase) == 'undefined') {
                 if (confirm('检测到您还未选择购房情况，确定放弃吗？')) {
                     window.location.hash = '/main/information';  //跳转
                 } else {
@@ -1311,7 +1313,8 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
             } else {
                 api.save('/wap/member/save-data', $scope.formData).success(function (res) {
                     // 保存
-
+                    $scope.userInfo.info.is_purchase = $scope.formData.is_purchase;
+                    $scope.setUserStorage();
                 })
             }
         }
@@ -1321,16 +1324,16 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
     module.controller("member.car", ['app.serviceApi', '$scope', '$ionicPopup', function (api, $scope, $ionicPopup) {
 
         $scope.formData = [];
-
+        $scope.formData.is_car = $scope.userInfo.info.is_car != '未知' ? $scope.userInfo.info.is_car : '';
         $scope.carList = config_infoData.car;
 
         $scope.carSelect = function (car) {
-            $scope.formData.car = car;
+            $scope.formData.is_car = car;
         }
 
         // 保存
         $scope.saveData = function () {
-            if ($scope.formData.car == "" || typeof($scope.formData.car) == 'undefined') {
+            if ($scope.formData.is_car == "" || typeof($scope.formData.is_car) == 'undefined') {
                 if (confirm('检测到您还未选择购车情况，确定放弃吗？')) {
                     window.location.hash = '/main/information';  //跳转
                 } else {
@@ -1339,7 +1342,8 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
             } else {
                 api.save('/wap/member/save-data', $scope.formData).success(function (res) {
                     // 保存
-
+                    $scope.userInfo.info.is_car = $scope.formData.is_car;
+                    $scope.setUserStorage();
                 })
             }
         }
@@ -1349,7 +1353,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
     module.controller("member.blood", ['app.serviceApi', '$scope', '$ionicPopup', function (api, $scope, $ionicPopup) {
 
         $scope.formData = [];
-
+        $scope.formData.blood = $scope.userInfo.info.blood != '未知' ? $scope.userInfo.info.blood : '';
         $scope.bloodList = config_infoData.blood;
 
         $scope.bloodSelect = function (blood) {
@@ -1367,7 +1371,8 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
             } else {
                 api.save('/wap/member/save-data', $scope.formData).success(function (res) {
                     // 保存
-
+                    $scope.userInfo.info.blood = $scope.formData.blood;
+                    $scope.setUserStorage();
                 })
             }
         }
@@ -1377,8 +1382,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
     module.controller("member.school", ['app.serviceApi', '$scope', '$ionicPopup', function (api, $scope, $ionicPopup) {
 
         $scope.formData = [];
-
-        $scope.formData.school = "";
+        $scope.formData.school = $scope.userInfo.info.school != '未知' ? $scope.userInfo.info.school : '';
 
         // 保存
         $scope.saveData = function () {
@@ -1391,7 +1395,8 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
             } else {
                 api.save('/wap/member/save-data', $scope.formData).success(function (res) {
                     // 保存
-
+                    $scope.userInfo.info.school = $scope.formData.school;
+                    $scope.setUserStorage();
                 })
             }
         }
@@ -1401,9 +1406,9 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
     module.controller("member.zo_age", ['app.serviceApi', '$scope', '$ionicPopup', function (api, $scope, $ionicPopup) {
 
         $scope.formData = [];
-
-        $scope.formData.zo_ageMax = "0";   // 最大年龄
-        $scope.formData.zo_ageMin = "18";   // 最小年龄
+        var zo_age = $scope.userInfo.info.zo_age.split('-');
+        $scope.formData.zo_min_age = zo_age[0];
+        $scope.formData.zo_msx_age = zo_age[1];
         $scope.zo_ageMaxList = [];
         $scope.zo_ageMinList = [];
         for (var i = 18; i <= 99; i++) {
@@ -1412,8 +1417,8 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
         }
         $scope.zo_ageMinSelect = function (ageMin) {
             $scope.zo_ageMaxList = [];
-            if (ageMin >= $scope.formData.zo_ageMax) {
-                $scope.formData.zo_ageMax = "0";
+            if (ageMin >= $scope.formData.zo_msx_age) {
+                $scope.formData.zo_msx_age = "0";
             }
             for (var i = ageMin; i <= 99; i++) {
                 $scope.zo_ageMaxList.push(i);
@@ -1422,10 +1427,12 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
 
         // 保存
         $scope.saveData = function () {
-
-            api.save(url, $scope.formData).success(function (res) {
+            var formData = [];
+            formData.zo_age = $scope.formData.zo_min_age + '-' + $scope.formData.zo_msx_age;
+            api.save('/wap/member/save-data', formData).success(function (res) {
                 // 保存
-
+                $scope.userInfo.info.zo_age = formData.zo_age;
+                $scope.setUserStorage();
             })
         }
     }]);
@@ -1434,9 +1441,9 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
     module.controller("member.zo_height", ['app.serviceApi', '$scope', '$ionicPopup', function (api, $scope, $ionicPopup) {
 
         $scope.formData = [];
-
-        $scope.formData.zo_heightMax = "0";   // 最大年龄
-        $scope.formData.zo_heightMin = "140";   // 最小年龄
+        var zo_height = $scope.userInfo.info.zo_height.split('-');
+        $scope.formData.zo_min_height = zo_height[0];
+        $scope.formData.zo_msx_height = zo_height[1];
         $scope.zo_heightMaxList = [];
         $scope.zo_heightMinList = [];
         for (var i = 140; i <= 260; i++) {
@@ -1445,8 +1452,8 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
         }
         $scope.zo_heightMinSelect = function (heightMin) {
             $scope.zo_heightMaxList = [];
-            if (heightMin >= $scope.formData.zo_heightMax) {
-                $scope.formData.zo_heightMax = "0";
+            if (heightMin >= $scope.formData.zo_msx_height) {
+                $scope.formData.zo_msx_height = "0";
             }
             for (var i = heightMin; i <= 260; i++) {
                 $scope.zo_heightMaxList.push(i);
@@ -1455,10 +1462,12 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
 
         // 保存
         $scope.saveData = function () {
-
-            api.save(url, $scope.formData).success(function (res) {
+            var formData = [];
+            formData.zo_height = $scope.formData.zo_min_height + '-' + $scope.formData.zo_msx_height;
+            api.save('/wap/member/save-data', formData).success(function (res) {
                 // 保存
-
+                $scope.userInfo.info.zo_height = formData.zo_height;
+                $scope.setUserStorage();
             })
         }
     }]);
@@ -1467,8 +1476,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
     module.controller("member.zo_education", ['app.serviceApi', '$scope', '$ionicPopup', function (api, $scope, $ionicPopup) {
 
         $scope.formData = [];
-
-        $scope.formData.zo_education = "";   // 学历
+        $scope.formData.zo_education = $scope.userInfo.info.zo_education != '未知' ? $scope.userInfo.info.zo_education : '';
         $scope.zo_educationList = config_infoData.education;
 
         // 保存
@@ -1480,9 +1488,10 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
                     return false;
                 }
             } else {
-                api.save(url, $scope.formData).success(function (res) {
+                api.save('/wap/member/save-data', $scope.formData).success(function (res) {
                     // 保存
-
+                    $scope.userInfo.info.zo_education = $scope.formData.zo_education;
+                    $scope.setUserStorage();
                 })
             }
         }
@@ -1496,7 +1505,12 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
         $scope.isSelectedNull = false;
         $scope.marriageList = config_infoData.marriage;
 
-        $scope.formData.userMarriageIDList = [1, 2];   //用户数据  未婚、离异
+        $scope.formData.userMarriageIDList = [];   //用户数据  未婚、离异
+        var zo_marriage = $scope.userInfo.info.zo_marriage != '未知' ? $scope.userInfo.info.zo_marriage.split('-') : [];
+        for(var i in zo_marriage) {
+            $scope.formData.userMarriageIDList[i] = parseInt(zo_marriage[i]);
+            alert(11);
+        }
 
         // 点击不限
         $scope.SelectedNull = function ($event) {
@@ -1525,9 +1539,11 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
 
         // 保存
         $scope.saveData = function () {
-
-            api.save(url, $scope.formData).success(function (res) {
-
+            var formData = [];
+            formData.zo_marriage = $scope.formData.userMarriageIDList.join('-');
+            api.save('/wap/member/save-data', formData).success(function (res) {
+                $scope.userInfo.info.zo_marriage = formData.zo_marriage;
+                $scope.setUserStorage();
             })
 
         }
@@ -1539,15 +1555,15 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
 
         $scope.formData = [];
 
-        $scope.formData.zo_house = "0";   // 学历 默认不限
+        $scope.formData.zo_house = $scope.userInfo.info.zo_house != '未知' ? $scope.userInfo.info.zo_house : '0';
         $scope.zo_houseList = config_infoData.house;
 
         // 保存
         $scope.saveData = function () {
-
-            api.save(url, $scope.formData).success(function (res) {
+            api.save('/wap/member/save-data', $scope.formData).success(function (res) {
                 // 保存
-
+                $scope.userInfo.info.zo_house = $scope.formData.zo_house;
+                $scope.setUserStorage();
             })
         }
     }]);
@@ -1557,15 +1573,15 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
 
         $scope.formData = [];
 
-        $scope.formData.zo_car = "";   // 学历
+        $scope.formData.zo_car = $scope.userInfo.info.zo_car != '未知' ? $scope.userInfo.info.zo_car : '0';
         $scope.zo_carList = config_infoData.car;
 
         // 保存
         $scope.saveData = function () {
-
-            api.save(url, $scope.formData).success(function (res) {
+            api.save('/wap/member/save-data', $scope.formData).success(function (res) {
                 // 保存
-
+                $scope.userInfo.info.zo_car = $scope.formData.zo_car;
+                $scope.setUserStorage();
             })
         }
     }]);
@@ -1578,7 +1594,11 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
         $scope.isSelectedNull = false;
         $scope.zodiacList = config_infoData.zodiac;
 
-        $scope.formData.userZodiacIDList = [1, 2];   //用户数据  鼠、牛
+        $scope.formData.userZodiacIDList = [];   //用户数据  鼠、牛
+        var zo_zodiac = $scope.userInfo.info.zo_zodiac != '未知' ? $scope.userInfo.info.zo_zodiac.split('-') : [];
+        for(var i in zo_zodiac) {
+            $scope.formData.userZodiacIDList[i] = parseInt(zo_zodiac[i]);
+        }
 
         // 点击不限
         $scope.SelectedNull = function ($event) {
@@ -1607,9 +1627,11 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
 
         // 保存
         $scope.saveData = function () {
-
-            api.save(url, $scope.formData).success(function (res) {
-
+            var formData = [];
+            formData.zo_zodiac = $scope.formData.userZodiacIDList.join('-');
+            api.save('/wap/member/save-data', formData).success(function (res) {
+                $scope.userInfo.info.zo_zodiac = formData.zo_zodiac;
+                $scope.setUserStorage();
             })
 
         }
@@ -1624,8 +1646,11 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
         $scope.isSelectedNull = false;
         $scope.constellationList = config_infoData.constellation;
 
-        $scope.formData.userConstellationIDList = [7, 9];   //用户数据  狮子座、天秤座
-
+        $scope.formData.userConstellationIDList = [];   //用户数据  狮子座、天秤座
+        var zo_constellation = $scope.userInfo.info.zo_constellation != '未知' ? $scope.userInfo.info.zo_constellation.split('-') : [];
+        for(var i in zo_constellation) {
+            $scope.formData.userConstellationIDList[i] = parseInt(zo_constellation[i]);
+        }
         // 点击不限
         $scope.SelectedNull = function ($event) {
             if ($event.target.checked) {     // 选中不限
@@ -1653,11 +1678,12 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
 
         // 保存
         $scope.saveData = function () {
-
-            api.save(url, $scope.formData).success(function (res) {
-
+            var formData = [];
+            formData.zo_constellation = $scope.formData.userConstellationIDList.join('-');
+            api.save('/wap/member/save-data', formData).success(function (res) {
+                $scope.userInfo.info.zo_constellation = formData.zo_constellation;
+                $scope.setUserStorage();
             })
-
         }
 
     }]);

@@ -17,7 +17,7 @@
                     <div class="input-label">
                         最小身高
                     </div>
-                    <select ng-model="formData.zo_heightMin" ng-change="zo_heightMinSelect(this.formData.zo_heightMin)" >
+                    <select ng-model="formData.zo_min_height" ng-change="zo_heightMinSelect(this.formData.zo_min_height)" >
                         <option value="{{h}}" ng-repeat="h in zo_heightMinList">{{h}}厘米</option>
                     </select>
                 </label>
@@ -26,7 +26,7 @@
                     <div class="input-label">
                         最大身高
                     </div>
-                    <select ng-model="formData.zo_heightMax">
+                    <select ng-model="formData.zo_msx_height">
                         <option value="0">不限</option>
                         <option value="{{h}}" ng-repeat="h in zo_heightMaxList">{{h}}厘米</option>
                     </select>

@@ -17,7 +17,7 @@
                     <div class="input-label">
                         最小年龄
                     </div>
-                    <select ng-model="formData.zo_ageMin" ng-change="zo_ageMinSelect(this.formData.zo_ageMin)" >
+                    <select ng-model="formData.zo_min_age" ng-change="zo_ageMinSelect(this.formData.zo_min_age)" >
                         <option value="{{a}}" ng-repeat="a in zo_ageMinList">{{a}}岁</option>
                     </select>
                 </label>
@@ -26,7 +26,7 @@
                     <div class="input-label">
                         最大年龄
                     </div>
-                    <select ng-model="formData.zo_ageMax">
+                    <select ng-model="formData.zo_msx_age">
                         <option value="0">不限</option>
                         <option value="{{a}}" ng-repeat="a in zo_ageMaxList">{{a}}岁</option>
                     </select>
