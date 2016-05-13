@@ -10,8 +10,8 @@
     </ion-header-bar>
     <ion-content class="com_w_100 bhy has-header discovery">
         <ion-list>
-            <ion-item class="mt10" ng-repeat="dis in discoveryList" ui-sref="main.discovery_single({userId:dis.id})">
-                <div class="dis_u_img">
+            <ion-item class="mt10" ng-repeat="dis in discoveryList">
+                <div class="dis_u_img" ui-sref="main.member_user_info({userId:1,tempUrl:'main.discovery'})">
                     <img src="/wechat/web/images/test.jpg">
                 </div>
                 <div class="dis_con clearfix">
@@ -32,13 +32,13 @@
                         <p>{{dis.content}}</p>
                     </div>
                     <div class="dis_con_p clearfix">
-                        <a class="pic" ng-repeat="img in dis.imgList" href="{{img.url}}">
-                            <img src="{{img.url}}">
+                        <a class="pic" ng-repeat="img in dis.imgList" ng-click="showImgList(dis.imgList,$index)">
+                            <img src="{{img.src}}">
                         </a>
                     </div>
                     <div class="dis_con_b clearfix">
 
-                         <span class="fr ml15 cp">
+                         <span class="fr ml15 cp" ui-sref="main.discovery_single({userId:dis.id})">
                             <i class="ion-chatbubble-working fs20 vam"></i>
                              <span class="vam">{{dis.commentNumber}}</span>
                         </span>
@@ -68,11 +68,17 @@
             </ion-header-bar>
             <ion-content class="discovery">
                 <ion-list>
-                    <div class="padding mt10">
-                        <div>
-
+                    <ion-item class="mt10 padding">
+                        <div class="imgItem" ng-repeat="img in imgList">
+                            <img src="{{img.thumb_path}}">
+                            <span class="ion-close-circled del" ng-click="deleteImg($index)"></span>
                         </div>
-                    </div>
+                        <div class="imgItem addimg" ng-click="addNewImg()">
+                            <img src="/wechat/web/images/uploadImg.jpg">
+                        </div>
+                    </ion-item>
+                    <input id="pic_fileInput" type="file" nv-file-select="" uploader="uploader"
+                           style="visibility: hidden; display: none;" accept="image/*">
                     <ion-item class="item-toggle mt10 mb10">
                         显示地址
                         <label class="toggle toggle-assertive">

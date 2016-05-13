@@ -1690,18 +1690,39 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
 
     // 预览资料
     module.controller("member.preview", ['app.serviceApi', '$scope', '$ionicPopup', '$ionicLoading', function (api, $scope, $ionicPopup, $ionicLoading) {
-        // 图片放大查看插件
-        requirejs(['jquery'], function ($) {
-            requirejs(['klass', 'photoswipe'], function (klass, PhotoSwipe) {
 
-                $(document).ready(function () {
-                    var myPhotoSwipe = $(".imgItem a").photoSwipe({
-                        enableMouseWheel: false,
-                        enableKeyboard: false,
-                        allowRotationOnUserZoom: true
-                    });
-                });
-            })
+        $scope.imgList = [
+            {src: '/wechat/web/images/test/3.jpg',w:200,h:200},
+            {src: '/wechat/web/images/test/7.jpg',w:200,h:200},
+            {src: '/wechat/web/images/test/6.jpg',w:200,h:200},
+            {src: '/wechat/web/images/test/3.jpg',w:200,h:200},
+            {src: '/wechat/web/images/test/7.jpg',w:200,h:200},
+            {src: '/wechat/web/images/test/6.jpg',w:200,h:200},
+            {src: '/wechat/web/images/test/3.jpg',w:200,h:200},
+            {src: '/wechat/web/images/test/7.jpg',w:200,h:200}
+        ]
+
+        // 图片放大查看插件
+        requirejs(['photoswipe', 'photoswipe_ui'], function (photoswipe, photoswipe_ui) {
+
+            $scope.showImgList = function(imgList,index){
+                var pswpElement = document.querySelectorAll('.pswp')[0];
+                var options = {
+                    index: index
+                };
+                options.mainClass = 'pswp--minimal--dark';
+                options.barsSize = {top:0,bottom:0};
+                options.captionEl = false;
+                options.fullscreenEl = false;
+                options.shareEl = false;
+                options.bgOpacity = 0.85;
+                options.tapToClose = true;
+                options.tapToToggleControls = false;
+
+                var gallery = new photoswipe( pswpElement, photoswipe_ui, imgList, options);
+                gallery.init();
+            }
+
         })
 
 

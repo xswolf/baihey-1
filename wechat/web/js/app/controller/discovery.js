@@ -13,40 +13,70 @@ define(['app/module', 'app/directive/directiveApi'
         $scope.discoveryList = [
             {
                 id: 1, name: '张小姐', time: '17:40', content: '地方公司空间的花费撕开对方会告诉你不过就是不爽', imgList: [
-                {id: 1, url: '/wechat/web/images/test/1.jpg'},
-                {id: 2, url: '/wechat/web/images/test/2.jpg'},
-                {id: 3, url: '/wechat/web/images/test/3.jpg'}
+                {src: '/wechat/web/images/test/1.jpg',w:200,h:200},
+                {src: '/wechat/web/images/test/2.jpg',w:200,h:200},
+                {src: '/wechat/web/images/test/2.jpg',w:200,h:200},
+                {src: '/wechat/web/images/test/2.jpg',w:200,h:200},
+                {src: '/wechat/web/images/test/2.jpg',w:200,h:200},
+                {src: '/wechat/web/images/test/2.jpg',w:200,h:200},
+                {src: '/wechat/web/images/test/2.jpg',w:200,h:200},
+                {src: '/wechat/web/images/test/2.jpg',w:200,h:200},
+                {src: '/wechat/web/images/test/3.jpg',w:200,h:200}
             ], browseNumber: 2544, commentNumber: 525, likeNumber: 89
             },
             {
                 id: 2, name: '郭先生', time: '13:12', content: '地岁的威尔二万人订单', imgList: [
-                {id: 1, url: '/wechat/web/images/test/3.jpg'},
-                {id: 2, url: '/wechat/web/images/test/7.jpg'},
-                {id: 3, url: '/wechat/web/images/test/6.jpg'}
+                {src: '/wechat/web/images/test/3.jpg',w:200,h:200},
+                {src: '/wechat/web/images/test/7.jpg',w:200,h:200},
+                {src: '/wechat/web/images/test/6.jpg',w:200,h:200}
             ], browseNumber: 2544, commentNumber: 525, likeNumber: 89
             },
             {
                 id: 3, name: '毛女士', time: '12:40', content: '对方扫扫地', imgList: [
-                {id: 1, url: '/wechat/web/images/test/8.jpg'},
-                {id: 2, url: '/wechat/web/images/test/2.jpg'},
-                {id: 3, url: '/wechat/web/images/test/5.jpg'}
+                {src: '/wechat/web/images/test/8.jpg',w:200,h:200},
+                {src: '/wechat/web/images/test/2.jpg',w:200,h:200},
+                {srcsrcsrc: '/wechat/web/images/test/5.jpg',w:200,h:200}
             ], browseNumber: 2544, commentNumber: 525, likeNumber: 89
             },
             {
                 id: 4, name: '邱小姐', time: '11:43', content: '到访台湾台湾人体验围绕太阳勿扰', imgList: [
-                {id: 1, url: '/wechat/web/images/test/7.jpg'},
-                {id: 2, url: '/wechat/web/images/test/3.jpg'},
-                {id: 3, url: '/wechat/web/images/test/1.jpg'}
+                {srcsrc: '/wechat/web/images/test/7.jpg',w:200,h:200},
+                {srcsrc: '/wechat/web/images/test/3.jpg',w:200,h:200},
+                {srcsrc: '/wechat/web/images/test/1.jpg',w:200,h:200}
             ], browseNumber: 2544, commentNumber: 525, likeNumber: 89
             },
             {
                 id: 5, name: '隋小姐', time: '10:15', content: '年翻跟斗风格飞过海对方', imgList: [
-                {id: 1, url: '/wechat/web/images/test/2.jpg'},
-                {id: 2, url: '/wechat/web/images/test/3.jpg'},
-                {id: 3, url: '/wechat/web/images/test/4.jpg'}
+                {src: '/wechat/web/images/test/2.jpg',w:200,h:200},
+                {src: '/wechat/web/images/test/3.jpg',w:200,h:200},
+                {src: '/wechat/web/images/test/4.jpg',w:200,h:200}
             ], browseNumber: 2544, commentNumber: 525, likeNumber: 89
             },
         ]
+
+
+        // 图片放大查看插件
+        requirejs(['photoswipe', 'photoswipe_ui'], function (photoswipe, photoswipe_ui) {
+
+            $scope.showImgList = function(imgList,index){
+                var pswpElement = document.querySelectorAll('.pswp')[0];
+                var options = {
+                    index: index
+                };
+                options.mainClass = 'pswp--minimal--dark';
+                options.barsSize = {top:0,bottom:0};
+                options.captionEl = false;
+                options.fullscreenEl = false;
+                options.shareEl = false;
+                options.bgOpacity = 0.85;
+                options.tapToClose = true;
+                options.tapToToggleControls = false;
+
+                var gallery = new photoswipe( pswpElement, photoswipe_ui, imgList, options);
+                gallery.init();
+            }
+
+        })
 
         $scope.user = [];
         $scope.user.userLike = false;
@@ -182,9 +212,67 @@ define(['app/module', 'app/directive/directiveApi'
 
 
     // 发现-发布动态
-    module.controller("discovery.released", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$ionicModal', '$ionicActionSheet', '$ionicLoading', '$stateParams', function (api, $scope, $timeout, $ionicPopup, $ionicModal, $ionicActionSheet, $ionicLoading, $stateParams) {
+    module.controller("discovery.released", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$ionicModal', '$ionicActionSheet', '$ionicLoading', '$stateParams','FileUploader', function (api, $scope, $timeout, $ionicPopup, $ionicModal, $ionicActionSheet, $ionicLoading, $stateParams,FileUploader) {
 
+        $scope.imgList = [];
 
+        // 实例化上传图片插件
+        var uploader = $scope.uploader = new FileUploader({
+            url: '/wap/file/thumb-photo'
+        });
+
+        $scope.showLoading = function (progress) {
+            $ionicLoading.show({
+                template: '<p class="tac">上传中...</p><p class="tac">' + progress + '%</p>'
+            });
+        };
+
+        $scope.hideLoading = function () {
+            $ionicLoading.hide();
+        }
+
+        $scope.addNewImg = function () {
+            var e = document.getElementById("pic_fileInput");
+            var ev = document.createEvent("MouseEvents");
+            ev.initEvent("click", true, true);
+            e.dispatchEvent(ev);
+
+            uploader.filters.push({
+                name: 'file-type-Res',
+                fn: function (item) {
+                    if (!ar.msg_file_res_img(item)) {   // 验证文件是否是图片格式
+                        $ionicPopup.alert({title: '只能上传图片类型的文件！'});
+                        return false;
+                    }
+                    return true;
+                }
+            });
+
+            uploader.onAfterAddingFile = function (fileItem) {  // 选择文件后
+                fileItem.upload();   // 上传
+            };
+            uploader.onProgressItem = function (fileItem, progress) {   //进度条
+                $scope.showLoading(progress);    // 显示loading
+            };
+            uploader.onSuccessItem = function (fileItem, response, status, headers) {  // 上传成功
+                $scope.imgList.push({id: response.id, thumb_path: response.thumb_path});
+            };
+            uploader.onErrorItem = function (fileItem, response, status, headers) {  // 上传出错
+                $ionicPopup.alert({title: '上传图片出错！'});
+                $scope.hideLoading();  // 隐藏loading
+            };
+            uploader.onCompleteItem = function (fileItem, response, status, headers) {  // 上传结束
+                $scope.hideLoading();  // 隐藏loading
+            };
+
+        }
+
+        // 删除图片
+        $scope.deleteImg = function(index){
+            var id = $scope.imgList[index].id;
+
+            $scope.imgList.splice(index, 1);
+        }
 
     }]);
 })
