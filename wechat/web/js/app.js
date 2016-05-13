@@ -18,7 +18,8 @@ require.config({
         bootstrap:'plugin/bootstrap/bootstrap.min',
         amezeui: 'plugin/amezeui/amazeui.min',
         comm: 'comm',
-        photoswipe:'plugin/photoswipe/code.photoswipe-3.0.5.min',
+        photoswipe:'plugin/photoswipe/photoswipe.min',
+        photoswipe_ui:'plugin/photoswipe/photoswipe-ui-default.min',
         klass:'plugin/photoswipe/klass.min',
         info_data: 'config/infoData'
     },

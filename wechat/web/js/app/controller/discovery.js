@@ -8,19 +8,7 @@ define(['app/module', 'app/directive/directiveApi'
     // 发现
     module.controller("discovery.index", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$ionicModal', '$ionicActionSheet', '$ionicLoading', function (api, $scope, $timeout, $ionicPopup, $ionicModal, $ionicActionSheet, $ionicLoading) {
 
-        // 图片放大查看插件
-        requirejs(['jquery'], function ($) {
-            requirejs(['klass', 'photoswipe'], function (klass, PhotoSwipe) {
-                $(document).ready(function () {
-                    window.event.stopPropagation();
-                    var myPhotoSwipe = $(".dis_con_p a").photoSwipe({
-                        enableMouseWheel: false,
-                        enableKeyboard: false,
-                        allowRotationOnUserZoom: true
-                    });
-                });
-            })
-        })
+
 
         $scope.discoveryList = [
             {
@@ -121,19 +109,6 @@ define(['app/module', 'app/directive/directiveApi'
     // 发现-个人
     module.controller("discovery.single", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$ionicModal', '$ionicActionSheet', '$ionicLoading', '$stateParams', function (api, $scope, $timeout, $ionicPopup, $ionicModal, $ionicActionSheet, $ionicLoading, $stateParams) {
 
-        // 图片放大查看插件
-        requirejs(['jquery'], function ($) {
-            requirejs(['klass', 'photoswipe'], function (klass, PhotoSwipe) {
-
-                $(document).ready(function () {
-                    var myPhotoSwipe = $(".dis_con_p a").photoSwipe({
-                        enableMouseWheel: false,
-                        enableKeyboard: false,
-                        allowRotationOnUserZoom: true
-                    });
-                });
-            })
-        })
 
 
         // url参数，用户ID
@@ -142,11 +117,35 @@ define(['app/module', 'app/directive/directiveApi'
         $scope.dis =
             {
                 id: 1, name: '张小姐', time: '17:40', content: '地方公司空间的花费撕开对方会告诉你不过就是不爽', imgList: [
-                {id: 1, url: '/wechat/web/images/test/1.jpg'},
-                {id: 2, url: '/wechat/web/images/test/2.jpg'},
-                {id: 3, url: '/wechat/web/images/test/3.jpg'}
+                { src: '/wechat/web/images/test/1.jpg',w:200,h:200},
+                { src: '/wechat/web/images/test/2.jpg',w:200,h:200},
+                { src: '/wechat/web/images/test/3.jpg',w:200,h:200}
             ], browseNumber: 2544, commentNumber: 525, likeNumber: 89
             }
+
+        // 图片放大查看插件
+        requirejs(['photoswipe', 'photoswipe_ui'], function (photoswipe, photoswipe_ui) {
+
+            $scope.showImgList = function(imgList,index){
+                var pswpElement = document.querySelectorAll('.pswp')[0];
+                var options = {
+                    index: index
+                };
+                options.mainClass = 'pswp--minimal--dark';
+                options.barsSize = {top:0,bottom:0};
+                options.captionEl = false;
+                options.fullscreenEl = false;
+                options.shareEl = false;
+                options.bgOpacity = 0.85;
+                options.tapToClose = true;
+                options.tapToToggleControls = false;
+
+                var gallery = new photoswipe( pswpElement, photoswipe_ui, imgList, options);
+                gallery.init();
+            }
+
+
+        })
 
 
         $scope.user = [];
@@ -184,6 +183,7 @@ define(['app/module', 'app/directive/directiveApi'
 
     // 发现-发布动态
     module.controller("discovery.released", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$ionicModal', '$ionicActionSheet', '$ionicLoading', '$stateParams', function (api, $scope, $timeout, $ionicPopup, $ionicModal, $ionicActionSheet, $ionicLoading, $stateParams) {
+
 
 
     }]);
