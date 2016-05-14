@@ -73,7 +73,11 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
                 $scope.showLoading(progress);    // 显示loading
             };
             uploader.onSuccessItem = function (fileItem, response, status, headers) {  // 上传成功
-                $scope.imgList.push({id: response.id, thumb_path: response.thumb_path, headpic: 0});
+                if(response.status > 0){
+                    $scope.imgList.push({id: response.id, thumb_path: response.thumb_path, headpic: 0});
+                }else{
+                    $ionicPopup.alert({title: '上传图片失败！'});
+                }
             };
             uploader.onErrorItem = function (fileItem, response, status, headers) {  // 上传出错
                 $ionicPopup.alert({title: '上传图片出错！'});
@@ -127,17 +131,26 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
     module.controller("member.dynamic", ['app.serviceApi', '$scope', '$ionicPopup', function (api, $scope, $ionicPopup) {
 
         // 图片放大查看插件
-        requirejs(['jquery'], function ($) {
-            requirejs(['klass', 'photoswipe'], function (klass, PhotoSwipe) {
+        requirejs(['photoswipe', 'photoswipe_ui'], function (photoswipe, photoswipe_ui) {
 
-                $(document).ready(function () {
-                    var myPhotoSwipe = $(".dyn_con_p a").photoSwipe({
-                        enableMouseWheel: false,
-                        enableKeyboard: false,
-                        allowRotationOnUserZoom: true
-                    });
-                });
-            })
+            $scope.showImgList = function(imgList,index){
+                var pswpElement = document.querySelectorAll('.pswp')[0];
+                var options = {
+                    index: index
+                };
+                options.mainClass = 'pswp--minimal--dark';
+                options.barsSize = {top:0,bottom:0};
+                options.captionEl = false;
+                options.fullscreenEl = false;
+                options.shareEl = false;
+                options.bgOpacity = 0.85;
+                options.tapToClose = true;
+                options.tapToToggleControls = false;
+
+                var gallery = new photoswipe( pswpElement, photoswipe_ui, imgList, options);
+                gallery.init();
+            }
+
         })
 
         $scope.dynamic = [];
@@ -146,37 +159,37 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
         $scope.dynamic.list = [
             {
                 id: 1, likeNumber: 68, commentNumber: 482, imgList: [
-                {src: '/wechat/web/images/test/1.jpg'},
-                {src: '/wechat/web/images/test/2.jpg'},
-                {src: '/wechat/web/images/test/3.jpg'},
+                {src: '/wechat/web/images/test/1.jpg',w:200,h:200},
+                {src: '/wechat/web/images/test/2.jpg',w:200,h:200},
+                {src: '/wechat/web/images/test/3.jpg',w:200,h:200}
             ]
             },
             {
                 id: 2, likeNumber: 877, commentNumber: 1882, imgList: [
-                {src: '/wechat/web/images/test/6.jpg'},
-                {src: '/wechat/web/images/test/4.jpg'},
-                {src: '/wechat/web/images/test/1.jpg'},
+                {src: '/wechat/web/images/test/6.jpg',w:200,h:200},
+                {src: '/wechat/web/images/test/4.jpg',w:200,h:200},
+                {src: '/wechat/web/images/test/1.jpg',w:200,h:200}
             ]
             },
             {
                 id: 3, likeNumber: 95, commentNumber: 381, imgList: [
-                {src: '/wechat/web/images/test/2.jpg'},
-                {src: '/wechat/web/images/test/5.jpg'},
-                {src: '/wechat/web/images/test/3.jpg'},
+                {src: '/wechat/web/images/test/2.jpg',w:200,h:200},
+                {src: '/wechat/web/images/test/5.jpg',w:200,h:200},
+                {src: '/wechat/web/images/test/3.jpg',w:200,h:200}
             ]
             },
             {
                 id: 4, likeNumber: 1898, commentNumber: 3487, imgList: [
-                {src: '/wechat/web/images/test/6.jpg'},
-                {src: '/wechat/web/images/test/1.jpg'},
-                {src: '/wechat/web/images/test/4.jpg'},
+                {src: '/wechat/web/images/test/6.jpg',w:200,h:200},
+                {src: '/wechat/web/images/test/1.jpg',w:200,h:200},
+                {src: '/wechat/web/images/test/4.jpg',w:200,h:200}
             ]
             },
             {
                 id: 5, likeNumber: 4577, commentNumber: 8841, imgList: [
-                {src: '/wechat/web/images/test/5.jpg'},
-                {src: '/wechat/web/images/test/6.jpg'},
-                {src: '/wechat/web/images/test/4.jpg'},
+                {src: '/wechat/web/images/test/5.jpg',w:200,h:200},
+                {src: '/wechat/web/images/test/6.jpg',w:200,h:200},
+                {src: '/wechat/web/images/test/4.jpg',w:200,h:200}
             ]
             }
 
@@ -1753,14 +1766,62 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
     // 查看用户资料
     module.controller("member.user_info", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$ionicModal', '$ionicActionSheet', '$ionicLoading', '$state', '$stateParams', function (api, $scope, $timeout, $ionicPopup, $ionicModal, $ionicActionSheet, $ionicLoading, $state, $stateParams) {
 
-        console.info($state, $stateParams);
+        $scope.formData = [];
+        $scope.formData.userId = $stateParams.userId;
 
-        $scope.userId = $stateParams.userId;
+        $scope.imgList = [
+            {src: '/wechat/web/images/test/1.jpg',w:200,h:200},
+            {src: '/wechat/web/images/test/2.jpg',w:200,h:200},
+            {src: '/wechat/web/images/test/3.jpg',w:200,h:200},
+            {src: '/wechat/web/images/test/4.jpg',w:200,h:200},
+            {src: '/wechat/web/images/test/5.jpg',w:200,h:200},
+            {src: '/wechat/web/images/test/6.jpg',w:200,h:200},
+            {src: '/wechat/web/images/test/7.jpg',w:200,h:200},
+            {src: '/wechat/web/images/test/8.jpg',w:200,h:200},
+            {src: '/wechat/web/images/test/3.jpg',w:200,h:200}
+        ];
+
+        // 图片放大查看插件
+        requirejs(['photoswipe', 'photoswipe_ui'], function (photoswipe, photoswipe_ui) {
+
+            $scope.showImgList = function(imgList,index){
+                console.info(imgList,index);
+                var pswpElement = document.querySelectorAll('.pswp')[0];
+                var options = {
+                    index: index
+                };
+                options.mainClass = 'pswp--minimal--dark';
+                options.barsSize = {top:0,bottom:0};
+                options.captionEl = false;
+                options.fullscreenEl = false;
+                options.shareEl = false;
+                options.bgOpacity = 0.85;
+                options.tapToClose = true;
+                options.tapToToggleControls = false;
+
+                var gallery = new photoswipe( pswpElement, photoswipe_ui, imgList, options);
+                gallery.init();
+            }
+
+        })
 
         $scope.jump = function () {
             $state.go($stateParams.tempUrl);
         }
 
+        // 未关注
+        $scope.formData.follow = false;
+
+        // 取消关注
+        $scope.cancelFollow = function(){
+
+            $scope.formData.follow = false;
+        }
+
+        // 关注
+        $scope.addFollow = function(){
+
+        }
 
     }]);
 

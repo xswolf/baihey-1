@@ -2,6 +2,7 @@
     <link href="/wechat/web/css/member.css" rel="stylesheet">
     <link href="/wechat/web/css/plugin/bootstrap/css/font-awesome.min.css" rel="stylesheet">
     <link href="/wechat/web/css/plugin/photoswipe/photoswipe.css" rel="stylesheet">
+    <link href="/wechat/web/css/plugin/photoswipe/default-skin.css" rel="stylesheet">
     <ion-header-bar>
         <button class="button button-icon icon ion-arrow-left-c" ng-click="jump()"></button>
         <title class="title">张小姐</title>
@@ -10,10 +11,8 @@
         <ion-list>
             <div class="imgList_con">
                 <div class="imgList_handle clearfix">
-                    <div class="imgItem" ng-repeat="img in imgList">
-                        <a href="{{img.url}}">
-                            <img src="{{img.url}}">
-                        </a>
+                    <div class="imgItem" ng-repeat="img in imgList" ng-click="showImgList(imgList,$index)">
+                        <img src="{{img.src}}">
                     </div>
                 </div>
             </div>
@@ -494,7 +493,7 @@
                     <p>牛</p>
                 </div>
             </ion-item>
-            <ion-item class="mb30">
+            <ion-item class="mb40">
                 <div class="info_l">
                     <p>星座</p>
                 </div>
@@ -505,4 +504,84 @@
 
         </ion-list>
     </ion-content>
+    <ion-footer-bar align-title="left" class="bar-light">
+        <div class="buttons w50 bor_r_1c">
+            <button class="button w100" style="font-size: 16px; color:#e4007f;" ui-sref="main.message_chat({id:user.id,head_pic:user.info.head_pic,real_name:user.info.real_name,sex:user.sex,age:user.info.age})"><i class="ion-chatbox-working cor21 mr5 vam fs22"></i>对话</button>
+        </div>
+        <div class="buttons w50" >
+            <button ng-if="!formData.follow" class="button w100"  style="font-size: 16px;" ng-click="addFollow()">
+                <i class="ion-plus-round mr5 vam fs22"></i>关注
+            </button>
+
+            <button ng-if="formData.follow" ng-click="cancelFollow()" class="button w100" style="font-size: 16px;">取消关注</button>
+        </div>
+    </ion-footer-bar>
+
+
+    <!-- Root element of PhotoSwipe. Must have class pswp. -->
+    <div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+        <!-- Background of PhotoSwipe.
+             It's a separate element as animating opacity is faster than rgba(). -->
+        <div class="pswp__bg"></div>
+
+        <!-- Slides wrapper with overflow:hidden. -->
+        <div class="pswp__scroll-wrap">
+
+            <!-- Container that holds slides.
+                PhotoSwipe keeps only 3 of them in the DOM to save memory.
+                Don't modify these 3 pswp__item elements, data is added later on. -->
+            <div class="pswp__container">
+                <div class="pswp__item"></div>
+                <div class="pswp__item"></div>
+                <div class="pswp__item"></div>
+            </div>
+
+            <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+            <div class="pswp__ui pswp__ui--hidden">
+
+                <div class="pswp__top-bar">
+
+                    <!--  Controls are self-explanatory. Order can be changed. -->
+
+                    <div class="pswp__counter"></div>
+
+                    <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                    <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                    <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                    <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                    <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                    <!-- element will get class pswp__preloader--active when preloader is running -->
+                    <div class="pswp__preloader">
+                        <div class="pswp__preloader__icn">
+                            <div class="pswp__preloader__cut">
+                                <div class="pswp__preloader__donut"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                    <div class="pswp__share-tooltip"></div>
+                </div>
+
+                <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+                </button>
+
+                <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+                </button>
+
+                <div class="pswp__caption">
+                    <div class="pswp__caption__center"></div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
 </ion-view>

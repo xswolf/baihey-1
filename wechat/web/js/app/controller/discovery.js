@@ -8,8 +8,6 @@ define(['app/module', 'app/directive/directiveApi'
     // 发现
     module.controller("discovery.index", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$ionicModal', '$ionicActionSheet', '$ionicLoading', function (api, $scope, $timeout, $ionicPopup, $ionicModal, $ionicActionSheet, $ionicLoading) {
 
-
-
         $scope.discoveryList = [
             {
                 id: 1, name: '张小姐', time: '17:40', content: '地方公司空间的花费撕开对方会告诉你不过就是不爽', imgList: [
@@ -22,35 +20,35 @@ define(['app/module', 'app/directive/directiveApi'
                 {src: '/wechat/web/images/test/2.jpg',w:200,h:200},
                 {src: '/wechat/web/images/test/2.jpg',w:200,h:200},
                 {src: '/wechat/web/images/test/3.jpg',w:200,h:200}
-            ], browseNumber: 2544, commentNumber: 525, likeNumber: 89
+            ], browseNumber: 2544, commentNumber: 525, likeNumber: 89,address:'重庆',showAddress:0
             },
             {
                 id: 2, name: '郭先生', time: '13:12', content: '地岁的威尔二万人订单', imgList: [
                 {src: '/wechat/web/images/test/3.jpg',w:200,h:200},
                 {src: '/wechat/web/images/test/7.jpg',w:200,h:200},
                 {src: '/wechat/web/images/test/6.jpg',w:200,h:200}
-            ], browseNumber: 2544, commentNumber: 525, likeNumber: 89
+            ], browseNumber: 2544, commentNumber: 525, likeNumber: 89,address:'重庆',showAddress:0
             },
             {
                 id: 3, name: '毛女士', time: '12:40', content: '对方扫扫地', imgList: [
                 {src: '/wechat/web/images/test/8.jpg',w:200,h:200},
                 {src: '/wechat/web/images/test/2.jpg',w:200,h:200},
                 {srcsrcsrc: '/wechat/web/images/test/5.jpg',w:200,h:200}
-            ], browseNumber: 2544, commentNumber: 525, likeNumber: 89
+            ], browseNumber: 2544, commentNumber: 525, likeNumber: 89,address:'重庆',showAddress:1
             },
             {
                 id: 4, name: '邱小姐', time: '11:43', content: '到访台湾台湾人体验围绕太阳勿扰', imgList: [
                 {srcsrc: '/wechat/web/images/test/7.jpg',w:200,h:200},
                 {srcsrc: '/wechat/web/images/test/3.jpg',w:200,h:200},
                 {srcsrc: '/wechat/web/images/test/1.jpg',w:200,h:200}
-            ], browseNumber: 2544, commentNumber: 525, likeNumber: 89
+            ], browseNumber: 2544, commentNumber: 525, likeNumber: 89,address:'重庆',showAddress:1
             },
             {
                 id: 5, name: '隋小姐', time: '10:15', content: '年翻跟斗风格飞过海对方', imgList: [
                 {src: '/wechat/web/images/test/2.jpg',w:200,h:200},
                 {src: '/wechat/web/images/test/3.jpg',w:200,h:200},
                 {src: '/wechat/web/images/test/4.jpg',w:200,h:200}
-            ], browseNumber: 2544, commentNumber: 525, likeNumber: 89
+            ], browseNumber: 2544, commentNumber: 525, likeNumber: 89,address:'重庆',showAddress:0
             },
         ]
 
@@ -215,6 +213,7 @@ define(['app/module', 'app/directive/directiveApi'
     module.controller("discovery.released", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$ionicModal', '$ionicActionSheet', '$ionicLoading', '$stateParams','FileUploader', function (api, $scope, $timeout, $ionicPopup, $ionicModal, $ionicActionSheet, $ionicLoading, $stateParams,FileUploader) {
 
         $scope.imgList = [];
+        $scope.formData = [];
 
         // 实例化上传图片插件
         var uploader = $scope.uploader = new FileUploader({
@@ -255,7 +254,11 @@ define(['app/module', 'app/directive/directiveApi'
                 $scope.showLoading(progress);    // 显示loading
             };
             uploader.onSuccessItem = function (fileItem, response, status, headers) {  // 上传成功
-                $scope.imgList.push({id: response.id, thumb_path: response.thumb_path});
+                if(response.status > 0){
+                    $scope.imgList.push({id: response.id, thumb_path: response.thumb_path});
+                }else{
+                    $ionicPopup.alert({title: '上传图片失败！'});
+                }
             };
             uploader.onErrorItem = function (fileItem, response, status, headers) {  // 上传出错
                 $ionicPopup.alert({title: '上传图片出错！'});
@@ -273,6 +276,22 @@ define(['app/module', 'app/directive/directiveApi'
 
             $scope.imgList.splice(index, 1);
         }
+
+        // 获取地址
+        //api.getUserAddress('url',param).success(function(res){
+        //    $scope.address = res;
+        //})
+        $scope.address= '重庆'
+
+        // 发布
+        $scope.saveData = function(){
+            console.log($scope.formData);
+            // 保存数据
+
+            $scope.closeModal();    // 发布后关闭modal并立即展现
+            $scope.discoveryList.push();   // 展现数据
+        }
+
 
     }]);
 })

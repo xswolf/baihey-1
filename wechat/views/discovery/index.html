@@ -38,6 +38,10 @@
                     </div>
                     <div class="dis_con_b clearfix">
 
+                        <span class="fl" ng-if="dis.showAddress">
+                            <i class="ion-location cor26"></i>
+                            {{dis.address}}
+                        </span>
                          <span class="fr ml15 cp" ui-sref="main.discovery_single({userId:dis.id})">
                             <i class="ion-chatbubble-working fs20 vam"></i>
                              <span class="vam">{{dis.commentNumber}}</span>
@@ -64,7 +68,7 @@
             <ion-header-bar>
                 <button class="button button-icon" ng-click="closeModal()">取消</button>
                 <h1 class="title">发布动态</h1>
-                <button class="button button-icon cor21">发布</button>
+                <button class="button button-icon cor21" ng-click="saveData()">发布</button>
             </ion-header-bar>
             <ion-content class="discovery">
                 <ion-list>
@@ -80,9 +84,10 @@
                     <input id="pic_fileInput" type="file" nv-file-select="" uploader="uploader"
                            style="visibility: hidden; display: none;" accept="image/*">
                     <ion-item class="item-toggle mt10 mb10">
-                        显示地址
+                        <span ng-if="!formData.showAddress">显示地址</span>
+                        <span ng-if="formData.showAddress"><i class="ion-location cor26 mr5"></i>{{address}}</span>
                         <label class="toggle toggle-assertive">
-                            <input type="checkbox">
+                            <input type="checkbox" ng-model="formData.showAddress">
                             <div class="track">
                                 <div class="handle"></div>
                             </div>
@@ -91,7 +96,7 @@
                     <ion-item class="item-toggle">
                         全部可以看
                         <label class="toggle toggle-assertive">
-                            <input type="checkbox">
+                            <input type="checkbox" ng-model="formData.showAll">
                             <div class="track">
                                 <div class="handle"></div>
                             </div>
@@ -100,7 +105,7 @@
                     <ion-item class="item-toggle">
                         只给我关注的人看
                         <label class="toggle toggle-assertive">
-                            <input type="checkbox">
+                            <input type="checkbox" ng-model="formData.showTofollow">
                             <div class="track">
                                 <div class="handle"></div>
                             </div>
@@ -109,7 +114,7 @@
                     <ion-item class="item-toggle">
                         只给关注我的人看
                         <label class="toggle toggle-assertive">
-                            <input type="checkbox">
+                            <input type="checkbox" ng-model="formData.showfollowTo">
                             <div class="track">
                                 <div class="handle"></div>
                             </div>
@@ -118,16 +123,7 @@
                     <ion-item class="item-toggle">
                         只给自己看
                         <label class="toggle toggle-assertive">
-                            <input type="checkbox">
-                            <div class="track">
-                                <div class="handle"></div>
-                            </div>
-                        </label>
-                    </ion-item>
-                    <ion-item class="item-toggle">
-                        分享
-                        <label class="toggle toggle-assertive">
-                            <input type="checkbox">
+                            <input type="checkbox" ng-model="formData.showMe">
                             <div class="track">
                                 <div class="handle"></div>
                             </div>
