@@ -26,8 +26,13 @@ class UserInformation extends Base
             $_user_information_table = static::tableName();// 表名
 
             switch (key($data)) {
-                case 'personalized':// 个性签名
-                    $sql = "UPDATE {$_user_information_table} SET personalized = {$data['personalized']} WHERE user_id={$user_id}";
+                case 'personalized' :// 个性签名
+                case 'went_travel'  :// 去过的地方
+                case 'want_travel'  :// 想去的地方
+                case 'love_sport'   :// 喜欢的运动
+                case 'want_film'    :// 想看的电影
+                case 'like_food'    :// 喜欢的美食
+                    $sql = "UPDATE {$_user_information_table} SET ".key($data)." = '".$data[key($data)]."' WHERE user_id={$user_id}";
                     break;
 
                 case 'occupation':// 职业

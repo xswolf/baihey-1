@@ -616,56 +616,27 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
     module.controller("member.been_address", ['app.serviceApi', '$scope', '$ionicPopup', '$filter', '$ionicScrollDelegate', function (api, $scope, $ionicPopup, $filter, $ionicScrollDelegate) {
 
         $scope.formData = [];
-
         $scope.formData.userAddrIdList = [];  // 用户已选择的地区，ID数据集，存数据库
         $scope.formData.userAddrList = [];    // 用户已选择的地区，name数据集，展示用
+        var dataList = $scope.userInfo.went_travel != null ? $scope.userInfo.went_travel.split(',') : [];
+        var arr = [];
+        var getAddrName = function(id) {
+            for(var i in arr) {
+                if(id == arr[i].id) {
+                    return arr[i].name;
+                }
+            }
+        }
+        // 默认数据处理
+        api.list('/wap/member/area-travel-list', []).success(function (res) {
+            $scope.addrList = res.data;
+            arr = res.data;
+            for(var i in dataList) {
+                $scope.formData.userAddrIdList[i] = parseInt(dataList[i]);
+                $scope.formData.userAddrList[i] = getAddrName($scope.formData.userAddrIdList[i]);
+            }
+        });
 
-        $scope.addrList = [
-            {id: 0, name: '北京', hot: 1},
-            {id: 1, name: '上海', hot: 1},
-            {id: 2, name: '张家界', hot: 1},
-            {id: 3, name: '九寨沟', hot: 1},
-            {id: 4, name: '马尔代夫', hot: 1},
-            {id: 5, name: '三亚', hot: 1},
-            {id: 6, name: '鼓浪屿', hot: 1},
-            {id: 7, name: '丽江', hot: 1},
-            {id: 8, name: '西双版纳', hot: 1},
-            {id: 9, name: '西藏', hot: 1},
-            {id: 10, name: '重庆', hot: 1},
-            {id: 11, name: '黄山', hot: 0},
-            {id: 12, name: '峨眉山', hot: 0},
-            {id: 13, name: '拉斯维加斯', hot: 0},
-            {id: 14, name: '纽约', hot: 0},
-            {id: 15, name: '巴黎', hot: 0},
-            {id: 16, name: '三峡', hot: 0},
-            {id: 17, name: '埃及', hot: 0},
-            {id: 18, name: '澳大利亚', hot: 0},
-            {id: 19, name: '巴厘岛', hot: 0},
-            {id: 20, name: '威尼斯', hot: 0}
-        ];
-        var arr = [
-            {id: 0, name: '北京', hot: 1},
-            {id: 1, name: '上海', hot: 1},
-            {id: 2, name: '张家界', hot: 1},
-            {id: 3, name: '九寨沟', hot: 1},
-            {id: 4, name: '马尔代夫', hot: 1},
-            {id: 5, name: '三亚', hot: 1},
-            {id: 6, name: '鼓浪屿', hot: 1},
-            {id: 7, name: '丽江', hot: 1},
-            {id: 8, name: '西双版纳', hot: 1},
-            {id: 9, name: '西藏', hot: 1},
-            {id: 10, name: '重庆', hot: 1},
-            {id: 11, name: '黄山', hot: 0},
-            {id: 12, name: '峨眉山', hot: 0},
-            {id: 13, name: '拉斯维加斯', hot: 0},
-            {id: 14, name: '纽约', hot: 0},
-            {id: 15, name: '巴黎', hot: 0},
-            {id: 16, name: '三峡', hot: 0},
-            {id: 17, name: '埃及', hot: 0},
-            {id: 18, name: '澳大利亚', hot: 0},
-            {id: 19, name: '巴厘岛', hot: 0},
-            {id: 20, name: '威尼斯', hot: 0}
-        ];
         var updateSelected = function (action, id, name) {
             if (action == 'add' && $scope.formData.userAddrIdList.indexOf(id) == -1) {
                 $scope.formData.userAddrIdList.push(id);
@@ -719,10 +690,12 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
                     return false;
                 }
             } else {
-                api.save(url, $scope.formData.userAddrIdList).success(function (res) {
-                    // 保存
-
-                })
+                var formData = [];
+                formData.went_travel = $scope.formData.userAddrIdList.join(',');
+                api.save('/wap/member/save-data', formData).success(function (res) {
+                    $scope.userInfo.went_travel = formData.went_travel;
+                    $scope.setUserStorage();
+                });
             }
         }
 
@@ -733,56 +706,27 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
     module.controller("member.want_address", ['app.serviceApi', '$scope', '$ionicPopup', '$filter', '$ionicScrollDelegate', function (api, $scope, $ionicPopup, $filter, $ionicScrollDelegate) {
 
         $scope.formData = [];
-
         $scope.formData.userAddrIdList = [];  // 用户已选择的地区，ID数据集，存数据库
         $scope.formData.userAddrList = [];    // 用户已选择的地区，name数据集，展示用
+        var dataList = $scope.userInfo.want_travel != null ? $scope.userInfo.want_travel.split(',') : [];
+        var arr = [];
+        var getAddrName = function(id) {
+            for(var i in arr) {
+                if(id == arr[i].id) {
+                    return arr[i].name;
+                }
+            }
+        }
+        // 默认数据处理
+        api.list('/wap/member/area-travel-list', []).success(function (res) {
+            $scope.addrList = res.data;
+            arr = res.data;
+            for(var i in dataList) {
+                $scope.formData.userAddrIdList[i] = parseInt(dataList[i]);
+                $scope.formData.userAddrList[i] = getAddrName($scope.formData.userAddrIdList[i]);
+            }
+        });
 
-        $scope.addrList = [
-            {id: 0, name: '解放碑', hot: 1},
-            {id: 1, name: '朝天门', hot: 1},
-            {id: 2, name: '南山', hot: 1},
-            {id: 3, name: '歌乐山', hot: 1},
-            {id: 4, name: '仙女山', hot: 1},
-            {id: 5, name: '武隆', hot: 1},
-            {id: 6, name: '云阳龙缸', hot: 1},
-            {id: 7, name: '金佛山', hot: 1},
-            {id: 8, name: '桃花源', hot: 1},
-            {id: 9, name: '黑山谷', hot: 1},
-            {id: 10, name: '大足石刻', hot: 1},
-            {id: 11, name: '金刀峡', hot: 0},
-            {id: 12, name: '洋人街', hot: 0},
-            {id: 13, name: '四面山', hot: 0},
-            {id: 14, name: '缙云山', hot: 0},
-            {id: 15, name: '小三峡', hot: 0},
-            {id: 16, name: '桂园', hot: 0},
-            {id: 17, name: '渣滓洞', hot: 0},
-            {id: 18, name: '白公馆', hot: 0},
-            {id: 19, name: '洪崖洞', hot: 0},
-            {id: 20, name: '茶山竹海', hot: 0}
-        ];
-        var arr = [
-            {id: 0, name: '北京', hot: 1},
-            {id: 1, name: '上海', hot: 1},
-            {id: 2, name: '张家界', hot: 1},
-            {id: 3, name: '九寨沟', hot: 1},
-            {id: 4, name: '马尔代夫', hot: 1},
-            {id: 5, name: '三亚', hot: 1},
-            {id: 6, name: '鼓浪屿', hot: 1},
-            {id: 7, name: '丽江', hot: 1},
-            {id: 8, name: '西双版纳', hot: 1},
-            {id: 9, name: '西藏', hot: 1},
-            {id: 10, name: '重庆', hot: 1},
-            {id: 11, name: '黄山', hot: 0},
-            {id: 12, name: '峨眉山', hot: 0},
-            {id: 13, name: '拉斯维加斯', hot: 0},
-            {id: 14, name: '纽约', hot: 0},
-            {id: 15, name: '巴黎', hot: 0},
-            {id: 16, name: '三峡', hot: 0},
-            {id: 17, name: '埃及', hot: 0},
-            {id: 18, name: '澳大利亚', hot: 0},
-            {id: 19, name: '巴厘岛', hot: 0},
-            {id: 20, name: '威尼斯', hot: 0}
-        ];
         var updateSelected = function (action, id, name) {
             if (action == 'add' && $scope.formData.userAddrIdList.indexOf(id) == -1) {
                 $scope.formData.userAddrIdList.push(id);
@@ -907,10 +851,12 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
                     return false;
                 }
             } else {
-                api.save(url, $scope.formData.userAddrIdList).success(function (res) {
-                    // 保存
-
-                })
+                var formData = [];
+                formData.want_travel = $scope.formData.userAddrIdList.join(',');
+                api.save('/wap/member/save-data', formData).success(function (res) {
+                    $scope.userInfo.want_travel = formData.want_travel;
+                    $scope.setUserStorage();
+                });
             }
         }
     }
@@ -920,25 +866,24 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
     module.controller("member.sports", ['app.serviceApi', '$scope', '$ionicPopup', '$ionicScrollDelegate', function (api, $scope, $ionicPopup, $ionicScrollDelegate) {
 
         $scope.formData = [];
-
         $scope.formData.userSportsIdList = [];
         $scope.formData.userSportsList = [];
-
-        $scope.sportsList = [
-            {id: 1, name: '跑步'},
-            {id: 2, name: '游泳'},
-            {id: 3, name: '骑行'},
-            {id: 4, name: '登山'},
-            {id: 5, name: '兵乓球'},
-            {id: 6, name: '篮球'},
-            {id: 7, name: '足球'},
-            {id: 8, name: '羽毛球'},
-            {id: 9, name: '滑雪'},
-            {id: 10, name: '攀岩'},
-            {id: 11, name: '户外'},
-            {id: 12, name: '高尔夫'}
-        ];
-
+        var dataList = $scope.userInfo.love_sport != null ? $scope.userInfo.love_sport.split(',') : [];
+        var getAddrName = function(arr, id) {
+            for(var i in arr) {
+                if(id == arr[i].id) {
+                    return arr[i].name;
+                }
+            }
+        }
+        // 默认数据处理
+        api.list('/wap/member/config-list', {'type':1}).success(function (res) {
+            $scope.sportsList = res.data;
+            for(var i in dataList) {
+                $scope.formData.userSportsIdList[i] = parseInt(dataList[i]);
+                $scope.formData.userSportsList[i] = getAddrName($scope.sportsList, $scope.formData.userSportsIdList[i]);
+            }
+        });
 
         var updateSelected = function (action, id, name) {
             if (action == 'add' && $scope.formData.userSportsIdList.indexOf(id) == -1) {
@@ -975,7 +920,6 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
             $ionicScrollDelegate.$getByHandle('small').scrollTop();
         };
 
-
         // 保存
         $scope.saveData = function () {
             if ($scope.formData.userSportsIdList.length <= 0) {
@@ -985,10 +929,12 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
                     return false;
                 }
             } else {
-                api.save(url, $scope.formData.userSportsIdList).success(function (res) {
-                    // 保存
-
-                })
+                var formData = [];
+                formData.love_sport = $scope.formData.userSportsIdList.join(',');
+                api.save('/wap/member/save-data', formData).success(function (res) {
+                    $scope.userInfo.love_sport = formData.love_sport;
+                    $scope.setUserStorage();
+                });
             }
         }
 
@@ -999,31 +945,26 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
     module.controller("member.movie", ['app.serviceApi', '$scope', '$ionicPopup', '$ionicScrollDelegate', '$filter', function (api, $scope, $ionicPopup, $ionicScrollDelegate, $filter) {
 
         $scope.formData = [];
-
         $scope.formData.userMovieIdList = [];
         $scope.formData.userMovieList = [];
-
-        $scope.movieList = [
-            {id: 1, name: '美人鱼', img: '/wechat/web/images/test/movie1.jpg'},
-            {id: 2, name: '飞鹰艾迪', img: '/wechat/web/images/test/movie2.jpg'},
-            {id: 3, name: '喜乐长安', img: '/wechat/web/images/test/movie3.jpg'},
-            {id: 4, name: '恐怖将映', img: '/wechat/web/images/test/movie4.gif'},
-            {id: 5, name: '寻找心中的你', img: '/wechat/web/images/test/movie5.jpg'},
-            {id: 6, name: '半熟少女', img: '/wechat/web/images/test/movie6.jpg'},
-            {id: 7, name: '功夫熊猫', img: '/wechat/web/images/test/movie7.jpg'},
-            {id: 8, name: '谍影特工', img: '/wechat/web/images/test/movie8.jpg'}
-        ];
-
-        var arr = [
-            {id: 1, name: '美人鱼', img: '/wechat/web/images/test/movie1.jpg'},
-            {id: 2, name: '飞鹰艾迪', img: '/wechat/web/images/test/movie2.jpg'},
-            {id: 3, name: '喜乐长安', img: '/wechat/web/images/test/movie3.jpg'},
-            {id: 4, name: '恐怖将映', img: '/wechat/web/images/test/movie4.gif'},
-            {id: 5, name: '寻找心中的你', img: '/wechat/web/images/test/movie5.jpg'},
-            {id: 6, name: '半熟少女', img: '/wechat/web/images/test/movie6.jpg'},
-            {id: 7, name: '功夫熊猫', img: '/wechat/web/images/test/movie7.jpg'},
-            {id: 8, name: '谍影特工', img: '/wechat/web/images/test/movie8.jpg'}
-        ];
+        var arr = [];
+        var dataList = $scope.userInfo.want_film != null ? $scope.userInfo.want_film.split(',') : [];
+        var getPicPath = function(arr, id) {
+            for(var i in arr) {
+                if(id == arr[i].id) {
+                    return arr[i].pic_path;
+                }
+            }
+        }
+        // 默认数据处理
+        api.list('/wap/member/config-list', {'type':2}).success(function (res) {
+            $scope.movieList = res.data;
+            arr = res.data;
+            for(var i in dataList) {
+                $scope.formData.userMovieIdList[i] = parseInt(dataList[i]);
+                $scope.formData.userMovieList[i] = getPicPath($scope.movieList, $scope.formData.userMovieIdList[i]);
+            }
+        });
 
         var updateSelected = function (action, id, name) {
             if (action == 'add' && $scope.formData.userMovieIdList.indexOf(id) == -1) {
@@ -1079,26 +1020,42 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
                     return false;
                 }
             } else {
-                api.save(url, $scope.formData.userMovieIdList).success(function (res) {
-                    // 保存
-
-                })
+                var formData = [];
+                formData.want_film = $scope.formData.userMovieIdList.join(',');
+                api.save('/wap/member/save-data', formData).success(function (res) {
+                    $scope.userInfo.want_film = formData.want_film;
+                    $scope.setUserStorage();
+                });
             }
         }
 
     }
     ]);
 
-
-    // 喜欢的电影
+    // 喜欢的美食
     module.controller("member.delicacy", ['app.serviceApi', '$scope', '$ionicPopup', '$ionicScrollDelegate', '$filter', function (api, $scope, $ionicPopup, $ionicScrollDelegate, $filter) {
 
         $scope.formData = [];
 
         $scope.formData.userDelicacyIdList = [];
         $scope.formData.userDelicacyList = [];
-
-        $scope.delicacyList = [
+        var dataList = $scope.userInfo.like_food != null ? $scope.userInfo.like_food.split(',') : [];
+        var getAddrName = function(arr, id) {
+            for(var i in arr) {
+                if(id == arr[i].id) {
+                    return arr[i].name;
+                }
+            }
+        }
+        // 默认数据处理
+        api.list('/wap/member/config-list', {'type':3}).success(function (res) {
+            $scope.delicacyList = res.data;
+            for(var i in dataList) {
+                $scope.formData.userDelicacyIdList[i] = parseInt(dataList[i]);
+                $scope.formData.userDelicacyList[i] = getAddrName($scope.delicacyList, $scope.formData.userDelicacyIdList[i]);
+            }
+        });
+        /*$scope.delicacyList = [
             {id: 1, name: '爱吃酸'},
             {id: 2, name: '爱吃甜'},
             {id: 3, name: '爱吃辣'},
@@ -1111,7 +1068,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
             {id: 10, name: '甜点'},
             {id: 11, name: '咖啡类'},
             {id: 12, name: '酒类'}
-        ];
+        ];*/
 
         var updateSelected = function (action, id, name) {
             if (action == 'add' && $scope.formData.userDelicacyIdList.indexOf(id) == -1) {
@@ -1158,10 +1115,12 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
                     return false;
                 }
             } else {
-                api.save(url, $scope.formData.userDelicacyIdList).success(function (res) {
-                    // 保存
-
-                })
+                var formData = [];
+                formData.like_food = $scope.formData.userDelicacyIdList.join(',');
+                api.save('/wap/member/save-data', formData).success(function (res) {
+                    $scope.userInfo.like_food = formData.like_food;
+                    $scope.setUserStorage();
+                });
             }
         }
 
@@ -1522,7 +1481,6 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
         var zo_marriage = $scope.userInfo.info.zo_marriage != '未知' ? $scope.userInfo.info.zo_marriage.split('-') : [];
         for(var i in zo_marriage) {
             $scope.formData.userMarriageIDList[i] = parseInt(zo_marriage[i]);
-            alert(11);
         }
 
         // 点击不限

@@ -24,10 +24,10 @@
             </p>
             <ion-item class="item-checkbox" ng-repeat="movie in movieList">
                 <label class="checkbox checkbox-balanced">
-                    <input type="checkbox" id="{{movie.id}}" name="{{movie.img}}" ng-checked="isSelected({{movie.id}})"
+                    <input type="checkbox" id="{{movie.id}}" name="{{movie.pic_path}}" ng-checked="isSelected({{movie.id}})"
                            ng-click="updateSelection($event,{{movie.id}})">
                 </label>
-                <img src="{{movie.img}}" class="vam mr10"  width="40" height="55">
+                <img src="{{movie.pic_path}}" class="vam mr10"  width="40" height="55">
                 {{movie.name}}
             </ion-item>
             <ion-item ng-if="!movieList.length">
