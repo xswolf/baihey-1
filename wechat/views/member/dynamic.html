@@ -3,12 +3,12 @@
     <link href="/wechat/web/css/plugin/photoswipe/photoswipe.css" rel="stylesheet">
     <link href="/wechat/web/css/plugin/photoswipe/default-skin.css" rel="stylesheet">
     <ion-header-bar class="com_w_100 bhy">
-        <button class="button button-icon icon ion-arrow-left-c" ui-sref="main.member_information" ></button>
+        <button class="button button-icon icon ion-arrow-left-c" ng-click="jump()" ></button>
        <title class="title">
            个人动态
        </title>
     </ion-header-bar>
-    <ion-content class="dynamic m_bg com_w_100 bhy" ng-controller="member.dynamic" style="bottom: 0;">
+    <ion-content class="dynamic m_bg com_w_100 bhy" style="bottom: 0;">
         <ion-list>
             <ion-item class="mt10" ng-repeat="dyn in dynamic.list">
                 <div class="dyn_u_img">

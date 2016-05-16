@@ -128,7 +128,10 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
     }]);
 
     // 个人动态
-    module.controller("member.dynamic", ['app.serviceApi', '$scope', '$ionicPopup', function (api, $scope, $ionicPopup) {
+    module.controller("member.dynamic", ['app.serviceApi', '$scope', '$ionicPopup','$stateParams', function (api, $scope, $ionicPopup,$stateParams) {
+
+        $scope.formData = [];
+        $scope.formData.userId = $stateParams.userId;
 
         // 图片放大查看插件
         requirejs(['photoswipe', 'photoswipe_ui'], function (photoswipe, photoswipe_ui) {
@@ -207,6 +210,10 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
 
         $scope.dynamic.loadMore = function () {  // 点击加载
 
+        }
+
+        $scope.jump = function () {
+            $state.go($stateParams.tempUrl);
         }
 
     }]);
@@ -1841,28 +1848,35 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
     // 隐私设置-黑名单
     module.controller("member.privacy_black", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', function (api, $scope, $timeout, $ionicPopup) {
 
+        $scope.formData = [];
+
         // 解除黑名单
         $scope.removeItem = function($index,item){
 
         }
+
     }]);
 
     // 账户安全
     module.controller("member.security", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', function (api, $scope, $timeout, $ionicPopup) {
+
+        $scope.formData = [];
 
     }]);
 
     // 账户安全-密码修改
     module.controller("member.security_pass", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', function (api, $scope, $timeout, $ionicPopup) {
 
+        $scope.formData = [];
+
     }]);
 
     // 账户安全-手机绑定
     module.controller("member.security_phone", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', function (api, $scope, $timeout, $ionicPopup) {
 
-        $scope.User = [];
+        $scope.formData = [];
 
-        $scope.User.codeBtn = '获取验证码';
+        $scope.formData.codeBtn = '获取验证码';
 
         function validatePhone(phone) {
 

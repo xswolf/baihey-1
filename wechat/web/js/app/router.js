@@ -79,10 +79,11 @@ define(["app/module", 'app/service/serviceApi'],
                         }
                     })
                     .state('main.member_dynamic', {   // 个人动态
-                        url: "/dynamic",
+                        url: "/dynamic?userId&tempUrl",
                         views: {
                             'member-tab': {
-                                templateUrl: "/wechat/views/member/dynamic.html"
+                                templateUrl: "/wechat/views/member/dynamic.html",
+                                controller:'member.dynamic'
                             }
                         }
                     })
