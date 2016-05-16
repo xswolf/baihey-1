@@ -277,6 +277,13 @@ define(['app/module', 'app/directive/directiveApi'
             $scope.imgList.splice(index, 1);
         }
 
+        $scope.formData.auth = 1;  // 默认完全公开
+        $scope.authList = [
+            {id:1,name:'完全公开'},
+            {id:2,name:'我关注的人可见'},
+            {id:3,name:'仅自己可见'}
+        ]
+
         // 获取地址
         //api.getUserAddress('url',param).success(function(res){
         //    $scope.address = res;

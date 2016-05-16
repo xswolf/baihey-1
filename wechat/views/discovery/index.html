@@ -80,6 +80,9 @@
                         <div class="imgItem addimg" ng-click="addNewImg()">
                             <img src="/wechat/web/images/uploadImg.jpg">
                         </div>
+                        <div class="w100 mt10 fl">
+                            <textarea class="dis_taInput" placeholder="想说点什么？" ng-model="formData.content"></textarea>
+                        </div>
                     </ion-item>
                     <input id="pic_fileInput" type="file" nv-file-select="" uploader="uploader"
                            style="visibility: hidden; display: none;" accept="image/*">
@@ -93,42 +96,9 @@
                             </div>
                         </label>
                     </ion-item>
-                    <ion-item class="item-toggle">
-                        全部可以看
-                        <label class="toggle toggle-assertive">
-                            <input type="checkbox" ng-model="formData.showAll">
-                            <div class="track">
-                                <div class="handle"></div>
-                            </div>
-                        </label>
-                    </ion-item>
-                    <ion-item class="item-toggle">
-                        只给我关注的人看
-                        <label class="toggle toggle-assertive">
-                            <input type="checkbox" ng-model="formData.showTofollow">
-                            <div class="track">
-                                <div class="handle"></div>
-                            </div>
-                        </label>
-                    </ion-item>
-                    <ion-item class="item-toggle">
-                        只给关注我的人看
-                        <label class="toggle toggle-assertive">
-                            <input type="checkbox" ng-model="formData.showfollowTo">
-                            <div class="track">
-                                <div class="handle"></div>
-                            </div>
-                        </label>
-                    </ion-item>
-                    <ion-item class="item-toggle">
-                        只给自己看
-                        <label class="toggle toggle-assertive">
-                            <input type="checkbox" ng-model="formData.showMe">
-                            <div class="track">
-                                <div class="handle"></div>
-                            </div>
-                        </label>
-                    </ion-item>
+                    <ion-radio ng-model="formData.auth" ng-repeat="au in authList" ng-value="au.id" name="authGroup">
+                        {{au.name}}
+                    </ion-radio>
                 </ion-list>
             </ion-content>
         </ion-modal-view>
