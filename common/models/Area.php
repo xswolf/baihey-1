@@ -14,15 +14,55 @@ class Area extends Base
 {
 
     /**
-     * 获取想去和去过的地方列表（type=1）
+     * 通过id字符串返回数据列表
+     * @param $strId id字符串"1,2,5"
      * @return array
      */
-    public function getAreaTravelList()
+    public function getTravelListById($strId)
+    {
+        $arrId = explode(',' ,$strId);
+        $result = (new Query())->select(['*'])
+            ->where(['in', 'id', $arrId])
+            ->from(static::tableName())
+            ->all();
+        return $result;
+    }
+
+    /**
+     * 去过的地方列表（type=1）
+     * @return array
+     */
+    public function getWentTravelList()
     {
         $result = (new Query())->select(['*'])
             ->where(['type' => 1])
             ->from(static::tableName())
             ->all();
+        return $result;
+    }
+
+    /**
+     * 获取想去的地方列表（type=1）
+     * @return array
+     */
+    public function getWantTravelList($province_id)
+    {
+        $result['local'] = (new Query())->select(['*'])
+            ->where(['type' => 1, 'parentId' => $province_id])
+            ->from(static::tableName())
+            ->all();
+
+        $result['province'] = (new Query())->select(['*'])
+            ->where(['type' => 1])
+            ->andWhere(['not in', 'parentId', [$province_id, 3635]])
+            ->from(static::tableName())
+            ->all();
+
+        $result['foreign'] = (new Query())->select(['*'])
+            ->where(['type' => 1, 'parentId' => 3635])
+            ->from(static::tableName())
+            ->all();
+
         return $result;
     }
 }

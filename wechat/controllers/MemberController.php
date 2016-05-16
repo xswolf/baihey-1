@@ -4,6 +4,7 @@ namespace wechat\controllers;
 use common\models\Area;
 use common\models\UserInformation;
 use common\models\UserPhoto;
+use common\util\Cookie;
 use wechat\models\Config;
 
 
@@ -74,9 +75,20 @@ class MemberController extends BaseController
     /**
      * 类型为1的地方列表
      */
-    public function actionAreaTravelList()
+    public function actionWentTravelList()
     {
-        $list = Area::getInstance()->getAreaTravelList();
+        $list = Area::getInstance()->getWentTravelList();
+        $this->renderAjax(['status=>1', 'data' => $list]);
+    }
+
+    /**
+     * 类型为2的地方列表
+     */
+    public function actionWantTravelList()
+    {
+        $province_id = $this->get['province_id'] ? $this->get['province_id'] : 1;// 默认重庆
+        $list = Area::getInstance()->getWantTravelList($province_id);
+
         $this->renderAjax(['status=>1', 'data' => $list]);
     }
 
@@ -89,4 +101,21 @@ class MemberController extends BaseController
         $this->renderAjax(['status=>1', 'data' => $list]);
     }
 
+    /**
+     * 获取去过的地方或者想去的地方的地区列表
+     */
+    public function actionGetTravelList()
+    {
+        $list = Area::getInstance()->getTravelListById($this->get['area_id']);
+        $this->renderAjax(['status=>1', 'data' => $list]);
+    }
+
+    /**
+     * 获取去过的地方或者想去的地方的地区列表
+     */
+    public function actionGetConfigList()
+    {
+        $list = Config::getInstance()->getListById($this->get['config_id']);
+        $this->renderAjax(['status=>1', 'data' => $list]);
+    }
 }
