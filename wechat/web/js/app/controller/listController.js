@@ -7,7 +7,8 @@ define([
     'app/controller/site',
     'app/controller/message',
     'app/controller/member',
-    'app/controller/discovery'
+    'app/controller/discovery',
+    'app/controller/rendezvous'
 ], function () {
 
 })

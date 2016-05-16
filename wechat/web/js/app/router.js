@@ -701,7 +701,8 @@ define(["app/module", 'app/service/serviceApi'],
                         url: "/rendezvous",
                         views: {
                             'rendezvous-tab': {
-                                templateUrl: "/wechat/views/rendezvous/index.html"
+                                templateUrl: "/wechat/views/rendezvous/index.html",
+                                controller:'rendezvous.index'
                             }
                         }
                     });
