@@ -1793,29 +1793,58 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
     module.controller("member.privacy_pic", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', function (api, $scope, $timeout, $ionicPopup) {
         $scope.formData = [];
         $scope.formData.auth = 1;
+
+        // 已经离开本页面
+        $scope.$on('$ionicView.afterLeave', function() {
+            // 保存数据
+
+        });
     }]);
 
     // 隐私设置-个人动态权限
     module.controller("member.privacy_per", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', function (api, $scope, $timeout, $ionicPopup) {
         $scope.formData = [];
         $scope.formData.auth = 1;
+
+        // 已经离开本页面
+        $scope.$on('$ionicView.afterLeave', function() {
+            // 保存数据
+
+        });
+
     }]);
 
     // 隐私设置-微信显示权限
     module.controller("member.privacy_wechat", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', function (api, $scope, $timeout, $ionicPopup) {
         $scope.formData = [];
         $scope.formData.auth = 1;
+
+        // 已经离开本页面
+        $scope.$on('$ionicView.afterLeave', function() {
+            // 保存数据
+
+        });
     }]);
 
     // 隐私设置-QQ显示权限
     module.controller("member.privacy_qq", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', function (api, $scope, $timeout, $ionicPopup) {
         $scope.formData = [];
         $scope.formData.auth = 1;
+
+        // 已经离开本页面
+        $scope.$on('$ionicView.afterLeave', function() {
+            // 保存数据
+
+        });
     }]);
 
     // 隐私设置-黑名单
     module.controller("member.privacy_black", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', function (api, $scope, $timeout, $ionicPopup) {
 
+        // 解除黑名单
+        $scope.removeItem = function($index,item){
+
+        }
     }]);
 
     // 账户安全
