@@ -106,6 +106,7 @@ class User extends \common\models\Base
             'children_occupation'   => '未知',// 子职业
             'zodiac'                => '未知',// 属相生肖
             'constellation'         => '未知',// 星座
+            'mate'                  => '未知',// 对未来伴侣的期望
             'nation'                => '未知',// 民族
             'wechat'                => '未知',// 微信
             'qq'                    => '未知',// QQ

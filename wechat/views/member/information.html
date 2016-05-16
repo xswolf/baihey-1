@@ -296,33 +296,9 @@
                 </div>
                 <div class="info_c hob">
                     <div class="hob_addr clearfix">
-                        <span class="hob_addr_flag">
+                        <span class="hob_addr_flag" ng-repeat="addrt in went_travel track by addrt.id">
                             <i class="ion-location hob_addr_icon"></i>
-                            <span class="hob_addr_name">北京</span>
-                        </span>
-                        <span class="hob_addr_flag">
-                            <i class="ion-location hob_addr_icon"></i>
-                            <span class="hob_addr_name">重庆</span>
-                        </span>
-                        <span class="hob_addr_flag">
-                            <i class="ion-location hob_addr_icon"></i>
-                            <span class="hob_addr_name">上海</span>
-                        </span>
-                        <span class="hob_addr_flag">
-                            <i class="ion-location hob_addr_icon"></i>
-                            <span class="hob_addr_name">澳大利亚</span>
-                        </span>
-                        <span class="hob_addr_flag">
-                            <i class="ion-location hob_addr_icon"></i>
-                            <span class="hob_addr_name">墨西哥</span>
-                        </span>
-                        <span class="hob_addr_flag">
-                            <i class="ion-location hob_addr_icon"></i>
-                            <span class="hob_addr_name">北京</span>
-                        </span>
-                        <span class="hob_addr_flag">
-                            <i class="ion-location hob_addr_icon"></i>
-                            <span class="hob_addr_name">北京</span>
+                            <span class="hob_addr_name">{{addrt.name}}</span>
                         </span>
                     </div>
                 </div>
@@ -336,27 +312,10 @@
                 </div>
                 <div class="info_c hob">
                     <div class="hob_addr clearfix">
-                        <span class="hob_addr_flag f2">
+                        <span class="hob_addr_flag f2" ng-repeat="addrt in want_travel track by addrt.id">
                             <i class="ion-location hob_addr_icon"></i>
-                            <span class="hob_addr_name">北京</span>
+                            <span class="hob_addr_name">{{addrt.name}}</span>
                         </span>
-                        <span class="hob_addr_flag f2">
-                            <i class="ion-location hob_addr_icon"></i>
-                            <span class="hob_addr_name">北京</span>
-                        </span>
-                        <span class="hob_addr_flag f2">
-                            <i class="ion-location hob_addr_icon"></i>
-                            <span class="hob_addr_name">北京</span>
-                        </span>
-                        <span class="hob_addr_flag f2">
-                            <i class="ion-location hob_addr_icon"></i>
-                            <span class="hob_addr_name">北京</span>
-                        </span>
-                        <span class="hob_addr_flag f2">
-                            <i class="ion-location hob_addr_icon"></i>
-                            <span class="hob_addr_name">北京</span>
-                        </span>
-
                     </div>
                 </div>
             </ion-item>
@@ -370,29 +329,9 @@
                 </div>
                 <div class="info_c hob">
                     <div class="hob_sport clearfix">
-                        <span class="hob_sport_flag">
+                        <span class="hob_sport_flag" ng-repeat="addrt in love_sport track by addrt.id">
                             <i class="bhy-icon-moves hob_sport_icon"></i>
-                            <span class="hob_sport_name">跑步</span>
-                        </span>
-                         <span class="hob_sport_flag">
-                            <i class="bhy-icon-moves hob_sport_icon"></i>
-                            <span class="hob_sport_name">羽毛球</span>
-                        </span>
-                         <span class="hob_sport_flag">
-                            <i class="bhy-icon-moves hob_sport_icon"></i>
-                            <span class="hob_sport_name">篮球</span>
-                        </span>
-                         <span class="hob_sport_flag">
-                            <i class="bhy-icon-moves hob_sport_icon"></i>
-                            <span class="hob_sport_name">骑行</span>
-                        </span>
-                         <span class="hob_sport_flag">
-                            <i class="bhy-icon-moves hob_sport_icon"></i>
-                            <span class="hob_sport_name">健身</span>
-                        </span>
-                        <span class="hob_sport_flag">
-                            <i class="bhy-icon-moves hob_sport_icon"></i>
-                            <span class="hob_sport_name">游泳</span>
+                            <span class="hob_sport_name">{{addrt.name}}</span>
                         </span>
                     </div>
                 </div>
@@ -408,49 +347,9 @@
                 <div class="info_c hob">
                     <ion-scroll delegate-handle="small" zooming="false" direction="x" scrollbar-x="false"
                                 scrollbar-y="false" class="hob_movie clearfix">
-                        <dl>
-                            <dt><img src="/wechat/web/images/test/movie1.jpg"></dt>
-                            <dd class="fs12 tac cor25 lh24 toe">美人鱼</dd>
-                        </dl>
-                        <dl>
-                            <dt><img src="/wechat/web/images/test/movie2.jpg"></dt>
-                            <dd class="fs12 tac cor25 lh24 toe">山东分公司当然</dd>
-                        </dl>
-                        <dl>
-                            <dt><img src="/wechat/web/images/test/movie3.jpg"></dt>
-                            <dd class="fs12 tac cor25 lh24 toe">使得法国</dd>
-                        </dl>
-                        <dl>
-                            <dt><img src="/wechat/web/images/test/movie4.gif"></dt>
-                            <dd class="fs12 tac cor25 lh24 toe">阿瑟我去</dd>
-                        </dl>
-                        <dl>
-                            <dt><img src="/wechat/web/images/test/movie5.jpg"></dt>
-                            <dd class="fs12 tac cor25 lh24 toe">才vssdfsd发</dd>
-                        </dl>
-                        <dl>
-                            <dt><img src="/wechat/web/images/test/movie6.jpg"></dt>
-                            <dd class="fs12 tac cor25 lh24 toe">短途运输让他</dd>
-                        </dl>
-                        <dl>
-                            <dt><img src="/wechat/web/images/test/movie7.jpg"></dt>
-                            <dd class="fs12 tac cor25 lh24 toe">让他我去</dd>
-                        </dl>
-                        <dl>
-                            <dt><img src="/wechat/web/images/test/movie8.jpg"></dt>
-                            <dd class="fs12 tac cor25 lh24 toe">人与人他</dd>
-                        </dl>
-                        <dl>
-                            <dt><img src="/wechat/web/images/test/movie3.jpg"></dt>
-                            <dd class="fs12 tac cor25 lh24 toe">法国皇帝</dd>
-                        </dl>
-                        <dl>
-                            <dt><img src="/wechat/web/images/test/movie5.jpg"></dt>
-                            <dd class="fs12 tac cor25 lh24 toe">身高4而</dd>
-                        </dl>
-                        <dl>
-                            <dt><img src="/wechat/web/images/test/movie2.jpg"></dt>
-                            <dd class="fs12 tac cor25 lh24 toe">导演姜文</dd>
+                        <dl ng-repeat="addrt in want_film track by addrt.id">
+                            <dt><img src="{{addrt.pic_path}}"></dt>
+                            <dd class="fs12 tac cor25 lh24 toe">{{addrt.name}}</dd>
                         </dl>
                     </ion-scroll>
                 </div>
@@ -465,39 +364,22 @@
                 </div>
                 <div class="info_c hob mb10">
                     <div class="hob_food clearfix">
-                        <span class="hob_food_flag">
+                        <span class="hob_food_flag" ng-repeat="addrt in like_food track by addrt.id">
                             <i class="icon-food hob_food_icon"></i>
-                            <span class="hob_food_name">爱吃甜</span>
-                        </span>
-                        <span class="hob_food_flag">
-                            <i class=" icon-food hob_food_icon"></i>
-                            <span class="hob_food_name">爱吃辣</span>
-                        </span>
-                        <span class="hob_food_flag">
-                            <i class=" icon-food hob_food_icon"></i>
-                            <span class="hob_food_name">寿司</span>
-                        </span>
-                        <span class="hob_food_flag">
-                            <i class=" icon-food hob_food_icon"></i>
-                            <span class="hob_food_name">火锅</span>
-                        </span>
-                        <span class="hob_food_flag">
-                            <i class=" icon-food hob_food_icon"></i>
-                            <span class="hob_food_name">哈根达斯</span>
-                        </span>
-                        <span class="hob_food_flag">
-                            <i class=" icon-food hob_food_icon"></i>
-                            <span class="hob_food_name">冰棍</span>
+                            <span class="hob_food_name">{{addrt.name}}</span>
                         </span>
                     </div>
                 </div>
             </ion-item>
             <ion-item ui-sref="main.member_mate">
-                <div class="info_l mate">
-                    <p>对未来伴侣的期望</p>
+                <div class="info_l">
+                    <p>对伴侣的期望</p>
                 </div>
-                <div class="info_c mate">
+                <div ng-if="userInfo.info.mate == '未知' || userInfo.info.mate == undefined" class="info_c">
                     <p><span class="cor21 mr10">立即填写</span></p>
+                </div>
+                <div ng-if="userInfo.info.mate != '未知'" class="info_c">
+                    <p><span>{{userInfo.info.mate}}</span></p>
                 </div>
                 <div class="info_r">
                     <i class="ionc ion-ios-arrow-right"></i>
