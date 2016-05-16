@@ -128,7 +128,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
     }]);
 
     // 个人动态
-    module.controller("member.dynamic", ['app.serviceApi', '$scope', '$ionicPopup','$stateParams', function (api, $scope, $ionicPopup,$stateParams) {
+    module.controller("member.dynamic", ['app.serviceApi', '$scope', '$ionicPopup','$state','$stateParams', function (api, $scope, $ionicPopup,$state,$stateParams) {
 
         $scope.formData = [];
         $scope.formData.userId = $stateParams.userId;

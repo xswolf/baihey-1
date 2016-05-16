@@ -2,8 +2,7 @@
 <link href="/wechat/web/css/member.css" rel="stylesheet">
 <ion-content class="member com_w_100" ng-controller="member.index">
     <ion-list>
-        <a ui-sref="main.member_information" >
-            <ion-item class="member_hdr">
+            <ion-item class="member_hdr" ui-sref="main.member_information">
                 <div class="fl u_img">
                     <img class="rounded" src="/wechat/web/images/test.jpg">
                 </div>
@@ -37,16 +36,14 @@
                     <button class="hdr_info_btn button-light rounded mt20">资料<i class="ml5 ion-ios-arrow-right vam"></i>
                     </button>
                 </div>
-                <div class="hdr_tips fl pr clearfix">
-                    <p class="tips fl" ng-if="userInfo.identity_pic.url1 == '未知'">
-                        <i class="fl bhy-icon-tips-02 mr5"></i>
-                        <span class="fl">您还未上传身份证！</span>
-                        <i class="fr ion-ios-arrow-right vam fs20"></i>
-                    </p>
-
-                </div>
             </ion-item>
-        </a>
+            <div class="hdr_tips fl pr clearfix mb10" ng-if="userInfo.identity_pic.url1 == '未知'" ui-sref="main.member_honesty_sfz">
+                <p class="tips fl">
+                    <i class="fl bhy-icon-tips-02 mr5"></i>
+                    <span class="fl">您还未上传身份证！</span>
+                    <i class="fr ion-ios-arrow-right vam fs20"></i>
+                </p>
+            </div>
         <ion-item class="personal_info" ui-sref="main.member_dynamic({userId:1,tempUrl:'main.member'})">
             <div class="member_menu_i rounded per">
                 <i class="bhy-icon-member-menu-01"></i>
