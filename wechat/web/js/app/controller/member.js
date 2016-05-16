@@ -1785,27 +1785,32 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
 
     // 隐私设置
     module.controller("member.privacy", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', function (api, $scope, $timeout, $ionicPopup) {
-
+        $scope.formData = [];
+        $scope.formData.auth = 1;
     }]);
 
     // 隐私设置-照片权限
     module.controller("member.privacy_pic", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', function (api, $scope, $timeout, $ionicPopup) {
-
+        $scope.formData = [];
+        $scope.formData.auth = 1;
     }]);
 
     // 隐私设置-个人动态权限
     module.controller("member.privacy_per", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', function (api, $scope, $timeout, $ionicPopup) {
-
+        $scope.formData = [];
+        $scope.formData.auth = 1;
     }]);
 
     // 隐私设置-微信显示权限
     module.controller("member.privacy_wechat", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', function (api, $scope, $timeout, $ionicPopup) {
-
+        $scope.formData = [];
+        $scope.formData.auth = 1;
     }]);
 
     // 隐私设置-QQ显示权限
     module.controller("member.privacy_qq", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', function (api, $scope, $timeout, $ionicPopup) {
-
+        $scope.formData = [];
+        $scope.formData.auth = 1;
     }]);
 
     // 隐私设置-黑名单

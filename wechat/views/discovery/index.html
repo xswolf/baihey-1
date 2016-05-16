@@ -96,8 +96,14 @@
                             </div>
                         </label>
                     </ion-item>
-                    <ion-radio ng-model="formData.auth" ng-repeat="au in authList" ng-value="au.id" name="authGroup">
-                        {{au.name}}
+                    <ion-radio ng-model="formData.auth" value="1" name="authGroup">
+                        完全公开
+                    </ion-radio>
+                    <ion-radio ng-model="formData.auth" value="2" name="authGroup">
+                        我关注的人可见
+                    </ion-radio>
+                    <ion-radio ng-model="formData.auth" value="3" name="authGroup">
+                        仅自己可见
                     </ion-radio>
                 </ion-list>
             </ion-content>

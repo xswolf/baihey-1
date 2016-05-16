@@ -9,51 +9,18 @@
             <ion-item class="item item-input mt10 mb10">
                 <input type="text" placeholder="请填写QQ号">
             </ion-item>
-            <ion-item class="item item-toggle">
-                VIP可见
-                <label class="toggle toggle-positive">
-                    <input type="checkbox">
-                    <div class="track">
-                        <div class="handle"></div>
-                    </div>
-                </label>
-            </ion-item>
-            <ion-item class="item item-toggle">
-                全部可见
-                <label class="toggle toggle-positive">
-                    <input type="checkbox">
-                    <div class="track">
-                        <div class="handle"></div>
-                    </div>
-                </label>
-            </ion-item>
-            <ion-item class="item item-toggle">
-                不可公开
-                <label class="toggle toggle-positive">
-                    <input type="checkbox">
-                    <div class="track">
-                        <div class="handle"></div>
-                    </div>
-                </label>
-            </ion-item>
-            <ion-item class="item item-toggle">
+            <ion-radio value="1" name="authGroup" ng-model="formData.auth">
+                完全公开
+            </ion-radio>
+            <ion-radio value="2" name="authGroup" ng-model="formData.auth">
                 我关注的人可见
-                <label class="toggle toggle-positive">
-                    <input type="checkbox">
-                    <div class="track">
-                        <div class="handle"></div>
-                    </div>
-                </label>
-            </ion-item>
-            <ion-item class="item item-toggle">
-                关注我的人可见
-                <label class="toggle toggle-positive">
-                    <input type="checkbox">
-                    <div class="track">
-                        <div class="handle"></div>
-                    </div>
-                </label>
-            </ion-item>
+            </ion-radio>
+            <ion-radio value="3" name="authGroup" ng-model="formData.auth">
+                VIP会员可见
+            </ion-radio>
+            <ion-radio value="4" name="authGroup" ng-model="formData.auth">
+                不公开
+            </ion-radio>
         </ion-list>
     </ion-content>
 </ion-view>
