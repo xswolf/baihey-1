@@ -2011,6 +2011,10 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
 
     }]);
 
+    // 我的约会
+    module.controller("member.rendezvous", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', function (api, $scope, $timeout, $ionicPopup) {
+
+    }]);
     return module;
 })
 
