@@ -78,15 +78,6 @@ define(["app/module", 'app/service/serviceApi'],
                             }
                         }
                     })
-                    .state('main.member_dynamic', {   // 个人动态
-                        url: "/dynamic?userId&tempUrl",
-                        views: {
-                            'member-tab': {
-                                templateUrl: "/wechat/views/member/dynamic.html",
-                                controller:'member.dynamic'
-                            }
-                        }
-                    })
                     .state('main.member_signature', {  //  个性签名
                         url: "/signature",
                         views: {
@@ -680,7 +671,7 @@ define(["app/module", 'app/service/serviceApi'],
                         }
                     })
                     .state('main.discovery', {       // 发现
-                        url: "/discovery",
+                        url: "/discovery?userId?tempUrl",
                         views: {
                             'discovery-tab': {
                                 templateUrl: "/wechat/views/discovery/index.html",
