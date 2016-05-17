@@ -4,7 +4,7 @@
     <ion-header-bar>
         <button class="button button-icon icon ion-arrow-left-c" ui-sref="main.member"></button>
         <title class="title">我的资料</title>
-        <button class="button button-icon" ui-sref="main.member_preview">预览</button>
+        <button class="button button-icon" href="#/main/member/preview">预览</button>
     </ion-header-bar>
     <ion-content ng-controller="member.information" class="bhy com_w_100 infomation m_bg">
         <ion-list>
@@ -40,7 +40,7 @@
                     </span>
                 </p>
             </ion-item>
-            <ion-item ui-sref="main.member_dynamic">
+            <ion-item ui-sref="main.dynamic({userId:1,tempUrl:'/main/member/information'})" >
                 <div class="info_l">
                     <p>个人动态</p>
                     <p class="dyn_nb">12</p>
@@ -58,7 +58,7 @@
                     <i class="ionc ion-ios-arrow-right"></i>
                 </div>
             </ion-item>
-            <ion-item class="mb10" ui-sref="main.member_signature">
+            <ion-item class="mb10" href="#/main/member/signature">
                 <div class="info_l">
                     <p>个性签名</p>
                 </div>
@@ -70,7 +70,7 @@
                     <i class="ionc ion-ios-arrow-right"></i>
                 </div>
             </ion-item>
-            <ion-item class="idv mb10" href="">
+            <ion-item class="idv mb10" href="#/main/member/honesty">
                 <div class="info_c">
                     <p>
                         <i class="icon ion-android-alert fs16 mr5 energized vam"></i>
@@ -90,7 +90,7 @@
                     <p ng-if="userInfo.sex == 1"><i class="mr5 icon bhy-icon-member-man cor13 vam"></i>男</p>
                 </div>
             </ion-item>
-            <ion-item ng-if="userInfo.info.real_name == '未知'" ui-sref="main.member_real_name">
+            <ion-item ng-if="userInfo.info.real_name == '未知'" href="#/main/member/real_name">
                 <div class="info_l">
                     <p>真实姓名</p>
                 </div>
@@ -110,7 +110,7 @@
                             class="fs12 cor20">保密，只有您自己可以看到</span></p>
                 </div>
             </ion-item>
-            <ion-item class="brithday" ng-if="userInfo.info.age == '未知'" ui-sref="main.member_age">
+            <ion-item class="brithday" ng-if="userInfo.info.age == '未知'" href="#/main/member/age">
                 <div class="info_l">
                     <p>出生年月</p>
                 </div>
@@ -121,7 +121,7 @@
                     <i class="ionc ion-ios-arrow-right"></i>
                 </div>
             </ion-item>
-            <ion-item class="brithday" ng-if="userInfo.info.age != '未知'" ui-sref="main.member_age">
+            <ion-item class="brithday" ng-if="userInfo.info.age != '未知'" href="#/main/member/age">
                 <div class="info_l">
                     <p>出生年月</p>
                 </div>
@@ -130,7 +130,7 @@
                             class="mr10">{{userInfo.info.zodiac | zodiac}}</span><span>{{userInfo.info.constellation | constellation}}</span></p>
                 </div>
             </ion-item>
-            <ion-item ng-if="userInfo.info.height == '未知'" ui-sref="main.member_height">
+            <ion-item ng-if="userInfo.info.height == '未知'" href="#/main/member/height">
                 <div class="info_l">
                     <p>身高</p>
                 </div>
@@ -149,7 +149,7 @@
                     <p>{{userInfo.info.height}}</p>
                 </div>
             </ion-item>
-            <ion-item ng-if="userInfo.info.is_marriage == '未知'" ui-sref="main.member_is_marriage">
+            <ion-item ng-if="userInfo.info.is_marriage == '未知'" href="#/main/member/is_marriage">
                 <div class="info_l">
                     <p>婚姻状况</p>
                 </div>
@@ -168,7 +168,7 @@
                     <p>{{userInfo.info.is_marriage | marriage}}</p>
                 </div>
             </ion-item>
-            <ion-item ng-if="userInfo.info.education == '未知'" ui-sref="main.member_education">
+            <ion-item ng-if="userInfo.info.education == '未知'" href="#/main/member/education">
                 <div class="info_l">
                     <p>学历</p>
                 </div>
@@ -190,7 +190,7 @@
                     </p>
                 </div>
             </ion-item>
-            <ion-item ui-sref="main.member_occupation">
+            <ion-item href="#/main/member/occupation">
                 <div class="info_l">
                     <p>职业</p>
                 </div>
@@ -204,7 +204,7 @@
                     <i class="ionc ion-ios-arrow-right"></i>
                 </div>
             </ion-item>
-            <ion-item ui-sref="main.member_address">
+            <ion-item href="#/main/member/address">
                 <div class="info_l">
                     <p>地区</p>
                 </div>
@@ -218,7 +218,7 @@
                     <i class="ionc ion-ios-arrow-right"></i>
                 </div>
             </ion-item>
-            <ion-item ui-sref="main.member_haunt_address">
+            <ion-item href="#/main/member/haunt_address">
                 <div class="info_l">
                     <p>常出没地</p>
                 </div>
@@ -249,7 +249,7 @@
                     <i class="ionc ion-ios-arrow-right"></i>
                 </div>
             </ion-item>-->
-            <ion-item ui-sref="main.member_wechat_number">
+            <ion-item href="#/main/member/wechat_number">
                 <div class="info_l">
                     <p>微信号</p>
                 </div>
@@ -263,7 +263,7 @@
                     <i class="ionc ion-ios-arrow-right"></i>
                 </div>
             </ion-item>
-            <ion-item ui-sref="main.member_qq_number">
+            <ion-item href="#/main/member/qq_number">
                 <div class="info_l">
                     <p>QQ号</p>
                 </div>
@@ -287,7 +287,7 @@
                     </div>
                 </div>
             </div>
-            <ion-item ui-sref="main.member_been_address" class="hob_item">
+            <ion-item class="hob_item" href="#/main/member/been_address">
                 <div class="info_l hob">
                     <p>我去过的地方(7)</p>
                 </div>
@@ -303,7 +303,7 @@
                     </div>
                 </div>
             </ion-item>
-            <ion-item ui-sref="main.member_want_address" class="hob_item">
+            <ion-item class="hob_item" href="#/main/member/want_address">
                 <div class="info_l hob">
                     <p>想去的地方(5)</p>
                 </div>
@@ -320,7 +320,7 @@
                 </div>
             </ion-item>
 
-            <ion-item ui-sref="main.member_sports" class="hob_item">
+            <ion-item class="hob_item" href="#/main/member/sports">
                 <div class="info_l hob">
                     <p>喜欢的运动(4)</p>
                 </div>
@@ -337,7 +337,7 @@
                 </div>
             </ion-item>
 
-            <ion-item ui-sref="main.member_movie" class="hob_item">
+            <ion-item class="hob_item" href="#/main/member/movie">
                 <div class="info_l hob">
                     <p>想看的电影(8)</p>
                 </div>
@@ -355,7 +355,7 @@
                 </div>
             </ion-item>
 
-            <ion-item ui-sref="main.member_delicacy" class="hob_item">
+            <ion-item class="hob_item" href="#/main/member/delicacy">
                 <div class="info_l hob">
                     <p>喜欢的美食(9)</p>
                 </div>
@@ -371,7 +371,7 @@
                     </div>
                 </div>
             </ion-item>
-            <ion-item ui-sref="main.member_mate">
+            <ion-item href="#/main/member/mate">
                 <div class="info_l">
                     <p>对伴侣的期望</p>
                 </div>
@@ -388,7 +388,7 @@
             <ion-item class="member_t">
                 <p>详细资料</p>
             </ion-item>
-            <ion-item ui-sref="main.member_children">
+            <ion-item href="#/main/member/children">
                 <div class="info_l">
                     <p>子女状况</p>
                 </div>
@@ -402,7 +402,7 @@
                     <i class="ionc ion-ios-arrow-right"></i>
                 </div>
             </ion-item>
-            <ion-item ng-if="userInfo.info.nation == '未知'" ui-sref="main.member_nation">
+            <ion-item ng-if="userInfo.info.nation == '未知'" href="#/main/member/nation">
                 <div class="info_l">
                     <p>民族</p>
                 </div>
@@ -421,7 +421,7 @@
                     <p>{{userInfo.info.nation | nation}}</p>
                 </div>
             </ion-item>
-            <ion-item ui-sref="main.member_work">
+            <ion-item href="#/main/member/work">
                 <div class="info_l">
                     <p>工作单位</p>
                 </div>
@@ -435,7 +435,7 @@
                     <i class="ionc ion-ios-arrow-right"></i>
                 </div>
             </ion-item>
-            <ion-item ui-sref="main.member_salary">
+            <ion-item href="#/main/member/salary">
                 <div class="info_l">
                     <p>年收入</p>
                 </div>
@@ -449,7 +449,7 @@
                     <i class="ionc ion-ios-arrow-right"></i>
                 </div>
             </ion-item>
-            <ion-item ui-sref="main.member_house">
+            <ion-item href="#/main/member/house">
                 <div class="info_l">
                     <p>购房情况</p>
                 </div>
@@ -463,7 +463,7 @@
                     <i class="ionc ion-ios-arrow-right"></i>
                 </div>
             </ion-item>
-            <ion-item ui-sref="main.member_car">
+            <ion-item href="#/main/member/car">
                 <div class="info_l">
                     <p>购车情况</p>
                 </div>
@@ -477,7 +477,7 @@
                     <i class="ionc ion-ios-arrow-right"></i>
                 </div>
             </ion-item>
-            <ion-item ui-sref="main.member_blood">
+            <ion-item href="#/main/member/blood">
                 <div class="info_l">
                     <p>血型</p>
                 </div>
@@ -491,7 +491,7 @@
                     <i class="ionc ion-ios-arrow-right"></i>
                 </div>
             </ion-item>
-            <ion-item ui-sref="main.member_school">
+            <ion-item href="#/main/member/school">
                 <div class="info_l">
                     <p>毕业院校</p>
                 </div>
@@ -508,7 +508,7 @@
             <ion-item class="member_t">
                 <p>择偶标准</p>
             </ion-item>
-            <ion-item ui-sref="main.member_zo_age">
+            <ion-item href="#/main/member/zo_age">
                 <div class="info_l">
                     <p>年龄</p>
                 </div>
@@ -519,7 +519,7 @@
                     <i class="ionc ion-ios-arrow-right"></i>
                 </div>
             </ion-item>
-            <ion-item ui-sref="main.member_zo_height">
+            <ion-item href="#/main/member/zo_height">
                 <div class="info_l">
                     <p>身高</p>
                 </div>
@@ -530,7 +530,7 @@
                     <i class="ionc ion-ios-arrow-right"></i>
                 </div>
             </ion-item>
-            <ion-item ui-sref="main.member_zo_education">
+            <ion-item href="#/main/member/zo_education">
                 <div class="info_l">
                     <p>学历</p>
                 </div>
@@ -544,7 +544,7 @@
                     <i class="ionc ion-ios-arrow-right"></i>
                 </div>
             </ion-item>
-            <ion-item ui-sref="main.member_zo_marriage">
+            <ion-item href="#/main/member/zo_marriage">
                 <div class="info_l">
                     <p>婚姻状况</p>
                 </div>
@@ -558,7 +558,7 @@
                     <i class="ionc ion-ios-arrow-right"></i>
                 </div>
             </ion-item>
-            <ion-item ui-sref="main.member_zo_house">
+            <ion-item href="#/main/member/zo_house">
                 <div class="info_l">
                     <p>购房情况</p>
                 </div>
@@ -572,7 +572,7 @@
                     <i class="ionc ion-ios-arrow-right"></i>
                 </div>
             </ion-item>
-            <ion-item ui-sref="main.member_zo_car">
+            <ion-item href="#/main/member/zo_car">
                 <div class="info_l">
                     <p>购车情况</p>
                 </div>
@@ -586,7 +586,7 @@
                     <i class="ionc ion-ios-arrow-right"></i>
                 </div>
             </ion-item>
-            <ion-item ui-sref="main.member_zo_zodiac">
+            <ion-item href="#/main/member/zo_zodiac">
                 <div class="info_l">
                     <p>属相</p>
                 </div>
@@ -600,7 +600,7 @@
                     <i class="ionc ion-ios-arrow-right"></i>
                 </div>
             </ion-item>
-            <ion-item ui-sref="main.member_zo_constellation" class="mb30">
+            <ion-item class="mb30" href="#/main/member/zo_constellation">
                 <div class="info_l">
                     <p>星座</p>
                 </div>
