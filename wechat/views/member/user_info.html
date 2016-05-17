@@ -12,21 +12,21 @@
             <div class="imgList_con">
                 <div class="imgList_handle clearfix">
                     <div class="imgItem" ng-repeat="img in imgList" ng-click="showImgList(imgList,$index)">
-                        <img src="{{img.src}}">
+                        <img src="{{img.thumb_path}}">
                     </div>
                 </div>
             </div>
             <ion-item class="idt mt10">
                 <p>
-                    <span class="identity sfz" ng-if="userInfo.identity_pic.is_check == 1">身份证</span>
-                    <span class="identity phone" ng-if="userInfo.phone">手机</span>
-                    <span class="identity vip" ng-if="userInfo.info.level == 1">vip</span>
-                    <span class="identity guest" ng-if="userInfo.info.level == 2">贵宾</span>
-                    <span class="identity diamond" ng-if="userInfo.info.level == 3">钻石</span>
+                    <span class="identity sfz" ng-if="otherUserInfo.identity_pic.is_check == 1">身份证</span>
+                    <span class="identity phone" ng-if="otherUserInfo.phone">手机</span>
+                    <span class="identity vip" ng-if="otherUserInfo.info.level == 1">vip</span>
+                    <span class="identity guest" ng-if="otherUserInfo.info.level == 2">贵宾</span>
+                    <span class="identity diamond" ng-if="otherUserInfo.info.level == 3">钻石</span>
                     <span class="ml10">
-                        {{userInfo.info.zodiac | zodiac}}
+                        {{otherUserInfo.info.zodiac | zodiac}}
                         <span class="sx">|</span>
-                        {{userInfo.info.constellation | constellation}}
+                        {{otherUserInfo.info.constellation | constellation}}
                     </span>
                 </p>
             </ion-item>
@@ -53,8 +53,8 @@
                     <p>个性签名</p>
                 </div>
                 <div class="info_c">
-                    <p ng-if="userInfo.personalized == null">这人很懒，什么也没留下~</p>
-                    <p ng-if="userInfo.personalized != null">{{userInfo.personalized}}</p>
+                    <p ng-if="otherUserInfo.personalized == null">这人很懒，什么也没留下~</p>
+                    <p ng-if="otherUserInfo.personalized != null">{{otherUserInfo.personalized}}</p>
                 </div>
             </ion-item>
             <ion-item>
@@ -62,8 +62,8 @@
                     <p>性别</p>
                 </div>
                 <div class="info_c">
-                    <p ng-if="userInfo.sex == 0"><i class="mr5 icon bhy-icon-member-woman cor13 vam"></i>女</p>
-                    <p ng-if="userInfo.sex == 1"><i class="mr5 icon bhy-icon-member-man cor13 vam"></i>男</p>
+                    <p ng-if="otherUserInfo.sex == 0"><i class="mr5 icon bhy-icon-member-woman cor13 vam"></i>女</p>
+                    <p ng-if="otherUserInfo.sex == 1"><i class="mr5 icon bhy-icon-member-man cor13 vam"></i>男</p>
                 </div>
             </ion-item>
             <ion-item>

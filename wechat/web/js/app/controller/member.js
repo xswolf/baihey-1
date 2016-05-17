@@ -7,9 +7,8 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
 ], function (module) {
 
     // 我
-    module.controller("member.index", ['app.serviceApi','$rootScope', '$scope', '$ionicPopup', function (api,$rootScope, $scope, $ionicPopup) {
+    module.controller("member.index", ['app.serviceApi', '$scope', '$ionicPopup', function (api, $scope, $ionicPopup) {
 
-        $rootScope.hideTabs = false;
         /* // 判断是否登录
          api.getLoginStatus().success(function (res) {
          if (!res.status) {
@@ -144,6 +143,97 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
         getConfig('love_sport',love_sport);
         getConfig('want_film',want_film);
         getConfig('like_food',like_food);
+
+    }]);
+
+    // 个人动态
+    module.controller("member.dynamic", ['app.serviceApi', '$scope', '$ionicPopup','$state','$stateParams', function (api, $scope, $ionicPopup,$state,$stateParams) {
+
+        $scope.formData = [];
+        $scope.formData.userId = $stateParams.userId;
+
+        // 图片放大查看插件
+        requirejs(['photoswipe', 'photoswipe_ui'], function (photoswipe, photoswipe_ui) {
+
+            $scope.showImgList = function(imgList,index){
+                var pswpElement = document.querySelectorAll('.pswp')[0];
+                var options = {
+                    index: index
+                };
+                options.mainClass = 'pswp--minimal--dark';
+                options.barsSize = {top:0,bottom:0};
+                options.captionEl = false;
+                options.fullscreenEl = false;
+                options.shareEl = false;
+                options.bgOpacity = 0.85;
+                options.tapToClose = true;
+                options.tapToToggleControls = false;
+
+                var gallery = new photoswipe( pswpElement, photoswipe_ui, imgList, options);
+                gallery.init();
+            }
+
+        })
+
+        $scope.dynamic = [];
+
+        // 当前登录用户的所有动态，点击加载，每页十条
+        $scope.dynamic.list = [
+            {
+                id: 1, likeNumber: 68, commentNumber: 482, imgList: [
+                {src: '/wechat/web/images/test/1.jpg',w:200,h:200},
+                {src: '/wechat/web/images/test/2.jpg',w:200,h:200},
+                {src: '/wechat/web/images/test/3.jpg',w:200,h:200}
+            ]
+            },
+            {
+                id: 2, likeNumber: 877, commentNumber: 1882, imgList: [
+                {src: '/wechat/web/images/test/6.jpg',w:200,h:200},
+                {src: '/wechat/web/images/test/4.jpg',w:200,h:200},
+                {src: '/wechat/web/images/test/1.jpg',w:200,h:200}
+            ]
+            },
+            {
+                id: 3, likeNumber: 95, commentNumber: 381, imgList: [
+                {src: '/wechat/web/images/test/2.jpg',w:200,h:200},
+                {src: '/wechat/web/images/test/5.jpg',w:200,h:200},
+                {src: '/wechat/web/images/test/3.jpg',w:200,h:200}
+            ]
+            },
+            {
+                id: 4, likeNumber: 1898, commentNumber: 3487, imgList: [
+                {src: '/wechat/web/images/test/6.jpg',w:200,h:200},
+                {src: '/wechat/web/images/test/1.jpg',w:200,h:200},
+                {src: '/wechat/web/images/test/4.jpg',w:200,h:200}
+            ]
+            },
+            {
+                id: 5, likeNumber: 4577, commentNumber: 8841, imgList: [
+                {src: '/wechat/web/images/test/5.jpg',w:200,h:200},
+                {src: '/wechat/web/images/test/6.jpg',w:200,h:200},
+                {src: '/wechat/web/images/test/4.jpg',w:200,h:200}
+            ]
+            }
+
+        ];
+
+        $scope.dynamic.pageLast = true;  // 是否还有更多数据
+        $scope.dynamic.like = true; // 当前登录用户是否已对该条动态点赞
+
+        $scope.dynamic.clickLike = function () { // 点赞
+            if ($scope.dynamic.like) {  // 如果已点赞，说明是再次点击，点赞数-1，相应样式变化
+                $scope.dynamic.like = !$scope.dynamic.like;
+                // 点赞数-1
+            }
+        };
+
+        $scope.dynamic.loadMore = function () {  // 点击加载
+
+        }
+
+        $scope.jump = function () {
+            $state.go($stateParams.tempUrl);
+        }
 
     }]);
 
@@ -1569,17 +1659,6 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
                 $scope.followList[i].identity_pic = JSON.parse($scope.followList[i].identity_pic);
             }
         });
-
-        $scope.removeItem = function ($index, item) {
-            if (confirm("确认删除？")) {
-                // 删除操作
-                api.save('/wap/follow/del-follow', {'id': item.id}).success(function (res) {
-                    $scope.followList.splice($index, 1)
-                })
-            } else {
-                return false;
-            }
-        }
     }]);
 
     // 查看用户资料
@@ -1588,17 +1667,12 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
         $scope.formData = [];
         $scope.formData.userId = $stateParams.userId;
 
-        $scope.imgList = [
-            {src: '/wechat/web/images/test/1.jpg',w:200,h:200},
-            {src: '/wechat/web/images/test/2.jpg',w:200,h:200},
-            {src: '/wechat/web/images/test/3.jpg',w:200,h:200},
-            {src: '/wechat/web/images/test/4.jpg',w:200,h:200},
-            {src: '/wechat/web/images/test/5.jpg',w:200,h:200},
-            {src: '/wechat/web/images/test/6.jpg',w:200,h:200},
-            {src: '/wechat/web/images/test/7.jpg',w:200,h:200},
-            {src: '/wechat/web/images/test/8.jpg',w:200,h:200},
-            {src: '/wechat/web/images/test/3.jpg',w:200,h:200}
-        ];
+        api.list('/wap/member/photo-list', {'user_id' : $scope.formData.userId}).success(function (res) {
+            $scope.imgList = res.data;
+        });
+        api.getUserInfo($scope.formData.userId).success(function (res) {
+            $scope.otherUserInfo = res.data;
+        });
 
         // 图片放大查看插件
         requirejs(['photoswipe', 'photoswipe_ui'], function (photoswipe, photoswipe_ui) {
