@@ -14,6 +14,9 @@ use yii\db\Query;
 class UserFollow extends Base
 {
 
+    protected $_user_information_table = 'user_information';
+    protected $_user_table = 'user';
+
     /**
      * 根据类型$type获取关注列表或被关注列表
      * @param $type follow关注列表，followed被关注列表
@@ -23,17 +26,23 @@ class UserFollow extends Base
      */
     public function getFollowList($type, $user_id, $where)
     {
+        $infoTable  = $this->getDb()->tablePrefix . $this->_user_information_table;
+        $userTable  = $this->getDb()->tablePrefix . $this->_user_table;
         $pageSize   = isset($where['pageSize']) ? $where['pageSize'] : 6;
         $pageNum    = isset($where['pageNum']) ? $where['pageNum'] : 1;
         $offset     = ($pageNum - 1) * $pageSize;
         if($type == 'follow') {
-            $condition = ['user_id' => $user_id];
+            $condition = ['user_id' => $user_id, 'status' => 1];
+            $join = 'f.follow_id = i.user_id';
         } else {
-            $condition = ['follow_id' => $user_id];
+            $condition = ['follow_id' => $user_id, 'status' => 1];
+            $join = 'f.user_id = i.user_id';
         }
-        $result = (new Query())->select(['*'])
+        $result = (new Query())->select(['f.*', 'u.id other', 'u.sex', 'i.*'])
             ->where($condition)
-            ->from(static::tableName())
+            ->from(static::tableName() . ' f')
+            ->innerJoin($infoTable . ' i', $join)
+            ->innerJoin($userTable . ' u', 'i.user_id = u.id')
             ->orderBy('create_time desc')
             ->limit($pageSize)
             ->offset($offset);
@@ -109,6 +118,7 @@ class UserFollow extends Base
     public function delFollow($where)
     {
         $follow = $this->findOne($where);
+        var_dump($follow);exit;
         $follow->status = 2;
         return $follow->save(false);
     }

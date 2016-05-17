@@ -1652,20 +1652,20 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
 
     // 谁关注了我
     module.controller("member.follow", ['app.serviceApi', '$scope', '$ionicPopup', '$ionicLoading', '$state', '$stateParams', function (api, $scope, $ionicPopup, $ionicLoading, $state, $stateParams) {
-        $scope.followList = [
-            {id: 1, realName: '张三', marriage: '未婚', age: '29', height: '180', house: '有房', car: '有车'},
-            {id: 2, realName: '李四', marriage: '未婚', age: '35', height: '165', house: '有房', car: 0},
-            {id: 3, realName: '王武', marriage: '未婚', age: '41', height: '170', house: 0, car: 0},
-            {id: 4, realName: '谭善', marriage: '未婚', age: '34', height: '175', house: '有房', car: 0},
-            {id: 5, realName: '赵四', marriage: '未婚', age: '24', height: '170', house: '有房', car: 0}
-        ];
+        api.list('/wap/follow/followed-list', {}).success(function (res) {
+            $scope.followList = res.data;
+            for (var i in $scope.followList) {
+                $scope.followList[i].info = JSON.parse($scope.followList[i].info);
+                $scope.followList[i].identity_pic = JSON.parse($scope.followList[i].identity_pic);
+            }
+        });
 
         $scope.removeItem = function ($index, item) {
             if (confirm("确认删除？")) {
                 // 删除操作
-
-                $scope.followList.splice($index, 1)
-
+                api.save('/wap/follow/del-follow', {'id': item.id}).success(function (res) {
+                    $scope.followList.splice($index, 1)
+                })
             } else {
                 return false;
             }
