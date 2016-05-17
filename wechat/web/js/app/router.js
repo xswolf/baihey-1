@@ -679,6 +679,15 @@ define(["app/module", 'app/service/serviceApi'],
                             }
                         }
                     })
+                    .state('main.dynmaic', {       // 发现
+                        url: "/dynmaic?userId?tempUrl",
+                        views: {
+                            'discovery-tab': {
+                                templateUrl: "/wechat/views/discovery/index.html",
+                                controller:'discovery.index'
+                            }
+                        }
+                    })
                     .state('main.discovery_single', {       // 发现-个人
                         url: "/discovery_single?userId",
                         views: {
