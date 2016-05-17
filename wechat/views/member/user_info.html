@@ -5,7 +5,7 @@
     <link href="/wechat/web/css/plugin/photoswipe/default-skin.css" rel="stylesheet">
     <ion-header-bar>
         <button class="button button-icon icon ion-arrow-left-c" ng-click="jump()"></button>
-        <!--<title class="title">{{otherUserInfo.info.real_name | sex:otherUserInfo.sex :otherUserInfo.info.age}}</title>-->
+        <title class="title">{{otherUserInfo.info.real_name | sex:otherUserInfo.sex :otherUserInfo.info.age}}</title>
     </ion-header-bar>
     <ion-content class="bhy com_w_100 infomation m_bg">
         <ion-list>
@@ -16,7 +16,7 @@
                     </div>
                 </div>
             </div>
-            <ion-item class="idt mt10">
+            <ion-item class="idt mt10" ng-if="otherUserInfo.identity_pic.is_check == 1 || otherUserInfo.phone != '' || otherUserInfo.info.level != '未知' || otherUserInfo.info.zodiac != '未知' || otherUserInfo.info.constellation != '未知'">
                 <p>
                     <span class="identity sfz" ng-if="otherUserInfo.identity_pic.is_check == 1">身份证</span>
                     <span class="identity phone" ng-if="otherUserInfo.phone">手机</span>
@@ -30,7 +30,7 @@
                     </span>
                 </p>
             </ion-item>
-            <ion-item ui-sref="main.member_dynamic">
+            <ion-item>
                 <div class="info_l">
                     <p>个人动态</p>
                     <p class="dyn_nb">12</p>
@@ -80,8 +80,8 @@
                     <p>出生年月</p>
                 </div>
                 <div class="info_c">
-                    <p><i class="bhy-icon-member-birthday cor23 vam mr5"></i><span class="mr10">1991-08-04</span><span
-                            class="mr10">羊</span><span>狮子座</span></p>
+                    <p><i class="bhy-icon-member-birthday cor23 vam mr5"></i><span class="mr10">{{otherUserInfo.info.age | date:'yyyy-MM-dd'}}</span><span
+                            class="mr10">{{otherUserInfo.info.zodiac | zodiac}}</span><span>{{otherUserInfo.info.constellation | constellation}}</span></p>
                 </div>
             </ion-item>
             <ion-item>
@@ -89,7 +89,7 @@
                     <p>身高</p>
                 </div>
                 <div class="info_c">
-                    <p>165厘米</p>
+                    <p>{{otherUserInfo.info.height}}</p>
                 </div>
             </ion-item>
             <ion-item >
@@ -97,7 +97,7 @@
                     <p>婚姻状况</p>
                 </div>
                 <div class="info_c">
-                    <p class="null">未知</p>
+                    <p class="null">{{otherUserInfo.info.is_marriage | marriage}}</p>
                 </div>
             </ion-item>
             <ion-item>
@@ -105,7 +105,7 @@
                     <p>学历</p>
                 </div>
                 <div class="info_c">
-                    <p class="null">未知</p>
+                    <p class="null">{{otherUserInfo.info.education | education}}</p>
                 </div>
             </ion-item>
             <ion-item>
@@ -113,7 +113,7 @@
                     <p>职业</p>
                 </div>
                 <div class="info_c">
-                    <p class="null">未知</p>
+                    <p class="null">{{otherUserInfo.info.occupation | occupation : otherUserInfo.info.children_occupation}}</p>
                 </div>
             </ion-item>
             <ion-item>
@@ -121,15 +121,15 @@
                     <p>地区</p>
                 </div>
                 <div class="info_c">
-                    <p><span>重庆市</span><span>渝中区</span></p>
+                    <p><span>{{otherUserInfo.province | address : otherUserInfo.city :otherUserInfo.area}}</span></p>
                 </div>
             </ion-item>
-            <ion-item ui-sref="main.member_haunt_address">
+            <ion-item>
                 <div class="info_l">
                     <p>常出没地</p>
                 </div>
                 <div class="info_c">
-                    <p>观音桥、大坪、南坪</p>
+                    <p>{{otherUserInfo.info.haunt_address}}</p>
                 </div>
             </ion-item>
 
@@ -154,7 +154,7 @@
                     <p>微信号</p>
                 </div>
                 <div class="info_c">
-                    <p>******</p>
+                    <p>{{otherUserInfo.info.wechat}}</p>
                 </div>
             </ion-item>
             <ion-item>
@@ -162,7 +162,7 @@
                     <p>QQ号</p>
                 </div>
                 <div class="info_c">
-                    <p>******</p>
+                    <p>{{otherUserInfo.info.qq}}</p>
                 </div>
             </ion-item>
             <div class="hobby">
@@ -176,33 +176,9 @@
                 </div>
                 <div class="info_c hob">
                     <div class="hob_addr clearfix">
-                        <span class="hob_addr_flag">
+                        <span class="hob_addr_flag" ng-repeat="addrt in went_travel track by addrt.id">
                             <i class="ion-location hob_addr_icon"></i>
-                            <span class="hob_addr_name">北京</span>
-                        </span>
-                        <span class="hob_addr_flag">
-                            <i class="ion-location hob_addr_icon"></i>
-                            <span class="hob_addr_name">重庆</span>
-                        </span>
-                        <span class="hob_addr_flag">
-                            <i class="ion-location hob_addr_icon"></i>
-                            <span class="hob_addr_name">上海</span>
-                        </span>
-                        <span class="hob_addr_flag">
-                            <i class="ion-location hob_addr_icon"></i>
-                            <span class="hob_addr_name">澳大利亚</span>
-                        </span>
-                        <span class="hob_addr_flag">
-                            <i class="ion-location hob_addr_icon"></i>
-                            <span class="hob_addr_name">墨西哥</span>
-                        </span>
-                        <span class="hob_addr_flag">
-                            <i class="ion-location hob_addr_icon"></i>
-                            <span class="hob_addr_name">北京</span>
-                        </span>
-                        <span class="hob_addr_flag">
-                            <i class="ion-location hob_addr_icon"></i>
-                            <span class="hob_addr_name">北京</span>
+                            <span class="hob_addr_name">{{addrt.name}}</span>
                         </span>
                     </div>
                 </div>
@@ -213,25 +189,9 @@
                 </div>
                 <div class="info_c hob">
                     <div class="hob_addr clearfix">
-                        <span class="hob_addr_flag f2">
+                        <span class="hob_addr_flag f2" ng-repeat="addrt in want_travel track by addrt.id">
                             <i class="ion-location hob_addr_icon"></i>
-                            <span class="hob_addr_name">北京</span>
-                        </span>
-                        <span class="hob_addr_flag f2">
-                            <i class="ion-location hob_addr_icon"></i>
-                            <span class="hob_addr_name">北京</span>
-                        </span>
-                        <span class="hob_addr_flag f2">
-                            <i class="ion-location hob_addr_icon"></i>
-                            <span class="hob_addr_name">北京</span>
-                        </span>
-                        <span class="hob_addr_flag f2">
-                            <i class="ion-location hob_addr_icon"></i>
-                            <span class="hob_addr_name">北京</span>
-                        </span>
-                        <span class="hob_addr_flag f2">
-                            <i class="ion-location hob_addr_icon"></i>
-                            <span class="hob_addr_name">北京</span>
+                            <span class="hob_addr_name">{{addrt.name}}</span>
                         </span>
                     </div>
                 </div>
@@ -243,29 +203,9 @@
                 </div>
                 <div class="info_c hob">
                     <div class="hob_sport clearfix">
-                        <span class="hob_sport_flag">
+                        <span class="hob_sport_flag" ng-repeat="addrt in love_sport track by addrt.id">
                             <i class="bhy-icon-moves hob_sport_icon"></i>
-                            <span class="hob_sport_name">跑步</span>
-                        </span>
-                         <span class="hob_sport_flag">
-                            <i class="bhy-icon-moves hob_sport_icon"></i>
-                            <span class="hob_sport_name">羽毛球</span>
-                        </span>
-                         <span class="hob_sport_flag">
-                            <i class="bhy-icon-moves hob_sport_icon"></i>
-                            <span class="hob_sport_name">篮球</span>
-                        </span>
-                         <span class="hob_sport_flag">
-                            <i class="bhy-icon-moves hob_sport_icon"></i>
-                            <span class="hob_sport_name">骑行</span>
-                        </span>
-                         <span class="hob_sport_flag">
-                            <i class="bhy-icon-moves hob_sport_icon"></i>
-                            <span class="hob_sport_name">健身</span>
-                        </span>
-                        <span class="hob_sport_flag">
-                            <i class="bhy-icon-moves hob_sport_icon"></i>
-                            <span class="hob_sport_name">游泳</span>
+                            <span class="hob_sport_name">{{addrt.name}}</span>
                         </span>
                     </div>
                 </div>
@@ -278,49 +218,9 @@
                 <div class="info_c hob">
                     <ion-scroll delegate-handle="small" zooming="false" direction="x" scrollbar-x="false"
                                 scrollbar-y="false" class="hob_movie clearfix">
-                        <dl>
-                            <dt><img src="/wechat/web/images/test/movie1.jpg"></dt>
-                            <dd class="fs12 tac cor25 lh24 toe">美人鱼</dd>
-                        </dl>
-                        <dl>
-                            <dt><img src="/wechat/web/images/test/movie2.jpg"></dt>
-                            <dd class="fs12 tac cor25 lh24 toe">山东分公司当然</dd>
-                        </dl>
-                        <dl>
-                            <dt><img src="/wechat/web/images/test/movie3.jpg"></dt>
-                            <dd class="fs12 tac cor25 lh24 toe">使得法国</dd>
-                        </dl>
-                        <dl>
-                            <dt><img src="/wechat/web/images/test/movie4.gif"></dt>
-                            <dd class="fs12 tac cor25 lh24 toe">阿瑟我去</dd>
-                        </dl>
-                        <dl>
-                            <dt><img src="/wechat/web/images/test/movie5.jpg"></dt>
-                            <dd class="fs12 tac cor25 lh24 toe">才vssdfsd发</dd>
-                        </dl>
-                        <dl>
-                            <dt><img src="/wechat/web/images/test/movie6.jpg"></dt>
-                            <dd class="fs12 tac cor25 lh24 toe">短途运输让他</dd>
-                        </dl>
-                        <dl>
-                            <dt><img src="/wechat/web/images/test/movie7.jpg"></dt>
-                            <dd class="fs12 tac cor25 lh24 toe">让他我去</dd>
-                        </dl>
-                        <dl>
-                            <dt><img src="/wechat/web/images/test/movie8.jpg"></dt>
-                            <dd class="fs12 tac cor25 lh24 toe">人与人他</dd>
-                        </dl>
-                        <dl>
-                            <dt><img src="/wechat/web/images/test/movie3.jpg"></dt>
-                            <dd class="fs12 tac cor25 lh24 toe">法国皇帝</dd>
-                        </dl>
-                        <dl>
-                            <dt><img src="/wechat/web/images/test/movie5.jpg"></dt>
-                            <dd class="fs12 tac cor25 lh24 toe">身高4而</dd>
-                        </dl>
-                        <dl>
-                            <dt><img src="/wechat/web/images/test/movie2.jpg"></dt>
-                            <dd class="fs12 tac cor25 lh24 toe">导演姜文</dd>
+                        <dl ng-repeat="addrt in want_film track by addrt.id">
+                            <dt><img src="{{addrt.pic_path}}"></dt>
+                            <dd class="fs12 tac cor25 lh24 toe">{{addrt.name}}</dd>
                         </dl>
                     </ion-scroll>
                 </div>
@@ -332,29 +232,9 @@
                 </div>
                 <div class="info_c hob mb10">
                     <div class="hob_food clearfix">
-                        <span class="hob_food_flag">
+                        <span class="hob_food_flag" ng-repeat="addrt in like_food track by addrt.id">
                             <i class="icon-food hob_food_icon"></i>
-                            <span class="hob_food_name">爱吃甜</span>
-                        </span>
-                        <span class="hob_food_flag">
-                            <i class=" icon-food hob_food_icon"></i>
-                            <span class="hob_food_name">爱吃辣</span>
-                        </span>
-                        <span class="hob_food_flag">
-                            <i class=" icon-food hob_food_icon"></i>
-                            <span class="hob_food_name">寿司</span>
-                        </span>
-                        <span class="hob_food_flag">
-                            <i class=" icon-food hob_food_icon"></i>
-                            <span class="hob_food_name">火锅</span>
-                        </span>
-                        <span class="hob_food_flag">
-                            <i class=" icon-food hob_food_icon"></i>
-                            <span class="hob_food_name">哈根达斯</span>
-                        </span>
-                        <span class="hob_food_flag">
-                            <i class=" icon-food hob_food_icon"></i>
-                            <span class="hob_food_name">冰棍</span>
+                            <span class="hob_food_name">{{addrt.name}}</span>
                         </span>
                     </div>
                 </div>
@@ -364,7 +244,7 @@
                     <p>她对未来伴侣的期望</p>
                 </div>
                 <div class="info_c mate">
-                    <p class="null">未知</p>
+                    <p class="null">{{otherUserInfo.info.mate}}</p>
                 </div>
             </ion-item>
             <ion-item class="member_t">
@@ -375,7 +255,7 @@
                     <p>子女状况</p>
                 </div>
                 <div class="info_c">
-                    <p>无小孩</p>
+                    <p>{{otherUserInfo.info.is_child | child}}</p>
                 </div>
             </ion-item>
             <ion-item>
@@ -383,7 +263,7 @@
                     <p>民族</p>
                 </div>
                 <div class="info_c">
-                    <p>汉族</p>
+                    <p>{{otherUserInfo.info.nation | nation}}</p>
                 </div>
             </ion-item>
             <ion-item>
@@ -391,7 +271,7 @@
                     <p>工作单位</p>
                 </div>
                 <div class="info_c">
-                    <p class="null">未知</p>
+                    <p class="null">{{otherUserInfo.info.work}}</p>
                 </div>
             </ion-item>
             <ion-item>
@@ -399,7 +279,7 @@
                     <p>年收入</p>
                 </div>
                 <div class="info_c">
-                    <p class="null">未知</p>
+                    <p class="null">{{otherUserInfo.info.year_income | yearIncome}}</p>
                 </div>
             </ion-item>
             <ion-item>
@@ -407,7 +287,7 @@
                     <p>购房情况</p>
                 </div>
                 <div class="info_c">
-                    <p>未购房</p>
+                    <p>{{otherUserInfo.info.is_purchase | purchase}}</p>
                 </div>
             </ion-item>
             <ion-item>
@@ -415,7 +295,7 @@
                     <p>购车情况</p>
                 </div>
                 <div class="info_c">
-                    <p>未购车</p>
+                    <p>{{otherUserInfo.info.is_car | car}}</p>
                 </div>
             </ion-item>
             <ion-item>
@@ -423,7 +303,7 @@
                     <p>血型</p>
                 </div>
                 <div class="info_c">
-                    <p>O型</p>
+                    <p>{{otherUserInfo.info.blood | blood}}</p>
                 </div>
             </ion-item>
             <ion-item>
@@ -431,7 +311,7 @@
                     <p>毕业院校</p>
                 </div>
                 <div class="info_c">
-                    <p class="null">未知</p>
+                    <p class="null">{{otherUserInfo.info.school}}</p>
                 </div>
             </ion-item>
             <ion-item class="member_t">
@@ -442,7 +322,7 @@
                     <p>年龄</p>
                 </div>
                 <div class="info_c">
-                    <p>18-24岁</p>
+                    <p>{{otherUserInfo.info.zo_age | zo_age}}</p>
                 </div>
             </ion-item>
             <ion-item>
@@ -450,7 +330,7 @@
                     <p>身高</p>
                 </div>
                 <div class="info_c">
-                    <p>170-185厘米</p>
+                    <p>{{otherUserInfo.info.zo_height | zo_age}}</p>
                 </div>
             </ion-item>
             <ion-item>
@@ -458,7 +338,7 @@
                     <p>学历</p>
                 </div>
                 <div class="info_c">
-                    <p>不限</p>
+                    <p>{{otherUserInfo.info.zo_education | education}}</p>
                 </div>
             </ion-item>
             <ion-item>
@@ -466,7 +346,7 @@
                     <p>婚姻状况</p>
                 </div>
                 <div class="info_c">
-                    <p>未婚</p>
+                    <p>{{otherUserInfo.info.zo_marriage | zo_marriage}}</p>
                 </div>
             </ion-item>
             <ion-item>
@@ -474,7 +354,7 @@
                     <p>购房情况</p>
                 </div>
                 <div class="info_c">
-                    <p>已购房</p>
+                    <p>{{otherUserInfo.info.zo_house | purchase}}</p>
                 </div>
             </ion-item>
             <ion-item>
@@ -482,7 +362,7 @@
                     <p>购车情况</p>
                 </div>
                 <div class="info_c">
-                    <p>不限</p>
+                    <p>{{otherUserInfo.info.zo_car | car}}</p>
                 </div>
             </ion-item>
             <ion-item>
@@ -490,7 +370,7 @@
                     <p>属相</p>
                 </div>
                 <div class="info_c">
-                    <p>牛</p>
+                    <p>{{otherUserInfo.info.zo_zodiac | zo_zodiac}}</p>
                 </div>
             </ion-item>
             <ion-item class="mb40">
@@ -498,7 +378,7 @@
                     <p>星座</p>
                 </div>
                 <div class="info_c">
-                    <p>不限</p>
+                    <p>{{otherUserInfo.info.zo_constellation | zo_constellation}}</p>
                 </div>
             </ion-item>
 
@@ -506,7 +386,7 @@
     </ion-content>
     <ion-footer-bar align-title="left" class="bar-light">
         <div class="buttons w50 bor_r_1c">
-            <button class="button w100" style="font-size: 16px; color:#e4007f;" ui-sref="main.message_chat({id:user.id,head_pic:user.info.head_pic,real_name:user.info.real_name,sex:user.sex,age:user.info.age})"><i class="ion-chatbox-working cor21 mr5 vam fs22"></i>对话</button>
+            <button class="button w100" style="font-size: 16px; color:#e4007f;" ui-sref="main.message_chat({id:otherUserInfo.id,head_pic:otherUserInfo.info.head_pic,real_name:otherUserInfo.info.real_name,sex:otherUserInfo.sex,age:otherUserInfo.info.age})"><i class="ion-chatbox-working cor21 mr5 vam fs22"></i>对话</button>
         </div>
         <div class="buttons w50" >
             <button ng-if="!formData.follow" class="button w100"  style="font-size: 16px;" ng-click="addFollow()">
