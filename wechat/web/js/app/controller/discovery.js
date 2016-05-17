@@ -20,6 +20,7 @@ define(['app/module', 'app/directive/directiveApi'
 
         // 返回
         $scope.jump = function () {
+            $rootScope.hideTabs = false;
             $location.path($location.$$search.tempUrl.replace(/~2F/g, "/"));
         }
 
