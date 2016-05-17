@@ -1667,12 +1667,19 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
         $scope.formData = [];
         $scope.formData.userId = $stateParams.userId;
 
+        api.list("/wap/user/get-user-info", {'id':$scope.formData.userId}).success(function (res) {
+            $scope.otherUserInfo = res.data;
+            $scope.otherUserInfo.info = JSON.parse($scope.otherUserInfo.info);
+            $scope.otherUserInfo.identity_pic = JSON.parse($scope.otherUserInfo.identity_pic);
+        });
         api.list('/wap/member/photo-list', {'user_id' : $scope.formData.userId}).success(function (res) {
             $scope.imgList = res.data;
         });
-        api.getUserInfo($scope.formData.userId).success(function (res) {
+        /*api.getUserInfo($scope.formData.userId).success(function (res) {
             $scope.otherUserInfo = res.data;
-        });
+            $scope.otherUserInfo.info = JSON.parse($scope.otherUserInfo.info);
+            $scope.otherUserInfo.identity_pic = JSON.parse($scope.otherUserInfo.identity_pic);
+        });*/
 
         // 图片放大查看插件
         requirejs(['photoswipe', 'photoswipe_ui'], function (photoswipe, photoswipe_ui) {
