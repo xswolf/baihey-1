@@ -2,6 +2,7 @@
 namespace wechat\controllers;
 
 use common\models\Area;
+use common\models\User;
 use common\models\UserInformation;
 use common\models\UserPhoto;
 use common\util\Cookie;
@@ -117,5 +118,28 @@ class MemberController extends BaseController
     {
         $list = Config::getInstance()->getListById($this->get['config_id']);
         $this->renderAjax(['status=>1', 'data' => $list]);
+    }
+
+    /**
+     * 获取发过的个人动态
+     */
+    public function actionGetDynamicList(){
+
+        $list = User::getInstance()->getDynamicList($this->get['user_id']);
+        $this->renderAjax(['status=>1', 'data' => $list]);
+    }
+
+    /**
+     * 设置点赞
+     */
+    public function actionSetClickLike(){
+        if ($this->get['add'] == 1){
+            $flag = User::getInstance()->setClickLike($this->get['dynamicId'],$this->get['user_id'] , $this->get['add']);
+
+        }else{
+            $flag = User::getInstance()->cancelClickLike($this->get['dynamicId'],$this->get['user_id'] , $this->get['add']);
+
+        }
+        $this->renderAjax(['status=>1', 'data' => $flag]);
     }
 }
