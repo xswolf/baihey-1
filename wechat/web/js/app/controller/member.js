@@ -2027,7 +2027,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
     // 我的约会-发布约会
     module.controller("member.rendezvous_add", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$ionicModal', function (api, $scope, $timeout, $ionicPopup, $ionicModal) {
 
-        $scope.fromData = [];
+        $scope.formData = [];
 
         // 约会主题
         $ionicModal.fromTemplateUrl('themeModal.html', {
@@ -2129,6 +2129,35 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
             $scope.requirementModal.hide();
         };
 
+        // 默认选项
+        $scope.formData.sex = "0";
+
+        // 保存，发布
+        $scope.saveData = function(){
+            if(!$scope.formData.theme){
+                $ionicPopup.alert({title:'请选择约会主题'});
+                return false;
+            }
+            if(!$scope.formData.from){
+                $ionicPopup.alert({title:'请填写出发地'});
+                return false;
+            }
+            if(!$scope.formData.destination){
+                $ionicPopup.alert({title:'请填写目的地'});
+                return false;
+            }
+            if(!$scope.formData.date){
+                $ionicPopup.alert({title:'请填写出发时间'});
+                return false;
+            }
+            if(!$scope.formData.date){
+                $ionicPopup.alert({title:'请选择费用说明'});
+                return false;
+            }
+
+            console.log($scope.formData);
+        }
+
     }]);
 
     // 我的约会-发布约会-约会主题
@@ -2189,6 +2218,16 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
         }
     }]);
 
+
+    // 我的约会-我发布的约会
+    module.controller("member.rendezvous_put", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', function (api, $scope, $timeout, $ionicPopup) {
+
+    }]);
+
+    // 我的约会-我参与的约会
+    module.controller("member.rendezvous_part", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', function (api, $scope, $timeout, $ionicPopup) {
+
+    }]);
     return module;
 })
 

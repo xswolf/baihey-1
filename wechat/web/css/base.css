@@ -122,6 +122,7 @@
 .cor32{color:#f06c6c;}
 .cor33{color:#f08e1a;}
 .cor34{color:#BBBBBB;}
+.cor35{color:#66CC66;}
 
 .fs11{ font-size: 11px;}
 .fs12{ font-size: 12px;}
@@ -142,6 +143,7 @@
 .com_w_100{width:100%;min-width:320px;}
 .w100{width: 100%;}
 .w50{width: 50%;}
+.mw50{max-width: 50%;}
 .mr0a{margin:0 auto;}
 .dl{display:inline;}
 .dbl{display:block;}
