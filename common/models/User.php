@@ -58,11 +58,11 @@ class User extends Base
      * 获取个人发布动态
      * @param $uid
      * @param $limit
-     * @param $offset
+     * @param $page
      * @return array
      */
-    public function getDynamicList($uid , $offset = 0 , $limit = 5){
-
+    public function getDynamicList($uid , $page = 0 , $limit = 5){
+        $offset = $page * $limit;
         return (new Query())
             ->from($this->tablePrefix . "user_dynamic d")
             ->innerJoin($this->tablePrefix.'user_information i' , 'd.user_id=i.user_id' )
@@ -71,6 +71,24 @@ class User extends Base
             ->where(['u.id'=>$uid])
             ->limit($limit)
             ->offset($offset)
+            ->select(["d.*","u.phone" ,"json_extract(i.identity_pic , '$.is_check') AS identity_check" ,"json_extract(i.info , '$.level') AS level" , "c.id as cid"])
+            ->orderBy("d.create_time desc")
+            ->all();
+    }
+
+    /**
+     * 根据动态ID获取动态内容
+     * @param $id
+     * @return array
+     */
+    public function getDynamicById($id){
+
+        return (new Query())
+            ->from($this->tablePrefix . "user_dynamic d")
+            ->innerJoin($this->tablePrefix.'user_information i' , 'd.user_id=i.user_id' )
+            ->innerJoin($this->tablePrefix.'user u' , 'd.user_id=u.id' )
+            ->leftJoin($this->tablePrefix.'user_click c' , 'c.dynamic_id = d.id AND c.user_id=d.user_id')
+            ->where(['d.id'=>$id])
             ->select(["d.*","u.phone" ,"json_extract(i.identity_pic , '$.is_check') AS identity_check" ,"json_extract(i.info , '$.level') AS level" , "c.id as cid"])
             ->orderBy("d.create_time desc")
             ->all();
@@ -128,11 +146,14 @@ class User extends Base
     public function addDynamic($data){
 
         $dynamic = \common\models\Base::getInstance("user_dynamic");
-        $dynamic->user_id = Cookie::getInstance()->getCookie('bhy_user_id');
+        $dynamic->user_id = $data['user_id'];
         $dynamic->name = $data['name'];
         $dynamic->content= $data['content'];
         $dynamic->pic = $data['pic'];
+        $dynamic->auth = $data['auth'];
+        $dynamic->address = $data['address'];
         $dynamic->create_time = time();
-        $dynamic->save();
+        return $dynamic->save();
     }
+
 }
