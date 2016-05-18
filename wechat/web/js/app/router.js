@@ -52,7 +52,7 @@ define(["app/module", 'app/service/serviceApi'],
                         $ionicLoading.hide();
                     });
         }]);
-        return module.config(["$stateProvider", "$urlRouterProvider", "$ionicConfigProvider", function ($stateProvider, $urlRouterProvider, $ionicConfigProvider) {
+        return module.config(["$stateProvider", "$urlRouterProvider", "$ionicConfigProvider","$controllerProvider", function ($stateProvider, $urlRouterProvider, $ionicConfigProvider,$controllerProvider) {
                 $ionicConfigProvider.templates.maxPrefetch(0);
                 $ionicConfigProvider.tabs.position("bottom");
                 $stateProvider
@@ -79,13 +79,13 @@ define(["app/module", 'app/service/serviceApi'],
                         }
                     })
                     .state('main.member-children', {   // 我-子页
-                        url:'/member/:tempName',
+                        url: '/member/:tempName',
                         views: {
                             'member-tab': {
-                                templateUrl: function($stateParams){
-                                    return "/wechat/views/member/"+$stateParams.tempName+".html";
+                                templateUrl: function ($stateParams) {
+                                    return "/wechat/views/member/" + $stateParams.tempName + ".html";
                                 },
-                                controller : function($stateParams){
+                                controllerProvider: function($stateParams){
                                     return 'member.'+$stateParams.tempName;
                                 }
                             }
@@ -147,7 +147,7 @@ define(["app/module", 'app/service/serviceApi'],
                         views: {
                             'discovery-tab': {
                                 templateUrl: "/wechat/views/discovery/index.html",
-                                controller:'discovery.index'
+                                controller: 'discovery.index'
                             }
                         }
                     })
@@ -156,7 +156,7 @@ define(["app/module", 'app/service/serviceApi'],
                         views: {
                             'member-tab': {
                                 templateUrl: "/wechat/views/discovery/index.html",
-                                controller:'discovery.index'
+                                controller: 'discovery.index'
                             }
                         }
                     })
@@ -165,7 +165,7 @@ define(["app/module", 'app/service/serviceApi'],
                         views: {
                             'discovery-tab': {
                                 templateUrl: "/wechat/views/discovery/single.html",
-                                controller:'discovery.single'
+                                controller: 'discovery.single'
                             }
                         }
                     })
@@ -174,7 +174,7 @@ define(["app/module", 'app/service/serviceApi'],
                         views: {
                             'rendezvous-tab': {
                                 templateUrl: "/wechat/views/rendezvous/index.html",
-                                controller:'rendezvous.index'
+                                controller: 'rendezvous.index'
                             }
                         }
                     });
@@ -218,7 +218,7 @@ define(["app/module", 'app/service/serviceApi'],
 
                 if ($scope.userInfo = ar.getStorage('userInfo')) {
                     getUserStorage();
-                } else if(ar.getCookie('bhy_user_id')) {
+                } else if (ar.getCookie('bhy_user_id')) {
                     api.list("/wap/user/get-user-info", []).success(function (res) {
                         $scope.userInfo = res.data;
                         ar.setStorage('userInfo', res.data);
