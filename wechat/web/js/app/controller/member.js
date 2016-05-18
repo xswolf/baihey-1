@@ -71,9 +71,9 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
                 $scope.showLoading(progress);    // 显示loading
             };
             uploader.onSuccessItem = function (fileItem, response, status, headers) {  // 上传成功
-                if (response.status > 0) {
+                if(response.status > 0){
                     $scope.imgList.push({id: response.id, thumb_path: response.thumb_path, headpic: 0});
-                } else {
+                }else{
                     $ionicPopup.alert({title: '上传图片失败！'});
                 }
             };
@@ -125,33 +125,33 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
 
         var went_travel = $scope.userInfo.went_travel;// 我去过的地方
         var want_travel = $scope.userInfo.want_travel;// 我想去的地方
-        var love_sport = $scope.userInfo.love_sport;// 喜欢的运动
-        var want_film = $scope.userInfo.want_film;// 想看的电影
-        var like_food = $scope.userInfo.like_food;// 喜欢的食物
-        var getTravel = function (name, serId) {
-            if (serId != null) {
+        var love_sport  = $scope.userInfo.love_sport;// 喜欢的运动
+        var want_film   = $scope.userInfo.want_film;// 想看的电影
+        var like_food   = $scope.userInfo.like_food;// 喜欢的食物
+        var getTravel = function(name,serId) {
+            if(serId != null) {
                 api.list('/wap/member/get-travel-list', {'area_id': serId}).success(function (res) {
                     eval("$scope." + name + " = " + JSON.stringify(res.data));
                 });
             }
         }
-        var getConfig = function (name, serId) {
-            if (serId != null) {
+        var getConfig = function(name,serId) {
+            if(serId != null) {
                 api.list('/wap/member/get-config-list', {'config_id': serId}).success(function (res) {
                     eval("$scope." + name + " = " + JSON.stringify(res.data));
                 });
             }
         }
-        getTravel('went_travel', went_travel);
-        getTravel('want_travel', want_travel);
-        getConfig('love_sport', love_sport);
-        getConfig('want_film', want_film);
-        getConfig('like_food', like_food);
+        getTravel('went_travel',went_travel);
+        getTravel('want_travel',want_travel);
+        getConfig('love_sport',love_sport);
+        getConfig('want_film',want_film);
+        getConfig('like_food',like_food);
 
     }]);
 
     // 个人动态
-    module.controller("member.dynamic", ['app.serviceApi', '$scope', '$ionicPopup', '$state', '$stateParams', function (api, $scope, $ionicPopup, $state, $stateParams) {
+    module.controller("member.dynamic", ['app.serviceApi', '$scope', '$ionicPopup','$state','$stateParams', function (api, $scope, $ionicPopup,$state,$stateParams) {
 
         $scope.formData = [];
         $scope.formData.userId = $stateParams.userId;
@@ -159,13 +159,13 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
         // 图片放大查看插件
         requirejs(['photoswipe', 'photoswipe_ui'], function (photoswipe, photoswipe_ui) {
 
-            $scope.showImgList = function (imgList, index) {
+            $scope.showImgList = function(imgList,index){
                 var pswpElement = document.querySelectorAll('.pswp')[0];
                 var options = {
                     index: index
                 };
                 options.mainClass = 'pswp--minimal--dark';
-                options.barsSize = {top: 0, bottom: 0};
+                options.barsSize = {top:0,bottom:0};
                 options.captionEl = false;
                 options.fullscreenEl = false;
                 options.shareEl = false;
@@ -173,7 +173,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
                 options.tapToClose = true;
                 options.tapToToggleControls = false;
 
-                var gallery = new photoswipe(pswpElement, photoswipe_ui, imgList, options);
+                var gallery = new photoswipe( pswpElement, photoswipe_ui, imgList, options);
                 gallery.init();
             }
 
@@ -185,37 +185,37 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
         $scope.dynamic.list = [
             {
                 id: 1, likeNumber: 68, commentNumber: 482, imgList: [
-                {src: '/wechat/web/images/test/1.jpg', w: 200, h: 200},
-                {src: '/wechat/web/images/test/2.jpg', w: 200, h: 200},
-                {src: '/wechat/web/images/test/3.jpg', w: 200, h: 200}
+                {src: '/wechat/web/images/test/1.jpg',w:200,h:200},
+                {src: '/wechat/web/images/test/2.jpg',w:200,h:200},
+                {src: '/wechat/web/images/test/3.jpg',w:200,h:200}
             ]
             },
             {
                 id: 2, likeNumber: 877, commentNumber: 1882, imgList: [
-                {src: '/wechat/web/images/test/6.jpg', w: 200, h: 200},
-                {src: '/wechat/web/images/test/4.jpg', w: 200, h: 200},
-                {src: '/wechat/web/images/test/1.jpg', w: 200, h: 200}
+                {src: '/wechat/web/images/test/6.jpg',w:200,h:200},
+                {src: '/wechat/web/images/test/4.jpg',w:200,h:200},
+                {src: '/wechat/web/images/test/1.jpg',w:200,h:200}
             ]
             },
             {
                 id: 3, likeNumber: 95, commentNumber: 381, imgList: [
-                {src: '/wechat/web/images/test/2.jpg', w: 200, h: 200},
-                {src: '/wechat/web/images/test/5.jpg', w: 200, h: 200},
-                {src: '/wechat/web/images/test/3.jpg', w: 200, h: 200}
+                {src: '/wechat/web/images/test/2.jpg',w:200,h:200},
+                {src: '/wechat/web/images/test/5.jpg',w:200,h:200},
+                {src: '/wechat/web/images/test/3.jpg',w:200,h:200}
             ]
             },
             {
                 id: 4, likeNumber: 1898, commentNumber: 3487, imgList: [
-                {src: '/wechat/web/images/test/6.jpg', w: 200, h: 200},
-                {src: '/wechat/web/images/test/1.jpg', w: 200, h: 200},
-                {src: '/wechat/web/images/test/4.jpg', w: 200, h: 200}
+                {src: '/wechat/web/images/test/6.jpg',w:200,h:200},
+                {src: '/wechat/web/images/test/1.jpg',w:200,h:200},
+                {src: '/wechat/web/images/test/4.jpg',w:200,h:200}
             ]
             },
             {
                 id: 5, likeNumber: 4577, commentNumber: 8841, imgList: [
-                {src: '/wechat/web/images/test/5.jpg', w: 200, h: 200},
-                {src: '/wechat/web/images/test/6.jpg', w: 200, h: 200},
-                {src: '/wechat/web/images/test/4.jpg', w: 200, h: 200}
+                {src: '/wechat/web/images/test/5.jpg',w:200,h:200},
+                {src: '/wechat/web/images/test/6.jpg',w:200,h:200},
+                {src: '/wechat/web/images/test/4.jpg',w:200,h:200}
             ]
             }
 
@@ -302,8 +302,8 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
         }
 
         /*$scope.formData.age = ar.getTimestampByBirthday(ar.DateTimeToDate($scope.birthday)); // 年龄时间戳
-         $scope.formData.zodic = $scope.zodic.id; // 生肖ID 详见comm.js
-         $scope.formData.constellation = $scope.constellation.id; // 星座ID 详见comm.js*/
+        $scope.formData.zodic = $scope.zodic.id; // 生肖ID 详见comm.js
+        $scope.formData.constellation = $scope.constellation.id; // 星座ID 详见comm.js*/
 
         $scope.formData.age = ar.getTimestampByBirthday(ar.DateTimeToDate($scope.birthday)) + '-' + $scope.zodic.id + '-' + $scope.constellation.id;
         $scope.saveData = function () {
@@ -650,9 +650,9 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
         $scope.formData.userAddrList = [];    // 用户已选择的地区，name数据集，展示用
         var dataList = $scope.userInfo.went_travel != null ? $scope.userInfo.went_travel.split(',') : [];
         var arr = [];
-        var getAddrName = function (id) {
-            for (var i in arr) {
-                if (id == arr[i].id) {
+        var getAddrName = function(id) {
+            for(var i in arr) {
+                if(id == arr[i].id) {
                     return arr[i].name;
                 }
             }
@@ -661,7 +661,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
         api.list('/wap/member/went-travel-list', []).success(function (res) {
             $scope.addrList = res.data;
             arr = res.data;
-            for (var i in dataList) {
+            for(var i in dataList) {
                 $scope.formData.userAddrIdList[i] = parseInt(dataList[i]);
                 $scope.formData.userAddrList[i] = getAddrName($scope.formData.userAddrIdList[i]);
             }
@@ -741,22 +741,22 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
         var arr = [];
         var province_id = $scope.userInfo.province != '0' ? $scope.userInfo.province : 1;
         var dataList = $scope.userInfo.want_travel != null ? $scope.userInfo.want_travel.split(',') : [];
-        var getAddrName = function (id) {
-            for (var i in arr) {
-                if (id == arr[i].id) {
+        var getAddrName = function(id) {
+            for(var i in arr) {
+                if(id == arr[i].id) {
                     return arr[i].name;
                 }
             }
         }
         // 默认数据处理
-        api.list('/wap/member/want-travel-list', {'province_id': province_id}).success(function (res) {
+        api.list('/wap/member/want-travel-list', {'province_id' : province_id}).success(function (res) {
             $scope.addrListOne = res.data.local;
             $scope.addrListTwo = res.data.province;
             $scope.addrListThree = res.data.foreign;
             arr = arr.concat($scope.addrListOne);
             arr = arr.concat($scope.addrListTwo);
             arr = arr.concat($scope.addrListThree);
-            for (var i in dataList) {
+            for(var i in dataList) {
                 $scope.formData.userAddrIdList[i] = parseInt(dataList[i]);
                 $scope.formData.userAddrList[i] = getAddrName($scope.formData.userAddrIdList[i]);
             }
@@ -838,17 +838,17 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
         $scope.formData.userSportsIdList = [];
         $scope.formData.userSportsList = [];
         var dataList = $scope.userInfo.love_sport != null ? $scope.userInfo.love_sport.split(',') : [];
-        var getAddrName = function (arr, id) {
-            for (var i in arr) {
-                if (id == arr[i].id) {
+        var getAddrName = function(arr, id) {
+            for(var i in arr) {
+                if(id == arr[i].id) {
                     return arr[i].name;
                 }
             }
         }
         // 默认数据处理
-        api.list('/wap/member/config-list', {'type': 1}).success(function (res) {
+        api.list('/wap/member/config-list', {'type':1}).success(function (res) {
             $scope.sportsList = res.data;
-            for (var i in dataList) {
+            for(var i in dataList) {
                 $scope.formData.userSportsIdList[i] = parseInt(dataList[i]);
                 $scope.formData.userSportsList[i] = getAddrName($scope.sportsList, $scope.formData.userSportsIdList[i]);
             }
@@ -918,18 +918,18 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
         $scope.formData.userMovieList = [];
         var arr = [];
         var dataList = $scope.userInfo.want_film != null ? $scope.userInfo.want_film.split(',') : [];
-        var getPicPath = function (arr, id) {
-            for (var i in arr) {
-                if (id == arr[i].id) {
+        var getPicPath = function(arr, id) {
+            for(var i in arr) {
+                if(id == arr[i].id) {
                     return arr[i].pic_path;
                 }
             }
         }
         // 默认数据处理
-        api.list('/wap/member/config-list', {'type': 2}).success(function (res) {
+        api.list('/wap/member/config-list', {'type':2}).success(function (res) {
             $scope.movieList = res.data;
             arr = res.data;
-            for (var i in dataList) {
+            for(var i in dataList) {
                 $scope.formData.userMovieIdList[i] = parseInt(dataList[i]);
                 $scope.formData.userMovieList[i] = getPicPath($scope.movieList, $scope.formData.userMovieIdList[i]);
             }
@@ -1009,17 +1009,17 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
         $scope.formData.userDelicacyIdList = [];
         $scope.formData.userDelicacyList = [];
         var dataList = $scope.userInfo.like_food != null ? $scope.userInfo.like_food.split(',') : [];
-        var getAddrName = function (arr, id) {
-            for (var i in arr) {
-                if (id == arr[i].id) {
+        var getAddrName = function(arr, id) {
+            for(var i in arr) {
+                if(id == arr[i].id) {
                     return arr[i].name;
                 }
             }
         }
         // 默认数据处理
-        api.list('/wap/member/config-list', {'type': 3}).success(function (res) {
+        api.list('/wap/member/config-list', {'type':3}).success(function (res) {
             $scope.delicacyList = res.data;
-            for (var i in dataList) {
+            for(var i in dataList) {
                 $scope.formData.userDelicacyIdList[i] = parseInt(dataList[i]);
                 $scope.formData.userDelicacyList[i] = getAddrName($scope.delicacyList, $scope.formData.userDelicacyIdList[i]);
             }
@@ -1434,8 +1434,12 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
 
         $scope.formData.userMarriageIDList = [];   //用户数据  未婚、离异
         var zo_marriage = $scope.userInfo.info.zo_marriage != '未知' ? $scope.userInfo.info.zo_marriage.split('-') : [];
-        for (var i in zo_marriage) {
-            $scope.formData.userMarriageIDList[i] = parseInt(zo_marriage[i]);
+        for(var i in zo_marriage) {
+            if(zo_marriage[i] != '') {
+                $scope.formData.userMarriageIDList[i] = parseInt(zo_marriage[i]);
+            } else {
+                $scope.isSelectedNull = false;
+            }
         }
 
         // 点击不限
@@ -1522,7 +1526,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
 
         $scope.formData.userZodiacIDList = [];   //用户数据  鼠、牛
         var zo_zodiac = $scope.userInfo.info.zo_zodiac != '未知' ? $scope.userInfo.info.zo_zodiac.split('-') : [];
-        for (var i in zo_zodiac) {
+        for(var i in zo_zodiac) {
             $scope.formData.userZodiacIDList[i] = parseInt(zo_zodiac[i]);
         }
 
@@ -1574,7 +1578,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
 
         $scope.formData.userConstellationIDList = [];   //用户数据  狮子座、天秤座
         var zo_constellation = $scope.userInfo.info.zo_constellation != '未知' ? $scope.userInfo.info.zo_constellation.split('-') : [];
-        for (var i in zo_constellation) {
+        for(var i in zo_constellation) {
             $scope.formData.userConstellationIDList[i] = parseInt(zo_constellation[i]);
         }
         // 点击不限
@@ -1618,26 +1622,26 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
     module.controller("member.preview", ['app.serviceApi', '$scope', '$ionicPopup', '$ionicLoading', function (api, $scope, $ionicPopup, $ionicLoading) {
 
         $scope.imgList = [
-            {src: '/wechat/web/images/test/3.jpg', w: 200, h: 200},
-            {src: '/wechat/web/images/test/7.jpg', w: 200, h: 200},
-            {src: '/wechat/web/images/test/6.jpg', w: 200, h: 200},
-            {src: '/wechat/web/images/test/3.jpg', w: 200, h: 200},
-            {src: '/wechat/web/images/test/7.jpg', w: 200, h: 200},
-            {src: '/wechat/web/images/test/6.jpg', w: 200, h: 200},
-            {src: '/wechat/web/images/test/3.jpg', w: 200, h: 200},
-            {src: '/wechat/web/images/test/7.jpg', w: 200, h: 200}
+            {src: '/wechat/web/images/test/3.jpg',w:200,h:200},
+            {src: '/wechat/web/images/test/7.jpg',w:200,h:200},
+            {src: '/wechat/web/images/test/6.jpg',w:200,h:200},
+            {src: '/wechat/web/images/test/3.jpg',w:200,h:200},
+            {src: '/wechat/web/images/test/7.jpg',w:200,h:200},
+            {src: '/wechat/web/images/test/6.jpg',w:200,h:200},
+            {src: '/wechat/web/images/test/3.jpg',w:200,h:200},
+            {src: '/wechat/web/images/test/7.jpg',w:200,h:200}
         ]
 
         // 图片放大查看插件
         requirejs(['photoswipe', 'photoswipe_ui'], function (photoswipe, photoswipe_ui) {
 
-            $scope.showImgList = function (imgList, index) {
+            $scope.showImgList = function(imgList,index){
                 var pswpElement = document.querySelectorAll('.pswp')[0];
                 var options = {
                     index: index
                 };
                 options.mainClass = 'pswp--minimal--dark';
-                options.barsSize = {top: 0, bottom: 0};
+                options.barsSize = {top:0,bottom:0};
                 options.captionEl = false;
                 options.fullscreenEl = false;
                 options.shareEl = false;
@@ -1645,7 +1649,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
                 options.tapToClose = true;
                 options.tapToToggleControls = false;
 
-                var gallery = new photoswipe(pswpElement, photoswipe_ui, imgList, options);
+                var gallery = new photoswipe( pswpElement, photoswipe_ui, imgList, options);
                 gallery.init();
             }
 
@@ -1671,31 +1675,31 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
         $scope.formData = [];
         $scope.formData.userId = $stateParams.userId;
 
-        api.list("/wap/user/get-user-info", {'id': $scope.formData.userId}).success(function (res) {
+        api.list("/wap/user/get-user-info", {'id':$scope.formData.userId}).success(function (res) {
             $scope.otherUserInfo = res.data;
             $scope.otherUserInfo.info = JSON.parse($scope.otherUserInfo.info);
             $scope.otherUserInfo.identity_pic = JSON.parse($scope.otherUserInfo.identity_pic);
         });
-        api.list('/wap/member/photo-list', {'user_id': $scope.formData.userId}).success(function (res) {
+        api.list('/wap/member/photo-list', {'user_id' : $scope.formData.userId}).success(function (res) {
             $scope.imgList = res.data;
         });
         /*api.getUserInfo($scope.formData.userId).success(function (res) {
-         $scope.otherUserInfo = res.data;
-         $scope.otherUserInfo.info = JSON.parse($scope.otherUserInfo.info);
-         $scope.otherUserInfo.identity_pic = JSON.parse($scope.otherUserInfo.identity_pic);
-         });*/
+            $scope.otherUserInfo = res.data;
+            $scope.otherUserInfo.info = JSON.parse($scope.otherUserInfo.info);
+            $scope.otherUserInfo.identity_pic = JSON.parse($scope.otherUserInfo.identity_pic);
+        });*/
 
         // 图片放大查看插件
         requirejs(['photoswipe', 'photoswipe_ui'], function (photoswipe, photoswipe_ui) {
 
-            $scope.showImgList = function (imgList, index) {
-                console.info(imgList, index);
+            $scope.showImgList = function(imgList,index){
+                console.info(imgList,index);
                 var pswpElement = document.querySelectorAll('.pswp')[0];
                 var options = {
                     index: index
                 };
                 options.mainClass = 'pswp--minimal--dark';
-                options.barsSize = {top: 0, bottom: 0};
+                options.barsSize = {top:0,bottom:0};
                 options.captionEl = false;
                 options.fullscreenEl = false;
                 options.shareEl = false;
@@ -1703,7 +1707,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
                 options.tapToClose = true;
                 options.tapToToggleControls = false;
 
-                var gallery = new photoswipe(pswpElement, photoswipe_ui, imgList, options);
+                var gallery = new photoswipe( pswpElement, photoswipe_ui, imgList, options);
                 gallery.init();
             }
 
@@ -1717,13 +1721,13 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
         $scope.formData.follow = false;
 
         // 取消关注
-        $scope.cancelFollow = function () {
+        $scope.cancelFollow = function(){
 
             $scope.formData.follow = false;
         }
 
         // 关注
-        $scope.addFollow = function () {
+        $scope.addFollow = function(){
 
         }
 
@@ -1741,7 +1745,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
         $scope.formData.auth = 1;
 
         // 已经离开本页面
-        $scope.$on('$ionicView.afterLeave', function () {
+        $scope.$on('$ionicView.afterLeave', function() {
             // 保存数据
 
         });
@@ -1753,7 +1757,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
         $scope.formData.auth = 1;
 
         // 已经离开本页面
-        $scope.$on('$ionicView.afterLeave', function () {
+        $scope.$on('$ionicView.afterLeave', function() {
             // 保存数据
 
         });
@@ -1766,7 +1770,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
         $scope.formData.auth = 1;
 
         // 已经离开本页面
-        $scope.$on('$ionicView.afterLeave', function () {
+        $scope.$on('$ionicView.afterLeave', function() {
             // 保存数据
 
         });
@@ -1778,7 +1782,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
         $scope.formData.auth = 1;
 
         // 已经离开本页面
-        $scope.$on('$ionicView.afterLeave', function () {
+        $scope.$on('$ionicView.afterLeave', function() {
             // 保存数据
 
         });
@@ -1790,7 +1794,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
         $scope.formData = [];
 
         // 解除黑名单
-        $scope.removeItem = function ($index, item) {
+        $scope.removeItem = function($index,item){
 
         }
 
@@ -2016,175 +2020,14 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
     }]);
 
     // 我的约会
-    module.controller("member.rendezvous", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', function (api, $scope, $timeout, $ionicPopup) {
+    module.controller("member.rendezvous", ['app.serviceApi', '$scope', '$timeout', '$ioni      cPopup', function (api, $scope, $timeout, $ionicPopup) {
 
     }]);
 
     // 我的约会-发布约会
-    module.controller("member.rendezvous_add", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$ionicModal', function (api, $scope, $timeout, $ionicPopup, $ionicModal) {
-
-        $scope.fromData = [];
-
-        // 约会主题
-        $ionicModal.fromTemplateUrl('themeModal.html', {
-            scope: $scope,
-            animation: 'slide-in-up'
-        }).then(function(modal) {
-            $scope.themeModal = modal;
-        });
-        $scope.openThemeModal = function() {
-            $scope.themeModal.show();
-        };
-        $scope.closeThemeModal = function() {
-            $scope.themeModal.hide();
-        };
-
-
-        // 性别限制
-        $ionicModal.fromTemplateUrl('sexModal.html', {
-            scope: $scope,
-            animation: 'slide-in-up'
-        }).then(function(modal) {
-            $scope.sexModal = modal;
-        });
-        $scope.openSexModal = function() {
-            $scope.sexModal.show();
-        };
-        $scope.closeSexModal = function() {
-            $scope.sexModal.hide();
-        };
-
-        // 我的出发地
-        $ionicModal.fromTemplateUrl('fromModal.html', {
-            scope: $scope,
-            animation: 'slide-in-up'
-        }).then(function(modal) {
-            $scope.fromModal = modal;
-        });
-        $scope.openFromModal = function() {
-            $scope.fromModal.show();
-        };
-        $scope.closeFromModal = function() {
-            $scope.fromModal.hide();
-        };
-
-
-        // 目的地
-        $ionicModal.fromTemplateUrl('destinationModal.html', {
-            scope: $scope,
-            animation: 'slide-in-up'
-        }).then(function(modal) {
-            $scope.destinationModal = modal;
-        });
-        $scope.openDestinationModal = function() {
-            $scope.destinationModal.show();
-        };
-        $scope.closeDestinationModal = function() {
-            $scope.destinationModal.hide();
-        };
-
-        // 目的地
-        $ionicModal.fromTemplateUrl('dateModal.html', {
-            scope: $scope,
-            animation: 'slide-in-up'
-        }).then(function(modal) {
-            $scope.dateModal = modal;
-        });
-        $scope.openDateModal = function() {
-            $scope.dateModal.show();
-        };
-        $scope.closeDateModal = function() {
-            $scope.dateModal.hide();
-        };
-
-        // 费用说明
-        $ionicModal.fromTemplateUrl('moneyModal.html', {
-            scope: $scope,
-            animation: 'slide-in-up'
-        }).then(function(modal) {
-            $scope.moneyModal = modal;
-        });
-        $scope.openMoneyModal = function() {
-            $scope.moneyModal.show();
-        };
-        $scope.closeMoneyModal = function() {
-            $scope.moneyModal.hide();
-        };
-
-        // 对约伴的要求
-        $ionicModal.fromTemplateUrl('requirementModal.html', {
-            scope: $scope,
-            animation: 'slide-in-up'
-        }).then(function(modal) {
-            $scope.requirementModal = modal;
-        });
-        $scope.openRequirementModal = function() {
-            $scope.requirementModal.show();
-        };
-        $scope.closeRequirementModal = function() {
-            $scope.requirementModal.hide();
-        };
+    module.controller("member.rendezvous_add", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', function (api, $scope, $timeout, $ionicPopup) {
 
     }]);
-
-    // 我的约会-发布约会-约会主题
-    module.controller("member.rendezvous_theme", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', function (api, $scope, $timeout, $ionicPopup) {
-
-        $scope.selTheme = function(){
-            $scope.closeThemeModal();
-            console.log($scope.formData.theme);
-        }
-
-    }]);
-
-    // 我的约会-发布约会-性别限制
-    module.controller("member.rendezvous_sex", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', function (api, $scope, $timeout, $ionicPopup) {
-        $scope.selSex = function(){
-            $scope.closeSexModal();
-            console.log($scope.formData.sex);
-        }
-    }]);
-
-    // 我的约会-发布约会-我的出发地
-    module.controller("member.rendezvous_from", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', function (api, $scope, $timeout, $ionicPopup) {
-        $scope.saveFrom = function(){
-            $scope.closeFromModal();
-            console.log($scope.formData.from);
-        }
-    }]);
-
-    // 我的约会-发布约会-目的地
-    module.controller("member.rendezvous_destination", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', function (api, $scope, $timeout, $ionicPopup) {
-        $scope.saveDestination = function(){
-            $scope.closeDestinationModal();
-            console.log($scope.formData.destination);
-        }
-    }]);
-
-    // 我的约会-发布约会-出发时间
-    module.controller("member.rendezvous_date", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', function (api, $scope, $timeout, $ionicPopup) {
-        $scope.saveDate = function(){
-            $scope.closeDateModal();
-            console.log($scope.formData.date);
-        }
-    }]);
-
-    // 我的约会-发布约会-费用说明
-    module.controller("member.rendezvous_money", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', function (api, $scope, $timeout, $ionicPopup) {
-        $scope.selMoney = function(){
-            $scope.closeMoneyModal();
-            console.log($scope.formData.money);
-        }
-    }]);
-
-    // 我的约会-发布约会-对约伴的要求
-    module.controller("member.rendezvous_requirement", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', function (api, $scope, $timeout, $ionicPopup) {
-        $scope.saveRequirement = function(){
-            $scope.closeRequirementModal();
-            console.log($scope.formData.requirement);
-        }
-    }]);
-
     return module;
 })
 

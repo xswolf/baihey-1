@@ -2,6 +2,7 @@
 namespace wechat\controllers;
 
 use common\models\Area;
+use common\models\User;
 use common\models\UserInformation;
 use common\models\UserPhoto;
 use common\util\Cookie;
@@ -117,5 +118,55 @@ class MemberController extends BaseController
     {
         $list = Config::getInstance()->getListById($this->get['config_id']);
         $this->renderAjax(['status=>1', 'data' => $list]);
+    }
+
+    /**
+     * 获取发过的个人动态
+     */
+    public function actionGetDynamicList(){
+
+        isset($this->get['page']) ? $page = $this->get['page'] : $page = 0;
+        isset($this->get['user_id']) ? $userId = $this->get['user_id'] : $userId = -1;
+
+        $list = User::getInstance()->getDynamicList($userId , $page);
+
+
+        $this->renderAjax(['status=>1', 'data' => $list]);
+    }
+
+    /**
+     * 设置点赞
+     */
+    public function actionSetClickLike(){
+        if ($this->get['add'] == 1){
+            $flag = User::getInstance()->setClickLike($this->get['dynamicId'],$this->get['user_id'] , $this->get['add']);
+
+        }else{
+            $flag = User::getInstance()->cancelClickLike($this->get['dynamicId'],$this->get['user_id'] , $this->get['add']);
+
+        }
+        $this->renderAjax(['status=>1', 'data' => $flag]);
+    }
+
+    /**
+     * 发布个人动态
+     */
+    public function actionAddDynamic(){
+
+        $user_id = \common\util\Cookie::getInstance()->getCookie('bhy_id')->value;
+//        var_dump($user_id);exit;
+        $data['user_id'] = $user_id;
+        $data['auth'] = $this->get['auth'];
+        $data['address'] = $this->get['address'];
+        $data['name'] = $this->get['name'];
+        $data['pic'] = isset($this->get['pic']) ? $this->get['pic'] : '';
+        $data['content'] = isset($this->get['content']) ? $this->get['content'] : '';
+        $flag = User::getInstance()->addDynamic($data);
+        if ($flag > 0) {
+            $data = User::getInstance()->getDynamicById(\Yii::$app->db->lastInsertID);
+            $this->renderAjax(['status=>1', 'data' => $data[0]]);
+        }else{
+            $this->renderAjax(['status=>-1', 'data' => '发布失败']);
+        }
     }
 }

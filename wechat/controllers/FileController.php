@@ -29,9 +29,7 @@ class FileController extends BaseController {
      */
     public function actionThumbPhoto() {
         $user_id = Cookie::getInstance()->getCookie('bhy_id');
-        $file    = new File();
-        $res     = $file->upload(__DIR__."/../../images/");// 原图上传
-        $data    = (1 == $res['status']) ? $file->thumbPhoto($res) : $res;// 原图压缩
+        $data = $this->thumb();
         // 保存数据
         if(1 == $data['status']) {
             if($id = UserPhoto::getInstance()->addPhoto($user_id, $data)) {
@@ -40,6 +38,22 @@ class FileController extends BaseController {
                 $data = ['status' => -1, 'info' => '保存失败!~'];
             }
         }
+        $this->renderAjax($data);
+    }
+
+    public function thumb(){
+        $file    = new File();
+        $res     = $file->upload(__DIR__."/../../images/");// 原图上传
+        return (1 == $res['status']) ? $file->thumbPhoto($res) : $res;// 原图压缩
+    }
+
+    /**
+     * 相册上传+缩略图
+     */
+    public function actionThumb() {
+
+        $data = $this->thumb();
+
         $this->renderAjax($data);
     }
 }

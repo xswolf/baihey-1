@@ -6,13 +6,14 @@ define(['app/module', 'app/directive/directiveApi'
 ], function (module) {
 
     // 发现
-    module.controller("discovery.index", ['app.serviceApi', '$rootScope', '$scope', '$timeout', '$ionicPopup', '$ionicModal', '$ionicActionSheet', '$ionicLoading', '$location','$state', function (api, $rootScope, $scope, $timeout, $ionicPopup, $ionicModal, $ionicActionSheet, $ionicLoading, $location,$state) {
+    module.controller("discovery.index", ['app.serviceApi', '$rootScope', '$scope', '$timeout', '$ionicPopup', '$ionicModal', '$ionicActionSheet', '$ionicLoading', '$location','$state','$stateParams', function (api, $rootScope, $scope, $timeout, $ionicPopup, $ionicModal, $ionicActionSheet, $ionicLoading, $location,$state,$stateParams) {
 
         $state.reload();
-
+        var userInfo = ar.getStorage('userInfo');
+        console.log(userInfo)
         if ($location.$$search.userId) {
             // 显示个人
-            $scope.title = '张小姐的个人动态';
+            $scope.title = JSON.parse(userInfo['info']).real_name + '的个人动态';
             $rootScope.hideTabs = true;
         } else {
             // 显示所有
@@ -26,51 +27,7 @@ define(['app/module', 'app/directive/directiveApi'
             $location.path($location.$$search.tempUrl.replace(/~2F/g, "/"));
         }
 
-
-        $scope.discoveryList = [
-            {
-                id: 1, name: '张小姐', time: '17:40', content: '地方公司空间的花费撕开对方会告诉你不过就是不爽', imgList: [
-                {src: '/wechat/web/images/test/1.jpg', w: 200, h: 200},
-                {src: '/wechat/web/images/test/2.jpg', w: 200, h: 200},
-                {src: '/wechat/web/images/test/2.jpg', w: 200, h: 200},
-                {src: '/wechat/web/images/test/2.jpg', w: 200, h: 200},
-                {src: '/wechat/web/images/test/2.jpg', w: 200, h: 200},
-                {src: '/wechat/web/images/test/2.jpg', w: 200, h: 200},
-                {src: '/wechat/web/images/test/2.jpg', w: 200, h: 200},
-                {src: '/wechat/web/images/test/2.jpg', w: 200, h: 200},
-                {src: '/wechat/web/images/test/3.jpg', w: 200, h: 200}
-            ], browseNumber: 2544, commentNumber: 525, likeNumber: 89, address: '重庆', showAddress: 0
-            },
-            {
-                id: 2, name: '郭先生', time: '13:12', content: '地岁的威尔二万人订单', imgList: [
-                {src: '/wechat/web/images/test/3.jpg', w: 200, h: 200},
-                {src: '/wechat/web/images/test/7.jpg', w: 200, h: 200},
-                {src: '/wechat/web/images/test/6.jpg', w: 200, h: 200}
-            ], browseNumber: 2544, commentNumber: 525, likeNumber: 89, address: '重庆', showAddress: 0
-            },
-            {
-                id: 3, name: '毛女士', time: '12:40', content: '对方扫扫地', imgList: [
-                {src: '/wechat/web/images/test/8.jpg', w: 200, h: 200},
-                {src: '/wechat/web/images/test/2.jpg', w: 200, h: 200},
-                {srcsrcsrc: '/wechat/web/images/test/5.jpg', w: 200, h: 200}
-            ], browseNumber: 2544, commentNumber: 525, likeNumber: 89, address: '重庆', showAddress: 1
-            },
-            {
-                id: 4, name: '邱小姐', time: '11:43', content: '到访台湾台湾人体验围绕太阳勿扰', imgList: [
-                {srcsrc: '/wechat/web/images/test/7.jpg', w: 200, h: 200},
-                {srcsrc: '/wechat/web/images/test/3.jpg', w: 200, h: 200},
-                {srcsrc: '/wechat/web/images/test/1.jpg', w: 200, h: 200}
-            ], browseNumber: 2544, commentNumber: 525, likeNumber: 89, address: '重庆', showAddress: 1
-            },
-            {
-                id: 5, name: '隋小姐', time: '10:15', content: '年翻跟斗风格飞过海对方', imgList: [
-                {src: '/wechat/web/images/test/2.jpg', w: 200, h: 200},
-                {src: '/wechat/web/images/test/3.jpg', w: 200, h: 200},
-                {src: '/wechat/web/images/test/4.jpg', w: 200, h: 200}
-            ], browseNumber: 2544, commentNumber: 525, likeNumber: 89, address: '重庆', showAddress: 0
-            },
-        ]
-
+        $scope.discoveryList = [];
 
         // 图片放大查看插件
         requirejs(['photoswipe', 'photoswipe_ui'], function (photoswipe, photoswipe_ui) {
@@ -96,42 +53,44 @@ define(['app/module', 'app/directive/directiveApi'
         })
 
         $scope.user = [];
-        $scope.user.userLike = false;
 
         // 点赞
-        $scope.clickLike = function (likeNumber) {
-            if (!$scope.user.userLike) {
-                $scope.user.userLike = true;
-                likeNumber += 1;  // 点赞数 +1
+        $scope.clickLike = function (id) {
+            var i = ar.getArrI($scope.discoveryList , 'id' , id);
+            var add = 0;
+            if ($scope.discoveryList[i].cid > 0) {
+                add = -1;
+                $scope.discoveryList[i].cid  = -1;
             } else {
-                $scope.user.userLike = false;
+                add = 1;
+                $scope.discoveryList[i].cid  = 1;
             }
+
+            $scope.discoveryList[i].like_num =  parseInt($scope.discoveryList[i].like_num) + add;
+            api.save('/wap/member/set-click-like' , {dynamicId:id , user_id: userInfo['id'] , add:add});
         }
 
+        $scope.page = 0;
+        $scope.morePage = true;
         // 加载更多
         $scope.loadMore = function () {
 
-            $scope.$broadcast('scroll.infiniteScrollComplete');
-            //api.get('url').success(function(res) {
-
-            $scope.discoveryList.push({
-                id: 5, name: '隋小姐', time: '10:15', content: '年翻跟斗风格飞过海对方', imgList: [
-                    {id: 1, url: '/wechat/web/images/test/2.jpg'},
-                    {id: 2, url: '/wechat/web/images/test/3.jpg'},
-                    {id: 3, url: '/wechat/web/images/test/4.jpg'}
-                ], browseNumber: 2544, commentNumber: 525, likeNumber: 89
-            });
-
-            $scope.$broadcast('scroll.infiniteScrollComplete');
-            //});
+            api.list('/wap/member/get-dynamic-list' , {user_id:$stateParams.userId , page:$scope.page}).success(function (res) {
+                if (res.data == ''){
+                    $scope.morePage = false;
+                }
+                for (var i in res.data){
+                    res.data[i].imgList = JSON.parse(res.data[i].pic);
+                    $scope.discoveryList.push(res.data[i]);
+                }
+                $scope.$broadcast('scroll.infiniteScrollComplete');
+            })
+            $scope.page += 1;
         };
-        $scope.$on('$stateChangeSuccess', function () {
-            $scope.loadMore();
-        });
 
         // 是否还有更多
         $scope.moreDataCanBeLoaded = function () {
-            return true;
+            return $scope.morePage;
         };
 
         $ionicModal.fromTemplateUrl('released.html', {
@@ -241,10 +200,10 @@ define(['app/module', 'app/directive/directiveApi'
 
         $scope.imgList = [];
         $scope.formData = [];
-
+        var id = 0;
         // 实例化上传图片插件
         var uploader = $scope.uploader = new FileUploader({
-            url: '/wap/file/thumb-photo'
+            url: '/wap/file/thumb'
         });
 
         $scope.showLoading = function (progress) {
@@ -282,7 +241,8 @@ define(['app/module', 'app/directive/directiveApi'
             };
             uploader.onSuccessItem = function (fileItem, response, status, headers) {  // 上传成功
                 if (response.status > 0) {
-                    $scope.imgList.push({id: response.id, thumb_path: response.thumb_path});
+                    $scope.imgList.push({id: id, thumb_path: response.thumb_path});
+                    id++;
                 } else {
                     $ionicPopup.alert({title: '上传图片失败！'});
                 }
@@ -312,13 +272,24 @@ define(['app/module', 'app/directive/directiveApi'
         //})
         $scope.address = '重庆'
 
+
+
         // 发布
         $scope.saveData = function () {
             console.log($scope.formData);
-            // 保存数据
+            var userInfo = ar.getStorage('userInfo');
+            $scope.formData.name = JSON.parse(userInfo.info).real_name;
+            $scope.formData.pic = JSON.stringify($scope.imgList);
+            $scope.formData.showAddress ? $scope.formData.address = $scope.address : $scope.formData.address = '';
 
-            $scope.closeModal();    // 发布后关闭modal并立即展现
-            $scope.discoveryList.push();   // 展现数据
+            // 保存数据
+            api.save('/wap/member/add-dynamic' , $scope.formData).success(function (res) {
+                $scope.closeModal();    // 发布后关闭modal并立即展现
+                res.data.imgList = JSON.parse(res.data.pic);
+                $scope.discoveryList.splice(0, 0, res.data);
+                console.log($scope.discoveryList);
+            })
+
         }
 
 

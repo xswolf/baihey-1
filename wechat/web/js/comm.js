@@ -360,6 +360,24 @@ var ar = {
                     return arr[i];
                 }
             }
+        },
+
+        /**
+         * 找到数组中存在的元素，返回其索引
+         * @param arr
+         * @param name
+         * @param value
+         * @returns {*}
+         */
+        getArrI : function (arr , name , value) {
+            var filed = ""
+            for (var i in arr){
+                filed = eval("arr[i]."+name);
+                if (filed == value){
+                    return i;
+                }
+            }
+            return false;
         }
 
     }
