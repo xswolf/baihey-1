@@ -129,14 +129,18 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
         var want_film   = $scope.userInfo.want_film;// 想看的电影
         var like_food   = $scope.userInfo.like_food;// 喜欢的食物
         var getTravel = function(name,serId) {
-            api.list('/wap/member/get-travel-list', {'area_id': serId}).success(function (res) {
-                eval("$scope." + name + " = " + JSON.stringify(res.data));
-            });
+            if(serId != null) {
+                api.list('/wap/member/get-travel-list', {'area_id': serId}).success(function (res) {
+                    eval("$scope." + name + " = " + JSON.stringify(res.data));
+                });
+            }
         }
         var getConfig = function(name,serId) {
-            api.list('/wap/member/get-config-list', {'config_id': serId}).success(function (res) {
-                eval("$scope." + name + " = " + JSON.stringify(res.data));
-            });
+            if(serId != null) {
+                api.list('/wap/member/get-config-list', {'config_id': serId}).success(function (res) {
+                    eval("$scope." + name + " = " + JSON.stringify(res.data));
+                });
+            }
         }
         getTravel('went_travel',went_travel);
         getTravel('want_travel',want_travel);
