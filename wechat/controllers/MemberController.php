@@ -127,15 +127,10 @@ class MemberController extends BaseController
 
         isset($this->get['page']) ? $page = $this->get['page'] : $page = 0;
         isset($this->get['user_id']) ? $userId = $this->get['user_id'] : $userId = -1;
-        if ($userId > 0){
-            // 个人动态
-            $list = User::getInstance()->getDynamicList($this->get['user_id'] , $page);
 
-        }else{
-            // 发现
-            $list =[];
+        $list = User::getInstance()->getDynamicList($userId , $page);
 
-        }
+
         $this->renderAjax(['status=>1', 'data' => $list]);
     }
 
