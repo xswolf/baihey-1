@@ -2,7 +2,7 @@
     <link href="/wechat/web/css/member.css" rel="stylesheet">
     <ion-header-bar class="com_w_100 bhy">
         <a class="button button-icon icon ion-arrow-left-c" href="#/main/member/rendezvous"></a>
-        <title class="title">发布约会</title>
+        <h1 class="title">发布约会</h1>
         <button class="button button-icon cor21">发布</button>
     </ion-header-bar>
     <ion-content class="bhy com_w_100 m_bg rendezvous">
@@ -10,9 +10,205 @@
             <div class="item item-divider">
                 嘉瑞 ● 实名制婚恋网
             </div>
-            <ion-item>
-
-            </ion-item>
+            <a class="item item-icon-left item-icon-right mb10" ng-click="openThemeModal()">
+                <i class="icon ion-ios-star cor33"></i>
+                <span class="cor21">约会主题</span>
+                <i class="icon ion-ios-arrow-right cor34"></i>
+            </a>
+            <a class="item item-icon-left item-icon-right" ng-click="openSexModal()">
+                <i class="icon bhy-icon-notsex cor30"></i>
+                性别限制
+                <i class="icon ion-ios-arrow-right cor34"></i>
+            </a>
+            <a class="item item-icon-left item-icon-right" ng-click="openFromModal()">
+                <i class="icon bhy-icon-setout cor26"></i>
+                我的出发地
+                <i class="icon ion-ios-arrow-right cor34"></i>
+            </a>
+            <a class="item item-icon-left item-icon-right" ng-click="openDestinationModal()">
+                <i class="icon bhy-icon-destination cor33"></i>
+                目的地
+                <i class="icon ion-ios-arrow-right cor34"></i>
+            </a>
+            <a class="item item-icon-left item-icon-right" ng-click="openDateModal()">
+                <i class="icon bhy-icon-seout-time cor21"></i>
+                出发时间
+                <i class="icon ion-ios-arrow-right cor34"></i>
+            </a>
+            <a class="item item-icon-left item-icon-right" ng-click="openMoneyModal()">
+                <i class="icon bhy-icon-cost cor15"></i>
+                费用说明
+                <i class="icon ion-ios-arrow-right cor34"></i>
+            </a>
+            <a class="item item-icon-left item-icon-right mt10" ng-click="openRequirementModal()">
+                <i class="icon ion-compose cor15"></i>
+                对约伴的要求
+                <i class="icon ion-ios-arrow-right cor34"></i>
+            </a>
         </ion-list>
     </ion-content>
+
+    <script id="themeModal.html" type="text/ng-template">
+        <ion-modal-view>
+            <ion-header-bar>
+                <button class="button button-icon" ng-click="closeThemeModal()">关闭</button>
+                <h1 class="title">约会主题</h1>
+            </ion-header-bar>
+            <ion-content ng-controller="member.rendezvous_theme">
+                <ion-list>
+                    <ion-radio ng-value="1" ng-model="formData.theme" ng-change="selTheme()">
+                        <i class="icon bhy-icon-ent cor29 fs30 vam mr5"></i>
+                        <span class="vam">娱乐</span>
+                    </ion-radio>
+                    <ion-radio ng-value="2" ng-model="formData.theme" ng-change="selTheme()">
+                        <i class="icon bhy-icon-food cor23 fs30 vam mr5"></i>
+                        <span class="vam">美食</span>
+                    </ion-radio>
+                    <ion-radio ng-value="3" ng-model="formData.theme" ng-change="selTheme()">
+                        <i class="icon bhy-icon-tour cor25 fs30 vam mr5"></i>
+                        <span class="vam">旅游</span>
+                    </ion-radio>
+                    <ion-radio ng-value="4" ng-model="formData.theme" ng-change="selTheme()">
+                        <i class="icon bhy-icon-moves cor33 fs30 vam mr5"></i>
+                        <span class="vam">运动健身</span>
+                    </ion-radio>
+                    <ion-radio ng-value="5" ng-model="formData.theme" ng-change="selTheme()">
+                        <i class="icon ion-more cor4 fs30 vam mr5"></i>
+                        <span class="vam">其它</span>
+                    </ion-radio>
+                </ion-list>
+            </ion-content>
+        </ion-modal-view>
+    </script>
+
+    <script id="sexModal.html" type="text/ng-template">
+        <ion-modal-view>
+            <ion-header-bar>
+                <button class="button button-icon" ng-click="closeSexModal()">关闭</button>
+                <h1 class="title">性别限制</h1>
+            </ion-header-bar>
+            <ion-content ng-controller="member.rendezvous_sex">
+                <ion-list>
+                    <ion-radio ng-value="0" ng-model="formData.sex" ng-change="selSex()">
+                        <i class="icon bhy-icon-ent cor29 fs30 vam mr5"></i>
+                        <span class="vam">不限制</span>
+                    </ion-radio>
+                    <ion-radio ng-value="1" ng-model="formData.sex" ng-change="selSex()">
+                        <i class="icon bhy-icon-food cor23 fs30 vam mr5"></i>
+                        <span class="vam">限男生</span>
+                    </ion-radio>
+                    <ion-radio ng-value="2" ng-model="formData.sex" ng-change="selSex()">
+                        <i class="icon bhy-icon-tour cor25 fs30 vam mr5"></i>
+                        <span class="vam">限女生</span>
+                    </ion-radio>
+                </ion-list>
+            </ion-content>
+        </ion-modal-view>
+    </script>
+
+    <script id="fromModal.html" type="text/ng-template">
+        <ion-modal-view>
+            <ion-header-bar>
+                <button class="button button-icon" ng-click="closeFromModal()">关闭</button>
+                <h1 class="title">我的出发地</h1>
+            </ion-header-bar>
+            <ion-content ng-controller="member.rendezvous_from">
+                <ion-list>
+                    <label class="item item-input">
+                        <input type="text" ng-model="formData.from" placeholder="请输入您的出发地点">
+                    </label>
+                    <ion-item>
+                        <button class="button button-positive button-block" ng-click="saveFrom()">确定</button>
+                    </ion-item>
+                </ion-list>
+            </ion-content>
+        </ion-modal-view>
+    </script>
+
+    <script id="destinationModal.html" type="text/ng-template">
+        <ion-modal-view>
+            <ion-header-bar>
+                <button class="button button-icon" ng-click="closeDestinationModal()">关闭</button>
+                <h1 class="title">目的地</h1>
+            </ion-header-bar>
+            <ion-content ng-controller="member.rendezvous_destination">
+                <ion-list>
+                    <label class="item item-input">
+                        <input type="text" ng-model="formData.destination" placeholder="请填写目的地">
+                    </label>
+                    <ion-item>
+                        <button class="button button-positive button-block" ng-click="saveDestination()">确定</button>
+                    </ion-item>
+                </ion-list>
+            </ion-content>
+        </ion-modal-view>
+    </script>
+
+    <script id="dateModal.html" type="text/ng-template">
+        <ion-modal-view>
+            <ion-header-bar>
+                <button class="button button-icon" ng-click="closeDateModal()">关闭</button>
+                <h1 class="title">出发时间</h1>
+            </ion-header-bar>
+            <ion-content ng-controller="member.rendezvous_date">
+                <ion-list>
+                    <label class="item item-input">
+                        <input type="datetime" ng-model="formData.date" placeholder="请选择出发时间">
+                    </label>
+                    <ion-item>
+                        <button class="button button-positive button-block" ng-click="saveDate()">确定</button>
+                    </ion-item>
+                </ion-list>
+            </ion-content>
+        </ion-modal-view>
+    </script>
+
+    <script id="moneyModal.html" type="text/ng-template">
+        <ion-modal-view>
+            <ion-header-bar>
+                <button class="button button-icon" ng-click="closeMoneyModal()">关闭</button>
+                <h1 class="title">费用说明</h1>
+            </ion-header-bar>
+            <ion-content ng-controller="member.rendezvous_money">
+                <ion-list>
+                    <ion-radio ng-value="1" ng-model="formData.money" ng-change="selMoney()">
+                        <i class="icon bhy-icon-ent cor29 fs30 vam mr5"></i>
+                        <span class="vam">免费</span>
+                    </ion-radio>
+                    <ion-radio ng-value="2" ng-model="formData.money" ng-change="selMoney()">
+                        <i class="icon bhy-icon-food cor23 fs30 vam mr5"></i>
+                        <span class="vam">我请客</span>
+                    </ion-radio>
+                    <ion-radio ng-value="3" ng-model="formData.money" ng-change="selMoney()">
+                        <i class="icon bhy-icon-tour cor25 fs30 vam mr5"></i>
+                        <span class="vam">你请客</span>
+                    </ion-radio>
+                    <ion-radio ng-value="4" ng-model="formData.money" ng-change="selMoney()">
+                        <i class="icon bhy-icon-tour cor25 fs30 vam mr5"></i>
+                        <span class="vam">AA制</span>
+                    </ion-radio>
+                </ion-list>
+            </ion-content>
+        </ion-modal-view>
+    </script>
+
+
+    <script id="requirementModal.html" type="text/ng-template">
+        <ion-modal-view>
+            <ion-header-bar>
+                <button class="button button-icon" ng-click="closeRequirementModal()">关闭</button>
+                <h1 class="title">出发时间</h1>
+            </ion-header-bar>
+            <ion-content ng-controller="member.rendezvous_requirement">
+                <ion-list>
+                    <label class="item item-input">
+                        <textarea ng-model="formData.requirement" placeholder="请简要描述对约伴的要求"></textarea>
+                    </label>
+                    <ion-item>
+                        <button class="button button-positive button-block" ng-click="saveRequirement()">确定</button>
+                    </ion-item>
+                </ion-list>
+            </ion-content>
+        </ion-modal-view>
+    </script>
 </ion-view>
