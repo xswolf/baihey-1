@@ -1435,7 +1435,11 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
         $scope.formData.userMarriageIDList = [];   //用户数据  未婚、离异
         var zo_marriage = $scope.userInfo.info.zo_marriage != '未知' ? $scope.userInfo.info.zo_marriage.split('-') : [];
         for(var i in zo_marriage) {
-            $scope.formData.userMarriageIDList[i] = parseInt(zo_marriage[i]);
+            if(zo_marriage[i] != '') {
+                $scope.formData.userMarriageIDList[i] = parseInt(zo_marriage[i]);
+            } else {
+                $scope.isSelectedNull = false;
+            }
         }
 
         // 点击不限

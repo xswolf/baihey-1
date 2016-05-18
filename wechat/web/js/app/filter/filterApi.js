@@ -279,7 +279,7 @@ define(['app/module'], function (module) {
     // 返回择偶婚姻状况
     module.filter('zo_marriage', function () {
         return function (input, arr) {
-            if(typeof(input) != 'undefined' && input != '') {
+            if(typeof(input) != 'undefined') {
                 return getMoreName(input, config_infoData.marriage);
             }
         }

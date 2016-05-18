@@ -91,6 +91,15 @@ define(["app/module", 'app/service/serviceApi'],
                             }
                         }
                     })
+                    .state('main.member_user_info', {  // 用户资料
+                        url: "/user_info?userId&tempUrl",
+                        views: {
+                            'member-tab': {
+                                templateUrl: "/wechat/views/member/user_info.html",
+                                controller: 'member.user_info'
+                            }
+                        }
+                    })
                     .state('main.message', {  // 消息首页
                         cache: false,
                         url: "/message",
@@ -212,7 +221,7 @@ define(["app/module", 'app/service/serviceApi'],
                     $scope.userInfo.info = JSON.stringify($scope.userInfo.info);
                     $scope.userInfo.identity_pic = JSON.stringify($scope.userInfo.identity_pic);
                     ar.setStorage('userInfo', $scope.userInfo);
-                    window.location.hash = '/main/information';
+                    window.location.hash = '#/main/member/information';
                     getUserStorage();
                 }
 
