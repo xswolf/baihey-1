@@ -24,7 +24,7 @@ class UserPhoto extends Base
     public function addPhoto($user_id, $data)
     {
         // 个人相册不得多于12张
-        if (12 >= $this->find(['user_id' => $user_id])->count('id')) {
+        if (12 >= $this->find()->where(['user_id' => $user_id])->count('id')) {
             $this->user_id = $user_id;
             $this->pic_path = $data['pic_path'];
             $this->thumb_path = $data['thumb_path'];
