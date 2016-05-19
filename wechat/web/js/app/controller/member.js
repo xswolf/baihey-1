@@ -1785,12 +1785,20 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
 
     // 隐私设置-黑名单
     module.controller("member.privacy_black", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', function (api, $scope, $timeout, $ionicPopup) {
-
-        $scope.formData = [];
+        $scope.followList = [];
+        api.list('/wap/follow/black-list', {}).success(function (res) {
+            $scope.followList = res.data;
+            for (var i in $scope.followList) {
+                $scope.followList[i].info = JSON.parse($scope.followList[i].info);
+                $scope.followList[i].identity_pic = JSON.parse($scope.followList[i].identity_pic);
+            }
+        });
 
         // 解除黑名单
         $scope.removeItem = function ($index, item) {
-
+            api.save('/wap/follow/del-black', {'id':item.id}).success(function (res) {
+                $scope.followList.splice($index, 1);
+            });
         }
 
     }]);

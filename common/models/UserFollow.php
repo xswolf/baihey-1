@@ -28,15 +28,18 @@ class UserFollow extends Base
     {
         $infoTable  = $this->getDb()->tablePrefix . $this->_user_information_table;
         $userTable  = $this->getDb()->tablePrefix . $this->_user_table;
-        $pageSize   = isset($where['pageSize']) ? $where['pageSize'] : 6;
+        $pageSize   = isset($where['pageSize']) ? $where['pageSize'] : 20;
         $pageNum    = isset($where['pageNum']) ? $where['pageNum'] : 1;
         $offset     = ($pageNum - 1) * $pageSize;
-        if($type == 'follow') {
-            $condition = ['user_id' => $user_id, 'status' => 1];
+        if($type == 'follow') {// 关注
+            $condition = ['f.user_id' => $user_id, 'status' => 1];
             $join = 'f.follow_id = i.user_id';
-        } else {
+        } elseif($type == 'followed') {// 被关注
             $condition = ['follow_id' => $user_id, 'status' => 1];
             $join = 'f.user_id = i.user_id';
+        } elseif($type == 'black') {// 黑名单
+            $condition = ['f.user_id' => $user_id, 'status' => 0];
+            $join = 'f.follow_id = i.user_id';
         }
         $result = (new Query())->select(['f.*', 'u.id other', 'u.sex', 'i.*'])
             ->where($condition)
@@ -56,18 +59,16 @@ class UserFollow extends Base
      * 获取关注我的总数
      * @return array|bool
      */
-    public function getSumFollow($user_id)
+    public function getSumFollow($type, $user_id)
     {
-        $condition = [
-            'follow_id' => $user_id,
-            'status'    => 1
-        ];
-        $row = (new Query())
-            ->select(['count(id) sumFollow'])
-            ->where($condition)
-            ->from(static::tableName())
-            ->one();
-        return $row;
+        if($type == 'follow') {// 关注
+            $condition = ['user_id' => $user_id, 'status' => 1];
+        } elseif($type == 'followed') {// 被关注
+            $condition = ['follow_id' => $user_id, 'status' => 1];
+        } elseif($type == 'black') {// 黑名单
+            $condition = ['user_id' => $user_id, 'status' => 0];
+        }
+        return $this->find()->where($condition)->count('id');
     }
 
     /**
@@ -98,9 +99,11 @@ class UserFollow extends Base
     public function addFollow($where)
     {
         if(!$this->findOne($where)) {
+            $time = YII_BEGIN_TIME;
             $this->user_id = $where['user_id'];
             $this->follow_id = $where['follow_id'];
-            $this->create_time = YII_BEGIN_TIME;
+            $this->create_time = $time;
+            $this->update_time = $time;
             $this->status = 1;
             return $this->insert(false);
         } else {
@@ -118,8 +121,8 @@ class UserFollow extends Base
     public function delFollow($where)
     {
         $follow = $this->findOne($where);
-        var_dump($follow);exit;
         $follow->status = 2;
+        $follow->update_time = YII_BEGIN_TIME;
         return $follow->save(false);
     }
 
@@ -133,6 +136,19 @@ class UserFollow extends Base
     {
         $follow = $this->findOne($where);
         $follow->status = 0;
+        return $follow->save(false);
+    }
+
+    /**
+     * 取消拉黑
+     * @param $where
+     * @return bool
+     */
+    public function delBlack($where)
+    {
+        $follow = $this->findOne($where);
+        $follow->status = 3;
+        $follow->update_time = YII_BEGIN_TIME;
         return $follow->save(false);
     }
 

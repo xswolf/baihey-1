@@ -37,12 +37,34 @@ class FollowController extends BaseController
     }
 
     /**
+     * 被关注列表
+     */
+    public function actionBlackList()
+    {
+        $user_id = Cookie::getInstance()->getCookie('bhy_id');
+        $data = UserFollow::getInstance()->getFollowList('black', $user_id, $this->get);
+
+        return $this->renderAjax(['status' => 1, 'data' => $data]);
+    }
+
+    /**
      * 获取关注我的总数
      */
     public function actionGetSumFollow()
     {
         $user_id = Cookie::getInstance()->getCookie('bhy_id');
-        $data = UserFollow::getInstance()->getSumFollow($user_id);
+        $data = UserFollow::getInstance()->getSumFollow('followed', $user_id);
+
+        return $this->renderAjax(['status' => 1, 'data' => $data]);
+    }
+
+    /**
+     * 获取拉黑的总数
+     */
+    public function actionGetSumBlack()
+    {
+        $user_id = Cookie::getInstance()->getCookie('bhy_id');
+        $data = UserFollow::getInstance()->getSumFollow('black', $user_id);
 
         return $this->renderAjax(['status' => 1, 'data' => $data]);
     }
@@ -83,6 +105,16 @@ class FollowController extends BaseController
     public function actionBlackFollow()
     {
         $data = UserFollow::getInstance()->blackFollow($this->get);
+
+        return $this->renderAjax(['status' => 1, 'data' => $data]);
+    }
+
+    /**
+     * 取消拉黑
+     */
+    public function actionDelBlack()
+    {
+        $data = UserFollow::getInstance()->delBlack($this->get);
 
         return $this->renderAjax(['status' => 1, 'data' => $data]);
     }
