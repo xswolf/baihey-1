@@ -109,7 +109,7 @@ define(["app/module", 'app/service/serviceApi'],
                             }
                         }
                     })
-                    .state('main.message.chat', { // 聊天页面
+                    .state('main.message_chat', { // 聊天页面
                         cache: false,
                         url: "/chat?id&head_pic&real_name&sex&age",
                         views: {
