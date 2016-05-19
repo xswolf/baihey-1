@@ -378,7 +378,14 @@ var ar = {
                 }
             }
             return false;
-        }
+        },
 
+        /**
+         * 去除数据库json字段引号
+         */
+        cleanQuotes : function (string) {
+            var str = string.replace(/\\"/g , "");
+            return str;
+        }
     }
     ;

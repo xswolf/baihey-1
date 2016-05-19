@@ -154,7 +154,7 @@ class MemberController extends BaseController
     public function actionAddDynamic(){
 
         $user_id = \common\util\Cookie::getInstance()->getCookie('bhy_id')->value;
-//        var_dump($user_id);exit;
+
         $data['user_id'] = $user_id;
         $data['auth'] = $this->get['auth'];
         $data['address'] = $this->get['address'];
@@ -168,5 +168,34 @@ class MemberController extends BaseController
         }else{
             $this->renderAjax(['status=>-1', 'data' => '发布失败']);
         }
+    }
+
+    /**
+     * 获取单条动态内容
+     */
+    public function actionGetDynamic(){
+
+        $data = User::getInstance()->getDynamicById($this->get['id']);
+        $data[0]['comment'] = User::getInstance()->getCommentById($this->get['id']);
+        $this->renderAjax(['status=>1', 'data' => $data[0]]);
+    }
+
+    /**
+     * 获取动态评论内容
+     */
+    public function actionGetComment(){
+
+        $list = User::getInstance()->getCommentById($this->get['id']);
+        $this->renderAjax(['status=>1', 'data' => $list]);
+    }
+
+    public function actionAddComment(){
+
+        $data['content'] = $this->get['content'];
+        $data['private'] = $this->get['private'] == 'true' ? 1 : 0;
+        $data['dynamicId'] = $this->get['dynamicId'];
+        $data['create_time'] = time();
+        $id = User::getInstance()->addComment($data);
+        $this->renderAjax(['status=>1', 'data' => ['id'=>$id,'create_time'=>$data['create_time']]]);
     }
 }

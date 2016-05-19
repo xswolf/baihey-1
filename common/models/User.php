@@ -1,7 +1,6 @@
 <?php
 namespace common\models;
 
-use common\util\Cookie;
 use Yii;
 use yii\db\Query;
 use yii\web\Session;
@@ -86,12 +85,12 @@ class User extends Base
      * @return array
      */
     public function getDynamicById($id){
-
+        $loginUserId  = \common\util\Cookie::getInstance()->getCookie('bhy_id')->value;
         return (new Query())
             ->from($this->tablePrefix . "user_dynamic d")
             ->innerJoin($this->tablePrefix.'user_information i' , 'd.user_id=i.user_id' )
             ->innerJoin($this->tablePrefix.'user u' , 'd.user_id=u.id' )
-            ->leftJoin($this->tablePrefix.'user_click c' , 'c.dynamic_id = d.id AND c.user_id=d.user_id')
+            ->leftJoin($this->tablePrefix.'user_click c' , 'c.dynamic_id = d.id AND c.user_id='.$loginUserId)
             ->where(['d.id'=>$id])
             ->select(["d.*","u.phone" ,"json_extract(i.identity_pic , '$.is_check') AS identity_check" ,"json_extract(i.info , '$.level') AS level" , "c.id as cid"])
             ->orderBy("d.create_time desc")
@@ -147,6 +146,11 @@ class User extends Base
         return false;
     }
 
+    /**
+     * 发布动态
+     * @param $data
+     * @return bool
+     */
     public function addDynamic($data){
 
         $dynamic = \common\models\Base::getInstance("user_dynamic");
@@ -158,6 +162,48 @@ class User extends Base
         $dynamic->address = $data['address'];
         $dynamic->create_time = time();
         return $dynamic->save();
+    }
+
+    /**
+     * 获取动态评论
+     * @param $id
+     * @return array
+     */
+    public function getCommentById($id){
+
+        return (new Query())
+            ->from($this->tablePrefix."user_comment c")
+            ->innerJoin($this->tablePrefix . "user_information i" , "i.user_id = c.user_id")
+            ->where(["dynamic_id" => $id])
+            ->select(["c.*" , "json_extract(i.info , '$.head_pic') as headPic" , "json_extract(i.info , '$.real_name') as name"])
+            ->all();
+    }
+
+    /**
+     * 添加评论
+     * @param $data
+     * @return bool
+     */
+    public function addComment($data){
+
+        $tran               = \Yii::$app->db->beginTransaction();
+        $comment = \common\models\Base::getInstance("user_comment");
+        $comment->user_id = \common\util\Cookie::getInstance()->getCookie('bhy_id')->value;;
+        $comment->content= $data['content'];
+        $comment->dynamic_id = $data['dynamicId'];
+        $comment->private = $data['private'];
+        $comment->create_time = $data['create_time'];
+
+        $flag =  $comment->save();
+        $id = Yii::$app->db->lastInsertID;
+        $dynamic            = \common\models\Base::getInstance("user_dynamic")->findOne($data['dynamicId']);
+        $dynamic->comment_num  = $dynamic->comment_num + 1;
+        if ($flag  && $dynamic->save()){
+            $tran->commit();
+            return $id;
+        }
+        $tran->rollBack();
+        return false;
     }
 
 }

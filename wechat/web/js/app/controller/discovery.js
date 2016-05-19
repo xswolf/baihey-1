@@ -10,7 +10,7 @@ define(['app/module', 'app/directive/directiveApi'
 
         $state.reload();
         var userInfo = ar.getStorage('userInfo');
-        console.log(userInfo)
+
         if ($location.$$search.userId) {
             // 显示个人
             $scope.title = JSON.parse(userInfo['info']).real_name + '的个人动态';
@@ -118,18 +118,16 @@ define(['app/module', 'app/directive/directiveApi'
         $scope.jump = function () {
             window.history.go(-1);
         }
-
-        // url参数，用户ID
-        $scope.userId = $stateParams.userId;
-
-        $scope.dis =
-        {
-            id: 1, name: '张小姐', time: '17:40', content: '地方公司空间的花费撕开对方会告诉你不过就是不爽', imgList: [
-            {src: '/wechat/web/images/test/1.jpg', w: 200, h: 200},
-            {src: '/wechat/web/images/test/2.jpg', w: 200, h: 200},
-            {src: '/wechat/web/images/test/3.jpg', w: 200, h: 200}
-        ], browseNumber: 2544, commentNumber: 525, likeNumber: 89
-        }
+        var userInfo = ar.getStorage('userInfo');
+        var info = JSON.parse(userInfo.info);
+        $scope.user_id = userInfo.id;
+        api.list('/wap/member/get-dynamic' , {id:$stateParams.id}).success(function (res) {
+            res.data.imgList = JSON.parse(res.data.pic);
+            $scope.dis = res.data;
+            $comment = ar.cleanQuotes(JSON.stringify(res.data.comment))
+            $scope.commentList = JSON.parse($comment);
+            console.log($scope.dis)
+        })
 
         // 图片放大查看插件
         requirejs(['photoswipe', 'photoswipe_ui'], function (photoswipe, photoswipe_ui) {
@@ -155,42 +153,48 @@ define(['app/module', 'app/directive/directiveApi'
 
         })
 
-
-        $scope.user = [];
-        $scope.user.userLike = false;
-
         // 点赞
-        $scope.clickLike = function (likeNumber) {
-            if (!$scope.user.userLike) {
-                $scope.user.userLike = true;
-                likeNumber += 1;  // 点赞数 +1
+        $scope.clickLike = function (id) {
+            var add = 0;
+            if ($scope.dis.cid > 0) {
+                add = -1;
+                $scope.dis.cid  = -1;
             } else {
-                $scope.user.userLike = false;
+                add = 1;
+                $scope.dis.cid  = 1;
             }
+
+            $scope.dis.like_num =  parseInt($scope.dis.like_num) + add;
+            api.save('/wap/member/set-click-like' , {dynamicId:id , user_id: userInfo['id'] , add:add});
         }
-
-        $scope.commentList = [
-            {id: 1, headPic: '/wechat/web/images/test/8.jpg', name: '谢先生', time: '15-05-11 17:15', content: '照片很漂亮！'},
-            {id: 2, headPic: '/wechat/web/images/test/7.jpg', name: '李先生', time: '15-05-11 15:05', content: '顶！'},
-            {id: 3, headPic: '/wechat/web/images/test/6.jpg', name: '张先生', time: '15-05-11 13:38', content: '支持！'},
-            {id: 4, headPic: '/wechat/web/images/test/5.jpg', name: '刘女士', time: '15-05-11 17:15', content: '法规和儿童'},
-            {id: 5, headPic: '/wechat/web/images/test/4.jpg', name: '陈小姐', time: '15-05-11 17:15', content: '打过去喂喂喂'},
-            {
-                id: 6,
-                headPic: '/wechat/web/images/test/3.jpg',
-                name: '郭先生',
-                time: '15-05-11 17:15',
-                content: '相册vdefgewrgewr！'
-            },
-            {id: 7, headPic: '/wechat/web/images/test/2.jpg', name: '谭先生', time: '15-05-11 17:15', content: '但若全额威风威风'},
-            {id: 8, headPic: '/wechat/web/images/test/1.jpg', name: '张小姐', time: '15-05-11 17:15', content: '丰田和热火太'}
-        ]
-
+        $scope.user = [];
         $scope.user.private = false;
         $scope.checkPrivate = function () {
             $scope.user.private = !$scope.user.private;
         }
 
+        // 发表评论
+        $scope.sendComment = function () {
+            $scope.formData.private = $scope.user.private;
+            $scope.formData.dynamicId = $stateParams.id;
+            api.save('/wap/member/add-comment' , $scope.formData).success(function (res) {
+                if (res.data.id>0) {
+                    $scope.commentList.push({
+                        id: res.data.id,
+                        user_id: userInfo.id,
+                        headPic: info.head_pic,
+                        name: info.real_name,
+                        private:$scope.user.private=='true' ? 1 : 0,
+                        create_time: res.data.create_time,
+                        content: $scope.formData.content
+                    });
+
+                    $scope.dis.comment_num = parseInt($scope.dis.comment_num) + 1;
+                    $scope.formData.content = ''; //重置输入框
+                }
+
+            })
+        }
 
     }]);
 
