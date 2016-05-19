@@ -255,7 +255,25 @@ define(['app/module'], function (module) {
                 });
             }
         };
-    }])
+    }]);
+
+    module.directive('showMulti', ['$animate', function($animate){
+        return {
+            replace: false,
+            link: function(scope, iElm, iAttrs, controller) {
+                var footerBar = iElm.parent().parent().parent('#msg_footer_bar');
+                var multi =iElm.parent().parent().parent().next('#multi_con');
+                iElm.bind('click',function(){
+                    $animate.animate(footerBar,{
+                        'bottom':multi[0].offsetHeight+'px'
+                    });
+                    $animate.animate(multi,{
+                        'bottom':'0'
+                    });
+                })
+            }
+        };
+    }]);
 })
 
 

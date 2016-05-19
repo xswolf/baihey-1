@@ -587,3 +587,22 @@ input[type="number"]{-moz-appearance:textfield;}
     color: #e4007f;
 }
 
+
+.item{
+    -webkit-transition: all linear 1s;
+    -o-transition: all linear 1s;
+    transition: all linear 1s;
+}
+/*动画开始前*/
+.item.ng-enter{
+    opacity:0;
+}
+/*动画过程*/
+.item-ng-enter-active{
+    opacity:1;
+}
+/*不同时出现*/
+.item.ng-enter-stagger {
+    transition-delay:0.5s;
+    transition-duration:0;
+}

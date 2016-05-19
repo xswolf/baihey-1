@@ -76,12 +76,14 @@ define(['app/module', 'app/directive/directiveApi'
     }]);
 
 
-    module.controller("message.chat", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$ionicModal', '$ionicActionSheet', '$ionicLoading', '$ionicScrollDelegate', 'FileUploader', '$http','$location','$rootScope', function (api, $scope, $timeout, $ionicPopup, $ionicModal, $ionicActionSheet, $ionicLoading, $ionicScrollDelegate, FileUploader, $http , $location,$rootScope) {
+    module.controller("message.chat", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$ionicModal', '$ionicActionSheet', '$ionicLoading', '$ionicScrollDelegate', 'FileUploader', '$http','$location','$rootScope','$animate', function (api, $scope, $timeout, $ionicPopup, $ionicModal, $ionicActionSheet, $ionicLoading, $ionicScrollDelegate, FileUploader, $http , $location,$rootScope,$animate) {
         $scope.sendId = ar.getCookie("bhy_user_id");
         $scope.receiveId = $location.search().id;
-        $scope.multi = false;
-        $scope.showMulti = function () {
-            $scope.multi = !$scope.multi;
+
+
+        $scope.hideMultiOnKeyboard = function(){
+            angular.element(document.querySelector('#multi_con')).css('bottom','-110px');
+            angular.element(document.querySelector('#msg_footer_bar')).css('bottom','0');
         }
 
         var viewScroll = $ionicScrollDelegate.$getByHandle('messageDetailsScroll');
@@ -106,8 +108,7 @@ define(['app/module', 'app/directive/directiveApi'
             return time - $scope.historyList[index-1].time > 300
         }
 
-
-        $scope.talk_type = 'voice';
+        $scope.talk_type = 'txt';
 
         $scope.changeType = function () {
             if ($scope.talk_type == 'voice') {
