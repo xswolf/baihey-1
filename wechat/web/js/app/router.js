@@ -216,13 +216,22 @@ define(["app/module", 'app/service/serviceApi'],
                     $scope.userInfo.info = JSON.parse($scope.userInfo.info);
                     $scope.userInfo.identity_pic = JSON.parse($scope.userInfo.identity_pic);
                 }
-
-                $scope.setUserStorage = function () {
+                var setUserInfoStorage = function () {
                     $scope.userInfo.info = JSON.stringify($scope.userInfo.info);
                     $scope.userInfo.identity_pic = JSON.stringify($scope.userInfo.identity_pic);
                     ar.setStorage('userInfo', $scope.userInfo);
-                    window.location.hash = '#/main/member/information';
                     getUserStorage();
+                }
+
+                // 设置用户信息跳转至资料页
+                $scope.setUserStorage = function () {
+                    setUserInfoStorage();
+                    window.location.hash = '#/main/member/information';
+                }
+
+                // 设置用户信息不跳转
+                $scope.getUserPrivacyStorage = function () {
+                    setUserInfoStorage();
                 }
 
                 if ($scope.userInfo = ar.getStorage('userInfo')) {
@@ -235,6 +244,7 @@ define(["app/module", 'app/service/serviceApi'],
                     });
                 }
 
+                // 用于想去的地方，去过的地方等
                 $scope.getTravel = function (name, serId) {
                     if (serId != null) {
                         var arrSer = serId.split(',');

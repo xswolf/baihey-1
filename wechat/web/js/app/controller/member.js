@@ -1725,49 +1725,60 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
     // 隐私设置-照片权限
     module.controller("member.privacy_pic", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', function (api, $scope, $timeout, $ionicPopup) {
         $scope.formData = [];
-        $scope.formData.auth = 1;
+        $scope.formData.privacy_pic = $scope.userInfo.privacy_pic ? $scope.userInfo.privacy_pic : 1;
 
         // 已经离开本页面
         $scope.$on('$ionicView.afterLeave', function () {
             // 保存数据
-
+            api.save('/wap/member/save-data', $scope.formData).success(function (res) {
+                $scope.userInfo.privacy_pic = $scope.formData.privacy_pic;
+                $scope.getUserPrivacyStorage();
+            });
         });
     }]);
 
     // 隐私设置-个人动态权限
     module.controller("member.privacy_per", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', function (api, $scope, $timeout, $ionicPopup) {
         $scope.formData = [];
-        $scope.formData.auth = 1;
+        $scope.formData.privacy_per = $scope.userInfo.privacy_per ? $scope.userInfo.privacy_per : 1;
 
         // 已经离开本页面
         $scope.$on('$ionicView.afterLeave', function () {
             // 保存数据
-
+            api.save('/wap/member/save-data', $scope.formData).success(function (res) {
+                $scope.userInfo.privacy_per = $scope.formData.privacy_per;
+                $scope.getUserPrivacyStorage();
+            });
         });
-
     }]);
 
     // 隐私设置-微信显示权限
     module.controller("member.privacy_wechat", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', function (api, $scope, $timeout, $ionicPopup) {
         $scope.formData = [];
-        $scope.formData.auth = 1;
+        $scope.formData.privacy_wechat = $scope.userInfo.privacy_wechat ? $scope.userInfo.privacy_wechat : 1;
 
         // 已经离开本页面
         $scope.$on('$ionicView.afterLeave', function () {
             // 保存数据
-
+            api.save('/wap/member/save-data', $scope.formData).success(function (res) {
+                $scope.userInfo.privacy_wechat = $scope.formData.privacy_wechat;
+                $scope.getUserPrivacyStorage();
+            });
         });
     }]);
 
     // 隐私设置-QQ显示权限
     module.controller("member.privacy_qq", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', function (api, $scope, $timeout, $ionicPopup) {
         $scope.formData = [];
-        $scope.formData.auth = 1;
+        $scope.formData.privacy_qq = $scope.userInfo.privacy_qq ? $scope.userInfo.privacy_qq : 1;
 
         // 已经离开本页面
         $scope.$on('$ionicView.afterLeave', function () {
             // 保存数据
-
+            api.save('/wap/member/save-data', $scope.formData).success(function (res) {
+                $scope.userInfo.privacy_qq = $scope.formData.privacy_qq;
+                $scope.getUserPrivacyStorage();
+            });
         });
     }]);
 
