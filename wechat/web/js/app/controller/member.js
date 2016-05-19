@@ -1719,8 +1719,11 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
 
     // 隐私设置
     module.controller("member.privacy", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', function (api, $scope, $timeout, $ionicPopup) {
-        $scope.formData = [];
-        $scope.formData.auth = 1;
+        $scope.$on('$ionicView.beforeEnter', function() {
+            api.list('/wap/follow/get-sum-black', {}).success(function (res) {
+                $scope.blackSum = res.data;
+            });
+        });
     }]);
 
     // 隐私设置-照片权限
@@ -1800,7 +1803,6 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
                 $scope.followList.splice($index, 1);
             });
         }
-
     }]);
 
     // 账户安全
