@@ -17,6 +17,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
          }
          });*/
 
+        $scope.userInfo = ar.getStorage('userInfo');
 
     }]);
 
