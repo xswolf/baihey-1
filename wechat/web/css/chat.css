@@ -339,22 +339,37 @@
     z-index: 1;
 }
 
-.msg_footer {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    margin-left: auto;
-    margin-left: auto;
-    height: auto;
-    padding: 5px;
-    background: #fff;
-    min-height: 44px;
+/* footer-bar */
+.rj-footer-btn-wrap {
+    height: 100%;
+    position: relative;
+    top: 2px;
+    width: 50px;
 }
-
-.msg_footer .common {
-    height: 40px;
-    line-height: 40px;
+.rj-footer-input {
+    background-color: #fff;
+    border-bottom: 1px solid #e8e8e8;
+    width: 100%;
+}
+.rj-footer-btn-left {
+    bottom: 0;
+    position: absolute !important;
+}
+.rj-footer-btn-wrap .rj-send-button {
+    background-color: #1bbb37;
+    bottom: 3px;
+    color: #fff;
+    height: 30px;
+    left: 4px;
+    line-height: 30px;
+    position: absolute;
+    text-align: center;
+    width: 38px;
+}
+.bar-footer textarea {
+    height: 21px;
+    max-height: 100px;
+    resize: none;
 }
 
 .multi_con {

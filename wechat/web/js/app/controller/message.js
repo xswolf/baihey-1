@@ -84,15 +84,28 @@ define(['app/module', 'app/directive/directiveApi'
             $scope.multi = !$scope.multi;
         }
 
+        var viewScroll = $ionicScrollDelegate.$getByHandle('messageDetailsScroll');
+        $scope.doRefresh = function() {
+            $scope.messageNum += 5;
+            $timeout(function() {
+                api.getAmountMessageById('url',$scope.messageNum,$stateParams.messageId).success(function(res){
+                    // 加载5条数据
+                });
+                $scope.$broadcast('scroll.refreshComplete');
+
+            }, 200);
+        };
+
+        window.addEventListener("native.keyboardshow", function(e){
+            viewScroll.scrollBottom();
+        });
+
         // 显示时间函数
         $scope.isLongTime = function (time , index) {
             if (index<2) return false;
             return time - $scope.historyList[index-1].time > 300
         }
 
-        $scope.scrollBot = function () {
-            $ionicScrollDelegate.scrollBottom(true);
-        }
 
         $scope.talk_type = 'voice';
 
@@ -397,7 +410,7 @@ define(['app/module', 'app/directive/directiveApi'
                             success: function (res) {
                                 //response.message = res.localId;
                                 setMessageStatus(response);
-                                $scope.scrollBot(); // 滚动至底部
+                                viewScroll.scrollBottom(); // 滚动至底部
                                 $scope.$apply();
                             }
                         });
@@ -405,7 +418,7 @@ define(['app/module', 'app/directive/directiveApi'
 
                     default :
                         setMessageStatus(response);
-                        $scope.scrollBot(); // 滚动至底部
+                        viewScroll.scrollBottom();  // 滚动至底部
                         //$scope.$apply();
                         break;
                 }
