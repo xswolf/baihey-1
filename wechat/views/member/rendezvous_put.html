@@ -1,17 +1,52 @@
 <ion-view hide-tabs="true">
     <link href="/wechat/web/css/member.css" rel="stylesheet">
+    <link href="/wechat/web/css/plugin/bootstrap/css/font-awesome.min.css" rel="stylesheet">
     <ion-header-bar class="com_w_100 bhy">
         <a class="button button-icon icon ion-arrow-left-c" href="#/main/member/rendezvous"></a>
         <h1 class="title">我发布的约会</h1>
     </ion-header-bar>
-    <ion-content class="bhy com_w_100 m_bg rendezvous">
+    <ion-content class="bhy com_w_100 rendezvous padding comm_bg_e">
         <ion-list>
-            <div class="item item-divider">
-                25/2015
+            <p class="clearfix lh24 pr">
+                <span class="fl fs16">
+                    <span class="fs24">05</span>
+                    <span class="cor5">月/2016年</span>
+                </span>
+                <span class="fr icon icon-calendar fs24 cor5"></span>
+                <div class="selectTool">
+                    <b></b>
+                    <p>2016年05月</p>
+                    <p>2016年04月</p>
+                    <p>2016年03月</p>
+                    <p>2016年02月</p>
+                    <p>2016年01月</p>
+                    <p>2015年12月</p>
+                </div>
+            </p>
+
+            <div class="card">
+                <div class="item item-divider balanced-bg cor0">
+                    <span class="fl fs14">05月12日 17:35</span>
+                    <span class="fr icon-cog fs18 cor0"></span>
+                </div>
+                <div class="item item-image">
+                    <img src="/wechat/web/images/test/s1.jpg">
+                </div>
+                <div class="item item-text-wrap">
+                    <h2> <span class="balanced">##5月24日出发，约伴看电影##</span>男女不限，有礼貌，举止文雅。在大坪龙湖时代天街UME影城看少年派的奇幻漂流。</h2>
+                    <p class="mt10">
+                        <span class="label">限女性</span>
+                        <span class="label">颜值高</span>
+                        <span class="label">技术宅</span>
+                        <span class="label">逗比</span>
+                    </p>
+                </div>
+                <div class="item item-divider balanced-bg cor0" ng-click="openPopover()">
+                    <span class="fl fs12">参与人数：5</span><span class="fr fs12">结束时间：2016-05-20 17:35</span>
+                </div>
             </div>
 
         </ion-list>
     </ion-content>
-
 
 </ion-view>
