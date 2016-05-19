@@ -234,6 +234,29 @@ define(["app/module", 'app/service/serviceApi'],
                         getUserStorage();
                     });
                 }
+
+                $scope.getTravel = function (name, serId) {
+                    if (serId != null) {
+                        var arrSer = serId.split(',');
+                        eval("$scope." + name + "_count = " + arrSer.length);
+                        api.list('/wap/member/get-travel-list', {'area_id': serId}).success(function (res) {
+                            eval("$scope." + name + " = " + JSON.stringify(res.data));
+                        });
+                    } else {
+                        eval("$scope." + name + "_count = " + 0);
+                    }
+                }
+                $scope.getConfig = function (name, serId) {
+                    if (serId != null) {
+                        var arrSer = serId.split(',');
+                        eval("$scope." + name + "_count = " + arrSer.length);
+                        api.list('/wap/member/get-config-list', {'config_id': serId}).success(function (res) {
+                            eval("$scope." + name + " = " + JSON.stringify(res.data));
+                        });
+                    } else {
+                        eval("$scope." + name + "_count = " + 0);
+                    }
+                }
                 //$scope.userInfo = [{}];
             }])
     });

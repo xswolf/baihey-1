@@ -123,30 +123,11 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
             });
         }
 
-        var went_travel = $scope.userInfo.went_travel;// 我去过的地方
-        var want_travel = $scope.userInfo.want_travel;// 我想去的地方
-        var love_sport = $scope.userInfo.love_sport;// 喜欢的运动
-        var want_film = $scope.userInfo.want_film;// 想看的电影
-        var like_food = $scope.userInfo.like_food;// 喜欢的食物
-        var getTravel = function (name, serId) {
-            if (serId != null) {
-                api.list('/wap/member/get-travel-list', {'area_id': serId}).success(function (res) {
-                    eval("$scope." + name + " = " + JSON.stringify(res.data));
-                });
-            }
-        }
-        var getConfig = function (name, serId) {
-            if (serId != null) {
-                api.list('/wap/member/get-config-list', {'config_id': serId}).success(function (res) {
-                    eval("$scope." + name + " = " + JSON.stringify(res.data));
-                });
-            }
-        }
-        getTravel('went_travel', went_travel);
-        getTravel('want_travel', want_travel);
-        getConfig('love_sport', love_sport);
-        getConfig('want_film', want_film);
-        getConfig('like_food', like_food);
+        $scope.getTravel('went_travel', $scope.userInfo.went_travel);// 我去过的地方
+        $scope.getTravel('want_travel', $scope.userInfo.want_travel);// 我想去的地方
+        $scope.getConfig('love_sport', $scope.userInfo.love_sport);// 喜欢的运动
+        $scope.getConfig('want_film', $scope.userInfo.want_film);// 想看的电影
+        $scope.getConfig('like_food', $scope.userInfo.like_food);// 喜欢的食物
 
     }]);
 
@@ -1674,6 +1655,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
 
         $scope.formData = [];
         $scope.formData.userId = $stateParams.userId;
+        $scope.otherUserInfo = [];
 
         api.list("/wap/user/get-user-info", {'id': $scope.formData.userId}).success(function (res) {
             $scope.otherUserInfo = res.data;
@@ -1683,11 +1665,12 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
         api.list('/wap/member/photo-list', {'user_id': $scope.formData.userId}).success(function (res) {
             $scope.imgList = res.data;
         });
-        /*api.getUserInfo($scope.formData.userId).success(function (res) {
-         $scope.otherUserInfo = res.data;
-         $scope.otherUserInfo.info = JSON.parse($scope.otherUserInfo.info);
-         $scope.otherUserInfo.identity_pic = JSON.parse($scope.otherUserInfo.identity_pic);
-         });*/
+
+        $scope.getTravel('went_travel', $scope.otherUserInfo.went_travel);// 我去过的地方
+        $scope.getTravel('want_travel', $scope.otherUserInfo.want_travel);// 我想去的地方
+        $scope.getConfig('love_sport', $scope.otherUserInfo.love_sport);// 喜欢的运动
+        $scope.getConfig('want_film', $scope.otherUserInfo.want_film);// 想看的电影
+        $scope.getConfig('like_food', $scope.otherUserInfo.like_food);// 喜欢的食物
 
         // 图片放大查看插件
         requirejs(['photoswipe', 'photoswipe_ui'], function (photoswipe, photoswipe_ui) {

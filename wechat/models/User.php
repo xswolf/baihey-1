@@ -128,7 +128,7 @@ class User extends \common\models\Base
         $userIdentity = [
             'url1'          => '未知',// 正面
             'url2'          => '未知',// 反面
-            'is_check'      => '未知',// 审核状态1通过，0未通过
+            'is_check'      => false,// 审核状态true通过，false未通过
             'create_time'   => '未知',// 时间
         ];
         $infoData['identity_pic'] = json_encode($userIdentity);

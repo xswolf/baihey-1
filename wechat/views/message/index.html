@@ -30,7 +30,7 @@
                     <p style="width: 65%;" class="">
                         <span class="fwb fs14 mr10 lh28" ng-if="messageInfo.info.real_name != '未知'">{{messageInfo.info.real_name | sex:messageInfo.sex :messageInfo.info.age}}</span>
                         <span class="fwb fs14 mr10 lh28" ng-if="messageInfo.info.real_name == '未知'">会员ID:{{messageInfo.other}}</span>
-                        <span class="identity sfz lh28" ng-if="messageInfo.identity_pic.is_check == 1">身份证</span>
+                        <span class="identity sfz lh28" ng-if="messageInfo.identity_pic">身份证</span>
                         <span class="identity phone lh28" ng-if="messageInfo.phone">手机</span>
                         <span class="dbl fs12 lh28 msg_text">
                             <span class="mr20" ng-if="messageInfo.info.age != '未知'">[{{messageInfo.info.age | timeToAge}}岁 {{messageInfo.info.is_marriage}}]</span>

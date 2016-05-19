@@ -28,7 +28,7 @@
                    style="visibility: hidden; display: none;" accept="image/*">
             <ion-item class="idt mt10">
                 <p>
-                    <span class="identity sfz" ng-if="userInfo.identity_pic.is_check == 1">身份证</span>
+                    <span class="identity sfz" ng-if="userInfo.identity_pic.is_check">身份证</span>
                     <span class="identity phone" ng-if="userInfo.phone">手机</span>
                     <span class="identity vip" ng-if="userInfo.info.level == 1">vip</span>
                     <span class="identity guest" ng-if="userInfo.info.level == 2">贵宾</span>
@@ -126,7 +126,7 @@
                     <p>出生年月</p>
                 </div>
                 <div class="info_c">
-                    <p><i class="bhy-icon-member-birthday cor23 vam mr5"></i><span class="mr10">{{userInfo.info.age | date:'yyyy-MM-dd'}}</span><span
+                    <p><i class="bhy-icon-member-birthday cor23 vam mr5"></i><span class="mr10">{{userInfo.info.age * 1000 | date:'yyyy-MM-dd'}}</span><span
                             class="mr10">{{userInfo.info.zodiac | zodiac}}</span><span>{{userInfo.info.constellation | constellation}}</span></p>
                 </div>
             </ion-item>
@@ -289,7 +289,7 @@
             </div>
             <ion-item class="hob_item" href="#/main/member/been_address">
                 <div class="info_l hob">
-                    <p>我去过的地方(7)</p>
+                    <p>我去过的地方({{went_travel_count}})</p>
                 </div>
                 <div class="info_r">
                     <i class=" ion-ios-arrow-right"></i>
@@ -305,7 +305,7 @@
             </ion-item>
             <ion-item class="hob_item" href="#/main/member/want_address">
                 <div class="info_l hob">
-                    <p>想去的地方(5)</p>
+                    <p>想去的地方({{want_travel_count}})</p>
                 </div>
                 <div class="info_r">
                     <i class=" ion-ios-arrow-right"></i>
@@ -322,7 +322,7 @@
 
             <ion-item class="hob_item" href="#/main/member/sports">
                 <div class="info_l hob">
-                    <p>喜欢的运动(4)</p>
+                    <p>喜欢的运动({{love_sport_count}})</p>
                 </div>
                 <div class="info_r">
                     <i class=" ion-ios-arrow-right"></i>
@@ -339,7 +339,7 @@
 
             <ion-item class="hob_item" href="#/main/member/movie">
                 <div class="info_l hob">
-                    <p>想看的电影(8)</p>
+                    <p>想看的电影({{want_film_count}})</p>
                 </div>
                 <div class="info_r">
                     <i class=" ion-ios-arrow-right"></i>
@@ -357,7 +357,7 @@
 
             <ion-item class="hob_item" href="#/main/member/delicacy">
                 <div class="info_l hob">
-                    <p>喜欢的美食(9)</p>
+                    <p>喜欢的美食({{like_food_count}})</p>
                 </div>
                 <div class="info_r">
                     <i class=" ion-ios-arrow-right"></i>
