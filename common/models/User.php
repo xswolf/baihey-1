@@ -62,12 +62,13 @@ class User extends Base
      * @return array
      */
     public function getDynamicList($uid , $page = 0 , $limit = 5){
+        $loginUserId  = \common\util\Cookie::getInstance()->getCookie('bhy_id')->value;
         $offset = $page * $limit;
         $obj = (new Query())
             ->from($this->tablePrefix . "user_dynamic d")
             ->innerJoin($this->tablePrefix.'user_information i' , 'd.user_id=i.user_id' )
             ->innerJoin($this->tablePrefix.'user u' , 'd.user_id=u.id' )
-            ->leftJoin($this->tablePrefix.'user_click c' , 'c.dynamic_id = d.id AND c.user_id=d.user_id')
+            ->leftJoin($this->tablePrefix.'user_click c' , 'c.dynamic_id = d.id AND c.user_id ='.$loginUserId)
             ->limit($limit)
             ->offset($offset)
             ->select(["d.*","u.phone" ,"json_extract(i.identity_pic , '$.is_check') AS identity_check" ,"json_extract(i.info , '$.level') AS level" , "c.id as cid"])
