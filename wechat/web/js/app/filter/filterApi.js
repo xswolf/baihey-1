@@ -303,6 +303,23 @@ define(['app/module'], function (module) {
         }
     });
 
+    // 权限设置
+    module.filter('privacy', function () {
+        return function (input, arr) {
+            switch (input) {
+                case '1':
+                    return '全部可见';
+                case '2':
+                    return '我关注的人可见';
+                case '3':
+                    return 'vip会员可见';
+                case '4':
+                    return '不公开';
+            }
+
+        }
+    });
+
     module.filter('briMessage',function () {
         return function (input) {
             if (typeof(input) != 'undefined' && input != '') {
