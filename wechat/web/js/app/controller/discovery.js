@@ -8,7 +8,7 @@ define(['app/module', 'app/directive/directiveApi'
     // 发现
     module.controller("discovery.index", ['app.serviceApi', '$rootScope', '$scope', '$timeout', '$ionicPopup', '$ionicModal', '$ionicActionSheet', '$ionicLoading', '$location','$state','$stateParams', function (api, $rootScope, $scope, $timeout, $ionicPopup, $ionicModal, $ionicActionSheet, $ionicLoading, $location,$state,$stateParams) {
 
-        $state.reload();
+        //$state.reload();
         var userInfo = ar.getStorage('userInfo');
 
         if ($location.$$search.userId) {

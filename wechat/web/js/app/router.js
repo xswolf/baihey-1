@@ -152,6 +152,7 @@ define(["app/module", 'app/service/serviceApi'],
                         }
                     })
                     .state('main.discovery', {       // 发现
+                        cache: false,
                         url: "/discovery?userId?tempUrl",
                         views: {
                             'discovery-tab': {
@@ -161,6 +162,7 @@ define(["app/module", 'app/service/serviceApi'],
                         }
                     })
                     .state('main.dynmaic', {       // 个人动态
+                        cache: false,
                         url: "/dynmaic?userId?tempUrl",
                         views: {
                             'member-tab': {
@@ -170,6 +172,7 @@ define(["app/module", 'app/service/serviceApi'],
                         }
                     })
                     .state('main.discovery_single', {       // 发现-个人
+                        cache: false,
                         url: "/discovery_single?id",
                         views: {
                             'discovery-tab': {
