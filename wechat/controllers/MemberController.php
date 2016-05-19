@@ -189,6 +189,9 @@ class MemberController extends BaseController
         $this->renderAjax(['status=>1', 'data' => $list]);
     }
 
+    /**
+     * 发布评论
+     */
     public function actionAddComment(){
 
         $data['content'] = $this->get['content'];
@@ -197,5 +200,11 @@ class MemberController extends BaseController
         $data['create_time'] = time();
         $id = User::getInstance()->addComment($data);
         $this->renderAjax(['status=>1', 'data' => ['id'=>$id,'create_time'=>$data['create_time']]]);
+    }
+
+    public function actionGetFollow(){
+
+        $list = User::getInstance()->getFollowList();
+        $this->renderAjax(['status=>1', 'data' => $list]);
     }
 }

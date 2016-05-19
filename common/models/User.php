@@ -188,7 +188,7 @@ class User extends Base
 
         $tran               = \Yii::$app->db->beginTransaction();
         $comment = \common\models\Base::getInstance("user_comment");
-        $comment->user_id = \common\util\Cookie::getInstance()->getCookie('bhy_id')->value;;
+        $comment->user_id = \common\util\Cookie::getInstance()->getCookie('bhy_id')->value;
         $comment->content= $data['content'];
         $comment->dynamic_id = $data['dynamicId'];
         $comment->private = $data['private'];
@@ -206,4 +206,15 @@ class User extends Base
         return false;
     }
 
+    /**
+     * 获取关注的人
+     * @return array
+     */
+    public function getFollowList(){
+
+        return (new Query())->from($this->tablePrefix."user_follow")
+            ->where(['user_id'=>\common\util\Cookie::getInstance()->getCookie('bhy_id')->value ,'status'=>1])
+            ->select('follow_id')
+            ->all();
+    }
 }

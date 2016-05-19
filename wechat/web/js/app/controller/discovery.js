@@ -88,6 +88,23 @@ define(['app/module', 'app/directive/directiveApi'
             $scope.page += 1;
         };
 
+        api.list('/wap/member/get-follow').success(function (res) {
+            $scope.followList = res.data;
+        })
+        // 判断该动态是否可以见 userId发动态用户的ID
+        $scope.display = function (auth , userId) {
+            if(auth == 1){ // 全部可见
+                return true;
+            }
+            if (auth == 2 && ar.getArrI($scope.followList , "follow_id" , userId)){ // 关注的人可见
+                return true;
+            }
+            if (auth == 3 && userId == userInfo.id){ // 自己可以见
+                return true;
+            }
+            return false;
+        }
+
         // 是否还有更多
         $scope.moreDataCanBeLoaded = function () {
             return $scope.morePage;
