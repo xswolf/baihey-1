@@ -9,15 +9,15 @@
         <ion-list>
             <ion-item class="item item-input">
                 <span class="input-label">旧密码</span>
-                <input type="text" placeholder="请输入旧密码">
+                <input type="password" ng-model="formData.pass" placeholder="请输入旧密码">
             </ion-item>
             <ion-item class="item item-input">
                 <span class="input-label">新密码</span>
-                <input type="text" placeholder="请输入新密码">
+                <input type="password" ng-model="formData.new_pass1" placeholder="请输入新密码">
             </ion-item>
             <ion-item class="item item-input">
                 <span class="input-label">确认密码</span>
-                <input type="text" placeholder="请再次输入新密码">
+                <input type="password" ng-model="formData.new_pass2" placeholder="请再次输入新密码">
             </ion-item>
         </ion-list>
     </ion-content>

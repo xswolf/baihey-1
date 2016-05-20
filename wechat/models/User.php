@@ -58,7 +58,6 @@ class User extends \common\models\Base
         return false;
     }
 
-
     /**
      * 新增/注册用户
      * @param $data
@@ -76,6 +75,7 @@ class User extends \common\models\Base
         $time = YII_BEGIN_TIME;
         $data['reg_time'] = $time;
         $data['last_login_time'] = $time;
+        $data['reset_pass_time'] = $time;
 
         // user表 数据写入
         $user = $db->createCommand()
@@ -176,8 +176,17 @@ class User extends \common\models\Base
         if (!$row) {
             return null;
         }
-
         return $row;
+    }
+
+    /**
+     * 验证手机是否存在
+     * @param $phone
+     * @return null|static
+     */
+    public function mobileIsExist($phone)
+    {
+        return $this->findOne(['phone' => $phone]);
     }
 
     public function getUserById($id)
@@ -346,6 +355,33 @@ class User extends \common\models\Base
     }
 
     /**
+     * 更新用户数据
+     * @param $user_id
+     * @param $data
+     * @return bool|int
+     * @throws \yii\db\Exception
+     */
+    public function updateUserData($user_id, $data)
+    {
+        $row = false;
+        if ($data && $this->findOne($user_id)) {
+            $_user_table = static::tableName();// 表名
+            switch (key($data)) {
+                case 'phone':
+                case 'sex':
+                    $sql = "UPDATE {$_user_table} SET ".key($data)." = ".$data[key($data)]." WHERE id={$user_id}";
+                    break;
+                default:
+                    $sql = "UPDATE {$_user_table} SET ".key($data)." = '".$data[key($data)]."' WHERE id={$user_id}";
+                    break;
+            }
+
+            $row = $this->getDb()->createCommand($sql)->execute();
+        }
+        return $row;
+    }
+
+    /**
      * 修改余额
      * @param $uid
      * @param $money
@@ -379,5 +415,21 @@ class User extends \common\models\Base
         }
         $tran->rollBack();
         return 0;
+    }
+
+    public function resetPassword($user_id, $where)
+    {
+        if($user = $this->findOne(['id' => $user_id,'password' => md5(md5($where['pass']))])) {
+            $time = YII_BEGIN_TIME;
+            $user->password = md5(md5($where['new_pass1']));
+            $user->reset_pass_time = $time;
+            if($user->save(false)) {
+                return $time;
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
     }
 }

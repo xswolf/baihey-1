@@ -1736,7 +1736,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
             // 保存数据
             api.save('/wap/member/save-data', $scope.formData).success(function (res) {
                 $scope.userInfo.privacy_pic = $scope.formData.privacy_pic;
-                $scope.getUserPrivacyStorage();
+                $scope.getUserPrivacyStorage('');
             });
         });
     }]);
@@ -1751,7 +1751,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
             // 保存数据
             api.save('/wap/member/save-data', $scope.formData).success(function (res) {
                 $scope.userInfo.privacy_per = $scope.formData.privacy_per;
-                $scope.getUserPrivacyStorage();
+                $scope.getUserPrivacyStorage('');
             });
         });
     }]);
@@ -1766,7 +1766,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
             // 保存数据
             api.save('/wap/member/save-data', $scope.formData).success(function (res) {
                 $scope.userInfo.privacy_wechat = $scope.formData.privacy_wechat;
-                $scope.getUserPrivacyStorage();
+                $scope.getUserPrivacyStorage('');
             });
         });
     }]);
@@ -1781,7 +1781,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
             // 保存数据
             api.save('/wap/member/save-data', $scope.formData).success(function (res) {
                 $scope.userInfo.privacy_qq = $scope.formData.privacy_qq;
-                $scope.getUserPrivacyStorage();
+                $scope.getUserPrivacyStorage('');
             });
         });
     }]);
@@ -1816,34 +1816,38 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
     module.controller("member.security_pass", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', function (api, $scope, $timeout, $ionicPopup) {
 
         $scope.formData = [];
+        // 保存
+        $scope.saveData = function () {
+            if($scope.formData.pass == '') {
+                $ionicPopup.alert({title: '请填写旧密码'}); return false;
+            }
+            if($scope.formData.new_pass1 == '' || $scope.formData.new_pass1.length < 6) {
+                $ionicPopup.alert({title: '密码长度必须大于6个字符'}); return false;
+            }
+            if($scope.formData.new_pass1 != $scope.formData.new_pass1) {
+                $ionicPopup.alert({title: '新密码不一致'}); return false;
+            }
+
+            api.save('/wap/user/reset-password', $scope.formData).success(function (res) {
+                if(res.data) {
+                    $ionicPopup.alert({title: '密码修改成功'});
+                    $scope.userInfo.reset_pass_time = parseInt(res.data);
+                    $scope.getUserPrivacyStorage('#/main/member/security');
+                } else {
+                    $ionicPopup.alert({title: '密码修改失败'});
+                }
+            })
+
+        }
 
     }]);
 
     // 账户安全-手机绑定
     module.controller("member.security_phone", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', function (api, $scope, $timeout, $ionicPopup) {
 
-        $scope.formData = [];
-
-        $scope.formData.codeBtn = '获取验证码';
-
-        function validatePhone(phone) {
-
-            if (!ar.validateMobile(phone)) {  // 验证手机格式
-                $ionicPopup.alert({title: '手机号码格式不正确'});
-                return false;
-            }
-
-            api.getMobileIsExist(phone).success(function (data) {
-                if (!data.status) {
-                    $ionicPopup.alert({title: data.msg});
-                    return true;
-                } else {
-                    return false;
-                }
-            })
-
-            return true;
-        }
+        $scope.User = [];
+        $scope.User.codeBtn = '获取验证码';
+        $scope.User.mobile = $scope.userInfo.phone != null ? $scope.userInfo.phone : '';
 
         // 开始计时
         $scope.User.startTime = function () {
@@ -1864,36 +1868,101 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
         // 获取验证码
         $scope.User.getCode = function () {
 
-            if (!validatePhone($scope.User.mobile)) return;
+            if (!ar.validateMobile($scope.User.mobile)) {  // 验证手机格式
+                $ionicPopup.alert({title: '手机号码格式不正确'});
+                return false;
+            }
 
-            //计时
-            $scope.User.codeSwitch = true;
-            $scope.User.codeCls = true;
-            $scope.User.max_time = 60;
-            $scope.User.timer = setInterval($scope.User.startTime, 1000);
-            setTimeout($scope.User.endTime, $scope.User.max_time * 1000);
-
-            // 发送验证码
-            api.sendCodeMsg($scope.User.mobile).success(function (data) {
-
+            api.getMobileIsExist($scope.User.mobile).success(function (data) {
                 if (!data.status) {
-                    $ionicPopup.alert({title: '短信发送失败，请稍后重试。'});
+                    $ionicPopup.alert({title: data.msg});
                     return false;
+                } else {
+                    //计时
+                    $scope.User.codeSwitch = true;
+                    $scope.User.codeCls = true;
+                    $scope.User.max_time = 60;
+                    $scope.User.timer = setInterval($scope.User.startTime, 1000);
+                    setTimeout($scope.User.endTime, $scope.User.max_time * 1000);
+
+                    // 发送验证码
+                    api.sendCodeMsg($scope.User.mobile).success(function (data) {
+
+                        if (!data.status) {
+                            $ionicPopup.alert({title: '短信发送失败，请稍后重试。'});
+                            return false;
+                        }
+                    });
                 }
-            });
+            })
 
+            $scope.saveData = function () {
 
+                if($scope.User.mobile == '') {
+                    $ionicPopup.alert({title: '手机号不能为空'}); return false;
+                }
+                api.validateCode($scope.User.code).success(function (res) {
+                    if(!res.status) {
+                        $ionicPopup.alert({title: '验证码错误'}); return false;
+                    } else {
+                        var formData = [];
+                        formData.phone = $scope.User.mobile;
+                        api.save('/wap/user/update-user-data', formData).success(function (res) {
+                            if(res.data) {
+                                $ionicPopup.alert({title: '手机绑定成功'});
+                                $scope.userInfo.phone = $scope.User.mobile;
+                                $scope.getUserPrivacyStorage('#/main/member/security');
+                            } else {
+                                $ionicPopup.alert({title: '手机绑定失败'});
+                            }
+                        })
+                    }
+                })
+            }
         }
     }]);
 
     // 账户安全-微信绑定
     module.controller("member.security_wechat", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', function (api, $scope, $timeout, $ionicPopup) {
-
+        $scope.formData = [];
+        $scope.formData.wechat = $scope.userInfo.info.wechat != '未知' ? $scope.userInfo.info.wechat : '';
+        $scope.saveData = function () {
+            alert($scope.formData.wechat);
+            if ($scope.formData.wechat == '' || typeof($scope.formData.wechat) == 'undefined') {
+                if (confirm('检测到您还未填写微信号，确定放弃吗？')) {
+                    window.location.hash = '#/main/member/security';  //跳转
+                } else {
+                    return false;
+                }
+            } else {
+                api.save('/wap/member/save-data', $scope.formData).success(function (res) {
+                    // 保存
+                    $scope.userInfo.info.wechat = $scope.formData.wechat;
+                    $scope.getUserPrivacyStorage('#/main/member/security');
+                })
+            }
+        }
     }]);
 
     // 账户安全-QQ绑定
     module.controller("member.security_qq", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', function (api, $scope, $timeout, $ionicPopup) {
-
+        $scope.formData = [];
+        $scope.formData.qq = $scope.userInfo.info.qq != '未知' ? $scope.userInfo.info.qq : '';
+        $scope.saveData = function () {
+            if ($scope.formData.qq == '' || typeof($scope.formData.qq) == 'undefined') {
+                if (confirm('检测到您还未填写微信号，确定放弃吗？')) {
+                    window.location.hash = '#/main/member/security';  //跳转
+                } else {
+                    return false;
+                }
+            } else {
+                api.save('/wap/member/save-data', $scope.formData).success(function (res) {
+                    // 保存
+                    $scope.userInfo.info.qq = $scope.formData.qq;
+                    $scope.getUserPrivacyStorage('#/main/member/security');
+                })
+            }
+        }
     }]);
 
     // 诚信认证

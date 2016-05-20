@@ -233,8 +233,11 @@ define(["app/module", 'app/service/serviceApi'],
                 }
 
                 // 设置用户信息不跳转
-                $scope.getUserPrivacyStorage = function () {
+                $scope.getUserPrivacyStorage = function (url) {
                     setUserInfoStorage();
+                    if(url != '' && typeof(url) != undefined) {
+                        window.location.hash = url;
+                    }
                 }
 
                 if ($scope.userInfo = ar.getStorage('userInfo')) {

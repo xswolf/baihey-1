@@ -186,10 +186,8 @@ class UserController extends BaseController
     public function actionMobileIsExist()
     {
         if (\Yii::$app->request->isGet) {
-
-            $data = \Yii::$app->request->get();
             // 通过手机号查询用户信息
-            if (User::getInstance()->getUserByName($data['mobile'])) {
+            if (User::getInstance()->mobileIsExist($this->get['mobile'])) {
 
                 $this->renderAjax(['status' => 0, 'msg' => '手机号码已存在']);
             } else {
@@ -204,7 +202,6 @@ class UserController extends BaseController
      */
     public function actionSendCodeMsg()
     {
-
         if (\Yii::$app->request->isGet) {
 
             $data = \Yii::$app->request->get();
@@ -225,6 +222,26 @@ class UserController extends BaseController
             $data = \Yii::$app->request->get();
             $this->renderAjax(['status' => \Yii::$app->messageApi->validataCode($data['code'])]);
         }
+    }
+
+    /**
+     * 修改密码
+     */
+    public function actionResetPassword()
+    {
+        $user_id = \common\util\Cookie::getInstance()->getCookie('bhy_id');
+        $list = User::getInstance()->resetPassword($user_id, $this->get);
+        $this->renderAjax(['status=>1', 'data' => $list]);
+    }
+
+    /**
+     * 更新用户数据
+     */
+    public function actionUpdateUserData()
+    {
+        $user_id = \common\util\Cookie::getInstance()->getCookie('bhy_id');
+        $list = User::getInstance()->updateUserData($user_id, $this->get);
+        $this->renderAjax(['status=>1', 'data' => $list]);
     }
 
 }
