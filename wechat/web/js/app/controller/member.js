@@ -2477,7 +2477,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
 
                     }
                     if (index == 1) { // 修改
-
+                        $location.url('/main/member/rendezvous_add?id=2');
                     }
                 }
             });
