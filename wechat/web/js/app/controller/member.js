@@ -1818,18 +1818,21 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
         $scope.formData = [];
         // 保存
         $scope.saveData = function () {
-            if($scope.formData.pass == '') {
-                $ionicPopup.alert({title: '请填写旧密码'}); return false;
+            if ($scope.formData.pass == '') {
+                $ionicPopup.alert({title: '请填写旧密码'});
+                return false;
             }
-            if($scope.formData.new_pass1 == '' || $scope.formData.new_pass1.length < 6) {
-                $ionicPopup.alert({title: '密码长度必须大于6个字符'}); return false;
+            if ($scope.formData.new_pass1 == '' || $scope.formData.new_pass1.length < 6) {
+                $ionicPopup.alert({title: '密码长度必须大于6个字符'});
+                return false;
             }
-            if($scope.formData.new_pass1 != $scope.formData.new_pass1) {
-                $ionicPopup.alert({title: '新密码不一致'}); return false;
+            if ($scope.formData.new_pass1 != $scope.formData.new_pass1) {
+                $ionicPopup.alert({title: '新密码不一致'});
+                return false;
             }
 
             api.save('/wap/user/reset-password', $scope.formData).success(function (res) {
-                if(res.data) {
+                if (res.data) {
                     $ionicPopup.alert({title: '密码修改成功'});
                     $scope.userInfo.reset_pass_time = parseInt(res.data);
                     $scope.getUserPrivacyStorage('#/main/member/security');
@@ -1898,17 +1901,19 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
 
             $scope.saveData = function () {
 
-                if($scope.User.mobile == '') {
-                    $ionicPopup.alert({title: '手机号不能为空'}); return false;
+                if ($scope.User.mobile == '') {
+                    $ionicPopup.alert({title: '手机号不能为空'});
+                    return false;
                 }
                 api.validateCode($scope.User.code).success(function (res) {
-                    if(!res.status) {
-                        $ionicPopup.alert({title: '验证码错误'}); return false;
+                    if (!res.status) {
+                        $ionicPopup.alert({title: '验证码错误'});
+                        return false;
                     } else {
                         var formData = [];
                         formData.phone = $scope.User.mobile;
                         api.save('/wap/user/update-user-data', formData).success(function (res) {
-                            if(res.data) {
+                            if (res.data) {
                                 $ionicPopup.alert({title: '手机绑定成功'});
                                 $scope.userInfo.phone = $scope.User.mobile;
                                 $scope.getUserPrivacyStorage('#/main/member/security');
@@ -2294,9 +2299,9 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
     // 我的约会-发布约会-约会标题
     module.controller("member.rendezvous_themeTitle", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', function (api, $scope, $timeout, $ionicPopup) {
 
-        $scope.saveThemeTitle = function () {
+        $scope.save = function () {
             $scope.closeThemeTitleModal();
-            console.log($scope.formData.themeTitle);
+            console.info($scope.formData.themeTitle, $scope.formData.content);
         }
 
     }]);
@@ -2380,7 +2385,6 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
                 theme: '娱乐',
                 themeTitle: '约个高富帅看电影，有没有啊？',
                 startDate: '5月12日 17:25',
-                img: '/wechat/web/images/test/s1.jpg',
                 content: '520一个人无聊，约个高富帅去大坪龙湖时代天街UME看电影，求骚扰！520一个人无聊，约个高富帅去大坪龙湖时代天街UME看电影，求骚扰！520一个人无聊，约个高富帅去大坪龙湖时代天街UME看电影，求骚扰！520一个人无聊，约个高富帅去大坪龙湖时代天街UME看电影，求骚扰！520一个人无聊，约个高富帅去大坪龙湖时代天街UME看电影，求骚扰！',
                 label: [{id: 3, name: '高富帅'}, {id: 6, name: '幽默'}, {id: 7, name: '型男'}, {id: 8, name: '阳光外形'}],
                 endDate: '2015-05-20 17:25',
@@ -2392,7 +2396,6 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
                 theme: '美食',
                 themeTitle: '去杨家坪吃小龙虾',
                 startDate: '2015-05-19 17:25',
-                img: '/wechat/web/images/test/s1.jpg',
                 content: '去杨家坪吃小龙虾去杨家坪吃小龙虾去杨家坪吃小龙虾去杨家坪吃小龙虾',
                 label: [{id: 3, name: '高富帅'}, {id: 6, name: '幽默'}, {id: 7, name: '型男'}, {id: 8, name: '阳光外形'}],
                 endDate: '2015-05-20 17:25',
@@ -2404,7 +2407,6 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
                 theme: '运动/健身',
                 themeTitle: '强身健体强身健体强身健体',
                 startDate: '2015-05-19 17:25',
-                img: '/wechat/web/images/test/s1.jpg',
                 content: '强身健体强身健体强身健体强身健体强身健体',
                 label: [{id: 3, name: '高富帅'}, {id: 6, name: '幽默'}, {id: 7, name: '型男'}, {id: 8, name: '阳光外形'}],
                 endDate: '2015-05-20 17:25',
@@ -2416,7 +2418,6 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
                 theme: '旅游',
                 themeTitle: '求志同道合妹子游西湖！',
                 startDate: '2015-05-19 17:25',
-                img: '/wechat/web/images/test/s1.jpg',
                 content: '求志同道合妹子游西湖求志同道合妹子游西湖求志同道合妹子游西湖求志同道合妹子游西湖',
                 label: [{id: 3, name: '高富帅'}, {id: 6, name: '幽默'}, {id: 7, name: '型男'}, {id: 8, name: '阳光外形'}],
                 endDate: '2015-05-20 17:25',
@@ -2428,7 +2429,6 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
                 theme: '其它',
                 themeTitle: '跳广场舞',
                 startDate: '2015-05-19 17:25',
-                img: '/wechat/web/images/test/s1.jpg',
                 content: '跳广场舞跳广场舞跳广场舞跳广场舞跳广场舞跳广场舞',
                 label: [{id: 3, name: '高富帅'}, {id: 6, name: '幽默'}, {id: 7, name: '型男'}, {id: 8, name: '阳光外形'}],
                 endDate: '2015-05-20 17:25',
@@ -2458,7 +2458,9 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
                 destructiveButtonClicked: function () {
                     var confirmPopup = $ionicPopup.confirm({
                         title: '确定删除此条记录？删除后不可恢复。',
-                        template: false
+                        template: false,
+                        cancelText: '点错了',
+                        okText: '确定'
                     });
                     confirmPopup.then(function (res) {
                         if (res) {
@@ -2488,7 +2490,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
 
         $scope.openTxt = false;
         // 展开全文
-        $scope.openText = function($event){
+        $scope.openText = function ($event) {
             $event.stopPropagation();
             $scope.openTxt = true;
         }
@@ -2501,8 +2503,81 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
 
         $scope.formData = [];
 
-        $scope.partList = [];
+        $scope.partList = [
+            {
+                id: 1,
+                userName: '李先生',
+                theme: '运动/健身',
+                themeTitle: '求个美女一起去爬山！',
+                content: '第三方公司更换三分公司梵蒂冈而而非去的法撒旦法阿斯蒂芬',
+                label: [{id: 1, name: '白富美'}, {id: 1, name: '大长腿'}, {id: 1, name: '无公主病'}, {id: 1, name: '温柔'}],
+                status:1
+            },
+            {
+                id: 2,
+                userName: '谭先生',
+                theme: '运动/健身',
+                themeTitle: '求个美女一起去爬山！',
+                content: '第三方公司更换三分公司梵蒂冈而而非去的法撒旦法阿斯蒂芬',
+                label: [{id: 1, name: '白富美'}, {id: 1, name: '大长腿'}, {id: 1, name: '无公主病'}, {id: 1, name: '温柔'}],
+                status:2
+            },
+            {
+                id: 3,
+                userName: '陈先生',
+                theme: '运动/健身',
+                themeTitle: '求个美女一起去爬山！',
+                content: '第三方公司更换三分公司梵蒂冈而而非去的法撒旦法阿斯蒂芬',
+                label: [{id: 1, name: '白富美'}, {id: 1, name: '大长腿'}, {id: 1, name: '无公主病'}, {id: 1, name: '温柔'}],
+                status:1
+            },
+            {
+                id: 4,
+                userName: '张先生',
+                theme: '运动/健身',
+                themeTitle: '求个美女一起去爬山！',
+                content: '第三方公司更换三分公司梵蒂冈而而非去的法撒旦法阿斯蒂芬',
+                label: [{id: 1, name: '白富美'}, {id: 1, name: '大长腿'}, {id: 1, name: '无公主病'}, {id: 1, name: '温柔'}],
+                status:0
+            },
+            {
+                id: 5,
+                userName: '郭先生',
+                theme: '运动/健身',
+                themeTitle: '求个美女一起去爬山！',
+                content: '第三方公司更换三分公司梵蒂冈而而非去的法撒旦法阿斯蒂芬',
+                label: [{id: 1, name: '白富美'}, {id: 1, name: '大长腿'}, {id: 1, name: '无公主病'}, {id: 1, name: '温柔'}],
+                status:1
+            }
+        ];
 
+        $scope.delPart = function (id, itemIndex) {
+            var confirmPopup = $ionicPopup.confirm({
+                title: '确定删除此条记录？删除后将不显示在对方参与列表。',
+                template: false,
+                cancelText: '点错了',
+                okText: '确定'
+            });
+            confirmPopup.then(function (res) {
+                if (res) {
+                    // 删除
+                    $scope.partList.splice(itemIndex, 1);
+                } else {
+                    return false;
+                }
+            });
+        }
+
+        $scope.openTxt = false;
+        // 展开全文
+        $scope.openText = function ($event) {
+            $event.stopPropagation();
+            $scope.openTxt = true;
+        }
+
+        $scope.acceptAlert = function(){
+            $ionicPopup.alert({title:'TA的手机号码：13359886652'});
+        }
 
     }]);
 
@@ -2530,20 +2605,22 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
         };
 
         $scope.involvedList = [
-            {id:1,userId:23,msg:'你好，我想和你约会，你看我行吗？',status:0},
-            {id:2,userId:24,msg:'你好，我想和你约会，你看我行吗？',status:0},
-            {id:3,userId:43,msg:'你好，我想和你约会，你看我行吗？',status:1},
-            {id:4,userId:11,msg:'你好，我想和你约会，你看我行吗？',status:0},
-            {id:5,userId:84,msg:'你好，我想和你约会，你看我行吗？',status:2}
+            {id: 1, userId: 23, msg: '你好，我想和你约会，你看我行吗？', status: 0},
+            {id: 2, userId: 24, msg: '你好，我想和你约会，你看我行吗？', status: 0},
+            {id: 3, userId: 43, msg: '你好，我想和你约会，你看我行吗？', status: 1},
+            {id: 4, userId: 11, msg: '你好，我想和你约会，你看我行吗？', status: 0},
+            {id: 5, userId: 84, msg: '你好，我想和你约会，你看我行吗？', status: 2}
         ];
 
         $scope.isAccept = false;
         $scope.isIgnore = false;
         // 接受
-        $scope.accept = function(){
+        $scope.accept = function () {
             var confirmPopup = $ionicPopup.confirm({
                 title: '确定吗？',
-                template: false
+                template: false,
+                cancelText: '点错了',
+                okText: '确定'
             });
             confirmPopup.then(function (res) {
                 if (res) {
@@ -2556,10 +2633,12 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
         }
 
         // 忽略
-        $scope.ignore = function(){
+        $scope.ignore = function () {
             var confirmPopup = $ionicPopup.confirm({
                 title: '确定吗？',
-                template: false
+                template: false,
+                cancelText: '点错了',
+                okText: '确定'
             });
             confirmPopup.then(function (res) {
                 if (res) {
@@ -2570,7 +2649,6 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
                 }
             });
         }
-
 
 
     }]);

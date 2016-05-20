@@ -72,7 +72,8 @@
 .mt30{ margin-top: 30px;}
 .mt40{ margin-top: 40px;}
 .mt50{ margin-top: 50px;}
-
+p.mt0{ margin-top: 0;}
+p.mb0{ margin-bottom: 0;}
 
 .ml5{ margin-left: 5px;}
 .ml10{ margin-left: 10px;}
@@ -125,7 +126,8 @@
 .cor35{color:#66CC66;}
 .cor36{color:#f4f4f4;}
 .cor37{color:#33475f;}
-.cor38{color:#cc66ff ;}
+.cor38{color:#cc66ff;}
+.cor39{color:#89a1c3 !important;}
 
 .fs11{ font-size: 11px;}
 .fs12{ font-size: 12px;}

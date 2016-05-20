@@ -17,9 +17,9 @@
                 <i class="icon ion-ios-arrow-right cor34"></i>
             </a>
             <a class="item item-icon-left item-icon-right mb10" ng-click="openThemeTitleModal()">
-                <i class="icon ion-ios-paper cor38"></i>
-                <span class="fl">约会标题</span>
-                <p class="fr cor5 fs14 mw50">约个高富帅看电影</p>
+                <i class="icon ion-ios-compose cor38"></i>
+                <span class="fl">约会内容</span>
+                <p class="fr cor5 fs14 mw50">约个高富帅看电影约个高富帅看电影约个高富帅看电影约个高富帅看电影</p>
                 <i class="icon ion-ios-arrow-right cor34"></i>
             </a>
             <a class="item item-icon-left item-icon-right" ng-click="openSexModal()">
@@ -28,15 +28,9 @@
                 <p class="fr cor5 fs14 mw50">不限制</p>
                 <i class="icon ion-ios-arrow-right cor34"></i>
             </a>
-            <a class="item item-icon-left item-icon-right" ng-click="openFromModal()">
-                <i class="icon bhy-icon-setout cor26"></i>
-                <span class="fl">我的出发地</span>
-                <p class="fr cor5 fs14 mw50">重庆市渝中区大坪正街118号嘉华鑫城A幢11-11</p>
-                <i class="icon ion-ios-arrow-right cor34"></i>
-            </a>
             <a class="item item-icon-left item-icon-right" ng-click="openDestinationModal()">
                 <i class="icon bhy-icon-destination cor33"></i>
-                <span class="fl">目的地</span>
+                <span class="fl">约会地点</span>
                 <p class="fr cor5 fs14 mw50">重庆市渝中区大坪正街118号嘉华鑫城A幢11-11</p>
                 <i class="icon ion-ios-arrow-right cor34"></i>
             </a>
@@ -99,15 +93,19 @@
         <ion-modal-view>
             <ion-header-bar>
                 <button class="button button-icon" ng-click="closeThemeTitleModal()">关闭</button>
-                <h1 class="title">约会标题</h1>
+                <h1 class="title">约会内容</h1>
             </ion-header-bar>
             <ion-content ng-controller="member.rendezvous_themeTitle">
                 <ion-list>
+                    <label class="item item-input mb10">
+                        <input type="text" ng-model="formData.themeTitle" maxlength="15" placeholder="请输入约会标题，15字以内。">
+                    </label>
                     <label class="item item-input">
-                        <input type="text" ng-model="formData.themeTitle" maxlength="15" placeholder="请输入约会标题，限15字。">
+                        <textarea ng-model="formData.content" maxlength="300" style="resize:none;height: 120px;"
+                                  placeholder="请输入约会内容，300字以内。"></textarea>
                     </label>
                     <ion-item>
-                        <button class="button button-positive button-block" ng-click="saveThemeTitle()">确定</button>
+                        <button class="button button-positive button-block" ng-click="save()">确定</button>
                     </ion-item>
                 </ion-list>
             </ion-content>
@@ -235,7 +233,8 @@
             <ion-content ng-controller="member.rendezvous_requirement">
                 <ion-list>
                     <label class="item item-input">
-                        <textarea ng-model="formData.requirement" style="resize: none;height: 100px;" placeholder="请简要描述对约伴的要求"></textarea>
+                        <textarea ng-model="formData.requirement" style="resize: none;height: 100px;"
+                                  placeholder="请简要描述对约伴的要求"></textarea>
                     </label>
                     <ion-item>
                         <button class="button button-positive button-block" ng-click="saveRequirement()">确定</button>

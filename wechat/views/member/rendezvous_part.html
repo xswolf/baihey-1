@@ -1,17 +1,49 @@
 <ion-view hide-tabs="true">
     <link href="/wechat/web/css/member.css" rel="stylesheet">
+    <link href="/wechat/web/css/plugin/bootstrap/css/font-awesome.min.css" rel="stylesheet">
     <ion-header-bar class="com_w_100 bhy">
         <a class="button button-icon icon ion-arrow-left-c" href="#/main/member/rendezvous"></a>
         <h1 class="title">我参与的约会</h1>
-        <button class="button button-icon cor21" ng-click="saveData()">发布</button>
     </ion-header-bar>
     <ion-content class="bhy com_w_100 m_bg rendezvous">
-        <ion-list>
-            <div class="item item-divider">
-                嘉瑞 ● 实名制婚恋网
+        <div class="list card" ng-repeat="part in partList">
+            <div class="item item-thumbnail-left">
+                <img src="/wechat/web/images/test.jpg">
+                <h2>
+                    <span class="fl">{{part.userName}}</span>
+                    <span ng-click="delPart(part.id,$index)" class="fr icon icon-trash cor5"></span>
+                </h2>
+                <p>
+                    <span class="identity sfz">身份证</span>
+                    <span class="identity phone">手机</span>
+                    <span class="identity vip">vip</span>
+                </p>
+                <p>29岁 未婚</p>
+            </div>
+            <div class="item item-body">
+                <p class="mt0">
+                    <span ng-class="{'娱乐':'balanced','美食':'energized','旅游':'calm','运动/健身':'assertive','其它':'dark'}[part.theme]">##{{part.themeTitle}}##</span>
+                    <span ng-if="!openTxt">{{part.content | cut:true:60:'...'}}</span>
+                    <span ng-if="openTxt">{{part.content}}</span>
+                    <a href="javascript:;" ng-if="part.content.length > 60 && !openTxt" class="allTextLink" ng-click="openText($event)">[展开全文]</a>
+                </p>
+                <p class="cor39 mt0 mb0">约会地点：重庆市大坪龙湖时代天街</p>
+                <p class="cor39 mt0 mb0">约会时间：2016-03-15 10:20</p>
+                <p class="cor39 mt0 mb0">费用说明：我请客</p>
+                <p class="cor39 mt0">性别限制：女</p>
+                <p>
+                    <span class="label mr5" ng-repeat="lab in part.label">{{lab.name}}</span>
+                </p>
             </div>
 
-        </ion-list>
+            <div class="item tabs tabs-secondary tabs-icon-left">
+                <span ng-if="part.status==0">等待对方回复</span>
+                <span ng-if="part.status==2">对方已忽略</span>
+                <button ng-if="part.status==1" ng-click="acceptAlert()" class="button button-balanced w100">对方已接受，联系TA</button>
+            </div>
+
+        </div>
+
     </ion-content>
 
 
