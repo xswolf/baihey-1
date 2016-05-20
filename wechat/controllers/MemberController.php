@@ -202,9 +202,33 @@ class MemberController extends BaseController
         $this->renderAjax(['status=>1', 'data' => ['id'=>$id,'create_time'=>$data['create_time']]]);
     }
 
+    /**
+     * 获取关注列表
+     */
     public function actionGetFollow(){
 
         $list = User::getInstance()->getFollowList();
         $this->renderAjax(['status=>1', 'data' => $list]);
+    }
+
+    /**
+     * 获取红包信息
+     */
+    public function actionBriberyInfo(){
+        $user_id = \common\util\Cookie::getInstance()->getCookie('bhy_id')->value;
+        $data = User::getInstance()->briberyInfo($user_id);
+        $this->renderAjax(['status=>1', 'data' => $data]);
+    }
+
+    /**
+     * 获取发送或收到的红包列表
+     */
+    public function actionBriberyList(){
+
+        isset($this->get['page']) ? $page = $this->get['page'] : $page = 0;
+        $flag = $this->get['flag'] ==  'true' ? true : false;
+        $user_id = \common\util\Cookie::getInstance()->getCookie('bhy_id')->value;
+        $data = User::getInstance()->getBriberyList($user_id , $flag , $page);
+        $this->renderAjax(['status=>1', 'data' => $data]);
     }
 }

@@ -217,4 +217,43 @@ class User extends Base
             ->select('follow_id')
             ->all();
     }
+
+    /**
+     * 获个人红包信息
+     * @param $userId
+     * @return array
+     */
+    public function briberyInfo($userId){
+
+        $data =  (new Query())
+            ->from($this->tablePrefix.'user u')
+            ->innerJoin("(SELECT send_user_id , COUNT(*) AS sendBribery , sum(money) sendMoney FROM {$this->tablePrefix}user_bribery WHERE send_user_id=12 AND STATUS=1) send ","send.send_user_id = u.id")
+            ->innerJoin("(SELECT receive_user_id , COUNT(*) AS receiveBribery ,sum(money) recMoney FROM {$this->tablePrefix}user_bribery WHERE receive_user_id=12 AND STATUS=1) receive" , "receive.receive_user_id = u.id")
+            ->where(['u.id'=>$userId])
+            ->select("u.id,u.balance,send.sendBribery , receive.receiveBribery,sendMoney,recMoney")
+            ->all();
+        return $data[0];
+    }
+
+    /**
+     * 获取发送的红包或收到的红包，flag=true 收到的红包
+     * @param $userId
+     * @param bool $flag
+     * @param int $page
+     * @param int $limit
+     * @return array
+     */
+    public function getBriberyList($userId , $flag = true,$page = 0 , $limit = 5){
+        $joinOnField = $flag == true ? 'receive_user_id':'send_user_id';
+        $whereField = $flag == true ? 'receive_user_id':'send_user_id';
+        $offset = $page * $limit;
+        return (new Query())
+            ->from($this->tablePrefix."user_bribery  b")
+            ->innerJoin($this->tablePrefix."user_information i" , "b.{$joinOnField} = i.user_id")
+            ->where(["b.{$whereField}"=>$userId])
+            ->select(["b.*","json_extract(i.info , '$.real_name') as realName"])
+            ->limit($limit)
+            ->offset($offset)
+            ->all();
+    }
 }

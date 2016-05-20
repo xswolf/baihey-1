@@ -1936,39 +1936,69 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
     // 嘉瑞红包
     module.controller("member.bribery", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', function (api, $scope, $timeout, $ionicPopup) {
 
+        api.list('/wap/member/bribery-info').success(function (res) {
+            $scope.bribery = res.data;
+        })
 
     }]);
 
     // 嘉瑞红包-收到的红包
-    module.controller("member.bribery_rec", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', function (api, $scope, $timeout, $ionicPopup) {
+    module.controller("member.bribery_rec", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup','$location', function (api, $scope, $timeout, $ionicPopup,$location) {
 
         $scope.items = [];
+        $scope.moreData = true;
+        $scope.money = $location.$$search.money;
+        $scope.briberyList = [];
         $scope.loadMore = function () {
-            //$scope.$broadcast('scroll.infiniteScrollComplete');
-            /* $http.get('/more-items').success(function(items) {
-             useItems(items);
-             $scope.$broadcast('scroll.infiniteScrollComplete');
-             });*/
+            api.list('/wap/member/bribery-list' , {flag:true,page:$scope.page}).success(function (res) {
+                if (res.data == '') {
+                    $scope.moreData = false;
+                    return ;
+                }
+                var data = ar.cleanQuotes(JSON.stringify(res.data))
+                $scope.briberyList = $scope.briberyList.concat(JSON.parse(data));
+                $scope.page++;
+                $scope.$broadcast('scroll.infiniteScrollComplete');
+            })
         };
-        $scope.$on('$stateChangeSuccess', function () {
-            $scope.loadMore();
+        $scope.$on('$ionicView.beforeEnter', function () {
+            $scope.page = 0;
         });
+
+        $scope.moreDataCanBeLoaded = function () {
+
+            return $scope.moreData;
+        }
 
     }]);
 
     // 嘉瑞红包-发出的红包
-    module.controller("member.bribery_send", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', function (api, $scope, $timeout, $ionicPopup) {
+    module.controller("member.bribery_send", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup','$location', function (api, $scope, $timeout, $ionicPopup,$location) {
         $scope.items = [];
+        $scope.moreData = true;
+        $scope.money = $location.$$search.money;
+        $scope.briberyList = [];
         $scope.loadMore = function () {
-            //$scope.$broadcast('scroll.infiniteScrollComplete');
-            /*$http.get('/more-items').success(function(items) {
-             useItems(items);
-             $scope.$broadcast('scroll.infiniteScrollComplete');
-             });*/
+            api.list('/wap/member/bribery-list' , {flag:false,page:$scope.page}).success(function (res) {
+                if (res.data == '') {
+                    $scope.moreData = false;
+                    return ;
+                }
+                var data = ar.cleanQuotes(JSON.stringify(res.data))
+                $scope.briberyList = $scope.briberyList.concat(JSON.parse(data));
+                $scope.page++;
+                $scope.$broadcast('scroll.infiniteScrollComplete');
+            })
         };
-        $scope.$on('$stateChangeSuccess', function () {
-            $scope.loadMore();
+        $scope.$on('$ionicView.beforeEnter', function () {
+            $scope.page = 0;
         });
+
+        $scope.moreDataCanBeLoaded = function () {
+
+            return $scope.moreData;
+        }
+
 
     }]);
 

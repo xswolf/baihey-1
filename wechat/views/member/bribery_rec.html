@@ -11,7 +11,7 @@
                 <div class="padding pr">
                     <p class="tac mt40"><img class="u_img" src="/wechat/web/images/test.jpg" width="80" height="80"></p>
                     <p class="mt20 tac fs18">共收到</p>
-                    <p class="mt30 fs50 tac ">480.15</p>
+                    <p class="mt30 fs50 tac ">{{money | currency:'￥'}}</p>
                     <div class="date">
                         <select class="cor24">
                             <option value="2016">2016年</option>
@@ -23,36 +23,14 @@
 
                 </div>
             </div>
-            <ion-item class="bri_item">
-                <p class="name"><span class="fl">张先生</span><span class="fr">200.00元</span></p>
-                <p class="time">05-10</p>
+            <ion-item class="bri_item" ng-repeat="vo in briberyList">
+                <p class="name"><span class="fl">{{vo.realName}}</span><span class="fr">{{vo.money | currency:'￥'}}元</span></p>
+                <p class="time"><span class="fl">{{vo.create_time | date:'M-d'}}</span><span class="fr">已领</span></p>
             </ion-item>
-            <ion-item class="bri_item">
-                <p class="name"><span class="fl">张先生</span><span class="fr">200.00元</span></p>
-                <p class="time">05-10</p>
-            </ion-item>
-            <ion-item class="bri_item">
-                <p class="name"><span class="fl">张先生</span><span class="fr">200.00元</span></p>
-                <p class="time">05-10</p>
-            </ion-item>
-            <ion-item class="bri_item">
-                <p class="name"><span class="fl">张先生</span><span class="fr">200.00元</span></p>
-                <p class="time">05-10</p>
-            </ion-item>
-            <ion-item class="bri_item">
-                <p class="name"><span class="fl">张先生</span><span class="fr">200.00元</span></p>
-                <p class="time">05-10</p>
-            </ion-item>
-            <ion-item class="bri_item">
-                <p class="name"><span class="fl">张先生</span><span class="fr">200.00元</span></p>
-                <p class="time">05-10</p>
-            </ion-item>
-            <ion-item class="bri_item">
-                <p class="name"><span class="fl">张先生</span><span class="fr">200.00元</span></p>
-                <p class="time">05-10</p>
-            </ion-item>
+
         </ion-list>
         <ion-infinite-scroll
+                ng-if="moreDataCanBeLoaded()"
                 on-infinite="loadMore()"
                 distance="1%">
         </ion-infinite-scroll>
