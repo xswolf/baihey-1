@@ -1,0 +1,48 @@
+<ion-view hide-tabs="true">
+    <link href="/wechat/web/css/member.css" rel="stylesheet">
+    <ion-header-bar class="com_w_100 bhy">
+        <a class="button button-icon icon ion-arrow-left-c" href="#/main/member/rendezvous_put"></a>
+        <h1 class="title">参与的人</h1>
+    </ion-header-bar>
+    <ion-content class="bhy com_w_100 m_bg rendezvous">
+        <ion-list>
+            <ion-item ng-class="{'娱乐':'balanced-bg','美食':'energized-bg','旅游':'calm-bg','运动/健身':'assertive-bg','其它':'dark-bg'}[rendzvous.theme]">
+                <p>
+                    <span class="cor0">##{{rendzvous.themeTitle}}##</span>
+                </p>
+            </ion-item>
+            <p class="padding" style="margin: 0;">
+                TA们想和你约会
+            </p>
+        </ion-list>
+
+        <div class="list card" ng-repeat="inv in involvedList">
+            <div class="item item-thumbnail-left">
+                <img src="/wechat/web/images/test.jpg">
+                <h2>
+                    张先生
+                </h2>
+                <p>
+                    <span class="identity sfz">身份证</span>
+                    <span class="identity phone">手机</span>
+                    <span class="identity vip">vip</span>
+                </p>
+                <p>29岁 未婚</p>
+                <p>手机号码：13569684922</p>
+            </div>
+            <div class="item item-body">
+                <p style="margin-top: 0;">TA的留言：{{inv.msg}}</p>
+            </div>
+            <div class="item tabs tabs-secondary tabs-icon-left">
+                <p ng-if="inv.status==1">已接受</p>
+                <p ng-if="inv.status==2">已忽略</p>
+                <button ng-if="inv.status==0" class="button button-balanced w50" ng-click="accept()">接受</button>
+                <button ng-if="inv.status==0" class="button button-stable w50" ng-click="ignore()">忽略</button>
+            </div>
+        </div>
+
+
+    </ion-content>
+
+
+</ion-view>

@@ -22,19 +22,24 @@
             <div class="card mb10" ng-if="putList.length>0" ng-repeat="put in putList">
                 <div class="item item-divider cor0" ng-class="{'娱乐':'balanced-bg','美食':'energized-bg','旅游':'calm-bg','运动/健身':'assertive-bg','其它':'dark-bg'}[put.theme]">
                     <span class="fl fs14">{{put.startDate}}</span>
-                    <span class="fr icon-cog fs18 cor0" ng-click="showhandle(put.id)"></span>
+                    <span class="fr icon-cog fs18 cor0" ng-click="showhandle(put.id,$index)"></span>
                 </div>
-                <div class="item item-image" ng-if="put.img!=''">
+                <div class="item item-image" ng-if="put.img!=''" ng-click="involved(put.id)">
                     <img ng-src="{{put.img}}">
                 </div>
-                <div class="item item-text-wrap">
-                    <h2> <span ng-class="{'娱乐':'balanced','美食':'energized','旅游':'calm','运动/健身':'assertive','其它':'dark'}[put.theme]">##{{put.themeTitle}}##</span>{{put.content}}</h2>
+                <div class="item item-text-wrap" ng-click="involved(put.id)">
+                    <h2>
+                        <span ng-class="{'娱乐':'balanced','美食':'energized','旅游':'calm','运动/健身':'assertive','其它':'dark'}[put.theme]">##{{put.themeTitle}}##</span>
+                        <span ng-if="!openTxt">{{put.content | cut:true:60:'...'}}</span>
+                        <span ng-if="openTxt">{{put.content}}</span>
+                        <a href="javascript:;" ng-if="put.content.length > 60 && !openTxt" class="allTextLink" ng-click="openText($event)">[展开全文]</a>
+                    </h2>
                     <p class="mt10">
                         <span class="label mr5" ng-repeat="lab in put.label">{{lab.name}}</span>
                     </p>
                 </div>
-                <div class="item item-divider cor0" ng-class="{'娱乐':'balanced-bg','美食':'energized-bg','旅游':'calm-bg','运动/健身':'assertive-bg','其它':'dark-bg'}[put.theme]">
-                    <span class="fl fs12">参与人数：{{put.entryNumber}}</span><span class="fr fs12">结束时间：{{put.endDate}}</span>
+                <div ng-click="involved(put.id)" class="item item-divider cor0" ng-class="{'娱乐':'balanced-bg','美食':'energized-bg','旅游':'calm-bg','运动/健身':'assertive-bg','其它':'dark-bg'}[put.theme]">
+                    <span class="fl fs12">参与人数：{{put.entryNumber}}</span><span class="fr fs12">{{put.status | rend_status}}</span>
                 </div>
             </div>
             <p ng-if="putList.length <= 0" class="padding tac">没有记录</p>

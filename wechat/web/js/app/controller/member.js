@@ -2012,17 +2012,17 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
     }]);
 
     // 嘉瑞红包-收到的红包
-    module.controller("member.bribery_rec", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup','$location', function (api, $scope, $timeout, $ionicPopup,$location) {
+    module.controller("member.bribery_rec", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$location', function (api, $scope, $timeout, $ionicPopup, $location) {
 
         $scope.items = [];
         $scope.moreData = true;
         $scope.money = $location.$$search.money;
         $scope.briberyList = [];
         $scope.loadMore = function () {
-            api.list('/wap/member/bribery-list' , {flag:true,page:$scope.page}).success(function (res) {
+            api.list('/wap/member/bribery-list', {flag: true, page: $scope.page}).success(function (res) {
                 if (res.data == '') {
                     $scope.moreData = false;
-                    return ;
+                    return;
                 }
                 var data = ar.cleanQuotes(JSON.stringify(res.data))
                 $scope.briberyList = $scope.briberyList.concat(JSON.parse(data));
@@ -2042,16 +2042,16 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
     }]);
 
     // 嘉瑞红包-发出的红包
-    module.controller("member.bribery_send", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup','$location', function (api, $scope, $timeout, $ionicPopup,$location) {
+    module.controller("member.bribery_send", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$location', function (api, $scope, $timeout, $ionicPopup, $location) {
         $scope.items = [];
         $scope.moreData = true;
         $scope.money = $location.$$search.money;
         $scope.briberyList = [];
         $scope.loadMore = function () {
-            api.list('/wap/member/bribery-list' , {flag:false,page:$scope.page}).success(function (res) {
+            api.list('/wap/member/bribery-list', {flag: false, page: $scope.page}).success(function (res) {
                 if (res.data == '') {
                     $scope.moreData = false;
-                    return ;
+                    return;
                 }
                 var data = ar.cleanQuotes(JSON.stringify(res.data))
                 $scope.briberyList = $scope.briberyList.concat(JSON.parse(data));
@@ -2351,7 +2351,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
 
 
     // 我的约会-我发布的约会
-    module.controller("member.rendezvous_put", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup','$ionicActionSheet', function (api, $scope, $timeout, $ionicPopup,$ionicActionSheet) {
+    module.controller("member.rendezvous_put", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$ionicActionSheet', '$location', function (api, $scope, $timeout, $ionicPopup, $ionicActionSheet, $location) {
 
         $scope.formData = [];
         $scope.dateList = [];
@@ -2370,7 +2370,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
 
         // 选择日期改变样式、并查询数据
         $scope.seletedDate = function (title) {
-           $scope.dateTitle = title;
+            $scope.dateTitle = title;
             $scope.dateList = []; // 根据日期查询的数据
         }
 
@@ -2381,10 +2381,11 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
                 themeTitle: '约个高富帅看电影，有没有啊？',
                 startDate: '5月12日 17:25',
                 img: '/wechat/web/images/test/s1.jpg',
-                content: '520一个人无聊，约个高富帅去大坪龙湖时代天街UME看电影，求骚扰！',
+                content: '520一个人无聊，约个高富帅去大坪龙湖时代天街UME看电影，求骚扰！520一个人无聊，约个高富帅去大坪龙湖时代天街UME看电影，求骚扰！520一个人无聊，约个高富帅去大坪龙湖时代天街UME看电影，求骚扰！520一个人无聊，约个高富帅去大坪龙湖时代天街UME看电影，求骚扰！520一个人无聊，约个高富帅去大坪龙湖时代天街UME看电影，求骚扰！',
                 label: [{id: 3, name: '高富帅'}, {id: 6, name: '幽默'}, {id: 7, name: '型男'}, {id: 8, name: '阳光外形'}],
                 endDate: '2015-05-20 17:25',
-                entryNumber: '3'
+                entryNumber: '3',
+                status: '1'
             },
             {
                 id: 2,
@@ -2395,7 +2396,8 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
                 content: '去杨家坪吃小龙虾去杨家坪吃小龙虾去杨家坪吃小龙虾去杨家坪吃小龙虾',
                 label: [{id: 3, name: '高富帅'}, {id: 6, name: '幽默'}, {id: 7, name: '型男'}, {id: 8, name: '阳光外形'}],
                 endDate: '2015-05-20 17:25',
-                entryNumber: '3'
+                entryNumber: '3',
+                status: '1'
             },
             {
                 id: 3,
@@ -2406,7 +2408,8 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
                 content: '强身健体强身健体强身健体强身健体强身健体',
                 label: [{id: 3, name: '高富帅'}, {id: 6, name: '幽默'}, {id: 7, name: '型男'}, {id: 8, name: '阳光外形'}],
                 endDate: '2015-05-20 17:25',
-                entryNumber: '3'
+                entryNumber: '3',
+                status: '0'
             },
             {
                 id: 4,
@@ -2417,7 +2420,8 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
                 content: '求志同道合妹子游西湖求志同道合妹子游西湖求志同道合妹子游西湖求志同道合妹子游西湖',
                 label: [{id: 3, name: '高富帅'}, {id: 6, name: '幽默'}, {id: 7, name: '型男'}, {id: 8, name: '阳光外形'}],
                 endDate: '2015-05-20 17:25',
-                entryNumber: '3'
+                entryNumber: '3',
+                status: '2'
             },
             {
                 id: 5,
@@ -2428,7 +2432,8 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
                 content: '跳广场舞跳广场舞跳广场舞跳广场舞跳广场舞跳广场舞',
                 label: [{id: 3, name: '高富帅'}, {id: 6, name: '幽默'}, {id: 7, name: '型男'}, {id: 8, name: '阳光外形'}],
                 endDate: '2015-05-20 17:25',
-                entryNumber: '3'
+                entryNumber: '3',
+                status: '1'
             }
         ];
 
@@ -2438,29 +2443,135 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
         }
 
         // 操作
-        $scope.showhandle = function(id){
+        $scope.showhandle = function (id, itemIndex) {
             var hideSheet = $ionicActionSheet.show({
                 buttons: [
-                    { text: '关闭' },
-                    { text: '修改' }
+                    {text: '关闭'},
+                    {text: '修改'}
                 ],
                 destructiveText: '删除',
                 titleText: '操作',
                 cancelText: '取消',
-                cancel: function() {
+                cancel: function () {
                     // add cancel code..
                 },
-                buttonClicked: function(index) {
-                    return true;
+                destructiveButtonClicked: function () {
+                    var confirmPopup = $ionicPopup.confirm({
+                        title: '确定删除此条记录？删除后不可恢复。',
+                        template: false
+                    });
+                    confirmPopup.then(function (res) {
+                        if (res) {
+                            // 删除
+                            $scope.putList.splice(itemIndex, 1);
+                            hideSheet();
+                        } else {
+                            return false;
+                        }
+                    });
+                },
+                buttonClicked: function (index) {
+                    if (index == 0) {  // 关闭约会
+
+                    }
+                    if (index == 1) { // 修改
+
+                    }
                 }
             });
-
         }
+
+        // 跳转-参与的人
+        $scope.involved = function (id) {
+            $location.url('/main/member/rendezvous_involved?id=' + id);
+        }
+
+        $scope.openTxt = false;
+        // 展开全文
+        $scope.openText = function($event){
+            $event.stopPropagation();
+            $scope.openTxt = true;
+        }
+
 
     }]);
 
     // 我的约会-我参与的约会
     module.controller("member.rendezvous_part", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', function (api, $scope, $timeout, $ionicPopup) {
+
+        $scope.formData = [];
+
+        $scope.partList = [];
+
+
+    }]);
+
+    // 我的约会-参与的人
+    module.controller("member.rendezvous_involved", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$location', function (api, $scope, $timeout, $ionicPopup, $location) {
+
+        $scope.formData = [];
+
+        $scope.partList = [];
+
+        var id = $location.$$search.id;  // 约会ID
+
+        // 根据ID查询约会信息
+        $scope.rendzvous = {
+            id: 1,
+            theme: '娱乐',
+            themeTitle: '约个高富帅看电影，有没有啊？',
+            startDate: '5月12日 17:25',
+            img: '/wechat/web/images/test/s1.jpg',
+            content: '520一个人无聊，约个高富帅去大坪龙湖时代天街UME看电影，求骚扰！',
+            label: [{id: 3, name: '高富帅'}, {id: 6, name: '幽默'}, {id: 7, name: '型男'}, {id: 8, name: '阳光外形'}],
+            endDate: '2015-05-20 17:25',
+            entryNumber: '3',
+            status: '1'
+        };
+
+        $scope.involvedList = [
+            {id:1,userId:23,msg:'你好，我想和你约会，你看我行吗？',status:0},
+            {id:2,userId:24,msg:'你好，我想和你约会，你看我行吗？',status:0},
+            {id:3,userId:43,msg:'你好，我想和你约会，你看我行吗？',status:1},
+            {id:4,userId:11,msg:'你好，我想和你约会，你看我行吗？',status:0},
+            {id:5,userId:84,msg:'你好，我想和你约会，你看我行吗？',status:2}
+        ];
+
+        $scope.isAccept = false;
+        $scope.isIgnore = false;
+        // 接受
+        $scope.accept = function(){
+            var confirmPopup = $ionicPopup.confirm({
+                title: '确定吗？',
+                template: false
+            });
+            confirmPopup.then(function (res) {
+                if (res) {
+                    // 确定
+                    $scope.isAccept = true;
+                } else {
+                    return false;
+                }
+            });
+        }
+
+        // 忽略
+        $scope.ignore = function(){
+            var confirmPopup = $ionicPopup.confirm({
+                title: '确定吗？',
+                template: false
+            });
+            confirmPopup.then(function (res) {
+                if (res) {
+                    // 确定
+                    $scope.isIgnore = true;
+                } else {
+                    return false;
+                }
+            });
+        }
+
+
 
     }]);
     return module;
