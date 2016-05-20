@@ -1416,8 +1416,8 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
 
         $scope.formData.userMarriageIDList = [];   //用户数据  未婚、离异
         var zo_marriage = $scope.userInfo.info.zo_marriage != '未知' ? $scope.userInfo.info.zo_marriage.split('-') : [];
-        for(var i in zo_marriage) {
-            if(zo_marriage[i] != '') {
+        for (var i in zo_marriage) {
+            if (zo_marriage[i] != '') {
                 $scope.formData.userMarriageIDList[i] = parseInt(zo_marriage[i]);
             } else {
                 $scope.isSelectedNull = false;
@@ -1719,7 +1719,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
 
     // 隐私设置
     module.controller("member.privacy", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', function (api, $scope, $timeout, $ionicPopup) {
-        $scope.$on('$ionicView.beforeEnter', function() {
+        $scope.$on('$ionicView.beforeEnter', function () {
             api.list('/wap/follow/get-sum-black', {}).success(function (res) {
                 $scope.blackSum = res.data;
             });
@@ -1799,7 +1799,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
 
         // 解除黑名单
         $scope.removeItem = function ($index, item) {
-            api.save('/wap/follow/del-black', {'id':item.id}).success(function (res) {
+            api.save('/wap/follow/del-black', {'id': item.id}).success(function (res) {
                 $scope.followList.splice($index, 1);
             });
         }
@@ -2068,28 +2068,41 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
         $ionicModal.fromTemplateUrl('themeModal.html', {
             scope: $scope,
             animation: 'slide-in-up'
-        }).then(function(modal) {
+        }).then(function (modal) {
             $scope.themeModal = modal;
         });
-        $scope.openThemeModal = function() {
+        $scope.openThemeModal = function () {
             $scope.themeModal.show();
         };
-        $scope.closeThemeModal = function() {
+        $scope.closeThemeModal = function () {
             $scope.themeModal.hide();
         };
 
+        // 约会标题
+        $ionicModal.fromTemplateUrl('themeTitleModal.html', {
+            scope: $scope,
+            animation: 'slide-in-up'
+        }).then(function (modal) {
+            $scope.themeTitleModal = modal;
+        });
+        $scope.openThemeTitleModal = function () {
+            $scope.themeTitleModal.show();
+        };
+        $scope.closeThemeTitleModal = function () {
+            $scope.themeTitleModal.hide();
+        };
 
         // 性别限制
         $ionicModal.fromTemplateUrl('sexModal.html', {
             scope: $scope,
             animation: 'slide-in-up'
-        }).then(function(modal) {
+        }).then(function (modal) {
             $scope.sexModal = modal;
         });
-        $scope.openSexModal = function() {
+        $scope.openSexModal = function () {
             $scope.sexModal.show();
         };
-        $scope.closeSexModal = function() {
+        $scope.closeSexModal = function () {
             $scope.sexModal.hide();
         };
 
@@ -2097,13 +2110,13 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
         $ionicModal.fromTemplateUrl('fromModal.html', {
             scope: $scope,
             animation: 'slide-in-up'
-        }).then(function(modal) {
+        }).then(function (modal) {
             $scope.fromModal = modal;
         });
-        $scope.openFromModal = function() {
+        $scope.openFromModal = function () {
             $scope.fromModal.show();
         };
-        $scope.closeFromModal = function() {
+        $scope.closeFromModal = function () {
             $scope.fromModal.hide();
         };
 
@@ -2112,27 +2125,27 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
         $ionicModal.fromTemplateUrl('destinationModal.html', {
             scope: $scope,
             animation: 'slide-in-up'
-        }).then(function(modal) {
+        }).then(function (modal) {
             $scope.destinationModal = modal;
         });
-        $scope.openDestinationModal = function() {
+        $scope.openDestinationModal = function () {
             $scope.destinationModal.show();
         };
-        $scope.closeDestinationModal = function() {
+        $scope.closeDestinationModal = function () {
             $scope.destinationModal.hide();
         };
 
-        // 目的地
+        // 约会时间
         $ionicModal.fromTemplateUrl('dateModal.html', {
             scope: $scope,
             animation: 'slide-in-up'
-        }).then(function(modal) {
+        }).then(function (modal) {
             $scope.dateModal = modal;
         });
-        $scope.openDateModal = function() {
+        $scope.openDateModal = function () {
             $scope.dateModal.show();
         };
-        $scope.closeDateModal = function() {
+        $scope.closeDateModal = function () {
             $scope.dateModal.hide();
         };
 
@@ -2140,13 +2153,13 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
         $ionicModal.fromTemplateUrl('moneyModal.html', {
             scope: $scope,
             animation: 'slide-in-up'
-        }).then(function(modal) {
+        }).then(function (modal) {
             $scope.moneyModal = modal;
         });
-        $scope.openMoneyModal = function() {
+        $scope.openMoneyModal = function () {
             $scope.moneyModal.show();
         };
-        $scope.closeMoneyModal = function() {
+        $scope.closeMoneyModal = function () {
             $scope.moneyModal.hide();
         };
 
@@ -2154,13 +2167,13 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
         $ionicModal.fromTemplateUrl('requirementModal.html', {
             scope: $scope,
             animation: 'slide-in-up'
-        }).then(function(modal) {
+        }).then(function (modal) {
             $scope.requirementModal = modal;
         });
-        $scope.openRequirementModal = function() {
+        $scope.openRequirementModal = function () {
             $scope.requirementModal.show();
         };
-        $scope.closeRequirementModal = function() {
+        $scope.closeRequirementModal = function () {
             $scope.requirementModal.hide();
         };
 
@@ -2168,25 +2181,29 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
         $scope.formData.sex = "0";
 
         // 保存，发布
-        $scope.saveData = function(){
-            if(!$scope.formData.theme){
-                $ionicPopup.alert({title:'请选择约会主题'});
+        $scope.saveData = function () {
+            if (!$scope.formData.theme) {
+                $ionicPopup.alert({title: '请选择约会主题'});
                 return false;
             }
-            if(!$scope.formData.from){
-                $ionicPopup.alert({title:'请填写出发地'});
+            if (!$scope.formData.themeTitle) {
+                $ionicPopup.alert({title: '请填写约会标题'});
                 return false;
             }
-            if(!$scope.formData.destination){
-                $ionicPopup.alert({title:'请填写目的地'});
+            if (!$scope.formData.from) {
+                $ionicPopup.alert({title: '请填写出发地'});
                 return false;
             }
-            if(!$scope.formData.date){
-                $ionicPopup.alert({title:'请填写出发时间'});
+            if (!$scope.formData.destination) {
+                $ionicPopup.alert({title: '请填写目的地'});
                 return false;
             }
-            if(!$scope.formData.date){
-                $ionicPopup.alert({title:'请选择费用说明'});
+            if (!$scope.formData.date) {
+                $ionicPopup.alert({title: '请填写出发时间'});
+                return false;
+            }
+            if (!$scope.formData.date) {
+                $ionicPopup.alert({title: '请选择费用说明'});
                 return false;
             }
 
@@ -2198,16 +2215,26 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
     // 我的约会-发布约会-约会主题
     module.controller("member.rendezvous_theme", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', function (api, $scope, $timeout, $ionicPopup) {
 
-        $scope.selTheme = function(){
+        $scope.selTheme = function () {
             $scope.closeThemeModal();
             console.log($scope.formData.theme);
         }
 
     }]);
 
+    // 我的约会-发布约会-约会标题
+    module.controller("member.rendezvous_themeTitle", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', function (api, $scope, $timeout, $ionicPopup) {
+
+        $scope.saveThemeTitle = function () {
+            $scope.closeThemeTitleModal();
+            console.log($scope.formData.themeTitle);
+        }
+
+    }]);
+
     // 我的约会-发布约会-性别限制
     module.controller("member.rendezvous_sex", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', function (api, $scope, $timeout, $ionicPopup) {
-        $scope.selSex = function(){
+        $scope.selSex = function () {
             $scope.closeSexModal();
             console.log($scope.formData.sex);
         }
@@ -2215,7 +2242,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
 
     // 我的约会-发布约会-我的出发地
     module.controller("member.rendezvous_from", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', function (api, $scope, $timeout, $ionicPopup) {
-        $scope.saveFrom = function(){
+        $scope.saveFrom = function () {
             $scope.closeFromModal();
             console.log($scope.formData.from);
         }
@@ -2223,7 +2250,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
 
     // 我的约会-发布约会-目的地
     module.controller("member.rendezvous_destination", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', function (api, $scope, $timeout, $ionicPopup) {
-        $scope.saveDestination = function(){
+        $scope.saveDestination = function () {
             $scope.closeDestinationModal();
             console.log($scope.formData.destination);
         }
@@ -2231,7 +2258,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
 
     // 我的约会-发布约会-出发时间
     module.controller("member.rendezvous_date", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', function (api, $scope, $timeout, $ionicPopup) {
-        $scope.saveDate = function(){
+        $scope.saveDate = function () {
             $scope.closeDateModal();
             console.log($scope.formData.date);
         }
@@ -2239,7 +2266,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
 
     // 我的约会-发布约会-费用说明
     module.controller("member.rendezvous_money", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', function (api, $scope, $timeout, $ionicPopup) {
-        $scope.selMoney = function(){
+        $scope.selMoney = function () {
             $scope.closeMoneyModal();
             console.log($scope.formData.money);
         }
@@ -2247,7 +2274,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
 
     // 我的约会-发布约会-对约伴的要求
     module.controller("member.rendezvous_requirement", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', function (api, $scope, $timeout, $ionicPopup) {
-        $scope.saveRequirement = function(){
+        $scope.saveRequirement = function () {
             $scope.closeRequirementModal();
             console.log($scope.formData.requirement);
         }
@@ -2255,7 +2282,111 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
 
 
     // 我的约会-我发布的约会
-    module.controller("member.rendezvous_put", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', function (api, $scope, $timeout, $ionicPopup) {
+    module.controller("member.rendezvous_put", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup','$ionicActionSheet', function (api, $scope, $timeout, $ionicPopup,$ionicActionSheet) {
+
+        $scope.formData = [];
+        $scope.dateList = [];
+        // 只能查看最近半年的数据
+        for (var i = 0; i < 6; i++) {
+            var dt = new Date();
+            dt.setMonth(dt.getMonth() - i);
+            var _title = dt.getFullYear() + '年' + (dt.getMonth() + 1) + '月'
+            $scope.dateList.push({title: _title, value: dt.toLocaleString()})
+        }
+        $scope.dateTitle = $scope.dateList[0].title; // 默认当前月
+        $scope.date = false;
+        $scope.showDate = function () {
+            $scope.date = !$scope.date;
+        }
+
+        // 选择日期改变样式、并查询数据
+        $scope.seletedDate = function (title) {
+           $scope.dateTitle = title;
+            $scope.dateList = []; // 根据日期查询的数据
+        }
+
+        $scope.putList = [
+            {
+                id: 1,
+                theme: '娱乐',
+                themeTitle: '约个高富帅看电影，有没有啊？',
+                startDate: '5月12日 17:25',
+                img: '/wechat/web/images/test/s1.jpg',
+                content: '520一个人无聊，约个高富帅去大坪龙湖时代天街UME看电影，求骚扰！',
+                label: [{id: 3, name: '高富帅'}, {id: 6, name: '幽默'}, {id: 7, name: '型男'}, {id: 8, name: '阳光外形'}],
+                endDate: '2015-05-20 17:25',
+                entryNumber: '3'
+            },
+            {
+                id: 2,
+                theme: '美食',
+                themeTitle: '去杨家坪吃小龙虾',
+                startDate: '2015-05-19 17:25',
+                img: '/wechat/web/images/test/s1.jpg',
+                content: '去杨家坪吃小龙虾去杨家坪吃小龙虾去杨家坪吃小龙虾去杨家坪吃小龙虾',
+                label: [{id: 3, name: '高富帅'}, {id: 6, name: '幽默'}, {id: 7, name: '型男'}, {id: 8, name: '阳光外形'}],
+                endDate: '2015-05-20 17:25',
+                entryNumber: '3'
+            },
+            {
+                id: 3,
+                theme: '运动/健身',
+                themeTitle: '强身健体强身健体强身健体',
+                startDate: '2015-05-19 17:25',
+                img: '/wechat/web/images/test/s1.jpg',
+                content: '强身健体强身健体强身健体强身健体强身健体',
+                label: [{id: 3, name: '高富帅'}, {id: 6, name: '幽默'}, {id: 7, name: '型男'}, {id: 8, name: '阳光外形'}],
+                endDate: '2015-05-20 17:25',
+                entryNumber: '3'
+            },
+            {
+                id: 4,
+                theme: '旅游',
+                themeTitle: '求志同道合妹子游西湖！',
+                startDate: '2015-05-19 17:25',
+                img: '/wechat/web/images/test/s1.jpg',
+                content: '求志同道合妹子游西湖求志同道合妹子游西湖求志同道合妹子游西湖求志同道合妹子游西湖',
+                label: [{id: 3, name: '高富帅'}, {id: 6, name: '幽默'}, {id: 7, name: '型男'}, {id: 8, name: '阳光外形'}],
+                endDate: '2015-05-20 17:25',
+                entryNumber: '3'
+            },
+            {
+                id: 5,
+                theme: '其它',
+                themeTitle: '跳广场舞',
+                startDate: '2015-05-19 17:25',
+                img: '/wechat/web/images/test/s1.jpg',
+                content: '跳广场舞跳广场舞跳广场舞跳广场舞跳广场舞跳广场舞',
+                label: [{id: 3, name: '高富帅'}, {id: 6, name: '幽默'}, {id: 7, name: '型男'}, {id: 8, name: '阳光外形'}],
+                endDate: '2015-05-20 17:25',
+                entryNumber: '3'
+            }
+        ];
+
+        // 加载更多
+        $scope.loadMore = function () {
+            console.log('加载更多');
+        }
+
+        // 操作
+        $scope.showhandle = function(id){
+            var hideSheet = $ionicActionSheet.show({
+                buttons: [
+                    { text: '关闭' },
+                    { text: '修改' }
+                ],
+                destructiveText: '删除',
+                titleText: '操作',
+                cancelText: '取消',
+                cancel: function() {
+                    // add cancel code..
+                },
+                buttonClicked: function(index) {
+                    return true;
+                }
+            });
+
+        }
 
     }]);
 
