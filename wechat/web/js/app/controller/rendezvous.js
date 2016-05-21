@@ -57,5 +57,24 @@ define(['app/module', 'app/directive/directiveApi'
             return syTimeStr;
         }
 
+        // 加载更多
+        $scope.loadMore = function(){
+            console.log('加载更多');
+        }
+
+    }]);
+
+    // 约TA
+    module.controller("rendezvous.ask", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$ionicModal', '$ionicActionSheet', '$ionicLoading','$ionicScrollDelegate',function (api, $scope, $timeout, $ionicPopup, $ionicModal, $ionicActionSheet, $ionicLoading,$ionicScrollDelegate) {
+        var viewScroll = $ionicScrollDelegate.$getByHandle('askScroll');
+
+        // 手机键盘弹出时，滑动至底部
+        window.addEventListener("native.keyboardshow", function(e){
+            viewScroll.scrollBottom();
+        });
+
+        $scope.ss = function(){
+            alert(1);
+        }
     }]);
 });

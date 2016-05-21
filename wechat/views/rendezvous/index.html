@@ -4,18 +4,17 @@
     <ion-header-bar>
         <button class="button button-icon">筛选</button>
         <title class="title">约会</title>
-        <button class="button button-icon icon ion-ios-plus-outline energized"></button>
+        <a class="button button-icon icon ion-ios-plus-outline energized" href="#/main/member/rendezvous_add"></a>
     </ion-header-bar>
     <ion-content class="bhy com_w_100 rendezvous" style="background: #e1e2e1;">
         <div class="list card">
-
             <div class="item item-avatar">
-                <img src="/wechat/web/images/test/1.jpg">
+                <img src="/wechat/web/images/test.jpg">
                 <h2>
                     <span class="fl">张小姐</span>
                     <span class="fl cor5 fs12 ml5 lh20">28岁 未婚</span>
                     <span class="fr fs12 lh20 cor5">
-                        05-16 15:03:55
+                        05-16 15:03
                     </span>
                 </h2>
                 <p><span class="identity sfz">身份证</span>
@@ -25,10 +24,14 @@
             </div>
 
             <div class="item item-body">
-                <img class="full-image" src="/wechat/web/images/test/s2.jpg">
-                <p>
+                <p class="mt0">
                     <span class="cor33">##5月19日，约伴娱乐##</span>最好是女性、不事儿多、没有公主病、颜值高。差不多晚上7点在重庆沙坪坝吃九五老火锅。
                 </p>
+                <p class="cor39 mt0 mb0">约会地点：重庆市大坪龙湖时代天街</p>
+                <p class="cor39 mt0 mb0">约会时间：2016-03-15 10:20</p>
+                <p class="cor39 mt0 mb0">费用说明：我请客</p>
+                <p class="cor39 mt0">性别限制：女</p>
+                <p>
                 <p>
                     <span class="label">限女性</span>
                     <span class="label">颜值高</span>
@@ -41,7 +44,7 @@
             </div>
 
             <div class="item tabs tabs-secondary tabs-icon-left">
-                <a class="tab-item func" href="#">
+                <a class="tab-item func" ui-sref="main.rendezvous_ask({userId:1})">
                     <i class="ion-heart fs16"></i>
                     约TA
                 </a>
@@ -49,48 +52,12 @@
                     <i class="ion-chatbox fs16"></i>
                     对话
                 </a>
-                <a class="tab-item func" href="#">
-                    <i class="ion-more fs16"></i>
-                    详情
-                </a>
-            </div>
 
-        </div>
-
-
-        <div class="list card">
-
-            <div class="item item-avatar">
-                <img src="/wechat/web/images/test/3.jpg">
-                <h2>李小姐</h2>
-                <p>25岁 未婚</p>
-            </div>
-
-            <div class="item item-body">
-
-                <p>
-                    <span class="cor30">##5月24日出发，约伴看电影##</span>男女不限，有礼貌，举止文雅。在大坪龙湖时代天街UME影城看少年派的奇幻漂流。
-                </p>
-                <p>
-                    <a href="#" class="subdued">有礼貌</a>
-                    <a href="#" class="subdued">男女不限</a>
-                </p>
-            </div>
-
-            <div class="item tabs tabs-secondary tabs-icon-left">
-                <a class="tab-item" href="#">
-                    <i class="icon ion-thumbsup"></i>
-                    关注
-                </a>
-                <a class="tab-item" href="#">
-                    <i class="icon ion-chatbox"></i>
-                    对话
-                </a>
-                <a class="tab-item" href="#">
-                    <i class="icon ion-share"></i>
-                    详情
-                </a>
             </div>
         </div>
+        <ion-infinite-scroll
+                on-infinite="loadMore()"
+                distance="1%">
+        </ion-infinite-scroll>
     </ion-content>
 </ion-view>

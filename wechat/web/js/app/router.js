@@ -189,6 +189,15 @@ define(["app/module", 'app/service/serviceApi'],
                                 controller: 'rendezvous.index'
                             }
                         }
+                    })
+                    .state('main.rendezvous_ask', {     // 约会-约TA
+                        url: "/rendezvous_ask?userId",
+                        views: {
+                            'rendezvous-tab': {
+                                templateUrl: "/wechat/views/rendezvous/ask.html",
+                                controller: 'rendezvous.ask'
+                            }
+                        }
                     });
                 //$urlRouterProvider.otherwise("/main/index");
             }])
