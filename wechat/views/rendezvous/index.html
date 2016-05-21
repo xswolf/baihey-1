@@ -2,7 +2,7 @@
     <link href="/wechat/web/css/rendezvous.css" rel="stylesheet">
     <link href="/wechat/web/css/plugin/bootstrap/css/font-awesome.min.css" rel="stylesheet">
     <ion-header-bar>
-        <button class="button button-icon">筛选</button>
+        <button class="button button-icon" ng-click="showScreenModal()">筛选</button>
         <title class="title">约会</title>
         <a class="button button-icon icon ion-ios-plus-outline energized" href="#/main/member/rendezvous_add"></a>
     </ion-header-bar>
@@ -60,4 +60,51 @@
                 distance="1%">
         </ion-infinite-scroll>
     </ion-content>
+
+    <script id="screenModal.html" type="text/ng-template">
+        <ion-modal-view>
+            <ion-header-bar>
+                <button class="button button-icon" ng-click="closeScreenModal()">关闭</button>
+                <h1 class="title">筛选</h1>
+                <button class="button button-icon cor21" ng-click="saveScreen()">确定</button>
+            </ion-header-bar>
+            <ion-content>
+                <ion-list>
+                    <div class="item item-input item-select">
+                        <div class="input-label">
+                            约会主题
+                        </div>
+                        <select ng-model="screen.theme">
+                            <option value="0" selected>不限</option>
+                            <option value="1">娱乐</option>
+                            <option value="2">美食</option>
+                            <option value="3">旅游</option>
+                            <option value="4">运动/健身</option>
+                            <option value="5">其它</option>
+                        </select>
+                    </div>
+                    <div class="item item-input item-select">
+                        <div class="input-label">
+                            费用
+                        </div>
+                        <select ng-model="screen.money">
+                            <option value="0" selected>不限</option>
+                            <option value="1">免费</option>
+                            <option value="2">我请客</option>
+                            <option value="3">你请客</option>
+                            <option value="4">AA制</option>
+                        </select>
+                    </div>
+                    <div class="item">
+                        <span class="input-label">发布者性别</span>
+                        <div class="button-bar">
+                            <a class="button bor_imp" ng-class="{0:'button-positive',1:'button-stable',2:'button-stable'}[screen.sex]" ng-click="sexChange(0)">不限</a>
+                            <a class="button bor_imp" ng-class="{0:'button-stable',1:'button-positive',2:'button-stable'}[screen.sex]" ng-click="sexChange(1)">男</a>
+                            <a class="button bor_imp" ng-class="{0:'button-stable',1:'button-stable',2:'button-positive'}[screen.sex]" ng-click="sexChange(2)">女</a>
+                        </div>
+                    </div>
+                </ion-list>
+            </ion-content>
+        </ion-modal-view>
+    </script>
 </ion-view>
