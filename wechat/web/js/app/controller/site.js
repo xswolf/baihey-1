@@ -59,8 +59,7 @@ define(['app/module', 'app/directive/directiveApi'
             $scope.cityId = data.id;
             $scope.searchForm.city = data.id;
             $scope.searchForm.cityName = data.name;
-            $scope.searchForm.pageNum = 1;
-
+            $scope.searchForm.pageNum = 0;
         });
 
 
@@ -201,11 +200,15 @@ define(['app/module', 'app/directive/directiveApi'
 
         // 保存已选择城市
         $scope.citySave = function () {
+            $scope.searchForm.pageNum = 1;
             for (var i = 0; i < $scope.cityList.length; i++) {
                 if ($scope.cityList[i].id == $scope.cityId) {
                     $scope.modalCityName = $scope.cityList[i].name;
                     $scope.cityName = $scope.cityList[i].name;
-                    continue;
+                    $scope.searchForm.city = $scope.cityId;
+                    userListPromise();
+                    $scope.pageLast = true;
+                    break;
                 }
             }
             $scope.cityModal.hide();
