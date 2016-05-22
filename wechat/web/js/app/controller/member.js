@@ -2454,6 +2454,20 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
 
     // 我的约会-发布约会-对约伴的要求
     module.controller("member.rendezvous_requirement", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', function (api, $scope, $timeout, $ionicPopup) {
+
+        $scope.labelList = ['宅男','高富帅','逗比','大长腿','型男','肌肉男','阳光男'];
+        $scope.formData.labelList = [];
+
+        // 添加标签
+        $scope.addLabel = function(value){
+            $scope.formData.labelList.push(value);
+        }
+
+        // 删除标签
+        $scope.removeLabel = function(index){
+            $scope.formData.labelList.splice(index, 1);
+        }
+
         $scope.saveRequirement = function () {
             $scope.closeRequirementModal();
             console.log($scope.formData.we_want);

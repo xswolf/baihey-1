@@ -18,7 +18,7 @@
             </a>
             <a class="item item-icon-left item-icon-right mb10" ng-click="openThemeTitleModal()">
                 <i class="icon ion-ios-compose cor38"></i>
-                <span class="fl">{{formData.title}}</span>
+                <span class="fl">约会内容</span>
                 <p class="fr cor5 fs14 mw50">{{formData.content}}</p>
                 <i class="icon ion-ios-arrow-right cor34"></i>
             </a>
@@ -232,10 +232,15 @@
             </ion-header-bar>
             <ion-content ng-controller="member.rendezvous_requirement">
                 <ion-list>
-                    <label class="item item-input">
-                        <textarea ng-model="formData.we_want" style="resize: none;height: 100px;"
-                                  placeholder="请简要描述对约伴的要求"></textarea>
-                    </label>
+                    <ion-item>
+                        <p class="comm_bg_e padding">
+                            <span class="label mr5" ng-repeat="ul in formData.labelList" ng-click="removeLabel($index)">{{ul}}</span>
+                        </p>
+                        <p>
+                          <span class="input-label">请选择</span>
+                          <span class="label mr5" ng-repeat="l in labelList" ng-click="addLabel(l)">{{l}}</span>
+                        </p>
+                    </ion-item>
                     <ion-item>
                         <button class="button button-positive button-block" ng-click="saveRequirement()">确定</button>
                     </ion-item>
