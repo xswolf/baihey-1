@@ -90,6 +90,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
 
         // 点击img，功能
         $scope.moreImg = function (index, img) {
+            var id = $scope.imgList[index].id;
             var hideSheet = $ionicActionSheet.show({
                 buttons: [
                     {text: '设为头像'}
@@ -100,7 +101,6 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
                 destructiveButtonClicked: function () {  // 点击删除
                     if (confirm("确认删除该照片？")) {
                         // 删除操作
-                        var id = $scope.imgList[index].id;
                         api.save('/wap/member/del-photo', {'id': id}).success(function (res) {
                             $scope.imgList.splice(index, 1);
                             hideSheet();
@@ -111,14 +111,13 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
                     }
                 },
                 buttonClicked: function () {
-                    if (index != 0) {   // 设置头像
-                        api.save('/wap/member/set-head', {'id': index}).success(function (res) {
-                            $scope.imgList[head_id].is_head = 0;
-                            $scope.imgList[index].is_head = 1;
-                            head_id = index;
-                            hideSheet();
-                        });
-                    }
+                    // 设置头像
+                    api.save('/wap/member/set-head', {'id': id}).success(function (res) {
+                        $scope.imgList[head_id].is_head = 0;
+                        $scope.imgList[index].is_head = 1;
+                        head_id = index;
+                        hideSheet();
+                    });
                     return true;
                 }
             });
