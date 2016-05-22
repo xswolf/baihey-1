@@ -17,11 +17,10 @@ define(['app/module', 'app/directive/directiveApi'
         $scope.pageLast = true;
 
         // 读取用户数据
-        function userListPromise(){
-            var data = [];
+        function userListPromise() {
+            $scope.tempData = [];
             api.list("/wap/site/user-list", $scope.searchForm).success(function (res) {
-                data = res.data;
-                if(res.data.length == 0){
+                if (res.data.length == 0) {
                     $scope.pageLast = false;
                 }
                 $scope.userList = res.data;
@@ -29,8 +28,8 @@ define(['app/module', 'app/directive/directiveApi'
                     $scope.userList[i].info = JSON.parse($scope.userList[i].info);
                     $scope.userList[i].identity_pic = JSON.parse($scope.userList[i].identity_pic);
                 }
+                $scope.tempData = $scope.userList;
             })
-            return data;
         }
 
         // 根据登录状态，登录用户性别默认查询条件：性别
@@ -53,7 +52,7 @@ define(['app/module', 'app/directive/directiveApi'
 
         // 默认查询条件：年龄范围，页码，每页数量
         $scope.searchForm.age = '18-28';
-        $scope.searchForm.pageNum = 0;
+        $scope.searchForm.pageNum = 1;
         $scope.searchForm.pageSize = 6;
 
         // 监听地区变化
@@ -62,7 +61,7 @@ define(['app/module', 'app/directive/directiveApi'
             $scope.cityId = data.id;
             $scope.searchForm.city = data.id;
             $scope.searchForm.cityName = data.name;
-            $scope.searchForm.pageNum = 0;
+            $scope.searchForm.pageNum = 1;
 
         });
 
@@ -86,7 +85,7 @@ define(['app/module', 'app/directive/directiveApi'
         // 高级搜索-点击确定
         $scope.moreSearchOk = function () {
             $scope.moreSearchModal.hide();
-            $scope.searchForm.pageNum = 0;
+            $scope.searchForm.pageNum = 1;
             userListPromise();
         }
 
@@ -114,7 +113,7 @@ define(['app/module', 'app/directive/directiveApi'
                 titleText: '搜索',
                 cancelText: '取消',
                 buttonClicked: function (index) {
-                    $scope.searchForm.pageNum = 0;
+                    $scope.searchForm.pageNum = 1; // 初始化页码
                     $scope.buttonsItemIndex = index;
                     if (index == 0) {   // 全部
                         $scope.searchForm.sex = 'all';
@@ -159,10 +158,9 @@ define(['app/module', 'app/directive/directiveApi'
 
         // 加载更多
         $scope.loadMore = function () {
-           var data = userListPromise();
-           $scope.userList = $scope.userList.concat(data);
-           $scope.$broadcast('scroll.infiniteScrollComplete');
-           $scope.searchForm.pageNum++;
+            $scope.userList = $scope.userList.concat($scope.tempData);
+            $scope.$broadcast('scroll.infiniteScrollComplete');
+            $scope.searchForm.pageNum++;
         }
 
         // 是否还有更多
