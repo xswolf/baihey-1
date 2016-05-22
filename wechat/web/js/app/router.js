@@ -66,7 +66,8 @@ define(["app/module", 'app/service/serviceApi'],
                         url: "/index",
                         views: {
                             'home-tab': {
-                                templateUrl: "/wechat/views/site/index.html"
+                                templateUrl: "/wechat/views/site/index.html",
+                                controller:'site.index'
                             }
                         }
                     })

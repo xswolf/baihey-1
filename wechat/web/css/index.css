@@ -167,10 +167,10 @@ a.weibo {
   background-color: #69b1f3;
   padding-left: 10px;
 }
-.selected a {
+.selected {
   color: #387ef5;
 }
-.city .selected a {
+.city .selected {
   color: #fc6da2;
 }
 .identity {

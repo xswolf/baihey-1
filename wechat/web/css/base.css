@@ -611,9 +611,9 @@ input[type="number"]{-moz-appearance:textfield;}
 
 
 .item{
-    -webkit-transition: all linear 1s;
-    -o-transition: all linear 1s;
-    transition: all linear 1s;
+    -webkit-transition: all linear 0.2s;
+    -o-transition: all linear 0.2s;
+    transition: all linear 0.2s;
 }
 /*动画开始前*/
 .item.ng-enter{
