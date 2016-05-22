@@ -22,11 +22,18 @@ class RendezvousController extends BaseController
     }
 
     /**
-     *
+     * 发布约会
      */
     public function actionRelease(){
         $data = $this->get;
         $flag = UserRendezvous::getInstance()->release($data);
         $this->renderAjax(['status'=>1,'data'=>$flag]);
+    }
+
+    public function actionList(){
+
+        $data = $this->get;
+        $list = UserRendezvous::getInstance()->lists($data);
+        $this->renderAjax(['status'=>1 , 'data'=>$list]);
     }
 }

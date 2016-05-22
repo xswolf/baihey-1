@@ -1,5 +1,7 @@
 <?php
 namespace common\models;
+use yii\db\Query;
+
 /**
  * Created by PhpStorm.
  * User: Administrator
@@ -17,6 +19,7 @@ class UserRendezvous extends Base
     /**
      * 发布约会
      * @param $data
+     * @return bool
      */
     public function release($data)
     {
@@ -31,5 +34,22 @@ class UserRendezvous extends Base
         $this->we_want         = $data['we_want'];
         $this->user_id         = \common\util\Cookie::getInstance()->getCookie('bhy_id')->value;
         return $this->save();
+    }
+
+    /**
+     * 查询约会列表
+     * @param $where
+     * @return array
+     */
+    public function lists($where){
+
+        $obj = (new Query())->from($this->tablePrefix.'user_information i')
+            ->innerJoin($this->tablePrefix.'user_rendezvous r' , "i.user_id=r.user_id")
+            ->select("*");
+        if (is_array($where) && count($where)>0){
+            $obj->where($where)->all();
+        }
+        return $obj->all();
+
     }
 }

@@ -7,6 +7,12 @@ define(['app/module', 'app/directive/directiveApi'
 
     module.controller("rendezvous.index", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$ionicModal', '$ionicActionSheet', '$ionicLoading','$interval', function (api, $scope, $timeout, $ionicPopup, $ionicModal, $ionicActionSheet, $ionicLoading,$interval) {
 
+        $scope.searchForm = {};
+
+        api.list('/wap/rendezvous/list' , $scope.searchForm).success(function (res) {
+            $scope.list = res.data;
+        })
+
         $scope.formData = [];
 
         $scope.formData.timer = '78时00分12秒';
