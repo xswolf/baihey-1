@@ -378,5 +378,19 @@ define(['app/module'], function (module) {
                 return "不限"
             }
         }
+    });
+
+    module.filter('feeDisplay' , function () {
+        return function (input) {
+            if (input == 1){
+                return "免费"
+            }else if (input == 3){
+                return "你请客"
+            }else if (input == 2){
+                return "我请客"
+            }else if(input ==4){
+                return "AA制"
+            }
+        }
     })
 })

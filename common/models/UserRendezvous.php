@@ -11,7 +11,7 @@ class UserRendezvous extends Base
 
     public static function tableName()
     {
-        return "user_rendezvous";
+        return \Yii::$app->db->tablePrefix."user_rendezvous";
     }
 
     /**
@@ -25,10 +25,10 @@ class UserRendezvous extends Base
         $this->content         = $data['content'];
         $this->sex             = $data['sex'];
         $this->destination     = $data['destination'];
-        $this->create_time     = $data['create_time'];
+        $this->create_time     = time();
         $this->rendezvous_time = $data['rendezvous_time'];
         $this->fee_des         = $data['fee_des'];
         $this->we_want         = $data['we_want'];
-        $this->save();
+        return $this->save();
     }
 }

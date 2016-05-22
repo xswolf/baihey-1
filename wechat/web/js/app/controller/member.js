@@ -2264,6 +2264,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
 
         // 保存，发布
         $scope.saveData = function () {
+            $scope.formData.rendezvous_time = ar.currentDate;
             if (!$scope.formData.theme) {
                 $ionicPopup.alert({title: '请选择约会主题'});
                 return false;
@@ -2272,26 +2273,25 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
                 $ionicPopup.alert({title: '请填写约会标题'});
                 return false;
             }
-            if (!$scope.formData.from) {
-                $ionicPopup.alert({title: '请填写出发地'});
-                return false;
-            }
+
             if (!$scope.formData.destination) {
                 $ionicPopup.alert({title: '请填写目的地'});
                 return false;
             }
-            if (!$scope.formData.date) {
+            if (!$scope.formData.rendezvous_time) {
                 $ionicPopup.alert({title: '请填写出发时间'});
                 return false;
             }
-            if (!$scope.formData.date) {
+            if (!$scope.formData.fee_des) {
                 $ionicPopup.alert({title: '请选择费用说明'});
                 return false;
             }
 
             console.log($scope.formData);
-            api.save('/wap/rendezvous/release' , $scope.followData).success(function () {
-                
+            api.save('/wap/rendezvous/release' , $scope.formData).success(function (res) {
+                if (res.data == 'true'){
+
+                }
             })
         }
 
@@ -2345,7 +2345,6 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
         $scope.saveDate = function () {
             $scope.closeDateModal();
             console.log($scope.formData.rendezvous_time);
-            alert($scope.formData.rendezvous_time);
         }
     }]);
 

@@ -43,7 +43,7 @@
             <a class="item item-icon-left item-icon-right" ng-click="openMoneyModal()">
                 <i class="icon bhy-icon-cost cor15"></i>
                 <span class="fl">费用说明</span>
-                <p class="fr cor5 fs14 mw50">{{formData.fee_des}}</p>
+                <p class="fr cor5 fs14 mw50">{{formData.fee_des | feeDisplay}}</p>
                 <i class="icon ion-ios-arrow-right cor34"></i>
             </a>
             <a class="item item-icon-left item-icon-right mt10" ng-click="openRequirementModal()">
