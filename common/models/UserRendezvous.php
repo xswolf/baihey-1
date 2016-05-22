@@ -29,6 +29,7 @@ class UserRendezvous extends Base
         $this->rendezvous_time = $data['rendezvous_time'];
         $this->fee_des         = $data['fee_des'];
         $this->we_want         = $data['we_want'];
+        $this->user_id         = \common\util\Cookie::getInstance()->getCookie('bhy_id')->value;
         return $this->save();
     }
 }
