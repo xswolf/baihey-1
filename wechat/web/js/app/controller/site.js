@@ -201,10 +201,10 @@ define(['app/module', 'app/directive/directiveApi'
 
         // 保存已选择城市
         $scope.citySave = function () {
-            for (var i = 0; i < $scope.citys.length; i++) {
-                if ($scope.citys[i].id == $scope.cityId) {
-                    $scope.modalCityName = $scope.citys[i].name;
-                    $scope.cityName = $scope.citys[i].name;
+            for (var i = 0; i < $scope.cityList.length; i++) {
+                if ($scope.cityList[i].id == $scope.cityId) {
+                    $scope.modalCityName = $scope.cityList[i].name;
+                    $scope.cityName = $scope.cityList[i].name;
                     continue;
                 }
             }
