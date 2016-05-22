@@ -17,9 +17,9 @@ define(['app/module', 'app/directive/directiveApi'
         $scope.pageLast = true;
 
         // 读取用户数据
-        function userListPromise(searchForm){
+        function userListPromise(){
             var data = [];
-            api.list("/wap/site/user-list", searchForm).success(function (res) {
+            api.list("/wap/site/user-list", $scope.searchForm).success(function (res) {
                 data = res.data;
                 if(res.data.length == 0){
                     $scope.pageLast = false;
@@ -87,7 +87,7 @@ define(['app/module', 'app/directive/directiveApi'
         $scope.moreSearchOk = function () {
             $scope.moreSearchModal.hide();
             $scope.searchForm.pageNum = 0;
-            userListPromise($scope.searchForm);
+            userListPromise();
         }
 
         $scope.buttonsItemIndex = '';
@@ -118,19 +118,19 @@ define(['app/module', 'app/directive/directiveApi'
                     $scope.buttonsItemIndex = index;
                     if (index == 0) {   // 全部
                         $scope.searchForm.sex = 'all';
-                        userListPromise($scope.searchForm);
+                        userListPromise();
                         hideSheet();
                     }
 
                     if (index == 1) {   //只看男
                         $scope.searchForm.sex = 1;
-                        userListPromise($scope.searchForm);
+                        userListPromise();
                         hideSheet();
                     }
 
                     if (index == 2) {   //只看女
                         $scope.searchForm.sex = 0;
-                        userListPromise($scope.searchForm);
+                        userListPromise();
                         hideSheet();
                     }
 
@@ -149,7 +149,7 @@ define(['app/module', 'app/directive/directiveApi'
                             inputPlaceholder: '请输入对方ID号'
                         }).then(function (res) {
                             $scope.searchForm.id = res;
-                            userListPromise($scope.searchForm);
+                            userListPromise();
                             hideSheet();
                         });
                     }
@@ -159,7 +159,7 @@ define(['app/module', 'app/directive/directiveApi'
 
         // 加载更多
         $scope.loadMore = function () {
-           var data = userListPromise($scope.searchForm);
+           var data = userListPromise();
            $scope.userList = $scope.userList.concat(data);
            $scope.$broadcast('scroll.infiniteScrollComplete');
            $scope.searchForm.pageNum++;
