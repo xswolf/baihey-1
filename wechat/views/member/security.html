@@ -18,7 +18,7 @@
                     <i class="ion-ios-arrow-right vam"></i>
                 </div>
             </ion-item>
-            <ion-item class="item" href="#/main/member/security_phone">
+            <ion-item class="item" ng-if="userInfo.phone == null" href="#/main/member/security_phone">
                 <div class="security_menu_i rounded phone">
                     <i class="ion-android-phone-portrait"></i>
                 </div>
@@ -26,9 +26,19 @@
                     <p>手机绑定</p>
                 </div>
                 <div class="menu_arrow">
-                    <span class="cor5 fs14 mr15 vam" ng-if="userInfo.phone">已绑定 {{userInfo.phone}}</span>
-                    <span class="cor5 fs14 mr15 vam" ng-if="userInfo.phone == null">未绑定</span>
+                    <span class="cor5 fs14 mr15 vam" ng-show="userInfo.phone == null">未绑定</span>
                     <i class="ion-ios-arrow-right vam"></i>
+                </div>
+            </ion-item>
+            <ion-item class="item"  ng-if="userInfo.phone">
+                <div class="security_menu_i rounded phone">
+                    <i class="ion-android-phone-portrait"></i>
+                </div>
+                <div class="menu_name">
+                    <p>手机绑定</p>
+                </div>
+                <div class="menu_arrow">
+                    <span class="cor5 fs14 mr15 vam" ng-show="userInfo.phone">已绑定 {{userInfo.phone | cut: true:3:'********'}}</span>
                 </div>
             </ion-item>
             <ion-item class="item" href="#/main/member/security_wechat">
