@@ -158,6 +158,7 @@ define(['app/module', 'app/directive/directiveApi'
 
         // 加载更多
         $scope.loadMore = function () {
+            userListPromise();
             $scope.userList = $scope.userList.concat($scope.tempData);
             $scope.$broadcast('scroll.infiniteScrollComplete');
             $scope.searchForm.pageNum++;
