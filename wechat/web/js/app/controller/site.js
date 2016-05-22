@@ -27,7 +27,7 @@ define(['app/module', 'app/directive/directiveApi'
                 $scope.userList = res.data;
                 for (var i in $scope.userList) {
                     $scope.userList[i].info = JSON.parse($scope.userList[i].info);
-                    $scope.userList[i].identity_pic = JSON.parse($scope.userList[i].identity_pic);
+                    $scope.userList[i].auth = JSON.parse($scope.userList[i].auth);
                 }
             })
             return data;
