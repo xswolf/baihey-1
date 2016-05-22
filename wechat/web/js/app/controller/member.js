@@ -2148,6 +2148,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
             $scope.themeModal.show();
         };
         $scope.closeThemeModal = function () {
+            $scope.formData.themeText = $scope.formData.themeList[ar.getArrI($scope.formData.themeList , 'id' , $scope.formData.theme)].title;
             $scope.themeModal.hide();
         };
 
@@ -2253,13 +2254,21 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
         // 默认选项
         $scope.formData.sex = "0";
 
+        $scope.formData.themeList = [
+            {id:1,title:'娱乐'},
+            {id:2,title:'美食'},
+            {id:3,title:'旅游'},
+            {id:4,title:'运动健身'},
+            {id:-1,title:'其他'},
+        ]
+
         // 保存，发布
         $scope.saveData = function () {
             if (!$scope.formData.theme) {
                 $ionicPopup.alert({title: '请选择约会主题'});
                 return false;
             }
-            if (!$scope.formData.themeTitle) {
+            if (!$scope.formData.title) {
                 $ionicPopup.alert({title: '请填写约会标题'});
                 return false;
             }
@@ -2281,6 +2290,9 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
             }
 
             console.log($scope.formData);
+            api.save('/wap/rendezvous/release' , $scope.followData).success(function () {
+                
+            })
         }
 
     }]);
@@ -2290,7 +2302,6 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
 
         $scope.selTheme = function () {
             $scope.closeThemeModal();
-            console.log($scope.formData.theme);
         }
 
     }]);
@@ -2333,7 +2344,8 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
     module.controller("member.rendezvous_date", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', function (api, $scope, $timeout, $ionicPopup) {
         $scope.saveDate = function () {
             $scope.closeDateModal();
-            console.log($scope.formData.date);
+            console.log($scope.formData.rendezvous_time);
+            alert($scope.formData.rendezvous_time);
         }
     }]);
 
@@ -2341,7 +2353,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
     module.controller("member.rendezvous_money", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', function (api, $scope, $timeout, $ionicPopup) {
         $scope.selMoney = function () {
             $scope.closeMoneyModal();
-            console.log($scope.formData.money);
+            console.log($scope.formData.fee_des);
         }
     }]);
 
@@ -2349,7 +2361,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
     module.controller("member.rendezvous_requirement", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', function (api, $scope, $timeout, $ionicPopup) {
         $scope.saveRequirement = function () {
             $scope.closeRequirementModal();
-            console.log($scope.formData.requirement);
+            console.log($scope.formData.we_want);
         }
     }]);
 

@@ -366,5 +366,17 @@ define(['app/module'], function (module) {
                 return json.bri_message;
             }
         }
+    });
+
+    module.filter('sexDisplay' , function () {
+        return function (input) {
+            if (input == 0){
+                return "女生"
+            }else if (input == 1){
+                return "男生"
+            }else {
+                return "不限"
+            }
+        }
     })
 })

@@ -1,5 +1,6 @@
 <?php
 namespace wechat\controllers;
+use common\models\UserRendezvous;
 
 
 /**
@@ -20,5 +21,12 @@ class RendezvousController extends BaseController
         return $this->render();
     }
 
-
+    /**
+     *
+     */
+    public function actionRelease(){
+        $data = $this->get;
+        $flag = UserRendezvous::getInstance()->release($data);
+        $this->renderAjax(['status'=>1,'data'=>$flag]);
+    }
 }

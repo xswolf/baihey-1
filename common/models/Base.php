@@ -15,7 +15,11 @@ class Base extends \yii\db\ActiveRecord{
 
     static $instance;
     static $_table = false;
+    protected $tablePrefix  = '';
 
+    public function init() {
+        $this->tablePrefix = \Yii::$app->db->tablePrefix;
+    }
 
     public static function tableName(){
         if (self::$_table){
