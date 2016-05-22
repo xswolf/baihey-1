@@ -23,14 +23,14 @@
                 </p>
             </div>
 
-            <div class="item item-body">
+            <div class="item item-body" ng-repeat = "vo in list">
                 <p class="mt0">
-                    <span class="cor33">##5月19日，约伴娱乐##</span>最好是女性、不事儿多、没有公主病、颜值高。差不多晚上7点在重庆沙坪坝吃九五老火锅。
+                    <span class="cor33">##{{vo.title}}##</span>{{vo.content}}
                 </p>
-                <p class="cor39 mt0 mb0">约会地点：重庆市大坪龙湖时代天街</p>
-                <p class="cor39 mt0 mb0">约会时间：2016-03-15 10:20</p>
-                <p class="cor39 mt0 mb0">费用说明：我请客</p>
-                <p class="cor39 mt0">性别限制：女</p>
+                <p class="cor39 mt0 mb0">约会地点：{{vo.destination}}</p>
+                <p class="cor39 mt0 mb0">约会时间：{{vo.rendezvous_time}}</p>
+                <p class="cor39 mt0 mb0">费用说明：{{vo.fee_des | feeDisplay}}</p>
+                <p class="cor39 mt0">性别限制：{{vo.sex | sexDisplay}}</p>
                 <p>
                 <p>
                     <span class="label">限女性</span>
