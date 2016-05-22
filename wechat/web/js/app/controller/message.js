@@ -2,7 +2,7 @@
  * Created by NSK. on 2016/4/5/0005.
  */
 define(['app/module', 'app/directive/directiveApi'
-    , 'app/service/serviceApi','app/directive/FileCanvas', 'comm'
+    , 'app/service/serviceApi', 'comm'
 ], function (module) {
 
     module.controller("message.index", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$ionicModal', '$ionicActionSheet', '$ionicLoading','$state', function (api, $scope, $timeout, $ionicPopup, $ionicModal, $ionicActionSheet, $ionicLoading,$state) {

@@ -18,7 +18,6 @@ define(['app/module', 'app/directive/directiveApi'
 
         // 读取用户数据
         function userListPromise() {
-            $scope.tempData = [];
             api.list("/wap/site/user-list", $scope.searchForm).success(function (res) {
                 if (res.data.length == 0) {
                     $scope.pageLast = false;
@@ -28,7 +27,6 @@ define(['app/module', 'app/directive/directiveApi'
                     $scope.userList[i].info = JSON.parse($scope.userList[i].info);
                     $scope.userList[i].auth = JSON.parse($scope.userList[i].auth);
                 }
-                $scope.tempData = $scope.userList;
             })
         }
 
@@ -158,10 +156,19 @@ define(['app/module', 'app/directive/directiveApi'
 
         // 加载更多
         $scope.loadMore = function () {
-            userListPromise();
-            $scope.userList = $scope.userList.concat($scope.tempData);
-            $scope.$broadcast('scroll.infiniteScrollComplete');
-            $scope.searchForm.pageNum++;
+
+            api.list('/wap/site/user-list', $scope.searchForm).success(function (res) {
+                if (res.data.length == 0) {
+                    $scope.pageLast = false;
+                }
+                for (var i in res.data) {
+                    res.data[i].info = JSON.parse(res.data[i].info);
+                    res.data[i].auth = JSON.parse(res.data[i].auth);
+                }
+                $scope.userList = $scope.userList.concat(res.data);
+                $scope.$broadcast('scroll.infiniteScrollComplete');
+                $scope.searchForm.pageNum += 1;
+            });
         }
 
         // 是否还有更多
