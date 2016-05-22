@@ -1,17 +1,13 @@
 <ion-view>
 <link href="/wechat/web/css/plugin/ionic/ionic-citypicker.css" rel="stylesheet">
-<div class="com_w_100 bhy" ng-controller="site.index">
-    <ion-header>
-        <div class="bar bar-header">
-            <a href="javascript:;" ng-click="cityModal.show()" class="button button-icon "><i
-                    class="fs16 ion-android-pin positive mr5"></i><span ng-bind="cityName"></span><i
-                    class="ml5 fs14 ion-android-arrow-dropdown positive"></i></a>
-            <a href="javascript:;" ng-click="search()" class="button button-icon">搜索</a>
-        </div>
-    </ion-header>
+    <ion-header-bar class="com_w_100">
+        <button ng-click="cityModal.show()" class="button button-icon "><i
+                class="fs16 ion-android-pin positive mr5"></i><span ng-bind="cityName"></span><i
+                class="ml5 fs14 ion-android-arrow-dropdown positive"></i></button>
+        <button ng-click="search()" class="button button-icon">搜索</button>
+    </ion-header-bar>
 
-    <ion-content class="has-header site">
-        <ion-list>
+    <ion-content class="com_w_100 has-header site">
             <div class="row" ng-if="userInfo.info">
                 <div class="col col-25"><img class="item_uimg rounded" ng-if="userInfo.info.head_pic == '未知'" ng-src="/wechat/web/images/u_noimg.jpg"><img class="item_uimg rounded" ng-if="userInfo.info.head_pic != '未知'" ng-src="{{userInfo.info.head_pic}}"></div>
                 <div class="col col-75">
@@ -32,7 +28,7 @@
                 <div class="col col-75">
 
                     <div class="row pl0">
-                        <div class="col" >会员您好！您还没有<a href="/wap/user/login">登录</a>！</div>
+                        <div class="col" >您好！您还没有<a href="/wap/user/login">登录</a>！</div>
                     </div>
 
                     <div class="row pl0">
@@ -41,7 +37,7 @@
                 </div>
             </div>
 
-
+        <ion-list ng-if="userList.length > 0">
             <ion-item ng-repeat="user in userList track by user.id" ng-if="user.id != userInfo.id" item="item" ui-sref="main.message_chat({id:user.id,head_pic:user.info.head_pic,real_name:user.info.real_name,sex:user.sex,age:user.info.age})" >
                 <div class="row">
                     <div class="col col-25"><img class="item_uimg rounded" ng-src="{{user.info.head_pic}}"></div>
@@ -73,35 +69,44 @@
                 </div>
             </ion-item>
         </ion-list>
-        <ion-item style="padding: 0; border: 0;"  ng-if="pageLast">
-            <button style="margin: 0;" class="button button-block" ng-click="loadMore()">点击加载更多</button>
-        </ion-item>
+        <ion-infinite-scroll
+                ng-if="moreDataCanBeLoaded()"
+                on-infinite="loadMore()"
+                distance="1%">
+        </ion-infinite-scroll>
+
+
+        <ion-list ng-if="userList.length <= 0">
+            <ion-item>
+                <p class="tac">没有相关的数据，您可以放宽搜索条件后再试！</p>
+            </ion-item>
+        </ion-list>
     </ion-content>
 
     <script id="selCityModal.html" type="text/ng-template">
-        <ion-modal-view ng-controller="site.childCityController" ng-cloak>
+        <ion-modal-view>
             <ion-header-bar>
-                <a href="javascript:;" ng-click="cityModal.hide()" class="button button-icon " ng-model="searchForm.data.age"><i
+                <button href="javascript:;" ng-click="cityModal.hide()" class="button button-icon " ng-model="searchForm.data.age"><i
                         class="fs16 ion-android-pin positive mr5"></i>{{modalCityName}}<i
-                        class="ml5 fs14 ion-android-arrow-dropup positive"></i></a>
-                <a href="javascript:;" ng-click="citySave()" class="button button-icon">保存</a>
+                        class="ml5 fs14 ion-android-arrow-dropup positive"></i></button>
+                <button href="javascript:;" ng-click="citySave()" class="button button-icon">保存</button>
             </ion-header-bar>
             <ion-content>
                 <ion-scroll zooming="false"
                             ng-style="scrollStyle" style="border-right: 1px solid #ccc;">
                     <ion-list style="height: 3000px;">
-                        <ion-item ng-repeat="province in provinces track by province.id" item="province"
+                        <ion-item ng-repeat="province in provinceList track by province.id" item="province"
                                   class="item tac" ng-class="{true:'selected',flase:''}[pvId == province.id]"
-                                  href="#" ng-click="selected_pv({{province.id}})">
+                                  ng-click="selected_pv({{province.id}})">
                             {{province.name}}
                         </ion-item>
                     </ion-list>
                 </ion-scroll>
                 <ion-scroll zooming="false" ng-style="scrollStyle">
                     <ion-list class="city" style="height: 3000px;">
-                        <ion-item ng-repeat="city in citys track by city.id" item="city" class="item tac"
+                        <ion-item ng-repeat="city in cityList track by city.id" item="city" class="item tac"
                                   ng-if="pvId == city.parentId" ng-click="selected_city({{city.id}})"
-                                  ng-class="{true:'selected',flase:''}[cityId == city.id]" href="#">
+                                  ng-class="{true:'selected',flase:''}[cityId == city.id]">
                             {{city.name}} <i class="ml25 ion-ios-checkmark-outline"></i>
                         </ion-item>
                     </ion-list>
@@ -112,28 +117,28 @@
 
 
     <script id="MoreSearchModal.html" type="text/ng-template">
-        <ion-modal-view ng-controller="site.childSearchController" ng-cloak>
+        <ion-modal-view>
             <ion-header-bar>
                 <a href="javascript:;" ng-click="searchModal.hide()" class="button button-icon">取消</a>
                 <h1 class="title">高级搜索</h1>
-                <a href="javascript:;" ng-click="moreSearchModalHide()" class="button button-icon">确定</a>
+                <a href="javascript:;" ng-click="moreSearchOk()" class="button button-icon">确定</a>
             </ion-header-bar>
             <ion-content class="stable-bg">
                 <div class="row mb15">
                     <div class="col-90 mr0a">
                         <label class="item item-input">
-                            <input type="text" ng-model="searchForm.data.id" placeholder="请输入ID">
+                            <input type="text" ng-model="searchForm.id" placeholder="请输入ID">
                         </label>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-90 mr0a">
                         <div class="moreSearch_form_box search_sex light-bg clearfix">
-                            <a href="javascript:;" class="sex_item" ng-click="searchForm.clickSex('all')"
+                            <a href="javascript:;" class="sex_item" ng-click="sexChange('all')"
                                ng-class="{1:'',0:'',all:'checked'}[searchForm.sex]">全部</a>
-                            <a href="javascript:;" class="sex_item" ng-click="searchForm.clickSex('1')"
+                            <a href="javascript:;" class="sex_item" ng-click="sexChange('1')"
                                ng-class="{1:'checked',0:'',all:''}[searchForm.sex]">男生</a>
-                            <a href="javascript:;" class="sex_item" ng-click="searchForm.clickSex('0')"
+                            <a href="javascript:;" class="sex_item" ng-click="sexChange('0')"
                                ng-class="{1:'',0:'checked',all:''}[searchForm.sex]">女生</a>
                         </div>
                         <div class="moreSearch_form_box mt10 clearfix">
@@ -141,7 +146,7 @@
                                 <div class="input-label">
                                     年龄
                                 </div>
-                                <select ng-model="searchForm.data.age">
+                                <select ng-model="searchForm.age">
                                     <option value="0" selected>不限</option>
                                     <option value="18-22">18-22</option>
                                     <option value="22-26">23-26</option>
@@ -157,7 +162,7 @@
                                 <div class="input-label">
                                     身高
                                 </div>
-                                <select ng-model="searchForm.data.height">
+                                <select ng-model="searchForm.height">
                                     <option value="0" selected>不限</option>
                                     <option value="140-150">140-150 厘米</option>
                                     <option value="151-155">151-155 厘米</option>
@@ -178,22 +183,12 @@
                         ng-class="{true:'ion-android-arrow-dropup',false:'ion-android-arrow-dropdown'}[more]"></i></a>
                 <div class="row" ng-if="more">
                     <div class="col-90 mr0a">
-                        <!--<div class="moreSearch_form_box mt10 clearfix">
-                            <label class="item item-input item-select">
-                                <div class="input-label">
-                                    所在地区
-                                </div>
-                                <ionic-city-picker placeholder="" tag="-" backdrop=true
-                                                   backdrop-click-to-close=false css-class="bhy-search-city-picker" okText="确定"
-                                                   citydata="citydata" button-clicked="vm.cb()"></ionic-city-picker>
-                            </label>
-                        </div>-->
                         <div class="moreSearch_form_box mt10 clearfix">
                             <label class="item item-input item-select">
                                 <div class="input-label">
                                     婚姻状况
                                 </div>
-                                <select ng-model="searchForm.data.is_marriage">
+                                <select ng-model="searchForm.is_marriage">
                                     <option value="0" selected>不限</option>
                                     <option value="{{c.id}}" ng-repeat="c in marriage">{{c.name}}</option>
                                 </select>
@@ -204,7 +199,7 @@
                                 <div class="input-label">
                                     有无子女
                                 </div>
-                                <select ng-model="searchForm.data.is_child">
+                                <select ng-model="searchForm.is_child">
                                     <option value="0" selected>不限</option>
                                     <option value="{{c.id}}" ng-repeat="c in children">{{c.name}}</option>
                                 </select>
@@ -215,7 +210,7 @@
                                 <div class="input-label">
                                     学历
                                 </div>
-                                <select ng-model="searchForm.data.education">
+                                <select ng-model="searchForm.education">
                                     <option value="0" selected>不限</option>
                                     <option value="{{c.id}}" ng-repeat="c in education">{{c.name}}</option>
                                 </select>
@@ -226,7 +221,7 @@
                                 <div class="input-label">
                                     年收入
                                 </div>
-                                <select ng-model="searchForm.data.year_income">
+                                <select ng-model="searchForm.year_income">
                                     <option value="0" selected>不限</option>
                                     <option value="{{c.id}}" ng-repeat="c in salary">{{c.name}}</option>
                                 </select>
@@ -237,7 +232,7 @@
                                 <div class="input-label">
                                     购房
                                 </div>
-                                <select ng-model="searchForm.data.is_purchase">
+                                <select ng-model="searchForm.is_purchase">
                                     <option value="0" selected>不限</option>
                                     <option value="{{c.id}}" ng-repeat="c in house">{{c.name}}</option>
                                 </select>
@@ -248,7 +243,7 @@
                                 <div class="input-label">
                                     购车
                                 </div>
-                                <select ng-model="searchForm.data.is_car">
+                                <select ng-model="searchForm.is_car">
                                     <option value="0" selected>不限</option>
                                     <option value="{{c.id}}" ng-repeat="c in car">{{c.name}}</option>
                                 </select>
@@ -259,7 +254,7 @@
                                 <div class="input-label">
                                     职业
                                 </div>
-                                <select ng-model="searchForm.data.occupation">
+                                <select ng-model="searchForm.occupation">
                                     <option value="0" selected>不限</option>
                                     <option ng-repeat="occupation in occupations track by occupation.id" value="{{occupation.id}}">{{occupation.name}}</option>
                                 </select>
@@ -270,7 +265,7 @@
                                 <div class="input-label">
                                     属相
                                 </div>
-                                <select ng-model="searchForm.data.zodiac">
+                                <select ng-model="searchForm.zodiac">
                                     <option value="0" selected>不限</option>
                                     <option value="{{c.id}}" ng-repeat="c in zodiac">{{c.name}}</option>
                                 </select>
@@ -281,7 +276,7 @@
                                 <div class="input-label">
                                     星座
                                 </div>
-                                <select ng-model="searchForm.data.constellation">
+                                <select ng-model="searchForm.constellation">
                                     <option value="0" selected>不限</option>
                                     <option value="{{c.id}}" ng-repeat="c in constellation">{{c.name}}</option>
                                 </select>
@@ -292,65 +287,9 @@
                                 <div class="input-label">
                                     民族
                                 </div>
-                                <select ng-model="searchForm.data.nation">
+                                <select ng-model="searchForm.nation">
                                     <option value="0" selected>不限</option>
                                     <option value="{{c.id}}" ng-repeat="c in nation">{{c.name}}</option>
-                                    <!--<option value="1">汉族</option>
-                                    <option value="2">基诺族</option>
-                                    <option value="3">珞巴族</option>
-                                    <option value="4">门巴族</option>
-                                    <option value="5">赫哲族</option>
-                                    <option value="6">鄂伦春族</option>
-                                    <option value="7">独龙族</option>
-                                    <option value="8">塔塔尔族</option>
-                                    <option value="9">京族</option>
-                                    <option value="10">裕固族</option>
-                                    <option value="11">保安族</option>
-                                    <option value="12">德昂族</option>
-                                    <option value="13">鄂温克族</option>
-                                    <option value="14">俄罗斯族</option>
-                                    <option value="15">乌孜别克族</option>
-                                    <option value="16">怒族</option>
-                                    <option value="17">塔吉克族</option>
-                                    <option value="18">普米族</option>
-                                    <option value="19">阿昌族</option>
-                                    <option value="20">锡伯族</option>
-                                    <option value="21">仡佬族</option>
-                                    <option value="22">毛南族</option>
-                                    <option value="23">撒拉族</option>
-                                    <option value="24">布朗族</option>
-                                    <option value="25">羌族</option>
-                                    <option value="26">仫佬族</option>
-                                    <option value="27">达斡尔族</option>
-                                    <option value="28">土族</option>
-                                    <option value="29">柯尔克孜族</option>
-                                    <option value="30">景颇族</option>
-                                    <option value="31">纳西族</option>
-                                    <option value="32">东乡族</option>
-                                    <option value="33">水族</option>
-                                    <option value="34">拉祜族</option>
-                                    <option value="35">高山族</option>
-                                    <option value="36">畲族</option>
-                                    <option value="37">佤族</option>
-                                    <option value="38">傈僳族</option>
-                                    <option value="39">黎族</option>
-                                    <option value="40">傣族</option>
-                                    <option value="41">哈萨克族</option>
-                                    <option value="42">哈尼族</option>
-                                    <option value="43">土家族</option>
-                                    <option value="44">白族</option>
-                                    <option value="45">瑶族</option>
-                                    <option value="46">侗族</option>
-                                    <option value="47">满族</option>
-                                    <option value="48">朝鲜族</option>
-                                    <option value="49">布依族</option>
-                                    <option value="50">壮族</option>
-                                    <option value="51">彝族</option>
-                                    <option value="52">苗族</option>
-                                    <option value="53">维吾尔族</option>
-                                    <option value="54">藏族</option>
-                                    <option value="55">回族</option>
-                                    <option value="56">蒙古族</option>-->
                                 </select>
                             </label>
                         </div>
@@ -360,49 +299,4 @@
         </ion-modal-view>
     </script>
 
-    <script id="city-picker-modal.html" type="text/ng-template">
-        <div ng-class="{'city-picker-backdrop' : vm.backdrop }">
-            <ion-modal-view class="city-picker-bg">
-                <div class="city-bgclose" ng-click="vm.clickToClose()"></div>
-                <div class="city-picker ">
-                    <header class=" bar city-picker-header" ng-class="vm.barCssClass">
-                        <h1 class="title"></h1>
-                        <div class="buttons">
-                            <button class="button" ng-click="vm.returnOk()">{{vm.okText}}</button>
-                        </div>
-                    </header>
-                    <div class="city-picker-inner has-header">
-                        <div class="row ">
-                            <div class="col col-33">
-                                <ion-scroll delegate-handle={{vm.provinceHandle}} on-scroll="vm.getData('province')"
-                                            scrollbar-y=false>
-                                    <ul>
-                                        <li ng-repeat="province in vm.cityData">{{province.name}}</li>
-                                    </ul>
-                                </ion-scroll>
-                            </div>
-                            <div class="col col-33">
-                                <ion-scroll delegate-handle={{vm.cityHandle}} on-scroll="vm.getData('city')"
-                                            scrollbar-y=false>
-                                    <ul>
-                                        <li ng-repeat="city in vm.province.sub">{{city.name}}</li>
-                                    </ul>
-                                </ion-scroll>
-                            </div>
-                            <div class="col col-33">
-                                <ion-scroll delegate-handle={{vm.countryHandle}} on-scroll="vm.getData('country')"
-                                            scrollbar-y=false>
-                                    <ul>
-                                        <li ng-repeat="country in vm.city.sub">{{country.name}}</li>
-                                    </ul>
-                                </ion-scroll>
-                            </div>
-                        </div>
-                        <div class="picker-center-highlight"></div>
-                    </div>
-                </div>
-            </ion-modal-view>
-        </div>
-    </script>
-</div>
 </ion-view>
