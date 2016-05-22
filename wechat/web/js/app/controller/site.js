@@ -43,7 +43,7 @@ define(['app/module', 'app/directive/directiveApi'
                 $scope.userList = res.data;
                 for (var i in $scope.userList) {
                     $scope.userList[i].info = JSON.parse($scope.userList[i].info);
-                    $scope.userList[i].identity_pic = JSON.parse($scope.userList[i].identity_pic);
+                    $scope.userList[i].auth = JSON.parse($scope.userList[i].auth);
                 }
             })
         });
@@ -53,7 +53,7 @@ define(['app/module', 'app/directive/directiveApi'
             $scope.userList = res.data;
             for (var i in $scope.userList) {
                 $scope.userList[i].info = JSON.parse($scope.userList[i].info);
-                $scope.userList[i].identity_pic = JSON.parse($scope.userList[i].identity_pic);
+                $scope.userList[i].auth = JSON.parse($scope.userList[i].auth);
             }
         })
 
@@ -85,7 +85,7 @@ define(['app/module', 'app/directive/directiveApi'
                 $scope.userList = res.data;
                 for (var i in $scope.userList) {
                     $scope.userList[i].info = JSON.parse($scope.userList[i].info);
-                    $scope.userList[i].identity_pic = JSON.parse($scope.userList[i].identity_pic);
+                    $scope.userList[i].auth = JSON.parse($scope.userList[i].auth);
                 }
             })
         }
@@ -159,7 +159,7 @@ define(['app/module', 'app/directive/directiveApi'
                             api.list("/wap/site/user-list", {'id': res}).success(function (res) {
                                 $scope.userList = res.data;
                                 $scope.userList[0].info = JSON.parse($scope.userList[0].info);
-                                $scope.userList[i].identity_pic = JSON.parse($scope.userList[i].identity_pic);
+                                $scope.userList[i].auth = JSON.parse($scope.userList[i].auth);
                             })
                         });
                     }
@@ -168,7 +168,7 @@ define(['app/module', 'app/directive/directiveApi'
                             $scope.userList = res.data;
                             for (var i in $scope.userList) {
                                 $scope.userList[i].info = JSON.parse($scope.userList[i].info);
-                                $scope.userList[i].identity_pic = JSON.parse($scope.userList[i].identity_pic);
+                                $scope.userList[i].auth = JSON.parse($scope.userList[i].auth);
                             }
                         })
                     }
@@ -195,7 +195,7 @@ define(['app/module', 'app/directive/directiveApi'
 
                 for (var i in res.data) {
                     res.data[i].info = JSON.parse(res.data[i].info);
-                    res.data[i].identity_pic = JSON.parse(res.data[i].identity_pic);
+                    res.data[i].auth = JSON.parse(res.data[i].auth);
                 }
                 $scope.userList = $scope.userList.concat(res.data);
 

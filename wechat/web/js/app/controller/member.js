@@ -1067,7 +1067,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
     module.controller("member.mate", ['app.serviceApi', '$scope', '$ionicPopup', function (api, $scope, $ionicPopup) {
 
         $scope.formData = [];
-        $scope.formData.mate = $scope.userInfo.info.mate != '未知' || $scope.userInfo.info.mate != undefined ? $scope.userInfo.info.mate : '';
+        $scope.formData.mate = $scope.userInfo.info.mate != '未知' && $scope.userInfo.info.mate != undefined ? $scope.userInfo.info.mate : '';
 
         // 保存
         $scope.saveData = function () {
@@ -1645,7 +1645,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
             $scope.followList = res.data;
             for (var i in $scope.followList) {
                 $scope.followList[i].info = JSON.parse($scope.followList[i].info);
-                $scope.followList[i].identity_pic = JSON.parse($scope.followList[i].identity_pic);
+                $scope.followList[i].auth = JSON.parse($scope.followList[i].auth);
             }
         });
     }]);
@@ -1660,7 +1660,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
         api.list("/wap/user/get-user-info", {'id': $scope.formData.userId}).success(function (res) {
             $scope.otherUserInfo = res.data;
             $scope.otherUserInfo.info = JSON.parse($scope.otherUserInfo.info);
-            $scope.otherUserInfo.identity_pic = JSON.parse($scope.otherUserInfo.identity_pic);
+            $scope.otherUserInfo.auth = JSON.parse($scope.otherUserInfo.auth);
         });
         api.list('/wap/member/photo-list', {'user_id': $scope.formData.userId}).success(function (res) {
             $scope.imgList = res.data;
@@ -1792,7 +1792,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
             $scope.followList = res.data;
             for (var i in $scope.followList) {
                 $scope.followList[i].info = JSON.parse($scope.followList[i].info);
-                $scope.followList[i].identity_pic = JSON.parse($scope.followList[i].identity_pic);
+                $scope.followList[i].auth = JSON.parse($scope.followList[i].auth);
             }
         });
 
@@ -1980,6 +1980,102 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
         var uploader = $scope.uploader = new FileUploader({
             url: '/wap/file/thumb-photo'
         });
+
+        $scope.formData = [];
+        $scope.imgList = [];
+        var head_id = 0;
+        var getImgList = function () {
+            api.list('/wap/member/photo-list', []).success(function (res) {
+                $scope.imgList = res.data;
+            });
+        }
+        getImgList();
+
+        $scope.showLoading = function (progress) {
+            $ionicLoading.show({
+                template: '<p class="tac">上传中...</p><p class="tac">' + progress + '%</p>'
+            });
+        };
+
+        $scope.hideLoading = function () {
+            $ionicLoading.hide();
+        }
+
+        $scope.addNewImg = function () {
+            var e = document.getElementById("pic_fileInput");
+            var ev = document.createEvent("MouseEvents");
+            ev.initEvent("click", true, true);
+            e.dispatchEvent(ev);
+
+            uploader.filters.push({
+                name: 'file-type-Res',
+                fn: function (item) {
+                    if (!ar.msg_file_res_img(item)) {   // 验证文件是否是图片格式
+                        $ionicPopup.alert({title: '只能上传图片类型的文件！'});
+                        return false;
+                    }
+                    return true;
+                }
+            });
+
+            uploader.onAfterAddingFile = function (fileItem) {  // 选择文件后
+                fileItem.upload();   // 上传
+            };
+            uploader.onProgressItem = function (fileItem, progress) {   //进度条
+                $scope.showLoading(progress);    // 显示loading
+            };
+            uploader.onSuccessItem = function (fileItem, response, status, headers) {  // 上传成功
+                if (response.status > 0) {
+                    $scope.imgList.push({id: response.id, thumb_path: response.thumb_path, headpic: 0});
+                } else {
+                    $ionicPopup.alert({title: '上传图片失败！'});
+                }
+            };
+            uploader.onErrorItem = function (fileItem, response, status, headers) {  // 上传出错
+                $ionicPopup.alert({title: '上传图片出错！'});
+                $scope.hideLoading();  // 隐藏loading
+            };
+            uploader.onCompleteItem = function (fileItem, response, status, headers) {  // 上传结束
+                $scope.hideLoading();  // 隐藏loading
+            };
+
+        }
+
+        // 点击img，功能
+        $scope.moreImg = function (index, img) {
+            var id = $scope.imgList[index].id;
+            var hideSheet = $ionicActionSheet.show({
+                buttons: [
+                    {text: '设为头像'}
+                ],
+                destructiveText: '删除',
+                titleText: '操作照片',
+                cancelText: '取消',
+                destructiveButtonClicked: function () {  // 点击删除
+                    if (confirm("确认删除该照片？")) {
+                        // 删除操作
+                        api.save('/wap/member/del-photo', {'id': id}).success(function (res) {
+                            $scope.imgList.splice(index, 1);
+                            hideSheet();
+                        });
+
+                    } else {
+                        return false;
+                    }
+                },
+                buttonClicked: function () {
+                    // 设置头像
+                    api.save('/wap/member/set-head', {'id': id}).success(function (res) {
+                        $scope.imgList[head_id].is_head = 0;
+                        $scope.imgList[index].is_head = 1;
+                        head_id = index;
+                        hideSheet();
+                    });
+                    return true;
+                }
+            });
+        }
+
     }]);
 
     // 诚信认证-婚姻认证

@@ -10,7 +10,7 @@ define(["app/module", 'app/service/serviceApi'],
                     var list = res.data;
                     for (var i in list) {
                         list[i].info = JSON.parse(list[i].info);
-                        list[i].identity_pic = JSON.parse(list[i].identity_pic);
+                        list[i].auth = JSON.parse(list[i].auth);
                         var flag = true;
                         for (var j in $rootScope.messageList) {  // 相同消息合并
                             if ($rootScope.messageList[j].send_user_id == list[i].send_user_id) {
@@ -138,7 +138,7 @@ define(["app/module", 'app/service/serviceApi'],
                             }
                             if (flag) {
                                 $rootScope.receiveUserInfo.info = JSON.parse($rootScope.receiveUserInfo.info);
-                                $rootScope.receiveUserInfo.identity_pic = JSON.parse($rootScope.receiveUserInfo.identity_pic);
+                                $rootScope.receiveUserInfo.auth = JSON.parse($rootScope.receiveUserInfo.auth);
                                 $rootScope.receiveUserInfo.receive_user_id = $rootScope.receiveUserInfo.id;
                                 $rootScope.receiveUserInfo.other = $rootScope.receiveUserInfo.id;
                                 $rootScope.receiveUserInfo.send_user_id = $rootScope.receiveUserInfo.send_user_id;
@@ -227,11 +227,11 @@ define(["app/module", 'app/service/serviceApi'],
                 $scope.userInfo = [];
                 var getUserStorage = function () {
                     $scope.userInfo.info = JSON.parse($scope.userInfo.info);
-                    $scope.userInfo.identity_pic = JSON.parse($scope.userInfo.identity_pic);
+                    $scope.userInfo.auth = JSON.parse($scope.userInfo.auth);
                 }
                 var setUserInfoStorage = function () {
                     $scope.userInfo.info = JSON.stringify($scope.userInfo.info);
-                    $scope.userInfo.identity_pic = JSON.stringify($scope.userInfo.identity_pic);
+                    $scope.userInfo.auth = JSON.stringify($scope.userInfo.auth);
                     ar.setStorage('userInfo', $scope.userInfo);
                     getUserStorage();
                 }

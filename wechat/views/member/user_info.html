@@ -16,9 +16,9 @@
                     </div>
                 </div>
             </div>
-            <ion-item class="idt mt10" ng-if="otherUserInfo.identity_pic || otherUserInfo.phone != '' || otherUserInfo.info.level != '未知' || otherUserInfo.info.zodiac != '未知' || otherUserInfo.info.constellation != '未知'">
+            <ion-item class="idt mt10" ng-if="otherUserInfo.auth.identity_check || otherUserInfo.phone != '' || otherUserInfo.info.level != '未知' || otherUserInfo.info.zodiac != '未知' || otherUserInfo.info.constellation != '未知'">
                 <p>
-                    <span class="identity sfz" ng-if="otherUserInfo.identity_pic">身份证</span>
+                    <span class="identity sfz" ng-if="otherUserInfo.auth.identity_check">身份证</span>
                     <span class="identity phone" ng-if="otherUserInfo.phone">手机</span>
                     <span class="identity vip" ng-if="otherUserInfo.info.level == 1">vip</span>
                     <span class="identity guest" ng-if="otherUserInfo.info.level == 2">贵宾</span>

@@ -126,12 +126,24 @@ class User extends \common\models\Base
         ];
         // 身份证照片
         $userIdentity = [
-            'url1'          => '未知',// 正面
-            'url2'          => '未知',// 反面
-            'is_check'      => false,// 审核状态true通过，false未通过
-            'create_time'   => '未知',// 时间
+            'identity_pic1'     => '未知',// 身份证正面
+            'identity_pic2'     => '未知',// 反面
+            'identity_check'    => false,// 审核状态true通过，false未通过
+            'identity_time'     => '未知',// 时间
+            'marriage_pic1'     => '未知',// 离婚证正面
+            'marriage_pic2'     => '未知',// 反面
+            'marriage_check'    => false,// 审核状态true通过，false未通过
+            'marriage_time'     => '未知',// 时间
+            'education_pic1'    => '未知',// 学历正面
+            'education_pic2'    => '未知',// 反面
+            'education_check'   => false,// 审核状态true通过，false未通过
+            'education_time'    => '未知',// 时间
+            'house_pic1'        => '未知',// 房产证正面
+            'house_pic2'        => '未知',// 反面
+            'house_check'       => false,// 审核状态true通过，false未通过
+            'house_time'        => '未知',// 时间
         ];
-        $infoData['identity_pic'] = json_encode($userIdentity);
+        $infoData['auth'] = json_encode($userIdentity);
         $infoData['info'] = json_encode($userInfo);
         $infoData['city'] = 1;
 
