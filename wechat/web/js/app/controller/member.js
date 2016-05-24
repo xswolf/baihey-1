@@ -2229,9 +2229,19 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
     }]);
 
     // 我的约会-发布约会
-    module.controller("member.rendezvous_add", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$ionicModal', function (api, $scope, $timeout, $ionicPopup, $ionicModal) {
+    module.controller("member.rendezvous_add", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$ionicModal','$location', function (api, $scope, $timeout, $ionicPopup, $ionicModal,$location) {
 
         $scope.formData = [];
+
+        // 跳转-返回
+        $scope.jump = function(){
+            if($location.$$search.tempUrl){    // 因为只有2种情况，所以只需要判断是否有值
+                $location.url('#/main/rendezvous');
+            }else {
+                $location.url('#/main/member/rendezvous');
+            }
+        }
+
 
         // 约会主题
         $ionicModal.fromTemplateUrl('themeModal.html', {

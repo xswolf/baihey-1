@@ -52,7 +52,7 @@ define(["app/module", 'app/service/serviceApi'],
                         $ionicLoading.hide();
                     });
         }]);
-        return module.config(["$stateProvider", "$urlRouterProvider", "$ionicConfigProvider","$controllerProvider", function ($stateProvider, $urlRouterProvider, $ionicConfigProvider,$controllerProvider) {
+        return module.config(["$stateProvider", "$urlRouterProvider", "$ionicConfigProvider", "$controllerProvider", function ($stateProvider, $urlRouterProvider, $ionicConfigProvider, $controllerProvider) {
                 $ionicConfigProvider.templates.maxPrefetch(0);
                 $ionicConfigProvider.tabs.position("bottom");
                 $stateProvider
@@ -67,7 +67,7 @@ define(["app/module", 'app/service/serviceApi'],
                         views: {
                             'home-tab': {
                                 templateUrl: "/wechat/views/site/index.html",
-                                controller:'site.index'
+                                controller: 'site.index'
                             }
                         }
                     })
@@ -86,8 +86,8 @@ define(["app/module", 'app/service/serviceApi'],
                                 templateUrl: function ($stateParams) {
                                     return "/wechat/views/member/" + $stateParams.tempName + ".html";
                                 },
-                                controllerProvider: function($stateParams){
-                                    return 'member.'+$stateParams.tempName;
+                                controllerProvider: function ($stateParams) {
+                                    return 'member.' + $stateParams.tempName;
                                 }
                             }
                         }
@@ -191,6 +191,15 @@ define(["app/module", 'app/service/serviceApi'],
                             }
                         }
                     })
+                    .state('main.rendezvous_add', {     // 约会-发布约会
+                        url: "/rendezvous_add?userId&tempUrl",
+                        views: {
+                            'rendezvous-tab': {
+                                templateUrl: "/wechat/views/member/rendezvous_add.html",
+                                controller: 'member.rendezvous_add'
+                            }
+                        }
+                    })
                     .state('main.rendezvous_ask', {     // 约会-约TA
                         url: "/rendezvous_ask?userId",
                         views: {
@@ -245,7 +254,7 @@ define(["app/module", 'app/service/serviceApi'],
                 // 设置用户信息不跳转
                 $scope.getUserPrivacyStorage = function (url) {
                     setUserInfoStorage();
-                    if(url != '' && typeof(url) != undefined) {
+                    if (url != '' && typeof(url) != undefined) {
                         window.location.hash = url;
                     }
                 }
