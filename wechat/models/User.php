@@ -96,6 +96,7 @@ class User extends \common\models\Base
             'head_pic'              => '未知',// 头像
             'real_name'             => '未知',// 真实姓名
             'identity_id'           => '未知',// 身份证号码
+            'identity_address'      => '未知',// 身份证地址
             'is_marriage'           => '未知',// 婚姻状况
             'is_child'              => '未知',// 子女状况
             'education'             => '未知',// 学历
@@ -125,7 +126,7 @@ class User extends \common\models\Base
             'zo_constellation'      => '未知',// 星座
         ];
         // 身份证照片
-        $userIdentity = [
+        $userAuth = [
             'identity_pic1'     => '未知',// 身份证正面
             'identity_pic2'     => '未知',// 反面
             'identity_check'    => false,// 审核状态true通过，false未通过
@@ -134,8 +135,8 @@ class User extends \common\models\Base
             'marriage_pic2'     => '未知',// 反面
             'marriage_check'    => false,// 审核状态true通过，false未通过
             'marriage_time'     => '未知',// 时间
-            'education_pic1'    => '未知',// 学历正面
-            'education_pic2'    => '未知',// 反面
+            'education_pic1'    => '未知',// 学历学位证
+            'education_pic2'    => '未知',// 毕业证
             'education_check'   => false,// 审核状态true通过，false未通过
             'education_time'    => '未知',// 时间
             'house_pic1'        => '未知',// 房产证正面
@@ -143,7 +144,7 @@ class User extends \common\models\Base
             'house_check'       => false,// 审核状态true通过，false未通过
             'house_time'        => '未知',// 时间
         ];
-        $infoData['auth'] = json_encode($userIdentity);
+        $infoData['auth'] = json_encode($userAuth);
         $infoData['info'] = json_encode($userInfo);
         $infoData['city'] = 1;
 

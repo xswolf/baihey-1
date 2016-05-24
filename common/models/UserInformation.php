@@ -39,6 +39,16 @@ class UserInformation extends Base
                     $sql = "UPDATE {$_user_information_table} SET ".key($data)." = '".$data[key($data)]."' WHERE user_id={$user_id}";
                     break;
 
+                case 'auth':// 诚信认证
+                    $arr = explode('_', $data['auth'], 3);
+                    $sql = "UPDATE {$_user_information_table} SET auth = JSON_REPLACE(auth,'$.".$arr[0].'_'.$arr[1]."','".$arr[2]."'), auth = JSON_REPLACE(auth,'$.".$arr[0].'_time'."','".YII_BEGIN_TIME."'), auth = JSON_REPLACE(auth,'$.".$arr[0].'_check'."','".false."') WHERE user_id={$user_id}";
+                    break;
+
+                case 'identity':// 身份证认证
+                    $arr = explode('_', $data['identity']);
+                    $sql = "UPDATE {$_user_information_table} SET info = JSON_REPLACE(info,'$.".'real_name'."','".$arr[0]."'), info = JSON_REPLACE(info,'$.".'identity_id'."','".$arr[1]."'), info = JSON_REPLACE(info,'$.".'identity_address'."','".$arr[2]."') WHERE user_id={$user_id}";
+                    break;
+
                 case 'occupation':// 职业
                     $arr = explode('-', $data['occupation']);
                     $sql = "UPDATE {$_user_information_table} SET info = JSON_REPLACE(info,'$.occupation','".$arr[0]."'), info = JSON_REPLACE(info,'$.children_occupation','".$arr[1]."') WHERE user_id={$user_id}";
@@ -64,6 +74,22 @@ class UserInformation extends Base
             $row = $this->getDb()->createCommand($sql)->execute();
         }
 
+        return $row;
+    }
+
+    public function getAuthImgPath($user_id, $name)
+    {
+        $select = "json_extract(auth,'$.".$name."') $name";
+        $row = (new Query())
+            ->select([$select])
+            ->from(static::tableName())
+            ->where(['user_id' => $user_id]);
+        //echo $row->createCommand()->getRawSql();exit;
+        $row = $row->one();
+
+        if (!$row) {
+            return null;
+        }
         return $row;
     }
 }

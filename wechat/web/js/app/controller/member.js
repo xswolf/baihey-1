@@ -38,16 +38,6 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
         }
         getImgList();
 
-        $scope.showLoading = function (progress) {
-            $ionicLoading.show({
-                template: '<p class="tac">上传中...</p><p class="tac">' + progress + '%</p>'
-            });
-        };
-
-        $scope.hideLoading = function () {
-            $ionicLoading.hide();
-        }
-
         $scope.addNewImg = function () {
             var e = document.getElementById("pic_fileInput");
             var ev = document.createEvent("MouseEvents");
@@ -1977,129 +1967,106 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
     // 诚信认证-身份认证
     module.controller("member.honesty_sfz", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', 'FileUploader', function (api, $scope, $timeout, $ionicPopup, FileUploader) {
         // 实例化上传图片插件
-        var uploader = $scope.uploader = new FileUploader({
-            url: '/wap/file/thumb-photo'
+        var uploader1 = $scope.uploader1 = new FileUploader({
+            url: '/wap/file/auth-pictures?auth=identity_pic1'
+        });
+        var uploader2 = $scope.uploader2 = new FileUploader({
+            url: '/wap/file/auth-pictures?auth=identity_pic2'
         });
 
         $scope.formData = [];
-        $scope.imgList = [];
-        var head_id = 0;
-        var getImgList = function () {
-            api.list('/wap/member/photo-list', []).success(function (res) {
-                $scope.imgList = res.data;
-            });
-        }
-        getImgList();
+        $scope.formData.real_name = $scope.userInfo.info.real_name != '未知' ? $scope.userInfo.info.real_name : '';
+        $scope.formData.identity_id = $scope.userInfo.info.identity_id != '未知' ? $scope.userInfo.info.identity_id : '';
+        $scope.formData.identity_address = $scope.userInfo.info.identity_address != '未知' ? $scope.userInfo.info.identity_address : '';
 
-        $scope.showLoading = function (progress) {
-            $ionicLoading.show({
-                template: '<p class="tac">上传中...</p><p class="tac">' + progress + '%</p>'
-            });
-        };
-
-        $scope.hideLoading = function () {
-            $ionicLoading.hide();
+        $scope.addNewImg = function (name) {
+            if(name == 'identity_pic1') {
+                var uploader = uploader1;
+            } else {
+                var uploader = uploader2;
+            }
+            $scope.uploaderImage(uploader, name);
         }
 
-        $scope.addNewImg = function () {
-            var e = document.getElementById("pic_fileInput");
-            var ev = document.createEvent("MouseEvents");
-            ev.initEvent("click", true, true);
-            e.dispatchEvent(ev);
-
-            uploader.filters.push({
-                name: 'file-type-Res',
-                fn: function (item) {
-                    if (!ar.msg_file_res_img(item)) {   // 验证文件是否是图片格式
-                        $ionicPopup.alert({title: '只能上传图片类型的文件！'});
-                        return false;
-                    }
-                    return true;
-                }
-            });
-
-            uploader.onAfterAddingFile = function (fileItem) {  // 选择文件后
-                fileItem.upload();   // 上传
-            };
-            uploader.onProgressItem = function (fileItem, progress) {   //进度条
-                $scope.showLoading(progress);    // 显示loading
-            };
-            uploader.onSuccessItem = function (fileItem, response, status, headers) {  // 上传成功
-                if (response.status > 0) {
-                    $scope.imgList.push({id: response.id, thumb_path: response.thumb_path, headpic: 0});
+        $scope.saveData = function () {
+            if ($scope.formData.real_name == '' || $scope.formData.identity_id == '' || $scope.formData.identity_address == '') {
+                if (confirm('检测到您还未填写完整，确定放弃吗？')) {
+                    window.location.hash = '#/main/member/honesty';  //跳转
                 } else {
-                    $ionicPopup.alert({title: '上传图片失败！'});
+                    return false;
                 }
-            };
-            uploader.onErrorItem = function (fileItem, response, status, headers) {  // 上传出错
-                $ionicPopup.alert({title: '上传图片出错！'});
-                $scope.hideLoading();  // 隐藏loading
-            };
-            uploader.onCompleteItem = function (fileItem, response, status, headers) {  // 上传结束
-                $scope.hideLoading();  // 隐藏loading
-            };
-
+            } else {
+                var formData = [];
+                formData.identity = $scope.formData.real_name + '_' + $scope.formData.identity_id + '_' + $scope.formData.identity_address;
+                api.save('/wap/member/save-data', formData).success(function (res) {
+                    // 保存
+                    $scope.userInfo.info.real_name = $scope.formData.real_name;
+                    $scope.userInfo.info.identity_id = $scope.formData.identity_id;
+                    $scope.userInfo.info.identity_address = $scope.formData.identity_address;
+                    $scope.getUserPrivacyStorage('#/main/member/honesty');
+                })
+            }
         }
-
-        // 点击img，功能
-        $scope.moreImg = function (index, img) {
-            var id = $scope.imgList[index].id;
-            var hideSheet = $ionicActionSheet.show({
-                buttons: [
-                    {text: '设为头像'}
-                ],
-                destructiveText: '删除',
-                titleText: '操作照片',
-                cancelText: '取消',
-                destructiveButtonClicked: function () {  // 点击删除
-                    if (confirm("确认删除该照片？")) {
-                        // 删除操作
-                        api.save('/wap/member/del-photo', {'id': id}).success(function (res) {
-                            $scope.imgList.splice(index, 1);
-                            hideSheet();
-                        });
-
-                    } else {
-                        return false;
-                    }
-                },
-                buttonClicked: function () {
-                    // 设置头像
-                    api.save('/wap/member/set-head', {'id': id}).success(function (res) {
-                        $scope.imgList[head_id].is_head = 0;
-                        $scope.imgList[index].is_head = 1;
-                        head_id = index;
-                        hideSheet();
-                    });
-                    return true;
-                }
-            });
-        }
-
     }]);
 
     // 诚信认证-婚姻认证
     module.controller("member.honesty_marr", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', 'FileUploader', function (api, $scope, $timeout, $ionicPopup, FileUploader) {
         // 实例化上传图片插件
-        var uploader = $scope.uploader = new FileUploader({
-            url: '/wap/file/thumb-photo'
+        var uploader1 = $scope.uploader1 = new FileUploader({
+            url: '/wap/file/auth-pictures?auth=marriage_pic1'
         });
+        var uploader2 = $scope.uploader2 = new FileUploader({
+            url: '/wap/file/auth-pictures?auth=marriage_pic2'
+        });
+
+        $scope.addNewImg = function (name) {
+            if(name == 'marriage_pic1') {
+                var uploader = uploader1;
+            } else {
+                var uploader = uploader2;
+            }
+            $scope.uploaderImage(uploader, name);
+        }
     }]);
 
     // 诚信认证-学历认证
     module.controller("member.honesty_edu", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', 'FileUploader', function (api, $scope, $timeout, $ionicPopup, FileUploader) {
         // 实例化上传图片插件
-        var uploader = $scope.uploader = new FileUploader({
-            url: '/wap/file/thumb-photo'
+        var uploader1 = $scope.uploader1 = new FileUploader({
+            url: '/wap/file/auth-pictures?auth=education_pic1'
         });
+        var uploader2 = $scope.uploader2 = new FileUploader({
+            url: '/wap/file/auth-pictures?auth=education_pic2'
+        });
+
+        $scope.addNewImg = function (name) {
+            if(name == 'education_pic1') {
+                var uploader = uploader1;
+            } else {
+                var uploader = uploader2;
+            }
+            $scope.uploaderImage(uploader, name);
+        }
     }]);
 
     // 诚信认证-房产认证
     module.controller("member.honesty_housing", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', 'FileUploader', function (api, $scope, $timeout, $ionicPopup, FileUploader) {
         // 实例化上传图片插件
-        var uploader = $scope.uploader = new FileUploader({
-            url: '/wap/file/thumb-photo'
+        var uploader1 = $scope.uploader1 = new FileUploader({
+            url: '/wap/file/auth-pictures?auth=house_pic1'
         });
+        var uploader2 = $scope.uploader2 = new FileUploader({
+            url: '/wap/file/auth-pictures?auth=house_pic2'
+        });
+
+        $scope.addNewImg = function (name) {
+            if(name == 'house_pic1') {
+                var uploader = uploader1;
+            } else {
+                var uploader = uploader2;
+            }
+            $scope.uploaderImage(uploader, name);
+        }
     }]);
 
     // 嘉瑞红包

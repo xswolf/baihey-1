@@ -13,8 +13,11 @@
             </div>
             <div class="item item-text-wrap">
                 <div class="upload_box">
-                    <span class="upload_text">
-                        <p class="tac">
+                    <span class="upload_text tac" ng-click="addNewImg('identity_pic1')">
+                        <span ng-show="userInfo.auth.identity_pic1 != '未知'">
+                            <img src="{{userInfo.auth.identity_pic1}}">
+                        </span>
+                        <p class="tac" ng-show="userInfo.auth.identity_pic1 == '未知'">
                             <i class="icon ion-plus-round upload_icon"></i>
                         </p>
                         <p class="tac">
@@ -23,8 +26,11 @@
                     </span>
                 </div>
                 <div class="upload_box">
-                    <span class="upload_text">
-                        <p class="tac">
+                    <span class="upload_text tac" ng-click="addNewImg('identity_pic2')">
+                        <span ng-show="userInfo.auth.identity_pic2 != '未知'">
+                            <img src="{{userInfo.auth.identity_pic2}}">
+                        </span>
+                        <p class="tac" ng-show="userInfo.auth.identity_pic2 == '未知'">
                             <i class="icon ion-plus-round upload_icon"></i>
                         </p>
                         <p class="tac">
@@ -32,9 +38,9 @@
                         </p>
                     </span>
                 </div>
-                <input id="ml_idCard" type="file" nv-file-select uploader="uploader"
+                <input id="identity_pic1" type="file" nv-file-select uploader="uploader1"
                        style="visibility: hidden; display: none;" accept="image/*" >
-                <input id="re_idCard" type="file" nv-file-select uploader="uploader"
+                <input id="identity_pic2" type="file" nv-file-select uploader="uploader2"
                        style="visibility: hidden; display: none;" accept="image/*" >
             </div>
         </div>
@@ -46,15 +52,15 @@
             <div class="item item-text-wrap ">
                 <label class="item item-input">
                     <span class="input-label">真实姓名</span>
-                    <input type="text" placeholder="请输入您的真实姓名">
+                    <input type="text" ng-model="formData.real_name" placeholder="请输入您的真实姓名">
                 </label>
                 <label class="item item-input">
                     <span class="input-label">身份证号码</span>
-                    <input type="text" placeholder="请输入您的身份证号码">
+                    <input type="text" ng-model="formData.identity_id" placeholder="请输入您的身份证号码">
                 </label>
                 <label class="item item-input">
                     <span class="input-label">身份证地址</span>
-                    <input type="text" placeholder="请输入您的身份证地址">
+                    <input type="text" ng-model="formData.identity_address" placeholder="请输入您的身份证地址">
                 </label>
             </div>
         </div>

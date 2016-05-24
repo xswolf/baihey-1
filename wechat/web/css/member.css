@@ -540,6 +540,10 @@
   min-width: 87px;
   min-height: 46px;
 }
+.upload_box .upload_text img{
+    max-width: 185px;
+    max-height: 180px;
+}
 .upload_box .upload_text .upload_icon {
   font-size: 24px;
 }

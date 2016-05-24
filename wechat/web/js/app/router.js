@@ -211,7 +211,7 @@ define(["app/module", 'app/service/serviceApi'],
                     });
                 //$urlRouterProvider.otherwise("/main/index");
             }])
-            .controller('main', ['$scope', '$location', 'app.serviceApi', function ($scope, $location, api) {
+            .controller('main', ['$scope', '$location', 'app.serviceApi','$ionicLoading', function ($scope, $location, api, $ionicLoading) {
                 if (ar.getCookie('bhy_user_id') > 0) {
                     api.getMessageNumber().success(function (res) {
                         $scope.msgNumber = parseInt(res.data);
@@ -291,6 +291,57 @@ define(["app/module", 'app/service/serviceApi'],
                     } else {
                         eval("$scope." + name + "_count = " + 0);
                     }
+                }
+
+                $scope.showLoading = function (progress) {
+                    $ionicLoading.show({
+                        template: '<p class="tac">上传中...</p><p class="tac">' + progress + '%</p>'
+                    });
+                };
+                $scope.hideLoading = function () {
+                    $ionicLoading.hide();
+                }
+
+                // 图片上传目前用于诚信认证
+                $scope.uploaderImage = function (uploader, name) {
+                    var e = document.getElementById(name);
+                    var ev = document.createEvent("MouseEvents");
+                    ev.initEvent("click", true, true);
+                    e.dispatchEvent(ev);
+
+                    uploader.filters.push({
+                        name: 'file-type-Res',
+                        fn: function (item) {
+                            if (!ar.msg_file_res_img(item)) {   // 验证文件是否是图片格式
+                                $ionicPopup.alert({title: '只能上传图片类型的文件！'});
+                                return false;
+                            }
+                            return true;
+                        }
+                    });
+
+                    uploader.onAfterAddingFile = function (fileItem) {  // 选择文件后
+                        fileItem.upload();   // 上传
+                    };
+                    uploader.onProgressItem = function (fileItem, progress) {   //进度条
+                        $scope.showLoading(progress);    // 显示loading
+                    };
+                    uploader.onSuccessItem = function (fileItem, response, status, headers) {  // 上传成功
+                        if (response.status > 0) {
+                            eval('$scope.userInfo.auth.' + name + ' = ' + "'" + response.thumb_path + "'");
+                            $scope.getUserPrivacyStorage('');
+                        } else {
+                            $ionicPopup.alert({title: '上传图片失败！'});
+                        }
+                    };
+                    uploader.onErrorItem = function (fileItem, response, status, headers) {  // 上传出错
+                        $ionicPopup.alert({title: '上传图片出错！'});
+                        $scope.hideLoading();  // 隐藏loading
+                    };
+                    uploader.onCompleteItem = function (fileItem, response, status, headers) {  // 上传结束
+                        $scope.hideLoading();  // 隐藏loading
+                    };
+
                 }
                 //$scope.userInfo = [{}];
             }])
