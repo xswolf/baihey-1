@@ -282,7 +282,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
                 $ionicPopup.alert({title: '如果您未满18岁，请退出本站，谢谢合作！'});
                 return false;
             }
-            api.save(url, $scope.formData).success(function (res) {
+            api.save('/wap/member/save-data', $scope.formData).success(function (res) {
                 // 保存
                 $scope.userInfo.info.age = ar.getTimestampByBirthday(ar.DateTimeToDate($scope.birthday));
                 $scope.userInfo.info.zodiac = $scope.zodic.id;
@@ -2418,11 +2418,11 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
                 $ionicPopup.alert({title: '请选择费用说明'});
                 return false;
             }
-
-            console.log($scope.formData);
+            $scope.formData.we_want = $scope.formData.labelList.join(',');
             api.save('/wap/rendezvous/release', $scope.formData).success(function (res) {
                 if (res.data == 'true') {
-
+                    $ionicPopup.alert({title: '发布成功！'});
+                    window.location.hash = '#/main/member/rendezvous_put';
                 }
             })
         }
