@@ -1,6 +1,5 @@
 <?php
-namespace common\util\pay\wechat;
-use common\util\pay\wechat\WxPayApi;
+require_once "../lib/WxPay.Api.php";
 /**
  * 
  * JSAPI支付实现类

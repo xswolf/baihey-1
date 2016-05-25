@@ -1,5 +1,4 @@
 <?php
-namespace common\util\pay\wechat;
 /**
  * 
  * 回调基础类

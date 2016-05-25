@@ -1,12 +1,10 @@
 <?php
 namespace wechat\controllers;
-
-use common\util\pay\wechat\WxPayApi;
-use common\util\pay\wechat\JsApiPay;
-use common\util\pay\wechat\WxPayUnifiedOrder;
 use wechat\models\ChargeGoods;
 use wechat\models\ChargeOrder;
 use wechat\models\ChargeType;
+require_once ('../../common/util/pay/wechat/lib/WxPay.Api.php');
+require_once ('../../common/util/pay/wechat/WxPay.JsApiPay.php');
 
 /**
  * 充值/支付 控制层
@@ -44,11 +42,11 @@ class ChargeController extends BaseController
     public function actionCreateOrder(){
 
         //①、获取用户openid
-        $tools = new JsApiPay();
+        $tools = new \JsApiPay();
         $openId = $tools->GetOpenid();
 
         //②、统一下单
-        $input = new WxPayUnifiedOrder();
+        $input = new \WxPayUnifiedOrder();
         $input->SetBody("嘉瑞百合缘VIP会员服务");
         $input->SetAttach("手机网站");
         $input->SetOut_trade_no(ChargeOrder::getInstance()->createOrderId());
@@ -58,7 +56,7 @@ class ChargeController extends BaseController
         $input->SetNotify_url("http://wechat.baihey.com/wap/Charge/notify-url");
         $input->SetTrade_type("JSAPI");
         $input->SetOpenid($openId);
-        $order = WxPayApi::unifiedOrder($input);
+        $order = \WxPayApi::unifiedOrder($input);
         $jsApiParameters = $tools->GetJsApiParameters($order);
         $this->assign('param',$jsApiParameters);
         return $this->render();
