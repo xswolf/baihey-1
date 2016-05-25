@@ -24,7 +24,7 @@ define(['app/module', 'app/directive/directiveApi'
 
         // 立即支付
         $scope.pay = function () {
-            window.location.href = 'http://wechat.baihey.com/wap/charge/pay?orderId=' + $location.$$search.orderId;
+            $location.absUrl() == 'http://wechat.baihey.com/wap/charge/pay?orderId=' + $location.$$search.orderId;
         }
 
         // 跳转-返回
