@@ -21,11 +21,6 @@ class ChargeController extends BaseController
         return $this->render();
     }
 
-    public function actionNotifyUrl()
-    {
-        return $this->render();
-    }
-
     public function actionGetChargeGoodsList()
     {
          $this->renderAjax(['status' => 1, 'data' => ChargeGoods::getInstance()->getList()]);
@@ -60,7 +55,7 @@ class ChargeController extends BaseController
         $input->SetTotal_fee("");
         $input->SetTime_start(date("YmdHis"));
         $input->SetTime_expire(date("YmdHis", time() + 600));
-        $input->SetNotify_url("http://wechat.baihey.com/wap/Charge/notify_url");
+        $input->SetNotify_url("http://wechat.baihey.com/wap/Charge/notify-url");
         $input->SetTrade_type("JSAPI");
         $input->SetOpenid($openId);
         $order = WxPayApi::unifiedOrder($input);
@@ -69,6 +64,13 @@ class ChargeController extends BaseController
         $this->assign('param',$jsApiParameters);
         return $this->render();
 //        $this->renderAjax(['status' => 1, 'data' => ChargeOrder::getInstance()->createOrder()]);
+    }
+
+    public function actionNotifyUrl()
+    {
+        $this->assign('gett',$this->get);
+        $this->assign('postt',$this->post);
+        return $this->render();
     }
 
 
