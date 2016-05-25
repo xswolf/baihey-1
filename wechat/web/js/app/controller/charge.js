@@ -38,4 +38,11 @@ define(['app/module', 'app/directive/directiveApi'
 
     }]);
 
+    // 选择支付方式
+    module.controller("charge.pay", ['app.serviceApi', '$rootScope', '$scope', '$timeout', '$ionicPopup', '$ionicModal', '$ionicActionSheet', '$ionicLoading', '$location', function (api, $rootScope, $scope, $timeout, $ionicPopup, $ionicModal, $ionicActionSheet, $ionicLoading, $location) {
+
+
+
+    }]);
+
 })

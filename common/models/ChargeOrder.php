@@ -79,7 +79,7 @@ class ChargeOrder extends Base
         $obj = (new Query())->from($this->tablePrefix . 'charge_order o')
             ->innerJoin($this->tablePrefix . 'charge_goods g', 'o.charge_goods_id = g.id')
             ->where(['o.order_id' => $orderId])
-            ->select('o.id,g.*');
+            ->select('o.id,o.order_id,g.*');
 //          echo $obj->createCommand()->getRawSql();
         return $obj->all();
     }
@@ -98,15 +98,14 @@ class ChargeOrder extends Base
 
         $row = $this->updateAll(['status' => $status], ['order_id' => $orderId]);
 
-        if ($orderInfo['id'] == '-1') {   // 充值余额
+       /* if ($orderInfo['id'] == '-1') {   // 充值余额
 
             $money = User::getInstance()->changeBalance($orderInfo['uid'], -($orderInfo['money'] / 100));
 
         } else {  // 开通服务
 
 
-        }
-
+        }*/
         if ($row) {
             $tran->commit();
             return true;

@@ -56,12 +56,13 @@ class ChargeController extends BaseController
     {
         if ($this->get) {
             $order = ChargeOrder::getInstance()->getOne($this->get['orderId']);
+            $goods = ChargeGoods::getInstance()->getOne($order['charge_goods_id']);
             //①、获取用户openid
             $tools = new \JsApiPay();
-            $openId = $tools->GetOpenid();
+            $openId = $tools->GetOpenid($this->get['orderId']);
             //②、统一下单
             $input = new \WxPayUnifiedOrder();
-            $input->SetBody("嘉瑞百合缘VIP会员服务");
+            $input->SetBody("嘉瑞百合缘-【" . $goods['name'] . "】");
             $input->SetAttach("手机网站");
             $input->SetOut_trade_no($this->get['orderId']);
             $input->SetTotal_fee((string)$order['money']);
@@ -73,10 +74,10 @@ class ChargeController extends BaseController
             $order = \WxPayApi::unifiedOrder($input);
             $jsApiParameters = $tools->GetJsApiParameters($order);
             $this->assign('param', $jsApiParameters);
-            $this->assign('msg', '正在跳转支付');
-        } else {
-            $this->assign('msg', '非法请求');
+            $this->assign('order', $order);
+            $this->assign('goods', $goods);
         }
+
         return $this->render();
     }
 
@@ -101,6 +102,11 @@ class ChargeController extends BaseController
         }
 
 
+    }
+
+    public function setOrderStatus()
+    {
+        $this->renderAjax(ChargeOrder::getInstance()->setOrderStatus($this->get['orderId']));
     }
 
 

@@ -209,6 +209,15 @@ define(["app/module", 'app/service/serviceApi'],
                             }
                         }
                     })
+                    .state('main.charge_pay', {     // 支付
+                        url: "/charge_pay",
+                        views: {
+                            'member-tab': {
+                                templateUrl: "/wechat/views/charge/pay.html",
+                                controller: 'charge.pay'
+                            }
+                        }
+                    })
                     .state('main.charge', {     // 充值
                         url: "/member_charge",
                         views: {
