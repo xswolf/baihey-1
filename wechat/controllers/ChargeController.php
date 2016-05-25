@@ -57,7 +57,7 @@ class ChargeController extends BaseController
         $input->SetBody("嘉瑞百合缘VIP会员服务");
         $input->SetAttach("手机网站");
         $input->SetOut_trade_no(ChargeOrder::getInstance()->createOrderId());
-        $input->SetTotal_fee("1");
+        $input->SetTotal_fee("");
         $input->SetTime_start(date("YmdHis"));
         $input->SetTime_expire(date("YmdHis", time() + 600));
         $input->SetNotify_url("http://wechat.baihey.com/wap/Charge/notify_url");
