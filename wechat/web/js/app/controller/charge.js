@@ -6,7 +6,7 @@ define(['app/module', 'app/directive/directiveApi'
 ], function (module) {
 
     // 选择支付方式
-    module.controller("charge.index", ['app.serviceApi', '$rootScope', '$scope', '$timeout', '$ionicPopup', '$ionicModal', '$ionicActionSheet', '$ionicLoading', '$location', '$window', function (api, $rootScope, $scope, $timeout, $ionicPopup, $ionicModal, $ionicActionSheet, $ionicLoading, $location, $window) {
+    module.controller("charge.index", ['app.serviceApi', '$rootScope', '$scope', '$timeout', '$ionicPopup', '$ionicModal', '$ionicActionSheet', '$ionicLoading', '$location', function (api, $rootScope, $scope, $timeout, $ionicPopup, $ionicModal, $ionicActionSheet, $ionicLoading, $location) {
 
         $scope.formData = [];
 
@@ -24,7 +24,7 @@ define(['app/module', 'app/directive/directiveApi'
 
         // 立即支付
         $scope.pay = function () {
-            $window.location.href = 'http://wechat.baihey.com/wap/charge/pay?orderId=' + $location.$$search.orderId;
+            location.href = 'http://wechat.baihey.com/wap/charge/pay?orderId=' + $location.$$search.orderId;
         }
 
         // 跳转-返回
