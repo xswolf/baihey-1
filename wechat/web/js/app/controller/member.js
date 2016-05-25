@@ -2070,14 +2070,17 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
     }]);
 
     // 开通VIP
-    module.controller("member.vip", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$interval', function (api, $scope, $timeout, $ionicPopup, $interval) {
+    module.controller("member.vip", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$interval','$location', function (api, $scope, $timeout, $ionicPopup, $interval,$location) {
         $scope.formData = [];
 
         $scope.formData.timer = '78时00分12秒';
 
+        // 用户的ID
+        $scope.userId = 1;
+
         // 商品列表
         api.save('/wap/charge/get-charge-goods-list',false).success(function(res){
-            $scope.goodsList = res.data;
+            $scope.goodsList = res;
         });
 
         var tid = $interval(function () {
@@ -2125,6 +2128,18 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
 
             return syTimeStr;
         }
+
+        // 生成订单并跳转支付
+        $scope.createOrder = function(_goodsId){
+            api.save('/wap/charge/produce-order',{goodsId:_goodsId,uid:1}).success(function(res){
+                if(res.status<1){
+                    $ionicPopup.alert({title:res.msg});
+                }else{
+                    $location.url('/main/member_charge?orderId='+res.data+'&tempUrl=/main/member/vip');
+                }
+            })
+        }
+
     }]);
 
 

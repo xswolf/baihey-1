@@ -1,5 +1,5 @@
 <?php
-namespace common\charge;
+namespace common\models;
 
 use Yii;
 
@@ -10,13 +10,6 @@ use Yii;
  */
 class ChargeType extends Base
 {
-    /**
-     * @return string 返回该AR类关联的数据表名
-     */
-    public static function tableName()
-    {
-        return 'charge_type';
-    }
 
     /**
      * 获取所有支付方式

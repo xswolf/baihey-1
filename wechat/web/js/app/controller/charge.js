@@ -11,19 +11,20 @@ define(['app/module', 'app/directive/directiveApi'
         $scope.formData = [];
 
         // 商品
-        api.get('/wap/charge/get-charge-goods-by-id',{id:$location.$$search.goodsId}).success(function(res){
-            $scope.goods = res.data;
+        api.get('/wap/charge/get-order',{id:$location.$$search.orderId}).success(function(res){
+            $scope.goods = res[0];
         })
 
         $scope.iswx = ar.isWeChat();
         if ($scope.iswx) {
-            $scope.formData.payType = "1";
+            $scope.formData.payType = "5";
         } else {
-            $scope.formData.payType = "2";
+            $scope.formData.payType = "4";
         }
 
         // 立即支付
         $scope.pay = function () {
+            window.location.href('http://wechat.baihey.com/wap/charge/pay?orderId='+$location.$$search.orderId);
         }
 
         // 跳转-返回
@@ -31,38 +32,6 @@ define(['app/module', 'app/directive/directiveApi'
             $location.url($location.$$search.tempUrl);
         }
 
-        api.get('/wap/charge/create-order',false).success(function(res){
-            $scope.jsApi = res.data;
-        })
-
-
-
-
-        function jsApiCall()
-        {
-            WeixinJSBridge.invoke(
-                'getBrandWCPayRequest',
-                $scope.jsApi,
-            function(res){
-                WeixinJSBridge.log(res.err_msg);
-                alert(res.err_code+res.err_desc+res.err_msg);
-            }
-        );
-        }
-
-        function callpay()
-        {
-            if (typeof WeixinJSBridge == "undefined"){
-                if( document.addEventListener ){
-                    document.addEventListener('WeixinJSBridgeReady', jsApiCall, false);
-                }else if (document.attachEvent){
-                    document.attachEvent('WeixinJSBridgeReady', jsApiCall);
-                    document.attachEvent('onWeixinJSBridgeReady', jsApiCall);
-                }
-            }else{
-                jsApiCall();
-            }
-        }
 
     }]);
 

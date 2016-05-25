@@ -1,10 +1,12 @@
 <?php
 namespace wechat\controllers;
-use wechat\models\ChargeGoods;
-use wechat\models\ChargeOrder;
-use wechat\models\ChargeType;
-require_once ('../../common/util/pay/wechat/lib/WxPay.Api.php');
-require_once ('../../common/util/pay/wechat/WxPay.JsApiPay.php');
+
+use common\models\ChargeGoods;
+use common\models\ChargeOrder;
+use common\models\ChargeType;
+
+require_once('../../common/util/pay/wechat/lib/WxPay.Api.php');
+require_once('../../common/util/pay/wechat/WxPay.JsApiPay.php');
 
 /**
  * 充值/支付 控制层
@@ -21,53 +23,84 @@ class ChargeController extends BaseController
 
     public function actionGetChargeGoodsList()
     {
-         $this->renderAjax(['status' => 1, 'data' => ChargeGoods::getInstance()->getList()]);
+
+        $this->renderAjax(ChargeGoods::getInstance()->getAllList());
     }
 
     public function actionGetChargeGoodsById()
     {
-        $this->renderAjax(['status' => 1, 'data' => ChargeGoods::getInstance()->getById($this->get['id'])]);
+        $this->renderAjax(ChargeGoods::getInstance()->getOne($this->get['id']));
     }
 
     public function actionGetChargeTypeList()
     {
-         $this->renderAjax(['status' => 1, 'data' => ChargeType::getInstance()->getList()]);
+        $this->renderAjax(ChargeType::getInstance()->getAllList());
     }
 
     public function actionGetChargeTypeById()
     {
-        $this->renderAjax(['status' => 1, 'data' => ChargeType::getInstance()->getById($this->get['id'])]);
+        $this->renderAjax(ChargeType::getInstance()->getOne($this->get['id']));
     }
 
-    public function actionCreateOrder(){
+    public function actionGetChargeOrderById()
+    {
+        $this->renderAjax(ChargeOrder::getInstance()->getOne($this->get['id']));
+    }
 
-        //①、获取用户openid
-        $tools = new \JsApiPay();
-        $openId = $tools->GetOpenid();
+    public function actionGetOrder()
+    {
+        $this->renderAjax(ChargeOrder::getInstance()->getOrderInfo($this->get['id']));
+    }
 
-        //②、统一下单
-        $input = new \WxPayUnifiedOrder();
-        $input->SetBody("嘉瑞百合缘VIP会员服务");
-        $input->SetAttach("手机网站");
-        $input->SetOut_trade_no(ChargeOrder::getInstance()->createOrderId());
-        $input->SetTotal_fee("1");
-        $input->SetTime_start(date("YmdHis"));
-        $input->SetTime_expire(date("YmdHis", time() + 600));
-        $input->SetNotify_url("http://wechat.baihey.com/wap/Charge/notify-url");
-        $input->SetTrade_type("JSAPI");
-        $input->SetOpenid($openId);
-        $order = \WxPayApi::unifiedOrder($input);
-        $jsApiParameters = $tools->GetJsApiParameters($order);
-        $this->assign('param',$jsApiParameters);
+    public function actionPay()
+    {
+        if ($this->get) {
+            $order = ChargeOrder::getInstance()->getOne($this->get['orderId']);
+            //①、获取用户openid
+            $tools = new \JsApiPay();
+            $openId = $tools->GetOpenid();
+            //②、统一下单
+            $input = new \WxPayUnifiedOrder();
+            $input->SetBody("嘉瑞百合缘VIP会员服务");
+            $input->SetAttach("手机网站");
+            $input->SetOut_trade_no($this->get['orderId']);
+            $input->SetTotal_fee((string)$order['money']);
+            $input->SetTime_start(date("YmdHis"));
+            $input->SetTime_expire(date("YmdHis", time() + 600));
+            $input->SetNotify_url("http://wechat.baihey.com/wap/Charge/notify-url");
+            $input->SetTrade_type("JSAPI");
+            $input->SetOpenid($openId);
+            $order = \WxPayApi::unifiedOrder($input);
+            $jsApiParameters = $tools->GetJsApiParameters($order);
+            $this->assign('param', $jsApiParameters);
+            $this->assign('msg', '正在跳转支付');
+        } else {
+            $this->assign('msg', '非法请求');
+        }
         return $this->render();
-//        $this->renderAjax(['status' => 1, 'data' => ChargeOrder::getInstance()->createOrder()]);
     }
 
     public function actionNotifyUrl()
     {
-        $this->assign('gett',$this->get);
-        $this->assign('postt',$this->post);
+        $this->assign('gett', $this->get);
+        $this->assign('postt', $this->post);
         return $this->render();
+    }
+
+    public function actionProduceOrder()
+    {
+        if (isset($this->get['goodsId'])) {
+            $orderId = ChargeOrder::getInstance()->createOrder($this->get);
+            if ($orderId) {
+                $this->renderAjax(['status' => 1, 'msg' => '下单成功', 'data' => $orderId]);
+            } else {
+                $this->renderAjax(['status' => 0, 'msg' => '下单失败']);
+            }
+        } else {
+            $this->renderAjax(['status' => 0, 'msg' => '没有商品信息']);
+        }
+
+
     }
 
 

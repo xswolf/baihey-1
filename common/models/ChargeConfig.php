@@ -5,7 +5,7 @@
  * Date: 2016/3/23/0023
  * Time: 11:33
  */
-namespace common\charge;
+namespace common\models;
 
 
 class ChargeConfig extends Base

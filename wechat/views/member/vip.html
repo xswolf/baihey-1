@@ -9,7 +9,7 @@
             <div class="mt10 vip_top_bg clearfix tac">
                 <h4 class="cor0 lh48">距离恢复原价还有：{{formData.timer}}</h4>
             </div>
-            <ion-item class="item-button-right vip_g" ng-repeat="goods in goodsList | orderBy:['-id']" href="#/main/member_charge?goodsId={{goods.id}}&tempUrl=/main/member/vip">
+            <ion-item class="item-button-right vip_g" ng-repeat="goods in goodsList | orderBy:['-id']" ng-click="createOrder(goods.id)">
                 <img src="{{goods.img}}" width="102">
                 <p class="vip_g_t tac">
                     <s class="fs16">原价{{goods.native_price}}元</s>

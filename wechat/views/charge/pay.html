@@ -9,6 +9,9 @@
                     'getBrandWCPayRequest', {!$param},
                     function (res) {
                         if (res.err_msg == "get_brand_wcpay_request：ok") {
+                            alert('支付成功');
+                        }else{
+                            alert('支付失败');
                         }
                     }
             );
@@ -27,5 +30,6 @@
 </head>
 <body>
 参数：{!$param}
+提示：{!msg}
 </body>
 </html>

@@ -256,4 +256,20 @@ class User extends Base
             ->offset($offset)
             ->all();
     }
+
+    /**
+     * 修改余额
+     * @param $uid
+     * @param $money
+     * @return int
+     * @throws \yii\db\Exception
+     */
+    public function changeBalance($uid, $money)
+    {
+
+        $user = User::findOne($uid);
+        $user->balance = $user->balance - $money;
+        return $user->save();
+    }
+
 }
