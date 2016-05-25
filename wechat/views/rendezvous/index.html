@@ -7,7 +7,7 @@
         <a class="button button-icon icon ion-ios-plus-outline energized" href="#/main/rendezvous_add?userId=1&tempUrl=1"></a>
     </ion-header-bar>
     <ion-content class="bhy com_w_100 rendezvous" style="background: #e1e2e1;">
-        <div class="list card">
+        <div class="list card" ng-repeat = "vo in list">
             <div class="item item-avatar">
                 <img src="/wechat/web/images/test.jpg">
                 <h2>
@@ -23,7 +23,7 @@
                 </p>
             </div>
 
-            <div class="item item-body" ng-repeat = "vo in list">
+            <div class="item item-body">
                 <p class="mt0">
                     <!-- 约会主题 1:娱乐 2:美食 3:旅游 4:运动/健身  其它不显示-->
                     <i class="icon fs30 vam" ng-if="vo.theme!=5" ng-class="{'1':'bhy-icon-ent cor29','2':'bhy-icon-food cor23','3':'bhy-icon-tour cor25','4':'bhy-icon-moves cor33'}[vo.theme]"></i>

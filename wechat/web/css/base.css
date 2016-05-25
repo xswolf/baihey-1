@@ -69,6 +69,7 @@
 .mt10{ margin-top: 10px;}
 .mt15{ margin-top: 15px;}
 .mt20{ margin-top: 20px;}
+.mt25{ margin-top: 25px;}
 .mt30{ margin-top: 30px;}
 .mt40{ margin-top: 40px;}
 .mt50{ margin-top: 50px;}
@@ -142,6 +143,7 @@ p.mb0{ margin-bottom: 0;}
 .fs30{ font-size: 30px;}
 .fs50{ font-size: 50px;}
 
+.ls3{letter-spacing:3.5px;}
 .fwn{font-weight:normal;}
 .tal{text-align:left}
 .toe{text-overflow: ellipsis;}

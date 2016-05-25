@@ -208,6 +208,15 @@ define(["app/module", 'app/service/serviceApi'],
                                 controller: 'rendezvous.ask'
                             }
                         }
+                    })
+                    .state('main.charge', {     // 充值
+                        url: "/member_charge",
+                        views: {
+                            'member-tab': {
+                                templateUrl: "/wechat/views/charge/index.html",
+                                controller: 'charge.index'
+                            }
+                        }
                     });
                 //$urlRouterProvider.otherwise("/main/index");
             }])

@@ -2069,6 +2069,65 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
         }
     }]);
 
+    // 开通VIP
+    module.controller("member.vip", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$interval', function (api, $scope, $timeout, $ionicPopup, $interval) {
+        $scope.formData = [];
+
+        $scope.formData.timer = '78时00分12秒';
+
+        // 商品列表
+        api.save('/wap/charge/get-charge-goods-list',false).success(function(res){
+            $scope.goodsList = res.data;
+        });
+
+        var tid = $interval(function () {
+            var totalSec = getTotalSecond($scope.formData.timer) - 1;
+            if (totalSec >= 0) {
+                $scope.formData.timer = getNewSyTime(totalSec);
+            } else {
+                $interval.cancel(tid);
+            }
+
+        }, 1000);
+
+        //根据剩余时间字符串计算出总秒数
+        function getTotalSecond(timestr) {
+            var reg = /\d+/g;
+            var timenums = new Array();
+            while ((r = reg.exec(timestr)) != null) {
+                timenums.push(parseInt(r));
+            }
+            var second = 0, i = 0;
+            if (timenums.length == 4) {
+                second += timenums[0] * 24 * 3600;
+                i = 1;
+            }
+            second += timenums[i] * 3600 + timenums[++i] * 60 + timenums[++i];
+            return second;
+        }
+
+        //根据剩余秒数生成时间格式
+        function getNewSyTime(sec) {
+            var s = sec % 60;
+            sec = (sec - s) / 60; //min
+            var m = sec % 60;
+            sec = (sec - m) / 60; //hour
+            var h = sec % 24;
+            var d = (sec - h) / 24;//day
+            var syTimeStr = "";
+            if (d > 0) {
+                syTimeStr += d.toString() + "天";
+            }
+
+            syTimeStr += ("0" + h.toString()).substr(-2) + "时"
+                + ("0" + m.toString()).substr(-2) + "分"
+                + ("0" + s.toString()).substr(-2) + "秒";
+
+            return syTimeStr;
+        }
+    }]);
+
+
     // 嘉瑞红包
     module.controller("member.bribery", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', function (api, $scope, $timeout, $ionicPopup) {
 
@@ -2196,16 +2255,16 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
     }]);
 
     // 我的约会-发布约会
-    module.controller("member.rendezvous_add", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$ionicModal','$location', function (api, $scope, $timeout, $ionicPopup, $ionicModal,$location) {
+    module.controller("member.rendezvous_add", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$ionicModal', '$location', function (api, $scope, $timeout, $ionicPopup, $ionicModal, $location) {
 
         $scope.formData = [];
 
         // 跳转-返回
-        $scope.jump = function(){
-            if($location.$$search.tempUrl){    // 因为只有2种情况，所以只需要判断是否有值
-                $location.url('#/main/rendezvous');
-            }else {
-                $location.url('#/main/member/rendezvous');
+        $scope.jump = function () {
+            if ($location.$$search.tempUrl) {    // 因为只有2种情况，所以只需要判断是否有值
+                $location.url('/main/rendezvous');
+            } else {
+                $location.url('/main/member/rendezvous');
             }
         }
 
@@ -2221,7 +2280,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
             $scope.themeModal.show();
         };
         $scope.closeThemeModal = function () {
-            $scope.formData.themeText = $scope.formData.themeList[ar.getArrI($scope.formData.themeList , 'id' , $scope.formData.theme)].title;
+            $scope.formData.themeText = $scope.formData.themeList[ar.getArrI($scope.formData.themeList, 'id', $scope.formData.theme)].title;
             $scope.themeModal.hide();
         };
 
@@ -2328,11 +2387,11 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
         $scope.formData.sex = "0";
 
         $scope.formData.themeList = [
-            {id:1,title:'娱乐'},
-            {id:2,title:'美食'},
-            {id:3,title:'旅游'},
-            {id:4,title:'运动健身'},
-            {id:-1,title:'其他'},
+            {id: 1, title: '娱乐'},
+            {id: 2, title: '美食'},
+            {id: 3, title: '旅游'},
+            {id: 4, title: '运动健身'},
+            {id: -1, title: '其他'},
         ]
 
         // 保存，发布
@@ -2361,8 +2420,8 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
             }
 
             console.log($scope.formData);
-            api.save('/wap/rendezvous/release' , $scope.formData).success(function (res) {
-                if (res.data == 'true'){
+            api.save('/wap/rendezvous/release', $scope.formData).success(function (res) {
+                if (res.data == 'true') {
 
                 }
             })
@@ -2432,16 +2491,16 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
     // 我的约会-发布约会-对约伴的要求
     module.controller("member.rendezvous_requirement", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', function (api, $scope, $timeout, $ionicPopup) {
 
-        $scope.labelList = ['宅男','高富帅','逗比','大长腿','型男','肌肉男','阳光男'];
+        $scope.labelList = ['宅男', '高富帅', '逗比', '大长腿', '型男', '肌肉男', '阳光男'];
         $scope.formData.labelList = [];
 
         // 添加标签
-        $scope.addLabel = function(value){
+        $scope.addLabel = function (value) {
             $scope.formData.labelList.push(value);
         }
 
         // 删除标签
-        $scope.removeLabel = function(index){
+        $scope.removeLabel = function (index) {
             $scope.formData.labelList.splice(index, 1);
         }
 
@@ -2608,7 +2667,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
                 themeTitle: '求个美女一起去爬山！',
                 content: '第三方公司更换三分公司梵蒂冈而而非去的法撒旦法阿斯蒂芬',
                 label: [{id: 1, name: '白富美'}, {id: 1, name: '大长腿'}, {id: 1, name: '无公主病'}, {id: 1, name: '温柔'}],
-                status:1
+                status: 1
             },
             {
                 id: 2,
@@ -2617,7 +2676,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
                 themeTitle: '求个美女一起去爬山！',
                 content: '第三方公司更换三分公司梵蒂冈而而非去的法撒旦法阿斯蒂芬',
                 label: [{id: 1, name: '白富美'}, {id: 1, name: '大长腿'}, {id: 1, name: '无公主病'}, {id: 1, name: '温柔'}],
-                status:2
+                status: 2
             },
             {
                 id: 3,
@@ -2626,7 +2685,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
                 themeTitle: '求个美女一起去爬山！',
                 content: '第三方公司更换三分公司梵蒂冈而而非去的法撒旦法阿斯蒂芬',
                 label: [{id: 1, name: '白富美'}, {id: 1, name: '大长腿'}, {id: 1, name: '无公主病'}, {id: 1, name: '温柔'}],
-                status:1
+                status: 1
             },
             {
                 id: 4,
@@ -2635,7 +2694,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
                 themeTitle: '求个美女一起去爬山！',
                 content: '第三方公司更换三分公司梵蒂冈而而非去的法撒旦法阿斯蒂芬',
                 label: [{id: 1, name: '白富美'}, {id: 1, name: '大长腿'}, {id: 1, name: '无公主病'}, {id: 1, name: '温柔'}],
-                status:0
+                status: 0
             },
             {
                 id: 5,
@@ -2644,7 +2703,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
                 themeTitle: '求个美女一起去爬山！',
                 content: '第三方公司更换三分公司梵蒂冈而而非去的法撒旦法阿斯蒂芬',
                 label: [{id: 1, name: '白富美'}, {id: 1, name: '大长腿'}, {id: 1, name: '无公主病'}, {id: 1, name: '温柔'}],
-                status:1
+                status: 1
             }
         ];
 
@@ -2672,8 +2731,8 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
             $scope.openTxt = true;
         }
 
-        $scope.acceptAlert = function(){
-            $ionicPopup.alert({title:'TA的手机号码：13359886652'});
+        $scope.acceptAlert = function () {
+            $ionicPopup.alert({title: 'TA的手机号码：13359886652'});
         }
 
     }]);

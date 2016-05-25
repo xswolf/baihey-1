@@ -24,6 +24,15 @@ var ar = {
             return Date.parse(new Date()) / 1000;
         },
 
+        'isWeChat': function () {
+            var ua = navigator.userAgent.toLowerCase();
+            if (ua.match(/MicroMessenger/i) == "micromessenger") {
+                return true;
+            } else {
+                return false;
+            }
+        },
+
         'validateMobile': function (mobile) {
             var pattern = /^1[34578]\d{9}$/;
             return pattern.test(mobile);
@@ -323,7 +332,7 @@ var ar = {
          * @returns {number}
          */
         getTimestampByBirthday: function (birthday) {
-            return Math.round(new Date(birthday.replace(/-/g,'/')).getTime()/1000);
+            return Math.round(new Date(birthday.replace(/-/g, '/')).getTime() / 1000);
         },
 
         /**
@@ -331,11 +340,11 @@ var ar = {
          * @param min
          * @returns {string}
          */
-        heightLink : function(min){
+        heightLink: function (min) {
             var ageHtml = "",
                 ageMin = min,
                 ageMax = 260;
-            for(ageMin; ageMin <= ageMax; ageMin++){
+            for (ageMin; ageMin <= ageMax; ageMin++) {
                 ageHtml += '<option value="';
                 ageHtml += ageMin;
                 ageHtml += '">';
@@ -351,12 +360,12 @@ var ar = {
          * @param id
          * @returns {*}
          */
-        getObjById : function(arr, id) {
-            if(id == '0' || id == 'null') {
+        getObjById: function (arr, id) {
+            if (id == '0' || id == 'null') {
                 return '0';
             }
-            for(var i in arr) {
-                if(arr[i].id == id) {
+            for (var i in arr) {
+                if (arr[i].id == id) {
                     return arr[i];
                 }
             }
@@ -369,11 +378,11 @@ var ar = {
          * @param value
          * @returns {*}
          */
-        getArrI : function (arr , name , value) {
+        getArrI: function (arr, name, value) {
             var filed = ""
-            for (var i in arr){
-                filed = eval("arr[i]."+name);
-                if (filed == value){
+            for (var i in arr) {
+                filed = eval("arr[i]." + name);
+                if (filed == value) {
                     return i;
                 }
             }
@@ -383,8 +392,8 @@ var ar = {
         /**
          * 去除数据库json字段引号
          */
-        cleanQuotes : function (string) {
-            var str = string.replace(/\\"/g , "");
+        cleanQuotes: function (string) {
+            var str = string.replace(/\\"/g, "");
             return str;
         }
     }
