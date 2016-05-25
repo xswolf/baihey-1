@@ -10,7 +10,7 @@
                 <img src="{{f.info.head_pic}}">
                 <h2 class="clearfix">
                     <span class="fl">{{f.info.real_name | sex:f.sex :f.info.age}}</span>
-                    <span class="fr fs12 cor5">{{f.create_time | date:'yyyy-MM-dd HH:mm:ss'}}</span>
+                    <span class="fr fs12 cor5">{{f.create_time * 1000 | date:'yyyy-MM-dd HH:mm:ss'}}</span>
                 </h2>
                 <p>{{f.info.age | timeToAge}}岁 {{f.info.height}}cm {{f.info.is_marriage | marriage}} {{f.info.is_purchase | purchase}} {{f.info.is_car | car}}</p>
             </ion-item>

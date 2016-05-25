@@ -43,13 +43,17 @@ class UserRendezvous extends Base
      */
     public function lists($where){
 
-        $obj = (new Query())->from($this->tablePrefix.'user_information i')
+        $obj = (new Query())
+            ->from($this->tablePrefix.'user_information i')
             ->innerJoin($this->tablePrefix.'user_rendezvous r' , "i.user_id=r.user_id")
+            ->leftJoin('(SELECT rendezvous_id,COUNT(id) count FROM '.$this->tablePrefix.'user_rendezvous_apply GROUP BY rendezvous_id) a', "a.rendezvous_id=r.id")
             ->select("*");
         if (is_array($where) && count($where)>0){
             $obj->where($where)->all();
         }
+        //echo $obj->createCommand()->getRawSql();exit;
         return $obj->all();
 
     }
+
 }

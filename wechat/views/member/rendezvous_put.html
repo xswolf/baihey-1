@@ -25,21 +25,21 @@
                 </div>
                 <div class="item item-text-wrap" ng-click="involved(put.id)">
                     <h2>
-                        <span ng-class="{'娱乐':'balanced','美食':'energized','旅游':'calm','运动/健身':'assertive','其它':'dark'}[put.theme]">##{{put.themeTitle}}##</span>
+                        <span ng-class="{'娱乐':'balanced','美食':'energized','旅游':'calm','运动/健身':'assertive','其它':'dark'}[put.theme]">##{{put.title}}##</span>
                         <span ng-if="!openTxt">{{put.content | cut:true:60:'...'}}</span>
                         <span ng-if="openTxt">{{put.content}}</span>
                         <a href="javascript:;" ng-if="put.content.length > 60 && !openTxt" class="allTextLink" ng-click="openText($event)">[展开全文]</a>
                     </h2>
-                    <p class="cor39 mt20">约会地点：重庆市大坪龙湖时代天街</p>
-                    <p class="cor39">约会时间：2016-03-15 10:20</p>
-                    <p class="cor39">费用说明：我请客</p>
-                    <p class="cor39">性别限制：女</p>
+                    <p class="cor39 mt20">约会地点：{{put.destination}}</p>
+                    <p class="cor39">约会时间：{{put.rendezvous_time * 1000 | date:'yyyy-MM-dd HH:mm:ss'}}</p>
+                    <p class="cor39">费用说明：{{put.fee_des | feeDisplay}}</p>
+                    <p class="cor39">性别限制：{{put.sex | sexDisplay}}</p>
                     <p class="mt10">
-                        <span class="label mr5" ng-repeat="lab in put.label">{{lab.name}}</span>
+                        <span class="label mr5" ng-repeat="lab in put.label">{{lab}}</span>
                     </p>
                 </div>
                 <div ng-click="involved(put.id)" class="item item-divider" >
-                    <span class="fl fs12">参与人数：{{put.entryNumber}}</span><span class="fr fs12"><i class="icon ion-record mr5" ng-class="{'0':'assertive','1':'balanced','2':'dark'}[put.status]"></i>{{put.status | rend_status}}</span>
+                    <span class="fl fs12">参与人数：{{put.count}}</span><span class="fr fs12"><i class="icon ion-record mr5" ng-class="{'0':'assertive','1':'balanced','2':'dark'}[put.status]"></i>{{put.status | rend_status}}</span>
                 </div>
             </div>
             <p ng-if="putList.length <= 0" class="padding tac">没有记录</p>

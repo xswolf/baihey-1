@@ -311,7 +311,7 @@ define(["app/module", 'app/service/serviceApi'],
                     $ionicLoading.hide();
                 }
 
-                // 图片上传目前用于诚信认证
+                // 图片上传目前用于诚信认证（obj，str）
                 $scope.uploaderImage = function (uploader, name) {
                     var e = document.getElementById(name);
                     var ev = document.createEvent("MouseEvents");

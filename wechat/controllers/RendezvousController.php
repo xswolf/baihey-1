@@ -32,7 +32,7 @@ class RendezvousController extends BaseController
 
     public function actionList(){
 
-        $data = $this->get;
+        isset($this->get['user_id']) ? $data['r.user_id'] = $this->get['user_id'] : $data = $this->get;
         $list = UserRendezvous::getInstance()->lists($data);
         $this->renderAjax(['status'=>1 , 'data'=>$list]);
     }

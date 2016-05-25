@@ -2535,63 +2535,15 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
             $scope.dateList = []; // 根据日期查询的数据
         }
 
-        $scope.putList = [
-            {
-                id: 1,
-                theme: '娱乐',
-                themeTitle: '约个高富帅看电影，有没有啊？',
-                startDate: '5月12日 17:25',
-                content: '520一个人无聊，约个高富帅去大坪龙湖时代天街UME看电影，求骚扰！520一个人无聊，约个高富帅去大坪龙湖时代天街UME看电影，求骚扰！520一个人无聊，约个高富帅去大坪龙湖时代天街UME看电影，求骚扰！520一个人无聊，约个高富帅去大坪龙湖时代天街UME看电影，求骚扰！520一个人无聊，约个高富帅去大坪龙湖时代天街UME看电影，求骚扰！',
-                label: [{id: 3, name: '高富帅'}, {id: 6, name: '幽默'}, {id: 7, name: '型男'}, {id: 8, name: '阳光外形'}],
-                endDate: '2015-05-20 17:25',
-                entryNumber: '3',
-                status: '1'
-            },
-            {
-                id: 2,
-                theme: '美食',
-                themeTitle: '去杨家坪吃小龙虾',
-                startDate: '2015-05-19 17:25',
-                content: '去杨家坪吃小龙虾去杨家坪吃小龙虾去杨家坪吃小龙虾去杨家坪吃小龙虾',
-                label: [{id: 3, name: '高富帅'}, {id: 6, name: '幽默'}, {id: 7, name: '型男'}, {id: 8, name: '阳光外形'}],
-                endDate: '2015-05-20 17:25',
-                entryNumber: '3',
-                status: '1'
-            },
-            {
-                id: 3,
-                theme: '运动/健身',
-                themeTitle: '强身健体强身健体强身健体',
-                startDate: '2015-05-19 17:25',
-                content: '强身健体强身健体强身健体强身健体强身健体',
-                label: [{id: 3, name: '高富帅'}, {id: 6, name: '幽默'}, {id: 7, name: '型男'}, {id: 8, name: '阳光外形'}],
-                endDate: '2015-05-20 17:25',
-                entryNumber: '3',
-                status: '0'
-            },
-            {
-                id: 4,
-                theme: '旅游',
-                themeTitle: '求志同道合妹子游西湖！',
-                startDate: '2015-05-19 17:25',
-                content: '求志同道合妹子游西湖求志同道合妹子游西湖求志同道合妹子游西湖求志同道合妹子游西湖',
-                label: [{id: 3, name: '高富帅'}, {id: 6, name: '幽默'}, {id: 7, name: '型男'}, {id: 8, name: '阳光外形'}],
-                endDate: '2015-05-20 17:25',
-                entryNumber: '3',
-                status: '2'
-            },
-            {
-                id: 5,
-                theme: '其它',
-                themeTitle: '跳广场舞',
-                startDate: '2015-05-19 17:25',
-                content: '跳广场舞跳广场舞跳广场舞跳广场舞跳广场舞跳广场舞',
-                label: [{id: 3, name: '高富帅'}, {id: 6, name: '幽默'}, {id: 7, name: '型男'}, {id: 8, name: '阳光外形'}],
-                endDate: '2015-05-20 17:25',
-                entryNumber: '3',
-                status: '1'
+        $scope.putList = [];
+        api.list('/wap/rendezvous/list', {user_id:ar.getCookie('bhy_user_id')}).success(function (res) {
+            $scope.putList = res.data;
+            for(var i in $scope.putList) {
+                var label = $scope.putList[i].we_want.split(',');
+                $scope.putList[i].label = [];
+                $scope.putList[i].label = label;
             }
-        ];
+        });
 
         // 加载更多
         $scope.loadMore = function () {
