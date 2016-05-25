@@ -1,5 +1,5 @@
 <?php
-namespace common\util\pay\wechat\lib;
+namespace common\util\pay\wechat;
 /**
  * 
  * 回调基础类

@@ -1,5 +1,5 @@
 <?php
-namespace common\util\pay\wechat\lib;
+namespace common\util\pay\wechat;
 /**
 * 	配置账号信息
 */

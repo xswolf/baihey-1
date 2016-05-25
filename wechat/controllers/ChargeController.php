@@ -3,6 +3,7 @@ namespace wechat\controllers;
 
 use common\util\pay\wechat\lib\WxPayApi;
 use common\util\pay\wechat\JsApiPay;
+use common\util\pay\wechat\lib\WxPayUnifiedOrder;
 use wechat\models\ChargeGoods;
 use wechat\models\ChargeOrder;
 use wechat\models\ChargeType;
@@ -55,7 +56,7 @@ class ChargeController extends BaseController
         $input = new WxPayUnifiedOrder();
         $input->SetBody("嘉瑞百合缘VIP会员服务");
         $input->SetAttach("手机网站");
-        $input->SetOut_trade_no(WxPayConfig::MCHID.date("YmdHis"));
+        $input->SetOut_trade_no(ChargeOrder::getInstance()->createOrderId());
         $input->SetTotal_fee("1");
         $input->SetTime_start(date("YmdHis"));
         $input->SetTime_expire(date("YmdHis", time() + 600));
@@ -66,7 +67,6 @@ class ChargeController extends BaseController
         printf_info($order);
         $jsApiParameters = $tools->GetJsApiParameters($order);
 
-        var_dump($jsApiParameters);
         return $this->render();
 //        $this->renderAjax(['status' => 1, 'data' => ChargeOrder::getInstance()->createOrder()]);
     }

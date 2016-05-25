@@ -1,10 +1,10 @@
 <?php
-namespace common\util\pay\wechat\lib;
+namespace common\util\pay\wechat;
 /**
 * 2015-06-29 修复签名问题
 **/
-use WxPayException;
-use WxPayConfig;
+use common\util\pay\wechat\WxPayException;
+use common\util\pay\wechat\WxPayConfig;
 
 /**
  * 

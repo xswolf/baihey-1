@@ -1,5 +1,5 @@
 <?php
-namespace common\util\pay\wechat\lib;
+namespace common\util\pay\wechat;
 /**
  * 
  * 微信支付API异常类
