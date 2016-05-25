@@ -6,7 +6,7 @@
     <script type="text/javascript">
         function onBridgeReady() {
             WeixinJSBridge.invoke(
-                    'getBrandWCPayRequest', '{!$param}',
+                    'getBrandWCPayRequest', {!$param},
                     function (res) {
                         if (res.err_msg == "get_brand_wcpay_request：ok") {
                         }
