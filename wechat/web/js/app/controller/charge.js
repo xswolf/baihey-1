@@ -11,7 +11,7 @@ define(['app/module', 'app/directive/directiveApi'
         $scope.formData = [];
 
         // 商品
-        api.get('/wap/charge/get-order',{id:$location.$$search.orderId}).success(function(res){
+        api.get('/wap/charge/get-order', {id: $location.$$search.orderId}).success(function (res) {
             $scope.goods = res[0];
         })
 
@@ -24,7 +24,7 @@ define(['app/module', 'app/directive/directiveApi'
 
         // 立即支付
         $scope.pay = function () {
-            window.location.href('http://wechat.baihey.com/wap/charge/pay?orderId='+$location.$$search.orderId);
+            window.location.href = 'http://wechat.baihey.com/wap/charge/pay?orderId=' + $location.$$search.orderId;
         }
 
         // 跳转-返回
