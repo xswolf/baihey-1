@@ -1,8 +1,8 @@
 <?php
 namespace wechat\controllers;
 
-use pay\wechat\JsApiPay;
-use pay\wechat\lib\WxPayApi;
+use common\util\pay\wechat\lib\WxPayApi;
+use common\util\pay\wechat\JsApiPay;
 use wechat\models\ChargeGoods;
 use wechat\models\ChargeOrder;
 use wechat\models\ChargeType;
