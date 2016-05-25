@@ -59,7 +59,6 @@ class ChargeController extends BaseController
         $input->SetTrade_type("JSAPI");
         $input->SetOpenid($openId);
         $order = WxPayApi::unifiedOrder($input);
-        printf_info($order);
         $jsApiParameters = $tools->GetJsApiParameters($order);
         $this->assign('param',$jsApiParameters);
         return $this->render();
