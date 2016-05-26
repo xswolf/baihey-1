@@ -96,23 +96,18 @@ class ChargeOrder extends Base
         if ($orderInfo['status'] == 1) return true;        // 异常情况，不予处理，订单已经成功
         $tran = \Yii::$app->db->beginTransaction();
 
-        $row = $this->updateAll(['status' => $status], ['order_id' => $orderId]);
+        $row = $this->updateAll(['status' => $status], ['order_id' => $orderId]);  // 修改订单状态
 
-       /* if ($orderInfo['id'] == '-1') {   // 充值余额
+        $bal = User::getInstance()->changeBalance($orderInfo['user_id'], -($orderInfo['money'] / 100));  // 充值余额
 
-            $money = User::getInstance()->changeBalance($orderInfo['uid'], -($orderInfo['money'] / 100));
+        $mat = User::getInstance()->changeMatureTime($orderInfo['user_id'], $orderInfo['charge_goods_id']);  // 开通服务
 
-        } else {  // 开通服务
-
-
-        }*/
-        if ($row) {
-            $tran->commit();
+        if ($row && $bal && $mat) {
+            $tran->commit();  // 提交
             return true;
         }
-        $tran->rollBack();
+        $tran->rollBack();   // 回滚
         return false;
-
     }
 
 

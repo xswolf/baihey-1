@@ -10,7 +10,17 @@
             var orderId = '{!$orderId}';
             $.get('http://wechat.baihey.com/wap/charge/order-query', {out_trade_no:orderId}, function (res) {
                 res = JSON.parse(res);
-                alert(res.trade_state);
+                if(res.trade_state && res.trade_state == "SUCCESS"){
+                    $.get('http://wechat.baihey.com/wap/charge/set-order-status',{orderId:orderId},function(res){
+                        if(res){
+                            window.location.href= '/wap/site/main#/charge_order?orderId='+orderId;
+                        }else {
+                            alert('设置订单状态失败');
+                        }
+                    })
+                }else{
+                    window.location.href= '/wap/site/main#/charge_order?orderId='+orderId;
+                }
             });
         }
     );
