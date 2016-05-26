@@ -7,7 +7,7 @@
         WeixinJSBridge.invoke(
                 'getBrandWCPayRequest', {!$param},
         function (res) {
-            var orderId = '{!$orderId}}';
+            var orderId = '{!$orderId}';
             alert(orderId);
             $.post('http://wechat.baihey.com/wap/charge/order-query', {out_trade_no:orderId}, function (res) { alert(res.data); });
         }
