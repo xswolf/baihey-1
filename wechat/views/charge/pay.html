@@ -12,7 +12,7 @@
                 res = JSON.parse(res);
                 if(res.trade_state && res.trade_state == "SUCCESS"){
                     $.get('http://wechat.baihey.com/wap/charge/set-order-status',{orderId:orderId},function(res){
-                        alert(res.data);
+                        res = JSON.parse(res);
                         if(res.data){
                             window.location.href= '/wap/site/main#/charge_order?orderId='+orderId;
                         }else {
