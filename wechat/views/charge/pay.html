@@ -9,6 +9,7 @@
         function (res) {
             var orderId = '{!$orderId}';
             $.get('http://wechat.baihey.com/wap/charge/order-query', {out_trade_no:orderId}, function (res) {
+                res = JSON.parse(res);
                 alert(res+'|'+typeof(res));
             });
         }
