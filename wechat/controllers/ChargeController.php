@@ -67,7 +67,7 @@ class ChargeController extends BaseController
         $input->SetTotal_fee((string)$orderInfo['money']);
         $input->SetTime_start(date("YmdHis"));
         $input->SetTime_expire(date("YmdHis", time() + 600));
-        $input->SetNotify_url("http://wechat.baihey.com/wap/Charge/notify-url");
+        $input->SetNotify_url("http://wechat.baihey.com/wap/charge/notify-url");
         $input->SetTrade_type("JSAPI");
         $input->SetOpenid($openId);
         $order = \WxPayApi::unifiedOrder($input);
