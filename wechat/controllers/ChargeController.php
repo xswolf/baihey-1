@@ -9,6 +9,7 @@ use common\models\ChargeType;
 require_once('../../common/util/pay/wechat/lib/WxPay.Api.php');
 require_once('../../common/util/pay/wechat/WxPay.JsApiPay.php');
 require_once('../../common/util/pay/alipay/lib/alipay_submit.class.php');
+require_once('../../common/util/pay/alipay/alipay.config.php');
 require_once('../../common/util/pay/alipay/lib/alipay_notify.class.php');
 
 /**
@@ -84,7 +85,7 @@ class ChargeController extends BaseController
     public function actionNotifyUrl()
     {
         //计算得出通知验证结果
-        $alipayNotify = new \AlipayNotify(ChargeConfig::getInstance()->AlipayConfig);
+        $alipayNotify = new \AlipayNotify($alipay_config);
         $verify_result = $alipayNotify->verifyNotify();
 
         if($verify_result) {//验证成功
@@ -115,13 +116,13 @@ class ChargeController extends BaseController
         $goods = ChargeGoods::getInstance()->getOne($orderInfo['charge_goods_id']);
 
         $parameter = array(
-            "service"       => ChargeConfig::getInstance()->AlipayConfig['service'],
-            "partner"       => ChargeConfig::getInstance()->AlipayConfig['partner'],
-            "seller_id"     => ChargeConfig::getInstance()->AlipayConfig['partner'],
-            "payment_type"	=> ChargeConfig::getInstance()->AlipayConfig['payment_type'],
-            "notify_url"	=> ChargeConfig::getInstance()->AlipayConfig['notify_url'],
-            "return_url"	=> ChargeConfig::getInstance()->AlipayConfig['return_url'],
-            "_input_charset"	=> trim(strtolower(ChargeConfig::getInstance()->AlipayConfig['input_charset'])),
+            "service"       => $alipay_config['service'],
+            "partner"       => $alipay_config['partner'],
+            "seller_id"     => $alipay_config['partner'],
+            "payment_type"	=> $alipay_config['payment_type'],
+            "notify_url"	=> $alipay_config['notify_url'],
+            "return_url"	=> $alipay_config['return_url'],
+            "_input_charset"	=> trim(strtolower($alipay_config['input_charset'])),
             "out_trade_no"	=> $orderInfo['order_id'],
             "subject"	=> '嘉瑞百合缘-【'.$goods['name'].'】',
             "total_fee"	=> $orderInfo['money'],
@@ -132,7 +133,7 @@ class ChargeController extends BaseController
         );
 
         //建立请求
-        $alipaySubmit = new \AlipaySubmit(ChargeConfig::getInstance()->AlipayConfig);
+        $alipaySubmit = new \AlipaySubmit($alipay_config);
         $html_text = $alipaySubmit->buildRequestForm($parameter,"get", "确认");
         echo $html_text;
     }

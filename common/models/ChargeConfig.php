@@ -19,6 +19,7 @@ class ChargeConfig extends Base
         'partner' => '2088701919851801',
         'key' => 'np84w319xyg4r1p9uo69tiexwqhmy3w3',
         'seller_id' => '2088701919851801',
+        'service'=>'alipay.wap.create.direct.pay.by.user',
         'payment_type' => '1',
         'notify_url' => 'http://wehcat.baihey.com/wap/charge/notify-url',
         'return_url' => 'http://wehcat.baihey.com/wap/charge/notify-url',
