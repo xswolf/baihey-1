@@ -67,7 +67,6 @@ class ChargeController extends BaseController
             //①、获取用户openid
             $tools = new \JsApiPay();
             $openId = $tools->GetOpenid();
-        var_dump($_SERVER);exit();
             //②、统一下单
             $orderInfo = ChargeOrder::getInstance()->getOne($this->get['orderId']);
             $goods = ChargeGoods::getInstance()->getOne($orderInfo['charge_goods_id']);
