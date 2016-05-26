@@ -8,8 +8,7 @@
             WeixinJSBridge.invoke(
                     'getBrandWCPayRequest', {!$param},
                 function (res) {
-                    alert('支付结束1|' + res.err_code + res.err_desc + res.err_msg);
-                    window.location.href = 'http://wechat.baihey.com/wap/site/main#/charge_order?orderId={!$orderId}'
+                    window.location.href = 'http://wechat.baihey.com/wap/site/main#/charge_order?orderId={!$orderId}';
                 }
             );
         }
