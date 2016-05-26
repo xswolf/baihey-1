@@ -206,7 +206,7 @@ class JsApiPay
 	{
 		$urlObj["appid"] = WxPayConfig::APPID;
 		$urlObj["secret"] = WxPayConfig::APPSECRET;
-		$urlObj["code"] = $code;
+		$urlObj["code"] = (string)$code;
 		$urlObj["grant_type"] = "authorization_code";
 		$bizString = $this->ToUrlParams($urlObj);
 		return "https://api.weixin.qq.com/sns/oauth2/access_token?".$bizString;
