@@ -264,12 +264,32 @@ class User extends Base
      * @return int
      * @throws \yii\db\Exception
      */
-    public function changeBalance($uid, $money)
+    public function changeBalance($user_id, $money)
     {
 
-        $user = User::findOne($uid);
+        $user = User::findOne($user_id);
         $user->balance = $user->balance - $money;
         return $user->save();
+    }
+
+    /**
+     * 修改到期时间
+     * @param $user_id
+     * @param $time
+     * @param int $level
+     * @return int
+     * @throws \yii\db\Exception
+     */
+    public function changeMatureTime($user_id, $time, $level = 1)
+    {
+        $userInfo = UserInformation::findOne(['user_id' => $user_id]);
+        if(YII_BEGIN_TIME > $userInfo['mature_time']) {
+            $userInfo['mature_time'] = YII_BEGIN_TIME + $time;
+        } else {
+            $userInfo['mature_time'] = $userInfo['mature_time'] + $time;
+        }
+        $sql = "UPDATE {$userInfo->tableName()} SET info = JSON_REPLACE(info,'$.level','".$level."'), mature_time = ".$userInfo['mature_time']." WHERE user_id={$user_id}";
+        return $userInfo->getDb()->createCommand($sql)->execute();
     }
 
 }
