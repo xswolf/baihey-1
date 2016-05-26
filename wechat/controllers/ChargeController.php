@@ -1,7 +1,6 @@
 <?php
 namespace wechat\controllers;
 
-use common\models\ChargeConfig;
 use common\models\ChargeGoods;
 use common\models\ChargeOrder;
 use common\models\ChargeType;
@@ -19,6 +18,11 @@ require_once('../../common/util/pay/alipay/lib/alipay_notify.class.php');
  */
 class ChargeController extends BaseController
 {
+    var $alipay_config;
+
+    function __construct($alipay_config){
+        $this->alipay_config = $alipay_config;
+    }
 
     public function actionIndex()
     {
