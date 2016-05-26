@@ -83,14 +83,16 @@ class ChargeController extends BaseController
     }
 
     // 微信查询订单
-    public function actionOrderQuery(){
-        if(isset($_REQUEST["out_trade_no"]) && $_REQUEST["out_trade_no"] != ""){
+    public function actionOrderQuery()
+    {
+        if (isset($_REQUEST["out_trade_no"]) && $_REQUEST["out_trade_no"] != "") {
             $out_trade_no = $_REQUEST["out_trade_no"];
             $input = new \WxPayOrderQuery();
             $input->SetOut_trade_no($out_trade_no);
-            $this->renderAjax(['data'=>\WxPayApi::orderQuery($input)]);
-        }else{
-            $this->renderAjax(['data'=>'没有订单号你叫我怎么查？']);
+            $result = \WxPayApi::orderQuery($input);
+            $this->renderAjax(['data' => $result]);
+        } else {
+            $this->renderAjax(['data' => '没有订单号你叫我怎么查？']);
         }
     }
 
