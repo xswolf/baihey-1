@@ -79,8 +79,10 @@ class ChargeController extends BaseController
 
     public function actionNotifyUrl()
     {
-        $this->assign('gett', $this->get);
-        $this->assign('postt', $this->post);
+        if($this->get){
+            $filename = 'wxPay.txt';
+            file_put_contents($filename, implode('|',$this->get));
+        }
         return $this->render();
     }
 

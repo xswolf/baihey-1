@@ -283,10 +283,10 @@ class User extends Base
     public function changeMatureTime($user_id, $time, $level = 1)
     {
         $userInfo = UserInformation::findOne(['user_id' => $user_id]);
-        if(YII_BEGIN_TIME > $userInfo['mature_time']) {
+        if(YII_BEGIN_TIME > $userInfo['mature_time']) {  // 已到期
             $userInfo['mature_time'] = YII_BEGIN_TIME + $time;
         } else {
-            $userInfo['mature_time'] = $userInfo['mature_time'] + $time;
+            $userInfo['mature_time'] = $userInfo['mature_time'] + $time;   //未到期
         }
         $sql = "UPDATE {$userInfo->tableName()} SET info = JSON_REPLACE(info,'$.level','".$level."'), mature_time = ".$userInfo['mature_time']." WHERE user_id={$user_id}";
         return $userInfo->getDb()->createCommand($sql)->execute();

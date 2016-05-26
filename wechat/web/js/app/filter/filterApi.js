@@ -392,5 +392,10 @@ define(['app/module'], function (module) {
                 return "AA制"
             }
         }
+    });
+
+    module.filter('unix',function(){
+        return function (time){
+        }
     })
 })

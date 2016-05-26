@@ -1,42 +1,48 @@
-    <link href="/wechat/web/css/charge.css" rel="stylesheet">
-    <ion-header-bar class="com_w_100 bhy">
-        <h1 class="title">订单信息</h1>
-    </ion-header-bar>
-    <ion-content class="com_w_100 bhy">
-
-        <div class="list list-inset">
-            <div class="tac mb10 clearfix">
-                <p>
-                    <img ng-if="orderInfo.status==1" src="/wechat/web/images/pay_ok.png" width="70" class="mr10 vam">
-                    <img ng-if="orderInfo.status==0" src="/wechat/web/images/pay_wait.png" width="70" class="mr10 vam">
-                    <span ng-if="orderInfo.status==1" class="vam fs30">支付成功</span>
-                    <span ng-if="orderInfo.status==0" class="vam fs30">等待支付</span>
-                </p>
-            </div>
-            <ion-item>
-                <span>订单编号：</span>
-                <b>{{orderInfo.order_id}}</b>
-            </ion-item>
-            <ion-item>
-                <span>商品名称：</span>
-                <b>{{orderInfo.name}}</b>
-            </ion-item>
-            <ion-item>
-                <span>开通时长：</span>
-                <b>{{orderInfo.value}}个月</b>
-            </ion-item>
-            <ion-item>
-                <span>支付金额：</span>
-                <b>{{orderInfo.money / 100}}元</b>
-            </ion-item>
-            <ion-item>
-                <span>订单状态：</span>
-                <b ng-if="orderInfo.status==1">支付成功</b>
-                <b ng-if="orderInfo.status==0">等待支付</b>
-            </ion-item>
-            <ion-item>
-                <span>创建时间：</span>
-                <b>{{orderInfo.create_time}}</b>
-            </ion-item>
+<link href="/wechat/web/css/charge.css" rel="stylesheet">
+<ion-header-bar class="com_w_100 bhy">
+    <h1 class="title">订单信息</h1>
+</ion-header-bar>
+<ion-content class="com_w_100 bhy" cloak>
+    <div class="list list-inset">
+        <div class="tac mb10 clearfix">
+            <p>
+                <img ng-if="orderInfo.status==1" src="/wechat/web/images/pay_ok.png" width="70" class="mr10 vam">
+                <img ng-if="orderInfo.status==0" src="/wechat/web/images/pay_wait.png" width="70" class="mr10 vam">
+                <span ng-if="orderInfo.status==1" class="vam fs30 cor41">支付成功</span>
+                <span ng-if="orderInfo.status==0" class="vam fs30 cor40">等待支付</span>
+            </p>
         </div>
-    </ion-content>
+        <ion-item>
+            <span>订单编号：</span>
+            <b>{{orderInfo.order_id}}</b>
+        </ion-item>
+        <ion-item>
+            <span>商品名称：</span>
+            <b>{{orderInfo.name}}</b>
+        </ion-item>
+        <ion-item>
+            <span>开通时长：</span>
+            <b>{{orderInfo.value}}个月</b>
+        </ion-item>
+        <ion-item>
+            <span>支付金额：</span>
+            <b>{{orderInfo.money / 100}}元</b>
+        </ion-item>
+        <ion-item>
+            <span>订单状态：</span>
+            <b class="cor41" ng-if="orderInfo.status==1">支付成功</b>
+            <b class="cor40" ng-if="orderInfo.status==0">等待支付</b>
+        </ion-item>
+        <ion-item>
+            <span>创建时间：</span>
+            <b>{{orderInfo.create_time * 1000 | date:"yyyy-MM-dd HH:mm:ss"}}</b>
+        </ion-item>
+        <div class="w100 mt20 mb20 tac" ng-if="orderInfo.status==0">
+            <a class="button button-assertive w50 mb10" href="/wap/charge/pay?orderId={{orderInfo.orderId}}">重新支付</a>
+            <a class="button button-stable w50" href="/wap">放弃支付，返回首页</a>
+        </div>
+        <div class="w100 mt20 mb20 tac" ng-if="orderInfo.status==1">
+            <a class="button button-balanced w50" href="/wap">返回首页</a>
+        </div>
+    </div>
+</ion-content>

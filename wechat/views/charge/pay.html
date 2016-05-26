@@ -8,7 +8,12 @@
             WeixinJSBridge.invoke(
                     'getBrandWCPayRequest', {!$param},
                 function (res) {
-                    window.location.href = 'http://wechat.baihey.com/wap/site/main#/charge_order?orderId={!$orderId}';
+                    if(res.err_msg == "get_brand_wcpay_request:ok"){
+                        window.location.href = 'http://wechat.baihey.com/wap/site/main#/charge_order?orderId={!$orderId}';
+                    }else{
+
+                    }
+
                 }
             );
         }
