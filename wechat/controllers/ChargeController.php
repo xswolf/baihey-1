@@ -90,9 +90,9 @@ class ChargeController extends BaseController
             $input = new \WxPayOrderQuery();
             $input->SetOut_trade_no($out_trade_no);
             $result = \WxPayApi::orderQuery($input);
-            $this->renderAjax(['data' => $result]);
+            $this->renderAjax($result);
         } else {
-            $this->renderAjax(['data' => '没有订单号你叫我怎么查？']);
+            $this->renderAjax('没有订单号你叫我怎么查？');
         }
     }
 
