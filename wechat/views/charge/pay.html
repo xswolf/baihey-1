@@ -14,13 +14,13 @@
                     $.get('http://wechat.baihey.com/wap/charge/set-order-status',{orderId:orderId},function(res){
                         res = JSON.parse(res);
                         if(res.data){
-                            window.location.href= '/wap/site/main#/charge_order?orderId='+orderId;
+                            window.location.href= '/wap/site/main#/charge_order?orderId='+orderId+'&payType=5';
                         }else {
                             alert('设置订单状态失败');
                         }
                     })
                 }else{
-                    window.location.href= '/wap/site/main#/charge_order?orderId='+orderId;
+                    window.location.href= '/wap/site/main#/charge_order?orderId='+orderId+'&payType=5';
                 }
             });
         }
