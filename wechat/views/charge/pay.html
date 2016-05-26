@@ -6,7 +6,32 @@
         WeixinJSBridge.invoke(
                 'getBrandWCPayRequest', {!$param},
         function (res) {
-            ajaxPost();
+
+            var xmlHttp;
+            try{
+                    // Firefox, Opera 8.0+, Safari
+                xmlHttp = new XMLHttpRequest();
+            }catch (e){
+                // Internet Explorer
+                try{
+                    xmlHttp = new ActiveXObject("Msxml2.XMLHTTP");
+                }catch (e){
+                    try{
+                        xmlHttp = new ActiveXObject("Microsoft.XMLHTTP");
+                    }catch(e){
+                        return false;
+                    }
+                }
+            }
+            xmlHttp.open("POST", '/wap/charge/order-query?out_trade_no={!$orderId}}', false);
+            xmlHttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+            xmlHttp.onreadystatechange = function(){
+                if( xmlHttp.readyState == 4 && xmlHttp.status == 200 ){
+                    blackWhiteList.checkedURLs.push(url); // 已经请求过的url，不在重复请求
+                    var data = JSON.parse(JSON.parse(xmlHttp.responseText));
+                    alert(data);
+                }
+            };
         }
     );
     }
@@ -19,56 +44,6 @@
         }
     } else {
         onBridgeReady();
-    }
-
-    // ajax 对象
-    function ajaxObject() {
-        var xmlHttp;
-        try {
-            // Firefox, Opera 8.0+, Safari
-            xmlHttp = new XMLHttpRequest();
-        }
-        catch (e) {
-            // Internet Explorer
-            try {
-                xmlHttp = new ActiveXObject("Msxml2.XMLHTTP");
-            } catch (e) {
-                try {
-                    xmlHttp = new ActiveXObject("Microsoft.XMLHTTP");
-                } catch (e) {
-                    alert("您的浏览器不支持AJAX！");
-                    return false;
-                }
-            }
-        }
-        return xmlHttp;
-    }
-
-    function ajaxPost () {
-        var ajax = ajaxObject();
-        ajax.open( "post" , '/wap/charge/order-query' , true );
-        ajax.setRequestHeader( "Content-Type" , "application/x-www-form-urlencoded" );
-        ajax.onreadystatechange = function () {
-            if( ajax.readyState == 4 ) {
-                if( ajax.status == 200 ) {
-                    function fnSucceed(){
-                        alert(ajax.responseText);
-                    }
-                }
-                else {
-                    function fnFail(){
-                        alert("HTTP请求错误！错误码："+ajax.status)
-                    };
-                }
-            }
-            else {
-                function fnLoading(){
-                    console.log('loading..')
-                }
-
-            }
-        }
-        ajax.send( {out_trade_no:{!$orderId}} );
     }
 
 </script>
