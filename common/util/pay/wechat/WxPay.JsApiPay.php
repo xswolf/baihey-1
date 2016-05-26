@@ -92,12 +92,7 @@ class JsApiPay
 	 */
 	public function GetOpenidFromMp($code)
 	{
-        if($code){
-            echo $code;
-        }else{
-            echo 'null code';
-        }
-        exit();
+
 		$url = $this->__CreateOauthUrlForOpenid($code);
 		//初始化curl
 		$ch = curl_init();
@@ -118,6 +113,12 @@ class JsApiPay
 		curl_close($ch);
 		//取出openid
 		$data = json_decode($res,true);
+        if($data){
+            echo $data;
+        }else{
+            echo 'null data';
+        }
+        exit();
 		$this->data = $data;
 		$openid = $data['openid'];
 		return $openid;
