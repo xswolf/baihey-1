@@ -7,27 +7,14 @@ use yii\web\Session;
 
 class User extends Base
 {
-    public $tablePrefix;
-
-    public function init() {
-        $this->tablePrefix = Yii::$app->db->tablePrefix;
-    }
-
-    /**
-     * @return string 返回该AR类关联的数据表名
-     */
-    public static function tableName()
-    {
-        return 'user';
-    }
 
     public function getUserById($id){
-        $userTable = $this->tablePrefix.$this->tableName();
+        $userTable = static::tableName();
         $userInformationTable = $this->tablePrefix.'user_information';
         $row = (new Query)
             ->select('*')
             ->from($userTable)
-            ->leftJoin($this->tablePrefix.'user_information',"$userTable.id = ".$userInformationTable.'user_id')
+            ->leftJoin($this->tablePrefix.'user_information',"$userTable.id = ".$userInformationTable.'.user_id')
             ->where(['id' => $id])
             ->one();
 
@@ -259,7 +246,7 @@ class User extends Base
 
     /**
      * 修改余额
-     * @param $uid
+     * @param $user_id
      * @param $money
      * @return int
      * @throws \yii\db\Exception
@@ -273,23 +260,42 @@ class User extends Base
     }
 
     /**
-     * 修改到期时间
+     * 开通服务（修改余额，到期时间，等级）
      * @param $user_id
+     * @param $money
      * @param $time
      * @param int $level
-     * @return int
+     * @return bool
      * @throws \yii\db\Exception
      */
-    public function changeMatureTime($user_id, $time, $level = 1)
+    public function changeMatureTime($user_id, $money, $time, $level = 1)
     {
-        $userInfo = UserInformation::findOne(['user_id' => $user_id]);
-        if(YII_BEGIN_TIME > $userInfo['mature_time']) {  // 已到期
-            $userInfo['mature_time'] = YII_BEGIN_TIME + $time;
-        } else {
-            $userInfo['mature_time'] = $userInfo['mature_time'] + $time;   //未到期
+        $userInfo = $this->getUserById($user_id);
+        //  金额是否大于余额
+        if($money > $userInfo['balance']) {
+            return false;
         }
-        $sql = "UPDATE {$userInfo->tableName()} SET info = JSON_REPLACE(info,'$.level','".$level."'), mature_time = ".$userInfo['mature_time']." WHERE user_id={$user_id}";
-        return $userInfo->getDb()->createCommand($sql)->execute();
+        $db = $this->getDb();
+        $transaction = $db->beginTransaction();// 启动事件
+        // 修改余额
+        $userInfo['balance'] = $userInfo['balance'] - $money;
+        $user = $db->createCommand()
+            ->update(static::tableName(),['balance' => $userInfo['balance']],['id' => $user_id])
+            ->execute();
+
+        // 修改到期时间
+        $_user_information_table = $this->tablePrefix.'user_information';// 表名
+        $userInfo['mature_time'] = YII_BEGIN_TIME > $userInfo['mature_time'] ? YII_BEGIN_TIME + $time : $userInfo['mature_time'] + $time;
+        $sql = "UPDATE {$_user_information_table} SET info = JSON_REPLACE(info,'$.level','".$level."'), mature_time = ".$userInfo['mature_time']." WHERE user_id={$user_id}";
+        $info = $db->createCommand($sql)->execute();
+
+        if($user && $info) {
+            $transaction->commit();
+            return true;
+        } else {
+            $transaction->rollBack();
+            return false;
+        }
     }
 
 }
