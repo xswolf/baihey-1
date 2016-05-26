@@ -6,11 +6,7 @@
         WeixinJSBridge.invoke(
                 'getBrandWCPayRequest', {!$param},
         function (res) {
-            ajaxPost('/wap/charge/order-query',{out_trade_no:{!$orderId}},function success(res){
-                alert(res.data);
-                alert(res.data.return_code);
-            })
-
+            ajaxPost();
         }
     );
     }
@@ -48,25 +44,31 @@
         return xmlHttp;
     }
 
-    // ajax post请求：
-    function ajaxPost ( url , data , fnSucceed , fnFail , fnLoading ) {
+    function ajaxPost () {
         var ajax = ajaxObject();
-        ajax.open( "post" , url , true );
+        ajax.open( "post" , '/wap/charge/order-query' , true );
         ajax.setRequestHeader( "Content-Type" , "application/x-www-form-urlencoded" );
         ajax.onreadystatechange = function () {
             if( ajax.readyState == 4 ) {
                 if( ajax.status == 200 ) {
-                    fnSucceed( ajax.responseText );
+                    function fnSucceed(){
+                        alert(ajax.responseText);
+                    }
                 }
                 else {
-                    fnFail( "HTTP请求错误！错误码："+ajax.status );
+                    function fnFail(){
+                        alert("HTTP请求错误！错误码："+ajax.status)
+                    };
                 }
             }
             else {
-                fnLoading();
+                function fnLoading(){
+                    console.log('loading..')
+                }
+
             }
         }
-        ajax.send( data );
-
+        ajax.send( {out_trade_no:{!$orderId}} );
     }
+
 </script>
