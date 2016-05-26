@@ -8,7 +8,7 @@
                 'getBrandWCPayRequest', {!$param},
         function (res) {
             var orderId = '{!$orderId}';
-            $.get('http://wechat.baihey.com/wap/charge/order-query', {out_trade_no:orderId}, function (res) { alert(res.data); });
+            $.get('http://wechat.baihey.com/wap/charge/order-query', {out_trade_no:orderId}, function (res) { alert(typeof(res)); });
         }
     );
     }
