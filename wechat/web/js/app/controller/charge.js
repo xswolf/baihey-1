@@ -40,7 +40,7 @@ define(['app/module', 'app/directive/directiveApi'
     module.controller("charge.order", ['app.serviceApi', '$rootScope', '$scope', '$timeout', '$ionicPopup', '$ionicModal', '$ionicActionSheet', '$ionicLoading', '$location', function (api, $rootScope, $scope, $timeout, $ionicPopup, $ionicModal, $ionicActionSheet, $ionicLoading, $location) {
 
         api.save('/wap/charge/get-order', {orderId:$location.$$search.orderId}).success(function(res){
-            $scope.orderInfo = res[0];
+            $scope.orderInfo = res;
         })
 
 
