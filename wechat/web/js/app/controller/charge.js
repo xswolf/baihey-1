@@ -10,8 +10,9 @@ define(['app/module', 'app/directive/directiveApi'
 
         $scope.formData = [];
 
+        $scope.orderId = $location.$$search.orderId;
         // 商品
-        api.get('/wap/charge/get-order', {id: $location.$$search.orderId}).success(function (res) {
+        api.get('/wap/charge/get-order', {id: $scope.orderId}).success(function (res) {
             $scope.goods = res[0];
         })
 
@@ -24,8 +25,7 @@ define(['app/module', 'app/directive/directiveApi'
 
         // 立即支付
         $scope.pay = function () {
-
-            $location.url('/main/charge_pay?orderId='+$location.$$search.orderId);
+            window.location.href = '/wap/charge/pay?orderId='+$scope.orderId;
         }
 
         // 跳转-返回
@@ -39,6 +39,9 @@ define(['app/module', 'app/directive/directiveApi'
     // 选择支付方式
     module.controller("charge.pay", ['app.serviceApi', '$rootScope', '$scope', '$timeout', '$ionicPopup', '$ionicModal', '$ionicActionSheet', '$ionicLoading', '$location', function (api, $rootScope, $scope, $timeout, $ionicPopup, $ionicModal, $ionicActionSheet, $ionicLoading, $location) {
 
+        api.save('/wap/charge/pay',{orderId:$location.$$search.orderId}).success(function(res){
+            console.log(res);
+        })
 
 
     }]);

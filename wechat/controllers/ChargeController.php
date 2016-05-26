@@ -54,18 +54,17 @@ class ChargeController extends BaseController
 
     public function actionPay()
     {
-        if ($this->get) {
-            $order = ChargeOrder::getInstance()->getOne($this->get['orderId']);
-            $goods = ChargeGoods::getInstance()->getOne($order['charge_goods_id']);
             //①、获取用户openid
             $tools = new \JsApiPay();
             $openId = $tools->GetOpenid($this->get['orderId']);
             //②、统一下单
+            $orderInfo = ChargeOrder::getInstance()->getOne($this->get['orderId']);
+            $goods = ChargeGoods::getInstance()->getOne($orderInfo['charge_goods_id']);
             $input = new \WxPayUnifiedOrder();
             $input->SetBody("嘉瑞百合缘-【" . $goods['name'] . "】");
             $input->SetAttach("手机网站");
             $input->SetOut_trade_no($this->get['orderId']);
-            $input->SetTotal_fee((string)$order['money']);
+            $input->SetTotal_fee((string)$orderInfo['money']);
             $input->SetTime_start(date("YmdHis"));
             $input->SetTime_expire(date("YmdHis", time() + 600));
             $input->SetNotify_url("http://wechat.baihey.com/wap/Charge/notify-url");
@@ -73,12 +72,7 @@ class ChargeController extends BaseController
             $input->SetOpenid($openId);
             $order = \WxPayApi::unifiedOrder($input);
             $jsApiParameters = $tools->GetJsApiParameters($order);
-            $this->assign('param', $jsApiParameters);
-            $this->assign('order', $order);
-            $this->assign('goods', $goods);
-        }
-
-        return $this->render();
+            $this->renderAjax($jsApiParameters);
     }
 
     public function actionNotifyUrl()
