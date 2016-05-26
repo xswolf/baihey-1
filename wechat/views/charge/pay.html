@@ -1,22 +1,15 @@
 <ion-content>
   正在跳转支付...
 </ion-content>
+<script src="/wechat/web/js/plugin/jquery/jquery_1.8.3.min.js"></script>
 <script type="text/javascript">
     function onBridgeReady() {
         WeixinJSBridge.invoke(
                 'getBrandWCPayRequest', {!$param},
         function (res) {
-
-            var xmlHttp = new XMLHttpRequest();
-
-            xmlHttp.open("POST", '/wap/charge/order-query?out_trade_no={!$orderId}}', false);
-            xmlHttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-            xmlHttp.onreadystatechange = function(){
-                if( xmlHttp.readyState == 4 && xmlHttp.status == 200 ){
-                    var data = JSON.parse(JSON.parse(xmlHttp.responseText));
-                    alert(data);
-                }
-            };
+            $.ajax('/wap/charge/order-query',{out_trade_no:{!$orderId}}).success(function(res){
+                alert(res.data);
+            })
         }
     );
     }
