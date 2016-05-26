@@ -7,10 +7,10 @@
         <div class="list list-inset">
             <div class="tac mb10 clearfix">
                 <p>
-                    <img ng-if="orderInfo.status" src="/wechat/web/images/pay_ok.png" width="70" class="mr10 vam">
-                    <img ng-if="!orderInfo.status" src="/wechat/web/images/pay_wait.png" width="70" class="mr10 vam">
-                    <span ng-if="orderInfo.status" class="vam fs30">支付成功</span>
-                    <span ng-if="!orderInfo.status" class="vam fs30">等待支付</span>
+                    <img ng-if="orderInfo.status==1" src="/wechat/web/images/pay_ok.png" width="70" class="mr10 vam">
+                    <img ng-if="orderInfo.status==0" src="/wechat/web/images/pay_wait.png" width="70" class="mr10 vam">
+                    <span ng-if="orderInfo.status==1" class="vam fs30">支付成功</span>
+                    <span ng-if="orderInfo.status==0" class="vam fs30">等待支付</span>
                 </p>
             </div>
             <ion-item>
@@ -31,8 +31,8 @@
             </ion-item>
             <ion-item>
                 <span>订单状态：</span>
-                <b ng-if="orderInfo.status">支付成功</b>
-                <b ng-if="!orderInfo.status">等待支付</b>
+                <b ng-if="orderInfo.status==1">支付成功</b>
+                <b ng-if="orderInfo.status==0">等待支付</b>
             </ion-item>
             <ion-item>
                 <span>创建时间：</span>
