@@ -54,7 +54,7 @@ class ChargeController extends BaseController
 
     public function Transfer(){
         if(isset($_GET['code'])){
-            $url = 'http://wechat.baihey.com/wap/site/main#/main/charge_pay?orderId='.$_GET['orderId'].'&code='.$_GET['code'];
+            $url = 'http://wechat.baihey.com/wap/site/main#/main/charge_pay?appid='.$_GET['appid'].'&secret='.$_GET['secret'].'&code='.$_GET['code'].'&grant_type=authorization_code'.'&orderId='.$_GET['orderId'];
             Header("Location: $url");
         }
     }
