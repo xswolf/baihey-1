@@ -39,7 +39,7 @@ define(['app/module', 'app/directive/directiveApi'
     // 选择支付方式
     module.controller("charge.order", ['app.serviceApi', '$rootScope', '$scope', '$timeout', '$ionicPopup', '$ionicModal', '$ionicActionSheet', '$ionicLoading', '$location', function (api, $rootScope, $scope, $timeout, $ionicPopup, $ionicModal, $ionicActionSheet, $ionicLoading, $location) {
 
-        api.save('/wap/charge/get-order', {orderId:$location.$$search.orderId}).success(function(res){
+        api.save('/wap/charge/get-order', {id:$location.$$search.orderId}).success(function(res){
             $scope.orderInfo = res;
         })
 
