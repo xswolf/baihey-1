@@ -2131,7 +2131,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
 
         // 生成订单并跳转支付
         $scope.createOrder = function(_goodsId){
-            api.save('/wap/charge/produce-order',{goodsId:_goodsId,user_id:1}).success(function(res){
+            api.save('/wap/charge/produce-order',{goodsId:_goodsId,uid:1}).success(function(res){ // TODO user_id
                 if(res.status<1){
                     $ionicPopup.alert({title:res.msg});
                 }else{
