@@ -7,7 +7,6 @@ use common\models\ChargeType;
 
 require_once('../../common/util/pay/wechat/lib/WxPay.Api.php');
 require_once('../../common/util/pay/wechat/WxPay.JsApiPay.php');
-include_once('../../common/util/pay/alipay/alipay.config.php');
 require_once('../../common/util/pay/alipay/lib/alipay_submit.class.php');
 require_once('../../common/util/pay/alipay/lib/alipay_notify.class.php');
 
@@ -84,56 +83,56 @@ class ChargeController extends BaseController
     public function actionNotifyUrl()
     {
         //计算得出通知验证结果
-        $alipayNotify = new \AlipayNotify($alipay_config);
+
+        $alipayNotify = new \AlipayNotify($this->alipayConfig());
         $verify_result = $alipayNotify->verifyNotify();
 
-        if($verify_result) {//验证成功
+        if ($verify_result) {//验证成功
 
-            if($_POST['trade_status'] == 'TRADE_FINISHED') { //退款日期超过可退款期限后（如三个月可退款），支付宝系统发送该交易状态通知
+            if ($_POST['trade_status'] == 'TRADE_FINISHED') { //退款日期超过可退款期限后（如三个月可退款），支付宝系统发送该交易状态通知
                 echo '退款';
-            }
-            else if ($_POST['trade_status'] == 'TRADE_SUCCESS') { //付款完成后，支付宝系统发送该交易状态通知
-                if(ChargeOrder::getInstance()->setOrderStatus($_POST['out_trade_no'])){   // 设置订单状态
-                    $baseUrl = urlencode('http://wechat.baihey.com/wap/site/main#/charge_order?orderId='.$_POST['out_trade_no'].'&payType=4');
+            } else if ($_POST['trade_status'] == 'TRADE_SUCCESS') { //付款完成后，支付宝系统发送该交易状态通知
+                if (ChargeOrder::getInstance()->setOrderStatus($_POST['out_trade_no'])) {   // 设置订单状态
+                    $baseUrl = urlencode('http://wechat.baihey.com/wap/site/main#/charge_order?orderId=' . $_POST['out_trade_no'] . '&payType=4');
                     Header("Location: $baseUrl");
-                }else{
+                } else {
                     echo '设置订单状态失败';
                 }
             }
 
-            echo "success";		//请不要修改或删除
+            echo "success";        //请不要修改或删除
 
-        }
-        else {
+        } else {
             //验证失败
             echo "fail";
         }
     }
 
-    public function actionAlipay(){
+    public function actionAlipay()
+    {
         $orderInfo = ChargeOrder::getInstance()->getOne($this->get['orderId']);
         $goods = ChargeGoods::getInstance()->getOne($orderInfo['charge_goods_id']);
 
         $parameter = array(
-            "service"       => $alipay_config['service'],
-            "partner"       => $alipay_config['partner'],
-            "seller_id"     => $alipay_config['partner'],
-            "payment_type"	=> $alipay_config['payment_type'],
-            "notify_url"	=> $alipay_config['notify_url'],
-            "return_url"	=> $alipay_config['return_url'],
-            "_input_charset"	=> trim(strtolower($alipay_config['input_charset'])),
-            "out_trade_no"	=> $orderInfo['order_id'],
-            "subject"	=> '嘉瑞百合缘-【'.$goods['name'].'】',
-            "total_fee"	=> $orderInfo['money'],
-            "show_url"	=> 'http://wechat.baihey.com/wap/site/main#/main/member/vip',
-            "body"	=> '',
+            "service" => $this->alipayConfig()['service'],
+            "partner" => $this->alipayConfig()['partner'],
+            "seller_id" => $this->alipayConfig()['partner'],
+            "payment_type" => $this->alipayConfig()['payment_type'],
+            "notify_url" => $this->alipayConfig()['notify_url'],
+            "return_url" => $this->alipayConfig()['return_url'],
+            "_input_charset" => trim(strtolower($this->alipayConfig()['input_charset'])),
+            "out_trade_no" => $orderInfo['order_id'],
+            "subject" => '嘉瑞百合缘-【' . $goods['name'] . '】',
+            "total_fee" => $orderInfo['money'],
+            "show_url" => 'http://wechat.baihey.com/wap/site/main#/main/member/vip',
+            "body" => '',
             //其他业务参数根据在线开发文档，添加参数.文档地址:https://doc.open.alipay.com/doc2/detail.htm?spm=a219a.7629140.0.0.2Z6TSk&treeId=60&articleId=103693&docType=1
 
         );
 
         //建立请求
-        $alipaySubmit = new \AlipaySubmit($alipay_config);
-        $html_text = $alipaySubmit->buildRequestForm($parameter,"get", "确认");
+        $alipaySubmit = new \AlipaySubmit($this->alipayConfig());
+        $html_text = $alipaySubmit->buildRequestForm($parameter, "get", "确认");
         echo $html_text;
     }
 
@@ -169,8 +168,44 @@ class ChargeController extends BaseController
 
     public function actionSetOrderStatus()
     {
-        $this->renderAjax(['data'=>ChargeOrder::getInstance()->setOrderStatus($this->get['orderId'])]);
+        $this->renderAjax(['data' => ChargeOrder::getInstance()->setOrderStatus($this->get['orderId'])]);
     }
 
+    public function alipayConfig()
+    {
+        //合作身份者ID，签约账号，以2088开头由16位纯数字组成的字符串，查看地址：https://b.alipay.com/order/pidAndKey.htm
+        $alipay_config['partner'] = '2088701919851801';
+
+        //收款支付宝账号，以2088开头由16位纯数字组成的字符串，一般情况下收款账号就是签约账号
+        $alipay_config['seller_id'] = $alipay_config['partner'];
+
+        // MD5密钥，安全检验码，由数字和字母组成的32位字符串，查看地址：https://b.alipay.com/order/pidAndKey.htm
+        $alipay_config['key'] = 'np84w319xyg4r1p9uo69tiexwqhmy3w3';
+        // 服务器异步通知页面路径  需http://格式的完整路径，不能加?id=123这类自定义参数，必须外网可以正常访问
+        $alipay_config['notify_url'] = "http://wehcat.baihey.com/wap/charge/notify-url";
+
+        // 页面跳转同步通知页面路径 需http://格式的完整路径，不能加?id=123这类自定义参数，必须外网可以正常访问
+        $alipay_config['return_url'] = "http://wehcat.baihey.com/wap/charge/notify-url";
+
+        //签名方式
+        $alipay_config['sign_type'] = strtoupper('MD5');
+
+        //字符编码格式 目前支持utf-8
+        $alipay_config['input_charset'] = strtolower('utf-8');
+
+        //ca证书路径地址，用于curl中ssl校验
+        //请保证cacert.pem文件在当前文件夹目录中
+        $alipay_config['cacert'] = 'http://wechat.baihey.com/common/util/pay/alipay/cacert.pem';
+        //访问模式,根据自己的服务器是否支持ssl访问，若支持请选择https；若不支持请选择http
+        $alipay_config['transport'] = 'http';
+
+        // 支付类型 ，无需修改
+        $alipay_config['payment_type'] = "1";
+
+        // 产品类型，无需修改
+        $alipay_config['service'] = "alipay.wap.create.direct.pay.by.user";
+
+        return $alipay_config;
+    }
 
 }

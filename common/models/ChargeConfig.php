@@ -11,13 +11,11 @@ namespace common\models;
 class ChargeConfig extends Base
 {
 
-
-
     /**
      * 支付宝
      * @var array
      */
-    public $AlipayConfig = [
+    public $AlipayConfigTemp = [
         'partner' => '2088701919851801',
         'key' => 'np84w319xyg4r1p9uo69tiexwqhmy3w3',
         'seller_id' => '2088701919851801',
