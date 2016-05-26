@@ -79,7 +79,7 @@ class ChargeOrder extends Base
         $obj = (new Query())->from($this->tablePrefix . 'charge_order o')
             ->innerJoin($this->tablePrefix . 'charge_goods g', 'o.charge_goods_id = g.id')
             ->where(['o.order_id' => $orderId])
-            ->select('o.id,o.order_id,g.*');
+            ->select('o.id,o.order_id,o.status,o.create_time,o.money,g.*');
 //          echo $obj->createCommand()->getRawSql();
         return $obj->all();
     }

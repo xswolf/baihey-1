@@ -52,38 +52,29 @@ class ChargeController extends BaseController
         $this->renderAjax(ChargeOrder::getInstance()->getOrderInfo($this->get['id']));
     }
 
-    public function Transfer(){
-        if(isset($_GET['code'])){
-            $url = 'http://wechat.baihey.com/wap/site/main#/main/charge_pay?code='.$_GET['code'].'&state=STATE'.'&orderId='.$_GET['orderId'];
-            Header("Location: $url");
-        }
-    }
-
     public function actionPay()
     {
-        /*if(!isset($this->get['s'])){
-            $this->Transfer();
-        }*/
-            //①、获取用户openid
-            $tools = new \JsApiPay();
-            $openId = $tools->GetOpenid();
-            //②、统一下单
-            $orderInfo = ChargeOrder::getInstance()->getOne($this->get['orderId']);
-            $goods = ChargeGoods::getInstance()->getOne($orderInfo['charge_goods_id']);
-            $input = new \WxPayUnifiedOrder();
-            $input->SetBody("嘉瑞百合缘-【" . $goods['name'] . "】");
-            $input->SetAttach("手机网站");
-            $input->SetOut_trade_no($this->get['orderId']);
-            $input->SetTotal_fee((string)$orderInfo['money']);
-            $input->SetTime_start(date("YmdHis"));
-            $input->SetTime_expire(date("YmdHis", time() + 600));
-            $input->SetNotify_url("http://wechat.baihey.com/wap/Charge/notify-url");
-            $input->SetTrade_type("JSAPI");
-            $input->SetOpenid($openId);
-            $order = \WxPayApi::unifiedOrder($input);
-            $jsApiParameters = $tools->GetJsApiParameters($order);
+        //①、获取用户openid
+        $tools = new \JsApiPay();
+        $openId = $tools->GetOpenid();
+        //②、统一下单
+        $orderInfo = ChargeOrder::getInstance()->getOne($this->get['orderId']);
+        $goods = ChargeGoods::getInstance()->getOne($orderInfo['charge_goods_id']);
+        $input = new \WxPayUnifiedOrder();
+        $input->SetBody("嘉瑞百合缘-【" . $goods['name'] . "】");
+        $input->SetAttach("手机网站");
+        $input->SetOut_trade_no($this->get['orderId']);
+        $input->SetTotal_fee((string)$orderInfo['money']);
+        $input->SetTime_start(date("YmdHis"));
+        $input->SetTime_expire(date("YmdHis", time() + 600));
+        $input->SetNotify_url("http://wechat.baihey.com/wap/Charge/notify-url");
+        $input->SetTrade_type("JSAPI");
+        $input->SetOpenid($openId);
+        $order = \WxPayApi::unifiedOrder($input);
+        $jsApiParameters = $tools->GetJsApiParameters($order);
+        $this->assign('param', $jsApiParameters);
+        $this->assign('orderId', $orderInfo['order_id']);
         return $this->render();
-//            $this->renderAjax(['data'=>$jsApiParameters]);
     }
 
     public function actionNotifyUrl()

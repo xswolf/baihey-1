@@ -209,14 +209,10 @@ define(["app/module", 'app/service/serviceApi'],
                             }
                         }
                     })
-                    .state('main.charge_pay', {     // 支付
-                        url: "/charge_pay",
-                        views: {
-                            'member-tab': {
-                                templateUrl: "/wechat/views/charge/pay.html",
-                                controller: 'charge.pay'
-                            }
-                        }
+                    .state('charge_order', {     // 支付-订单信息
+                        url: "/charge_order",
+                            templateUrl: "/wechat/views/charge/order.html",
+                            controller: 'charge.order'
                     })
                     .state('main.charge', {     // 充值
                         url: "/member_charge",
