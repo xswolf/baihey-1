@@ -6,11 +6,11 @@
         WeixinJSBridge.invoke(
                 'getBrandWCPayRequest', {!$param},
         function (res) {
-            ajaxPost('http://wechat.baihey.com/wap/charge/order-query',{out_trade_no:{!$orderId}},function success(res){
+            ajaxPost('/wap/charge/order-query',{out_trade_no:{!$orderId}},function success(res){
                 alert(res.data);
                 alert(res.data.return_code);
             })
-            window.location.href = 'http://wechat.baihey.com/wap/site/main#/charge_order?orderId={!$orderId}';
+//            window.location.href = 'http://wechat.baihey.com/wap/site/main#/charge_order?orderId={!$orderId}';
         }
     );
     }

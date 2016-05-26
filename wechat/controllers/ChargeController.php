@@ -54,7 +54,7 @@ class ChargeController extends BaseController
 
     public function actionPay()
     {
-        /*//①、获取用户openid
+        //①、获取用户openid
         $tools = new \JsApiPay();
         $openId = $tools->GetOpenid();
         //②、统一下单
@@ -73,7 +73,7 @@ class ChargeController extends BaseController
         $order = \WxPayApi::unifiedOrder($input);
         $jsApiParameters = $tools->GetJsApiParameters($order);
         $this->assign('param', $jsApiParameters);
-        $this->assign('orderId', $orderInfo['order_id']);*/
+        $this->assign('orderId', $orderInfo['order_id']);
         return $this->render();
     }
 
