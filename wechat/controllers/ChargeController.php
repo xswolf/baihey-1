@@ -80,7 +80,7 @@ class ChargeController extends BaseController
             $input->SetOpenid($openId);
             $order = \WxPayApi::unifiedOrder($input);
             $jsApiParameters = $tools->GetJsApiParameters($order);
-            $this->renderAjax($jsApiParameters);
+            $this->renderAjax(['data'=>$jsApiParameters]);
     }
 
     public function actionNotifyUrl()
