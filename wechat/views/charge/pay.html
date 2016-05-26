@@ -3,31 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <title>等待支付</title>
-     <script type="text/javascript">
-            function onBridgeReady() {
-                WeixinJSBridge.invoke(
-                        'getBrandWCPayRequest', {!$param},
-                function (res) {
-                    if (res) {
-                        alert('支付结束1|'+res+'|'+res.err_msg);
-//                        window.location.href='http://wechat.baihey.com/wap/site/main#/charge_order?orderId={!$orderId}'
-                    }else{
-                        alert('支付结束2|'+res);
-                    }
-                }
-            );
+    <script type="text/javascript">
+        function onBridgeReady() {
+            WeixinJSBridge.invoke(
+                    'getBrandWCPayRequest', {
+            !$param
+        },
+            function (res) {
+                alert('支付结束1|' + res.err_code + res.err_desc + res.err_msg);
+                window.location.href = 'http://wechat.baihey.com/wap/site/main#/charge_order?orderId={!$orderId}'
             }
-            if (typeof WeixinJSBridge == "undefined") {
-                if (document.addEventListener) {
-                    document.addEventListener('WeixinJSBridgeReady', onBridgeReady, false);
-                } else if (document.attachEvent) {
-                    document.attachEvent('WeixinJSBridgeReady', onBridgeReady);
-                    document.attachEvent('onWeixinJSBridgeReady', onBridgeReady);
-                }
-            } else {
-                onBridgeReady();
+
+        )
+            ;
+        }
+        if (typeof WeixinJSBridge == "undefined") {
+            if (document.addEventListener) {
+                document.addEventListener('WeixinJSBridgeReady', onBridgeReady, false);
+            } else if (document.attachEvent) {
+                document.attachEvent('WeixinJSBridgeReady', onBridgeReady);
+                document.attachEvent('onWeixinJSBridgeReady', onBridgeReady);
             }
-        </script>
+        } else {
+            onBridgeReady();
+        }
+    </script>
 </head>
 <body>
 
