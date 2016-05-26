@@ -84,7 +84,7 @@ class ChargeController extends BaseController
     public function actionNotifyUrl()
     {
         //计算得出通知验证结果
-        $alipayNotify = new \AlipayNotify($this->$alipay_config);
+        $alipayNotify = new \AlipayNotify($alipay_config);
         $verify_result = $alipayNotify->verifyNotify();
 
         if($verify_result) {//验证成功
@@ -115,13 +115,13 @@ class ChargeController extends BaseController
         $goods = ChargeGoods::getInstance()->getOne($orderInfo['charge_goods_id']);
 
         $parameter = array(
-            "service"       => $this->$alipay_config['service'],
-            "partner"       => $this->$alipay_config['partner'],
-            "seller_id"     => $this->$alipay_config['partner'],
-            "payment_type"	=> $this->$alipay_config['payment_type'],
-            "notify_url"	=> $this->$alipay_config['notify_url'],
-            "return_url"	=> $this->$alipay_config['return_url'],
-            "_input_charset"	=> trim(strtolower($this->$alipay_config['input_charset'])),
+            "service"       => $alipay_config['service'],
+            "partner"       => $alipay_config['partner'],
+            "seller_id"     => $alipay_config['partner'],
+            "payment_type"	=> $alipay_config['payment_type'],
+            "notify_url"	=> $alipay_config['notify_url'],
+            "return_url"	=> $alipay_config['return_url'],
+            "_input_charset"	=> trim(strtolower($alipay_config['input_charset'])),
             "out_trade_no"	=> $orderInfo['order_id'],
             "subject"	=> '嘉瑞百合缘-【'.$goods['name'].'】',
             "total_fee"	=> $orderInfo['money'],
@@ -132,7 +132,7 @@ class ChargeController extends BaseController
         );
 
         //建立请求
-        $alipaySubmit = new \AlipaySubmit($this->$alipay_config);
+        $alipaySubmit = new \AlipaySubmit($alipay_config);
         $html_text = $alipaySubmit->buildRequestForm($parameter,"get", "确认");
         echo $html_text;
     }
