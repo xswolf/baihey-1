@@ -55,7 +55,7 @@ class ChargeOrder extends Base
     {
         $order = $this->getInstance();
         $goods = ChargeGoods::getInstance()->getOne($data['goodsId']);
-        $order['uid'] = $data['uid'];
+        $order['user_id'] = $data['user_id'];
         $order['order_id'] = ChargeOrder::getInstance()->createOrderId();
         $order['native_money'] = $goods['native_price'];
         $order['money'] = $goods['price'];
