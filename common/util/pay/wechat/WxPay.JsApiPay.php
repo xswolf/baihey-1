@@ -93,7 +93,7 @@ class JsApiPay
 	public function GetOpenidFromMp($code)
 	{
         if($code){
-            echo 'code';
+            echo $code;
         }else{
             echo 'null code';
         }
