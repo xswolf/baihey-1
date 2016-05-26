@@ -253,7 +253,9 @@ class User extends Base
      */
     public function changeBalance($user_id, $money)
     {
-        $user = \wechat\models\User::findOne($user_id);
+        $user = User::findOne($user_id);
+        print_r($user);
+        exit();
         $user->balance = intval($user->balance) - intval($money);
         return $user->save();
     }
