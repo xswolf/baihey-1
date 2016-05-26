@@ -114,7 +114,7 @@ class ChargeController extends BaseController
 
     public function actionSetOrderStatus()
     {
-        $this->renderAjax(ChargeOrder::getInstance()->setOrderStatus($this->get['orderId']));
+        $this->renderAjax(['data'=>ChargeOrder::getInstance()->setOrderStatus($this->get['orderId'])]);
     }
 
 
