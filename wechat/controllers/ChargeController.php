@@ -61,7 +61,7 @@ class ChargeController extends BaseController
 
     public function actionPay()
     {
-        if(!$this->get['s']){
+        if(!isset($this->get['s'])){
             $this->actionTransfer();
         }
             //①、获取用户openid
