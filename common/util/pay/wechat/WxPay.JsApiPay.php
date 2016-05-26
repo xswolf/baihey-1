@@ -38,12 +38,12 @@ class JsApiPay
 	 * 
 	 * @return 用户的openid
 	 */
-	public function GetOpenid($orderId = '')
+	public function GetOpenid()
 	{
 		//通过code获得openid
 		if (!isset($_GET['code'])){
 			//触发微信返回code码
-			$baseUrl = urlencode('http://wechat.baihey.com/wap/charge/pay?orderId='.$orderId);
+			$baseUrl = urlencode('http://wechat.baihey.com/wap/charge/pay?orderId='.$_GET['orderId']);
 			$url = $this->__CreateOauthUrlForCode($baseUrl);
 			Header("Location: $url");
 			exit();
@@ -93,10 +93,11 @@ class JsApiPay
 	public function GetOpenidFromMp($code)
 	{
         if($code){
-            echo $code;
+            echo 'code';
         }else{
-            echo '1111111';
+            echo 'null code';
         }
+        exit();
 		$url = $this->__CreateOauthUrlForOpenid($code);
 		//初始化curl
 		$ch = curl_init();
