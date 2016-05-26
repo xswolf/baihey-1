@@ -1,7 +1,7 @@
 <?php
 namespace common\models;
 
-use wechat\models\User;
+use common\models\User;
 use Yii;
 use yii\db\Query;
 
