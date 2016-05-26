@@ -114,7 +114,7 @@ class JsApiPay
 		//取出openid
 		$data = json_decode($res,true);
         if($data){
-            echo $data;
+            var_dump($data);
         }else{
             echo 'null data';
         }
