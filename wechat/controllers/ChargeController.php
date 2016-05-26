@@ -54,7 +54,7 @@ class ChargeController extends BaseController
 
     public function actionPay()
     {
-        //①、获取用户openid
+        /*//①、获取用户openid
         $tools = new \JsApiPay();
         $openId = $tools->GetOpenid();
         //②、统一下单
@@ -73,15 +73,24 @@ class ChargeController extends BaseController
         $order = \WxPayApi::unifiedOrder($input);
         $jsApiParameters = $tools->GetJsApiParameters($order);
         $this->assign('param', $jsApiParameters);
-        $this->assign('orderId', $orderInfo['order_id']);
+        $this->assign('orderId', $orderInfo['order_id']);*/
         return $this->render();
     }
 
     public function actionNotifyUrl()
     {
-        if($_REQUEST){
-            $filename = 'wxPay.txt';
-            file_put_contents($filename, implode('|',$_REQUEST));
+        // TODO 放弃吧孩子，微信是不会通知你的
+    }
+
+
+    public function actionOrderQuery(){
+        if(isset($_REQUEST["out_trade_no"]) && $_REQUEST["out_trade_no"] != ""){
+            $out_trade_no = $_REQUEST["out_trade_no"];
+            $input = new \WxPayOrderQuery();
+            $input->SetOut_trade_no($out_trade_no);
+            $this->renderAjax(['data'=>\WxPayApi::orderQuery($input)]);
+        }else{
+            $this->renderAjax(['data'=>'没有订单号你叫我怎么查？']);
         }
     }
 

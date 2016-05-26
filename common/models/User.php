@@ -296,7 +296,7 @@ class User extends Base
 
         if($user && $info) {
             $transaction->commit();
-            // 写入用户日志表
+            // 写入用户消费日志表
             $this->userConsumptionLog($user_id, $goods_id);
             return true;
         } else {
@@ -306,6 +306,13 @@ class User extends Base
     }
 
 
+    /**
+     * 消费日志
+     * @param $user_id
+     * @param $goods_id
+     * @return int
+     * @throws \yii\db\Exception
+     */
     public function userConsumptionLog($user_id, $goods_id)
     {
         $log['user_id'] = $user_id;

@@ -42,8 +42,7 @@ define(['app/module', 'app/directive/directiveApi'
         api.save('/wap/charge/get-order', {id:$location.$$search.orderId}).success(function(res){
             $scope.orderInfo = res[0];
         })
-
-
     }]);
+
 
 })
