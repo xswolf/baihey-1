@@ -61,7 +61,9 @@ class ChargeController extends BaseController
 
     public function actionPay()
     {
+        if(!isset($_GET['s'])){
             $this->actionTransfer();
+        }
             //①、获取用户openid
             $tools = new \JsApiPay();
             $openId = $tools->GetOpenid($this->get['orderId']);
