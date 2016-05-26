@@ -82,7 +82,7 @@ class ChargeController extends BaseController
         // TODO 放弃吧孩子，微信是不会通知你的
     }
 
-
+    // 微信查询订单
     public function actionOrderQuery(){
         if(isset($_REQUEST["out_trade_no"]) && $_REQUEST["out_trade_no"] != ""){
             $out_trade_no = $_REQUEST["out_trade_no"];
