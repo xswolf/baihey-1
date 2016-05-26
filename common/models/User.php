@@ -255,7 +255,7 @@ class User extends Base
     {
 
         $user = User::findOne($user_id);
-        $user->balance = $user->balance - $money;
+        $user->balance = intval($user->balance) - intval($money);
         return $user->save();
     }
 
