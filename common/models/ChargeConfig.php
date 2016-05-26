@@ -11,6 +11,8 @@ namespace common\models;
 class ChargeConfig extends Base
 {
 
+
+
     /**
      * 支付宝
      * @var array
@@ -91,8 +93,6 @@ class ChargeConfig extends Base
             ]
         ]
     ];
-
-
 
 
 }

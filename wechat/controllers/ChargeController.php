@@ -8,8 +8,8 @@ use common\models\ChargeType;
 
 require_once('../../common/util/pay/wechat/lib/WxPay.Api.php');
 require_once('../../common/util/pay/wechat/WxPay.JsApiPay.php');
-require_once('../../common/util/pay/alipay/lib/alipay_submit.class.php');
 require_once('../../common/util/pay/alipay/alipay.config.php');
+require_once('../../common/util/pay/alipay/lib/alipay_submit.class.php');
 require_once('../../common/util/pay/alipay/lib/alipay_notify.class.php');
 
 /**
