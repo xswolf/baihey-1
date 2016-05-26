@@ -262,23 +262,28 @@ class User extends Base
     /**
      * 开通服务（修改余额，到期时间，等级）
      * @param $user_id
-     * @param $money
-     * @param $time
+     * @param $goods_id
      * @param int $level
      * @return bool
      * @throws \yii\db\Exception
      */
-    public function changeMatureTime($user_id, $money, $time, $level = 1)
+    public function changeMatureTime($user_id, $goods_id, $level = 1)
     {
+        $goods = ChargeGoods::getInstance()->findOne($goods_id);
         $userInfo = $this->getUserById($user_id);
         //  金额是否大于余额
-        if($money > $userInfo['balance']) {
+        if($goods['price'] > $userInfo['balance']) {
             return false;
         }
         $db = $this->getDb();
-        $transaction = $db->beginTransaction();// 启动事件
+        $transaction = $db->beginTransaction();// 启动事务
+        // 计算时间
+        $time = $goods['value'] * 30 * 24 * 3600;// vip时间（月）
+        if(1 == $goods['giveType'] && $goods['give'] > 0) {
+            $time += $goods['give'] * 24 * 3600;// 赠送的时间（天）
+        }
         // 修改余额
-        $userInfo['balance'] = $userInfo['balance'] - $money;
+        $userInfo['balance'] = $userInfo['balance'] - $goods['price'];
         $user = $db->createCommand()
             ->update(static::tableName(),['balance' => $userInfo['balance']],['id' => $user_id])
             ->execute();
@@ -291,6 +296,8 @@ class User extends Base
 
         if($user && $info) {
             $transaction->commit();
+            // 写入用户日志表
+            $this->userConsumptionLog($user_id, $goods_id);
             return true;
         } else {
             $transaction->rollBack();
@@ -298,4 +305,15 @@ class User extends Base
         }
     }
 
+
+    public function userConsumptionLog($user_id, $goods_id)
+    {
+        $log['user_id'] = $user_id;
+        $log['goods_id'] = $goods_id;
+        $log['create_time'] = YII_BEGIN_TIME;
+        $row = $this->getDb()->createCommand()
+            ->insert($this->tablePrefix.'user_consumption_log',$log)
+            ->execute();
+        return $row;
+    }
 }
