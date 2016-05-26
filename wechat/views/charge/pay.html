@@ -7,9 +7,7 @@
         WeixinJSBridge.invoke(
                 'getBrandWCPayRequest', {!$param},
         function (res) {
-            $.ajax('/wap/charge/order-query',{out_trade_no:{!$orderId}}).success(function(res){
-                alert(res.data);
-            })
+            $.post('/wap/charge/order-query', {out_trade_no:{!$orderId}}, function (res) { alert(res.data); });
         }
     );
     }
