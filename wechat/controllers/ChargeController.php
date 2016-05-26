@@ -52,8 +52,16 @@ class ChargeController extends BaseController
         $this->renderAjax(ChargeOrder::getInstance()->getOrderInfo($this->get['id']));
     }
 
+    public function actionTransfer(){
+        if(isset($_GET['code'])){
+            $url = 'http://wechat.baihey.com/wap/site/main#/main/charge_pay?code='.$_GET['code'].'&orderId='.$_GET['orderId'];
+            Header("Location: $url");
+        }
+    }
+
     public function actionPay()
     {
+            $this->actionTransfer();
             //①、获取用户openid
             $tools = new \JsApiPay();
             $openId = $tools->GetOpenid($this->get['orderId']);
