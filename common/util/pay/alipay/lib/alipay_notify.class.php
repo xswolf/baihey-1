@@ -39,6 +39,7 @@ class AlipayNotify {
      */
 	function verifyNotify(){
 		if(empty($_POST)) {//判断POST来的数组是否为空
+            logResult('支付宝通知post是空的');
 			return false;
 		}
 		else {
