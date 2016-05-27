@@ -17,19 +17,36 @@
         </div>
     </div>
     <div class="box-body big">
-        <form class="form-horizontal" role="form">
+        <form class="form-horizontal" role="form" action="/admin/member/save" method="post">
             <div class="form-group">
                 <label class="col-sm-3 control-label">会员姓名</label>
                 <div class="col-sm-9">
-                    <input class="form-control" id="focusedInput" type="text" value="">
+                    <input class="form-control" name="info[real_name]" type="text" value="">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-3 control-label">所在地</label>
+                <div class="col-sm-9">
+                    <select class="col-md-4 select_2" name="info[occupation]" id="provines">
+                        <option>请选择</option>
+                    </select>
+                    <select class="col-md-4 select_2" name="info[occupation]" id="city">
+                        <option>请选择</option>
+
+                    </select>
+                    <select class="col-md-4 select_2" name="info[occupation]" id="area">
+                        <option>请选择</option>
+
+                    </select>
                 </div>
             </div>
 
             <div class="form-group">
                 <label class="col-md-3 control-label">性别</label>
                 <div class="col-md-9">
-                    <label class="radio-inline"> <input type="radio" class="uniform" name="optionsRadios2" value="option1"> 男票 </label>
-                    <label class="radio-inline"> <input type="radio" class="uniform" name="optionsRadios2" value="option2" checked> 妹子 </label>
+                    <label class="radio-inline"> <input type="radio" class="uniform" name="sex" value="1"> 男票 </label>
+                    <label class="radio-inline"> <input type="radio" class="uniform" name="sex" value="0" checked> 妹子 </label>
                 </div>
             </div>
 
@@ -37,58 +54,8 @@
             <div class="form-group">
                 <label class="col-md-3 control-label">民族</label>
                 <div class="col-md-9">
-                    <select class="col-md-12 select_2">
-                        <option></option>
-                        <option>Alabama</option>
-                        <option>Alaska</option>
-                        <option>Arizona</option>
-                        <option>Arkansas</option>
-                        <option>California</option>
-                        <option>Colorado</option>
-                        <option>Connecticut</option>
-                        <option>Delaware</option>
-                        <option>Florida</option>
-                        <option>Georgia</option>
-                        <option>Hawaii</option>
-                        <option>Idaho</option>
-                        <option>Illinois</option>
-                        <option>Indiana</option>
-                        <option>Iowa</option>
-                        <option>Kansas</option>
-                        <option>Kentucky</option>
-                        <option>Louisiana</option>
-                        <option>Maine</option>
-                        <option>Maryland</option>
-                        <option>Massachusetts</option>
-                        <option>Michigan</option>
-                        <option>Minnesota</option>
-                        <option>Mississippi</option>
-                        <option>Missouri</option>
-                        <option>Montana</option>
-                        <option>Nebraska</option>
-                        <option>Nevada</option>
-                        <option>New Hampshire</option>
-                        <option>New Jersey</option>
-                        <option>New Mexico</option>
-                        <option>New York</option>
-                        <option>North Dakota</option>
-                        <option>North Carolina</option>
-                        <option>Ohio</option>
-                        <option>Oklahoma</option>
-                        <option>Oregon</option>
-                        <option>Pennsylvania</option>
-                        <option>Rhode Island</option>
-                        <option>South Carolina</option>
-                        <option>South Dakota</option>
-                        <option>Tennessee</option>
-                        <option>Texas</option>
-                        <option>Utah</option>
-                        <option>Vermont</option>
-                        <option>Virginia</option>
-                        <option>Washington</option>
-                        <option>West Virginia</option>
-                        <option>Wisconsin</option>
-                        <option>Wyoming</option>
+                    <select name="nation" id="info[nation]" class="col-md-12 select_2">
+
                     </select>
 
                 </div>
@@ -96,13 +63,13 @@
             <div class="form-group">
                 <label class="col-md-3 control-label">出生年月</label>
                 <div class="col-md-9">
-                    <input type="text" class="form-control date_picker">
+                    <input type="text" name="info[age]" class="form-control date_picker">
                 </div>
             </div>
             <div class="form-group">
                 <label class="col-sm-3 control-label">学历</label>
                 <div class="col-sm-9">
-                    <select class="col-md-12 select_2" name="">
+                    <select class="col-md-12 select_2" name="info[education]">
                         <option value="1">初中</option>
                         <option value="2">高中</option>
                         <option value="3">大专</option>
@@ -115,7 +82,7 @@
             <div class="form-group">
                 <label class="col-sm-3 control-label">婚姻状况</label>
                 <div class="col-sm-9">
-                    <select class="col-md-12 select_2" name="">
+                    <select class="col-md-12 select_2" name="info[is_marriage]">
                         <option value="1">未婚</option>
                         <option value="2">离异</option>
                         <option value="3">丧偶</option>
@@ -126,7 +93,7 @@
                 <label class="col-sm-3 control-label">身高</label>
                 <div class="col-sm-9">
                     <div class="input-group">
-                        <input type="text" class="form-control">
+                        <input type="text" name="info[height]" class="form-control">
                         <span class="input-group-addon">cm</span>
                     </div>
                 </div>
@@ -134,7 +101,7 @@
             <div class="form-group">
                 <label class="col-sm-3 control-label">子女状况</label>
                 <div class="col-sm-9">
-                    <select class="col-md-12 select_2" name="">
+                    <select class="col-md-12 select_2" name="info[is_child]">
                         <option value="1">无小孩</option>
                         <option value="2">一个男孩（跟随对方</option>
                         <option value="3">一个女孩（跟随对方）</option>
@@ -145,124 +112,110 @@
                     </select>
                 </div>
             </div>
-
-            <div class="form-group">
-                <label class="col-sm-3 control-label">体重</label>
-                <div class="col-sm-9">
-                    <div class="input-group">
-                        <input type="text" class="form-control">
-                        <span class="input-group-addon">kg</span>
-                    </div>
-                </div>
-            </div>
-
 
             <div class="form-group">
                 <label class="col-sm-3 control-label">职业</label>
                 <div class="col-sm-9 ">
-                    <select class="col-md-12 select_2" name="">
-                        <option value="1">无小孩</option>
-                        <option value="2">一个男孩（跟随对方</option>
-                        <option value="3">一个女孩（跟随对方）</option>
-                        <option value="4">一个男孩（跟随自己）</option>
-                        <option value="5">一个女孩（跟随自己）</option>
-                        <option value="6">两个及以上（跟随对方）</option>
-                        <option value="7">两个及以上（跟随自己）</option>
-                    </select>
+                    <select class="col-md-6 select_2" name="info[occupation]" id="occupation_1"></select>
+                    <select class="col-md-6 select_2" name="info[children_occupation]" id="occupation_2"></select>
                 </div>
             </div>
             <div class="form-group">
                 <label class="col-sm-3 control-label">年收入</label>
                 <div class="col-sm-9">
-                    <input class="form-control"  type="text" value="This is focused...">
+                    <select class="col-md-12 select_2" name="info[year_income]" id="salary"></select>
                 </div>
             </div>
             <div class="form-group">
                 <label class="col-sm-3 control-label">是否有车</label>
                 <div class="col-sm-9">
-                    <input class="form-control"  type="text" value="This is focused...">
+                    <select class="col-md-12 select_2" name="info[is_car]" >
+                        <option value="1">已购</option>
+                        <option value="2">未购</option>
+                    </select>
                 </div>
             </div>
 
             <div class="form-group">
                 <label class="col-sm-3 control-label">住房情况</label>
                 <div class="col-sm-9">
-                    <input class="form-control"  type="text" value="This is focused...">
+                    <select class="col-md-12 select_2" name="info[is_purchase]" id="house"></select>
                 </div>
             </div>
             <div class="form-group">
                 <label class="col-sm-3 control-label">属相</label>
                 <div class="col-sm-9">
-                    <input class="form-control"  type="text" value="This is focused...">
+                    <select class="col-md-12 select_2" name="info[zodiac]" id="zodiac"></select>
                 </div>
             </div>
 
             <div class="form-group">
                 <label class="col-sm-3 control-label">星座</label>
                 <div class="col-sm-9">
-                    <input class="form-control"  type="text" value="This is focused...">
+                    <select class="col-md-12 select_2" name="info[constellation]" id="constellation"></select>
                 </div>
             </div>
 
             <div class="form-group">
                 <label class="col-sm-3 control-label">毕业院校</label>
                 <div class="col-sm-9">
-                    <input class="form-control"  type="text" value="This is focused...">
+                    <input class="form-control"  name="info[school]" type="text" value="">
                 </div>
             </div>
 
             <div class="form-group">
                 <label class="col-sm-3 control-label">身份证地址</label>
                 <div class="col-sm-9">
-                    <input class="form-control"  type="text" value="This is focused...">
+                    <input class="form-control"  name="info[identity_address]" type="text" value="">
                 </div>
             </div>
 
             <div class="form-group">
                 <label class="col-sm-3 control-label">身份证号码</label>
                 <div class="col-sm-9">
-                    <input class="form-control"  type="text" value="This is focused...">
+                    <input class="form-control"  name="info[identity_id]" type="text" value="">
                 </div>
             </div>
 
             <div class="form-group">
                 <label class="col-sm-3 control-label">电话</label>
                 <div class="col-sm-9">
-                    <input class="form-control"  type="text" value="This is focused...">
+                    <input class="form-control"  name="phone" type="tel" value="">
                 </div>
             </div>
             <div class="form-group">
                 <label class="col-sm-3 control-label">qq</label>
                 <div class="col-sm-9">
-                    <input class="form-control"  type="text" value="This is focused...">
+                    <input class="form-control"  name="info[qq]" type="text" value="">
                 </div>
             </div>
             <div class="form-group">
                 <label class="col-sm-3 control-label">微信</label>
                 <div class="col-sm-9">
-                    <input class="form-control"  type="text" value="This is focused...">
+                    <input class="form-control"  name="info[wechat]" type="text" value="">
                 </div>
             </div>
 
             <div class="form-group">
-                <label class="col-sm-3 control-label">内心爱好</label>
+                <label class="col-sm-3 control-label">个性签名</label>
                 <div class="col-sm-9">
-                    <input class="form-control"  type="text" value="This is focused...">
+                    <textarea name="personalized"></textarea>
                 </div>
             </div>
 
             <div class="form-group">
-                <label class="col-sm-3 control-label">兴趣爱好</label>
-                <div class="col-sm-9">
-                    <input class="form-control"  type="text" value="This is focused...">
-                </div>
+                <label class="col-sm-5"></label>
+                <button class="btn btn-success" type="submit">Submit</button>
             </div>
+
         </form>
 
 
     </div>
 </div>
-
+<script src="/wechat/web/js/config/infoData.js"></script>
+<script src="/wechat/web/js/config/area.js"></script>
+<script src="/wechat/web/js/config/city.js"></script>
 <script>
 
     jQuery(document).ready(function() {
@@ -276,7 +229,51 @@
         });
         App.setPage("save");  //Set current page
         App.init(); //Initialise plugins and elements
+        function createSelect(item){
+            var html = "";
+            var data = eval(item);
+            for (var i in data){
+                html += "<option value='" + data[i].id + "'>"+ data[i].name +"</option>>"
+            }
+            return html;
+        }
 
+        $("#occupation_1").html(createSelect("config_infoData.occupation")) //职业
+        $("#occupation_1").change(function () {
+            var id = $(this).val();
+            var html = "";
+            for (var i in config_infoData.occupation[id-1].children){
+                html += "<option value='" + config_infoData.occupation[id-1].children[i].id + "'>"+ config_infoData.occupation[id-1].children[i].name +"</option>>"
+            }
+            $("#occupation_2").html(html)
+        })
+        $("#salary").html(createSelect("config_infoData.salary"));
+        $("#house").html(createSelect("config_infoData.house"));
+        $("#zodiac").html(createSelect("config_infoData.zodiac"));
+        $("#constellation").html(createSelect("config_infoData.constellation"));
+        $("#nation").html(createSelect("config_infoData.nation"));
+
+
+        $("#provines").html(createSelect("provines"));
+
+        $("#provines").on("select2-close" , function () {
+            var html = '';
+            for (var i in citys){
+                if (citys[i].parentId == $(this).val()){
+                    html += "<option value='" + citys[i].id + "'>"+citys[i].name+"</option>";
+                }
+            }
+            $("#city").html(html)
+        })
+        $("#city").on("select2-close",function () {
+            var html = '';
+            for (var i in area){
+                if (area[i].parentId == $(this).val()){
+                    html += "<option value='" + area[i].id + "'>"+area[i].name+"</option>";
+                }
+            }
+            $("#area").html( html)
+        })
     });
 
 </script>

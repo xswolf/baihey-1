@@ -22,8 +22,9 @@ class MemberController extends BaseController
     }
 
     public function actionSave(){
-        if(\Yii::$app->request->post('id')){
-
+        if($data = \Yii::$app->request->post()){
+            print_r($data);exit;
+            \wechat\models\User::getInstance()->addUser($data);
         }
         return $this->render();
     }
