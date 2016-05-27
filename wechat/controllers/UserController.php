@@ -133,17 +133,18 @@ class UserController extends BaseController
                 $sex = \Yii::$app->request->get('sex');
                 $data['sex'] = json_decode($sex);
                 $data['sex'] = $data['sex']->man ? 1 : 0;
-                $data['username'] = \Yii::$app->request->get('mobile');
-                $data['phone'] = $data['username'];
-                $data['password'] = substr($data['username'], -6);
+                $data['phone'] = \Yii::$app->request->get('mobile');
 
                 // 验证手机号是否存在
-                if (User::getInstance()->getUserByName($data['username'])) {
+
+                if (\common\models\User::getInstance()->mobileIsExist($data['phone'])) {
+                //if (User::getInstance()->getUserByName($data['username'])) {
                     return $this->renderAjax(['status' => 0, 'msg' => '手机号已存在', 'data' => []]);
                 }
 
                 // 添加用户
-                $userId = User::getInstance()->addUser($data);
+                $userId = \common\models\User::getInstance()->addUser($data);
+                //$userId = User::getInstance()->addUser($data);
                 if ($userId) {
                     // 模拟登录
                     $data = User::getInstance()->login($data['username'], $data['password']);

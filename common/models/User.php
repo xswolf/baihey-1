@@ -31,8 +31,164 @@ class User extends Base
         return $row;
     }
 
-    public function addUser($userInfo){
+    /**
+     * 新增用户
+     * @param $data array()
+     * @return string
+     * @throws \yii\db\Exception
+     */
+    public function addUser($data){
 
+        $db = $this->getDb();
+        $transaction = $db->beginTransaction();// 启动事务
+
+        // user表 数据处理
+        $data['username'] = $data['phone'];
+        $data['password'] = substr($data['phone'], -6);
+        $data['password'] = md5(md5($data['password']));
+        $time = YII_BEGIN_TIME;
+        $data['reg_time'] = $time;
+        $data['last_login_time'] = $time;
+        $data['reset_pass_time'] = $time;
+        // userinformation表 数据处理
+        // info
+        $userInfo = $this->getDefaultInfo();
+        $userInfo = array_merge($userInfo,$data['info']);
+        // 身份证照片
+        $userAuth = $this->getDefaultAuth();
+        $userAuth = array_merge($userAuth,$data['auth']);
+        unset($data['info']);
+        unset($data['auth']);
+
+        // user表 数据写入
+        $user = $db->createCommand()
+            ->insert($this->tableName(), $data)
+            ->execute();
+
+        if ($user) {
+            $id = $db->getLastInsertID();// 获取id
+        }
+
+        // user_information表 数据处理
+        $infoData['user_id'] = $id;
+        $infoData['auth'] = json_encode($userAuth);
+        $infoData['info'] = json_encode($userInfo);
+        $infoData['city'] = 1;
+
+        // user_information表 数据写入
+        $info = $db->createCommand()
+            ->insert('bhy_user_information', $infoData)
+            ->execute();
+
+        if ($user && $info) {
+
+            $transaction->commit();
+            // 写入用户日志表
+            $log['user_id'] = $id;
+            $log['type'] = 2;
+            $log['time'] = $time;
+            $this->userLog($log);
+        } else {
+
+            $transaction->rollBack();
+        }
+
+        return $id;
+    }
+
+    /**
+     * 获取userinformation的info字段默认值
+     * @return array
+     */
+    public function getDefaultInfo()
+    {
+        return [
+            'age'                   => '未知',// 出生年月时间戳
+            'level'                 => '未知',// vip等级
+            'local'                 => '未知',// 当地地区（地区切换使用）
+            'height'                => '未知',// 身高
+            'head_pic'              => '未知',// 头像
+            'real_name'             => '未知',// 真实姓名
+            'identity_id'           => '未知',// 身份证号码
+            'identity_address'      => '未知',// 身份证地址
+            'is_marriage'           => '未知',// 婚姻状况
+            'is_child'              => '未知',// 子女状况
+            'education'             => '未知',// 学历
+            'year_income'           => '未知',// 年收入
+            'is_purchase'           => '未知',// 购房状况
+            'is_car'                => '未知',// 购车状况
+            'occupation'            => '未知',// 职业
+            'children_occupation'   => '未知',// 子职业
+            'zodiac'                => '未知',// 属相生肖
+            'constellation'         => '未知',// 星座
+            'mate'                  => '未知',// 对未来伴侣的期望
+            'nation'                => '未知',// 民族
+            'wechat'                => '未知',// 微信
+            'qq'                    => '未知',// QQ
+            'haunt_address'         => '未知',// 常出没地
+            'work'                  => '未知',// 工作单位
+            'blood'                 => '未知',// 血型
+            'school'                => '未知',// 学校
+            // 择偶标准
+            'zo_age'                => '18-0',// 年龄
+            'zo_height'             => '140-0',// 最小身高
+            'zo_education'          => '未知',// 最小学历
+            'zo_marriage'           => '未知',// 婚姻状况
+            'zo_house'              => '未知',// 购房
+            'zo_car'                => '未知',// 购车
+            'zo_zodiac'             => '未知',// 属相
+            'zo_constellation'      => '未知',// 星座
+        ];
+    }
+
+    /**
+     * 获取userinformation的auth字段默认值
+     * @return array
+     */
+    public function getDefaultAuth()
+    {
+        return [
+            'identity_pic1'     => '未知',// 身份证正面
+            'identity_pic2'     => '未知',// 反面
+            'identity_check'    => false,// 审核状态true通过，false未通过
+            'identity_time'     => '未知',// 时间
+            'marriage_pic1'     => '未知',// 离婚证正面
+            'marriage_pic2'     => '未知',// 反面
+            'marriage_check'    => false,// 审核状态true通过，false未通过
+            'marriage_time'     => '未知',// 时间
+            'education_pic1'    => '未知',// 学历学位证
+            'education_pic2'    => '未知',// 毕业证
+            'education_check'   => false,// 审核状态true通过，false未通过
+            'education_time'    => '未知',// 时间
+            'house_pic1'        => '未知',// 房产证正面
+            'house_pic2'        => '未知',// 反面
+            'house_check'       => false,// 审核状态true通过，false未通过
+            'house_time'        => '未知',// 时间
+        ];
+    }
+
+    /**
+     * 用户操作日志
+     */
+    public function userLog($log)
+    {
+
+        $userLog = \common\models\Base::getInstance('user_log');
+        $userLog->user_id = $log['user_id'];
+        $userLog->type = $log['type'];
+        $userLog->create_time = $log['time'];
+        $userLog->ip = ip2long($_SERVER["REMOTE_ADDR"]);
+        return $userLog->insert(false);
+    }
+
+    /**
+     * 验证手机是否存在
+     * @param $phone
+     * @return null|static
+     */
+    public function mobileIsExist($phone)
+    {
+        return $this->findOne(['phone' => $phone]);
     }
 
     public function delUser($id){
