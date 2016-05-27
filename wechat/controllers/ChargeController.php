@@ -94,9 +94,11 @@ class ChargeController extends BaseController
             } else if ($_REQUEST['trade_status'] == 'TRADE_SUCCESS') { //付款完成后，支付宝系统发送该交易状态通知
                 if (ChargeOrder::getInstance()->setOrderStatus($_REQUEST['out_trade_no'])) {   // 设置订单状态
                     return $this->redirect('http://wechat.baihey.com/wap/site/main#/charge_order?orderId=' . $_REQUEST['out_trade_no'] . '&payType=4');
-                } else {
-                    echo '设置订单状态失败';
+                } else {   // 设置订单状态失败
+                    return $this->redirect('http://wechat.baihey.com/wap/site/main#/charge_order?orderId=' . $_REQUEST['out_trade_no'] . '&payType=4');
                 }
+            }else{          // 未付款
+                return $this->redirect('http://wechat.baihey.com/wap/site/main#/charge_order?orderId=' . $_REQUEST['out_trade_no'] . '&payType=4');
             }
 
             echo "success";        //请不要修改或删除
@@ -104,6 +106,7 @@ class ChargeController extends BaseController
         } else {
             //验证失败
             echo "fail";
+            return $this->redirect('http://wechat.baihey.com/wap/site/main#/charge_order?orderId=' . $_REQUEST['out_trade_no'] . '&payType=4');
         }
     }
 

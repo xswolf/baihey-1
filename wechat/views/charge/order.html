@@ -38,8 +38,8 @@
             <b>{{orderInfo.create_time * 1000 | date:"yyyy-MM-dd HH:mm:ss"}}</b>
         </ion-item>
         <div class="w100 mt20 mb20 tac" ng-if="orderInfo.status==0">
-            <a ng-if="payType==5" class="button button-assertive button-full ml20 mr20 mb10" href="/wap/charge/pay?orderId={{orderInfo.orderId}}">重新支付</a>
-            <a ng-if="payType==4" class="button button-assertive button-full ml20 mr20 mb10" href="/wap/charge/alipay?orderId={{orderInfo.orderId}}">重新支付</a>
+            <a ng-if="payType==5" class="button button-assertive button-full ml20 mr20 mb10" href="/wap/charge/pay?orderId={{orderInfo.order_id}}">重新支付</a>
+            <a ng-if="payType==4" class="button button-assertive button-full ml20 mr20 mb10" href="/wap/charge/alipay?orderId={{orderInfo.order_id}}">重新支付</a>
             <a class="button button-stable button-full ml20 mr20" href="/wap">放弃支付，返回首页</a>
         </div>
         <div class="w100 mt20 mb20 tac" ng-if="orderInfo.status==1">
