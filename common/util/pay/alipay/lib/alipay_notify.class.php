@@ -38,16 +38,16 @@ class AlipayNotify {
      * @return 验证结果
      */
 	function verifyNotify(){
-		if(empty($_POST)) {//判断POST来的数组是否为空
-            logResult('支付宝通知post是空的');
+		if(empty($_REQUEST)) {//判断POST来的数组是否为空
+            logResult('支付宝通知$_REQUEST是空的');
 			return false;
 		}
 		else {
 			//生成签名结果
-			$isSign = $this->getSignVeryfy($_POST, $_POST["sign"]);
+			$isSign = $this->getSignVeryfy($_REQUEST, $_REQUEST["sign"]);
 			//获取支付宝远程服务器ATN结果（验证是否是支付宝发来的消息）
 			$responseTxt = 'false';
-			if (! empty($_POST["notify_id"])) {$responseTxt = $this->getResponse($_POST["notify_id"]);}
+			if (! empty($_REQUEST["notify_id"])) {$responseTxt = $this->getResponse($_REQUEST["notify_id"]);}
 			
 			//写日志记录
 			if ($isSign) {
@@ -57,7 +57,7 @@ class AlipayNotify {
 				$isSignStr = 'false';
 			}
 			$log_text = "responseTxt=".$responseTxt."\n notify_url_log:isSign=".$isSignStr.",";
-			$log_text = $log_text.createLinkString($_POST);
+			$log_text = $log_text.createLinkString($_REQUEST);
 			logResult($log_text);
 			
 			//验证
