@@ -196,6 +196,7 @@ define(['app/module', 'app/directive/directiveApi'
 
         $scope.selected_city = function (city_id) {
             $scope.cityId = city_id;
+            $scope.citySave();
         }
 
         // 保存已选择城市

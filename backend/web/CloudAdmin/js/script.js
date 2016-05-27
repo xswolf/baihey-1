@@ -65,6 +65,7 @@ var App = function () {
 	jQuery('.sidebar-menu .has-sub > a').click(function () {
             jQuery.cookie('clickOpt',null,{ path: "/"});
             jQuery.cookie('clickOpt',jQuery(this).parent().data('opt'),{ path: "/"});
+            jQuery.cookie('clickOptText',jQuery(this).find('.menu-text').text(),{ path: "/"});
             var last = jQuery('.has-sub.open', $('.sidebar-menu'));
             last.removeClass("open");
             jQuery('.arrow', last).removeClass("open");
@@ -99,6 +100,8 @@ var App = function () {
 	jQuery('.sidebar-menu .has-sub .sub .has-sub-sub > a').click(function () {
             jQuery.cookie('clickOpt',null,{ path: "/"});
             jQuery.cookie('clickOpt',jQuery(this).parent().data('opt'),{ path: "/"});
+            jQuery.cookie('clickOptText2',jQuery(this).find('.sub-menu-text').text(),{ path: "/"});
+            jQuery.cookie('clickOptUrl',jQuery(this).prop('href'),{ path: "/"});
             var last = jQuery('.has-sub-sub.open', $('.sidebar-menu'));
             last.removeClass("open");
             jQuery('.arrow', last).removeClass("open");

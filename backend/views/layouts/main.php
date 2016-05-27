@@ -10,6 +10,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
     <meta name="description" content="">
     <meta name="author" content="">
+    <link href="/wechat/web/images/apple-touch-icon.png" rel="shortcut icon">
     <!-- STYLESHEETS --><!--[if lt IE 9]><script src="/backend/web/CloudAdmin/js/flot/excanvas.min.js"></script><script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><script src="http://css3-mediaqueries-js.googlecode.com/svn/trunk/css3-mediaqueries.js"></script><![endif]-->
     <link rel="stylesheet" type="text/css"  href="/backend/web/CloudAdmin/css/themes/default.css" id="skin-switcher" >
     <link rel="stylesheet" type="text/css" href="/backend/web/CloudAdmin/css/cloud-admin.css" >
@@ -315,17 +316,11 @@
                                 <ul class="breadcrumb">
                                     <li>
                                         <i class="fa fa-home"></i>
-                                        <a href="<?php echo $view->params['map'][Yii::$app->controller->id]['url'] ?>"><?php echo $view->params['map'][Yii::$app->controller->id]['name'] ?></a>
+                                        <a href="#"><?php echo $view->params['title1']; ?></a>
                                     </li>
-                                    <?php
-                                       if($view->params['map'][Yii::$app->controller->id]['children']){
-                                           ?>
-                                           <li>
-                                               <a href="<?php echo $view->params['map'][Yii::$app->controller->id]['children'][Yii::$app->controller->action->id]['url'] ?>"><?php echo $view->params['map'][Yii::$app->controller->id]['children'][Yii::$app->controller->action->id]['name'] ?></a>
-                                           </li>
-                                    <?php
-                                       }
-                                    ?>
+                                       <li>
+                                           <a href="<?php echo $view->params['optUrl'];?>"><?php echo $view->params['title2'];?></a>
+                                       </li>
                                 </ul>
                                 <!-- /BREADCRUMBS -->
 

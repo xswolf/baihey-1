@@ -37,7 +37,7 @@
             </div>
 
         <ion-list ng-if="userList.length > 0">
-            <ion-item ng-repeat="user in userList track by user.id" ng-if="user.id != userInfo.id" item="item" ui-sref="main.message_chat({id:user.id,head_pic:user.info.head_pic,real_name:user.info.real_name,sex:user.sex,age:user.info.age})" >
+            <ion-item ng-repeat="user in userList" ng-if="user.id != userInfo.id" item="item" ui-sref="main.message_chat({id:user.id,head_pic:user.info.head_pic,real_name:user.info.real_name,sex:user.sex,age:user.info.age})" >
                 <div class="row">
                     <div class="col col-25"><img class="item_uimg rounded" ng-src="{{user.info.head_pic}}"></div>
 
@@ -88,7 +88,6 @@
                 <button href="javascript:;" ng-click="cityModal.hide()" class="button button-icon " ng-model="searchForm.data.age"><i
                         class="fs16 ion-android-pin positive mr5"></i>{{modalCityName}}<i
                         class="ml5 fs14 ion-android-arrow-dropup positive"></i></button>
-                <button href="javascript:;" ng-click="citySave()" class="button button-icon">保存</button>
             </ion-header-bar>
             <ion-content>
                 <ion-scroll zooming="false"
