@@ -66,7 +66,7 @@ class ChargeController extends BaseController
         $input->SetBody("嘉瑞百合缘-【" . $goods['name'] . "】");
         $input->SetAttach("手机网站");
         $input->SetOut_trade_no($this->get['orderId']);
-        $input->SetTotal_fee('0.01');  // (string)$orderInfo['money']
+        $input->SetTotal_fee((string)$orderInfo['money']);
         $input->SetTime_start(date("YmdHis"));
         $input->SetTime_expire(date("YmdHis", time() + 600));
         $input->SetNotify_url("http://wechat.baihey.com/wap/charge/notify-url");
@@ -123,7 +123,7 @@ class ChargeController extends BaseController
             "_input_charset" => trim(strtolower($this->alipayConfig()['input_charset'])),
             "out_trade_no" => $orderInfo['order_id'],
             "subject" => '嘉瑞百合缘-【' . $goods['name'] . '】',
-            "total_fee" => $orderInfo['money'],
+            "total_fee" => '0.01',  // $orderInfo['money']
             "show_url" => 'http://wechat.baihey.com/wap/site/main#/main/member/vip',
             "body" => '',
             //其他业务参数根据在线开发文档，添加参数.文档地址:https://doc.open.alipay.com/doc2/detail.htm?spm=a219a.7629140.0.0.2Z6TSk&treeId=60&articleId=103693&docType=1
