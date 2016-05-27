@@ -316,12 +316,13 @@
                                 <ul class="breadcrumb">
                                     <li>
                                         <i class="fa fa-home"></i>
-                                        <a href="#"><?php echo $view->params['title1']; ?></a>
+                                        <a id="opt1" href="#"></a>
                                     </li>
                                        <li>
-                                           <a href="<?php echo $view->params['optUrl'];?>"><?php echo $view->params['title2'];?></a>
+                                           <a id="opt2" href="#"></a>
                                        </li>
                                 </ul>
+
                                 <!-- /BREADCRUMBS -->
 
                             </div>
@@ -379,7 +380,6 @@
 <!-- BOOTSTRAP -->
 <script src="/backend/web/CloudAdmin/bootstrap/js/bootstrap.min.js"></script>
 
-
 <!-- DATA TABLES -->
 <script src="/backend/web/CloudAdmin/js/datatables/media/js/jquery.dataTables.min.js"></script>
 <script src="/backend/web/js/dataTables.bootstrap.js"></script>
@@ -403,7 +403,6 @@
 //        App.setPage("fixed_header_sidebar");  //Set current page
 //        App.setPage("dynamic_table");  //Set current page
         App.init(); //Initialise plugins and elements
-
     });
 
 </script>

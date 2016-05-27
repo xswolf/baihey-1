@@ -62,10 +62,20 @@ var App = function () {
 	/*	Sidebar
 	/*-----------------------------------------------------------------------------------*/
 	var handleSidebar = function () {
+
+        jQuery('#opt1').text(jQuery.cookie('clickOptText'));
+        jQuery('#opt2').text(jQuery.cookie('clickOptText2'));
+        jQuery('#opt2').prop('href',(jQuery.cookie('clickOptUrl')));
+
+
 	jQuery('.sidebar-menu .has-sub > a').click(function () {
             jQuery.cookie('clickOpt',null,{ path: "/"});
             jQuery.cookie('clickOpt',jQuery(this).parent().data('opt'),{ path: "/"});
             jQuery.cookie('clickOptText',jQuery(this).find('.menu-text').text(),{ path: "/"});
+            if(jQuery(this).next('ul.sub').length == 0){
+                jQuery.cookie('clickOptText2','',{ path: "/"});
+                jQuery.cookie('clickOptUrl','',{ path: "/"});
+            }
             var last = jQuery('.has-sub.open', $('.sidebar-menu'));
             last.removeClass("open");
             jQuery('.arrow', last).removeClass("open");
