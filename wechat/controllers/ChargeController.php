@@ -93,8 +93,7 @@ class ChargeController extends BaseController
                 echo '退款';
             } else if ($_REQUEST['trade_status'] == 'TRADE_SUCCESS') { //付款完成后，支付宝系统发送该交易状态通知
                 if (ChargeOrder::getInstance()->setOrderStatus($_REQUEST['out_trade_no'])) {   // 设置订单状态
-                    $baseUrl = urlencode('../site/main#/charge_order?orderId=' . $_REQUEST['out_trade_no'] . '&payType=4');
-                    return $this->redirect($baseUrl);
+                    return $this->redirect('http://wechat.baihey.com/wap/site/main#/charge_order?orderId=' . $_REQUEST['out_trade_no'] . '&payType=4');
                 } else {
                     echo '设置订单状态失败';
                 }
