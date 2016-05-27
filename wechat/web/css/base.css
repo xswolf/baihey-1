@@ -223,6 +223,7 @@ p.mb0{ margin-bottom: 0;}
 .dib{ display: inline-block;}
 .sx{ padding: 3px;}
 .vam{ vertical-align: middle;}
+p.wsn{white-space: normal;}
 
 
 /*清除浮动*/

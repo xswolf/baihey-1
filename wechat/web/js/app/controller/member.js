@@ -1980,7 +1980,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
         $scope.formData.identity_address = $scope.userInfo.info.identity_address != '未知' ? $scope.userInfo.info.identity_address : '';
 
         $scope.addNewImg = function (name) {
-            if(name == 'identity_pic1') {
+            if (name == 'identity_pic1') {
                 var uploader = uploader1;
             } else {
                 var uploader = uploader2;
@@ -2020,7 +2020,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
         });
 
         $scope.addNewImg = function (name) {
-            if(name == 'marriage_pic1') {
+            if (name == 'marriage_pic1') {
                 var uploader = uploader1;
             } else {
                 var uploader = uploader2;
@@ -2040,7 +2040,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
         });
 
         $scope.addNewImg = function (name) {
-            if(name == 'education_pic1') {
+            if (name == 'education_pic1') {
                 var uploader = uploader1;
             } else {
                 var uploader = uploader2;
@@ -2060,7 +2060,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
         });
 
         $scope.addNewImg = function (name) {
-            if(name == 'house_pic1') {
+            if (name == 'house_pic1') {
                 var uploader = uploader1;
             } else {
                 var uploader = uploader2;
@@ -2070,7 +2070,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
     }]);
 
     // 开通VIP
-    module.controller("member.vip", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$interval','$location', function (api, $scope, $timeout, $ionicPopup, $interval,$location) {
+    module.controller("member.vip", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$interval', '$location', function (api, $scope, $timeout, $ionicPopup, $interval, $location) {
         $scope.formData = [];
 
         $scope.formData.timer = '78时00分12秒';
@@ -2079,7 +2079,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
         $scope.userId = 1;
 
         // 商品列表
-        api.save('/wap/charge/get-charge-goods-list',false).success(function(res){
+        api.save('/wap/charge/get-charge-goods-list', false).success(function (res) {
             $scope.goodsList = res;
         });
 
@@ -2130,12 +2130,12 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
         }
 
         // 生成订单并跳转支付
-        $scope.createOrder = function(_goodsId){
-            api.save('/wap/charge/produce-order',{goodsId:_goodsId,user_id:1}).success(function(res){
-                if(res.status<1){
-                    $ionicPopup.alert({title:res.msg});
-                }else{
-                    $location.url('/main/member_charge?orderId='+res.data+'&tempUrl=/main/member/vip');
+        $scope.createOrder = function (_goodsId) {
+            api.save('/wap/charge/produce-order', {goodsId: _goodsId, user_id: 1}).success(function (res) {
+                if (res.status < 1) {
+                    $ionicPopup.alert({title: res.msg});
+                } else {
+                    $location.url('/main/member_charge?orderId=' + res.data + '&tempUrl=/main/member/vip');
                 }
             })
         }
@@ -2506,16 +2506,31 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
     // 我的约会-发布约会-对约伴的要求
     module.controller("member.rendezvous_requirement", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', function (api, $scope, $timeout, $ionicPopup) {
 
-        $scope.labelList = ['宅男', '高富帅', '逗比', '大长腿', '型男', '肌肉男', '阳光男'];
+        $scope.userSex = 0;  // 用户性别 默认女0
+
+        $scope.labelList = config_infoData.label;
+
         $scope.formData.labelList = [];
+
+        $scope.nothing = false;  // 不限
 
         // 添加标签
         $scope.addLabel = function (value) {
-            $scope.formData.labelList.push(value);
+            if ($scope.formData.labelList.indexOf(value) == -1) {  // 标签不存在才允许添加
+                $scope.formData.labelList.push(value);
+            }
+            if (value == '不限') {
+                $scope.formData.labelList = [];
+                $scope.formData.labelList.push(value);
+                $scope.nothing = true;
+            }
         }
 
         // 删除标签
-        $scope.removeLabel = function (index) {
+        $scope.removeLabel = function (index, value) {
+            if (value == '不限') {
+                $scope.nothing = false;
+            }
             $scope.formData.labelList.splice(index, 1);
         }
 
@@ -2551,9 +2566,9 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
         }
 
         $scope.putList = [];
-        api.list('/wap/rendezvous/list', {user_id:ar.getCookie('bhy_user_id')}).success(function (res) {
+        api.list('/wap/rendezvous/list', {user_id: ar.getCookie('bhy_user_id')}).success(function (res) {
             $scope.putList = res.data;
-            for(var i in $scope.putList) {
+            for (var i in $scope.putList) {
                 var label = $scope.putList[i].we_want.split(',');
                 $scope.putList[i].label = [];
                 $scope.putList[i].label = label;

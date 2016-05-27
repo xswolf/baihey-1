@@ -470,7 +470,38 @@ var config_infoData = {
         {id: 5, name: '一个女孩（跟随自己）'},
         {id: 6, name: '两个及以上（跟随对方）'},
         {id: 7, name: '两个及以上（跟随自己）'}
-    ]
+    ],
+    'label': {
+        'man': [
+            {name: '颜值高',hot:1},
+            {name: '白富美',hot:0},
+            {name: '逗逼',hot:1},
+            {name: '御姐',hot:0},
+            {name: '萝莉',hot:0},
+            {name: '土豪',hot:0},
+            {name: '女神',hot:0},
+            {name: '吃货',hot:1},
+            {name: '自来熟',hot:1},
+            {name: '御宅族',hot:0},
+            {name: '不限',hot:0}
+        ],
+        'woman':[
+            {name:'高富帅',hot:0},
+            {name:'长腿欧巴',hot:1},
+            {name:'型男',hot:0},
+            {name:'大叔',hot:0},
+            {name:'土豪',hot:0},
+            {name:'男神',hot:1},
+            {name:'吃货',hot:0},
+            {name:'小鲜肉',hot:1},
+            {name:'逗逼',hot:1},
+            {name:'自来熟',hot:1},
+            {name:'御宅族',hot:0},
+            {name:'暖男',hot:1},
+            {name:'小公举',hot:0},
+            {name:'不限',hot:0}
+        ]
+    }
 
 };
 

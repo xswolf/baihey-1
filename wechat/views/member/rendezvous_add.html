@@ -233,12 +233,13 @@
             <ion-content ng-controller="member.rendezvous_requirement">
                 <ion-list>
                     <ion-item>
-                        <p class="comm_bg_e padding">
-                            <span class="label mr5" ng-repeat="ul in formData.labelList" ng-click="removeLabel($index)">{{ul}}</span>
+                        <p class="padding bor_imp wsn">
+                            <span class="cor17 fs14" ng-if="formData.labelList.length < 1">约会对象你说了算</span>
+                            <span class="label mr10 mb10" ng-repeat="ul in formData.labelList" ng-click="removeLabel($index,ul)">{{ul}}</span>
                         </p>
-                        <p>
-                          <span class="input-label">请选择</span>
-                          <span class="label mr5" ng-repeat="l in labelList" ng-click="addLabel(l)">{{l}}</span>
+                        <p class="wsn mt20">
+                          <button class="button button-outline button-stable button-small ml5 mr5 mb10" ng-class="{1:'cor49 fwb fs14'}[l.hot]" ng-repeat="l in labelList.man" ng-if="userSex==1" ng-click="addLabel(l.name)" ng-disabled="nothing">{{l.name}}</button>
+                          <button class="button button-outline button-stable button-small ml5 mr5 mb10" ng-class="{1:'cor49 fwb fs14'}[l.hot]" ng-repeat="l in labelList.woman" ng-if="userSex==0" ng-click="addLabel(l.name)" ng-disabled="nothing">{{l.name}}</button>
                         </p>
                     </ion-item>
                     <ion-item>
