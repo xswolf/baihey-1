@@ -20,8 +20,9 @@
 
 
     <link href="/backend/web/CloudAdmin/font-awesome/css/font-awesome.min.css" rel="stylesheet">
-    <!-- DATE RANGE PICKER -->
-    <link rel="stylesheet" type="text/css" href="/backend/web/CloudAdmin/js/bootstrap-daterangepicker/daterangepicker-bs3.css" />
+    <!-- DATE PICKER -->
+    <link rel="stylesheet" type="text/css" href="/backend/web/CloudAdmin/js/datepicker/themes/jquery-ui.css" />
+    <link rel="stylesheet" type="text/css" href="/backend/web/CloudAdmin/js/datepicker/themes/red-datepicker.css" />
     <!-- FONTS -->
     <link href='http://fonts.useso.com/css?family=Open+Sans:300,400,600,700' rel='stylesheet' type='text/css'>
 
@@ -29,37 +30,9 @@
     <link rel="stylesheet" type="text/css"  href="/backend/web/css/site.css" >
     <link rel="stylesheet" type="text/css" href="/backend/web/css/jquery.dataTables.css" />
     <link rel="stylesheet" type="text/css" href="/backend/web/CloudAdmin/js/file_input/fileinput.min.css" />
-    <!-- JAVASCRIPTS -->
-    <!-- Placed at the end of the document so the pages load faster -->
+    <link rel="stylesheet" type="text/css" href="/backend/web/CloudAdmin/js/select2/select2.min.css" />
     <!-- JQUERY -->
     <script src="/backend/web/CloudAdmin/js/jquery/jquery-2.0.3.min.js"></script>
-    <!-- JQUERY VALIDATE -->
-    <script src="/backend/web/CloudAdmin/js/jquery-validate/jquery.validate.min.js"></script>
-    <!-- JQUERY UI-->
-    <script src="/backend/web/CloudAdmin/js/jquery-ui-1.10.3.custom/js/jquery-ui-1.10.3.custom.min.js"></script>
-    <script src="/backend/web/CloudAdmin/js/jQuery-BlockUI/jquery.blockUI.min.js"></script>
-    <!-- BOOTSTRAP -->
-    <script src="/backend/web/CloudAdmin/bootstrap/js/bootstrap.min.js"></script>
-
-
-    <!-- DATA TABLES -->
-    <script src="/backend/web/CloudAdmin/js/datatables/media/js/jquery.dataTables.min.js"></script>
-    <script src="/backend/web/js/dataTables.bootstrap.js"></script>
-
-    <!-- DATE RANGE PICKER -->
-    <script src="/backend/web/CloudAdmin/js/bootstrap-daterangepicker/moment.min.js"></script>
-
-    <script src="/backend/web/CloudAdmin/js/bootstrap-daterangepicker/daterangepicker.min.js"></script>
-    <!-- SLIMSCROLL -->
-    <script type="text/javascript" src="/backend/web/CloudAdmin/js/jQuery-slimScroll-1.3.0/jquery.slimscroll.min.js"></script><script type="text/javascript" src="/backend/web/CloudAdmin/js/jQuery-slimScroll-1.3.0/slimScrollHorizontal.min.js"></script>
-    <!-- COOKIE -->
-    <script type="text/javascript" src="/backend/web/CloudAdmin/js/jQuery-Cookie/jquery.cookie.min.js"></script>
-    <script type="text/javascript" src="/backend/web/CloudAdmin/js/file_input/fileinput.min.js"></script>
-    <script type="text/javascript" src="/backend/web/CloudAdmin/js/bootstrap-alert/alert.js"></script>
-    <!-- CUSTOM SCRIPT -->
-    <!--<script src="/backend/web/js/dataTableQuery.js"></script>-->
-    <script src="/backend/web/js/app.js"></script>
-    <script src="/backend/web/CloudAdmin/js/script.js"></script>
 </head>
 <body>
 <!-- HEADER -->
@@ -308,8 +281,18 @@
                         <span class="arrow"></span>
                     </a>
                     <ul class="sub">
-                        <li class="has-sub-sub" data-opt="6"><a class="has-sub-sub"  href="/admin/config/list"><span class="sub-menu-text">网址配置</span></a></li>
+                        <li class="has-sub-sub" data-opt="7"><a class="has-sub-sub"  href="/admin/config/list"><span class="sub-menu-text">基础配置</span></a></li>
                     </ul>
+                </li>
+
+                <li class="has-sub">
+                    <a href="javascript:;" class="">
+                        <i class="fa fa-file-text fa-fw"></i> <span class="menu-text">综合管理</span>
+                        <span class="arrow"></span>
+                    </a>
+                    <ul class="sub">
+                        <li class="has-sub-sub" data-opt="8"><a class="has-sub-sub"  href="/admin/member/search"><span class="sub-menu-text">会员查找</span></a></li>
+                        <li class="has-sub-sub" data-opt="9"><a class="has-sub-sub"  href="/admin/member/search"><span class="sub-menu-text">订单列表</span></a></li>                    </ul>
                 </li>
 
             </ul>
@@ -390,7 +373,35 @@
 </div>
 <!-- system modal end -->
 <!--/PAGE -->
+<!-- JAVASCRIPTS -->
+<!-- Placed at the end of the document so the pages load faster -->
 
+<!-- JQUERY VALIDATE -->
+<script src="/backend/web/CloudAdmin/js/jquery-validate/jquery.validate.min.js"></script>
+<!-- JQUERY UI-->
+<script src="/backend/web/CloudAdmin/js/jquery-ui-1.10.3.custom/js/jquery-ui-1.10.3.custom.min.js"></script>
+<script src="/backend/web/CloudAdmin/js/jQuery-BlockUI/jquery.blockUI.min.js"></script>
+<!-- BOOTSTRAP -->
+<script src="/backend/web/CloudAdmin/bootstrap/js/bootstrap.min.js"></script>
+
+
+<!-- DATA TABLES -->
+<script src="/backend/web/CloudAdmin/js/datatables/media/js/jquery.dataTables.min.js"></script>
+<script src="/backend/web/js/dataTables.bootstrap.js"></script>
+
+<!-- DATE PICKER -->
+<script src="/backend/web/CloudAdmin/js/datepicker/picker.js"></script>
+<!-- SLIMSCROLL -->
+<script type="text/javascript" src="/backend/web/CloudAdmin/js/jQuery-slimScroll-1.3.0/jquery.slimscroll.min.js"></script><script type="text/javascript" src="/backend/web/CloudAdmin/js/jQuery-slimScroll-1.3.0/slimScrollHorizontal.min.js"></script>
+<!-- COOKIE -->
+<script type="text/javascript" src="/backend/web/CloudAdmin/js/jQuery-Cookie/jquery.cookie.min.js"></script>
+<script type="text/javascript" src="/backend/web/CloudAdmin/js/file_input/fileinput.min.js"></script>
+<script type="text/javascript" src="/backend/web/CloudAdmin/js/bootstrap-alert/alert.js"></script>
+<script type="text/javascript" src="/backend/web/CloudAdmin/js/select2/select2.min.js"></script>
+<!-- CUSTOM SCRIPT -->
+<!--<script src="/backend/web/js/dataTableQuery.js"></script>-->
+<script src="/backend/web/js/app.js"></script>
+<script src="/backend/web/CloudAdmin/js/script.js"></script>
 <script>
 
     jQuery(document).ready(function() {

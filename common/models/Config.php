@@ -75,11 +75,25 @@ class Config {
 
             ],
             'config'=>[
-                'name'=>'网址配置',
+                'name'=>'基础配置',
                 'url'=>'javascript:;',
                 'children'=>[
                     'list'=>[
                         'name'=>'列表',
+                        'url'=>'',
+                    ]
+                ]
+            ],
+            'member'=>[
+                'name'=>'综合管理',
+                'url'=>'javascript:;',
+                'children'=>[
+                    'search'=>[
+                        'name'=>'会员查找',
+                        'url'=>'',
+                    ],
+                    'save'=>[
+                        'name'=>'添加',
                         'url'=>'',
                     ]
                 ]

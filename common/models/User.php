@@ -3,10 +3,17 @@ namespace common\models;
 
 use Yii;
 use yii\db\Query;
-use yii\web\Session;
 
 class User extends Base
 {
+
+
+    public function lists(){
+        return (new Query())->from($this->tablePrefix.'user u')
+            ->innerJoin($this->tablePrefix.'user_information i' , 'u.id=i.user_id')
+            ->select("*")
+            ->all();
+    }
 
     public function getUserById($id){
         $userTable = static::tableName();
