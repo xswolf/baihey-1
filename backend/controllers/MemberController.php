@@ -28,4 +28,8 @@ class MemberController extends BaseController
         }
         return $this->render();
     }
+
+    public function actionInfo(){
+        return $this->render();
+    }
 }

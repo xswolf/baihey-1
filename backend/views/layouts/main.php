@@ -23,7 +23,7 @@
     <link href="/backend/web/CloudAdmin/font-awesome/css/font-awesome.min.css" rel="stylesheet">
 
     <!-- DATE PICKER -->
-    <link href="/backend/web/CloudAdmin/js/bootstrap-datetimepicker/bootstrap-datetimepicker.min.css">
+    <link href="/backend/web/CloudAdmin/js/bootstrap-datetimepicker/bootstrap-datetimepicker.min.css" rel="stylesheet">
     <!-- FONTS -->
     <link href='http://fonts.useso.com/css?family=Open+Sans:300,400,600,700' rel='stylesheet' type='text/css'>
 
@@ -32,8 +32,13 @@
     <link rel="stylesheet" type="text/css" href="/backend/web/css/jquery.dataTables.css" />
     <link rel="stylesheet" type="text/css" href="/backend/web/CloudAdmin/js/file_input/fileinput.min.css" />
     <link rel="stylesheet" type="text/css" href="/backend/web/CloudAdmin/js/select2/select2.min.css" />
+
+    <!-- FORM -->
+    <link href="/backend/web/CloudAdmin/js/uniform/css/uniform.default.min.css" rel="stylesheet">
+
     <!-- JQUERY -->
     <script src="/backend/web/CloudAdmin/js/jquery/jquery-2.0.3.min.js"></script>
+
 </head>
 <body>
 <!-- HEADER -->
@@ -395,6 +400,9 @@
 <script type="text/javascript" src="/backend/web/CloudAdmin/js/file_input/fileinput.min.js"></script>
 <script type="text/javascript" src="/backend/web/CloudAdmin/js/bootstrap-alert/alert.js"></script>
 <script type="text/javascript" src="/backend/web/CloudAdmin/js/select2/select2.min.js"></script>
+
+<!-- FORM -->
+
 <!-- CUSTOM SCRIPT -->
 <!--<script src="/backend/web/js/dataTableQuery.js"></script>-->
 <script src="/backend/web/js/app.js"></script>

@@ -266,7 +266,7 @@ a.desc:after {
     border-top: 1px solid #e7eaec;
     line-height: 1.42857;
     padding: 8px;
-    vertical-align: top;
+    vertical-align: middle;
 }
 /* DATATABLES */
 table.dataTable thead .sorting,
@@ -295,4 +295,13 @@ table.dataTable thead .sorting_asc:after {
     padding: 4px 10px;
     position: relative;
     text-decoration: none;
+}
+
+table .user_img{
+    width: 29px;
+    height: 29px;
+    display: block;
+    border-radius: 99px;
+    display: block;
+    vertical-align: middle;
 }
