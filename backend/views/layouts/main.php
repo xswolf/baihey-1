@@ -21,9 +21,9 @@
 
 
     <link href="/backend/web/CloudAdmin/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+
     <!-- DATE PICKER -->
-    <link rel="stylesheet" type="text/css" href="/backend/web/CloudAdmin/js/datepicker/themes/jquery-ui.css" />
-    <link rel="stylesheet" type="text/css" href="/backend/web/CloudAdmin/js/datepicker/themes/red-datepicker.css" />
+    <link href="/backend/web/CloudAdmin/js/bootstrap-datetimepicker/bootstrap-datetimepicker.min.css">
     <!-- FONTS -->
     <link href='http://fonts.useso.com/css?family=Open+Sans:300,400,600,700' rel='stylesheet' type='text/css'>
 
@@ -385,7 +385,9 @@
 <script src="/backend/web/js/dataTables.bootstrap.js"></script>
 
 <!-- DATE PICKER -->
-<script src="/backend/web/CloudAdmin/js/datepicker/picker.js"></script>
+<script src="/backend/web/CloudAdmin/js/bootstrap-datetimepicker/bootstrap-datetimepicker.min.js"></script>
+<script src="/backend/web/CloudAdmin/js/bootstrap-datetimepicker/locales/bootstrap-datetimepicker.zh-CN.js"></script>
+
 <!-- SLIMSCROLL -->
 <script type="text/javascript" src="/backend/web/CloudAdmin/js/jQuery-slimScroll-1.3.0/jquery.slimscroll.min.js"></script><script type="text/javascript" src="/backend/web/CloudAdmin/js/jQuery-slimScroll-1.3.0/slimScrollHorizontal.min.js"></script>
 <!-- COOKIE -->

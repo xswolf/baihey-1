@@ -19,15 +19,15 @@
     <div class="box-body big">
         <form class="form-horizontal" role="form" action="/admin/member/save" method="post">
             <div class="form-group">
-                <label class="col-sm-3 control-label">会员姓名</label>
-                <div class="col-sm-9">
+                <label class="col-md-2 control-label">会员姓名</label>
+                <div class="input-group col-md-5">
                     <input class="form-control" name="info[real_name]" type="text" value="">
                 </div>
             </div>
 
             <div class="form-group">
-                <label class="col-sm-3 control-label">所在地</label>
-                <div class="col-sm-9">
+                <label class="col-md-2 control-label">所在地</label>
+                <div class="input-group col-md-5">
                     <select class="col-md-4 select_2" name="info[occupation]" id="provines">
                         <option>请选择</option>
                     </select>
@@ -43,8 +43,8 @@
             </div>
 
             <div class="form-group">
-                <label class="col-md-3 control-label">性别</label>
-                <div class="col-md-9">
+                <label class="col-md-2 control-label">性别</label>
+                <div class="col-md-5">
                     <label class="radio-inline"> <input type="radio" class="uniform" name="optionsRadios2" value="1"> 男 </label>
                     <label class="radio-inline"> <input type="radio" class="uniform" name="optionsRadios2" value="0" checked> 女 </label>
                 </div>
@@ -52,20 +52,22 @@
 
 
             <div class="form-group">
-                <label class="col-md-3 control-label">民族</label>
-                <div class="col-md-9">
-                    <select name="nation" id="info[nation]" class="col-md-12 select_2"></select>
+                <label class="col-md-2 control-label">民族</label>
+                <div class="input-group col-md-5">
+                    <select name="info[nation]" id="nation" class="col-md-12 select_2"></select>
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-md-3 control-label">出生年月</label>
-                <div class="col-md-9">
-                    <input type="text" name="info[age]" class="form-control date_picker">
+                <label for="dtp_input" class="col-md-2 control-label">出生年月</label>
+                <div id="dtp_input" class="input-group date form_date col-md-5" data-date="" data-date-format="yyyy-mm-dd" data-link-field="dtp_input" data-link-format="yyyy-mm-dd">
+                    <input name="info[age]" class="form-control" size="16" type="text" value="" readonly>
+                    <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+                    <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-sm-3 control-label">学历</label>
-                <div class="col-sm-9">
+                <label class="col-md-2 control-label">学历</label>
+                <div class="input-group col-md-5">
                     <select class="col-md-12 select_2" name="info[education]">
                         <option value="1">初中</option>
                         <option value="2">高中</option>
@@ -77,8 +79,8 @@
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-sm-3 control-label">婚姻状况</label>
-                <div class="col-sm-9">
+                <label class="col-md-2 control-label">婚姻状况</label>
+                <div class="input-group col-md-5">
                     <select class="col-md-12 select_2" name="info[is_marriage]">
                         <option value="1">未婚</option>
                         <option value="2">离异</option>
@@ -87,8 +89,8 @@
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-sm-3 control-label">身高</label>
-                <div class="col-sm-9">
+                <label class="col-md-2 control-label">身高</label>
+                <div class="input-group col-md-5">
                     <div class="input-group">
                         <input type="text" name="info[height]" class="form-control">
                         <span class="input-group-addon">cm</span>
@@ -96,16 +98,16 @@
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-sm-3 control-label">子女状况</label>
-                <div class="col-sm-9">
+                <label class="col-md-2 control-label">子女状况</label>
+                <div class="input-group col-md-5">
                     <select id="children" class="col-md-12 select_2" name="info[is_child]">
                     </select>
                 </div>
             </div>
 
             <div class="form-group">
-                <label class="col-sm-3 control-label">体重</label>
-                <div class="col-sm-9">
+                <label class="col-md-2 control-label">体重</label>
+                <div class="input-group col-md-5">
                     <div class="input-group">
                         <input type="text" class="form-control">
                         <span class="input-group-addon">kg</span>
@@ -115,21 +117,21 @@
 
 
             <div class="form-group">
-                <label class="col-sm-3 control-label">职业</label>
-                <div class="col-sm-9 ">
+                <label class="col-md-2 control-label">职业</label>
+                <div class="input-group col-md-5">
                     <select class="col-md-6 select_2" name="info[occupation]" id="occupation_1"></select>
                     <select class="col-md-6 select_2" name="info[children_occupation]" id="occupation_2"></select>
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-sm-3 control-label">年收入</label>
-                <div class="col-sm-9">
+                <label class="col-md-2 control-label">年收入</label>
+                <div class="input-group col-md-5">
                     <select class="col-md-12 select_2" name="info[year_income]" id="salary"></select>
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-sm-3 control-label">是否有车</label>
-                <div class="col-sm-9">
+                <label class="col-md-2 control-label">是否有车</label>
+                <div class="input-group col-md-5">
                     <select class="col-md-12 select_2" name="info[is_car]" >
                         <option value="1">已购车</option>
                         <option value="2">未购车</option>
@@ -138,79 +140,77 @@
             </div>
 
             <div class="form-group">
-                <label class="col-sm-3 control-label">住房情况</label>
-                <div class="col-sm-9">
+                <label class="col-md-2 control-label">住房情况</label>
+                <div class="input-group col-md-5">
                     <select class="col-md-12 select_2" name="info[is_purchase]" id="house"></select>
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-sm-3 control-label">属相</label>
-                <div class="col-sm-9">
+                <label class="col-md-2 control-label">属相</label>
+                <div class="input-group col-md-5">
                     <select class="col-md-12 select_2" name="info[zodiac]" id="zodiac"></select>
                 </div>
             </div>
 
             <div class="form-group">
-                <label class="col-sm-3 control-label">星座</label>
-                <div class="col-sm-9">
+                <label class="col-md-2 control-label">星座</label>
+                <div class="input-group col-md-5">
                     <select class="col-md-12 select_2" name="info[constellation]" id="constellation"></select>
                 </div>
             </div>
 
             <div class="form-group">
-                <label class="col-sm-3 control-label">毕业院校</label>
-                <div class="col-sm-9">
+                <label class="col-md-2 control-label">毕业院校</label>
+                <div class="input-group col-md-5">
                     <input class="form-control"  name="info[school]" type="text" value="">
                 </div>
             </div>
 
             <div class="form-group">
-                <label class="col-sm-3 control-label">身份证地址</label>
-                <div class="col-sm-9">
+                <label class="col-md-2 control-label">身份证地址</label>
+                <div class="input-group col-md-5">
                     <input class="form-control"  name="info[identity_address]" type="text" value="">
                 </div>
             </div>
 
             <div class="form-group">
-                <label class="col-sm-3 control-label">身份证号码</label>
-                <div class="col-sm-9">
+                <label class="col-md-2 control-label">身份证号码</label>
+                <div class="input-group col-md-5">
                     <input class="form-control"  name="info[identity_id]" type="text" value="">
                 </div>
             </div>
 
             <div class="form-group">
-                <label class="col-sm-3 control-label">电话</label>
-                <div class="col-sm-9">
+                <label class="col-md-2 control-label">电话</label>
+                <div class="input-group col-md-5">
                     <input class="form-control"  name="phone" type="tel" value="">
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-sm-3 control-label">qq</label>
-                <div class="col-sm-9">
+                <label class="col-md-2 control-label">qq</label>
+                <div class="input-group col-md-5">
                     <input class="form-control"  name="info[qq]" type="text" value="">
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-sm-3 control-label">微信</label>
-                <div class="col-sm-9">
+                <label class="col-md-2 control-label">微信</label>
+                <div class="input-group col-md-5">
                     <input class="form-control"  name="info[wechat]" type="text" value="">
                 </div>
             </div>
 
             <div class="form-group">
-                <label class="col-sm-3 control-label">个性签名</label>
-                <div class="col-sm-9">
-                    <textarea name="personalized"></textarea>
+                <label class="col-md-2 control-label">个性签名</label>
+                <div class="input-group col-md-5">
+                    <textarea name="personalized" class="form-control" rows="3"></textarea>
                 </div>
             </div>
 
-            <div class="form-group">
-                <label class="col-sm-5"></label>
-                <button class="btn btn-success" type="submit">Submit</button>
+            <div class="form-group center">
+                <button class="btn btn-lg btn-primary" type="submit">提交</button>
             </div>
 
         </form>
-
 
     </div>
 </div>
@@ -221,12 +221,15 @@
 
     jQuery(document).ready(function() {
         $(".select_2").select2();
-        $(".date_picker").datepicker({//添加日期选择功能
-            dateFormat: 'yy-mm-dd',
-            showMonthAfterYear:true,//是否把月放在年的后面
-            onSelect: function(selectedDate) {//选择日期后执行的操作
-
-            }
+        $('.form_date').datetimepicker({
+            language:  'zh-CN',
+            weekStart: 1,
+            todayBtn:  1,
+            autoclose: 1,
+            todayHighlight: 1,
+            startView: 2,
+            minView: 2,
+            forceParse: 0
         });
         App.setPage("save");  //Set current page
         App.init(); //Initialise plugins and elements
@@ -247,6 +250,7 @@
                 html += "<option value='" + config_infoData.occupation[id-1].children[i].id + "'>"+ config_infoData.occupation[id-1].children[i].name +"</option>>"
             }
             $("#occupation_2").html(html)
+            $("#occupation_2").val('');
         })
         $("#salary").html(createSelect("config_infoData.salary"));
         $("#house").html(createSelect("config_infoData.house"));
