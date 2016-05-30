@@ -3,7 +3,8 @@
  */
 define(["app/module", 'app/service/serviceApi'],
     function (module) {
-        module.run(['$rootScope', '$state', '$timeout', 'app.serviceApi', '$ionicLoading', function ($rootScope, $state, $timeout, api, $ionicLoading) {
+        module.run(['$rootScope', '$state', '$timeout', 'app.serviceApi', '$ionicLoading','$location', function ($rootScope, $state, $timeout, api, $ionicLoading,$location) {
+
             var messageList = function () {
                 api.list('/wap/message/message-list', []).success(function (res) {
                     $rootScope.messageList = ar.getStorage('messageList') ? ar.getStorage('messageList') : [];
@@ -36,6 +37,18 @@ define(["app/module", 'app/service/serviceApi'],
                 } else {
                     clearInterval($rootScope.handle)
                 }
+
+                // 判断用户是否登陆
+                console.log($location.$$url);
+                if ($location.$$url != '/main/index'){ // 首页不判断
+                    api.getLoginStatus().success(function (res) {
+                        if(!res.status) {
+                            location.href = '/wap/user/login';
+                            return false;
+                        }
+                    })
+                }
+
 
             });
             // 页面开始加载
