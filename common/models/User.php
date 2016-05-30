@@ -52,13 +52,24 @@ class User extends Base
         $data['reset_pass_time'] = $time;
         // userinformation表 数据处理
         // info
-        $userInfo = $this->getDefaultInfo();
-        $userInfo = array_merge($userInfo,$data['info']);
+        if(isset($data['info'])) {
+            $userInfo = $this->getDefaultInfo();
+            $userInfo = array_merge($userInfo, $data['info']);
+        }
+        unset($data['info']);
         // 身份证照片
         $userAuth = $this->getDefaultAuth();
-        $userAuth = array_merge($userAuth,$data['auth']);
-        unset($data['info']);
-        unset($data['auth']);
+        if(isset($data['auth'])) {
+            $userAuth = array_merge($userAuth, $data['auth']);
+            unset($data['auth']);
+        }
+
+
+        $infoData['auth'] = json_encode($userAuth);
+        $infoData['info'] = json_encode($userInfo);
+        $infoData['city'] = 1;
+        $infoData['personalized'] = $data['personalized'];
+        unset($data['personalized']);
 
         // user表 数据写入
         $user = $db->createCommand()
@@ -71,9 +82,6 @@ class User extends Base
 
         // user_information表 数据处理
         $infoData['user_id'] = $id;
-        $infoData['auth'] = json_encode($userAuth);
-        $infoData['info'] = json_encode($userInfo);
-        $infoData['city'] = 1;
 
         // user_information表 数据写入
         $info = $db->createCommand()

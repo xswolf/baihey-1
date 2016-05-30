@@ -1,3 +1,20 @@
+
+<script src="/wechat/web/js/config/area.js"></script>
+<script src="/wechat/web/js/config/city.js"></script>
+<script>
+
+    function getAdd(val){
+
+        for (var i in area){
+
+            if (area[i].id == val){
+                $("#area_"+val).html(area[i].name);
+                break;
+            }
+        }
+    }
+
+</script>
 <div class="wrapper wrapper-content animated fadeInUp">
     <div class="ibox">
         <div class="ibox-title"><h5>会员列表</h5>
@@ -37,22 +54,28 @@
                 <tbody>
                 {{foreach from=$list item=vo}}
                 <tr>
-                    <td><input name="" type="checkbox" value=""></td>
-                    <td><img class="user_img" src="/backend/web/CloudAdmin/img/addressbook/1.jpg"></td>
-                    <td>{{$vo.id}}</td>
+
                     {{$info = json_decode($vo.info)}}
+                    {{$auth = json_decode($vo.auth)}}
+                    <td><input name="" type="checkbox" value=""></td>
+                    <td><img class="user_img" src="{{$info->head_pic}}"></td>
+                    <td>{{$vo.id}}</td>
                     <td>{{$info->real_name}}</td>
-                    <td>男</td>
+                    <td>{{getSex($vo.sex)}}</td>
                     <td>{{getAge($info->age)}}</td>
-                    <td>未婚</td>
+                    <td>{{getMarriage($info->is_marriage)}}</td>
                     <td>165</td>
-                    <td>大专</td>
-                    <td>VIP</td>
-                    <td>是</td>
-                    <td>未审核</td>
-                    <td>否</td>
-                    <td>重庆市重庆市渝中区</td>
-                    <td>有</td>
+                    <td>{{getEducation($info->education)}}</td>
+                    <td>{{getLevel($info->level)}}</td>
+                    <td>{{getIsNot($vo.service_status) }}</td>
+                    <td>{{getIsNot($vo.is_auth) }}</td>
+                    <td>{{getIsNot($vo.is_sign) }}</td>
+                    <td><span id="area_{{$vo.area}}">
+                        <script>
+                            getAdd({{$vo.area}});
+                        </script>
+                    </span>{{$vo.address}}</td>
+                    <td>{{getIsNot($auth->identity_check)}}</td>
                     <td>
                         <button class="btn btn-primary btn-sm tip" title="管理"><i class="fa fa-cog"></i></button>
                         <button class="btn btn-info btn-sm tip" title="配对记录"><i class="fa fa-heart"></i></button>
@@ -68,11 +91,11 @@
     </div>
 </div>
 
-
 <script>
 
     jQuery(document).ready(function() {
         App.setPage("dynamic_table");  //Set current page
+
     });
 
 </script>

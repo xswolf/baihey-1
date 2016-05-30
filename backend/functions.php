@@ -26,3 +26,60 @@ function getAge($timeStamp){
 function getSex($sex){
     return $sex == 1 ? '男' : '女';
 }
+
+function getMarriage($marriage){
+    if ($marriage == 1){
+        return '未婚';
+    }elseif ($marriage == 2){
+        return '离异';
+
+    }else{
+        return '丧偶';
+
+    }
+}
+
+//{id: 1, name: '初中'},
+//{id: 2, name: '高中'},
+//{id: 3, name: '大专'},
+//{id: 4, name: '本科'},
+//{id: 5, name: '硕士'},
+//{id: 6, name: '博士及以上'}
+function getEducation($e){
+    switch ($e){
+        case 1 :
+            return '初中';
+        case 2 :
+            return '高中';
+
+        case 3 :
+            return '大专';
+
+        case 4 :
+            return '本科';
+
+        case 5 :
+            return '硕士';
+
+        case 6 :
+            return '博士及以上';
+
+    }
+
+}
+
+function getLevel($l){
+    switch ($l) {
+        case 1 :
+            return 'VIP';
+        case 2 :
+            return '贵宾';
+        case 3 :
+            return '钻石';
+    }
+}
+
+function getIsNot($s){
+    $value = $s == 0 ? '否' : '是';
+    return $value;
+}
