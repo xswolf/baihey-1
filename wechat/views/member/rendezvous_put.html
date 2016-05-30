@@ -9,13 +9,13 @@
         <ion-list>
             <p class="clearfix lh24 pr">
                 <span class="fl fs16">
-                    <span class="fs24">05</span>
-                    <span class="cor5">月/2016年</span>
+                    <span class="fs24">{{formData.month}}</span>
+                    <span class="cor5">月/{{formData.year}}年</span>
                 </span>
                 <span class="fr icon icon-calendar fs24 cor5" ng-click="showDate()"></span>
-                <div class="selectTool" ng-show="date">
+                <div class="selectTool" ng-show="datePicker">
                     <b></b>
-                    <p ng-class="{'selected':d.title==dateTitle}" ng-repeat="d in dateList" ng-click="seletedDate(d.title)">{{d.title}}</p>
+                    <p ng-class="{'selected':d.title==dateTitle}" ng-repeat="d in dateList" ng-click="seletedDate(d.title,d.time)">{{d.title}}</p>
                 </div>
             </p>
             <div class="card mb10" ng-if="putList.length>0" ng-repeat="put in putList">
@@ -45,6 +45,7 @@
             <p ng-if="putList.length <= 0" class="padding tac">没有记录</p>
         </ion-list>
         <ion-infinite-scroll
+                ng-if="moreDataCanBeLoaded()"
                 on-infinite="loadMore()"
                 distance="1%">
         </ion-infinite-scroll>

@@ -1,5 +1,6 @@
 <?php
 namespace common\models;
+use common\util\Functions;
 use yii\db\Query;
 
 /**
@@ -43,13 +44,24 @@ class UserRendezvous extends Base
      */
     public function lists($where){
 
+        isset($where['user_id']) ? $condition['r.user_id'] = $where['user_id'] : $condition = $where;
+        $pageNum = isset($where['pageNum']) ? $where['pageNum'] : 1;
+        $pageSize = isset($where['pageSize']) ? $where['pageSize'] : 10;
+        $offset = ($pageNum - 1) * $pageSize;
         $obj = (new Query())
-            ->from($this->tablePrefix.'user_information i')
-            ->innerJoin($this->tablePrefix.'user_rendezvous r' , "i.user_id=r.user_id")
+            ->from($this->tablePrefix.'user_rendezvous r')
+            ->innerJoin($this->tablePrefix.'user_information i', "i.user_id=r.user_id")
             ->leftJoin('(SELECT rendezvous_id,COUNT(id) count FROM '.$this->tablePrefix.'user_rendezvous_apply GROUP BY rendezvous_id) a', "a.rendezvous_id=r.id")
-            ->select("*");
-        if (is_array($where) && count($where)>0){
-            $obj->where($where)->all();
+            ->select("*")
+            ->offset($offset)
+            ->limit($pageSize);
+        if (is_array($condition) && count($condition)>0){
+            $obj->where($condition);
+        }
+        // 时间查询处理
+        if(isset($where['date'])) {
+            $arr = Functions::getInstance()->getTimeByMonth($where['date']);
+            $obj->andWhere(['between', 'create_time', $arr[0], $arr[1]]);
         }
         //echo $obj->createCommand()->getRawSql();exit;
         return $obj->all();

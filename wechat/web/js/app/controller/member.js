@@ -2542,42 +2542,69 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
 
 
     // 我的约会-我发布的约会
-    module.controller("member.rendezvous_put", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$ionicActionSheet', '$location', function (api, $scope, $timeout, $ionicPopup, $ionicActionSheet, $location) {
+    module.controller("member.rendezvous_put", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$ionicActionSheet', '$location','$ionicScrollDelegate', function (api, $scope, $timeout, $ionicPopup, $ionicActionSheet, $location,$ionicScrollDelegate) {
 
         $scope.formData = [];
         $scope.dateList = [];
+        $scope.putList = [];
+        $scope.formData.pageNum = 0;
+        var getPutList = function(date, pageNum) {
+            var formData = [];
+            formData.user_id = ar.getCookie('bhy_user_id');
+            formData.pageNum = pageNum + 1;
+            formData.date = date;
+            $scope.formData.date = date;
+            $scope.formData.pageNum = pageNum + 1;
+            api.list('/wap/rendezvous/list', formData).success(function (res) {
+                res.data.length < 10 ? $scope.isMore = false : $scope.isMore = true;
+                for(var i in res.data) {
+                    var label = res.data[i].we_want.split(',');
+                    res.data[i].label = [];
+                    res.data[i].label = label;
+					$scope.putList.push(res.data[i]);
+                }
+                $scope.$broadcast('scroll.infiniteScrollComplete');
+            });
+        }
         // 只能查看最近半年的数据
         for (var i = 0; i < 6; i++) {
             var dt = new Date();
             dt.setMonth(dt.getMonth() - i);
-            var _title = dt.getFullYear() + '年' + (dt.getMonth() + 1) + '月'
-            $scope.dateList.push({title: _title, value: dt.toLocaleString()})
+            var _title = dt.getFullYear() + '年' + (dt.getMonth() + 1) + '月';
+            var _time = dt.getFullYear() + '-' + (dt.getMonth() + 1);
+            $scope.dateList.push({title: _title, value: dt.toLocaleString(), time: _time});
         }
         $scope.dateTitle = $scope.dateList[0].title; // 默认当前月
-        $scope.date = false;
+        var arr = $scope.dateList[0].time.split('-');
+        $scope.formData.year = arr[0];
+        $scope.formData.month = arr[1] < 10 ? '0' + arr[1] : arr[1];
+        $scope.datePicker = false;
         $scope.showDate = function () {
-            $scope.date = !$scope.date;
+            $scope.datePicker = !$scope.datePicker;
         }
 
         // 选择日期改变样式、并查询数据
-        $scope.seletedDate = function (title) {
+        $scope.seletedDate = function (title,time) {
             $scope.dateTitle = title;
-            $scope.dateList = []; // 根据日期查询的数据
+            var arr = time.split('-');
+            $scope.formData.year = arr[0];
+            $scope.formData.month = arr[1] < 10 ? '0' + arr[1] : arr[1];
+            getPutList(time, 0);
+            $scope.putList = []; // 根据日期查询的数据
+            $scope.datePicker = false;
         }
 
-        $scope.putList = [];
-        api.list('/wap/rendezvous/list', {user_id: ar.getCookie('bhy_user_id')}).success(function (res) {
-            $scope.putList = res.data;
-            for (var i in $scope.putList) {
-                var label = $scope.putList[i].we_want.split(',');
-                $scope.putList[i].label = [];
-                $scope.putList[i].label = label;
-            }
-        });
+
+        $scope.isMore = true;
 
         // 加载更多
         $scope.loadMore = function () {
-            console.log('加载更多');
+            getPutList($scope.formData.date, $scope.formData.pageNum);
+        }
+
+        // 是否还有更多
+        $scope.moreDataCanBeLoaded = function() {
+            return $scope.isMore;
         }
 
         // 操作
