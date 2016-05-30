@@ -305,3 +305,7 @@ table .user_img{
     display: block;
     vertical-align: middle;
 }
+
+.pd0{
+    padding: 0 !important;
+}

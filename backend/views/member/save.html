@@ -1,285 +1,616 @@
-<div class="box border green">
-    <div class="box-title">
-        <h4><i class="fa fa-bars"></i>添加会员</h4>
-        <div class="tools hidden-xs">
-            <a href="#box-config" data-toggle="modal" class="config">
-                <i class="fa fa-cog"></i>
-            </a>
-            <a href="javascript:;" class="reload">
-                <i class="fa fa-refresh"></i>
-            </a>
-            <a href="javascript:;" class="collapse">
-                <i class="fa fa-chevron-up"></i>
-            </a>
-            <a href="javascript:;" class="remove">
-                <i class="fa fa-times"></i>
-            </a>
+<link rel="stylesheet" type="text/css" href="/backend/web/CloudAdmin/js/dropzone/dropzone.min.css"/>
+<div class="row">
+    <div class="col-md-12">
+        <div class="box border green">
+            <div class="box-title">
+                <h4><i class="fa fa-bars"></i>添加会员</h4>
+                <div class="tools hidden-xs">
+                    <a href="#box-config" data-toggle="modal" class="config">
+                        <i class="fa fa-cog"></i>
+                    </a>
+                    <a href="javascript:;" class="reload">
+                        <i class="fa fa-refresh"></i>
+                    </a>
+                    <a href="javascript:;" class="collapse">
+                        <i class="fa fa-chevron-up"></i>
+                    </a>
+                    <a href="javascript:;" class="remove">
+                        <i class="fa fa-times"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="box-body big">
+                <form class="form-horizontal" role="form" action="/admin/member/save" method="post">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h3 class="form-title">基本资料</h3>
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">会员姓名</label>
+                                <div class="input-group col-md-6">
+                                    <input class="form-control" name="info[real_name]" type="text" value=""
+                                           placeholder="请输入真实姓名">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">地区</label>
+                                <div class="input-group col-md-6">
+                                    <div class="col-xs-4 pd0">
+                                        <select class="form-control dq-Province" name="info[occupation]" id="dq-Province">
+                                            <option value="">请选择</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-xs-4 pd0">
+                                        <select class="form-control" name="info[occupation]" id="dq-City">
+                                            <option value="">请选择</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-xs-4 pd0">
+                                        <select class="form-control" name="info[occupation]" id="dq-Area">
+                                            <option value="">请选择</option>
+                                        </select>
+                                    </div>
+
+
+                                </div>
+
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">性别</label>
+                                <div class="col-md-6">
+                                    <label class="radio-inline"> <input type="radio" class="uniform" name="sex"
+                                                                        value="1"> 男
+                                    </label>
+                                    <label class="radio-inline"> <input type="radio" class="uniform" name="sex"
+                                                                        value="0"
+                                                                        checked> 女 </label>
+                                </div>
+                            </div>
+
+
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">民族</label>
+                                <div class="input-group col-md-6">
+                                    <select name="info[nation]" id="nation" class="form-control">
+                                        <option value="">请选择</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="dtp_input" class="col-md-3 control-label">出生年月</label>
+                                <div id="dtp_input" class="input-group date form_date col-md-6" data-date=""
+                                     data-date-format="yyyy-mm-dd" data-link-field="dtp_input"
+                                     data-link-format="yyyy-mm-dd">
+                                    <input name="info[age]" class="form-control" size="16" type="text" value=""
+                                           readonly>
+                                    <span class="input-group-addon"><span
+                                            class="glyphicon glyphicon-remove"></span></span>
+                                    <span class="input-group-addon"><span
+                                            class="glyphicon glyphicon-calendar"></span></span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">学历</label>
+                                <div class="input-group col-md-6">
+                                    <select class="form-control education" name="info[education]">
+                                        <option value="">请选择</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">婚姻状况</label>
+                                <div class="input-group col-md-6">
+                                    <select class="form-control" name="info[is_marriage]">
+                                        <option value="">请选择</option>
+                                        <option value="1">未婚</option>
+                                        <option value="2">离异</option>
+                                        <option value="3">丧偶</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">身高</label>
+                                <div class="input-group col-md-6">
+                                    <select id="height" class="form-control" name="info[height]">
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">子女状况</label>
+                                <div class="input-group col-md-6">
+                                    <select class="form-control children" name="info[is_child]">
+                                        <option value="">请选择</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">体重</label>
+                                <div class="input-group col-md-6">
+                                    <div class="input-group">
+                                        <input type="number" class="form-control" name="info[weight]"
+                                               placeholder="请输入体重">
+                                        <span class="input-group-addon">kg</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">职业</label>
+                                <div class="input-group col-md-6">
+                                    <div class="col-xs-6 pd0">
+                                        <select class="form-control occupation" name="info[occupation]" id="occupation_1">
+                                            <option value="">请选择</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-xs-6 pd0">
+                                        <select class="form-control" name="info[children_occupation]" id="occupation_2">
+                                            <option value="">请选择</option>
+                                        </select>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">年收入</label>
+                                <div class="input-group col-md-6">
+                                    <select class="form-control salary" name="info[year_income]">
+                                        <option value="">请选择</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">购车情况</label>
+                                <div class="input-group col-md-6">
+                                    <select class="form-control" name="info[is_car]">
+                                        <option value="">请选择</option>
+                                        <option value="1">已购车</option>
+                                        <option value="2">未购车</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">购房情况</label>
+                                <div class="input-group col-md-6">
+                                    <select class="form-control house" name="info[is_purchase]">
+                                        <option value="">请选择</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">属相</label>
+                                <div class="input-group col-md-6">
+                                    <select class="form-control zodiac" name="info[zodiac]">
+                                        <option value="">请选择</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">星座</label>
+                                <div class="input-group col-md-6">
+                                    <select class="form-control constellation" name="info[constellation]">
+                                        <option value="">请选择</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">毕业院校</label>
+                                <div class="input-group col-md-6">
+                                    <input class="form-control" name="info[school]" type="text" value=""
+                                           placeholder="请输入毕业院校">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">身份证地址</label>
+                                <div class="input-group col-md-6">
+                                    <input class="form-control" name="info[identity_address]" type="text" value=""
+                                           placeholder="请输入身份证地址">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">身份证号码</label>
+                                <div class="input-group col-md-6">
+                                    <input class="form-control" name="info[identity_id]" type="text" value=""
+                                           placeholder="请输入身份证号码">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">手机号码</label>
+                                <div class="input-group col-md-6">
+                                    <input class="form-control" name="phone" type="tel" value="" placeholder="请输入手机号码">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">qq</label>
+                                <div class="input-group col-md-6">
+                                    <input class="form-control" name="info[qq]" type="text" value=""
+                                           placeholder="请输入QQ号码">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">微信</label>
+                                <div class="input-group col-md-6">
+                                    <input class="form-control" name="info[wechat]" type="text" value=""
+                                           placeholder="请输入微信号码">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">个性签名</label>
+                                <div class="input-group col-md-6">
+                                    <textarea name="personalized" class="form-control" rows="3"
+                                              placeholder="请填写个性签名"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <h3 class="form-title">择偶标准</h3>
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">年龄范围</label>
+                                <div class="input-group col-md-6">
+                                    <div class="col-xs-5 pd0">
+                                        <select class="form-control" id="age1">
+                                        </select>
+                                    </div>
+                                    <div class="col-xs-1 pd0 center">
+                                        <span class="fa fa-minus fa-1x" style="margin-top: 8px;"></span>
+                                    </div>
+                                    <div class="col-xs-5 pd0">
+                                        <select class="form-control" id="age2">
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">身高要求</label>
+                                <div class="input-group col-md-6">
+                                    <div class="col-xs-5 pd0">
+                                        <select class="form-control" id="height1">
+                                        </select>
+                                    </div>
+                                    <div class="col-xs-1 pd0 center">
+                                        <span class="fa fa-minus fa-1x" style="margin-top: 8px;"></span>
+                                    </div>
+                                    <div class="col-xs-5 pd0">
+                                        <select class="form-control" id="height2">
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">学历要求</label>
+                                <div class="input-group col-md-6">
+                                    <div class="col-xs-8 pd0">
+                                        <select class="form-control education">
+                                            <option value="">不限</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-xs-4">
+                                        <label class="checkbox-inline"><input type="checkbox" class="uniform" value="">及以上</label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">年收入要求</label>
+                                <div class="input-group col-md-6">
+                                    <select class="form-control salary">
+                                        <option value="">不限</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">体重要求</label>
+                                <div class="input-group col-md-6">
+                                    <select class="form-control">
+                                        <option value="">不限</option>
+                                        <option value="1">偏胖</option>
+                                        <option value="2">标准</option>
+                                        <option value="3">偏瘦</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">购车要求</label>
+                                <div class="input-group col-md-6">
+                                    <select class="form-control">
+                                        <option value="">不限</option>
+                                        <option value="1">已购车</option>
+                                        <option value="2">未购车</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">购房要求</label>
+                                <div class="input-group col-md-6">
+                                    <select class="form-control house">
+                                        <option value="">不限</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">子女要求</label>
+                                <div class="input-group col-md-6">
+                                    <select class="form-control children">
+                                        <option value="">不限</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">才貌要求</label>
+                                <div class="input-group col-md-6">
+                                    <select class="form-control">
+                                        <option value="">不限</option>
+                                        <option value="1">出众</option>
+                                        <option value="2">一般</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">职业要求</label>
+                                <div class="input-group col-md-6">
+                                    <select multiple class="col-md-12 mult_select occupation">
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">婚姻要求</label>
+                                <div class="input-group col-md-6">
+                                    <select multiple class="col-md-12 mult_select">
+                                        <option value="1">未婚</option>
+                                        <option value="2">离异</option>
+                                        <option value="3">丧偶</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">属相要求</label>
+                                <div class="input-group col-md-6">
+                                    <select multiple class="col-md-12 mult_select zodiac">
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">星座要求</label>
+                                <div class="input-group col-md-6">
+                                    <select multiple class="form-control mult_select constellation"></select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">地区要求</label>
+                                <div class="input-group col-md-6">
+                                    <select multiple class="form-control mult_select dq-Province"></select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">其他要求</label>
+                                <div class="input-group col-md-6">
+                                    <textarea class="form-control" rows="3"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="box border blue">
+                            <div class="box-title">
+                                <h4><i class="fa fa-cloud-download"></i>上传照片</h4>
+                                <div class="tools hidden-xs">
+                                    <a href="#box-config" data-toggle="modal" class="config">
+                                        <i class="fa fa-cog"></i>
+                                    </a>
+                                    <a href="javascript:;" class="reload">
+                                        <i class="fa fa-refresh"></i>
+                                    </a>
+                                    <a href="javascript:;" class="collapse">
+                                        <i class="fa fa-chevron-up"></i>
+                                    </a>
+                                    <a href="javascript:;" class="remove">
+                                        <i class="fa fa-times"></i>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="box-body">
+                                <form action="/wap/file/thumb-photo"
+                                      class="dropzone"
+                                      id="my-awesome-dropzone">
+                                    <div class="fallback">
+                                        <input name="file" type="file" multiple=""/>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group center">
+                    <button class="btn btn-lg btn-primary" type="submit">提交</button>
+                </div>
+
+
+            </div>
         </div>
-    </div>
-    <div class="box-body big">
-        <form class="form-horizontal" role="form" action="/admin/member/save" method="post">
-            <div class="form-group">
-                <label class="col-md-2 control-label">会员姓名</label>
-                <div class="input-group col-md-5">
-                    <input class="form-control" name="info[real_name]" type="text" value="">
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label class="col-md-2 control-label">所在地</label>
-                <div class="input-group col-md-5">
-                    <select class="col-md-4 select_2" name="info[occupation]" id="provines">
-                        <option>请选择</option>
-                    </select>
-                    <select class="col-md-4 select_2" name="info[occupation]" id="city">
-                        <option>请选择</option>
-
-                    </select>
-                    <select class="col-md-4 select_2" name="info[occupation]" id="area">
-                        <option>请选择</option>
-
-                    </select>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label class="col-md-2 control-label">性别</label>
-                <div class="col-md-5">
-                    <label class="radio-inline"> <input type="radio" class="uniform" name="sex" value="1"> 男 </label>
-                    <label class="radio-inline"> <input type="radio" class="uniform" name="sex" value="0" checked> 女 </label>
-                </div>
-            </div>
-
-
-            <div class="form-group">
-                <label class="col-md-2 control-label">民族</label>
-                <div class="input-group col-md-5">
-                    <select name="info[nation]" id="nation" class="col-md-12 select_2"></select>
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="dtp_input" class="col-md-2 control-label">出生年月</label>
-                <div id="dtp_input" class="input-group date form_date col-md-5" data-date="" data-date-format="yyyy-mm-dd" data-link-field="dtp_input" data-link-format="yyyy-mm-dd">
-                    <input name="info[age]" class="form-control" size="16" type="text" value="" readonly>
-                    <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
-                    <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="col-md-2 control-label">学历</label>
-                <div class="input-group col-md-5">
-                    <select class="col-md-12 select_2" name="info[education]">
-                        <option value="1">初中</option>
-                        <option value="2">高中</option>
-                        <option value="3">大专</option>
-                        <option value="4">本科</option>
-                        <option value="5">研究生</option>
-                        <option value="6">博士及以上</option>
-                    </select>
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="col-md-2 control-label">婚姻状况</label>
-                <div class="input-group col-md-5">
-                    <select class="col-md-12 select_2" name="info[is_marriage]">
-                        <option value="1">未婚</option>
-                        <option value="2">离异</option>
-                        <option value="3">丧偶</option>
-                    </select>
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="col-md-2 control-label">身高</label>
-                <div class="input-group col-md-5">
-                    <div class="input-group">
-                        <input type="text" name="info[height]" class="form-control">
-                        <span class="input-group-addon">cm</span>
-                    </div>
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="col-md-2 control-label">子女状况</label>
-                <div class="input-group col-md-5">
-                    <select id="children" class="col-md-12 select_2" name="info[is_child]">
-                    </select>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label class="col-md-2 control-label">体重</label>
-                <div class="input-group col-md-5">
-                    <div class="input-group">
-                        <input type="text" class="form-control">
-                        <span class="input-group-addon">kg</span>
-                    </div>
-                </div>
-            </div>
-
-
-            <div class="form-group">
-                <label class="col-md-2 control-label">职业</label>
-                <div class="input-group col-md-5">
-                    <select class="col-md-6 select_2" name="info[occupation]" id="occupation_1"></select>
-                    <select class="col-md-6 select_2" name="info[children_occupation]" id="occupation_2"></select>
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="col-md-2 control-label">年收入</label>
-                <div class="input-group col-md-5">
-                    <select class="col-md-12 select_2" name="info[year_income]" id="salary"></select>
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="col-md-2 control-label">是否有车</label>
-                <div class="input-group col-md-5">
-                    <select class="col-md-12 select_2" name="info[is_car]" >
-                        <option value="1">已购车</option>
-                        <option value="2">未购车</option>
-                    </select>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label class="col-md-2 control-label">住房情况</label>
-                <div class="input-group col-md-5">
-                    <select class="col-md-12 select_2" name="info[is_purchase]" id="house"></select>
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="col-md-2 control-label">属相</label>
-                <div class="input-group col-md-5">
-                    <select class="col-md-12 select_2" name="info[zodiac]" id="zodiac"></select>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label class="col-md-2 control-label">星座</label>
-                <div class="input-group col-md-5">
-                    <select class="col-md-12 select_2" name="info[constellation]" id="constellation"></select>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label class="col-md-2 control-label">毕业院校</label>
-                <div class="input-group col-md-5">
-                    <input class="form-control"  name="info[school]" type="text" value="">
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label class="col-md-2 control-label">身份证地址</label>
-                <div class="input-group col-md-5">
-                    <input class="form-control"  name="info[identity_address]" type="text" value="">
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label class="col-md-2 control-label">身份证号码</label>
-                <div class="input-group col-md-5">
-                    <input class="form-control"  name="info[identity_id]" type="text" value="">
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label class="col-md-2 control-label">电话</label>
-                <div class="input-group col-md-5">
-                    <input class="form-control"  name="phone" type="tel" value="">
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="col-md-2 control-label">qq</label>
-                <div class="input-group col-md-5">
-                    <input class="form-control"  name="info[qq]" type="text" value="">
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="col-md-2 control-label">微信</label>
-                <div class="input-group col-md-5">
-                    <input class="form-control"  name="info[wechat]" type="text" value="">
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label class="col-md-2 control-label">个性签名</label>
-                <div class="input-group col-md-5">
-                    <textarea name="personalized" class="form-control" rows="3"></textarea>
-                </div>
-            </div>
-
-            <div class="form-group center">
-                <button class="btn btn-lg btn-primary" type="submit">提交</button>
-            </div>
-
-        </form>
-
     </div>
 </div>
 <script src="/wechat/web/js/config/infoData.js"></script>
 <script src="/wechat/web/js/config/area.js"></script>
 <script src="/wechat/web/js/config/city.js"></script>
-<script>
 
-    jQuery(document).ready(function() {
-        $(".select_2").select2();
+<script>
+    jQuery(document).ready(function () {
+
+        SelectInit();
+
+        try {
+            $(".dropzone").dropzone({
+                paramName: "file", // The name that will be used to transfer the file
+                maxFilesize: 0.5, // MB
+                addRemoveLinks: true,
+                dictResponseError: '同时上传文件时出错！',
+                //change the previewTemplate to use Bootstrap progress bars
+                previewTemplate: "<div class=\"dz-preview dz-file-preview\">\n  <div class=\"dz-details\">\n    <div class=\"dz-filename\"><span data-dz-name></span></div>\n    <div class=\"dz-size\" data-dz-size></div>\n    <img data-dz-thumbnail />\n  </div>\n  <div class=\"progress progress-sm progress-striped active\"><div class=\"progress-bar progress-bar-success\" data-dz-uploadprogress></div></div>\n  <div class=\"dz-success-mark\"><span></span></div>\n  <div class=\"dz-error-mark\"><span></span></div>\n  <div class=\"dz-error-message\"><span data-dz-errormessage></span></div>\n</div>"
+            });
+        } catch (e) {
+            alert('您的浏览器版本过旧，不支持上传图片！');
+        }
+
+
+        $(".uniform").uniform();
+
+        $(".mult_select").select2({
+            placeholder: "不限",
+            maximumSelectionSize: 3
+        });
+
         $('.form_date').datetimepicker({
-            language:  'zh-CN',
+            language: 'zh-CN',
             weekStart: 1,
-            todayBtn:  1,
+            todayBtn: 1,
             autoclose: 1,
             todayHighlight: 1,
             startView: 2,
             minView: 2,
             forceParse: 0
         });
-        App.setPage("save");  //Set current page
-        App.init(); //Initialise plugins and elements
-        function createSelect(item){
-            var html = "";
-            var data = eval(item);
-            for (var i in data){
-                html += "<option value='" + data[i].id + "'>"+ data[i].name +"</option>>"
+
+        // 地区联动-选择省
+        $("#dq-Province").on("change", function () {
+            addressLink($(this), $("#dq-City"), citys, true);
+        });
+        // 地区联动-选择市
+        $("#dq-City").on("change", function () {
+            addressLink($(this), $("#dq-Area"), area, false);
+        });
+
+        //地区联动函数
+        function addressLink(obj1, obj2, data, isProvince) {
+            var index = obj1.find("option:selected").val(),
+                    html = '<option value="">请选择</option>';
+            if (typeof data !== 'undefined') {
+                for (var i in data) {
+                    if (data[i].parentId == index) {
+                        html += '<option value="';
+                        html += data[i].id;
+                        html += '">';
+                        html += data[i].name;
+                        html += '</option>';
+                    }
+                }
+                if (isProvince) {
+                    $("#dq-Area").html('<option value="">请选择</option>');
+                }
+                obj2.empty().append(html);
             }
-            return html;
         }
 
-        $("#occupation_1").html(createSelect("config_infoData.occupation")) //职业
-        $("#occupation_1").change(function () {
-            var id = $(this).val();
-            var html = "";
-            for (var i in config_infoData.occupation[id-1].children){
-                html += "<option value='" + config_infoData.occupation[id-1].children[i].id + "'>"+ config_infoData.occupation[id-1].children[i].name +"</option>>"
-            }
-            $("#occupation_2").html(html)
-            $("#occupation_2").val('');
-        })
-        $("#salary").html(createSelect("config_infoData.salary"));
-        $("#house").html(createSelect("config_infoData.house"));
-        $("#zodiac").html(createSelect("config_infoData.zodiac"));
-        $("#constellation").html(createSelect("config_infoData.constellation"));
-        $("#nation").html(createSelect("config_infoData.nation"));
-        $("#children").html(createSelect("config_infoData.children"));
-
-
-        $("#provines").html(createSelect("provines"));
-
-        $("#provines").on("select2-close" , function () {
-            var html = '';
-            for (var i in citys){
-                if (citys[i].parentId == $(this).val()){
-                    html += "<option value='" + citys[i].id + "'>"+citys[i].name+"</option>";
+        // 初始化下拉框
+        function SelectInit() {
+            function createSelect(item) {
+                var html = "";
+                var data = eval(item);
+                for (var i in data) {
+                    html += "<option value='" + data[i].id + "'>" + data[i].name + "</option>"
                 }
+                return html;
             }
-            $("#city").html(html)
-        })
-        $("#city").on("select2-close",function () {
-            var html = '';
-            for (var i in area){
-                if (area[i].parentId == $(this).val()){
-                    html += "<option value='" + area[i].id + "'>"+area[i].name+"</option>";
-                }
+
+            $("#height").append(heightLink(140, '请选择'));
+            $(".dq-Province").append(createSelect(provines)); // 省份
+            $(".occupation").append(createSelect("config_infoData.occupation")); // 职业
+            $(".salary").append(createSelect("config_infoData.salary"));
+            $(".house").append(createSelect("config_infoData.house"));
+            $(".zodiac").append(createSelect("config_infoData.zodiac"));
+            $(".constellation").append(createSelect("config_infoData.constellation"));
+            $("#nation").append(createSelect("config_infoData.nation"));
+            $(".children").append(createSelect("config_infoData.children"));
+            $("#provines").append(createSelect("provines"));
+            $("#age1").append(ageLink(18));
+            $("#age2").append(ageLink(18));
+            $("#height1").append(heightLink(140, '不限'));
+            $("#height2").append(heightLink(140, '不限'));
+            $(".education").append(createSelect("config_infoData.education"))
+        }
+
+        // 职业联动
+        $("#occupation_1").on("change", function () {
+            occupationLink($(this), $("#occupation_2"));
+        });
+
+        // 职业联动函数
+        function occupationLink(obj1, obj2) {
+            var index = obj1.find("option:selected").val(),
+                    html = '<option value="">请选择</option>';
+            for (var i in config_infoData.occupation[index - 1].children) {
+                html += '<option value="';
+                html += config_infoData.occupation[index - 1].children[i].id;
+                html += '">';
+                html += config_infoData.occupation[index - 1].children[i].name;
+                html += '</option>';
             }
-            $("#area").html( html)
-        })
+            obj2.empty().append(html);
+        }
+
+        //年龄联动
+        $("#age1").on("change", function () {
+            var val1 = $(this).val(),
+                    val2 = $("#age2").val();
+            $("#age2").empty().append(ageLink(val1));
+            if (val1 <= val2) {
+                $("#age2 option[value=" + val2 + "]").attr("selected", "selected");
+            }
+            if (val1 == 0) $('#age2').empty().append(ageLink(18));
+        });
+
+        // 年龄联动函数
+        function ageLink(min) {
+            var ageHtml = "",
+                    ageMin = min,
+                    ageMax = 99;
+            ageHtml += '<option value="0">不限</option>';
+            for (ageMin; ageMin <= ageMax; ageMin++) {
+                ageHtml += '<option value="';
+                ageHtml += ageMin;
+                ageHtml += '">';
+                ageHtml += ageMin;
+                ageHtml += '</option>';
+            }
+            return ageHtml;
+        }
+
+        //身高联动
+        $("#height1").on("change", function () {
+            var val1 = $(this).val(),
+                    val2 = $("#height2").val();
+            $("#height2").empty().append(heightLink(val1, '不限'));
+            if (val1 <= val2) {
+                $("#height2 option[value=" + val2 + "]").attr("selected", "selected");
+            }
+            if (val1 == 0) $('#height2').empty().append(heightLink(140, '不限'));
+        });
+
+        // 身高联动函数
+        function heightLink(min, nullText) {
+            var ageHtml = "",
+                    ageMin = min,
+                    ageMax = 260;
+            ageHtml += '<option value="0">' + nullText + '</option>';
+            for (ageMin; ageMin <= ageMax; ageMin++) {
+                ageHtml += '<option value="';
+                ageHtml += ageMin;
+                ageHtml += '">';
+                ageHtml += ageMin;
+                ageHtml += '厘米</option>';
+            }
+            return ageHtml;
+        }
+
     });
 
 </script>

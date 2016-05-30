@@ -232,73 +232,63 @@
     <!-- SIDEBAR -->
     <div id="sidebar" class="sidebar sidebar-fixed">
         <div class="sidebar-menu nav-collapse">
-<!--            <div class="divide-20"></div>-->
-            <!-- SEARCH BAR -->
-<!--            <div id="search-bar">-->
-<!--                <input class="search" type="text" placeholder="Search"><i class="fa fa-search search-icon"></i>-->
-<!--            </div>-->
-            <!-- /SEARCH BAR -->
 
             <!-- 左侧菜单 -->
             <ul>
-                <li class="has-sub" data-opt="1">
-                    <a href="/admin/site">
+                <li class="has-sub">
+                    <a href="/admin/site" data-menu="1">
                         <i class="fa fa-tachometer fa-fw"></i> <span class="menu-text">主页</span>
                         <span class="selected"></span>
                     </a>
                 </li>
 
                 <li class="has-sub">
-                    <a href="javascript:;" class="">
+                    <a href="javascript:;" class="" data-menu="2">
                         <i class="fa fa-file-text fa-fw"></i> <span class="menu-text">功能</span>
                         <span class="arrow"></span>
                     </a>
                     <ul class="sub">
-                        <li class="has-sub-sub" data-opt="2"><a class="" href="javascript:;"><span class="sub-menu-text">功能 1</span></a></li>
-                        <li class="has-sub-sub" data-opt="3"><a class=""  href="javascript:;"><span class="sub-menu-text">功能 2</span></a></li>
-
+                        <li class="has-sub-sub"><a data-menu="1" class="" href="javascript:;"><span class="sub-menu-text">功能 1</span></a></li>
+                        <li class="has-sub-sub"><a data-menu="2" class=""  href="javascript:;"><span class="sub-menu-text">功能 2</span></a></li>
                     </ul>
                 </li>
-
-                <li class="has-sub ">
-                    <a href="javascript:;" class="">
+                <li class="has-sub" >
+                    <a href="javascript:;" class="" data-menu="3">
                         <i class="fa fa-file-text fa-fw"></i> <span class="menu-text">权限管理</span>
                         <span class="arrow"></span>
                     </a>
                     <ul class="sub">
-                        <li class="has-sub-sub" data-opt="4"><a class="" href="/admin/rbac/list-permission"><span class="sub-menu-text">权限列表</span></a></li>
-                        <li class="has-sub-sub" data-opt="5"><a class="" href="/admin/rbac/list-role"><span class="sub-menu-text">角色列表</span></a></li>
+                        <li class="has-sub-sub"><a data-menu="3" class="" href="/admin/rbac/list-permission"><span class="sub-menu-text">权限列表</span></a></li>
+                        <li class="has-sub-sub"><a data-menu="4" class="" href="/admin/rbac/list-role"><span class="sub-menu-text">角色列表</span></a></li>
                     </ul>
                 </li>
-
                 <li class="has-sub">
-                    <a href="javascript:;" class="">
+                    <a href="javascript:;" class="" data-menu="4">
                         <i class="fa fa-file-text fa-fw"></i> <span class="menu-text">用户管理</span>
                         <span class="arrow"></span>
                     </a>
                     <ul class="sub">
-                        <li class="has-sub-sub" data-opt="6"><a class="has-sub-sub"  href="/admin/user/list-user"><span class="sub-menu-text">用户列表</span></a></li>
+                        <li class="has-sub-sub"><a data-menu="5" class="has-sub-sub"  href="/admin/user/list-user"><span class="sub-menu-text">用户列表</span></a></li>
                     </ul>
                 </li>
-
                 <li class="has-sub">
-                    <a href="javascript:;" class="">
+                    <a href="javascript:;" class="" data-menu="5">
                         <i class="fa fa-file-text fa-fw"></i> <span class="menu-text">配置</span>
                         <span class="arrow"></span>
                     </a>
                     <ul class="sub">
-                        <li class="has-sub-sub" data-opt="7"><a class="has-sub-sub"  href="/admin/config/list"><span class="sub-menu-text">基础配置</span></a></li>
+                        <li class="has-sub-sub"><a data-menu="5" class="has-sub-sub"  href="/admin/config/list"><span class="sub-menu-text">基础配置</span></a></li>
                     </ul>
                 </li>
-
                 <li class="has-sub">
-                    <a href="javascript:;" class="">
+                    <a href="javascript:;" class="" data-menu="6">
                         <i class="fa fa-file-text fa-fw"></i> <span class="menu-text">综合管理</span>
                         <span class="arrow"></span>
                     </a>
                     <ul class="sub">
-                        <li class="has-sub-sub" data-opt="8"><a class="has-sub-sub"  href="/admin/member/search"><span class="sub-menu-text">会员查找</span></a></li>
-                        <li class="has-sub-sub" data-opt="9"><a class="has-sub-sub"  href="/admin/member/search"><span class="sub-menu-text">订单列表</span></a></li>                    </ul>
+                        <li class="has-sub-sub"><a data-menu="7" class="has-sub-sub"  href="/admin/member/search"><span class="sub-menu-text">会员查找</span></a></li>
+                        <li class="has-sub-sub"><a data-menu="8" class="has-sub-sub"  href="/admin/member/search"><span class="sub-menu-text">订单列表</span></a></li>
+                    </ul>
                 </li>
 
             </ul>
@@ -314,21 +304,7 @@
                     <div class="row">
                         <div class="col-sm-12">
                             <div class="page-header">
-                                <!-- STYLER -->
 
-                                <!-- /STYLER -->
-                                <!-- BREADCRUMBS -->
-                                <ul class="breadcrumb">
-                                    <li>
-                                        <i class="fa fa-home"></i>
-                                        <a id="opt1" href="#"></a>
-                                    </li>
-                                       <li>
-                                           <a id="opt2" href="#"></a>
-                                       </li>
-                                </ul>
-
-                                <!-- /BREADCRUMBS -->
 
                             </div>
                         </div>
@@ -399,9 +375,12 @@
 <script type="text/javascript" src="/backend/web/CloudAdmin/js/jQuery-Cookie/jquery.cookie.min.js"></script>
 <script type="text/javascript" src="/backend/web/CloudAdmin/js/file_input/fileinput.min.js"></script>
 <script type="text/javascript" src="/backend/web/CloudAdmin/js/bootstrap-alert/alert.js"></script>
-<script type="text/javascript" src="/backend/web/CloudAdmin/js/select2/select2.min.js"></script>
 
 <!-- FORM -->
+<script type="text/javascript" src="/backend/web/CloudAdmin/js/select2/select2.min.js"></script>
+<script src="/backend/web/CloudAdmin/js/uniform/jquery.uniform.min.js"></script>
+
+<script type="text/javascript" src="/backend/web/CloudAdmin/js/dropzone/dropzone.min.js"></script>
 
 <!-- CUSTOM SCRIPT -->
 <!--<script src="/backend/web/js/dataTableQuery.js"></script>-->
@@ -410,9 +389,8 @@
 <script>
 
     jQuery(document).ready(function() {
-//        App.setPage("fixed_header_sidebar");  //Set current page
-//        App.setPage("dynamic_table");  //Set current page
         App.init(); //Initialise plugins and elements
+
     });
 
 </script>

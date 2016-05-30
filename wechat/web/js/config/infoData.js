@@ -16,7 +16,7 @@ var config_infoData = {
         {id: 3, name: '大专'},
         {id: 4, name: '本科'},
         {id: 5, name: '硕士'},
-        {id: 6, name: '博士及以上'}
+        {id: 6, name: '博士'}
     ],
 
     'zodiac': [
