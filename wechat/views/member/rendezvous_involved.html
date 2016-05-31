@@ -6,9 +6,9 @@
     </ion-header-bar>
     <ion-content class="bhy com_w_100 m_bg rendezvous">
         <ion-list>
-            <ion-item ng-class="{'娱乐':'balanced-bg','美食':'energized-bg','旅游':'calm-bg','运动/健身':'assertive-bg','其它':'dark-bg'}[rendzvous.theme]">
+            <ion-item ng-class="{'1':'balanced-bg','2':'energized-bg','3':'calm-bg','运动/健身':'assertive-bg','-1':'dark-bg'}[rendzvous.theme]">
                 <p>
-                    <span class="cor0">##{{rendzvous.themeTitle}}##</span>
+                    <span class="cor0">##{{rendzvous.title}}##</span>
                 </p>
             </ion-item>
             <p class="padding" style="margin: 0;">
@@ -20,24 +20,26 @@
             <div class="item item-thumbnail-left">
                 <img src="/wechat/web/images/test.jpg">
                 <h2>
-                    张先生
+                    {{inv.info.real_name | sex:inv.sex :inv.info.age}}
                 </h2>
                 <p>
-                    <span class="identity sfz">身份证</span>
-                    <span class="identity phone">手机</span>
-                    <span class="identity vip">vip</span>
+                    <span class="identity sfz" ng-if="inv.auth.identity_check">身份证</span>
+                    <span class="identity phone" ng-if="inv.phone">手机</span>
+                    <span class="identity vip" ng-if="inv.info.level == 1">vip</span>
+                    <span class="identity guest" ng-if="inv.info.level == 2">贵宾</span>
+                    <span class="identity diamond" ng-if="inv.info.level == 3">钻石</span>
                 </p>
-                <p>29岁 未婚</p>
-                <p>手机号码：13569684922</p>
+                <p>{{inv.info.age | timeToAge}}岁 {{inv.info.is_marriage | marriage}}</p>
+                <p>手机号码：{{inv.mobile}}</p>
             </div>
             <div class="item item-body">
-                <p style="margin-top: 0;">TA的留言：{{inv.msg}}</p>
+                <p style="margin-top: 0;">TA的留言：{{inv.message}}</p>
             </div>
             <div class="item tabs tabs-secondary tabs-icon-left">
                 <p ng-if="inv.status==1">已接受</p>
                 <p ng-if="inv.status==2">已忽略</p>
-                <button ng-if="inv.status==0" class="button button-balanced w50" ng-click="accept()">接受</button>
-                <button ng-if="inv.status==0" class="button button-stable w50" ng-click="ignore()">忽略</button>
+                <button ng-if="inv.status==0" class="button button-balanced w50" ng-click="accept(inv.id,$index)">接受</button>
+                <button ng-if="inv.status==0" class="button button-stable w50" ng-click="ignore(inv.id,$index)">忽略</button>
             </div>
         </div>
 

@@ -108,4 +108,36 @@ class UserRendezvous extends Base
             ->one();
         return $obj;
     }
+
+    /**
+     * 我的约会申请人列表
+     * @param $id
+     * @return array
+     */
+    public function rendezvousApplyList($id)
+    {
+        $_user = $this->tablePrefix.'user';
+        $_user_information = $this->tablePrefix.'user_information';
+        $_user_rendezvous_apply = $this->tablePrefix.'user_rendezvous_apply';
+        $obj = (new Query())
+            ->from($_user_information.' i')
+            ->select('*,a.phone mobile')
+            ->leftJoin("$_user u", "u.id=i.user_id")
+            ->leftJoin("$_user_rendezvous_apply a", "a.user_id=i.user_id")
+            ->where(['a.rendezvous_id' => $id])
+            ->all();
+        return $obj;
+    }
+
+    /**
+     * 修改状态
+     * @param $data['id','status']
+     * @return bool
+     */
+    public function updateApplyStatus($data)
+    {
+        $apply = Base::getInstance('user_rendezvous_apply')->findOne($data['id']);
+        $apply->status = $data['status'];
+        return $apply->save(false);
+    }
 }

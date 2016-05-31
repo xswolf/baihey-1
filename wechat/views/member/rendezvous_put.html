@@ -23,7 +23,7 @@
                     <span class="fl fs14">{{put.startDate}}</span>
                     <span class="fr icon-cog fs18 cor5" ng-click="showhandle(put.id,$index)"></span>
                 </div>
-                <div class="item item-text-wrap" ng-click="involved(put.id)">
+                <div class="item item-text-wrap" ng-click="involved(put.id, put.theme, put.title)">
                     <h2>
                         <span ng-class="{'娱乐':'balanced','美食':'energized','旅游':'calm','运动/健身':'assertive','其它':'dark'}[put.theme]">##{{put.title}}##</span>
                         <span ng-if="!openTxt">{{put.content | cut:true:60:'...'}}</span>

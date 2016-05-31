@@ -2668,8 +2668,8 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
         }
 
         // 跳转-参与的人
-        $scope.involved = function (id) {
-            $location.url('/main/member/rendezvous_involved?id=' + id);
+        $scope.involved = function (id, theme, title) {
+            $location.url('/main/member/rendezvous_involved?id=' + id + '&theme=' + theme + '&title=' + title);
         }
 
         $scope.openTxt = false;
@@ -2768,40 +2768,27 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
     // 我的约会-参与的人
     module.controller("member.rendezvous_involved", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$location', function (api, $scope, $timeout, $ionicPopup, $location) {
 
-        $scope.formData = [];
-
         $scope.partList = [];
+        $scope.rendzvous = [];
+        $scope.involvedList = [];
+        $scope.rendzvous.id = $location.$$search.id;
+        $scope.rendzvous.title = $location.$$search.title;
+        $scope.rendzvous.theme = $location.$$search.theme;
 
-        var id = $location.$$search.id;  // 约会ID
-
-        // 根据ID查询约会信息
-        $scope.rendzvous = {
-            id: 1,
-            theme: '娱乐',
-            themeTitle: '约个高富帅看电影，有没有啊？',
-            startDate: '5月12日 17:25',
-            img: '/wechat/web/images/test/s1.jpg',
-            content: '520一个人无聊，约个高富帅去大坪龙湖时代天街UME看电影，求骚扰！',
-            label: [{id: 3, name: '高富帅'}, {id: 6, name: '幽默'}, {id: 7, name: '型男'}, {id: 8, name: '阳光外形'}],
-            endDate: '2015-05-20 17:25',
-            entryNumber: '3',
-            status: '1'
-        };
-
-        $scope.involvedList = [
-            {id: 1, userId: 23, msg: '你好，我想和你约会，你看我行吗？', status: 0},
-            {id: 2, userId: 24, msg: '你好，我想和你约会，你看我行吗？', status: 0},
-            {id: 3, userId: 43, msg: '你好，我想和你约会，你看我行吗？', status: 1},
-            {id: 4, userId: 11, msg: '你好，我想和你约会，你看我行吗？', status: 0},
-            {id: 5, userId: 84, msg: '你好，我想和你约会，你看我行吗？', status: 2}
-        ];
+        api.list('/wap/rendezvous/rendezvous-apply-list', {id : $location.$$search.id}).success(function (res) {
+            $scope.involvedList = res.data;
+            for(var i in res.data) {
+                $scope.involvedList[i].info = JSON.parse(res.data[i].info);
+                $scope.involvedList[i].auth = JSON.parse(res.data[i].auth);
+            }
+        });
 
         $scope.isAccept = false;
         $scope.isIgnore = false;
         // 接受
-        $scope.accept = function () {
+        $scope.accept = function (id, itemIndex) {
             var confirmPopup = $ionicPopup.confirm({
-                title: '确定吗？',
+                title: '确定接受吗？',
                 template: false,
                 cancelText: '点错了',
                 okText: '确定'
@@ -2809,6 +2796,12 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
             confirmPopup.then(function (res) {
                 if (res) {
                     // 确定
+                    var formData = [];
+                    formData.id = id;
+                    formData.status = 1;
+                    api.save('/wap/rendezvous/update-apply-status', formData).success(function (res) {
+                        $scope.involvedList[itemIndex].status = 1;
+                    });
                     $scope.isAccept = true;
                 } else {
                     return false;
@@ -2817,9 +2810,9 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
         }
 
         // 忽略
-        $scope.ignore = function () {
+        $scope.ignore = function (id, itemIndex) {
             var confirmPopup = $ionicPopup.confirm({
-                title: '确定吗？',
+                title: '确定忽略吗？',
                 template: false,
                 cancelText: '点错了',
                 okText: '确定'
@@ -2827,6 +2820,12 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
             confirmPopup.then(function (res) {
                 if (res) {
                     // 确定
+                    var formData = [];
+                    formData.id = id;
+                    formData.status = 2;
+                    api.save('/wap/rendezvous/update-apply-status', formData).success(function (res) {
+                        $scope.involvedList[itemIndex].status = 2;
+                    });
                     $scope.isIgnore = true;
                 } else {
                     return false;

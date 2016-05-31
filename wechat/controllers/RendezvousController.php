@@ -54,4 +54,22 @@ class RendezvousController extends BaseController
         $list = UserRendezvous::getInstance()->getRendezvousInfo($this->get);
         $this->renderAjax(['status'=>1 , 'data'=>$list]);
     }
+
+    /**
+     * 我的约会申请人列表
+     */
+    public function actionRendezvousApplyList()
+    {
+        $list = UserRendezvous::getInstance()->rendezvousApplyList($this->get['id']);
+        $this->renderAjax(['status'=>1 , 'data'=>$list]);
+    }
+
+    /**
+     * 修改约会申请人状态
+     */
+    public function actionUpdateApplyStatus()
+    {
+        $list = UserRendezvous::getInstance()->updateApplyStatus($this->get);
+        $this->renderAjax(['status'=>1 , 'data'=>$list]);
+    }
 }
