@@ -125,6 +125,7 @@ class UserRendezvous extends Base
             ->leftJoin("$_user u", "u.id=i.user_id")
             ->leftJoin("$_user_rendezvous_apply a", "a.user_id=i.user_id")
             ->where(['a.rendezvous_id' => $id])
+            ->orderBy('a.create_time desc')
             ->all();
         return $obj;
     }
@@ -139,5 +140,50 @@ class UserRendezvous extends Base
         $apply = Base::getInstance('user_rendezvous_apply')->findOne($data['id']);
         $apply->status = $data['status'];
         return $apply->save(false);
+    }
+
+    /**
+     * 我参与的约会列表
+     * @param $where
+     * @return array
+     */
+    public function applyLists($where){
+
+        isset($where['user_id']) ? $condition['a.user_id'] = $where['user_id'] : $condition = $where;
+        $pageNum = isset($where['pageNum']) ? $where['pageNum'] : 1;
+        $pageSize = isset($where['pageSize']) ? $where['pageSize'] : 10;
+        $offset = ($pageNum - 1) * $pageSize;
+        $obj = (new Query())
+            ->from($this->tablePrefix.'user_rendezvous_apply a')
+            ->innerJoin(static::tableName().' r', "a.rendezvous_id=r.id")
+            ->innerJoin($this->tablePrefix.'user_information i', "i.user_id=r.user_id")
+            ->innerJoin($this->tablePrefix.'user u', "u.id=i.user_id")
+            ->select("*,a.id apply_id,a.status apply_status")
+            ->orderBy('r.status asc, r.create_time desc')
+            ->offset($offset)
+            ->limit($pageSize);
+        if (is_array($condition) && count($condition)>0){
+            $obj->where($condition);
+        }
+        // 时间查询处理
+        if(isset($where['date'])) {
+            $arr = Functions::getInstance()->getTimeByMonth($where['date']);
+            $obj->andWhere(['between', 'r.create_time', $arr[0], $arr[1]]);
+        }
+        $obj->andWhere(['in', 'r.status', [1,2,3]]);
+        //echo $obj->createCommand()->getRawSql();exit;
+        return $obj->all();
+    }
+
+    /**
+     * 删除约会申请
+     * @param $data
+     * @return false|int
+     * @throws \Exception
+     */
+    public function deleteApply($data)
+    {
+        $apply = Base::getInstance('user_rendezvous_apply')->findOne($data['id']);
+        return $apply->delete();
     }
 }

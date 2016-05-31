@@ -2686,54 +2686,38 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
     module.controller("member.rendezvous_part", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', function (api, $scope, $timeout, $ionicPopup) {
 
         $scope.formData = [];
+        $scope.partList = [];
+        $scope.formData.pageNum = 0;
+        var getPutList = function(pageNum) {
+            var formData = [];
+            formData.user_id = ar.getCookie('bhy_user_id');
+            formData.pageNum = pageNum + 1;
+            $scope.formData.pageNum = pageNum + 1;
+            api.list('/wap/rendezvous/apply-list', formData).success(function (res) {
+                res.data.length < 10 ? $scope.isMore = false : $scope.isMore = true;
+                for(var i in res.data) {
+                    var label = res.data[i].we_want.split(',');
+                    res.data[i].label = [];
+                    res.data[i].label = label;
+                    res.data[i].info = JSON.parse(res.data[i].info);
+                    res.data[i].auth = JSON.parse(res.data[i].auth);
+                    $scope.partList.push(res.data[i]);
+                }
+                $scope.$broadcast('scroll.infiniteScrollComplete');
+            });
+        }
 
-        $scope.partList = [
-            {
-                id: 1,
-                userName: '李先生',
-                theme: '运动/健身',
-                themeTitle: '求个美女一起去爬山！',
-                content: '第三方公司更换三分公司梵蒂冈而而非去的法撒旦法阿斯蒂芬',
-                label: [{id: 1, name: '白富美'}, {id: 1, name: '大长腿'}, {id: 1, name: '无公主病'}, {id: 1, name: '温柔'}],
-                status: 1
-            },
-            {
-                id: 2,
-                userName: '谭先生',
-                theme: '运动/健身',
-                themeTitle: '求个美女一起去爬山！',
-                content: '第三方公司更换三分公司梵蒂冈而而非去的法撒旦法阿斯蒂芬',
-                label: [{id: 1, name: '白富美'}, {id: 1, name: '大长腿'}, {id: 1, name: '无公主病'}, {id: 1, name: '温柔'}],
-                status: 2
-            },
-            {
-                id: 3,
-                userName: '陈先生',
-                theme: '运动/健身',
-                themeTitle: '求个美女一起去爬山！',
-                content: '第三方公司更换三分公司梵蒂冈而而非去的法撒旦法阿斯蒂芬',
-                label: [{id: 1, name: '白富美'}, {id: 1, name: '大长腿'}, {id: 1, name: '无公主病'}, {id: 1, name: '温柔'}],
-                status: 1
-            },
-            {
-                id: 4,
-                userName: '张先生',
-                theme: '运动/健身',
-                themeTitle: '求个美女一起去爬山！',
-                content: '第三方公司更换三分公司梵蒂冈而而非去的法撒旦法阿斯蒂芬',
-                label: [{id: 1, name: '白富美'}, {id: 1, name: '大长腿'}, {id: 1, name: '无公主病'}, {id: 1, name: '温柔'}],
-                status: 0
-            },
-            {
-                id: 5,
-                userName: '郭先生',
-                theme: '运动/健身',
-                themeTitle: '求个美女一起去爬山！',
-                content: '第三方公司更换三分公司梵蒂冈而而非去的法撒旦法阿斯蒂芬',
-                label: [{id: 1, name: '白富美'}, {id: 1, name: '大长腿'}, {id: 1, name: '无公主病'}, {id: 1, name: '温柔'}],
-                status: 1
-            }
-        ];
+        $scope.isMore = true;
+
+        // 加载更多
+        $scope.loadMore = function () {
+            getPutList($scope.formData.pageNum);
+        }
+
+        // 是否还有更多
+        $scope.moreDataCanBeLoaded = function() {
+            return $scope.isMore;
+        }
 
         $scope.delPart = function (id, itemIndex) {
             var confirmPopup = $ionicPopup.confirm({
@@ -2745,7 +2729,9 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
             confirmPopup.then(function (res) {
                 if (res) {
                     // 删除
-                    $scope.partList.splice(itemIndex, 1);
+                    api.save('/wap/rendezvous/delete-apply', {id : id}).success(function (res) {
+                        $scope.partList.splice(itemIndex, 1);
+                    });
                 } else {
                     return false;
                 }
@@ -2759,8 +2745,12 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
             $scope.openTxt = true;
         }
 
-        $scope.acceptAlert = function () {
-            $ionicPopup.alert({title: 'TA的手机号码：13359886652'});
+        $scope.acceptAlert = function (phone) {
+            if(phone == null || typeof(phone) == undefined) {
+                $ionicPopup.alert({title: '请等待TA联系'});
+            } else {
+                $ionicPopup.alert({title: 'TA的手机号码：' + phone});
+            }
         }
 
     }]);

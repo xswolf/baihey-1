@@ -10,41 +10,48 @@
             <div class="item item-thumbnail-left">
                 <img src="/wechat/web/images/test.jpg">
                 <h2>
-                    <span class="fl">{{part.userName}}</span>
-                    <span ng-click="delPart(part.id,$index)" class="fr icon icon-trash cor5"></span>
+                    <span class="fl">{{part.info.real_name | sex:part.sex :part.info.age}}</span>
+                    <span ng-click="delPart(part.apply_id,$index)" class="fr icon icon-trash cor5"></span>
                 </h2>
                 <p>
-                    <span class="identity sfz">身份证</span>
-                    <span class="identity phone">手机</span>
-                    <span class="identity vip">vip</span>
+                    <span class="identity sfz" ng-if="part.auth.identity_check">身份证</span>
+                    <span class="identity phone" ng-if="part.phone">手机</span>
+                    <span class="identity vip" ng-if="part.info.level == 1">vip</span>
+                    <span class="identity guest" ng-if="part.info.level == 2">贵宾</span>
+                    <span class="identity diamond" ng-if="part.info.level == 3">钻石</span>
                 </p>
-                <p>29岁 未婚</p>
+                <p>{{part.info.age | timeToAge}}岁 {{part.info.is_marriage | marriage}}</p>
             </div>
             <div class="item item-body">
                 <p class="mt0">
-                    <span ng-class="{'娱乐':'balanced','美食':'energized','旅游':'calm','运动/健身':'assertive','其它':'dark'}[part.theme]">##{{part.themeTitle}}##</span>
+                    <span ng-class="{'1':'balanced-bg','2':'energized-bg','3':'calm-bg','运动/健身':'assertive-bg','-1':'dark-bg'}[part.theme]">##{{part.title}}##</span>
                     <span ng-if="!openTxt">{{part.content | cut:true:60:'...'}}</span>
                     <span ng-if="openTxt">{{part.content}}</span>
                     <a href="javascript:;" ng-if="part.content.length > 60 && !openTxt" class="allTextLink" ng-click="openText($event)">[展开全文]</a>
                 </p>
-                <p class="cor39 mt0 mb0">约会地点：重庆市大坪龙湖时代天街</p>
-                <p class="cor39 mt0 mb0">约会时间：2016-03-15 10:20</p>
-                <p class="cor39 mt0 mb0">费用说明：我请客</p>
-                <p class="cor39 mt0">性别限制：女</p>
+                <p class="cor39 mt0 mb0">约会地点：{{part.destination}}</p>
+                <p class="cor39 mt0 mb0">约会时间：{{part.rendezvous_time * 1000 | date:'yyyy-MM-dd HH:mm:ss'}}</p>
+                <p class="cor39 mt0 mb0">费用说明：{{part.fee_des | feeDisplay}}</p>
+                <p class="cor39 mt0">性别限制：{{part.sex | sexDisplay}}</p>
                 <p>
-                    <span class="label mr5" ng-repeat="lab in part.label">{{lab.name}}</span>
+                    <span class="label mr5" ng-repeat="lab in part.label">{{lab}}</span>
                 </p>
             </div>
 
             <div class="item tabs tabs-secondary tabs-icon-left">
-                <span ng-if="part.status==0">等待对方回复</span>
-                <span ng-if="part.status==2">对方已忽略</span>
-                <button ng-if="part.status==1" ng-click="acceptAlert()" class="button button-balanced w100">对方已接受，联系TA</button>
+                <span ng-if="part.apply_status==0">等待对方回复</span>
+                <span ng-if="part.apply_status==2">对方已忽略</span>
+                <button ng-if="part.apply_status==1" ng-click="acceptAlert(part.phone)" class="button button-balanced w100">对方已接受，联系TA</button>
             </div>
 
         </div>
 
     </ion-content>
+    <ion-infinite-scroll
+            ng-if="moreDataCanBeLoaded()"
+            on-infinite="loadMore()"
+            distance="1%">
+    </ion-infinite-scroll>
 
 
 </ion-view>
