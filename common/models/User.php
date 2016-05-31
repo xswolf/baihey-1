@@ -111,18 +111,18 @@ class User extends Base
     public function getDefaultInfo()
     {
         return [
-            'age'                   => '未知',// 出生年月时间戳
+            'age'                   => '未知',// 出生年月时间戳 1
             'level'                 => '未知',// vip等级
             'local'                 => '未知',// 当地地区（地区切换使用）
-            'height'                => '未知',// 身高
+            'height'                => '未知',// 身高 1
             'weight'                => '未知',// 体重
-            'head_pic'              => '未知',// 头像
+            'head_pic'              => '未知',// 头像 1
             'real_name'             => '未知',// 真实姓名
             'identity_id'           => '未知',// 身份证号码
             'identity_address'      => '未知',// 身份证地址
-            'is_marriage'           => '未知',// 婚姻状况
+            'is_marriage'           => '未知',// 婚姻状况 1
             'is_child'              => '未知',// 子女状况
-            'education'             => '未知',// 学历
+            'education'             => '未知',// 学历 1
             'year_income'           => '未知',// 年收入
             'is_purchase'           => '未知',// 购房状况
             'is_car'                => '未知',// 购车状况

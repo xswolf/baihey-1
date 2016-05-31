@@ -147,9 +147,7 @@ var App = function () {
         subOpj.children('.arrow').addClass('open');
         subOpj.next().show();
        jQuery('.sidebar-menu .has-sub .sub .has-sub-sub > a[data-menu='+sub_sub+']').parent().addClass('open');
-
     }
-
 
     /*-----------------------------------------------------------------------------------*/
     /*	Collapse Sidebar Programatically
