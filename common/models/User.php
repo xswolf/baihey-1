@@ -115,6 +115,7 @@ class User extends Base
             'level'                 => '未知',// vip等级
             'local'                 => '未知',// 当地地区（地区切换使用）
             'height'                => '未知',// 身高
+            'weight'                => '未知',// 体重
             'head_pic'              => '未知',// 头像
             'real_name'             => '未知',// 真实姓名
             'identity_id'           => '未知',// 身份证号码
@@ -140,12 +141,19 @@ class User extends Base
             // 择偶标准
             'zo_age'                => '18-0',// 年龄
             'zo_height'             => '140-0',// 最小身高
-            'zo_education'          => '未知',// 最小学历
+            'zo_education'          => '未知',// 学历
+            'zo_income'             => '未知',// 年收入
+            'zo_weight'             => '未知',// 体重
             'zo_marriage'           => '未知',// 婚姻状况
+            'zo_children'           => '未知',// 子女状况
+            'zo_endowed'            => '未知',// 才貌要求
+            'zo_occupation'         => '未知',// 职业
             'zo_house'              => '未知',// 购房
             'zo_car'                => '未知',// 购车
             'zo_zodiac'             => '未知',// 属相
             'zo_constellation'      => '未知',// 星座
+            'zo_address'            => '未知',// 地区
+            'zo_other'              => '未知',// 其他要求
         ];
     }
 

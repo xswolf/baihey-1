@@ -64,10 +64,11 @@
                                 <i class="fa fa-lock"></i>
                                 <input type="password" name="password" class="form-control" id="exampleInputPassword1">
                             </div>
-                            <div class="form-actions">
-                                <!--                                <label class="checkbox"> <input type="checkbox" class="uniform" value=""> 记住密码</label>-->
+                            <div>
+                                <label class="checkbox"> <input type="checkbox" class="uniform" checked value="">记住密码</label>
                                 <button type="button" class="btn btn-danger login-submit">登录</button>
                             </div>
+
                             <!-- SOCIAL LOGIN -->
                             <div class="divide-20"></div>
                         </form>
@@ -95,12 +96,12 @@
 <script src="/backend/web/CloudAdmin/js/backstretch/jquery.backstretch.min.js"></script>
 
 <!-- UNIFORM -->
-<script type="text/javascript" src="/backend/web/CloudAdmin/js/uniform/jquery.uniform.min.js"></script>
+<script src="/backend/web/CloudAdmin/js/uniform/jquery.uniform.min.js"></script>
 <!-- CUSTOM SCRIPT -->
 <script src="/backend/web/CloudAdmin/js/script.js"></script>
 <script>
     jQuery(document).ready(function () {
-        App.setPage("login");  //Set current page
+        App.setPage("login_bg");  //Set current page
         App.init(); //Initialise plugins and elements
     });
 </script>

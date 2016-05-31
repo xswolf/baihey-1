@@ -2829,10 +2829,10 @@ var App = function () {
      /*-----------------------------------------------------------------------------------*/
     var handleBackstretch = function () {
         $.backstretch([
-            "img/login/1.jpg"
-            , "img/login/2.jpg"
-            , "img/login/3.jpg"
-            , "img/login/4.jpg"
+            "/backend/web/CloudAdmin/img/login/1.jpg"
+            , "/backend/web/CloudAdmin/img/login/2.jpg"
+            , "/backend/web/CloudAdmin/img/login/3.jpg"
+            , "/backend/web/CloudAdmin/img/login/4.jpg"
         ], {duration: 3000, fade: 750});
     }
     /*-----------------------------------------------------------------------------------*/
