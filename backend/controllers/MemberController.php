@@ -27,7 +27,22 @@ class MemberController extends BaseController
                 return $this->__error('信息不全');
             }
             $data['username'] = $data['phone'];
+            $photo = $data['thumb_path'];
+            $data['info'] = array_merge($data['info'] , $data['zo']);
+            unset($data['zo']);
+            unset($data['thumb_path']);
+//            var_dump($data);exit;
             $uid = \common\models\User::getInstance()->addUser($data);
+            foreach( $photo as $k=>$v){
+                $time = time();
+                $pt['pic_path'] = $v;
+                $pt['thumb_path'] = $v;
+                $pt['create_time'] = $time;
+                $pt['create_time'] = time();
+                $pt['update_time'] = time();
+                $pt['user_id'] = $uid;
+                (new \common\models\UserPhoto)->addPhotoComment($pt);
+            }
             if ($uid>0){
                 return  $this->__success('添加成功');
             }else{

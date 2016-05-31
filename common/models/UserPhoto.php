@@ -37,6 +37,12 @@ class UserPhoto extends Base
         }
     }
 
+    public function addPhotoComment($data){
+        $this->getDb()->createCommand()
+            ->insert($this->tablePrefix.'user_photo', $data)
+            ->execute();
+    }
+
     /**
      * 获取相册列表
      * @param $user_id

@@ -43,13 +43,15 @@ class User extends Base
         $transaction = $db->beginTransaction();// 启动事务
 
         // user表 数据处理
-        $data['username'] = $data['phone'];
-        $data['password'] = substr($data['phone'], -6);
-        $data['password'] = md5(md5($data['password']));
+        $dataUser['username'] = $data['phone'];
+        $dataUser['password'] = substr($data['phone'], -6);
+        $dataUser['password'] = md5(md5($dataUser['password']));
         $time = YII_BEGIN_TIME;
-        $data['reg_time'] = $time;
-        $data['last_login_time'] = $time;
-        $data['reset_pass_time'] = $time;
+        $dataUser['reg_time'] = $time;
+        $dataUser['last_login_time'] = $time;
+        $dataUser['reset_pass_time'] = $time;
+        $dataUser['sex'] = $data['sex'];
+        $dataUser['phone'] = $data['phone'];
         // userinformation表 数据处理
         // info
         if(isset($data['info'])) {
@@ -73,7 +75,7 @@ class User extends Base
 
         // user表 数据写入
         $user = $db->createCommand()
-            ->insert($this->tableName(), $data)
+            ->insert($this->tableName(), $dataUser)
             ->execute();
 
         if ($user) {
