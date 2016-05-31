@@ -15,7 +15,7 @@
     <link rel="stylesheet" type="text/css"  href="/backend/web/CloudAdmin/css/themes/default.css" id="skin-switcher" >
     <link rel="stylesheet" type="text/css" href="/backend/web/CloudAdmin/css/cloud-admin.css" >
     <link rel="stylesheet" type="text/css"  href="/backend/web/CloudAdmin/css/responsive.css" >
-
+    <link rel="stylesheet" type="text/css" href="/backend/web/CloudAdmin/layer/skin/layer.css">
     <!-- css3动画 -->
     <link rel="stylesheet" type="text/css"  href="/backend/web/css/animate.css" >
 
@@ -381,6 +381,9 @@
 <script src="/backend/web/CloudAdmin/js/uniform/jquery.uniform.min.js"></script>
 
 <script type="text/javascript" src="/backend/web/CloudAdmin/js/dropzone/dropzone.min.js"></script>
+
+<!-- layer -->
+<script src="/backend/web/CloudAdmin/layer/layer.js"></script>
 
 <!-- CUSTOM SCRIPT -->
 <!--<script src="/backend/web/js/dataTableQuery.js"></script>-->
