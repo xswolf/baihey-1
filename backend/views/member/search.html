@@ -78,7 +78,7 @@
                     {{$auth = json_decode($vo.auth)}}
                     <td><input name="" type="checkbox" value=""></td>
                     <td><img class="user_img" src="{{$info->head_pic}}"></td>
-                    <td>{{$vo.id}}</td>
+                    <td><a target="_blank" href="/admin/member/info?id={{$vo.id}}">{{$vo.id}}</a></td>
                     <td>{{$info->real_name}}</td>
                     <td>{{getSex($vo.sex)}}</td>
                     <td>{{getAge($info->age)}}</td>

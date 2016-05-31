@@ -320,3 +320,9 @@ table .user_img{
 .col8{ color: #777;}
 .col9{ color: #888;}
 .col10{ color: #999;}
+
+.layer_form{
+    display: none;
+    width: 750px;
+    padding: 10px;
+}
