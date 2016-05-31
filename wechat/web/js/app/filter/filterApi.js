@@ -325,11 +325,13 @@ define(['app/module'], function (module) {
         return function (input) {
             switch (input) {
                 case '0':
-                    return '已关闭';
+                    return '已删除';
                 case '1':
                     return '显示中';
                 case '2':
                     return '已结束';
+                case '3':
+                    return '已关闭';
                 default:
                     return '未知状态';
             }
@@ -376,6 +378,23 @@ define(['app/module'], function (module) {
                 return "男生"
             }else {
                 return "不限"
+            }
+        }
+    });
+
+    module.filter('themeDisplay' , function () {
+        return function (input) {
+            switch (input) {
+                case 1:
+                    return '娱乐';
+                case 2:
+                    return '美食';
+                case 3:
+                    return '旅游';
+                case 4:
+                    return '运动健身';
+                default:
+                    return '其他';
             }
         }
     });

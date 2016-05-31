@@ -1,5 +1,6 @@
 <?php
 namespace common\models;
+use common\util\Cookie;
 use common\util\Functions;
 use yii\db\Query;
 
@@ -24,17 +25,29 @@ class UserRendezvous extends Base
      */
     public function release($data)
     {
-        $this->theme           = $data['theme'];
-        $this->title           = $data['title'];
-        $this->content         = $data['content'];
-        $this->sex             = $data['sex'];
-        $this->destination     = $data['destination'];
-        $this->create_time     = time();
-        $this->rendezvous_time = $data['rendezvous_time'];
-        $this->fee_des         = $data['fee_des'];
-        $this->we_want         = $data['we_want'];
-        $this->user_id         = \common\util\Cookie::getInstance()->getCookie('bhy_id')->value;
-        return $this->save();
+        if(isset($data['id']) && $row = $this->findOne($data['id'])) {
+            $row->theme             = $data['theme'];
+            $row->title             = $data['title'];
+            $row->content           = $data['content'];
+            $row->sex               = $data['sex'];
+            $row->destination       = $data['destination'];
+            $row->rendezvous_time   = is_numeric($data['rendezvous_time']) ? $data['rendezvous_time'] : 0;
+            $row->fee_des           = $data['fee_des'];
+            $row->we_want           = $data['we_want'];
+            return $row->save();
+        } else {
+            $this->user_id       = Cookie::getInstance()->getCookie('bhy_id')->value;
+            $this->create_time   = time();
+            $this->theme             = $data['theme'];
+            $this->title             = $data['title'];
+            $this->content           = $data['content'];
+            $this->sex               = $data['sex'];
+            $this->destination       = $data['destination'];
+            $this->rendezvous_time   = is_numeric($data['rendezvous_time']) ? $data['rendezvous_time'] : 0;
+            $this->fee_des           = $data['fee_des'];
+            $this->we_want           = $data['we_want'];
+            return $this->save();
+        }
     }
 
     /**
@@ -53,6 +66,7 @@ class UserRendezvous extends Base
             ->innerJoin($this->tablePrefix.'user_information i', "i.user_id=r.user_id")
             ->leftJoin('(SELECT rendezvous_id,COUNT(id) count FROM '.$this->tablePrefix.'user_rendezvous_apply GROUP BY rendezvous_id) a', "a.rendezvous_id=r.id")
             ->select("*")
+            ->orderBy('r.status asc, r.create_time desc')
             ->offset($offset)
             ->limit($pageSize);
         if (is_array($condition) && count($condition)>0){
@@ -61,11 +75,37 @@ class UserRendezvous extends Base
         // 时间查询处理
         if(isset($where['date'])) {
             $arr = Functions::getInstance()->getTimeByMonth($where['date']);
-            $obj->andWhere(['between', 'create_time', $arr[0], $arr[1]]);
+            $obj->andWhere(['between', 'r.create_time', $arr[0], $arr[1]]);
         }
+        $obj->andWhere(['in', 'r.status', [1,2,3]]);
         //echo $obj->createCommand()->getRawSql();exit;
         return $obj->all();
-
     }
 
+    /**
+     * 修改状态
+     * @param $data['id','status']
+     * @return bool
+     */
+    public function updateStatus($data)
+    {
+        $rendezvous = $this->findOne($data['id']);
+        $rendezvous->status = $data['status'];
+        return $rendezvous->save(false);
+    }
+
+    /**
+     * 获取约会信息
+     * @param $where
+     * @return array|bool
+     */
+    public function getRendezvousInfo($where)
+    {
+        $obj = (new Query())
+            ->from(static::tableName())
+            ->select('*')
+            ->where($where)
+            ->one();
+        return $obj;
+    }
 }

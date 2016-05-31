@@ -13,7 +13,7 @@
             <a class="item item-icon-left item-icon-right" ng-click="openThemeModal()">
                 <i class="icon ion-ios-star cor33"></i>
                 <span class="cor21 fl">约会主题</span>
-                <p class="fr cor5 fs14 mw50">{{formData.themeText}}</p>
+                <p class="fr cor5 fs14 mw50">{{formData.theme | themeDisplay}}</p>
                 <i class="icon ion-ios-arrow-right cor34"></i>
             </a>
             <a class="item item-icon-left item-icon-right mb10" ng-click="openThemeTitleModal()">
@@ -37,7 +37,7 @@
             <a class="item item-icon-left item-icon-right" ng-click="openDateModal()">
                 <i class="icon bhy-icon-seout-time cor21"></i>
                 <span class="fl">约会时间</span>
-                <p class="fr cor5 fs14 mw50">{{formData.rendezvous_time}}</p>
+                <p class="fr cor5 fs14 mw50">{{formData.rendezvous_time * 1000 | date:'yyyy-MM-dd'}}</p>
                 <i class="icon ion-ios-arrow-right cor34"></i>
             </a>
             <a class="item item-icon-left item-icon-right" ng-click="openMoneyModal()">
@@ -235,7 +235,7 @@
                     <ion-item>
                         <p class="padding bor_imp wsn">
                             <span class="cor17 fs14" ng-if="formData.labelList.length < 1">约会对象你说了算</span>
-                            <span class="label mr10 mb10" ng-repeat="ul in formData.labelList" ng-click="removeLabel($index,ul)">{{ul}}</span>
+                            <span class="label mr10 mb10" ng-repeat="ul in lab" ng-click="removeLabel($index,ul)">{{ul}}</span>
                         </p>
                         <p class="wsn mt20">
                           <button class="button button-outline button-stable button-small ml5 mr5 mb10" ng-class="{1:'cor49 fwb fs14'}[l.hot]" ng-repeat="l in labelList.man" ng-if="userSex==1" ng-click="addLabel(l.name)" ng-disabled="nothing">{{l.name}}</button>

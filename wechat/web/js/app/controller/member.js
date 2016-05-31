@@ -2273,6 +2273,12 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
     module.controller("member.rendezvous_add", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$ionicModal', '$location', function (api, $scope, $timeout, $ionicPopup, $ionicModal, $location) {
 
         $scope.formData = [];
+        if($location.search().id) {
+            api.list('/wap/rendezvous/get-rendezvous-info', {id:$location.search().id}).success(function (res) {
+                $scope.formData = res.data;
+                $scope.formData.theme = parseInt($scope.formData.theme);
+            });
+        }
 
         // 跳转-返回
         $scope.jump = function () {
@@ -2295,7 +2301,6 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
             $scope.themeModal.show();
         };
         $scope.closeThemeModal = function () {
-            $scope.formData.themeText = $scope.formData.themeList[ar.getArrI($scope.formData.themeList, 'id', $scope.formData.theme)].title;
             $scope.themeModal.hide();
         };
 
@@ -2433,9 +2438,9 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
                 $ionicPopup.alert({title: '请选择费用说明'});
                 return false;
             }
-            $scope.formData.we_want = $scope.formData.labelList.join(',');
+
             api.save('/wap/rendezvous/release', $scope.formData).success(function (res) {
-                if (res.data == 'true') {
+                if (res.data) {
                     $ionicPopup.alert({title: '发布成功！'});
                     window.location.hash = '#/main/member/rendezvous_put';
                 }
@@ -2448,6 +2453,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
     module.controller("member.rendezvous_theme", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', function (api, $scope, $timeout, $ionicPopup) {
 
         $scope.selTheme = function () {
+
             $scope.closeThemeModal();
         }
 
@@ -2510,18 +2516,19 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
 
         $scope.labelList = config_infoData.label;
 
-        $scope.formData.labelList = [];
+        $scope.lab = [];
 
         $scope.nothing = false;  // 不限
 
+
         // 添加标签
         $scope.addLabel = function (value) {
-            if ($scope.formData.labelList.indexOf(value) == -1) {  // 标签不存在才允许添加
-                $scope.formData.labelList.push(value);
+            if ($scope.lab.indexOf(value) == -1) {  // 标签不存在才允许添加
+                $scope.lab.push(value);
             }
             if (value == '不限') {
-                $scope.formData.labelList = [];
-                $scope.formData.labelList.push(value);
+                $scope.lab = [];
+                $scope.lab.push(value);
                 $scope.nothing = true;
             }
         }
@@ -2531,11 +2538,12 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
             if (value == '不限') {
                 $scope.nothing = false;
             }
-            $scope.formData.labelList.splice(index, 1);
+            $scope.lab.splice(index, 1);
         }
 
         $scope.saveRequirement = function () {
             $scope.closeRequirementModal();
+            $scope.formData.we_want = $scope.lab.join(',');
             console.log($scope.formData.we_want);
         }
     }]);
@@ -2548,6 +2556,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
         $scope.dateList = [];
         $scope.putList = [];
         $scope.formData.pageNum = 0;
+        // 获取我发布的约会列表
         var getPutList = function(date, pageNum) {
             var formData = [];
             formData.user_id = ar.getCookie('bhy_user_id');
@@ -2564,6 +2573,14 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
 					$scope.putList.push(res.data[i]);
                 }
                 $scope.$broadcast('scroll.infiniteScrollComplete');
+            });
+        }
+        // 修改约会状态
+        var upStatus = function(id,status) {
+            var formData = [];
+            formData.id = id;
+            formData.status = status;
+            api.save('/wap/rendezvous/update-status', formData).success(function (res) {
             });
         }
         // 只能查看最近半年的数据
@@ -2593,7 +2610,6 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
             $scope.putList = []; // 根据日期查询的数据
             $scope.datePicker = false;
         }
-
 
         $scope.isMore = true;
 
@@ -2630,6 +2646,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
                     confirmPopup.then(function (res) {
                         if (res) {
                             // 删除
+                            upStatus($scope.putList[itemIndex].id, 0);
                             $scope.putList.splice(itemIndex, 1);
                             hideSheet();
                         } else {
@@ -2639,10 +2656,12 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
                 },
                 buttonClicked: function (index) {
                     if (index == 0) {  // 关闭约会
-
+                        $scope.putList[itemIndex].status = "3";
+                        upStatus($scope.putList[itemIndex].id, 3);
+                        hideSheet();
                     }
                     if (index == 1) { // 修改
-                        $location.url('/main/member/rendezvous_add?id=2');
+                        $location.url('/main/member/rendezvous_add?id=' + $scope.putList[itemIndex].id);
                     }
                 }
             });
