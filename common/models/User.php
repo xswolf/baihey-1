@@ -69,9 +69,9 @@ class User extends Base
 
         $infoData['auth'] = json_encode($userAuth);
         $infoData['info'] = json_encode($userInfo);
-        $infoData['province'] = 1;
-        $infoData['city'] = 1;
-        $infoData['area'] = 1;
+        $infoData['province'] = $data['province'];
+        $infoData['city'] = $data['province'];
+        $infoData['area'] = $data['province'];
         $infoData['personalized'] = $data['personalized'];
         unset($data['personalized']);
 
