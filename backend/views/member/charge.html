@@ -5,8 +5,38 @@
                 <h4><i class="fa fa-bars"></i>充值</h4>
             </div>
             <div class="box-body big">
-                三点四十多岁的
+                <form class="form-horizontal" role="form">
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">会员编号：</label>
+                        <div class="col-sm-9 input-group">
+                            <input onblur="findUser(this.value)" name="user_id" type="text" class="form-control" value="">
+                            <span class="input-group-btn">
+                                <a id="userInfo" href="javascript:;" class="btn btn-default">请输入会员编号</a>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">充值商品：</label>
+                        <div class="col-sm-9 input-group">
+                            <select class="form-control">
+                                <option value="">请选择</option>
+                                <option value="1">VIP</option>
+                                <option value="2">贵宾会员</option>
+                                <option value="3">钻石会员</option>
+                                <option value="4">现金余额</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group"></div>
+                    <div class="form-group"></div>
+                </form>
             </div>
         </div>
     </div>
 </div>
+<script>
+    function findUser(userId){
+
+    }
+</script>
