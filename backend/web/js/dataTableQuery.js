@@ -71,7 +71,9 @@ $(function(){
             };
             ext_params.columns = [
                 {"data" : "id"},
-                {"data" : "info.head_pic"},
+                {"data" : "info.head_pic","fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
+                    $(nTd).html("<img class='user_img' src='"+oData.info.head_pic+"'>");
+                }},
                 {"data" : "id"},
                 {"data" : "info.real_name"},
                 {"data" : "sex"},
@@ -84,7 +86,11 @@ $(function(){
                 {"data" : "is_auth"},
                 {"data" : "is_sign"},
                 {"data" : "area"},
-                {"data" : "auth.identity_check"}
+                {"data" : "auth.identity_check"},
+                {"data" : "id","fnCreatedCell":function (nTd, sData, oData, iRow, iCol) {
+                    var html = ' <button class="btn btn-info btn-sm tip" onclick="showUpload('+oData.id+','+"'oData.info.real_name'"+');" title="上传照片"><i class="fa fa-upload"></i></button>';
+                    $(nTd).html(html);
+                }}
             ]
 
         }
