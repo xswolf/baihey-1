@@ -18,7 +18,7 @@
 
         <div class="list card" ng-repeat="inv in involvedList">
             <div class="item item-thumbnail-left">
-                <img src="/wechat/web/images/test.jpg">
+                <img src="{{inv.info.head_pic}}">
                 <h2>
                     {{inv.info.real_name | sex:inv.sex :inv.info.age}}
                 </h2>

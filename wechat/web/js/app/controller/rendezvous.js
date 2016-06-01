@@ -7,29 +7,46 @@ define(['app/module', 'app/directive/directiveApi'
 
     module.controller("rendezvous.index", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$ionicModal', '$ionicActionSheet', '$ionicLoading','$interval', function (api, $scope, $timeout, $ionicPopup, $ionicModal, $ionicActionSheet, $ionicLoading,$interval) {
 
-        $scope.searchForm = {};
-
-        api.list('/wap/rendezvous/list' , $scope.searchForm).success(function (res) {
-            $scope.list = res.data;
-        })
-
+        $scope.list = [];
         $scope.formData = [];
+        $scope.formData.pageNum = 0;
+        var getList = function(pageNum) {
+            var formData = [];
+            formData.pageNum = pageNum + 1;
+            $scope.formData.pageNum = pageNum + 1;
+            api.list('/wap/rendezvous/list' , formData).success(function (res) {
+                res.data.length < 2 ? $scope.isMore = false : $scope.isMore = true;
+                for(var i in res.data) {
+                    var label = res.data[i].we_want.split(',');
+                    res.data[i].label = [];
+                    res.data[i].label = label;
+                    res.data[i].info = JSON.parse(res.data[i].info);
+                    res.data[i].auth = JSON.parse(res.data[i].auth);
+                    $scope.list.push(res.data[i]);
+                }
+                for(var j in $scope.list) {
+                    $scope.list[j].timer = getRTime(1464976286000);
+                    $interval($scope.list[j].timer, 1000);
+                }
+                $scope.$broadcast('scroll.infiniteScrollComplete');
+                console.log($scope.list);
+            });
+        }
 
-        function getRTime(){
-            var EndTime= new Date('2016/7/1 10:00:00'); //截止时间
+        function getRTime(time){
             var NowTime = new Date();
-            var t =EndTime.getTime() - NowTime.getTime();
+            var t =time - NowTime.getTime();
 
             var d=Math.floor(t/1000/60/60/24);
             var h=Math.floor(t/1000/60/60%24);
             var m=Math.floor(t/1000/60%60);
             var s=Math.floor(t/1000%60);
 
-            $scope.formData.timer = d + '天' + h + '时' + m + '分' + s + '秒';
+            return d + '天' + h + '时' + m + '分' + s + '秒';
 
         }
 
-        $interval(getRTime, 1000);
+        //$interval(getRTime, 1000);
 
 
         // 筛选
@@ -49,16 +66,27 @@ define(['app/module', 'app/directive/directiveApi'
         }
 
 
+        $scope.isMore = true;
+
         // 加载更多
+        $scope.loadMore = function () {
+            getList($scope.formData.pageNum);
+        }
+
+        // 是否还有更多
+        $scope.moreDataCanBeLoaded = function() {
+            return $scope.isMore;
+        }
+        /*// 加载更多
         $scope.loadMore = function(){
             console.log('加载更多');
-        }
+        }*/
 
 
         $scope.screen = [];
 
         $scope.screen.theme = "0";  // 约会主题，默认 不限
-        $scope.screen.money = "0";  // 费用 默认 不限
+        $scope.screen.fee_des = "0";  // 费用 默认 不限
         $scope.screen.sex = 0; // 发布者性别 默认 不限
 
         // 性别选择

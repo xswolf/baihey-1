@@ -9,17 +9,20 @@
     <ion-content class="bhy com_w_100 rendezvous" style="background: #e1e2e1;">
         <div class="list card" ng-repeat = "vo in list">
             <div class="item item-avatar">
-                <img src="/wechat/web/images/test.jpg">
+                <img src="{{vo.info.head_pic}}">
                 <h2>
-                    <span class="fl">张小姐</span>
-                    <span class="fl cor5 fs12 ml5 lh20">28岁 未婚</span>
+                    <span class="fl">{{vo.info.real_name | sex:vo.sex :vo.info.age}}</span>
+                    <span class="fl cor5 fs12 ml5 lh20">{{vo.info.age | timeToAge}}岁 {{vo.info.is_marriage | marriage}}</span>
                     <span class="fr fs12 lh20 cor5">
-                        05-16 15:03
+                        {{vo.rendezvous_time * 1000 | date:'MM-dd HH:mm'}}
                     </span>
                 </h2>
-                <p><span class="identity sfz">身份证</span>
-                    <span class="identity phone">手机</span>
-                    <span class="identity diamond">钻石</span>
+                <p>
+                    <span class="identity sfz" ng-if="vo.auth.identity_check">身份证</span>
+                    <span class="identity phone" ng-if="vo.phone">手机</span>
+                    <span class="identity vip" ng-if="vo.info.level == 1">vip</span>
+                    <span class="identity guest" ng-if="vo.info.level == 2">贵宾</span>
+                    <span class="identity diamond" ng-if="vo.info.level == 3">钻石</span>
                 </p>
             </div>
 
@@ -35,13 +38,10 @@
                 <p class="cor39 mt0">性别限制：{{vo.sex | sexDisplay}}</p>
                 <p>
                 <p>
-                    <span class="label">限女性</span>
-                    <span class="label">颜值高</span>
-                    <span class="label">技术宅</span>
-                    <span class="label">逗比</span>
+                <span class="label mr5" ng-repeat="lab in vo.label">{{lab}}</span>
                 </p>
                 <p class="countdown">
-                    距离结束还有 {{formData.timer}}
+                    距离结束还有 {{vo.timer}}
                 </p>
             </div>
 
@@ -89,7 +89,7 @@
                         <div class="input-label">
                             费用
                         </div>
-                        <select ng-model="screen.money">
+                        <select ng-model="screen.fee_des">
                             <option value="0" selected>不限</option>
                             <option value="1">免费</option>
                             <option value="2">我请客</option>
@@ -107,6 +107,11 @@
                     </div>
                 </ion-list>
             </ion-content>
+            <ion-infinite-scroll
+                    ng-if="moreDataCanBeLoaded()"
+                    on-infinite="loadMore()"
+                    distance="1%">
+            </ion-infinite-scroll>
         </ion-modal-view>
     </script>
 </ion-view>

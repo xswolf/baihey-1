@@ -8,7 +8,7 @@
     <ion-content class="bhy com_w_100 m_bg rendezvous">
         <div class="list card" ng-repeat="part in partList">
             <div class="item item-thumbnail-left">
-                <img src="/wechat/web/images/test.jpg">
+                <img src="{{part.info.head_pic}}">
                 <h2>
                     <span class="fl">{{part.info.real_name | sex:part.sex :part.info.age}}</span>
                     <span ng-click="delPart(part.apply_id,$index)" class="fr icon icon-trash cor5"></span>

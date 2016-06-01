@@ -57,29 +57,54 @@ class UserRendezvous extends Base
      */
     public function lists($where){
 
-        isset($where['user_id']) ? $condition['r.user_id'] = $where['user_id'] : $condition = $where;
-        $pageNum = isset($where['pageNum']) ? $where['pageNum'] : 1;
-        $pageSize = isset($where['pageSize']) ? $where['pageSize'] : 10;
-        $offset = ($pageNum - 1) * $pageSize;
+        $condition = $this->getListsWhere($where);
         $obj = (new Query())
             ->from($this->tablePrefix.'user_rendezvous r')
             ->innerJoin($this->tablePrefix.'user_information i', "i.user_id=r.user_id")
+            ->innerJoin($this->tablePrefix.'user u', "i.user_id=u.id")
             ->leftJoin('(SELECT rendezvous_id,COUNT(id) count FROM '.$this->tablePrefix.'user_rendezvous_apply GROUP BY rendezvous_id) a', "a.rendezvous_id=r.id")
             ->select("*")
             ->orderBy('r.status asc, r.create_time desc')
-            ->offset($offset)
-            ->limit($pageSize);
-        if (is_array($condition) && count($condition)>0){
-            $obj->where($condition);
+            ->offset($condition['offset'])
+            ->limit($condition['pageSize']);
+        if (isset($condition['condition'])){
+            $obj->where($condition['condition']);
+        }
+        if(isset($where['user_id'])) {
+            $obj->andWhere(['in', 'r.status', [1, 2, 3]]);
+        } else {
+            $obj->andWhere(['in', 'r.status', [1]]);
         }
         // 时间查询处理
         if(isset($where['date'])) {
             $arr = Functions::getInstance()->getTimeByMonth($where['date']);
             $obj->andWhere(['between', 'r.create_time', $arr[0], $arr[1]]);
         }
-        $obj->andWhere(['in', 'r.status', [1,2,3]]);
+
         //echo $obj->createCommand()->getRawSql();exit;
         return $obj->all();
+    }
+
+    /**
+     * 返回查询约会列表条件
+     * @param $where
+     * @return mixed
+     */
+    public function getListsWhere($where)
+    {
+        $pageNum = isset($where['pageNum']) ? $where['pageNum'] : 1;
+        $data['pageSize'] = isset($where['pageSize']) ? $where['pageSize'] : 2;
+        $data['offset'] = ($pageNum - 1) * $data['pageSize'];
+        if (isset($where['user_id'])) {
+            $data['condition']['r.user_id'] = $where['user_id'];
+        } else {
+            isset($where['theme']) && $where['theme'] > 0 ? $data['condition']['r.theme'] = $where['theme'] : 1;
+            isset($where['fee_des']) && $where['fee_des'] > 0 ? $data['condition']['r.fee_des'] = $where['fee_des'] : 1;
+            if(isset($where['sex']) && $where['sex'] > 0) {
+                $data['condition']['u.sex'] = $where['sex'] == 1 ? 1 : 0;
+            }
+        }
+        return $data;
     }
 
     /**
@@ -149,7 +174,7 @@ class UserRendezvous extends Base
      */
     public function applyLists($where){
 
-        isset($where['user_id']) ? $condition['a.user_id'] = $where['user_id'] : $condition = $where;
+        isset($where['user_id']) ? $condition['a.user_id'] = $where['user_id'] : true;
         $pageNum = isset($where['pageNum']) ? $where['pageNum'] : 1;
         $pageSize = isset($where['pageSize']) ? $where['pageSize'] : 10;
         $offset = ($pageNum - 1) * $pageSize;
