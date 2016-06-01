@@ -81,7 +81,7 @@ class UserRendezvous extends Base
             $obj->andWhere(['between', 'r.create_time', $arr[0], $arr[1]]);
         }
 
-        echo $obj->createCommand()->getRawSql();exit;
+//        echo $obj->createCommand()->getRawSql();exit;
         return $obj->all();
     }
 

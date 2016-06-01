@@ -98,4 +98,8 @@ class MemberController extends BaseController
     {
         return $this->render();
     }
+
+    public function actionCharge(){
+        return $this->render();
+    }
 }
