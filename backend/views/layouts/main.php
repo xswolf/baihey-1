@@ -386,7 +386,7 @@
 <script src="/backend/web/CloudAdmin/layer/layer.js"></script>
 
 <!-- CUSTOM SCRIPT -->
-<!--<script src="/backend/web/js/dataTableQuery.js"></script>-->
+<script src="/backend/web/js/dataTableQuery.js"></script>
 <script src="/backend/web/js/app.js"></script>
 <script src="/backend/web/CloudAdmin/js/script.js"></script>
 <script>

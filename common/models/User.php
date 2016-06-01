@@ -12,6 +12,7 @@ class User extends Base
         return (new Query())->from($this->tablePrefix.'user u')
             ->innerJoin($this->tablePrefix.'user_information i' , 'u.id=i.user_id')
             ->select("*")
+            ->limit(20)
             ->all();
     }
 
