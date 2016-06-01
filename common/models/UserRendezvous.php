@@ -63,7 +63,7 @@ class UserRendezvous extends Base
             ->innerJoin($this->tablePrefix.'user_information i', "i.user_id=r.user_id")
             ->innerJoin($this->tablePrefix.'user u', "i.user_id=u.id")
             ->leftJoin('(SELECT rendezvous_id,COUNT(id) count FROM '.$this->tablePrefix.'user_rendezvous_apply GROUP BY rendezvous_id) a', "a.rendezvous_id=r.id")
-            ->select("*")
+            ->select("*, r.id r_id")
             ->orderBy('r.status asc, r.create_time desc')
             ->offset($condition['offset'])
             ->limit($condition['pageSize']);
@@ -81,7 +81,7 @@ class UserRendezvous extends Base
             $obj->andWhere(['between', 'r.create_time', $arr[0], $arr[1]]);
         }
 
-        //echo $obj->createCommand()->getRawSql();exit;
+        echo $obj->createCommand()->getRawSql();exit;
         return $obj->all();
     }
 

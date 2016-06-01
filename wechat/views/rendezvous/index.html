@@ -46,11 +46,11 @@
             </div>
 
             <div class="item tabs tabs-secondary tabs-icon-left">
-                <a class="tab-item func" ui-sref="main.rendezvous_ask({userId:1})">
+                <a class="tab-item func" ui-sref="main.rendezvous_ask({r_id:{{vo.r_id}}})">
                     <i class="ion-heart fs16"></i>
                     约TA
                 </a>
-                <a class="tab-item func" href="#">
+                <a class="tab-item func" ui-sref="main.message_chat({id:vo.id,head_pic:vo.info.head_pic,real_name:vo.info.real_name,sex:vo.sex,age:vo.info.age})">
                     <i class="ion-chatbox fs16"></i>
                     对话
                 </a>
