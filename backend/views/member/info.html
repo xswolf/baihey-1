@@ -10,9 +10,11 @@
             <div class="box-body">
                 <div class="tabbable header-tabs user-profile">
                     <ul class="nav nav-tabs">
-                        <li><a href="#pro_help" data-toggle="tab"><i class="fa fa-comments-o"></i> <span
+                        <li><a href="#pro_identity" data-toggle="tab"><i class="fa fa-credit-card"></i> <span
+                                class="hidden-inline-mobile"> 证件</span></a></li>
+                        <li><a href="#pro_msg" data-toggle="tab"><i class="fa fa-comments-o"></i> <span
                                 class="hidden-inline-mobile"> 消息记录</span></a></li>
-                        <li><a href="#pro_edit" data-toggle="tab"><i class="fa fa-heart-o"></i> <span
+                        <li><a href="#pro_peidui" data-toggle="tab"><i class="fa fa-heart-o"></i> <span
                                 class="hidden-inline-mobile"> 配对记录</span></a></li>
                         <li class="active"><a href="#pro_overview" data-toggle="tab"><i class="fa fa-dot-circle-o"></i>
                             <span class="hidden-inline-mobile">详细资料</span></a></li>
@@ -87,16 +89,17 @@
                                             <i class="fa fa-check-square fa-fw"></i>
                                             审核</a>
                                         <a href="javascript:;" class="list-group-item">
-                                            <span class="badge badge-red">1529.00元</span>
+                                            <!--<span class="badge badge-red">1529.00元</span>-->
                                             <i class="fa fa-rmb fa-fw"></i>
                                             充值
                                         </a>
-                                        <a href="#box-config" data-toggle="modal" class="list-group-item"><i class="fa fa-edit fa-fw"></i>
+                                        <a href="#box-config" data-toggle="modal" class="list-group-item"><i
+                                                class="fa fa-edit fa-fw"></i>
                                             修改资料</a>
                                         <a href="javascript:;" class="list-group-item"><i
-                                                class="fa fa-picture-o fa-fw"></i> 发送短信</a>
-                                        <a href="javascript:;" class="list-group-item"><i
-                                                class="fa fa-picture-o fa-fw"></i> 重置密码</a>
+                                                class="fa fa-comment-o fa-fw"></i> 发送短信</a>
+                                        <a href="javascript:;" id="resetPass" class="list-group-item"><i
+                                                class="fa fa-unlock-alt fa-fw"></i> 重置密码</a>
                                     </div>
                                 </div>
                                 <!-- /PROFILE PIC -->
@@ -237,13 +240,66 @@
                                     <div class="divide-10"></div>
                                 </div>
 
+                                <div class="col-md-9">
+                                    <!-- ROW 1 -->
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="box border">
+                                                <div class="box-title">
+                                                    <h4><i class="fa fa-bars"></i>其他资料</h4>
+                                                </div>
+                                                <div class="box-body big">
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <table class="table">
+                                                                <thead>
+                                                                <th><span class="text-muted">注册时间：</span><span
+                                                                        class="text-dark">2016-03-01 12:03:24</span>
+                                                                </th>
+                                                                <th><span class="text-muted">登录次数：</span><span
+                                                                        class="text-dark">24</span></th>
+                                                                <th><span class="text-muted">最后一次登录：</span><span
+                                                                        class="text-dark">2016-06-01 18:11:28</span>
+                                                                </th>
+                                                                <th><span class="text-muted">账户余额：</span><span
+                                                                        class="text-dark">581元</span></th>
+                                                                </thead>
+                                                                <thead>
+                                                                <th><span class="text-muted">会员等级：</span><span
+                                                                        class="text-dark">VIP</span></th>
+                                                                <th><span class="text-muted">到期时间：</span><span
+                                                                        class="text-dark">2017-06-01 18:11:28</span>
+                                                                </th>
+                                                                <th><span class="text-muted">红娘顾问：</span><span
+                                                                        class="text-dark">袁军</span></th>
+                                                                <th><span class="text-muted">服务红娘：</span><span
+                                                                        class="text-dark">唐明曙</span></th>
+
+                                                                </thead>
+                                                                <thead>
+                                                                <th><span class="text-muted">服务：</span><span
+                                                                        class="text-dark">是</span></th>
+                                                                <th><span class="text-muted">签单：</span><span
+                                                                        class="text-dark">是</span></th>
+                                                                </thead>
+
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- /ROW 1 -->
+                                    <div class="divide-10"></div>
+                                </div>
 
                             </div>
                         </div>
                         <!-- /OVERVIEW -->
 
-                        <!-- EDIT ACCOUNT -->
-                        <div class="tab-pane fade" id="pro_edit">
+                        <!-- 配对记录 -->
+                        <div class="tab-pane fade" id="pro_peidui">
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="box border primary">
@@ -289,10 +345,10 @@
                                 </div>
                             </div>
                         </div>
-                        <!-- /EDIT ACCOUNT -->
+                        <!-- /配对记录 -->
 
-                        <!-- HELP -->
-                        <div class="tab-pane fade" id="pro_help">
+                        <!-- 消息记录 -->
+                        <div class="tab-pane fade" id="pro_msg">
                             <!-- FAQ -->
                             <div class="row">
                                 <!-- NAV -->
@@ -353,16 +409,85 @@
                                 </div>
                             </div>
                         </div>
+
+                        <!--证件-->
+                        <div class="tab-pane fade" id="pro_identity">
+                            <!-- FAQ -->
+                            <div class="row">
+                                <!-- NAV -->
+                                <div class="col-md-12">
+
+                                    <div class="panel-group" id="accordion">
+                                        <div class="panel panel-danger">
+                                            <div class="panel-heading">
+                                                <h3 class="panel-title"><a class="accordion-toggle"
+                                                                           data-toggle="collapse"
+                                                                           data-parent="#accordion" href="#collapseOne">身份证</a>
+                                                </h3>
+                                            </div>
+                                            <div id="collapseOne" class="panel-collapse collapse in">
+                                                <div class="panel-body">
+                                                    <ul class="list-unstyled list-inline">
+                                                        <li><img src="/backend/web/images/idCard1.jpg" width="200" height="200"></li>
+                                                        <li><img src="/backend/web/images/idCard2.jpg" width="200" height="200"></li>
+                                                    </ul>
+
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading">
+                                                <h3 class="panel-title"><a class="accordion-toggle"
+                                                                           data-toggle="collapse"
+                                                                           data-parent="#accordion" href="#collapseTwo">婚姻证明</a>
+                                                </h3>
+                                            </div>
+                                            <div id="collapseTwo" class="panel-collapse collapse">
+                                                <div class="panel-body">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading">
+                                                <h3 class="panel-title"><a class="accordion-toggle"
+                                                                           data-toggle="collapse"
+                                                                           data-parent="#accordion"
+                                                                           href="#collapseThree">学历证明</a></h3>
+                                            </div>
+                                            <div id="collapseThree" class="panel-collapse collapse">
+                                                <div class="panel-body">
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading">
+                                                <h3 class="panel-title"><a class="accordion-toggle"
+                                                                           data-toggle="collapse"
+                                                                           data-parent="#accordion"
+                                                                           href="#collapseFour">房产证明</a></h3>
+                                            </div>
+                                            <div id="collapseFour" class="panel-collapse collapse">
+                                                <div class="panel-body">
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-<div id="layer_verify"  class="layer_form">
+<div id="layer_verify" class="layer_form">
     <form class="form-horizontal" role="form">
         <div class="form-group">
-            <label class="col-sm-3 control-label">请选择红娘顾问</label>
+            <label class="control-label">红娘顾问</label>
             <select class="form-control input-sm">
                 <option value="">请选择</option>
                 <option value="1">袁军</option>
@@ -371,12 +496,30 @@
             </select>
         </div>
         <div class="form-group">
-            <label class="col-sm-3 control-label">请选择服务红娘</label>
+            <label class="control-label">服务红娘</label>
             <select class="form-control input-sm">
                 <option value="">请选择</option>
                 <option value="1">方莉</option>
                 <option value="2">唐明曙</option>
             </select>
+        </div>
+        <div class="form-group">
+            <label class="control-label">签单</label>
+            <select class="form-control input-sm">
+                <option value="0">否</option>
+                <option value="1">是</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label class="control-label">服务</label>
+            <select class="form-control input-sm">
+                <option value="0">否</option>
+                <option value="1">是</option>
+            </select>
+        </div>
+        <div class="form-group center btn-toolbar">
+            <button type="button" class="btn btn-primary">审核通过</button>
+            <button type="button" class="btn btn-light-grey verify_cancel">取消</button>
         </div>
     </form>
 </div>
@@ -385,17 +528,32 @@
     $('#verify').click(function () {   // 审核
         layer.open({
             type: 1,
-            area: '800px',
-            shade: false,
-            title: false, //不显示标题
+            area: '410px',
+            title: '审核', //不显示标题
             content: $('#layer_verify'), //捕获的元素
+            success: function (layero, index) {
+                layero.find('.verify_cancel').click(function () {
+                    layer.close(index);
+                })
+            },
             cancel: function (index) {
                 layer.close(index);
-                this.content.show();
-                layer.msg('捕获就是从页面已经存在的元素上，包裹layer的结构', {time: 5000, icon: 6});
             }
         });
     })
+
+    $('#resetPass').click(function(){    // 重置密码
+        layer.confirm('是否重置该用户登录密码？', {
+            btn: ['是','取消'] //按钮
+        }, function(){
+            layer.msg('重置成功', {icon: 1});
+        }, function(){
+
+        });
+    })
+
+
+
 </script>
 <script type="text/javascript" src="/backend/web/CloudAdmin/js/colorbox/jquery.colorbox.min.js"></script>
 <script>

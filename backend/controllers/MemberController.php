@@ -55,4 +55,9 @@ class MemberController extends BaseController
     public function actionInfo(){
         return $this->render();
     }
+
+
+    public function actionOrder(){
+        return $this->render();
+    }
 }

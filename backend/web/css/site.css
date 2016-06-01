@@ -323,6 +323,10 @@ table .user_img{
 
 .layer_form{
     display: none;
-    width: 750px;
-    padding: 10px;
+    width: 350px;
+    margin: 5%;
+}
+
+.layer_form form{
+
 }
