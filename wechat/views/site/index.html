@@ -48,7 +48,7 @@
                                 <span class="fwb fs14" ng-if="user.info.real_name == '未知'">会员ID:{{user.id}}</span>
                                 <span ng-if="user.info.age != '未知'" class="cor19 fs12">{{user.info.age | timeToAge}}岁</span> <span ng-if="user.info.height != '未知'"
                                     class="cor19 fs12">{{user.info.height}}cm</span>
-                                <span ng-if="user.info.is_marriage != '未知'" class="cor19 fs12">{{user.info.is_marriage}}</span>
+                                <span ng-if="user.info.is_marriage != '未知'" class="cor19 fs12">{{user.info.is_marriage | marriage}}</span>
                             </div>
                             <div class="col-20"><label class="label-right fs12"><i
                                     class="ion-android-pin mr5 positive"></i>{{user.info.local}}</label>
