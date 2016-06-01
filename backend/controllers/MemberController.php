@@ -14,11 +14,26 @@ use common\models\User;
 class MemberController extends BaseController
 {
 
-    public function actionSearch(){
+    public function actionIndex(){
 
-        $list = User::getInstance()->lists();
-        $this->assign('list' , $list);
         return $this->render();
+    }
+
+    public function actionSearch(){
+        $start = \Yii::$app->request->get('iDisplayStart');
+        $limit = \Yii::$app->request->get('iDisplayLength');
+        $list = User::getInstance()->lists($start , $limit);
+        foreach ($list as $k=>$v){
+            $list[$k]['info'] = json_decode($v['info']);
+            $list[$k]['auth'] = json_decode($v['auth']);
+        }
+        $data = [
+            'draw' => \Yii::$app->request->get('sEcho'),
+            'recordsTotal'=>User::getInstance()->count(),
+            'recordsFiltered'=>User::getInstance()->count(),
+            'data' => $list
+        ];
+        $this->renderAjax($data);
     }
 
     public function actionSave(){

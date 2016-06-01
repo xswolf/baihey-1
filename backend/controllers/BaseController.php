@@ -112,6 +112,17 @@ class BaseController extends Controller
         return parent::render( $view , $arr);
     }
 
+    public function renderAjax( $params = [ ] , $view = '' ) {
+
+        if ( $view == '' ) {
+            $view = \Yii::$app->controller->action->id;
+        }
+        $view = $view . ".html";
+        $arr  = array_merge( $params , $this->assign );
+        echo json_encode( $arr );
+
+    }
+
     public function assign($field , $value){
         $this->assign[$field] = $value;
     }

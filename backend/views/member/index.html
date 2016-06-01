@@ -3,16 +3,6 @@
 <script src="/wechat/web/js/config/city.js"></script>
 <script>
 
-    function getAdd(id,val) {
-        for (var i in area) {
-            area[i].id = parseInt(area[i].id);
-            if (area[i].id == val) {
-                $("#area_" + id).html(area[i].name);
-                break;
-            }
-        }
-    }
-
     function showUpload(id,userName) {
         layer.open({
             type: 1,
@@ -48,6 +38,8 @@
 
         <div class="ibox-content">
             <table id="demo1" class="table table-striped table-bordered table-hover dataTables-example dataTable j-datatables"
+                data-is-ajax="1"
+                   data-ajax-url="/admin/member/search"
                    cellspacing="0" width="100%">
                 <thead>
                 <tr>
@@ -70,40 +62,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                {{foreach from=$list item=vo}}
-                <tr>
 
-                    {{$info = json_decode($vo.info)}}
-                    {{$auth = json_decode($vo.auth)}}
-                    <td><input name="" type="checkbox" value=""></td>
-                    <td><img class="user_img" src="{{$info->head_pic}}"></td>
-                    <td><a target="_blank" href="/admin/member/info?id={{$vo.id}}">{{$vo.id}}</a></td>
-                    <td>{{$info->real_name}}</td>
-                    <td>{{getSex($vo.sex)}}</td>
-                    <td>{{getAge($info->age)}}</td>
-                    <td>{{getMarriage($info->is_marriage)}}</td>
-                    <td>{{$info->height}}</td>
-                    <td>{{getEducation($info->education)}}</td>
-                    <td>{{getLevel($info->level)}}</td>
-                    <td>{{getIsNot($vo.service_status) }}</td>
-                    <td>{{getIsNot($vo.is_auth) }}</td>
-                    <td>{{getIsNot($vo.is_sign) }}</td>
-                    <td><span id="area_{{$vo.id}}">
-                        <script>
-                            getAdd({{$vo.id}},{{$vo.area}});
-                        </script>
-                    </span>{{$vo.address}}
-                    </td>
-                    <td>{{getIsNot($auth->identity_check)}}</td>
-                    <td>
-                        <!--<button class="btn btn-primary btn-sm tip" title="管理"><i class="fa fa-cog"></i></button>
-                        <button class="btn btn-info btn-sm tip" title="配对记录"><i class="fa fa-heart"></i></button>
-                        <button class="btn btn-info btn-sm tip" title="消息记录"><i class="fa fa-comments"></i></button>-->
-                        <button class="btn btn-info btn-sm tip" onclick="showUpload('{{$vo.id}}','{{$info->real_name}}');" title="上传照片"><i
-                                class="fa fa-upload"></i></button>
-                    </td>
-                </tr>
-                {{/foreach}}
                 </tbody>
             </table>
         </div>

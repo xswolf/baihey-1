@@ -3,11 +3,27 @@
  */
 $(function(){
 
+    function getUrlParamToArr() {
+        var url = window.location.search;
+        url = url.substring(1);
+        var urlArr = url.split("&");
+        var params = {}
+        for (var i in urlArr) {
+            var oS = urlArr[i].split('=');
+            var k = oS[0];
+            var v = oS[1];
+
+            v = decodeURIComponent(v);
+            params[k] = v;
+        }
+        return params;
+    }
+
     $('.j-datatables').each(function () {
         var $this = $(this);
         var $filterContainer = $this.data('filter-container') ? $($this.data('filter-container')) : $(document);
         var filters = [];
-        var table = $(this).DataTable({
+        var ext_params = {
             "pagingType": "full_numbers",
             "sLoadingRecords": "正在加载数据...",
             "sZeroRecords": "暂无数据",
@@ -30,7 +46,50 @@ $(function(){
                     "last": "末页"
                 }
             }
-        });
+        }
+
+        if ($this.data('is-ajax') == 1){
+            var ajaxUrl = $this.data('ajax-url')
+            ext_params.bServerSide = true;
+            ext_params.sAjaxSource = ajaxUrl;
+            ext_params.fnServerData =function(sSource, aoData, fnCallback) {
+                var params = getUrlParamToArr();
+                for (var i in params) {
+                    aoData.push({"name": i, "value": params[i]});
+                }
+                $.ajax({
+                    "type" : 'GET',
+                    "url" : ajaxUrl,
+                    "dataType" : "json",
+                    "data" : aoData,
+                    "success" : function(resp) {
+                        console.log(resp)
+                        fnCallback(resp);
+                    }
+                });
+
+            };
+            ext_params.columns = [
+                {"data" : "id"},
+                {"data" : "info.head_pic"},
+                {"data" : "id"},
+                {"data" : "info.real_name"},
+                {"data" : "sex"},
+                {"data" : "info.age"},
+                {"data" : "info.is_marriage"},
+                {"data" : "info.height"},
+                {"data" : "info.education"},
+                {"data" : "info.level"},
+                {"data" : "service_status"},
+                {"data" : "is_auth"},
+                {"data" : "is_sign"},
+                {"data" : "area"},
+                {"data" : "auth.identity_check"}
+            ]
+
+        }
+
+        var table = $this.DataTable(ext_params);
 
         $('.j-dt-filter', $filterContainer).each(function () {
             var $this = $(this);

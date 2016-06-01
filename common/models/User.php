@@ -8,12 +8,20 @@ class User extends Base
 {
 
 
-    public function lists(){
+    public function lists($start , $limit){
         return (new Query())->from($this->tablePrefix.'user u')
             ->innerJoin($this->tablePrefix.'user_information i' , 'u.id=i.user_id')
             ->select("*")
-            ->limit(20)
+            ->offset($start)
+            ->limit($limit)
             ->all();
+    }
+
+    public function count(){
+        return (new Query())->from($this->tablePrefix.'user u')
+            ->innerJoin($this->tablePrefix.'user_information i' , 'u.id=i.user_id')
+            ->select("*")
+            ->count();
     }
 
     public function getUserById($id){
