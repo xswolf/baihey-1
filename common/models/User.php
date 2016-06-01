@@ -8,20 +8,33 @@ class User extends Base
 {
 
 
-    public function lists($start , $limit){
-        return (new Query())->from($this->tablePrefix.'user u')
+    public function lists( $start , $limit ,$andWhere = []){
+
+        $handle = (new Query())->from($this->tablePrefix.'user u')
             ->innerJoin($this->tablePrefix.'user_information i' , 'u.id=i.user_id')
             ->select("*")
             ->offset($start)
-            ->limit($limit)
-            ->all();
+            ->limit($limit);
+
+        if (count($andWhere)>0){
+            foreach ($andWhere as $v){
+                $handle->andWhere($v);
+            }
+        }
+        return $handle->all();
     }
 
-    public function count(){
-        return (new Query())->from($this->tablePrefix.'user u')
+    public function count($andWhere = []){
+        $handle = (new Query())->from($this->tablePrefix.'user u')
             ->innerJoin($this->tablePrefix.'user_information i' , 'u.id=i.user_id')
-            ->select("*")
-            ->count();
+            ->select("*");
+
+        if (count($andWhere)>0){
+            foreach ($andWhere as $v){
+                $handle->andWhere($v);
+            }
+        }
+        return $handle->count();
     }
 
     public function getUserById($id){

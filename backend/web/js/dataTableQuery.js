@@ -63,7 +63,6 @@ $(function(){
                     "dataType" : "json",
                     "data" : aoData,
                     "success" : function(resp) {
-                        console.log(resp)
                         fnCallback(resp);
                     }
                 });
@@ -77,7 +76,7 @@ $(function(){
                 {"data" : "id"},
                 {"data" : "info.real_name"},
                 {"data" : "sex"},
-                {"data" : "info.age"},
+                {"data" : "age"},
                 {"data" : "info.is_marriage"},
                 {"data" : "info.height"},
                 {"data" : "info.education"},
@@ -85,7 +84,14 @@ $(function(){
                 {"data" : "service_status"},
                 {"data" : "is_auth"},
                 {"data" : "is_sign"},
-                {"data" : "area"},
+                {"data" : "area",fnCreatedCell:function (nTd, sData, oData, iRow, iCol) {
+                    for (var i in area){
+                        if (area[i].id == oData.area){
+                            $(nTd).html(area[i].name+" " + oData.address)
+                            break;
+                        }
+                    }
+                }},
                 {"data" : "auth.identity_check"},
                 {"data" : "id","fnCreatedCell":function (nTd, sData, oData, iRow, iCol) {
                     var html = ' <button class="btn btn-info btn-sm tip" onclick="showUpload('+oData.id+','+"'oData.info.real_name'"+');" title="上传照片"><i class="fa fa-upload"></i></button>';
@@ -179,7 +185,6 @@ Filter.prototype.textInit = function () {
     var _this = this;
     var t = 0;
     this.$dom.on('keyup', function () {
-        console.log(_this.$dom.val());
         if (t > 0) {
             clearTimeout(t);
         }
