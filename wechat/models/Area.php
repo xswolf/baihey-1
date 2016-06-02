@@ -23,7 +23,7 @@ class Area extends \common\models\Base
         $condition = ["(LENGTH(relation) - LENGTH(REPLACE(relation,',','')))" => 1];
         $row = (new Query())
             ->select('*')
-            ->from(static::tableName())
+            ->from($this->tablePrefix.'area')
             ->where($condition)
             ->andWhere(['like','name',$name]);
 
