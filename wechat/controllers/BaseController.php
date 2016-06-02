@@ -129,7 +129,7 @@ class BaseController extends Controller {
         $user = User::getInstance()->findOne( [ 'wx_id' => $data['wx_id'] ] );
         if ( ! $user ) { // 用户不存在，写入数据
             \common\models\User::getInstance()->addUser($data);
-            User::getInstance()->addUser( $data );
+            //User::getInstance()->addUser( $data );
             $userId     = User::getInstance()->getDb()->lastInsertID;
             $data['id'] = $userId;
             $user       = $data;
