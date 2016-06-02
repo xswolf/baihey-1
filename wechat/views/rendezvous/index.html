@@ -7,14 +7,14 @@
         <a class="button button-icon icon ion-ios-plus-outline energized" href="#/main/rendezvous_add?userId=1&tempUrl=1"></a>
     </ion-header-bar>
     <ion-content class="bhy com_w_100 rendezvous" style="background: #e1e2e1;" delegate-handle="mainScroll">
-        <div class="list card" ng-repeat = "vo in list">
+        <div class="list card" ng-repeat = "vo in list" ng-if="list.length > 0">
             <div class="item item-avatar">
                 <img src="{{vo.info.head_pic}}">
                 <h2>
                     <span class="fl">{{vo.info.real_name | sex:vo.sex :vo.info.age}}</span>
                     <span class="fl cor5 fs12 ml5 lh20">{{vo.info.age | timeToAge}}岁 {{vo.info.is_marriage | marriage}}</span>
                     <span class="fr fs12 lh20 cor5">
-                        {{vo.rendezvous_time * 1000 | date:'MM-dd HH:mm'}}
+                        {{vo.create_time * 1000 | date:'MM-dd HH:mm'}}
                     </span>
                 </h2>
                 <p>
@@ -33,15 +33,15 @@
                     <span class="cor33">##{{vo.title}}##</span>{{vo.content}}
                 </p>
                 <p class="cor39 mt0 mb0">约会地点：{{vo.destination}}</p>
-                <p class="cor39 mt0 mb0">约会时间：{{vo.rendezvous_time}}</p>
+                <p class="cor39 mt0 mb0">约会时间：{{vo.rendezvous_time * 1000 | date:'MM-dd HH:mm'}}</p>
                 <p class="cor39 mt0 mb0">费用说明：{{vo.fee_des | feeDisplay}}</p>
                 <p class="cor39 mt0">性别限制：{{vo.sex | sexDisplay}}</p>
                 <p>
                 <p>
-                <span class="label mr5" ng-repeat="lab in vo.label">{{lab}}</span>
+                <span class="cor39">约伴要求：</span><span class="label mr5" ng-repeat="lab in vo.label">{{lab}}</span>
                 </p>
                 <p class="countdown">
-                    距离结束还有 {{vo.timer}}
+                    距离结束还有 <span timer="{{vo.rendezvous_time}}"></span>
                 </p>
             </div>
 
@@ -61,6 +61,10 @@
                 <p>您不能约自己</p>
             </div>
         </div>
+        <div ng-if="list.length < 1" class="nullBox">
+            <p class="nulltip">没有相关的数据，请放宽筛选条件后再试！</p>
+        </div>
+
         <ion-infinite-scroll ng-if="moreDataCanBeLoaded()" on-infinite="loadMoreData()" distance="1%">
         </ion-infinite-scroll>
     </ion-content>
@@ -108,11 +112,6 @@
                         </div>
                     </div>
                 </ion-list>
-                <ion-infinite-scroll
-                        ng-if="moreDataCanBeLoaded()"
-                        on-infinite="loadMore()"
-                        distance="1%">
-                </ion-infinite-scroll>
             </ion-content>
         </ion-modal-view>
     </script>

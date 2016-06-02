@@ -235,12 +235,12 @@ define(['app/module'], function (module) {
         }
     ]);
 
-    module.directive('resizeFootBar', ['$ionicScrollDelegate', function($ionicScrollDelegate){
+    module.directive('resizeFootBar', ['$ionicScrollDelegate', function ($ionicScrollDelegate) {
         // Runs during compile
         return {
             replace: false,
-            link: function(scope, iElm, iAttrs, controller) {
-                scope.$on("taResize", function(e, ta) {
+            link: function (scope, iElm, iAttrs, controller) {
+                scope.$on("taResize", function (e, ta) {
                     if (!ta) return;
                     var scroll = document.body.querySelector("#message-detail-content");
                     var scrollBar = $ionicScrollDelegate.$getByHandle('messageDetailsScroll');
@@ -257,23 +257,59 @@ define(['app/module'], function (module) {
         };
     }]);
 
-    module.directive('showMulti', ['$animate', function($animate){
+    module.directive('showMulti', ['$animate', function ($animate) {
         return {
             replace: false,
-            link: function(scope, iElm, iAttrs, controller) {
+            link: function (scope, iElm, iAttrs, controller) {
                 var footerBar = iElm.parent().parent().parent('#msg_footer_bar');
-                var multi =iElm.parent().parent().parent().next('#multi_con');
-                iElm.bind('click',function(){
-                    $animate.animate(footerBar,{
-                        'bottom':multi[0].offsetHeight+'px'
+                var multi = iElm.parent().parent().parent().next('#multi_con');
+                iElm.bind('click', function () {
+                    $animate.animate(footerBar, {
+                        'bottom': multi[0].offsetHeight + 'px'
                     });
-                    $animate.animate(multi,{
-                        'bottom':'0'
+                    $animate.animate(multi, {
+                        'bottom': '0'
                     });
                 })
             }
         };
     }]);
+
+    module.directive(
+        "timer",
+        function ($interval) {
+            //将用户界面的事件绑定到$scope上
+            function link($scope, element, attributes) {
+                //当timeout被定义时，它返回一个promise对象
+                var timer = $interval(
+                    function () {
+                        var NowTime = new Date();
+                        var t = attributes.timer * 1000 - NowTime.getTime();
+                        var d = Math.floor(t / 1000 / 60 / 60 / 24);
+                        var h = Math.floor(t / 1000 / 60 / 60 % 24);
+                        var m = Math.floor(t / 1000 / 60 % 60);
+                        var s = Math.floor(t / 1000 % 60);
+                        element.text(d + '天' + h + '时' + m + '分' + s + '秒');
+                    },1000);
+                timer.then(
+                    function () {},
+                    function () {}
+                );
+                //当DOM元素从页面中被移除时，清除定时器
+                $scope.$on(
+                    "$destroy",
+                    function (event) {
+                        $interval.cancel(timer);
+                    }
+                );
+            }
+            //返回指令的配置
+            return ({
+                link: link,
+                scope: false
+            });
+        }
+    );
 })
 
 

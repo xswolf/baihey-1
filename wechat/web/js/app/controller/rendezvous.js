@@ -5,7 +5,7 @@ define(['app/module', 'app/directive/directiveApi'
     , 'app/service/serviceApi'
 ], function (module) {
 
-    module.controller("rendezvous.index", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$ionicModal', '$ionicActionSheet', '$ionicLoading', '$interval','$ionicScrollDelegate', function (api, $scope, $timeout, $ionicPopup, $ionicModal, $ionicActionSheet, $ionicLoading, $interval,$ionicScrollDelegate) {
+    module.controller("rendezvous.index", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$ionicModal', '$ionicActionSheet', '$ionicLoading', '$interval', '$ionicScrollDelegate', function (api, $scope, $timeout, $ionicPopup, $ionicModal, $ionicActionSheet, $ionicLoading, $interval, $ionicScrollDelegate) {
 
         $scope.formData = [];
         $scope.num = [];
@@ -29,9 +29,9 @@ define(['app/module', 'app/directive/directiveApi'
             $scope.screenModal.hide();
         }
         $scope.isMore = true;
+        var timer;
         // 加载更多
         $scope.loadMoreData = function () {
-
             $scope.formData.pageNum += 1;
             api.list('/wap/rendezvous/list', $scope.formData).success(function (res) {
                 if (res.data.length < 1) {
@@ -45,32 +45,14 @@ define(['app/module', 'app/directive/directiveApi'
                     res.data[i].auth = angular.fromJson(res.data[i].auth);
                     $scope.list.push(res.data[i]);
                 }
-                for(var j in $scope.list){
-                    timer(j,$scope.list[j].rendezvous_time * 1000)
-                }
                 $scope.$broadcast('scroll.infiniteScrollComplete');
             });
         }
-
-        // 定时器函数
-        function timer(num, time) {
-          $interval(function () {
-                var NowTime = new Date();
-                var t = time - NowTime.getTime();
-                var d = Math.floor(t / 1000 / 60 / 60 / 24);
-                var h = Math.floor(t / 1000 / 60 / 60 % 24);
-                var m = Math.floor(t / 1000 / 60 % 60);
-                var s = Math.floor(t / 1000 % 60);
-                $scope.list[num].timer = d + '天' + h + '时' + m + '分' + s + '秒';
-            }, 1000);
-        }
-
 
         // 是否还有更多
         $scope.moreDataCanBeLoaded = function () {
             return $scope.isMore;
         }
-
 
         $scope.screen = [];
 
@@ -85,7 +67,6 @@ define(['app/module', 'app/directive/directiveApi'
 
         // 确定筛选
         $scope.saveScreen = function () {
-            $interval.cancel($scope.sss);
             $scope.formData.theme = $scope.screen.theme;
             $scope.formData.fee_des = $scope.screen.fee_des;
             $scope.formData.sex = $scope.screen.sex;
@@ -103,14 +84,11 @@ define(['app/module', 'app/directive/directiveApi'
                     res.data[i].auth = angular.fromJson(res.data[i].auth);
                 }
                 $scope.list = res.data;
-                for(var j in $scope.list){
-                    timer(j,$scope.list[j].rendezvous_time * 1000)
-                }
-                $scope.$broadcast('scroll.infiniteScrollComplete');
             });
             $scope.screenModal.hide();
             $ionicScrollDelegate.$getByHandle('mainScroll').scrollTop();
         }
+
     }]);
 
     // 约TA

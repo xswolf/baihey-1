@@ -30,3 +30,19 @@
   resize: none;
   height: 100px;
 }
+.rendezvous .nullBox {
+  background: #fff;
+  display: table;
+  height: 80px;
+  left: -140px;
+  margin-left: 50%;
+  margin-top: 50%;
+  position: relative;
+  top: -40px;
+  width: 280px;
+}
+.rendezvous .nulltip {
+  display: table-cell;
+  vertical-align: middle;
+  text-align: center;
+}
