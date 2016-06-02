@@ -26,10 +26,13 @@ class MemberController extends BaseController
         $start = $request->get('iDisplayStart');
         $limit = $request->get('iDisplayLength');
 
-        $andWhere = [
-            [">=" ,"age", $request->get('ages')],
-            ["<=" ,"age", $request->get('agee')]
-        ];
+        $andWhere = [];
+        if ($request->get('ages') >= 18){
+            $andWhere[] = [">=" ,"age", $request->get('ages')];
+        }
+        if ($request->get('agee') >=18){
+            $andWhere[] = ["<=" ,"age", $request->get('agee')];
+        }
 
 
         $list  = User::getInstance()->lists($start, $limit ,$andWhere);
