@@ -214,7 +214,7 @@ define(["app/module", 'app/service/serviceApi'],
                         }
                     })
                     .state('main.rendezvous_ask', {     // 约会-约TA
-                        url: "/rendezvous_ask?userId",
+                        url: "/rendezvous_ask?rendezvous_id",
                         views: {
                             'rendezvous-tab': {
                                 templateUrl: "/wechat/views/rendezvous/ask.html",

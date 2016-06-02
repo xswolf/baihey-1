@@ -8,6 +8,7 @@ define(['app/module', 'app/directive/directiveApi'
     module.controller("rendezvous.index", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$ionicModal', '$ionicActionSheet', '$ionicLoading', '$interval', function (api, $scope, $timeout, $ionicPopup, $ionicModal, $ionicActionSheet, $ionicLoading, $interval) {
 
         $scope.formData = [];
+        $scope.num = [];
         $scope.formData.pageNum = 0;
         $scope.formData.pageSize = 5;
         $scope.list = [];
@@ -55,7 +56,7 @@ define(['app/module', 'app/directive/directiveApi'
 
         // 定时器函数
         function timer(num, time) {
-            $interval(function () {
+            $scope.num.push($interval(function () {
                 var NowTime = new Date();
                 var t = time - NowTime.getTime();
                 var d = Math.floor(t / 1000 / 60 / 60 / 24);
@@ -63,7 +64,7 @@ define(['app/module', 'app/directive/directiveApi'
                 var m = Math.floor(t / 1000 / 60 % 60);
                 var s = Math.floor(t / 1000 % 60);
                 $scope.list[num].timer = d + '天' + h + '时' + m + '分' + s + '秒';
-            }, 1000);
+            }, 1000));
         }
 
 
@@ -86,7 +87,31 @@ define(['app/module', 'app/directive/directiveApi'
 
         // 确定筛选
         $scope.saveScreen = function () {
-
+            $interval.cancel();
+            $scope.screen.theme > 0 ? $scope.formData.theme = $scope.screen.theme : true;
+            $scope.screen.fee_des > 0 ? $scope.formData.fee_des = $scope.screen.fee_des : true;
+            $scope.screen.sex > 0 ? $scope.formData.sex = $scope.screen.sex : true;
+            $scope.formData.pageNum = 1;
+            api.list('/wap/rendezvous/list', $scope.formData).success(function (res) {
+                if (res.data.length < 1) {
+                    $scope.isMore = false;
+                }
+                dataSize = res.data.length;   // 循环增加数据条数
+                console.log(dataSize);
+                for (var i in res.data) {
+                    var label = res.data[i].we_want.split(',');
+                    res.data[i].label = [];
+                    res.data[i].label = label;
+                    res.data[i].info = angular.fromJson(res.data[i].info);
+                    res.data[i].auth = angular.fromJson(res.data[i].auth);
+                }
+                $scope.list = res.data;
+                for (var j = 0; j <= dataSize - 1; j++) {     // 循环启动页面所有定时器
+                    timer(j, $scope.list[j].rendezvous_time * 1000);
+                }
+                $scope.$broadcast('scroll.infiniteScrollComplete');
+            });
+            $scope.screenModal.hide();
             console.log($scope.screen);
 
         }

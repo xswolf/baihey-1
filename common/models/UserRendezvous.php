@@ -64,7 +64,7 @@ class UserRendezvous extends Base
             ->innerJoin($this->tablePrefix.'user u', "i.user_id=u.id")
             ->leftJoin('(SELECT rendezvous_id,COUNT(id) count FROM '.$this->tablePrefix.'user_rendezvous_apply GROUP BY rendezvous_id) a', "a.rendezvous_id=r.id")
             ->select("*, r.id r_id")
-            ->orderBy('r.status asc, r.create_time desc')
+            ->orderBy('r.status asc, r.rendezvous_time desc, r.create_time desc')
             ->offset($condition['offset'])
             ->limit($condition['pageSize']);
         if (isset($condition['condition'])){
