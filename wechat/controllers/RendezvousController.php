@@ -35,7 +35,8 @@ class RendezvousController extends BaseController
      * 约会列表
      */
     public function actionList(){
-        $list = UserRendezvous::getInstance()->lists($this->get);
+        $user_id = Cookie::getInstance()->getCookie('bhy_id');
+        $list = UserRendezvous::getInstance()->lists($user_id, $this->get);
         $this->renderAjax(['status'=>1 , 'data'=>$list]);
     }
 
