@@ -73,13 +73,13 @@ class User extends Base
             $dataUser['username'] = $data['phone'];
             $dataUser['password'] = substr($data['phone'], -6);
             $dataUser['password'] = md5(md5($dataUser['password']));
+            $dataUser['phone'] = $data['phone'];
         }
         $time = YII_BEGIN_TIME;
         $dataUser['reg_time'] = $time;
         $dataUser['last_login_time'] = $time;
         $dataUser['reset_pass_time'] = $time;
         $dataUser['sex'] = $data['sex'];
-        $dataUser['phone'] = $data['phone'];
         // userinformation表 数据处理
         // info
         if(isset($data['info'])) {
