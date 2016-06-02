@@ -84,10 +84,11 @@ define(['app/module', 'app/directive/directiveApi'
         // 确定筛选
         $scope.saveScreen = function () {
             $interval.cancel($scope.sss);
-            $scope.screen.theme > 0 ? $scope.formData.theme = $scope.screen.theme : true;
-            $scope.screen.fee_des > 0 ? $scope.formData.fee_des = $scope.screen.fee_des : true;
-            $scope.screen.sex > 0 ? $scope.formData.sex = $scope.screen.sex : true;
+            $scope.formData.theme = $scope.screen.theme;
+            $scope.formData.fee_des = $scope.screen.fee_des;
+            $scope.formData.sex = $scope.screen.sex;
             $scope.formData.pageNum = 1;
+            $scope.isMore = true;
             api.list('/wap/rendezvous/list', $scope.formData).success(function (res) {
                 if (res.data.length < 1) {
                     $scope.isMore = false;
@@ -170,7 +171,7 @@ define(['app/module', 'app/directive/directiveApi'
                 if (res) {  // 正确，提交数据并提示后跳转
 
                     //提交数据
-                    api.save('url', $scope.followData).success(function (res) {
+                    api.save('/wap/rendezvous/add-rendezvous', $scope.followData).success(function (res) {
                         if (res) {  // 提交数据成功
 
                             $ionicPopup.alert({title: '已向对方发送约会信息，请耐心等待对方回复'});
