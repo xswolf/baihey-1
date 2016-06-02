@@ -10,6 +10,7 @@ namespace backend\controllers;
 
 
 use common\models\User;
+use common\models\UserPhoto;
 
 class MemberController extends BaseController
 {
@@ -108,5 +109,22 @@ class MemberController extends BaseController
 
     public function actionGetUserById(){
         $this->renderAjax(User::getInstance()->getUserById(\Yii::$app->request->get('id')));
+    }
+
+    /**
+     * 获取用户相册
+     */
+    public function actionGetPic(){
+        $list = UserPhoto::getInstance()->getPhotoList(\Yii::$app->request->get('id'));
+        $this->renderAjax(['status'=>1,'data'=>$list]);
+    }
+
+    public function actionUpPic(){
+        $data['thumb_path'] = \Yii::$app->request->get('thumb_path');
+        $data['pic_path'] = \Yii::$app->request->get('pic_path');
+        $data['time'] = time();
+        $result = UserPhoto::getInstance()->addPhoto(\Yii::$app->request->get('id') , $data);
+
+        $this->renderAjax(['status'=>$result]);
     }
 }
