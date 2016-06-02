@@ -82,11 +82,11 @@ class User extends Base
         $dataUser['sex'] = $data['sex'];
         // userinformation表 数据处理
         // info
+        $userInfo = $this->getDefaultInfo();
         if(isset($data['info'])) {
-            $userInfo = $this->getDefaultInfo();
             $userInfo = array_merge($userInfo, $data['info']);
+            unset($data['info']);
         }
-        unset($data['info']);
         // 身份证照片
         $userAuth = $this->getDefaultAuth();
         if(isset($data['auth'])) {
