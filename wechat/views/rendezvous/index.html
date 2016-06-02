@@ -6,7 +6,7 @@
         <title class="title">约会</title>
         <a class="button button-icon icon ion-ios-plus-outline energized" href="#/main/rendezvous_add?userId=1&tempUrl=1"></a>
     </ion-header-bar>
-    <ion-content class="bhy com_w_100 rendezvous" style="background: #e1e2e1;">
+    <ion-content class="bhy com_w_100 rendezvous" style="background: #e1e2e1;" delegate-handle="mainScroll">
         <div class="list card" ng-repeat = "vo in list">
             <div class="item item-avatar">
                 <img src="{{vo.info.head_pic}}">
@@ -108,12 +108,12 @@
                         </div>
                     </div>
                 </ion-list>
+                <ion-infinite-scroll
+                        ng-if="moreDataCanBeLoaded()"
+                        on-infinite="loadMore()"
+                        distance="1%">
+                </ion-infinite-scroll>
             </ion-content>
-            <ion-infinite-scroll
-                    ng-if="moreDataCanBeLoaded()"
-                    on-infinite="loadMore()"
-                    distance="1%">
-            </ion-infinite-scroll>
         </ion-modal-view>
     </script>
 </ion-view>

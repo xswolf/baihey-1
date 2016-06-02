@@ -25,11 +25,17 @@ define(['app/module', 'app/directive/directiveApi'
 
         // 立即支付
         $scope.pay = function () {
-            if($scope.formData.payType == "5"){
-                window.location.href = '/wap/charge/pay?orderId='+$scope.orderId;
-            }else{
-                window.location.href = '/wap/charge/alipay?orderId='+$scope.orderId;
-            }
+            // 设置订单 支付方式
+            api.get('/wap/charge/set-charge-type',{chargeTypeId:$scope.formData.payType}).success(function(res){
+                if(res.status){
+                    if($scope.formData.payType == "5"){
+                        window.location.href = '/wap/charge/pay?orderId='+$scope.orderId;
+                    }else{
+                        window.location.href = '/wap/charge/alipay?orderId='+$scope.orderId;
+                    }
+                }
+            })
+
         }
 
         // 跳转-返回

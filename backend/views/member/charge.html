@@ -9,7 +9,7 @@
                     <div class="form-group">
                         <label class="col-sm-3 control-label">会员编号：</label>
                         <div class="col-sm-9 input-group">
-                            <input onblur="findUser(this.value)" name="user_id" type="text" class="form-control" value="">
+                            <input id="userId" onblur="findUser(this.value)" name="user_id" type="text" class="form-control" value="">
                             <span class="input-group-btn">
                                 <a id="userInfo" href="javascript:;" class="btn btn-default">请输入会员编号</a>
                             </span>
@@ -18,18 +18,23 @@
                     <div class="form-group">
                         <label class="col-sm-3 control-label">充值商品：</label>
                         <div class="col-sm-9 input-group">
-                            <select class="form-control">
+                            <select class="form-control" id="chargeGoods">
                                 <option value="">请选择</option>
-                                <option value="1">VIP</option>
-                                <option value="2">贵宾会员</option>
-                                <option value="3">钻石会员</option>
-                                <option value="4">现金余额</option>
+                                {{foreach from=$goods item=good}}
+                                <option value="{{$good.id}}">{{$good.name}}{{getTitleByOrderListValue($good.value)}}</option>
+                                {{/foreach}}
                             </select>
                         </div>
                     </div>
-
-                    <div class="form-group"></div>
-                    <div class="form-group"></div>
+                    <div class="form-group money" style="display: none;">
+                        <label class="col-sm-3 control-label">充值金额：</label>
+                        <div class="col-sm-9 input-group">
+                            <input id="price" type="number" class="form-control" placeholder="请输入充值金额，单位：元。">
+                        </div>
+                    </div>
+                    <div class="form-group center">
+                        <button class="btn btn-primary" type="button" id="chargeSubmit">确认充值</button>
+                    </div>
                 </form>
             </div>
         </div>
@@ -38,6 +43,7 @@
 <script>
 
     function findUser(userId){
+        var userId = $.trim(userId);
         if(!userId){
             $('#userInfo').empty().text('请输入会员编号');
             return false;
@@ -71,8 +77,91 @@
             }
 
         })
-
-
     }
+
+    $('#chargeGoods').on('change',function(){
+        if($(this).val() == 8){
+            $('.money').show();
+        }else{
+            $('.money').hide();
+        }
+    })
+
+    // 确认充值
+    $('#chargeSubmit').click(function(){
+        var userIdInput = $('#userId');
+        var _userId = $.trim(userIdInput.val());
+        if(!_userId){
+            layer.tips('请输入会员编号', '#userId', {
+                tips: [1, '#3595CC'],
+                time: 3000
+            });
+            userIdInput.focus();
+            return false;
+        }
+        if($('#userInfo').text() == "该用户不存在"){
+            layer.tips('该用户不存在', '#userId', {
+                tips: [1, '#3595CC'],
+                time: 3000
+            });
+            userIdInput.focus();
+            return false;
+        }
+        if($('#chargeGoods').val() == ""){
+            layer.tips('请选择充值商品', '#chargeGoods', {
+                tips: [1, '#3595CC'],
+                time: 3000
+            });
+            return false;
+        }
+        if($('#chargeGoods').val() == 8){
+            if($('#price').val() == ""){
+                layer.tips('请输入充值金额', '#price', {
+                    tips: [1, '#3595CC'],
+                    time: 3000
+                });
+                return false;
+            }
+            var reg = /^\d+\.?\d{0,2}$/;
+            if(!reg.test($('#price').val()) || $('#price').val() > 50000){
+                layer.tips('充值金额不合法，一次性最多充值50000元！', '#price', {
+                    tips: [1, '#3595CC'],
+                    time: 4000
+                });
+                return false;
+            }
+        }
+
+        var conf = layer.confirm('请核对充值账户：<b class="text-danger">'+$('#userInfo').text()+'</b>', {
+            btn: ['已核对，确定充值','取消'] //按钮
+        }, function(){
+            var index;
+            $.ajax({
+                type: "POST",
+                url: "/admin/member/charge",
+                data: {goodsId: $('#chargeGoods').val(),chargeTypeId:3, user_id: _userId,authorId:1,money: $.trim($('#price').val())},
+                dataType: "json",
+                beforeSend:function(){
+                    index = layer.msg('充值中，请稍候...', {icon: 16});
+                },
+                success: function(res){
+                    layer.close(index);
+                    if(res.status){
+                        layer.alert('充值成功！', {
+                            icon: 1
+                        })
+                        window.location.href = '/admin/member/order';
+                    }
+                },
+                error:function(){
+                    layer.close(index);
+                    layer.msg('网络繁忙，请稍候再进行充值！');
+                }
+            })
+        }, function(){
+           layer.close(conf);
+        });
+
+    })
 
 </script>

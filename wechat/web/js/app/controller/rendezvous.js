@@ -5,7 +5,7 @@ define(['app/module', 'app/directive/directiveApi'
     , 'app/service/serviceApi'
 ], function (module) {
 
-    module.controller("rendezvous.index", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$ionicModal', '$ionicActionSheet', '$ionicLoading', '$interval', function (api, $scope, $timeout, $ionicPopup, $ionicModal, $ionicActionSheet, $ionicLoading, $interval) {
+    module.controller("rendezvous.index", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$ionicModal', '$ionicActionSheet', '$ionicLoading', '$interval','$ionicScrollDelegate', function (api, $scope, $timeout, $ionicPopup, $ionicModal, $ionicActionSheet, $ionicLoading, $interval,$ionicScrollDelegate) {
 
         $scope.formData = [];
         $scope.num = [];
@@ -44,7 +44,9 @@ define(['app/module', 'app/directive/directiveApi'
                     res.data[i].info = angular.fromJson(res.data[i].info);
                     res.data[i].auth = angular.fromJson(res.data[i].auth);
                     $scope.list.push(res.data[i]);
-                    timer(i,$scope.list[i].rendezvous_time * 1000) // 启动所有定时器
+                }
+                for(var j in $scope.list){
+                    timer(j,$scope.list[j].rendezvous_time * 1000)
                 }
                 $scope.$broadcast('scroll.infiniteScrollComplete');
             });
@@ -52,7 +54,7 @@ define(['app/module', 'app/directive/directiveApi'
 
         // 定时器函数
         function timer(num, time) {
-           $interval(function () {
+          $interval(function () {
                 var NowTime = new Date();
                 var t = time - NowTime.getTime();
                 var d = Math.floor(t / 1000 / 60 / 60 / 24);
@@ -99,14 +101,15 @@ define(['app/module', 'app/directive/directiveApi'
                     res.data[i].label = label;
                     res.data[i].info = angular.fromJson(res.data[i].info);
                     res.data[i].auth = angular.fromJson(res.data[i].auth);
-                    timer(i,$scope.list[i].rendezvous_time * 1000) // 启动所有定时器
                 }
                 $scope.list = res.data;
+                for(var j in $scope.list){
+                    timer(j,$scope.list[j].rendezvous_time * 1000)
+                }
                 $scope.$broadcast('scroll.infiniteScrollComplete');
             });
             $scope.screenModal.hide();
-            console.log($scope.screen);
-
+            $ionicScrollDelegate.$getByHandle('mainScroll').scrollTop();
         }
     }]);
 

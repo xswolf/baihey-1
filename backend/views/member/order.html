@@ -1,40 +1,6 @@
-<link rel="stylesheet" type="text/css" href="/backend/web/CloudAdmin/js/dropzone/dropzone.min.css"/>
-<script src="/wechat/web/js/config/area.js"></script>
-<script src="/wechat/web/js/config/city.js"></script>
-<script>
-
-    function getAdd(id,val) {
-        for (var i in area) {
-            area[i].id = parseInt(area[i].id);
-            if (area[i].id == val) {
-                $("#area_" + id).html(area[i].name);
-                break;
-            }
-        }
-    }
-
-    function showUpload(id,userName) {
-        layer.open({
-            type: 1,
-            shade: false,
-            area: '800px',
-            offset: ['100px', '200px'],
-            title: false, //不显示标题
-            content: $('#upload'), //捕获的元素
-            cancel: function (index) {
-                layer.close(index);
-            },
-            success:function(content,index){
-                content.find('.userName').text(userName);
-            }
-
-        });
-    }
-
-</script>
 <div class="wrapper wrapper-content animated fadeInUp">
     <div class="ibox">
-        <div class="ibox-title"><h5>会员列表</h5>
+        <div class="ibox-title"><h5>订单列表</h5>
             <div class="ibox-tools rboor">
                 <a href="/admin/member/charge" class="btn btn-green btn-xs p310"><i class="fa fa-plus"></i> 充值</a>
                 <button id="tb-refresh" href="projects.html" class="btn btn-green btn-xs p310"><i
@@ -59,79 +25,26 @@
                 </tr>
                 </thead>
                 <tbody>
+                {{foreach from=$list item=vo}}
                 <tr>
-                    <td>1651461321</td>
-                    <td><a href="javascript:;">张三(4984101)</a></td>
-                    <td>VIP</td>
-                    <td>85元</td>
-                    <td>支付宝</td>
-                    <td><a href="javascript:;">张三(4984101)</a></td>
-                    <td>2015-6-1 12:28:30</td>
-                    <td>成功</td>
+                    <td>{{$vo.order_id}}</td>
+                    <td><a href="javascript:;">{{json_decode($vo.real_name)}}({{$vo.user_id}})</a></td>
+                    <td>{{$vo.goodsName}}{{getTitleByOrderListValue($vo.value)}}</td>
+                    <td>{{$vo.money / 100}}元</td>
+                    <td>{{$vo.typeName}}</td>
+                    <td><a href="javascript:;">{{json_decode($vo.real_name)}}({{$vo.user_id}})</a></td>
+                    <td>{{date('Y-m-d H:i', $vo.time)}}</td>
+                    <td>{{getTitleByOrderListStatus($vo.status)}}</td>
                 </tr>
-                <tr>
-                    <td>1646162144</td>
-                    <td><a href="javascript:;">李四(4782211)</a></td>
-                    <td>贵宾会员</td>
-                    <td>5000元</td>
-                    <td>线下</td>
-                    <td>聂盛凯</td>
-                    <td>2015-6-1 17:21:10</td>
-                    <td>成功</td>
-                </tr>
-                <tr>
-                    <td>1651461321</td>
-                    <td><a href="javascript:;">张三(4984101)</a></td>
-                    <td>VIP</td>
-                    <td>85元</td>
-                    <td>支付宝</td>
-                    <td><a href="javascript:;">张三(4984101)</a></td>
-                    <td>2015-6-1 12:28:30</td>
-                    <td>成功</td>
-                </tr>
-                <tr>
-                    <td>1651461321</td>
-                    <td><a href="javascript:;">张三(4984101)</a></td>
-                    <td>VIP</td>
-                    <td>85元</td>
-                    <td>支付宝</td>
-                    <td><a href="javascript:;">张三(4984101)</a></td>
-                    <td>2015-6-1 12:28:30</td>
-                    <td>成功</td>
-                </tr>
-                <tr>
-                    <td>1651461321</td>
-                    <td><a href="javascript:;">张三(4984101)</a></td>
-                    <td>VIP</td>
-                    <td>85元</td>
-                    <td>支付宝</td>
-                    <td><a href="javascript:;">张三(4984101)</a></td>
-                    <td>2015-6-1 12:28:30</td>
-                    <td>成功</td>
-                </tr>
+                {{/foreach}}
                 </tbody>
             </table>
-        </div>
-    </div>
-    <div class="box border blue" id="upload" style="display: none; width:800px; height: 400px;">
-        <div class="box-title">
-            <h4><i class="fa fa-picture-o"></i>上传照片 <span class="userName"></span></h4>
-
-        </div>
-        <div class="box-body">
-            <form action="/wap/file/thumb"
-                  class="dropzone"
-                  id="my-awesome-dropzone">
-                <div class="fallback">
-                    <input name="file" type="file" multiple=""/>
-                </div>
-            </form>
         </div>
     </div>
 </div>
 
 <script>
     jQuery(document).ready(function () {
-//        App.setPage("dynamic_table");  //Set current page
+
     });
 </script>

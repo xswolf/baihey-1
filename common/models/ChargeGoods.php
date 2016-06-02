@@ -14,15 +14,14 @@ class ChargeGoods extends Base
 
     /**
      * 获取所有商品
-     * @param string $status
-     * @return static[]
+     * @param $where
+     * @return array
      */
-    public function getAllList($status = "")
+    public function getAllList($where)
     {
-        $status = $status == "" ? 1 : $status;
         return (new Query())->from($this->tablePrefix.'charge_goods')
                      ->select('*')
-                     ->where('status='.$status)
+                     ->where($where)
                      ->all();
     }
 

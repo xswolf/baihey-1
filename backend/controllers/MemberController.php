@@ -9,6 +9,8 @@
 namespace backend\controllers;
 
 
+use common\models\ChargeGoods;
+use common\models\ChargeOrder;
 use common\models\User;
 use common\models\UserPhoto;
 
@@ -100,10 +102,20 @@ class MemberController extends BaseController
 
     public function actionOrder()
     {
+        $vo = ChargeOrder::getInstance()->getOrderAllInfo();
+        $this->assign('list',$vo);
         return $this->render();
     }
 
     public function actionCharge(){
+        if(\Yii::$app->request->post()){
+           $orderId = ChargeOrder::getInstance()->createOrder(\Yii::$app->request->post()); // 创建订单
+           $result = ChargeOrder::getInstance()->setOrderStatus($orderId);
+           $this->renderAjax(['status'=>$result]);exit();
+        }
+
+        $goods = ChargeGoods::getInstance()->getAllList(['status'=>1]);
+        $this->assign('goods',$goods);
         return $this->render();
     }
 

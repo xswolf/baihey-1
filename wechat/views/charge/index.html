@@ -10,8 +10,8 @@
                     <img class="fl mr20 vam goods_img" src="{{goods.img}}" height="40">
                     <p>商品：<span class="cor14">{{goods.name}}</span></p>
                     <p>时长：<span class="cor14">{{goods.value}}个月</span></p>
-                    <p>现价：<span class="cor14">{{goods.price | currency:'￥'}}</span></p>
-                    <p><s>原价：<span class="cor14">{{goods.native_price | currency:'￥'}}</span></s></p>
+                    <p>现价：<span class="cor14">{{goods.price / 100 | currency:'￥'}}</span></p>
+                    <p><s>原价：<span class="cor14">{{goods.native_price / 100 | currency:'￥'}}</span></s></p>
                 </ion-item>
 
                 <ion-radio ng-if="iswx" ng-model="formData.payType" ng-value="5">

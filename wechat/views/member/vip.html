@@ -12,10 +12,10 @@
             <ion-item class="item-button-right vip_g" ng-repeat="goods in goodsList | orderBy:['-id']" ng-click="createOrder(goods.id)">
                 <img src="{{goods.img}}" width="102">
                 <p class="vip_g_t tac">
-                    <s class="fs16">原价{{goods.native_price}}元</s>
+                    <s class="fs16">原价{{goods.native_price / 100}}元</s>
                 </p>
                 <button class="button button-energized vip_g_b">
-                    {{ goods.price | currency:'￥'}}
+                    {{ goods.price / 100 | currency:'￥'}}
                 </button>
             </ion-item>
         </ion-list>

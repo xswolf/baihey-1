@@ -14,7 +14,7 @@ class ChargeOrder extends Base
 {
 
     /**
-     * 获取所有商品
+     * 获取所有订单
      * @return static[]
      */
     public function getAllList()
@@ -54,14 +54,25 @@ class ChargeOrder extends Base
      */
     public function createOrder($data)
     {
+
         $order = $this->getInstance();
         $goods = ChargeGoods::getInstance()->getOne($data['goodsId']);
         $order['user_id'] = $data['user_id'];
         $order['order_id'] = ChargeOrder::getInstance()->createOrderId();
         $order['native_money'] = $goods['native_price'];
-        $order['money'] = $goods['price'];
+        if ($data['goodsId'] == 8) {
+            $order['money'] = $data['money'] * 100;
+        } else {
+            $order['money'] = $goods['price'];
+        }
         $order['exchange_money'] = $goods['price'];
         $order['charge_goods_id'] = $data['goodsId'];
+        if (isset($data['chargeTypeId'])) {
+            $order['charge_type_id'] = $data['chargeTypeId'];
+        }
+        if (isset($data['authorId'])) {
+            $order['authorid'] = $data['authorId'];
+        }
         $order['create_time'] = time();
         $order['create_date'] = date('Ymd');
         if ($order->save()) {
@@ -97,11 +108,15 @@ class ChargeOrder extends Base
         if ($orderInfo['status'] == 1) return true;        // 异常情况，不予处理，订单已经成功
         $tran = \Yii::$app->db->beginTransaction();
 
-        $row = $this->updateAll(['status' => $status], ['order_id' => $orderId]);  // 修改订单状态
+        $row = $this->updateAll(['status' => $status, 'finsh_time' => time()], ['order_id' => $orderId]);  // 修改订单状态
 
-        $bal = User::getInstance()->changeBalance($orderInfo['user_id'], -($orderInfo['money'] / 100));  // 充值余额
+        $bal = User::getInstance()->changeBalance($orderInfo['user_id'], -$orderInfo['money']);  // 充值余额
 
-        $mat = User::getInstance()->changeMatureTime($orderInfo['user_id'], $orderInfo['charge_goods_id']);  // 开通服务
+        if ($orderInfo['charge_goods_id'] != 8) {
+            $mat = User::getInstance()->changeMatureTime($orderInfo['user_id'], $orderInfo['charge_goods_id']);  // 开通服务
+        } else {
+            $mat = true;
+        }
 
         if ($row && $bal && $mat) {
             $tran->commit();  // 提交
@@ -111,5 +126,25 @@ class ChargeOrder extends Base
         return false;
     }
 
+    // 修改充值方式
+    public function setOrderChargeType($typeId)
+    {
+        return $this->updateAll(['charge_type_id' => $typeId]);
+    }
+
+
+    // 后台订单列表
+    public function getOrderAllInfo()
+    {
+        $obj = (new Query())->from($this->tablePrefix . 'charge_order o')
+            ->innerJoin($this->tablePrefix . 'charge_goods g', 'o.charge_goods_id = g.id')
+            ->innerJoin($this->tablePrefix . 'user_information i', 'o.user_id = i.user_id')
+            ->innerJoin($this->tablePrefix . 'charge_type t', 'o.charge_type_id = t.id')
+            ->where([])
+            ->select(["o.order_id", "i.user_id", "json_extract(i.info , '$.real_name') AS real_name", "g.name AS goodsName", "o.money", "t.name AS typeName", "o.authorid", "o.create_time AS time", "o.status","g.value"])
+            ->orderBy("time desc");
+//          echo $obj->createCommand()->getRawSql();exit();
+        return $obj->all();
+    }
 
 }

@@ -26,7 +26,7 @@ class ChargeController extends BaseController
     public function actionGetChargeGoodsList()
     {
 
-        $this->renderAjax(ChargeGoods::getInstance()->getAllList());
+        $this->renderAjax(ChargeGoods::getInstance()->getAllList($this->get));
     }
 
     public function actionGetChargeGoodsById()
@@ -125,7 +125,7 @@ class ChargeController extends BaseController
             "_input_charset" => trim(strtolower($this->alipayConfig()['input_charset'])),
             "out_trade_no" => $orderInfo['order_id'],
             "subject" => '嘉瑞百合缘-【' . $goods['name'] . '】',
-            "total_fee" => '0.01',  // $orderInfo['money']
+            "total_fee" => $orderInfo['money'] / 100,
             "show_url" => 'http://wechat.baihey.com/wap/site/main#/main/member/vip',
             "body" => '',
             //其他业务参数根据在线开发文档，添加参数.文档地址:https://doc.open.alipay.com/doc2/detail.htm?spm=a219a.7629140.0.0.2Z6TSk&treeId=60&articleId=103693&docType=1
@@ -165,12 +165,15 @@ class ChargeController extends BaseController
             $this->renderAjax(['status' => 0, 'msg' => '没有商品信息']);
         }
 
-
     }
 
     public function actionSetOrderStatus()
     {
         $this->renderAjax(['data' => ChargeOrder::getInstance()->setOrderStatus($this->get['orderId'])]);
+    }
+
+    public function actionSetChargeType(){
+        $this->renderAjax(['status'=>ChargeOrder::getInstance()->setOrderChargeType($this->get['chargeTypeId'])]);
     }
 
     public function alipayConfig()

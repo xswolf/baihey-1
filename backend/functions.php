@@ -83,3 +83,13 @@ function getIsNot($s){
     $value = $s == 0 ? '否' : '是';
     return $value;
 }
+
+function getTitleByOrderListStatus($status){
+    $title = $status == 0 ? '待付款' : '<span class="text-danger">成功</span>';
+    return $title;
+}
+
+function getTitleByOrderListValue($value){
+    $title = $value == 0 ? '' : '('.$value.'个月)';
+    return $title;
+}

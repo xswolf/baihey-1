@@ -2079,7 +2079,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
         $scope.userId = 1;
 
         // 商品列表
-        api.save('/wap/charge/get-charge-goods-list', false).success(function (res) {
+        api.save('/wap/charge/get-charge-goods-list', {type:1}).success(function (res) {
             $scope.goodsList = res;
         });
 
@@ -2131,7 +2131,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
 
         // 生成订单并跳转支付
         $scope.createOrder = function (_goodsId) {
-            api.save('/wap/charge/produce-order', {goodsId: _goodsId, user_id: 1}).success(function (res) {
+            api.save('/wap/charge/produce-order', {goodsId: _goodsId, user_id: ar.getCookie('bhy_user_id')}).success(function (res) {
                 if (res.status < 1) {
                     $ionicPopup.alert({title: res.msg});
                 } else {
