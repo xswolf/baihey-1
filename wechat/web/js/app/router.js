@@ -262,12 +262,16 @@ define(["app/module", 'app/service/serviceApi'],
                 // 以下为用户信息处理
                 $scope.userInfo = [];
                 var getUserStorage = function () {
-                    $scope.userInfo.info = JSON.parse($scope.userInfo.info);
-                    $scope.userInfo.auth = JSON.parse($scope.userInfo.auth);
+                    if ($scope.userInfo.length>0) {
+                        $scope.userInfo.info = JSON.parse($scope.userInfo.info);
+                        $scope.userInfo.auth = JSON.parse($scope.userInfo.auth);
+                    }
                 }
                 var setUserInfoStorage = function () {
-                    $scope.userInfo.info = JSON.stringify($scope.userInfo.info);
-                    $scope.userInfo.auth = JSON.stringify($scope.userInfo.auth);
+                    if ($scope.userInfo.length>0) {
+                        $scope.userInfo.info = JSON.stringify($scope.userInfo.info);
+                        $scope.userInfo.auth = JSON.stringify($scope.userInfo.auth);
+                    }
                     ar.setStorage('userInfo', $scope.userInfo);
                     getUserStorage();
                 }
