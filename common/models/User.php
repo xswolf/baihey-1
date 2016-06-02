@@ -154,7 +154,7 @@ class User extends Base
             'real_name'             => '未知',// 真实姓名
             'identity_id'           => '未知',// 身份证号码
             'identity_address'      => '未知',// 身份证地址
-            'is_marriage'           => '未知',// 婚姻状况 1
+            'is_marriage'           => '1',// 婚姻状况 1
             'is_child'              => '未知',// 子女状况
             'education'             => '未知',// 学历 1
             'year_income'           => '未知',// 年收入
