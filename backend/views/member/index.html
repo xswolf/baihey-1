@@ -3,7 +3,8 @@
 <script src="/wechat/web/js/config/city.js"></script>
 <script>
 
-    function showUpload(id,userName) {
+    function showUpload(id,userName,obj) {
+        $(obj).removeClass('btn-info').addClass('btn-danger');
         layer.open({
             type: 1,
             shade: false,

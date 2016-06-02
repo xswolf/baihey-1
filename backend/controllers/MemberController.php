@@ -105,4 +105,8 @@ class MemberController extends BaseController
     public function actionCharge(){
         return $this->render();
     }
+
+    public function actionGetUserById(){
+        $this->renderAjax(User::getInstance()->getUserById(\Yii::$app->request->get('id')));
+    }
 }

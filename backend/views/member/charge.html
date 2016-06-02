@@ -36,7 +36,37 @@
     </div>
 </div>
 <script>
-    function findUser(userId){
 
+    function findUser(userId){
+        $.ajax({
+            type: "GET",
+            url: "/admin/member/get-user-by-id",
+            data: {id:userId},
+            dataType: "json",
+            beforeSend:function(){
+                $('#userInfo').empty().append('<img src="/backend/web/CloudAdmin/img/loaders/5.gif">');
+            },
+            success: function(res){
+                var text;
+                if(res.length < 1){
+                    res.info = JSON.parse(res.info);
+                    var text = res.info.real_name;
+                    if(res.sex == "0"){
+                        text += ' 女';
+                    }else{
+                        text += ' 男';
+                    }
+                }else {
+                    text = '该用户不存在';
+                }
+
+                $('#userInfo').text(text);
+            },
+            error:function(){
+                $('#userInfo').empty().append('<i class="fa fa-exclamation text-danger" title="网络错误">');
+            }
+
+        })
     }
+
 </script>
