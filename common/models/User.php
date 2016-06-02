@@ -65,9 +65,15 @@ class User extends Base
         $transaction = $db->beginTransaction();// 启动事务
 
         // user表 数据处理
-        $dataUser['username'] = $data['phone'];
-        $dataUser['password'] = substr($data['phone'], -6);
-        $dataUser['password'] = md5(md5($dataUser['password']));
+        if(isset($data['wx_id'])) {
+            $dataUser['username'] = $data['username'];
+            $dataUser['password'] = md5(md5($data['password']));
+            $dataUser['login_type'] = $data['login_type'];
+        } else {
+            $dataUser['username'] = $data['phone'];
+            $dataUser['password'] = substr($data['phone'], -6);
+            $dataUser['password'] = md5(md5($dataUser['password']));
+        }
         $time = YII_BEGIN_TIME;
         $dataUser['reg_time'] = $time;
         $dataUser['last_login_time'] = $time;

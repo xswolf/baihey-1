@@ -13,15 +13,15 @@
             <div class="ask_top_bg clearfix">
                 <div class="ask_user_box">
                     <p class="mt10">
-                        <img src="/wechat/web/images/test.jpg">
+                        <img src="{{userInfo.head_pic}}">
                     </p>
-                    <p class="mb0">张小姐</p>
+                    <p class="mb0">{{userInfo.real_name | sex:vo.sex :userInfo.age}}</p>
                     <p class="mb10">
-                        27岁
+                        {{userInfo.age | timeToAge}}岁
                         <span class="sx"></span>
-                        未婚
+                        {{userInfo.is_marriage | marriage}}
                         <span class="sx"></span>
-                        本科
+                        {{userInfo.education | education}}
                     </p>
                 </div>
             </div>

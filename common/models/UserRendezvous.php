@@ -211,4 +211,15 @@ class UserRendezvous extends Base
         $apply = Base::getInstance('user_rendezvous_apply')->findOne($data['id']);
         return $apply->delete();
     }
+
+    public function addApply($user_id, $data)
+    {
+        $apply = Base::getInstance('user_rendezvous_apply');
+        $apply->rendezvous_id = $data['rendezvous_id'];
+        $apply->user_id = $user_id;
+        $apply->create_time = YII_BEGIN_TIME;
+        $apply->phone = $data['mobile'];
+        $apply->message = $data['msg'];
+        return $apply->insert(false);
+    }
 }

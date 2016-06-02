@@ -45,8 +45,8 @@
                 </p>
             </div>
 
-            <div class="item tabs tabs-secondary tabs-icon-left">
-                <a class="tab-item func" ui-sref="main.rendezvous_ask({rendezvous_id:{{vo.r_id}}})">
+            <div class="item tabs tabs-secondary tabs-icon-left" ng-if="vo.id != userInfo.user_id">
+                <a class="tab-item func" ui-sref="main.rendezvous_ask({rendezvous_id:vo.r_id,user_id:vo.id,head_pic:vo.info.head_pic,real_name:vo.info.real_name,sex:vo.sex,age:vo.info.age,is_marriage:vo.info.is_marriage,education:vo.info.education})">
                     <i class="ion-heart fs16"></i>
                     约TA
                 </a>
@@ -55,6 +55,9 @@
                     对话
                 </a>
 
+            </div>
+            <div class="item tabs tabs-secondary tabs-icon-left" ng-if="vo.id == userInfo.user_id">
+                <p>您不能约自己</p>
             </div>
         </div>
         <ion-infinite-scroll ng-if="moreDataCanBeLoaded()" on-infinite="loadMoreData()" distance="1%">

@@ -1,6 +1,7 @@
 <?php
 namespace wechat\controllers;
 use common\models\UserRendezvous;
+use common\util\Cookie;
 
 
 /**
@@ -88,6 +89,15 @@ class RendezvousController extends BaseController
     public function actionDeleteApply()
     {
         $list = UserRendezvous::getInstance()->deleteApply($this->get);
+        $this->renderAjax(['status'=>1 , 'data'=>$list]);
+    }
+
+    /**
+     * 申请约会
+     */
+    public function actionAddApply() {
+        $user_id = Cookie::getInstance()->getCookie('bhy_id');
+        $list = UserRendezvous::getInstance()->addApply($user_id, $this->get);
         $this->renderAjax(['status'=>1 , 'data'=>$list]);
     }
 }

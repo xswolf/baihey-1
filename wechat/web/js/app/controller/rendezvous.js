@@ -114,6 +114,9 @@ define(['app/module', 'app/directive/directiveApi'
     module.controller("rendezvous.ask", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$ionicModal', '$ionicActionSheet', '$ionicLoading', '$ionicScrollDelegate', '$interval', '$location', function (api, $scope, $timeout, $ionicPopup, $ionicModal, $ionicActionSheet, $ionicLoading, $ionicScrollDelegate, $interval, $location) {
 
         $scope.formData = [];
+        $scope.formData.rendezvous_id = $location.search().rendezvous_id;
+        $scope.userInfo = [];
+        $scope.userInfo = $location.search();
         $scope.codeTitle = '获取验证码';
         $scope.isSend = false;  // 未发送
         var viewScroll = $ionicScrollDelegate.$getByHandle('askScroll');
@@ -142,7 +145,12 @@ define(['app/module', 'app/directive/directiveApi'
                 return false;
             }
             // 发送验证码
-
+            api.sendCodeMsg($scope.formData.mobile).success(function (data) {
+                if (!data.status) {
+                    $ionicPopup.alert({title: '短信发送失败，请稍后重试。'});
+                    return false;
+                }
+            });
 
             // 获取验证码按钮倒计时
             $scope.isSend = true;
@@ -169,13 +177,12 @@ define(['app/module', 'app/directive/directiveApi'
             // 查询验证码是否正确
             api.validateCode($scope.formData.code).success(function (res) {
                 if (res) {  // 正确，提交数据并提示后跳转
-
                     //提交数据
-                    api.save('/wap/rendezvous/add-rendezvous', $scope.followData).success(function (res) {
-                        if (res) {  // 提交数据成功
+                    api.save('/wap/rendezvous/add-apply', $scope.formData).success(function (res) {
+                        if (res.status) {  // 提交数据成功
 
                             $ionicPopup.alert({title: '已向对方发送约会信息，请耐心等待对方回复'});
-
+                            window.location.hash = '#/main/rendezvous';
                             $timeout(function () {
                                 $location.url('#/main/rendezvous');
                             }, 800);
