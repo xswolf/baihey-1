@@ -66,6 +66,7 @@ class User extends Base
 
         // user表 数据处理
         if(isset($data['wx_id'])) {
+            $dataUser['wx_id'] = $data['wx_id'];
             $dataUser['username'] = $data['username'];
             $dataUser['password'] = md5(md5($data['password']));
             $dataUser['login_type'] = $data['login_type'];
