@@ -74,6 +74,12 @@ class User extends Base
             $dataUser['password'] = substr($data['phone'], -6);
             $dataUser['password'] = md5(md5($dataUser['password']));
             $dataUser['phone'] = $data['phone'];
+
+            $infoData['province'] = $data['province'];
+            $infoData['city'] = $data['city'];
+            $infoData['area'] = $data['area'];
+            $infoData['personalized'] = $data['personalized'];
+            unset($data['personalized']);
         }
         $time = YII_BEGIN_TIME;
         $dataUser['reg_time'] = $time;
@@ -97,11 +103,6 @@ class User extends Base
 
         $infoData['auth'] = json_encode($userAuth);
         $infoData['info'] = json_encode($userInfo);
-        $infoData['province'] = $data['province'];
-        $infoData['city'] = $data['city'];
-        $infoData['area'] = $data['area'];
-        $infoData['personalized'] = $data['personalized'];
-        unset($data['personalized']);
 
         // user表 数据写入
         $user = $db->createCommand()
