@@ -38,6 +38,10 @@
 <script>
 
     function findUser(userId){
+        if(!userId){
+            $('#userInfo').empty().text('请输入会员编号');
+            return false;
+        }
         $.ajax({
             type: "GET",
             url: "/admin/member/get-user-by-id",
@@ -48,7 +52,7 @@
             },
             success: function(res){
                 var text;
-                if(res.length < 1){
+                if(res){
                     res.info = JSON.parse(res.info);
                     var text = res.info.real_name;
                     if(res.sex == "0"){
@@ -63,10 +67,12 @@
                 $('#userInfo').text(text);
             },
             error:function(){
-                $('#userInfo').empty().append('<i class="fa fa-exclamation text-danger" title="网络错误">');
+                $('#userInfo').empty().text('该用户不存在');
             }
 
         })
+
+
     }
 
 </script>
