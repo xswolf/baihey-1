@@ -44,9 +44,9 @@
                         <div class="form-group">
                             <label class="col-lg-3  col-sm-3 control-label">年龄：</label>
                             <div class="col-lg-8 col-sm-8 input-group date">
-                                <input type="text" name="ages" class="form-control">
+                                <input type="text" name="ages" class="form-control" value="{{\Yii::$app->request->get('ages')}}">
                                 <span class="input-group-addon">到</span>
-                                <input type="text" name="agee" class="form-control" name="end" value="" >
+                                <input type="text" name="agee" class="form-control" value="{{\Yii::$app->request->get('agee')}}" >
                             </div>
                         </div>
                     </div>

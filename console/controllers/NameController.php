@@ -173,7 +173,13 @@ class NameController extends Controller
         $realName                    = $rnd->getName();
         $age                         = rand(18, 23); // 年龄
         $age_time                    = strtotime("-$age year"); // 年龄时间戳
-        $age_time                    = rand(strtotime(date('Y' , $age_time)."-01-01") , strtotime(date('Y' , $age_time)."-12-31") );
+        if ($age == 18){
+            $age_time = rand(strtotime(date('Y' , $age_time)."-01-01") , strtotime(date('Y' , $age_time)."-06-01") );
+
+        }else{
+            $age_time = rand(strtotime(date('Y' , $age_time)."-01-01") , strtotime(date('Y' , $age_time)."-12-31") );
+
+        }
         $constellation               = $this->birthExt($age_time); // 星座
         $area                        = rand(3, 42); // 区
         $local                       = $this->getLocal($area); // 区域 例：渝中区
