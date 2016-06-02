@@ -32,9 +32,10 @@ function getMarriage($marriage){
     }elseif ($marriage == 2){
         return '离异';
 
-    }else{
+    }elseif ($marriage ==3){
         return '丧偶';
-
+    }else{
+        return '未婚';
     }
 }
 
