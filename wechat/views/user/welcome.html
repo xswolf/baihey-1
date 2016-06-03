@@ -9,10 +9,11 @@
     <link href="/wechat/web/images/apple-touch-icon.png" rel="shortcut icon">
     <link href="/wechat/web/css/plugin/ionic/ionic.min.css" rel="stylesheet">
     <link href="/wechat/web/css/plugin/bootstrap/css/animate.css" rel="stylesheet">
+    <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
     <script src="/wechat/web/js/plugin/jquery/jquery-1.12.2.min.js"></script>
 </head>
 <script>
-    if (window.navigator.geolocation) {
+    /*if (window.navigator.geolocation) {
         var options = {
             enableHighAccuracy: true,
         };
@@ -41,9 +42,57 @@
     }
     function handleError(){
 
-    }
+    }*/
 
+    wx.config({
+        debug: false,
+        appId: "{!$signPackage['appId']}",
+        timestamp: "{!$signPackage['timestamp']}",
+        nonceStr: "{!$signPackage['nonceStr']}",
+        signature: "{!$signPackage['signature']}",
+        jsApiList: [
+            // 所有要调用的 API 都要加到这个列表中
+            'checkJsApi',
+            'openLocation',
+            'getLocation'
+        ]
+    });
 
+    wx.ready(function () {
+        wx.checkJsApi({
+            jsApiList: [
+                'getLocation'
+            ],
+            success: function (res) {
+                if (res.checkResult.getLocation == false) {
+                    alert('你的微信版本太低，不支持微信JS接口，请升级到最新的微信版本！');
+                    return;
+                }
+            }
+        });
+
+        wx.getLocation({
+            success: function (res) {
+                var latitude = res.latitude; // 纬度，浮点数，范围为90 ~ -90
+                var longitude = res.longitude; // 经度，浮点数，范围为180 ~ -180。
+                $.ajax({
+                    type: "GET",
+                    url: "/wap/user/get-location",
+                    data: {lng: longitude, lat: latitude},
+                    dataType: "json",
+                    success: function (res) {
+                        alert(res.data);
+                    },
+                    error: function () {
+                        alert('百度地图api错误！')
+                    }
+                })
+            },
+            cancel: function (res) {
+                alert('用户拒绝授权获取地理位置');
+            }
+        });
+    });
 
 
 </script>
