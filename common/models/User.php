@@ -244,8 +244,16 @@ class User extends Base
 
     }
 
-    public function editUser($userInfo){
+    public function editUser($data){
+        $user = $data['user'];
+        $user['id']  = $data['user_id'];
+        unset($data['user']);
+        $userInfo = $data;
 
+        $userInfo['info']  = json_encode(array_merge($this->getDefaultInfo(),$userInfo['zo'] , $userInfo['info']));
+        unset ($userInfo['zo']);
+        \Yii::$app->db->createCommand()->update($this->tablePrefix."user_information", $userInfo ,['user_id'=>$data['user_id']])->execute();
+        \Yii::$app->db->createCommand()->update($this->tablePrefix."user", $user  , ['id'=>$data['user_id']])->execute();
     }
 
     public function getUserByPhone($tel){

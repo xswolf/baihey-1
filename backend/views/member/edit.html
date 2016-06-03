@@ -1,0 +1,904 @@
+<link rel="stylesheet" type="text/css" href="/backend/web/CloudAdmin/js/dropzone/dropzone.min.css"/>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="box border green">
+            <div class="box-title">
+                <h4><i class="fa fa-bars"></i>修改会员资料</h4>
+                <div class="tools hidden-xs">
+                    <a href="#box-config" data-toggle="modal" class="config">
+                        <i class="fa fa-cog"></i>
+                    </a>
+                    <a href="javascript:;" class="reload">
+                        <i class="fa fa-refresh"></i>
+                    </a>
+                    <a href="javascript:;" class="collapse">
+                        <i class="fa fa-chevron-up"></i>
+                    </a>
+                    <a href="javascript:;" class="remove">
+                        <i class="fa fa-times"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="box-body big">
+                <form class="form-horizontal" role="form" name="form1" action="/admin/member/edit?id=1" method="post">
+                    <!-- BOX -->
+                    <div class="box border">
+                        <div class="box-title">
+                            <h4><i class="fa fa-columns"></i><span class="hidden-inline-mobile">Tabs on Header Box</span></h4>
+                        </div>
+                        <div class="box-body">
+                            <div class="tabbable header-tabs">
+                                <ul class="nav nav-tabs">
+                                    <li><a href="#box_tab6" data-toggle="tab"><i class="fa fa-desktop"></i> <span class="hidden-inline-mobile">兴趣爱好</span></a></li>
+                                    <li><a href="#box_tab5" data-toggle="tab"><i class="fa fa-flask"></i> <span class="hidden-inline-mobile">择偶标准</span></a></li>
+                                    <li class="active"><a href="#box_tab4" data-toggle="tab"><i class="fa fa-home"></i> <span class="hidden-inline-mobile">基本资料</span> <span class="badge badge-blue font-11">3</span></a></li>
+                                </ul>
+                                <div class="tab-content">
+                                    <div class="tab-pane fade in active" id="box_tab4">
+
+                                        <h3 class="form-title">基本资料</h3>
+                                        <div class="form-group">
+                                            <label class="col-md-3 control-label">会员姓名</label>
+                                            <div class="input-group col-md-6">
+                                                <input class="form-control" name="info[real_name]" type="text" value="{{$user.info->real_name}}"
+                                                       placeholder="请输入真实姓名">
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="col-md-3 control-label">地区</label>
+                                            <div class="input-group col-md-6">
+                                                <div class="col-xs-4 pd0">
+                                                    <select class="form-control dq-Province" name="province" id="dq-Province">
+                                                        <option value="">请选择</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-xs-4 pd0">
+                                                    <select class="form-control" name="city" id="dq-City">
+                                                        <option value="">请选择</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-xs-4 pd0">
+                                                    <select class="form-control" name="area" id="dq-Area">
+                                                        <option value="">请选择</option>
+                                                    </select>
+                                                </div>
+
+
+                                            </div>
+
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="col-md-3 control-label">性别</label>
+                                            <div class="col-md-6">
+                                                <label class="radio-inline">
+                                                    <input type="radio" class="uniform" name="user[sex]" value="1" {{if $user.sex==1}} checked {{/if}}> 男
+                                                </label>
+                                                <label class="radio-inline">
+                                                    <input type="radio" class="uniform" name="user[sex]" value="0" {{if $user.sex==0}} checked {{/if}}> 女
+                                                </label>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="form-group">
+                                            <label class="col-md-3 control-label">民族</label>
+                                            <div class="input-group col-md-6">
+                                                <select name="info[nation]" id="nation" class="form-control">
+                                                    <option value="">请选择</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="dtp_input" class="col-md-3 control-label">出生年月</label>
+                                            <div id="dtp_input" class="input-group date form_date col-md-6" data-date=""
+                                                 data-date-format="yyyy-mm-dd" data-link-field="dtp_input"
+                                                 data-link-format="yyyy-mm-dd">
+                                                <input id="age" name="info[age]" class="form-control" size="16" type="text" value="{{date('Y-m-d',$user.info->age)}}"
+                                                       readonly>
+                            <span class="input-group-addon"><span
+                                    class="glyphicon glyphicon-remove"></span></span>
+                            <span class="input-group-addon"><span
+                                    class="glyphicon glyphicon-calendar"></span></span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-md-3 control-label">学历</label>
+                                            <div class="input-group col-md-6">
+                                                <select class="form-control education" id="education_1" name="info[education]">
+                                                    <option value="">请选择</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-md-3 control-label">婚姻状况</label>
+                                            <div class="input-group col-md-6">
+                                                <select class="form-control" name="info[is_marriage]" id="is_marriage">
+                                                    <option value="">请选择</option>
+                                                    <option value="1">未婚</option>
+                                                    <option value="2">离异</option>
+                                                    <option value="3">丧偶</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-md-3 control-label">身高</label>
+                                            <div class="input-group col-md-6">
+                                                <select id="height" class="form-control" name="info[height]">
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-md-3 control-label">子女状况</label>
+                                            <div class="input-group col-md-6">
+                                                <select class="form-control children" id="is_child" name="info[is_child]">
+                                                    <option value="">请选择</option>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="col-md-3 control-label">体重</label>
+                                            <div class="input-group col-md-6">
+                                                <div class="input-group">
+                                                    <input type="number" class="form-control" name="info[weight]" value="{{if isset($user.info->weight)}}{{$user.info->weight}}{{/if}}"
+                                                           placeholder="请输入体重">
+                                                    <span class="input-group-addon">kg</span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="col-md-3 control-label">职业</label>
+                                            <div class="input-group col-md-6">
+                                                <div class="col-xs-6 pd0">
+                                                    <select class="form-control occupation" name="info[occupation]" id="occupation_1">
+                                                        <option value="">请选择</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-xs-6 pd0">
+                                                    <select class="form-control" name="info[children_occupation]" id="occupation_2">
+                                                        <option value="">请选择</option>
+                                                    </select>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-md-3 control-label">年收入</label>
+                                            <div class="input-group col-md-6">
+                                                <select class="form-control salary" name="info[year_income]" id="year_income">
+                                                    <option value="">请选择</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-md-3 control-label">购车情况</label>
+                                            <div class="input-group col-md-6">
+                                                <select class="form-control" name="info[is_car]" id="is_car">
+                                                    <option value="">请选择</option>
+                                                    <option value="1">已购车</option>
+                                                    <option value="2">未购车</option>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="col-md-3 control-label">购房情况</label>
+                                            <div class="input-group col-md-6">
+                                                <select class="form-control house" name="info[is_purchase]" id="is_purchase">
+                                                    <option value="">请选择</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-md-3 control-label">属相</label>
+                                            <div class="input-group col-md-6">
+                                                <select class="form-control zodiac" id="zodiac" name="info[zodiac]" id="zodiac">
+                                                    <option value="">请选择</option>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="col-md-3 control-label">星座</label>
+                                            <div class="input-group col-md-6">
+                                                <select class="form-control constellation" id="constellation" name="info[constellation]">
+                                                    <option value="">请选择</option>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="col-md-3 control-label">毕业院校</label>
+                                            <div class="input-group col-md-6">
+                                                <input class="form-control" name="info[school]" type="text" value="{{$user.info->school}}"
+                                                       placeholder="请输入毕业院校">
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="col-md-3 control-label">身份证地址</label>
+                                            <div class="input-group col-md-6">
+                                                <input class="form-control" name="info[identity_address]" type="text" value="{{$user.info->identity_address}}"
+                                                       placeholder="请输入身份证地址">
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="col-md-3 control-label">身份证号码</label>
+                                            <div class="input-group col-md-6">
+                                                <input class="form-control" name="info[identity_id]" type="text" value="{{$user.info->identity_id}}"
+                                                       placeholder="请输入身份证号码">
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="col-md-3 control-label">手机号码</label>
+                                            <div class="input-group col-md-6">
+                                                <input class="form-control" name="user[phone]" type="tel" value="{{$user.phone}}" placeholder="请输入手机号码">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-md-3 control-label">qq</label>
+                                            <div class="input-group col-md-6">
+                                                <input class="form-control" name="info[qq]" type="text" value="{{$user.info->qq}}"
+                                                       placeholder="请输入QQ号码">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-md-3 control-label">微信</label>
+                                            <div class="input-group col-md-6">
+                                                <input class="form-control" name="info[wechat]" type="text" value="{{$user.info->wechat}}"
+                                                       placeholder="请输入微信号码">
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="col-md-3 control-label">个性签名</label>
+                                            <div class="input-group col-md-6">
+                                            <textarea name="personalized" class="form-control" rows="3"
+                                                      placeholder="请填写个性签名">
+
+                                                {{$user.personalized}}
+                                            </textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane fade" id="box_tab5">
+                                        <h3 class="form-title">择偶标准</h3>
+                                        <div class="form-group">
+                                            <label class="col-md-3 control-label">年龄范围</label>
+                                            <input name="zo[zo_age]" id="zo_age" type="hidden" value="{{$user.info->zo_age}}">
+                                            <div class="input-group col-md-6">
+                                                <div class="col-xs-5 pd0">
+                                                    <select class="form-control" id="age1">
+                                                    </select>
+                                                </div>
+                                                <div class="col-xs-1 pd0 center">
+                                                    <span class="fa fa-minus fa-1x" style="margin-top: 8px;"></span>
+                                                </div>
+                                                <div class="col-xs-5 pd0">
+                                                    <select class="form-control" id="age2">
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-md-3 control-label">身高要求</label>
+                                            <input name="zo[zo_height]" id="zo_height" type="hidden" value="{{$user.info->zo_height}}">
+                                            <div class="input-group col-md-6">
+                                                <div class="col-xs-5 pd0">
+                                                    <select class="form-control" id="height1">
+                                                    </select>
+                                                </div>
+                                                <div class="col-xs-1 pd0 center">
+                                                    <span class="fa fa-minus fa-1x" style="margin-top: 8px;"></span>
+                                                </div>
+                                                <div class="col-xs-5 pd0">
+                                                    <select class="form-control" id="height2">
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-md-3 control-label">学历要求</label>
+                                            <div class="input-group col-md-6">
+                                                <div class="col-xs-8 pd0">
+                                                    <select class="form-control education" name="zo[zo_education]" id="zo_education">
+                                                        <option value="">不限</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-xs-4 pd0">
+                                                    <label class="checkbox-inline">及以上</label>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="col-md-3 control-label">年收入要求</label>
+                                            <div class="input-group col-md-6">
+                                                <select class="form-control salary" name="zo[zo_income]" id="zo_income">
+                                                    <option value="">不限</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <!--<div class="form-group">-->
+                                            <!--<label class="col-md-3 control-label">体重要求</label>-->
+                                            <!--<div class="input-group col-md-6">-->
+                                                <!--<select class="form-control" name="zo[zo_weight]">-->
+                                                    <!--<option value="">不限</option>-->
+                                                    <!--<option value="1">偏胖</option>-->
+                                                    <!--<option value="2">标准</option>-->
+                                                    <!--<option value="3">偏瘦</option>-->
+                                                <!--</select>-->
+                                            <!--</div>-->
+                                        <!--</div>-->
+                                        <div class="form-group">
+                                            <label class="col-md-3 control-label">购车要求</label>
+                                            <div class="input-group col-md-6">
+                                                <select class="form-control" name="zo[zo_car]" id="zo_car">
+                                                    <option value="">不限</option>
+                                                    <option value="1">已购车</option>
+                                                    <option value="2">未购车</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-md-3 control-label">购房要求</label>
+                                            <div class="input-group col-md-6">
+                                                <select class="form-control house" name="zo[zo_house]" id="zo_house">
+                                                    <option value="">不限</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-md-3 control-label">子女要求</label>
+                                            <div class="input-group col-md-6">
+                                                <select class="form-control children" name="zo[zo_children]" id="zo_children">
+                                                    <option value="">不限</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <!--<div class="form-group">-->
+                                            <!--<label class="col-md-3 control-label">才貌要求</label>-->
+                                            <!--<div class="input-group col-md-6">-->
+                                                <!--<select class="form-control" name="zo[zo_endowed]">-->
+                                                    <!--<option value="">不限</option>-->
+                                                    <!--<option value="1">出众</option>-->
+                                                    <!--<option value="2">一般</option>-->
+                                                <!--</select>-->
+                                            <!--</div>-->
+                                        <!--</div>-->
+                                        <div class="form-group">
+                                            <label class="col-md-3 control-label">职业要求</label>
+                                            <div class="input-group col-md-6">
+                                                <select multiple class="col-md-12 mult_select occupation" data-name="zo_occupation">
+                                                </select>
+                                                <input type="hidden" name="zo[zo_occupation]" id="zo_occupation">
+
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-md-3 control-label">婚姻要求</label>
+                                            <div class="input-group col-md-6">
+                                                <select multiple class="col-md-12 mult_select" data-name="zo_marriage">
+                                                    <option value="1">未婚</option>
+                                                    <option value="2">离异</option>
+                                                    <option value="3">丧偶</option>
+                                                </select>
+                                                <input type="hidden" name="zo[zo_marriage]" id="zo_marriage">
+
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-md-3 control-label">属相要求</label>
+                                            <div class="input-group col-md-6">
+                                                <select multiple class="col-md-12 mult_select zodiac" data-name="zo_zodiac">
+                                                </select>
+                                                <input type="hidden" name="zo[zo_zodiac]" id="zo_zodiac">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-md-3 control-label">星座要求</label>
+                                            <div class="input-group col-md-6">
+                                                <select multiple class="form-control mult_select constellation" data-name="zo_constellation"></select>
+                                                <input type="hidden" name="zo[zo_constellation]" id="zo_constellation">
+
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-md-3 control-label">地区要求</label>
+                                            <div class="input-group col-md-6">
+                                                <select multiple class="form-control mult_select dq-Province" data-name="zo_address"></select>
+                                                <input type="hidden" name="zo[zo_address]" id="zo_address">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-md-3 control-label">其他要求</label>
+                                            <div class="input-group col-md-6">
+                                                <textarea class="form-control" rows="3" name="zo[other]"></textarea>
+                                            </div>
+                                        </div>
+                                        <div style="display: none" id="img_hidden">
+
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane fade" id="box_tab6">
+                                        <h3 class="form-title">兴趣爱好</h3>
+                                        <div class="form-group">
+                                            <label class="col-md-3 control-label">想去的地方</label>
+                                            <div class="input-group col-md-6">
+                                                <select multiple class="form-control mult_select"></select>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-md-3 control-label">去过的地方</label>
+                                            <div class="input-group col-md-6">
+                                                <select multiple class="form-control mult_select"></select>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-md-3 control-label">喜欢的美食</label>
+                                            <div class="input-group col-md-6">
+                                                <select multiple class="form-control mult_select"></select>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-md-3 control-label">喜欢的运动</label>
+                                            <div class="input-group col-md-6">
+                                                <select multiple class="form-control mult_select"></select>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-md-3 control-label">想看的电影</label>
+                                            <div class="input-group col-md-6">
+                                                <select multiple class="form-control mult_select"></select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /BOX -->
+                </form>
+
+                <div class="form-group center">
+                    <button class="btn btn-lg btn-primary" onclick="javascript:form1.submit()" type="button">提交</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<script src="/wechat/web/js/config/infoData.js"></script>
+<script src="/wechat/web/js/config/area.js"></script>
+<script src="/wechat/web/js/config/city.js"></script>
+
+<script>
+    jQuery(document).ready(function () {
+
+        $(".mult_select").click(function () {
+            $("#"+$(this).data('name')).val($(this).val())
+        })
+
+        SelectInit();
+
+        try {
+            $(".dropzone").dropzone({
+                paramName: "file", // The name that will be used to transfer the file
+                maxFilesize: 0.5, // MB
+                addRemoveLinks: true,
+                dictResponseError: '同时上传文件时出错！',
+                //change the previewTemplate to use Bootstrap progress bars
+                previewTemplate: "<div class=\"dz-preview dz-file-preview\">\n  <div class=\"dz-details\">\n    <div class=\"dz-filename\"><span data-dz-name></span></div>\n    <div class=\"dz-size\" data-dz-size></div>\n    <img data-dz-thumbnail />\n  </div>\n  <div class=\"progress progress-sm progress-striped active\"><div class=\"progress-bar progress-bar-success\" data-dz-uploadprogress></div></div>\n  <div class=\"dz-success-mark\"><span></span></div>\n  <div class=\"dz-error-mark\"><span></span></div>\n  <div class=\"dz-error-message\"><span data-dz-errormessage></span></div>\n</div>",
+                init: function () {
+                    this.on('success' , function (f,res){
+                        var hidden="<input type='hidden' name='thumb_path[]' value='" + JSON.parse(res).thumb_path + "'/>";
+                        $("#img_hidden").append(hidden);
+                    });
+                }
+            });
+        } catch (e) {
+            alert('您的浏览器版本过旧，不支持上传图片！');
+        }
+
+
+        $(".uniform").uniform();
+
+        $(".mult_select").select2({
+            placeholder: "不限",
+            maximumSelectionSize: 3
+        });
+
+        $('.form_date').datetimepicker({
+            language: 'zh-CN',
+            weekStart: 1,
+            todayBtn: 1,
+            autoclose: 1,
+            todayHighlight: 1,
+            startView: 2,
+            minView: 2,
+            forceParse: 0
+        });
+
+        // 出生日期联动 星座、属相
+        $('#age').on('change',function(){
+            var zodiac = getZodicByBirthday($(this).val());
+            var constellation = getConstellationByBirthday($(this).val());
+            $('#zodiac').val(zodiac.id);
+            $('#constellation').val(constellation.id);
+        })
+
+
+        // 地区联动-选择省
+        $("#dq-Province").on("change", function () {
+            addressLink($(this), $("#dq-City"), citys, true);
+        });
+
+        var province_value = {{$user.province}};
+        var city_value = {{$user.city}};
+        var area_value = {{$user.area}};
+        if (province_value>0) {
+            $("#dq-Province").val(province_value);
+            addressLink($("#dq-Province"), $("#dq-City"), citys, true);
+        }
+        if (city_value>0){
+            $("#dq-City").val(city_value);
+            addressLink($("#dq-City"), $("#dq-Area"), area, true);
+        }
+        if (area_value>0) {
+            $("#dq-Area").val(area_value);
+        }
+
+        // 地区联动-选择市
+        $("#dq-City").on("change", function () {
+            addressLink($(this), $("#dq-Area"), area, false);
+        });
+
+        //地区联动函数
+        function addressLink(obj1, obj2, data, isProvince) {
+            var index = obj1.find("option:selected").val(),
+                    html = '<option value="">请选择</option>';
+            if (typeof data !== 'undefined') {
+                for (var i in data) {
+                    if (data[i].parentId == index) {
+                        html += '<option value="';
+                        html += data[i].id;
+                        html += '">';
+                        html += data[i].name;
+                        html += '</option>';
+                    }
+                }
+                if (isProvince) {
+                    $("#dq-Area").html('<option value="">请选择</option>');
+                }
+                obj2.empty().append(html);
+            }
+        }
+
+        // 初始化下拉框
+        function SelectInit() {
+            function createSelect(item) {
+                var html = "";
+                var data = eval(item);
+                for (var i in data) {
+                    html += "<option value='" + data[i].id + "'>" + data[i].name + "</option>"
+                }
+                return html;
+            }
+
+            $("#height").append(heightLink(140, '请选择'));
+            $(".dq-Province").append(createSelect(provines)); // 省份
+            $(".occupation").append(createSelect("config_infoData.occupation")); // 职业
+            $(".salary").append(createSelect("config_infoData.salary"));
+            $(".house").append(createSelect("config_infoData.house"));
+            $(".zodiac").append(createSelect("config_infoData.zodiac"));
+            $(".constellation").append(createSelect("config_infoData.constellation"));
+            $("#nation").append(createSelect("config_infoData.nation"));
+            $(".children").append(createSelect("config_infoData.children"));
+            $("#provines").append(createSelect("provines"));
+            $("#age1").append(ageLink(18));
+            $("#age2").append(ageLink(18));
+            $("#height1").append(heightLink(140, '不限'));
+            $("#height2").append(heightLink(140, '不限'));
+            $(".education").append(createSelect("config_infoData.education"))
+
+            $("#nation").val({{$user.info->nation}});
+            $("#education_1").val({{$user.info->education}});
+            $("#is_marriage").val({{$user.info->is_marriage}});
+            $("#height").val({{$user.info->height}});
+            $("#is_child").val({{$user.info->is_child}});
+            $("#year_income").val('{{$user.info->year_income}}');
+            $("#is_car").val({{$user.info->is_car}});
+            $("#is_purchase").val({{$user.info->is_purchase}});
+            $("#zodiac").val('{{$user.info->zodiac}}');
+            $("#constellation").val({{$user.info->constellation}});
+
+            /******************择偶标准*********************/
+            var zo_age = '{{$user.info->zo_age}}';
+            var age_arr = zo_age.split('-')
+            if (age_arr.length=2){
+                $("#age1").val(age_arr[0]);
+                $("#age2").val(age_arr[1]);
+            }
+
+            var zo_height = '{{$user.info->zo_height}}';
+            var height_arr = zo_height.split("-");
+            if (height_arr.length=2){
+                $("#height1").val(height_arr[0]);
+                $("#height2").val(height_arr[1]);
+            }
+
+            $("#zo_education").val({{$user.info->zo_education}});
+            $("#zo_income").val({{if isset($user.info->zo_income)}} {{$user.info->zo_income}} {{/if}});
+            $("#zo_car").val({{$user.info->zo_car}});
+            $("#zo_house").val({{$user.info->zo_house}});
+            $("#zo_children").val({{if isset($user.info->zo_children)}}{{$user.info->zo_children}}{{/if}});
+
+            $(".mult_select").each(function () {
+                var zo = {};
+                zo.zo_occupation = '{{if isset($user.info->zo_occupation)}}{{$user.info->zo_occupation}}{{/if}}';
+                zo.zo_marriage = '{{if isset($user.info->zo_marriage)}}{{$user.info->zo_marriage}}{{/if}}';
+                zo.zo_zodiac = '{{if isset($user.info->zo_zodiac)}}{{$user.info->zo_zodiac}}{{/if}}';
+                zo.zo_constellation = '{{if isset($user.info->zo_constellation)}}{{$user.info->zo_constellation}}{{/if}}';
+                zo.zo_address = '{{if isset($user.info->zo_address)}}{{$user.info->zo_address}}{{/if}}';
+                var value = eval("zo."+$(this).data('name'));
+                if (value != undefined){
+                    value = value.split(",");
+
+                }
+                console.log(value)
+                $(this).val(value);
+
+                $("#"+$(this).data('name')).val($(this).val())
+            })
+        }
+
+        // 职业联动
+        $("#occupation_1").on("change", function () {
+            occupationLink($(this), $("#occupation_2"));
+        });
+
+        var occupation = '{{$user.info->occupation}}';
+        if (occupation > 0){
+            $("#occupation_1").val(occupation)
+            occupationLink($("#occupation_1"), $("#occupation_2"));
+            $("#occupation_2").val({{$user.info->children_occupation}})
+
+        }
+        // 职业联动函数
+        function occupationLink(obj1, obj2) {
+            var index = obj1.find("option:selected").val(),
+                    html = '<option value="">请选择</option>';
+            for (var i in config_infoData.occupation[index - 1].children) {
+                html += '<option value="';
+                html += config_infoData.occupation[index - 1].children[i].id;
+                html += '">';
+                html += config_infoData.occupation[index - 1].children[i].name;
+                html += '</option>';
+            }
+            obj2.empty().append(html);
+        }
+
+        //年龄联动
+        $("#age1").on("change", function () {
+            var val1 = $(this).val(),
+                    val2 = $("#age2").val();
+            $("#age2").empty().append(ageLink(val1));
+            if (val1 <= val2) {
+                $("#age2 option[value=" + val2 + "]").attr("selected", "selected");
+            }
+            if (val1 == 0) $('#age2').empty().append(ageLink(18));
+
+            $("#zo_age").val($(this).val()+"-"+$("#age2").val())
+        });
+
+        $("#age2").on('change' , function () {
+            $("#zo_age").val($("#age1").val() + "-" +$(this).val())
+        })
+
+        // 年龄联动函数
+        function ageLink(min) {
+            var ageHtml = "",
+                    ageMin = min,
+                    ageMax = 99;
+            ageHtml += '<option value="0">不限</option>';
+            for (ageMin; ageMin <= ageMax; ageMin++) {
+                ageHtml += '<option value="';
+                ageHtml += ageMin;
+                ageHtml += '">';
+                ageHtml += ageMin;
+                ageHtml += '</option>';
+            }
+            return ageHtml;
+        }
+
+        //身高联动
+        $("#height1").on("change", function () {
+            var val1 = $(this).val(),
+                    val2 = $("#height2").val();
+            $("#height2").empty().append(heightLink(val1, '不限'));
+            if (val1 <= val2) {
+                $("#height2 option[value=" + val2 + "]").attr("selected", "selected");
+            }
+            if (val1 == 0) $('#height2').empty().append(heightLink(140, '不限'));
+
+            $("#zo_height").val($(this).val() + "-" +$("#height2").val())
+        });
+
+        $("#height2").on("change" , function () {
+            $("#zo_height").val($("#height1").val() + "-" + $(this).val())
+        })
+
+        // 身高联动函数
+        function heightLink(min, nullText) {
+            var ageHtml = "",
+                    ageMin = min,
+                    ageMax = 260;
+            ageHtml += '<option value="0">' + nullText + '</option>';
+            for (ageMin; ageMin <= ageMax; ageMin++) {
+                ageHtml += '<option value="';
+                ageHtml += ageMin;
+                ageHtml += '">';
+                ageHtml += ageMin;
+                ageHtml += '厘米</option>';
+            }
+            return ageHtml;
+        }
+
+        /**
+         * 根据出生年月计算属相
+         * @param birthday
+         * @returns {*[]} id name
+         */
+        function getZodicByBirthday(birthday) {
+            var toyear = 1997;
+            var birthyear = new Date(birthday).getFullYear();
+            var zodic = [{id: 0, name: '未知'}]
+            x = (toyear - birthyear) % 12
+            if ((x == 1) || (x == -11)) {
+                zodic.id = 1;
+                zodic.name = '鼠';
+            }
+            else {
+                if (x == 0) {
+                    zodic.id = 2;
+                    zodic.name = '牛';
+                }
+                else {
+                    if ((x == 11) || (x == -1)) {
+                        zodic.id = 3;
+                        zodic.name = '虎';
+                    }
+                    else {
+                        if ((x == 10) || (x == -2)) {
+                            zodic.id = 4;
+                            zodic.name = '兔';
+                        }
+                        else {
+                            if ((x == 9) || (x == -3)) {
+                                zodic.id = 5;
+                                zodic.name = '龙';
+                            }
+                            else {
+                                if ((x == 8) || (x == -4)) {
+                                    zodic.id = 6;
+                                    zodic.name = '蛇';
+                                }
+                                else {
+                                    if ((x == 7) || (x == -5)) {
+                                        zodic.id = 7;
+                                        zodic.name = '马';
+                                    }
+                                    else {
+                                        if ((x == 6) || (x == -6)) {
+                                            zodic.id = 8;
+                                            zodic.name = '羊';
+                                        }
+                                        else {
+                                            if ((x == 5) || (x == -7)) {
+                                                zodic.id = 9;
+                                                zodic.name = '猴';
+                                            }
+                                            else {
+                                                if ((x == 4) || (x == -8)) {
+                                                    zodic.id = 10;
+                                                    zodic.name = '鸡';
+                                                }
+                                                else {
+                                                    if ((x == 3) || (x == -9)) {
+                                                        zodic.id = 11;
+                                                        zodic.name = '狗';
+                                                    }
+                                                    else {
+                                                        if ((x == 2) || (x == -10)) {
+                                                            zodic.id = 12;
+                                                            zodic.name = '猪';
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            return zodic;
+        }
+
+
+        /**
+         * 根据出生日期计算星座
+         * @param birthday
+         * @returns {*[]} id name
+         */
+        function getConstellationByBirthday(birthday) {
+            var start = 1901, date = new Date(birthday).getDate(), month = new Date(birthday).getMonth() + 1, constellation = [{
+                id: 0,
+                name: '未知'
+            }];
+            if (month == 1 && date >= 20 || month == 2 && date <= 18) {
+                constellation.id = 1;
+                constellation.name = '水瓶座';
+            }
+            if (month == 2 && date >= 19 || month == 3 && date <= 20) {
+                constellation.id = 2;
+                constellation.name = '双鱼座';
+            }
+            if (month == 3 && date >= 21 || month == 4 && date <= 19) {
+                constellation.id = 3;
+                constellation.name = '白羊座';
+            }
+            if (month == 4 && date >= 20 || month == 5 && date <= 20) {
+                constellation.id = 4;
+                constellation.name = '金牛座';
+            }
+            if (month == 5 && date >= 21 || month == 6 && date <= 21) {
+                constellation.id = 5;
+                constellation.name = '双子座';
+            }
+            if (month == 6 && date >= 22 || month == 7 && date <= 22) {
+                constellation.id = 6;
+                constellation.name = '巨蟹座';
+            }
+            if (month == 7 && date >= 23 || month == 8 && date <= 22) {
+                constellation.id = 7;
+                constellation.name = '狮子座';
+            }
+            if (month == 8 && date >= 23 || month == 9 && date <= 22) {
+                constellation.id = 8;
+                constellation.name = '处女座';
+            }
+            if (month == 9 && date >= 23 || month == 10 && date <= 23) {
+                constellation.id = 9;
+                constellation.name = '天秤座';
+            }
+            if (month == 10 && date >= 24 || month == 11 && date <= 22) {
+                constellation.id = 10;
+                constellation.name = '天蝎座';
+            }
+            if (month == 11 && date >= 23 || month == 12 && date <= 21) {
+                constellation.id = 11;
+                constellation.name = '射手座';
+            }
+            if (month == 12 && date >= 22 || month == 1 && date <= 19) {
+                constellation.id = 12;
+                constellation.name = '摩羯座';
+            }
+            return constellation;
+        }
+
+
+
+
+
+    });
+
+</script>

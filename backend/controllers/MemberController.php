@@ -94,6 +94,26 @@ class MemberController extends BaseController
         return $this->render();
     }
 
+    // 修改会员资料
+    public function actionEdit(){
+        $request = \Yii::$app->request;
+        $id = $request->get('id');
+        if ($id < 1 ){
+            exit();
+        }
+        if ($postData = $request->post()){
+            $postData['user_id'] = $request->get('id');
+            $postData['info']['age'] = strtotime($postData['info']['age']);
+            User::getInstance()->editUser($postData);
+        }
+        $user = User::getInstance()->getUserById($id);
+        $user['info'] = json_decode($user['info']);
+        $user['auth'] = json_decode($user['auth']);
+//        var_dump($user);exit;
+        $this->assign('user' , $user);
+        return $this->render();
+    }
+
     public function actionInfo()
     {
         return $this->render();
