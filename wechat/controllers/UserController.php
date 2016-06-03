@@ -103,11 +103,10 @@ class UserController extends BaseController
     {
         $user = $this->weChatMember();
 
-        var_dump($user['username']);
-
         $wxJSSDK = new WeChat();
         $signPackage = $wxJSSDK->getSignPackage();
         $this->assign('signPackage',$signPackage);
+
 
         /*// 地区是否存cookie，否则存
         if (!isset($_COOKIE['bhy_u_city']) && !isset($_COOKIE['bhy_u_cityId'])) {

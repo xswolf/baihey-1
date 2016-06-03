@@ -10,6 +10,7 @@
     <link href="/wechat/web/css/plugin/ionic/ionic.min.css" rel="stylesheet">
     <link href="/wechat/web/css/plugin/bootstrap/css/animate.css" rel="stylesheet">
     <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+    <script src="/wechat/web/js/plugin/jquery/jquery-1.12.2.min.js"></script>
 </head>
 <script>
 
@@ -33,8 +34,8 @@
                 'getLocation'
             ],
             success: function (res) {
-                 alert(JSON.stringify(res));
-                 alert(JSON.stringify(res.checkResult.getLocation));
+//                 alert(JSON.stringify(res));
+//                 alert(JSON.stringify(res.checkResult.getLocation));
                 if (res.checkResult.getLocation == false) {
                     alert('你的微信版本太低，不支持微信JS接口，请升级到最新的微信版本！');
                     return;
@@ -48,8 +49,18 @@
                 var longitude = res.longitude; // 经度，浮点数，范围为180 ~ -180。
                 var speed = res.speed; // 速度，以米/每秒计
                 var accuracy = res.accuracy; // 位置精度
-                alert(JSON.stringify(res));
-                alert('位置精度：'+accuracy);
+                $.ajax({
+                    type: "GET",
+                    url: "http://api.map.baidu.com/geoconv/v1/",
+                    data: {coords:latitude+','+longitude+';',from:1,to:5,ak:'Zh7mCxOxCyteqEhmCZtKPmhG'},
+                    dataType: "json",
+                    success: function(res){
+                        alert(res);
+                    },
+                    error:function(){
+                        alert('百度地图api错误！')
+                    }
+                })
             },
             cancel: function (res) {
                 alert('用户拒绝授权获取地理位置');
