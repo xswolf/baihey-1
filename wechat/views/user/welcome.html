@@ -28,7 +28,7 @@
         // 调用百度地图api显示
         $.ajax({
             type: "GET",
-            url: "/wap/user/welcome",
+            url: "/wap/user/get-location",
             data: {lng:lng,lat:lat},
             dataType: "json",
             success: function(res){

@@ -107,11 +107,6 @@ class UserController extends BaseController
         $signPackage = $wxJSSDK->getSignPackage();
         $this->assign('signPackage',$signPackage);
 
-        if(\Yii::$app->request->get()){
-            $url = 'http://api.map.baidu.com/geocoder/v2/?coordtype=wgs84ll&callback=result&output=json&ak=Zh7mCxOxCyteqEhmCZtKPmhG&pois=0&location='.\Yii::$app->request->get('lng').','.\Yii::$app->request->get('lat');
-            $result = file_get_contents($url);
-            $this->renderAjax(['data'=>$result]);exit();
-        }
 
         /*// 地区是否存cookie，否则存
         if (!isset($_COOKIE['bhy_u_city']) && !isset($_COOKIE['bhy_u_cityId'])) {
@@ -128,6 +123,15 @@ class UserController extends BaseController
         return $this->render();
     }
 
+    public function actionGetLocation(){
+        if(\Yii::$app->request->get()){
+            $url = 'http://api.map.baidu.com/geocoder/v2/?coordtype=wgs84ll&callback=result&output=json&ak=Zh7mCxOxCyteqEhmCZtKPmhG&pois=0&location='.\Yii::$app->request->get('lng').','.\Yii::$app->request->get('lat');
+            $result = file_get_contents($url);
+            $this->renderAjax(['data'=>$result]);
+        }else{
+            $this->__error('非法请求！');
+        }
+    }
     /**
      * 注册
      * @return string
