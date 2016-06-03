@@ -134,7 +134,7 @@ class User extends Base
             $transaction->rollBack();
         }
 
-        return $id;
+        return ['id' => $id, 'username' => $dataUser['username'], 'password' => $dataUser['password']];
     }
 
     /**
