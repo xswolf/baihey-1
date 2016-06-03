@@ -83,9 +83,6 @@
                     success: function (res) {
                         var data = JSON.parse(res);
                         alert(data.result.addressComponent.city);
-                        /*var result = JSON.parse(res.result);
-                        var addressComponent = JSON.parse(result.addressComponent);
-                        alert(addressComponent.city);*/
                     },
                     error: function () {
                         alert('百度地图api错误！')

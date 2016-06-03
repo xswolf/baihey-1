@@ -108,6 +108,9 @@ class UserController extends BaseController
         $this->assign('signPackage',$signPackage);
 
 
+        $url = 'http://wechat.baihey.com/wap/site/main#/main/index';
+        Header("Location: $url");
+
         /*// 地区是否存cookie，否则存
         if (!isset($_COOKIE['bhy_u_city']) && !isset($_COOKIE['bhy_u_cityId'])) {
 
@@ -120,7 +123,7 @@ class UserController extends BaseController
             Cookie::getInstance()->setCookie('bhy_id', $user['id']);
             setcookie('bhy_user_id', $user['id'], YII_BEGIN_TIME + 3600 * 24 * 30, '/wap');
         }*/
-        return $this->render();
+//        return $this->render();
     }
 
     public function actionGetLocation(){
