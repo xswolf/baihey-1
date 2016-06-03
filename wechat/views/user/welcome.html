@@ -9,65 +9,91 @@
     <link href="/wechat/web/images/apple-touch-icon.png" rel="shortcut icon">
     <link href="/wechat/web/css/plugin/ionic/ionic.min.css" rel="stylesheet">
     <link href="/wechat/web/css/plugin/bootstrap/css/animate.css" rel="stylesheet">
-    <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
     <script src="/wechat/web/js/plugin/jquery/jquery-1.12.2.min.js"></script>
-    <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=Zh7mCxOxCyteqEhmCZtKPmhG"></script>
 </head>
 <script>
+    if (window.navigator.geolocation) {
+        var options = {
+            enableHighAccuracy: true,
+        };
+        window.navigator.geolocation.getCurrentPosition(handleSuccess, handleError, options);
+    } else {
+        alert("浏览器不支持html5来获取地理位置信息");
+    }
 
-    wx.config({
-        debug: false,
-        appId: "{!$signPackage['appId']}",
-        timestamp: "{!$signPackage['timestamp']}",
-        nonceStr: "{!$signPackage['nonceStr']}",
-        signature: "{!$signPackage['signature']}",
-        jsApiList: [
-            // 所有要调用的 API 都要加到这个列表中
-            'checkJsApi',
-            'openLocation',
-            'getLocation'
-        ]
-    });
-
-    wx.ready(function () {
-        wx.checkJsApi({
-            jsApiList: [
-                'getLocation'
-            ],
-            success: function (res) {
-//                 alert(JSON.stringify(res));
-//                 alert(JSON.stringify(res.checkResult.getLocation));
-                if (res.checkResult.getLocation == false) {
-                    alert('你的微信版本太低，不支持微信JS接口，请升级到最新的微信版本！');
-                    return;
-                }
-            }
-        });
-
-        wx.getLocation({
-            success: function (res) {
-                var latitude = res.latitude; // 纬度，浮点数，范围为90 ~ -90
-                var longitude = res.longitude; // 经度，浮点数，范围为180 ~ -180。
-                $.ajax({
-                    type: "GET",
-                    url: "/wap/user/welcome",
-                    data: {lng:longitude,lat:latitude},
-                    dataType: "json",
-                    success: function(res){
-                        alert(res.data);
-                    },
-                    error:function(){
-                        alert('百度地图api错误！')
-                    }
-                })
+    function handleSuccess(position) {
+        // 获取到当前位置经纬度  本例中是chrome浏览器取到的是google地图中的经纬度
+        var lng = position.coords.longitude;
+        var lat = position.coords.latitude;
+        // 调用百度地图api显示
+        $.ajax({
+            type: "GET",
+            url: "/wap/user/welcome",
+            data: {lng:lng,lat:lat},
+            dataType: "json",
+            success: function(res){
+                alert(res.data);
             },
-            cancel: function (res) {
-                alert('用户拒绝授权获取地理位置');
+            error:function(){
+                alert('百度地图api错误！')
             }
-        });
-    });
+        })
+    }
+    function handleError(){
 
+    }
 
+    /* wx.config({
+     debug: false,
+     appId: "{!$signPackage['appId']}",
+     timestamp: "{!$signPackage['timestamp']}",
+     nonceStr: "{!$signPackage['nonceStr']}",
+     signature: "{!$signPackage['signature']}",
+     jsApiList: [
+     // 所有要调用的 API 都要加到这个列表中
+     'checkJsApi',
+     'openLocation',
+     'getLocation'
+     ]
+     });
+
+     wx.ready(function () {
+     wx.checkJsApi({
+     jsApiList: [
+     'getLocation'
+     ],
+     success: function (res) {
+     //                 alert(JSON.stringify(res));
+     //                 alert(JSON.stringify(res.checkResult.getLocation));
+     if (res.checkResult.getLocation == false) {
+     alert('你的微信版本太低，不支持微信JS接口，请升级到最新的微信版本！');
+     return;
+     }
+     }
+     });
+
+     wx.getLocation({
+     success: function (res) {
+     var latitude = res.latitude; // 纬度，浮点数，范围为90 ~ -90
+     var longitude = res.longitude; // 经度，浮点数，范围为180 ~ -180。
+     $.ajax({
+     type: "GET",
+     url: "/wap/user/welcome",
+     data: {lng:longitude,lat:latitude},
+     dataType: "json",
+     success: function(res){
+     alert(res.data);
+     },
+     error:function(){
+     alert('百度地图api错误！')
+     }
+     })
+     },
+     cancel: function (res) {
+     alert('用户拒绝授权获取地理位置');
+     }
+     });
+     });*/
 
 
 </script>
