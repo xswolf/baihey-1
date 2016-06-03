@@ -64,7 +64,7 @@ class ServerController extends BaseController {
         $result_1 = \Yii::$app->wechat->deleteMenu();
 
         $appId = \Yii::$app->wechat->appId;
-        $redirectUri = urlencode("http://wechat.baihey.com/wap/site/main");
+        $redirectUri = urlencode("http://wechat.baihey.com/wap/site");
 
         $url = "https://open.weixin.qq.com/connect/oauth2/authorize?appid={$appId}&redirect_uri={$redirectUri}&response_type=code&scope=snsapi_base&state=123#wechat_redirect";
         $result = \Yii::$app->wechat->createMenu([
