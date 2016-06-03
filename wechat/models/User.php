@@ -34,11 +34,12 @@ class User extends \common\models\Base
             'username' => $userName,
             'password' => md5(md5($password))
         ];
-        if ($user = $this->findOne($condition)) {
+        $user = $this->findOne($condition) ? $this->findOne($condition) : $this->findOne(['id' => $userName, 'password' => md5(md5($password))]);
+        if ($user) {
             $time = YII_BEGIN_TIME;
             $user->last_login_time = $time;
             $user->save(false);
-            $data = $this->getUserByName($userName);
+            $data = \common\models\User::getInstance()->getUserById($user->id);
             // 写入用户日志表
             $log['user_id'] = $user->id;
             $log['type'] = 1;
