@@ -13,6 +13,7 @@ use common\models\ChargeGoods;
 use common\models\ChargeOrder;
 use common\models\User;
 use common\models\UserPhoto;
+use wechat\models\Config;
 
 class MemberController extends BaseController
 {
@@ -109,8 +110,11 @@ class MemberController extends BaseController
         $user = User::getInstance()->getUserById($id);
         $user['info'] = json_decode($user['info']);
         $user['auth'] = json_decode($user['auth']);
-//        var_dump($user);exit;
+
         $this->assign('user' , $user);
+        $this->assign('sport' , Config::getInstance()->getListByType(1));
+        $this->assign('movie' , Config::getInstance()->getListByType(2));
+        $this->assign('food' , Config::getInstance()->getListByType(3));
         return $this->render();
     }
 
