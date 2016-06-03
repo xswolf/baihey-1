@@ -110,9 +110,7 @@ class UserController extends BaseController
         if(\Yii::$app->request->get()){
             $url = 'http://api.map.baidu.com/geocoder/v2/?coordtype=wgs84ll&callback=result&output=json&ak=Zh7mCxOxCyteqEhmCZtKPmhG&pois=0&location='.\Yii::$app->request->get('lng').','.\Yii::$app->request->get('lat');
             $result = file_get_contents($url);
-            var_dump(\Yii::$app->request->get());
-            $this->renderAjax(['data'=>$result]);
-
+            $this->renderAjax(['data'=>$result]);exit();
         }
 
         /*// 地区是否存cookie，否则存
