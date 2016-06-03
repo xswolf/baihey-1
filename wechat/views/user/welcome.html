@@ -11,6 +11,7 @@
     <link href="/wechat/web/css/plugin/bootstrap/css/animate.css" rel="stylesheet">
     <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
     <script src="/wechat/web/js/plugin/jquery/jquery-1.12.2.min.js"></script>
+    <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=Zh7mCxOxCyteqEhmCZtKPmhG"></script>
 </head>
 <script>
 
@@ -51,8 +52,8 @@
                 var accuracy = res.accuracy; // 位置精度
                 $.ajax({
                     type: "GET",
-                    url: "http://api.map.baidu.com/geoconv/v1/",
-                    data: {coords:latitude+','+longitude+';',from:1,to:5,ak:'Zh7mCxOxCyteqEhmCZtKPmhG'},
+                    url: "http://api.map.baidu.com/geocoder/v2/",
+                    data: {coordtype:'wgs84ll',location:longitude+','+latitude,callback:'result',output:'json',ak:'Zh7mCxOxCyteqEhmCZtKPmhG',pois:0},
                     dataType: "json",
                     success: function(res){
                         alert(res);
@@ -67,6 +68,10 @@
             }
         });
     });
+
+
+
+
 </script>
 <body>
 <div class="bhy com_w_100 pa wc_bg">
