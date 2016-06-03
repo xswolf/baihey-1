@@ -40,17 +40,13 @@
                     </span>
                 </p>
             </ion-item>
-            <ion-item ui-sref="main.dynamic({userId:1,tempUrl:'/main/member/information'})" >
+            <ion-item  ui-sref="main.dynmaic({userId:userInfo.id,tempUrl:'main\/member'})">
                 <div class="info_l">
                     <p>个人动态</p>
-                    <p class="dyn_nb">12</p>
                 </div>
                 <div class="info_c">
-                    <div class="dyn_img_list">
-                        <img class="dyn_img" src="/wechat/web/images/test/1.jpg">
-                        <img class="dyn_img" src="/wechat/web/images/test/2.jpg">
-                        <img class="dyn_img" src="/wechat/web/images/test/3.jpg">
-                        <img class="dyn_img" src="/wechat/web/images/test/4.jpg">
+                    <div class="dyn_img_list" ng-repeat="dynamic in dynamicList">
+                        <img class="dyn_img" ng-if="dynamic.imgList[0].thumb_path" src="{{dynamic.imgList[0].thumb_path}}">
                     </div>
 
                 </div>

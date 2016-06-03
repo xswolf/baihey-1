@@ -9,6 +9,7 @@
     <link href="/wechat/web/css/base.css" rel="stylesheet">
     <link href="/wechat/web/css/index.css" rel="stylesheet">
     <link href="/wechat/web/css/android.css" rel="stylesheet">
+    <link href="/wechat/web/css/plugin/animate/animate.css">
 </head>
 <script data-main="/wechat/web/js/app" src="/wechat/web/js/plugin/requirejs/require.js"></script>
 <body >
