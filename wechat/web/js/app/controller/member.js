@@ -394,8 +394,8 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
     module.controller("member.occupation", ['app.serviceApi', '$scope', '$ionicPopup', function (api, $scope, $ionicPopup) {
 
         $scope.formData = [];
-        $scope.occupation = $scope.userInfo.info.occupation != '未知' ? $scope.userInfo.info.occupation : 1;
-        $scope.children_occupation = $scope.userInfo.info.children_occupation != '未知' ? $scope.userInfo.info.children_occupation : 1;
+        $scope.occupation = $scope.userInfo.info.occupation != '未知' && $scope.userInfo.info.occupation ? $scope.userInfo.info.occupation : 1;
+        $scope.children_occupation = $scope.userInfo.info.children_occupation != '未知' && $scope.userInfo.info.children_occupation ? $scope.userInfo.info.children_occupation : 1;
 
         // 获取文档高度以适应ion-scroll
         $scope.bodyHeight = document.body.scrollHeight;
@@ -1081,7 +1081,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
     module.controller("member.children", ['app.serviceApi', '$scope', '$ionicPopup', function (api, $scope, $ionicPopup) {
 
         $scope.formData = [];
-        $scope.formData.is_child = $scope.userInfo.info.is_child != '未知' ? $scope.userInfo.info.is_child : '0';
+        $scope.formData.is_child = $scope.userInfo.info.is_child != '未知' && $scope.userInfo.info.is_child ? $scope.userInfo.info.is_child : '0';
         $scope.childrenList = config_infoData.children;
 
         $scope.childrenSelect = function (children) {
@@ -1111,7 +1111,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
     module.controller("member.nation", ['app.serviceApi', '$scope', '$ionicPopup', function (api, $scope, $ionicPopup) {
 
         $scope.formData = [];
-        $scope.formData.nation = $scope.userInfo.info.nation != '未知' ? $scope.userInfo.info.nation : '0';
+        $scope.formData.nation = $scope.userInfo.info.nation != '未知' && $scope.userInfo.info.nation ? $scope.userInfo.info.nation : '0';
         $scope.nationList = config_infoData.nation;
 
         $scope.nationSelect = function (nation) {
@@ -1404,7 +1404,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
         $scope.marriageList = config_infoData.marriage;
 
         $scope.formData.userMarriageIDList = [];   //用户数据  未婚、离异
-        var zo_marriage = $scope.userInfo.info.zo_marriage != '未知' ? $scope.userInfo.info.zo_marriage.split('-') : [];
+        var zo_marriage = $scope.userInfo.info.zo_marriage != '未知' && $scope.userInfo.info.zo_marriage ? $scope.userInfo.info.zo_marriage.split('-') : [];
         for (var i in zo_marriage) {
             if (zo_marriage[i] != '') {
                 $scope.formData.userMarriageIDList[i] = parseInt(zo_marriage[i]);
@@ -1456,7 +1456,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
 
         $scope.formData = [];
 
-        $scope.formData.zo_house = $scope.userInfo.info.zo_house != '未知' ? $scope.userInfo.info.zo_house : '0';
+        $scope.formData.zo_house = $scope.userInfo.info.zo_house != '未知' && $scope.userInfo.info.zo_house ? $scope.userInfo.info.zo_house : '0';
         $scope.zo_houseList = config_infoData.house;
 
         // 保存
@@ -1474,7 +1474,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
 
         $scope.formData = [];
 
-        $scope.formData.zo_car = $scope.userInfo.info.zo_car != '未知' ? $scope.userInfo.info.zo_car : '0';
+        $scope.formData.zo_car = $scope.userInfo.info.zo_car != '未知' && $scope.userInfo.info.zo_car ? $scope.userInfo.info.zo_car : '0';
         $scope.zo_carList = config_infoData.car;
 
         // 保存
@@ -1496,7 +1496,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
         $scope.zodiacList = config_infoData.zodiac;
 
         $scope.formData.userZodiacIDList = [];   //用户数据  鼠、牛
-        var zo_zodiac = $scope.userInfo.info.zo_zodiac != '未知' ? $scope.userInfo.info.zo_zodiac.split('-') : [];
+        var zo_zodiac = $scope.userInfo.info.zo_zodiac != '未知' && $scope.userInfo.info.zo_zodiac ? $scope.userInfo.info.zo_zodiac.split('-') : [];
         for (var i in zo_zodiac) {
             $scope.formData.userZodiacIDList[i] = parseInt(zo_zodiac[i]);
         }
@@ -1548,7 +1548,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
         $scope.constellationList = config_infoData.constellation;
 
         $scope.formData.userConstellationIDList = [];   //用户数据  狮子座、天秤座
-        var zo_constellation = $scope.userInfo.info.zo_constellation != '未知' ? $scope.userInfo.info.zo_constellation.split('-') : [];
+        var zo_constellation = $scope.userInfo.info.zo_constellation != '未知' && $scope.userInfo.info.zo_constellation ? $scope.userInfo.info.zo_constellation.split('-') : [];
         for (var i in zo_constellation) {
             $scope.formData.userConstellationIDList[i] = parseInt(zo_constellation[i]);
         }
