@@ -81,8 +81,8 @@
                     data: {lng: longitude, lat: latitude},
                     dataType: "json",
                     success: function (res) {
-                        var result = JSON.parse(res.result);
-                        alert(result);
+                        var data = JSON.parse(res);
+                        alert(data.result);
                         /*var result = JSON.parse(res.result);
                         var addressComponent = JSON.parse(result.addressComponent);
                         alert(addressComponent.city);*/
