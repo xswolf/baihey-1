@@ -82,8 +82,9 @@
                     dataType: "json",
                     success: function (res) {
                         var data = JSON.parse(res.data);
-                        var city = JSON.parse(data.addressComponent).city;
-                        alert(city);
+                        var result = JSON.parse(data.result);
+                        var addressComponent = JSON.parse(result.addressComponent);
+                        alert(addressComponent.city);
                     },
                     error: function () {
                         alert('百度地图api错误！')
