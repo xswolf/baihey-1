@@ -17,7 +17,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
          }
          });*/
 
-        $scope.userInfo = ar.getStorage('userInfo');
+        //$scope.userInfo = ar.getStorage('userInfo');
 
     }]);
 
@@ -112,6 +112,17 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
                 }
             });
         }
+
+        $scope.dynamicList = [];
+        api.list('/wap/member/get-dynamic-list' , {user_id:$scope.userInfo.id , page:0}).success(function (res) {
+            if (res.data == ''){
+                $scope.morePage = false;
+            }
+            for (var i in res.data){
+                res.data[i].imgList = JSON.parse(res.data[i].pic);
+                $scope.dynamicList.push(res.data[i]);
+            }
+        });
 
         $scope.getTravel('went_travel', $scope.userInfo.went_travel);// 我去过的地方
         $scope.getTravel('want_travel', $scope.userInfo.want_travel);// 我想去的地方
