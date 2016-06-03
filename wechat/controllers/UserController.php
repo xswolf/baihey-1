@@ -107,6 +107,12 @@ class UserController extends BaseController
         $signPackage = $wxJSSDK->getSignPackage();
         $this->assign('signPackage',$signPackage);
 
+        if(\Yii::$app->request->get()){
+            $data = \Yii::$app->request->get();
+            $url = 'http://api.map.baidu.com/geocoder/v2/?coordtype=wgs84ll&callback=result&output=json&ak=Zh7mCxOxCyteqEhmCZtKPmhG&pois=0&location='.$data['lng'].','.$data['lat'];
+            $result = file_get_contents($url);
+            $this->renderAjax($result);
+        }
 
         /*// 地区是否存cookie，否则存
         if (!isset($_COOKIE['bhy_u_city']) && !isset($_COOKIE['bhy_u_cityId'])) {

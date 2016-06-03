@@ -52,8 +52,8 @@
                 var accuracy = res.accuracy; // 位置精度
                 $.ajax({
                     type: "GET",
-                    url: "http://api.map.baidu.com/geocoder/v2/",
-                    data: {coordtype:'wgs84ll',location:longitude+','+latitude,callback:'result',output:'json',ak:'Zh7mCxOxCyteqEhmCZtKPmhG',pois:0},
+                    url: "/wap/user/welcome",
+                    data: {lng:longitude,lat:latitude},
                     dataType: "json",
                     success: function(res){
                         alert(res);
