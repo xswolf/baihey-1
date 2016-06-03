@@ -706,6 +706,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
                 formData.went_travel = $scope.formData.userAddrIdList.join(',');
                 api.save('/wap/member/save-data', formData).success(function (res) {
                     $scope.userInfo.went_travel = formData.went_travel;
+                    $scope.getTravel('went_travel', $scope.userInfo.went_travel);// 我去过的地方
                     $scope.setUserStorage();
                 });
             }
@@ -806,6 +807,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
                 formData.want_travel = $scope.formData.userAddrIdList.join(',');
                 api.save('/wap/member/save-data', formData).success(function (res) {
                     $scope.userInfo.want_travel = formData.want_travel;
+                    $scope.getTravel('want_travel', $scope.userInfo.want_travel);// 我想去的地方
                     $scope.setUserStorage();
                 });
             }
@@ -884,6 +886,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
                 formData.love_sport = $scope.formData.userSportsIdList.join(',');
                 api.save('/wap/member/save-data', formData).success(function (res) {
                     $scope.userInfo.love_sport = formData.love_sport;
+                    $scope.getConfig('love_sport', $scope.userInfo.love_sport);// 喜欢的运动
                     $scope.setUserStorage();
                 });
             }
@@ -975,6 +978,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
                 formData.want_film = $scope.formData.userMovieIdList.join(',');
                 api.save('/wap/member/save-data', formData).success(function (res) {
                     $scope.userInfo.want_film = formData.want_film;
+                    $scope.getConfig('want_film', $scope.userInfo.want_film);// 想看的电影
                     $scope.setUserStorage();
                 });
             }
@@ -1056,6 +1060,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
                 formData.like_food = $scope.formData.userDelicacyIdList.join(',');
                 api.save('/wap/member/save-data', formData).success(function (res) {
                     $scope.userInfo.like_food = formData.like_food;
+                    $scope.getConfig('like_food', $scope.userInfo.like_food);// 喜欢的食物
                     $scope.setUserStorage();
                 });
             }
