@@ -207,6 +207,7 @@ define(['app/module', 'app/directive/directiveApi'
                     $scope.modalCityName = $scope.cityList[i].name;
                     $scope.cityName = $scope.cityList[i].name;
                     $scope.searchForm.city = $scope.cityId;
+                    $scope.searchForm.cityName = $scope.cityList[i].name;
                     userListPromise();
                     $scope.pageLast = true;
                     break;

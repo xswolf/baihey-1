@@ -79,7 +79,7 @@ class MessageController extends BaseController
     public function actionDel()
     {
         if (isset($this->get)) {
-            $user_id = Cookie::getInstance()->getCookie('bhy_id');
+            $user_id = \common\util\Cookie::getInstance()->getCookie('bhy_id');
             $list    = UserMessage::getInstance()->messageDel($this->get, $user_id);
         } else {
             $list = 0;
