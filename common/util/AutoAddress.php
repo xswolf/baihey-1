@@ -32,6 +32,7 @@ class AutoAddress
      */
     public function autoAddress()
     {
+
         $html = Curl::getInstance()->curl_get('http://int.dpool.sina.com.cn/iplookup/iplookup.php?format=js&ip=' . $_SERVER['REMOTE_ADDR'], '');
         if ($html != -2) {
             $jsonData = explode("=", $html);

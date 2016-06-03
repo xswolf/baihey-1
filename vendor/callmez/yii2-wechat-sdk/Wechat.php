@@ -366,11 +366,11 @@ class Wechat extends Component
     /**
      * @var string 公众号appId
      */
-    public $appId;
+    public $appId = 'wx787f8071dd1e1dac';
     /**
      * @var string 公众号appSecret
      */
-    public $appSecret;
+    public $appSecret = '9eaeecaffdea0d9af4dcf20265e736bd';
     /**
      * @var string 公众号支付请求中用于加密的密钥 Key，可验证商户唯一身份，PaySignKey 对应于支付场景中的 appKey 值。
      */
@@ -386,7 +386,7 @@ class Wechat extends Component
     /**
      * @var string 公众号接口验证token,可由您来设定. 并填写在微信公众平台->开发者中心
      */
-    public $token;
+    public $token = 'jrbhy';
     /**
      * 数据缓存前缀
      * @var string
@@ -2572,4 +2572,42 @@ class Wechat extends Component
         }
         return false;
     }
+
+    public function getSignPackage() {
+        $jsapiTicket = $this->getJsApiTicket();
+
+        // 注意 URL 一定要动态获取，不能 hardcode.
+        $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://";
+        $url = "$protocol$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+
+        $timestamp = time();
+        $nonceStr = $this->createNonceStr();
+
+        // 这里参数的顺序要按照 key 值 ASCII 码升序排序
+        $string = "jsapi_ticket=$jsapiTicket&noncestr=$nonceStr&timestamp=$timestamp&url=$url";
+
+        $signature = sha1($string);
+
+        $signPackage = array(
+            "appId"     => $this->appId,
+            "nonceStr"  => $nonceStr,
+            "timestamp" => $timestamp,
+            "url"       => $url,
+            "signature" => $signature,
+            "rawString" => $string
+        );
+        return $signPackage;
+    }
+
+    private function createNonceStr($length = 16) {
+        $chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+        $str = "";
+        for ($i = 0; $i < $length; $i++) {
+            $str .= substr($chars, mt_rand(0, strlen($chars) - 1), 1);
+        }
+        return $str;
+    }
+
+
+
 }

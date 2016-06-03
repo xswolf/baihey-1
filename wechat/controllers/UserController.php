@@ -4,6 +4,7 @@ namespace wechat\controllers;
 use common\util\AutoAddress;
 use common\util\Cookie;
 use common\util\Curl;
+use common\wechat\WeChat;
 use wechat\models\Area;
 use wechat\models\User;
 
@@ -102,7 +103,12 @@ class UserController extends BaseController
     {
         $user = $this->weChatMember();
 
-        // 地区是否存cookie，否则存
+
+        $wxJSSDK = new WeChat();
+        $signPackage = $wxJSSDK->getSignPackage();
+        $this->assign('signPackage',$signPackage);
+
+        /*// 地区是否存cookie，否则存
         if (!isset($_COOKIE['bhy_u_city']) && !isset($_COOKIE['bhy_u_cityId'])) {
 
             // 自动获取地区并存储cookie
@@ -113,7 +119,7 @@ class UserController extends BaseController
             Cookie::getInstance()->setCookie('bhy_u_name', $user['username']);
             Cookie::getInstance()->setCookie('bhy_id', $user['id']);
             setcookie('bhy_user_id', $user['id'], YII_BEGIN_TIME + 3600 * 24 * 30, '/wap');
-        }
+        }*/
         return $this->render();
     }
 
