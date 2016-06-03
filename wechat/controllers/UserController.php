@@ -103,7 +103,7 @@ class UserController extends BaseController
     {
         $user = $this->weChatMember();
 
-        $this->actionWxLogin();
+        var_dump($user);
 
         $wxJSSDK = new WeChat();
         $signPackage = $wxJSSDK->getSignPackage();
