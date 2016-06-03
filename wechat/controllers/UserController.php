@@ -123,7 +123,7 @@ class UserController extends BaseController
         $result = json_decode($result);
         $cityName = $result->result->addressComponent->city;
         AutoAddress::getInstance()->autoAddress($cityName);
-        $this->renderAjax([$result->result->addressComponent->city]);
+        exit();
     }
 
     /**

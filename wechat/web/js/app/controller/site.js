@@ -15,41 +15,34 @@ define(['app/module', 'app/directive/directiveApi'
         // 默认还有更多
         $scope.pageLast = true;
 
-        // 默认重庆
-        var lng = 106.51228345689027;
-        var lat = 29.54206567258729;
+        function getLocation(){
+            // 默认重庆
+            var lng = 106.51228345689027;
+            var lat = 29.54206567258729;
 
-        if (window.navigator.geolocation) {
-            var options = {
-                enableHighAccuracy: true,
-            };
-            window.navigator.geolocation.getCurrentPosition(handleSuccess, handleError, options);
-        } else {
-            alert("浏览器不支持html5来获取地理位置信息");
+            if (window.navigator.geolocation) {
+                var options = {
+                    enableHighAccuracy: true,
+                };
+                window.navigator.geolocation.getCurrentPosition(handleSuccess, handleError, options);
+            } else {
+                alert("浏览器不支持html5来获取地理位置信息");
+            }
+
+            function handleSuccess(position) {
+                // 获取到当前位置经纬度  本例中是chrome浏览器取到的是google地图中的经纬度
+                lng = position.coords.longitude;
+                lat = position.coords.latitude;
+            }
+
+            function handleError() {
+
+            }
+
+            api.get('/wap/user/get-location', {lng: lng, lat: lat}).success(function (res) {
+            });
         }
-
-        function handleSuccess(position) {
-            // 获取到当前位置经纬度  本例中是chrome浏览器取到的是google地图中的经纬度
-            lng = position.coords.longitude;
-            lat = position.coords.latitude;
-        }
-
-        function handleError() {
-
-        }
-
-        api.get('/wap/user/get-location', {lng: lng, lat: lat}).success(function (res) {
-            //var data = JSON.parse(res);
-            alert(res);
-            /* // 存储cookie
-             ar.setCookie('bhy_u_cityId',data.result.addressComponent.city.replace('市',''))
-             for (var i in citys){
-             if(citys[i].name==data.result.addressComponent.city.replace('市','')){
-             alert(citys[i].id);
-             return;
-             }
-             }*/
-        });
+        getLocation();
 
 
         // 读取用户数据

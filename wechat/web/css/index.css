@@ -1,5 +1,4 @@
-/* welcome */
-.welcome .welcome_bg {
+#welcome {
   background: url("/wechat/web/images/welcome.jpg") no-repeat top;
   background-size: 100% 100%;
   height: 100%;
@@ -9,9 +8,10 @@
   left: 0;
   overflow: hidden;
 }
-.welcome .welcome_bg {
-  position: relative;
+#welcome {
+  position: absolute;
   width: 100%;
+  z-index: 99;
 }
 /* login */
 .login_bg {

@@ -54,8 +54,9 @@ define(["app/module", 'app/service/serviceApi'],
             $rootScope
                 .$on('$stateChangeStart',
                     function (event, toState, toParams, fromState, fromParams) {
-                        $ionicLoading.show();
-                        //console.info(event, toState, toParams, fromState, fromParams)
+                        if(toState.url != '/index'){
+                            $ionicLoading.show();
+                        }
                     });
             // 页面加载成功
             $rootScope
@@ -243,6 +244,7 @@ define(["app/module", 'app/service/serviceApi'],
                 //$urlRouterProvider.otherwise("/main/index");
             }])
             .controller('main', ['$scope', '$location', 'app.serviceApi','$ionicLoading', function ($scope, $location, api, $ionicLoading) {
+
                 if (ar.getCookie('bhy_user_id') > 0) {
                     api.getMessageNumber().success(function (res) {
                         $scope.msgNumber = parseInt(res.data);

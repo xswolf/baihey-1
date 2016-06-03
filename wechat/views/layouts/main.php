@@ -9,10 +9,20 @@
     <link href="/wechat/web/css/base.css" rel="stylesheet">
     <link href="/wechat/web/css/index.css" rel="stylesheet">
     <link href="/wechat/web/css/android.css" rel="stylesheet">
-    <link href="/wechat/web/css/plugin/animate/animate.css">
+    <link href="/wechat/web/css/plugin/animate/animate.css" rel="stylesheet">
+    <script>
+       setTimeout(function(){
+           document.getElementById('welcome').className = 'animated fadeOut';
+           setTimeout(function(){
+               document.getElementById('welcome').className = 'animated fadeOut hide';
+           },1100)
+       },3000)
+
+    </script>
 </head>
 <script data-main="/wechat/web/js/app" src="/wechat/web/js/plugin/requirejs/require.js"></script>
-<body >
+<body>
+<div id="welcome"></div>
 <?= $content ?>
 <!--[if lt IE 9]>
 <script src="/wechat/web/js/plugin/h5/html5.js"></script>
