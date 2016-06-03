@@ -143,14 +143,14 @@ class UserController extends BaseController
                 }
 
                 // 添加用户
-                $userId = \common\models\User::getInstance()->addUser($data);
+                $userInfo = \common\models\User::getInstance()->addUser($data);
                 //$userId = User::getInstance()->addUser($data);
-                if ($userId) {
+                if ($userInfo) {
                     // 模拟登录
-                    $data = User::getInstance()->login($data['username'], $data['password']);
+                    $data = User::getInstance()->login($userInfo['username'], $userInfo['password']);
 
                     // 发送默认密码
-                    \Yii::$app->messageApi->passwordMsg($data['username'], $data['password']);
+                    \Yii::$app->messageApi->passwordMsg($userInfo['username'], $userInfo['password']);
 
                     return $this->renderAjax(['status' => 1, 'msg' => '注册成功', 'data' => $data]);
                 } else {
