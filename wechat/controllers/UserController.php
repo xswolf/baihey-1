@@ -103,38 +103,41 @@ class UserController extends BaseController
     {
         $user = $this->weChatMember();
 
-        $wxJSSDK = new WeChat();
-        $signPackage = $wxJSSDK->getSignPackage();
-        $this->assign('signPackage',$signPackage);
-
-
-        $url = 'http://wechat.baihey.com/wap/site/main#/main/index';
-        Header("Location: $url");
-
-        /*// 地区是否存cookie，否则存
-        if (!isset($_COOKIE['bhy_u_city']) && !isset($_COOKIE['bhy_u_cityId'])) {
-
-            // 自动获取地区并存储cookie
-            AutoAddress::getInstance()->autoAddress();
-        }
         if (!isset($_COOKIE["bhy_u_name"]) && isset($user) && isset($user['username'])) {
 
             Cookie::getInstance()->setCookie('bhy_u_name', $user['username']);
             Cookie::getInstance()->setCookie('bhy_id', $user['id']);
             setcookie('bhy_user_id', $user['id'], YII_BEGIN_TIME + 3600 * 24 * 30, '/wap');
-        }*/
-//        return $this->render();
+        }
+
+        $url = 'http://wechat.baihey.com/wap/site/main#/main/index';
+        Header("Location: $url");
+
+
     }
 
     public function actionGetLocation(){
-        if(\Yii::$app->request->get()){
-            $url = 'http://api.map.baidu.com/geocoder/v2/?coordtype=wgs84ll&output=json&ak=Zh7mCxOxCyteqEhmCZtKPmhG&pois=0&location='.\Yii::$app->request->get('lat').','.\Yii::$app->request->get('lng');
-            $result = file_get_contents($url);
-            $this->renderAjax([$result]);
-        }else{
-            $this->__error('非法请求！');
+        // 微信获取用户基本信息自动注册并设置cookie
+        $user = $this->weChatMember();
+        if (!isset($_COOKIE["bhy_u_name"]) && isset($user) && isset($user['username'])) {
+
+            Cookie::getInstance()->setCookie('bhy_u_name', $user['username']);
+            Cookie::getInstance()->setCookie('bhy_id', $user['id']);
+            setcookie('bhy_user_id', $user['id'], YII_BEGIN_TIME + 3600 * 24 * 30, '/wap');
         }
+
+        $url = 'http://api.map.baidu.com/geocoder/v2/?coordtype=wgs84ll&output=json&ak=Zh7mCxOxCyteqEhmCZtKPmhG&pois=0&location='.\Yii::$app->request->get('lat').','.\Yii::$app->request->get('lng');
+        $result = file_get_contents($url);
+        /*// 地区是否存cookie，否则存
+        if (!isset($_COOKIE['bhy_u_city']) && !isset($_COOKIE['bhy_u_cityId'])) {
+            setcookie('bhy_u_city', json_encode($info['name']), YII_BEGIN_TIME + 3600 * 24 * 30, '/wap');
+            setcookie('bhy_u_cityId', $info['id'], YII_BEGIN_TIME + 3600 * 24 * 30, '/wap');
+            setcookie('bhy_u_cityPid', $info['parentId'], YII_BEGIN_TIME + 3600 * 24 * 30, '/wap');
+        }*/
+
+        $this->renderAjax([$result]);
     }
+
     /**
      * 注册
      * @return string

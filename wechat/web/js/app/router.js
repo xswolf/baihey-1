@@ -39,8 +39,7 @@ define(["app/module", 'app/service/serviceApi'],
                 }
 
                 // 判断用户是否登陆
-                console.log($location.$$url);
-                if ($location.$$url != '/main/index'){ // 首页不判断
+                if ($location.$$url != '/main/index' && $location.$$url != '/welcome'){ // 首页和欢迎页不判断
                     api.getLoginStatus().success(function (res) {
                         if(!res.status) {
                             location.href = '/wap/user/login';
@@ -69,6 +68,11 @@ define(["app/module", 'app/service/serviceApi'],
                 $ionicConfigProvider.templates.maxPrefetch(0);
                 $ionicConfigProvider.tabs.position("bottom");
                 $stateProvider
+                    .state('welcome', {     // 欢迎页
+                        url: "/welcome",
+                        templateUrl: "/wechat/views/user/welcome.html",
+                        controller: 'welcome'
+                    })
                     .state('main', {
                         url: "/main",
                         abstract: true,

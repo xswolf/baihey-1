@@ -6,6 +6,73 @@ define(['app/module', 'app/directive/directiveApi'
     , 'app/service/serviceApi'
 ], function (module) {
 
+    module.controller("welcome", ['app.serviceApi', '$scope', '$ionicPopup', function (api, $scope, $ionicPopup) {
+
+        if (document.body.scrollHeight > document.documentElement.clientHeight) {
+            $scope.winHeight = {
+                'height': document.body.scrollHeight + 'px'
+            }
+        } else {
+            $scope.winHeight = {
+                'height': document.documentElement.clientHeight + 'px'
+            }
+        }
+
+
+            // 默认重庆
+            var lng = 106.51228345689027;
+            var lat = 29.54206567258729;
+
+            if (window.navigator.geolocation) {
+                var options = {
+                    enableHighAccuracy: true,
+                };
+                window.navigator.geolocation.getCurrentPosition(handleSuccess, handleError, options);
+            } else {
+                alert("浏览器不支持html5来获取地理位置信息");
+            }
+
+            function handleSuccess(position) {
+                // 获取到当前位置经纬度  本例中是chrome浏览器取到的是google地图中的经纬度
+                lng = position.coords.longitude;
+                lat = position.coords.latitude;
+            }
+
+            function handleError() {
+
+            }
+
+            api.get('/wap/user/get-location', {lng: lng, lat: lat}).success(function (res) {
+                //var data = JSON.parse(res);
+                alert(res);
+               /* // 存储cookie
+                ar.setCookie('bhy_u_cityId',data.result.addressComponent.city.replace('市',''))
+                for (var i in citys){
+                    if(citys[i].name==data.result.addressComponent.city.replace('市','')){
+                        alert(citys[i].id);
+                        return;
+                    }
+                }*/
+            });
+
+
+        $scope.showMain =function(){
+
+        }
+
+        window.onorientationchange = function () {
+            switch (window.orientation) {
+                case -90:
+                case 90:  // 横屏
+                    break;
+                case 0:
+                case 180: //竖屏
+                    break;
+            }
+
+        }
+
+    }]);
     // 注册
     module.controller("User.register", ['app.serviceApi', '$scope', '$ionicPopup', function (api, $scope, $ionicPopup) {
 
@@ -120,9 +187,9 @@ define(['app/module', 'app/directive/directiveApi'
             result.success(function (data) {
                 if (data.status == 1) {
                     // 存储userInfo
-                    ar.setStorage('userInfo',data.data);
+                    ar.setStorage('userInfo', data.data);
                     window.location.href = '/wap/site/main#/main/index';
-                } else if(data.status == 2) {
+                } else if (data.status == 2) {
                     $ionicPopup.alert({title: '验证码错误'});
                 } else {
                     $ionicPopup.alert({title: '注册失败'});
@@ -160,7 +227,7 @@ define(['app/module', 'app/directive/directiveApi'
 
                 if (data.status) {
                     // 存储userInfo
-                    ar.setStorage('userInfo',data.data);
+                    ar.setStorage('userInfo', data.data);
                     window.location.href = '/wap/site/main#/main/index';
                 } else {
                     $ionicPopup.alert({title: '用户名或者密码错误'});
@@ -267,26 +334,26 @@ define(['app/module', 'app/directive/directiveApi'
         //设置新密码
         $scope.User.setpass = function () {
 
-            if(!ar.validatePass($scope.User.password)){
-                $ionicPopup.alert({title:'密码不能少于6位字符'})
+            if (!ar.validatePass($scope.User.password)) {
+                $ionicPopup.alert({title: '密码不能少于6位字符'})
                 return false;
             }
 
-            if($scope.User.password != $scope.User.repassword){
-                $ionicPopup.alert({title:'两次输入的密码不一致'});
+            if ($scope.User.password != $scope.User.repassword) {
+                $ionicPopup.alert({title: '两次输入的密码不一致'});
                 return false;
             }
 
-            api.save('url', $scope.User).success(function(data){
-                if(data.status){
+            api.save('url', $scope.User).success(function (data) {
+                if (data.status) {
                     //提交成功
-                    window.location.href='/wap/user/login'
+                    window.location.href = '/wap/user/login'
 
-                }else {
-                    $ionicPopup.alert({title:'设置密码失败'});
+                } else {
+                    $ionicPopup.alert({title: '设置密码失败'});
                 }
-            }).error(function(){
-                $ionicPopup.alert({title:'网络错误，请稍候再试'});
+            }).error(function () {
+                $ionicPopup.alert({title: '网络错误，请稍候再试'});
             });
 
         }
