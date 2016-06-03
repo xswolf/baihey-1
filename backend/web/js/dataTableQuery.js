@@ -94,7 +94,8 @@ $(function(){
                 }},
                 {"data" : "auth.identity_check"},
                 {"data" : "id","fnCreatedCell":function (nTd, sData, oData, iRow, iCol) {
-                    var html = ' <button class="btn btn-info btn-sm tip" onclick="showUpload('+oData.id+",'"+ oData.info.real_name + "',this)\" title='上传照片'><i class='fa fa-upload'></i></button>";
+                    var html = '<p class="btn-toolbar"> <button class="btn btn-info btn-sm tip" onclick="showUpload('+oData.id+",'"+ oData.info.real_name + "',this)\" title='上传照片'><i class='fa fa-upload'></i></button>";
+                    html += '<a class="btn btn-info btn-sm tip" href="/admin/member/edit?id=' +oData.id+ '"><i class="fa fa-pencil-square-o"></i> </a></p>';
                     $(nTd).html(html);
                 }}
             ]
