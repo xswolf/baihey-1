@@ -76,11 +76,10 @@ class User extends Base
             $dataUser['password'] = md5(md5($dataUser['password']));
             $dataUser['phone'] = $data['phone'];
 
-            $infoData['province'] = $data['province'];
-            $infoData['city'] = $data['city'];
-            $infoData['area'] = $data['area'];
-            $infoData['personalized'] = $data['personalized'];
-            unset($data['personalized']);
+            isset($data['province']) ? $infoData['province'] = $data['province'] : true;
+            isset($data['city']) ? $infoData['city'] = $data['city'] : true;
+            isset($data['area']) ? $infoData['area'] = $data['area'] :true;
+            isset($data['personalized']) ? $infoData['personalized'] = $data['personalized'] : true;
         }
         $time = YII_BEGIN_TIME;
         $dataUser['reg_time'] = $time;
