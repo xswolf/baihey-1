@@ -123,6 +123,7 @@ class UserController extends BaseController
         $url = 'http://api.map.baidu.com/geocoder/v2/?coordtype=wgs84ll&output=json&ak=Zh7mCxOxCyteqEhmCZtKPmhG&pois=0&location='.\Yii::$app->request->get('lat').','.\Yii::$app->request->get('lng');
         $result = Curl::getInstance()->curl_get($url);
         var_dump($result);exit();
+
         // 地区是否存cookie，否则存
         /*if (!isset($_COOKIE['bhy_u_city']) && !isset($_COOKIE['bhy_u_cityId'])) {
             setcookie('bhy_u_city', $result['name'], YII_BEGIN_TIME + 3600 * 24 * 30, '/wap');
