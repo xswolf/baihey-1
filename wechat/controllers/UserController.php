@@ -43,10 +43,10 @@ class UserController extends BaseController
         if ($this->isLogin()) {
             $id = (int)\Yii::$app->request->get('id');
             $userName = Cookie::getInstance()->getCookie('bhy_u_name');
-            if (isset($id) && $id>0){
+            if (isset($id) && $id > 0) {
                 $userInfo = User::getInstance()->getUserById($id);
 
-            }else{
+            } else {
                 $userInfo = User::getInstance()->getUserByName($userName);
 
             }
@@ -110,24 +110,20 @@ class UserController extends BaseController
             setcookie('bhy_user_id', $user['id'], YII_BEGIN_TIME + 3600 * 24 * 30, '/wap');
         }
 
-        $url ='http://wechat.baihey.com/wap/site/main#/main/index';
+        $url = 'http://wechat.baihey.com/wap/site/main#/main/index';
         Header("Location: $url");
         exit();
     }
 
-    public function actionGetLocation(){
+    public function actionGetLocation()
+    {
 
-        $url = 'http://api.map.baidu.com/geocoder/v2/?coordtype=wgs84ll&output=json&ak=Zh7mCxOxCyteqEhmCZtKPmhG&pois=0&location='.\Yii::$app->request->get('lat').','.\Yii::$app->request->get('lng');
+        $url = 'http://api.map.baidu.com/geocoder/v2/?coordtype=wgs84ll&output=json&ak=Zh7mCxOxCyteqEhmCZtKPmhG&pois=0&location=' . \Yii::$app->request->get('lat') . ',' . \Yii::$app->request->get('lng');
         $result = file_get_contents($url);
-
-        // 地区是否存cookie，否则存
-        /*if (!isset($_COOKIE['bhy_u_city']) && !isset($_COOKIE['bhy_u_cityId'])) {
-            setcookie('bhy_u_city', $result['name'], YII_BEGIN_TIME + 3600 * 24 * 30, '/wap');
-            setcookie('bhy_u_cityId', $result['id'], YII_BEGIN_TIME + 3600 * 24 * 30, '/wap');
-            setcookie('bhy_u_cityPid', $result['parentId'], YII_BEGIN_TIME + 3600 * 24 * 30, '/wap');
-        }*/
-
-        $this->renderAjax([$result]);
+        $result = json_decode($result);
+        $cityName = $result->result->addressComponent->city;
+        AutoAddress::getInstance()->autoAddress($cityName);
+        $this->renderAjax([$result->result->addressComponent->city]);
     }
 
     /**
@@ -151,7 +147,7 @@ class UserController extends BaseController
                 // 验证手机号是否存在
 
                 if (\common\models\User::getInstance()->mobileIsExist($data['phone'])) {
-                //if (User::getInstance()->getUserByName($data['username'])) {
+                    //if (User::getInstance()->getUserByName($data['username'])) {
                     return $this->renderAjax(['status' => 0, 'msg' => '手机号已存在', 'data' => []]);
                 }
 
