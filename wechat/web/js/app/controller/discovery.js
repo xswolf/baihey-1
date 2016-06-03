@@ -297,7 +297,6 @@ define(['app/module', 'app/directive/directiveApi'
 
         // 发布
         $scope.saveData = function () {
-            console.log($scope.formData);
             var userInfo = ar.getStorage('userInfo');
             $scope.formData.name = JSON.parse(userInfo.info).real_name;
             $scope.formData.pic = JSON.stringify($scope.imgList);
