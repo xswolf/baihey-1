@@ -110,16 +110,13 @@ class UserController extends BaseController
             setcookie('bhy_user_id', $user['id'], YII_BEGIN_TIME + 3600 * 24 * 30, '/wap');
         }
 
+        $url ='http://wechat.baihey.com/wap/site/main#/main/index';
+        Header("Location: $url");
+        exit();
     }
 
     public function actionGetLocation(){
-        // 微信获取用户基本信息自动注册并设置cookie
-        $user = $this->weChatMember();
-        if (!isset($_COOKIE["bhy_u_name"]) && isset($user) && isset($user['username'])) {
-            Cookie::getInstance()->setCookie('bhy_u_name', $user['username']);
-            Cookie::getInstance()->setCookie('bhy_id', $user['id']);
-            setcookie('bhy_user_id', $user['id'], YII_BEGIN_TIME + 3600 * 24 * 30, '/wap');
-        }
+
         $url = 'http://api.map.baidu.com/geocoder/v2/?coordtype=wgs84ll&output=json&ak=Zh7mCxOxCyteqEhmCZtKPmhG&pois=0&location='.\Yii::$app->request->get('lat').','.\Yii::$app->request->get('lng');
         $result = file_get_contents($url);
 
