@@ -14,7 +14,7 @@
                 var pic = $(".preview-pic").clone();
                 console.log(res.data[i].thumb_path);
                 pic.find("img").attr('src' , res.data[i].thumb_path);
-                $("#my-awesome-dropzone").append(pic.addClass('new_item').css('width' , '100px').css('display','inline-block'));
+                $("#my-awesome-dropzone").append(pic.removeClass("preview-pic").addClass('new_item').css('width' , '100px').css('display','inline-block'));
             }
         }});
 
