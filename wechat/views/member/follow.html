@@ -1,12 +1,12 @@
 <ion-view hide-tabs="true">
     <link href="/wechat/web/css/member.css" rel="stylesheet">
     <ion-header-bar class="com_w_100 bhy">
-        <button class="button button-icon icon ion-arrow-left-c" ui-sref="main.member"></button>
+        <button class="button button-icon icon ion-arrow-left-c" href="#/main/member/index"></button>
         <title class="title">谁关注了我</title>
     </ion-header-bar>
     <ion-content class="bhy com_w_100 m_bg follow">
         <ion-list show-delete="shouldShowDelete">
-            <ion-item class="item-avatar" ui-sref="main.member_user_info({userId:f.other,tempUrl:'main.member_follow'})" ng-repeat="f in followList">
+            <ion-item class="item-avatar" href="#/main/user_info?userId={{f.other}}$tempUrl=/main/member/follow" ng-repeat="f in followList">
                 <img src="{{f.info.head_pic}}">
                 <h2 class="clearfix">
                     <span class="fl">{{f.info.real_name | sex:f.sex :f.info.age}}</span>

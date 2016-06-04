@@ -110,15 +110,6 @@ define(["app/module", 'app/service/serviceApi'],
                             }
                         }
                     })
-                    .state('main.member_user_info', {  // 用户资料
-                        url: "/user_info?userId&tempUrl",
-                        views: {
-                            'member-tab': {
-                                templateUrl: "/wechat/views/member/user_info.html",
-                                controller: 'member.user_info'
-                            }
-                        }
-                    })
                     .state('main.message', {  // 消息首页
                         cache: false,
                         url: "/message",
@@ -182,7 +173,7 @@ define(["app/module", 'app/service/serviceApi'],
                     })
                     .state('main.dynmaic', {       // 个人动态
                         cache: false,
-                        url: "/dynmaic?userId?tempUrl",
+                        url: "/dynmaic",
                         views: {
                             'member-tab': {
                                 templateUrl: "/wechat/views/discovery/index.html",

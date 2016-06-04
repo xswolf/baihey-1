@@ -134,10 +134,10 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
     }]);
 
     // 个人动态
-    module.controller("member.dynamic", ['app.serviceApi', '$scope', '$ionicPopup', '$state', '$stateParams', function (api, $scope, $ionicPopup, $state, $stateParams) {
+    module.controller("member.dynamic", ['app.serviceApi', '$scope', '$ionicPopup', '$location', function (api, $scope, $ionicPopup, $location) {
 
         $scope.formData = [];
-        $scope.formData.userId = $stateParams.userId;
+        $scope.formData.userId = $location.$$search.userId;
 
         // 图片放大查看插件
         requirejs(['photoswipe', 'photoswipe_ui'], function (photoswipe, photoswipe_ui) {
@@ -219,7 +219,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
         }
 
         $scope.jump = function () {
-            $state.go($stateParams.tempUrl);
+            $location.url($location.$$search.tempUrl);
         }
 
     }]);
@@ -1704,7 +1704,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
         })
 
         $scope.jump = function () {
-            $state.go($stateParams.tempUrl);
+            $state.url($stateParams.tempUrl);
         }
 
         // 未关注

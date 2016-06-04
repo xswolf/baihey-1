@@ -414,7 +414,7 @@
     </ion-content>
     <ion-footer-bar align-title="left" class="bar-light">
         <div class="buttons w50 bor_r_1c">
-            <button class="button w100" style="font-size: 16px; color:#e4007f;" ui-sref="main.message_chat({id:otherUserInfo.id,head_pic:otherUserInfo.info.head_pic,real_name:otherUserInfo.info.real_name,sex:otherUserInfo.sex,age:otherUserInfo.info.age})"><i class="ion-chatbox-working cor21 mr5 vam fs22"></i>对话</button>
+            <button class="button w100" style="font-size: 16px; color:#e4007f;" href="#/main/chat?id={{otherUserInfo.id}}&head_pic={{otherUserInfo.info.head_pic}}&real_name={{otherUserInfo.info.real_name}}&sex={{otherUserInfo.sex}}&age={{otherUserInfo.info.age}}"><i class="ion-chatbox-working cor21 mr5 vam fs22"></i>对话</button>
         </div>
         <div class="buttons w50" >
             <button ng-if="!formData.follow" class="button w100"  style="font-size: 16px;" ng-click="addFollow()">

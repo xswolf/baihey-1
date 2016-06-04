@@ -2,7 +2,7 @@
     <link href="/wechat/web/css/member.css" rel="stylesheet">
     <link href="/wechat/web/css/plugin/bootstrap/css/font-awesome.min.css" rel="stylesheet">
     <ion-header-bar>
-        <button class="button button-icon icon ion-arrow-left-c" ui-sref="main.member"></button>
+        <button class="button button-icon icon ion-arrow-left-c" href="#/main/member/index"></button>
         <title class="title">我的资料</title>
         <button class="button button-icon" href="#/main/member/preview">预览</button>
     </ion-header-bar>
@@ -40,7 +40,7 @@
                     </span>
                 </p>
             </ion-item>
-            <ion-item  ui-sref="main.dynmaic({userId:userInfo.id,tempUrl:'main\/member'})">
+            <ion-item href="#/main/dynmaic?userId={{userInfo.id}}&tempUrl=/main/member/information">
                 <div class="info_l">
                     <p>个人动态</p>
                 </div>

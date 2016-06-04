@@ -10,7 +10,7 @@
             <ion-radio ng-repeat="bankCard in formData.userBankCardList" ng-value="bankCard.id" ng-model="formData.clientSide">
                 {{ bankCard.ad }}
             </ion-radio>
-            <ion-item ui-sref="main.member_add_bank_card">
+            <ion-item href="#/main/member/add_bank_card">
                 使用新卡提现
             </ion-item>
         </div>
