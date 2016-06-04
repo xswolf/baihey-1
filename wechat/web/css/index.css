@@ -112,6 +112,9 @@ a.weibo {
   background-color: #fc6da2;
   color: #fff;
 }
+.login_form .sexButton {
+  border-right: 1px solid #ddd !important;
+}
 /* forgetpass */
 .ft_btn {
   margin-top: 20px;

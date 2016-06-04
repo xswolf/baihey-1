@@ -65,7 +65,7 @@ class UserController extends BaseController
 
         // 判断是否自动登录
         if ($this->isLogin()) {
-            return $this->redirect('/wap/site/main');
+            return $this->redirect('/wap');
         }
 
         //判断是否点击提交
@@ -139,9 +139,9 @@ class UserController extends BaseController
             if (\Yii::$app->request->get('code') == \Yii::$app->session->get('reg_code')) {
 
                 // 注册数据处理
-                $sex = \Yii::$app->request->get('sex');
-                $data['sex'] = json_decode($sex);
-                $data['sex'] = $data['sex']->man ? 1 : 0;
+//                $sex = \Yii::$app->request->get('sex');   // TODO 前端sex值已处理为1或0。 这里可以删了，
+//                $data['sex'] = json_decode($sex);
+//                $data['sex'] = $data['sex']->man ? 1 : 0;
                 $data['phone'] = \Yii::$app->request->get('mobile');
 
                 // 验证手机号是否存在

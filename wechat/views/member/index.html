@@ -1,5 +1,6 @@
 <ion-view>
 <link href="/wechat/web/css/member.css" rel="stylesheet">
+<link href="/wechat/web/css/plugin/animate/animate.css" rel="stylesheet">
 <ion-content class="member com_w_100" ng-controller="member.index">
     <ion-list>
             <ion-item class="member_hdr" href="#/main/member/information" style="padding: 0;">
@@ -37,14 +38,14 @@
                     </button>
                 </div>
             </ion-item>
-            <div class="hdr_tips pr clearfix pl16" ng-if="userInfo.auth.identity_pic1 == '未知'" href="#/main/member/honesty_sfz">
+            <a class="hdr_tips pr clearfix pl16" ng-if="userInfo.auth.identity_pic1 == '未知'" href="#/main/member/honesty_sfz">
                 <p class="tips fl">
                     <i class="fl bhy-icon-tips-02 mr5"></i>
                     <span class="fl">您还未上传身份证！</span>
                     <i class="fr ion-ios-arrow-right vam fs20"></i>
                 </p>
-            </div>
-        <ion-item class="personal_info mt10" ui-sref="main.dynmaic({userId:userInfo.id,tempUrl:'main\/member'})">
+            </a>
+        <ion-item class="personal_info mt10" href="#/main/dynmaic?userId={{userInfo.id}}&tempUrl=main/member">
             <div class="member_menu_i rounded per">
                 <i class="bhy-icon-member-menu-01"></i>
             </div>
@@ -77,12 +78,12 @@
                 <i class="ion-ios-arrow-right vam"></i>
             </div>
         </ion-item>
-        <ion-item class="marker_info" href="">
+        <ion-item class="marker_info" href="#/main/member/matchmaker">
             <div class="member_menu_i rounded marker">
                 <i class="bhy-icon-member-menu-04"></i>
             </div>
             <div class="menu_name">
-                <p>申请红娘服务</p>
+                <p>我的专属红娘</p>
             </div>
             <div class="menu_arrow">
                 <i class="ion-ios-arrow-right vam"></i>
@@ -165,6 +166,7 @@
                 <i class="ion-ios-arrow-right vam"></i>
             </div>
         </ion-item>
+        <button class="button button-light button-block" ng-click="loginOut()">退出登录</button>
     </ion-list>
 </ion-content>
 </ion-view>

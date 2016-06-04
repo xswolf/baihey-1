@@ -6,6 +6,7 @@ define(['app/module', 'app/directive/directiveApi'
 ], function (module) {
 
     module.controller("site.index", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$ionicModal', '$ionicActionSheet', '$ionicLoading', '$ionicBackdrop', function (api, $scope, $timeout, $ionicPopup, $ionicModal, $ionicActionSheet, $ionicLoading,$ionicBackdrop) {
+
         // 搜索条件
         $scope.searchForm = [];
 

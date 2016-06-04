@@ -29,18 +29,23 @@
         <div class="login_form tac mr0a">
             <form action="" method="post" name="reg">
                 <div class="form-group clearfix ">
-
-                    <span class="sex mr15" ng-click="User.selSex1()" ng-class="{true:'checked',false:''}[User.sex.man]">我是男生</span>
+                    <div class="button-bar">
+                        <button type="button" class="button sexButton" ng-class="{0:'button-stable',1:'button-calm'}[User.sex]" ng-click="sexToggle(1,$event)">我是男生</button>
+                        <button type="button" class="button" ng-class="{0:'button-calm',1:'button-stable'}[User.sex]" ng-click="sexToggle(0,$event)">我是女生</button>
+                    </div>
+                    <!--<span class="sex mr15" ng-click="User.selSex1()" ng-class="{true:'checked',false:''}[User.sex.man]">我是男生</span>
                     <span class="sex" ng-click="User.selSex2()" ng-class="{true:'checked',false:''}[User.sex.woman]">我是女生</span>
-
+-->
                 </div>
                 <div class="form-group">
                     <label class="item item-input">
+                        <i class="ion-iphone mr16 fs18 cor50"></i>
                         <input type="text" class="login_input mobile" ng-model="User.mobile" placeholder="请输入正确的手机号码">
                     </label>
                 </div>
                 <div class="form-group clearfix">
                     <div class="item item-input">
+                        <i class="ion-key mr16 fs18 cor50"></i>
                         <input type="text" class="login_input pass fl mr5" id="code" ng-model="User.code"
                                placeholder="请输入短信验证码">
                         <a href="javascript:;" class="button button-positive button-small"
@@ -56,10 +61,7 @@
                 <div class="form-group mt15 tal cor0 fs12"><p>注册即表示您同意<a class="agree"
                                                                          href="javascript:;">《嘉瑞百合缘用户协议》</a></p>
                     <p>账户密码通过短信发送到您的手机上，请及时前往个人中心修改您的密码。</p></div>
-                <div class="form-group mt50"><h5 class="cor0">或用以下帐号登录</h5></div>
-                <div class="form-group mt30"><a href="" class="third-party qq"></a> <a href=""
-                                                                                       class="third-party wechat"></a>
-                    <a href="" class="third-party weibo"></a></div>
+                <div class="form-group mt10"><p class="cor0 tar"> 已有帐号？<a href="/wap/user/login" class="reg_link cor0"> 立即登录<i class="ion-arrow-right-a ml5"></i></a></p></div>
             </form>
 
         </div>

@@ -50,6 +50,7 @@
 .hdr_tips {
   background-color: #69b1f3;
   width: 100%;
+  display: block;
 }
 .hdr_tips .tips {
   color: #fff;
@@ -637,4 +638,17 @@
 }
 .allTextLink {
   text-decoration: none;
+}
+/* matchmaker */
+.matchmaker.matchmaker_bg1 {
+  background: url("/wechat/web/images/member/matchmaker_bg.jpg") no-repeat;
+}
+.matchmaker .mk_t {
+  -webkit-box-shadow: 0 0 10px #ff9999;
+  -moz-box-shadow: 0 0 10px #ff9999;
+  box-shadow: 0 0 10px #ff9999;
+  background-color: #ffcccc;
+  height: auto;
+  margin-top: 20px;
+  width: 290px;
 }

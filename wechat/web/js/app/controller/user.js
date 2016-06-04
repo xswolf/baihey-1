@@ -6,36 +6,6 @@ define(['app/module', 'app/directive/directiveApi'
     , 'app/service/serviceApi'
 ], function (module) {
 
-    module.controller("welcome", ['app.serviceApi', '$scope', '$ionicPopup', function (api, $scope, $ionicPopup) {
-
-        if (document.body.scrollHeight > document.documentElement.clientHeight) {
-            $scope.winHeight = {
-                'height': document.body.scrollHeight + 'px'
-            }
-        } else {
-            $scope.winHeight = {
-                'height': document.documentElement.clientHeight + 'px'
-            }
-        }
-
-
-        $scope.showMain =function(){
-
-        }
-
-        window.onorientationchange = function () {
-            switch (window.orientation) {
-                case -90:
-                case 90:  // 横屏
-                    break;
-                case 0:
-                case 180: //竖屏
-                    break;
-            }
-
-        }
-
-    }]);
     // 注册
     module.controller("User.register", ['app.serviceApi', '$scope', '$ionicPopup', function (api, $scope, $ionicPopup) {
 
@@ -55,21 +25,9 @@ define(['app/module', 'app/directive/directiveApi'
         }
 
 
-        $scope.User.sex = {
-            man: false,
-            woman: false
-        }
-
-        // 男生点击事件
-        $scope.User.selSex1 = function () {
-            $scope.User.sex.man = true;
-            $scope.User.sex.woman = false;
-        }
-
-        // 女生点击事件
-        $scope.User.selSex2 = function () {
-            $scope.User.sex.man = false;
-            $scope.User.sex.woman = true;
+        $scope.sexToggle = function(sex,event){
+            event.stopPropagation();
+            $scope.User.sex = sex;
         }
 
         function validatePhone(phone) {
@@ -134,8 +92,7 @@ define(['app/module', 'app/directive/directiveApi'
         //注册提交
         $scope.User.register = function () {
 
-
-            if ($scope.User.sex.man == false && $scope.User.sex.woman == false) {
+            if (!$scope.User.sex) {
                 $ionicPopup.alert({title: '请选择您的性别'});
                 return false;
             }
@@ -166,7 +123,7 @@ define(['app/module', 'app/directive/directiveApi'
     }])
 
     // 登录
-    module.controller("User.login", ['app.serviceApi', '$scope', '$ionicPopup', function (api, $scope, $ionicPopup) {
+    module.controller("User.login", ['app.serviceApi', '$scope', '$ionicPopup','$location', function (api, $scope, $ionicPopup,$location) {
 
         $scope.User = {};
 
@@ -215,6 +172,7 @@ define(['app/module', 'app/directive/directiveApi'
             }
             return true;
         }
+
     }])
 
     //找回密码
@@ -223,7 +181,6 @@ define(['app/module', 'app/directive/directiveApi'
         $scope.User = {}
 
         $scope.User.codeBtn = '获取验证码';
-
 
         // 发送验证码
         $scope.User.getCode = function () {

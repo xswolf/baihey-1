@@ -9,16 +9,17 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
     // 我
     module.controller("member.index", ['app.serviceApi', '$scope', '$ionicPopup', function (api, $scope, $ionicPopup) {
 
-        /* // 判断是否登录
-         api.getLoginStatus().success(function (res) {
-         if (!res.status) {
-         location.href = '/wap/user/login';
-         return false;
-         }
-         });*/
 
-        //$scope.userInfo = ar.getStorage('userInfo');
+        // 退出登录
+        $scope.loginOut = function(){
+            // 清除cookie
+            ar.setCookie('bhy_user_id',null);
+            ar.setCookie('bhy_u_name',null);
+            ar.setCookie('bhy_u_sex',null);
 
+            // 跳转登录页
+            $location.url('/wap/user/login');
+        }
     }]);
 
     // 资料首页
@@ -2841,6 +2842,12 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
 
 
     }]);
+
+
+    module.controller("member.matchmaker", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$location', function (api, $scope, $timeout, $ionicPopup, $location) {
+
+    }]);
+
     return module;
 })
 
