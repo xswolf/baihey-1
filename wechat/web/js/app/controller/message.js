@@ -5,7 +5,7 @@ define(['app/module', 'app/directive/directiveApi'
     , 'app/service/serviceApi', 'comm'
 ], function (module) {
 
-    module.controller("message.index", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$ionicModal', '$ionicActionSheet', '$ionicLoading','$state', function (api, $scope, $timeout, $ionicPopup, $ionicModal, $ionicActionSheet, $ionicLoading,$state) {
+    module.controller("message.index", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$ionicModal', '$ionicActionSheet', '$ionicLoading','$location', function (api, $scope, $timeout, $ionicPopup, $ionicModal, $ionicActionSheet, $ionicLoading,$location) {
 
         $timeout($scope.sumSend);
         // 判断是否登录
@@ -90,7 +90,7 @@ define(['app/module', 'app/directive/directiveApi'
         $scope.doRefresh = function() {
             $scope.messageNum += 5;
             $timeout(function() {
-                api.getAmountMessageById('url',$scope.messageNum,$stateParams.messageId).success(function(res){
+                api.getAmountMessageById('url',$scope.messageNum,$location.$$search.messageId).success(function(res){
                     // 加载5条数据
                 });
                 $scope.$broadcast('scroll.refreshComplete');

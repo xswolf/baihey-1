@@ -1647,7 +1647,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
     }]);
 
     // 谁关注了我
-    module.controller("member.follow", ['app.serviceApi', '$scope', '$ionicPopup', '$ionicLoading', '$state', '$stateParams', function (api, $scope, $ionicPopup, $ionicLoading, $state, $stateParams) {
+    module.controller("member.follow", ['app.serviceApi', '$scope', '$ionicPopup', '$ionicLoading', function (api, $scope, $ionicPopup, $ionicLoading) {
         api.list('/wap/follow/followed-list', {}).success(function (res) {
             $scope.followList = res.data;
             for (var i in $scope.followList) {
@@ -1658,10 +1658,10 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
     }]);
 
     // 查看用户资料
-    module.controller("member.user_info", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$ionicModal', '$ionicActionSheet', '$ionicLoading', '$state', '$stateParams', function (api, $scope, $timeout, $ionicPopup, $ionicModal, $ionicActionSheet, $ionicLoading, $state, $stateParams) {
+    module.controller("member.user_info", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$ionicModal', '$ionicActionSheet', '$ionicLoading', '$location', function (api, $scope, $timeout, $ionicPopup, $ionicModal, $ionicActionSheet, $ionicLoading, $location) {
 
         $scope.formData = [];
-        $scope.formData.userId = $stateParams.userId;
+        $scope.formData.userId = $location.$$search.userId;
         $scope.otherUserInfo = [];
 
         api.list("/wap/user/get-user-info", {'id': $scope.formData.userId}).success(function (res) {
@@ -1704,7 +1704,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
         })
 
         $scope.jump = function () {
-            $state.url($stateParams.tempUrl);
+            $location.url($location.$$search.tempUrl);
         }
 
         // 未关注

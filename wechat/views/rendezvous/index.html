@@ -46,12 +46,12 @@
             </div>
 
             <div class="item tabs tabs-secondary tabs-icon-left" ng-if="vo.id != userInfo.user_id">
-                <a class="tab-item func" ng-if="!vo.is_apply" ui-sref="main.rendezvous_ask({rendezvous_id:vo.r_id,user_id:vo.id,head_pic:vo.info.head_pic,real_name:vo.info.real_name,sex:vo.sex,age:vo.info.age,is_marriage:vo.info.is_marriage,education:vo.info.education})">
+                <a class="tab-item func" ng-if="!vo.is_apply" href="#/main/rendezvous_ask?rendezvous_id={{vo.r_id}}&user_id={{vo.id}}&head_pic={{vo.info.head_pic}}&real_name={{vo.info.real_name}}&sex={{vo.sex}}&age={{vo.info.age}}&is_marriage={{vo.info.is_marriage}}&education={{vo.info.education}}">
                     <i class="ion-heart fs16"></i>
                     约TA
                 </a>
                 <p class="tab-item func" ng-if="vo.is_apply">已约</p>
-                <a class="tab-item func" ui-sref="main.message_chat({id:vo.id,head_pic:vo.info.head_pic,real_name:vo.info.real_name,sex:vo.sex,age:vo.info.age})">
+                <a class="tab-item func" href="#/main/chat?id={{vo.id}}&head_pic={{vo.info.head_pic}}&real_name={{vo.info.real_name}}&sex={{vo.sex}}&age={{vo.info.age}}">
                     <i class="ion-chatbox fs16"></i>
                     对话
                 </a>

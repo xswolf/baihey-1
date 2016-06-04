@@ -6,9 +6,8 @@ define(['app/module', 'app/directive/directiveApi'
 ], function (module) {
 
     // 发现
-    module.controller("discovery.index", ['app.serviceApi', '$rootScope', '$scope', '$timeout', '$ionicPopup', '$ionicModal', '$ionicActionSheet', '$ionicLoading', '$location','$state','$stateParams', function (api, $rootScope, $scope, $timeout, $ionicPopup, $ionicModal, $ionicActionSheet, $ionicLoading, $location,$state,$stateParams) {
+    module.controller("discovery.index", ['app.serviceApi', '$rootScope', '$scope', '$timeout', '$ionicPopup', '$ionicModal', '$ionicActionSheet', '$ionicLoading', '$location', function (api, $rootScope, $scope, $timeout, $ionicPopup, $ionicModal, $ionicActionSheet, $ionicLoading, $location) {
 
-        //$state.reload();
         var userInfo = ar.getStorage('userInfo');
 
         if ($location.$$search.userId) {
@@ -75,7 +74,7 @@ define(['app/module', 'app/directive/directiveApi'
         // 加载更多
         $scope.loadMore = function () {
 
-            api.list('/wap/member/get-dynamic-list' , {user_id:$stateParams.userId , page:$scope.page}).success(function (res) {
+            api.list('/wap/member/get-dynamic-list' , {user_id:$location.$$search.userId , page:$scope.page}).success(function (res) {
                 if (res.data == ''){
                     $scope.morePage = false;
                 }
@@ -130,7 +129,7 @@ define(['app/module', 'app/directive/directiveApi'
     }]);
 
     // 发现-个人
-    module.controller("discovery.single", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$ionicModal', '$ionicActionSheet', '$ionicLoading', '$stateParams', function (api, $scope, $timeout, $ionicPopup, $ionicModal, $ionicActionSheet, $ionicLoading, $stateParams) {
+    module.controller("discovery.single", ['app.serviceApi', '$scope', '$location', function (api, $scope, $location) {
 
         $scope.jump = function () {
             window.history.go(-1);
@@ -138,7 +137,7 @@ define(['app/module', 'app/directive/directiveApi'
         var userInfo = ar.getStorage('userInfo');
         var info = JSON.parse(userInfo.info);
         $scope.user_id = userInfo.id;
-        api.list('/wap/member/get-dynamic' , {id:$stateParams.id}).success(function (res) {
+        api.list('/wap/member/get-dynamic' , {id:$location.$$search.id}).success(function (res) {
             res.data.imgList = JSON.parse(res.data.pic);
             $scope.dis = res.data;
             $comment = ar.cleanQuotes(JSON.stringify(res.data.comment))
@@ -193,7 +192,7 @@ define(['app/module', 'app/directive/directiveApi'
         // 发表评论
         $scope.sendComment = function () {
             $scope.formData.private = $scope.user.private;
-            $scope.formData.dynamicId = $stateParams.id;
+            $scope.formData.dynamicId = $location.$$search.id;
             api.save('/wap/member/add-comment' , $scope.formData).success(function (res) {
                 if (res.data.id>0) {
                     $scope.commentList.push({
@@ -217,7 +216,7 @@ define(['app/module', 'app/directive/directiveApi'
 
 
     // 发现-发布动态
-    module.controller("discovery.released", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$ionicModal', '$ionicActionSheet', '$ionicLoading', '$stateParams', 'FileUploader', function (api, $scope, $timeout, $ionicPopup, $ionicModal, $ionicActionSheet, $ionicLoading, $stateParams, FileUploader) {
+    module.controller("discovery.released", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$ionicModal', '$ionicActionSheet', '$ionicLoading', 'FileUploader', function (api, $scope, $timeout, $ionicPopup, $ionicModal, $ionicActionSheet, $ionicLoading, FileUploader) {
 
         $scope.imgList = [];
         $scope.formData = [];
