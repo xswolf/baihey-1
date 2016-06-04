@@ -638,11 +638,6 @@ input[type="number"]{-moz-appearance:textfield;}
 .item-ng-enter-active{
     opacity:1;
 }
-/*不同时出现*/
-.item.ng-enter-stagger {
-    transition-delay:0.5s;
-    transition-duration:0;
-}
 
 .label{
     border-radius: 3px;
