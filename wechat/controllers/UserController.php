@@ -112,7 +112,7 @@ class UserController extends BaseController
             Cookie::getInstance()->setCookie('bhy_id', $user['id']);
             setcookie('bhy_user_id', $user['id'], YII_BEGIN_TIME + 3600 * 24 * 30, '/wap');
         }
-        echo "<script>localtion.href='".$url."'</script>";
+        echo "<script>location.href='".$url."'</script>";
         exit();
     }
 
