@@ -416,7 +416,7 @@
                                         <div class="form-group">
                                             <label class="col-md-3 control-label">其他要求</label>
                                             <div class="input-group col-md-6">
-                                                <textarea class="form-control" rows="3" name="zo[zo_other]">{{$user.info->zo_other}}</textarea>
+                                                <textarea class="form-control" rows="3" name="zo[zo_other]">{{if isset($user.info->zo_other)}}{{$user.info->zo_other}}{{/if}}</textarea>
                                             </div>
                                         </div>
                                         <div style="display: none" id="img_hidden">
