@@ -98,6 +98,7 @@ define(["app/module", 'app/service/serviceApi'],
                         }
                     })
                     .state('main.member-children', {   // 我-子页
+                        cache: false,
                         url: '/member/:tempName',
                         views: {
                             'member-tab': {

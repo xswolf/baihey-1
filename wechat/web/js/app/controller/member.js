@@ -1713,18 +1713,36 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
             $location.url($location.$$search.tempUrl);
         }
 
+        var followData = [];
+        followData.user_id = ar.getCookie("bhy_user_id");
+        followData.follow_id = $scope.formData.userId;
         // 未关注
         $scope.formData.follow = false;
-
+        api.getStatus('/wap/follow/get-follow-status', followData).success(function (res) {
+            if(res.data) {
+                $scope.formData.follow = true;
+            }
+        });
         // 取消关注
         $scope.cancelFollow = function () {
-
-            $scope.formData.follow = false;
+            api.save('/wap/follow/del-follow', followData).success(function (res) {
+                if(res.data) {
+                    $scope.formData.follow = false;
+                    // 成功，提示
+                    $ionicPopup.alert({title: '取消关注成功'});
+                }
+            });
         }
 
         // 关注
         $scope.addFollow = function () {
-
+            api.save('/wap/follow/add-follow', followData).success(function (res) {
+                if(res.data) {
+                    $scope.formData.follow = true;
+                    // 成功，提示
+                    $ionicPopup.alert({title: '加关注成功'});
+                }
+            });
         }
 
     }]);

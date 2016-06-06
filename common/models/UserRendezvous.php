@@ -81,6 +81,7 @@ class UserRendezvous extends Base
             $arr = Functions::getInstance()->getTimeByMonth($where['date']);
             $obj->andWhere(['between', 'r.create_time', $arr[0], $arr[1]]);
         }
+        $obj->andWhere(['>', 'r.rendezvous_time', time()]);
 
 //        echo $obj->createCommand()->getRawSql();exit;
         return $obj->all();
@@ -220,7 +221,7 @@ class UserRendezvous extends Base
         $apply->user_id = $user_id;
         $apply->create_time = YII_BEGIN_TIME;
         $apply->phone = $data['mobile'];
-        $apply->message = $data['msg'];
+        isset($data['msg']) ? $apply->message = $data['msg'] : true;
         return $apply->insert(false);
     }
 }
