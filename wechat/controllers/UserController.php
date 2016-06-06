@@ -106,15 +106,16 @@ class UserController extends BaseController
 
 
         $url = 'http://wechat.baihey.com/wap';
-        header("Cache-Control: no-cache");
-        header("Pragma: no-cache");
-        header("Location:$url");
+//        header("Cache-Control: no-cache");
+//        header("Pragma: no-cache");
+//        header("Location:$url");
         if (!isset($_COOKIE["bhy_u_name"]) && isset($user) && isset($user['username'])) {
 
             Cookie::getInstance()->setCookie('bhy_u_name', $user['username']);
             Cookie::getInstance()->setCookie('bhy_id', $user['id']);
             setcookie('bhy_user_id', $user['id'], YII_BEGIN_TIME + 3600 * 24 * 30, '/wap');
         }
+        echo "<script>localtion.href='"+$url+"'</script>";
         exit();
     }
 
