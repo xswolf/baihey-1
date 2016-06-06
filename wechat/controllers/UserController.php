@@ -102,9 +102,6 @@ class UserController extends BaseController
     public function actionWelcome()
     {
         $user = $this->weChatMember();
-
-
-
         $url = 'http://wechat.baihey.com/wap';
 //        header("Cache-Control: no-cache");
 //        header("Pragma: no-cache");
