@@ -113,7 +113,7 @@ class UserController extends BaseController
         $url = 'http://wechat.baihey.com/wap';
         header("Cache-Control: no-cache");
         header("Pragma: no-cache");
-        header("Location: $url");
+        header("Location:$url");
         exit();
     }
 
