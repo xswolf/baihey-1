@@ -104,7 +104,9 @@ class MemberController extends BaseController
             exit();
         }
         if ($postData = $request->post()){
+
             $postData['zo']['other'] = trim($postData['zo']['zo_other']);
+            $postData['zo']['other'] = str_replace("\t" , "" , $postData['zo']['other']);
             $postData['user_id'] = $request->get('id');
             $postData['info']['age'] = strtotime($postData['info']['age']);
 

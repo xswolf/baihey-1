@@ -260,10 +260,7 @@
                                             <label class="col-md-3 control-label">个性签名</label>
                                             <div class="input-group col-md-6">
                                             <textarea name="personalized" class="form-control" rows="3"
-                                                      placeholder="请填写个性签名">
-
-                                                {{$user.personalized}}
-                                            </textarea>
+                                                      placeholder="请填写个性签名">{{$user.personalized}}</textarea>
                                             </div>
                                         </div>
                                     </div>
@@ -419,9 +416,7 @@
                                         <div class="form-group">
                                             <label class="col-md-3 control-label">其他要求</label>
                                             <div class="input-group col-md-6">
-                                                <textarea class="form-control" rows="3" name="zo[zo_other]">
-                                                    {{$user.info->zo_other}}
-                                                </textarea>
+                                                <textarea class="form-control" rows="3" name="zo[zo_other]">{{$user.info->zo_other}}</textarea>
                                             </div>
                                         </div>
                                         <div style="display: none" id="img_hidden">
