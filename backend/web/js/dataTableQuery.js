@@ -69,7 +69,7 @@ $(function(){
 
             };
             ext_params.columns = [
-                {"data" : "id"},
+                {"data" : "phone"},
                 {"data" : "info.head_pic","fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
                     $(nTd).html("<img class='user_img' src='"+oData.info.head_pic+"'>");
                 }},
@@ -79,7 +79,23 @@ $(function(){
                 {"data" : "age"},
                 {"data" : "info.is_marriage"},
                 {"data" : "info.height"},
-                {"data" : "info.education"},
+                {"data" : "info.education" , fnCreatedCell : function (nTd, sData, oData, iRow, iCol) {
+                    var education = '';
+                    if (oData.info.education == 1){
+                        education = '初中';
+                    } else if (oData.info.education == 2){
+                        education = '高中';
+                    } else if (oData.info.education == 3){
+                        education = '大专';
+                    }else if (oData.info.education == 4){
+                        education = '本科';
+                    }else if (oData.info.education == 5){
+                        education = '硕士';
+                    }else if (oData.info.education == 6){
+                        education = '博士';
+                    }
+                    $(nTd).html(education);
+                }},
                 {"data" : "info.level"},
                 {"data" : "service_status"},
                 {"data" : "is_auth"},
