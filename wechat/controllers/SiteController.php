@@ -19,12 +19,12 @@ class SiteController extends BaseController
      */
     public function actionMain()
     {
-        exit(121);
         return $this->render();
     }
 
     public function actionIndex()
     {
+        echo 12312;exit;
        echo "<script>";
         echo "location.href='/wap/site/main#/main/index'";
        echo "</script>";

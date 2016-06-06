@@ -102,7 +102,7 @@ class UserController extends BaseController
     public function actionWelcome()
     {
         $user = $this->weChatMember();
-        $url = 'http://wechat.baihey.com/wap/site/main#/main/index?code='.\Yii::$app->request->get( 'code' );
+        $url = 'http://wechat.baihey.com/wap/site?code='.\Yii::$app->request->get( 'code' );
 //        header("Cache-Control: no-cache");
 //        header("Pragma: no-cache");
 //        header("Location:$url");
