@@ -27,12 +27,15 @@
 //            },1100)
 //        },3000)
 //    }
+    alert(1)
     function addElement() {
         var div = document.createElement("div");
         div.setAttribute("id", "welcome");
         document.body.appendChild(div);
     }
 </script>
+asdfsadf
+<?= $content ?>
 <!--[if lt IE 9]>
 <script src="/wechat/web/js/plugin/h5/html5.js"></script>
 <script src="/wechat/web/js/plugin/h5/excanvas.min.js"></script>
