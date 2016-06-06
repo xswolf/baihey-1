@@ -9,6 +9,7 @@
 namespace backend\controllers;
 
 
+use common\models\Area;
 use common\models\ChargeGoods;
 use common\models\ChargeOrder;
 use common\models\User;
@@ -103,8 +104,10 @@ class MemberController extends BaseController
             exit();
         }
         if ($postData = $request->post()){
+            $postData['zo']['other'] = trim($postData['zo']['zo_other']);
             $postData['user_id'] = $request->get('id');
             $postData['info']['age'] = strtotime($postData['info']['age']);
+
             User::getInstance()->editUser($postData);
         }
         $user = User::getInstance()->getUserById($id);
@@ -115,6 +118,7 @@ class MemberController extends BaseController
         $this->assign('sport' , Config::getInstance()->getListByType(1));
         $this->assign('movie' , Config::getInstance()->getListByType(2));
         $this->assign('food' , Config::getInstance()->getListByType(3));
+        $this->assign('travel' , Area::getInstance()->getWentTravelList());
         return $this->render();
     }
 

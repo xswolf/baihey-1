@@ -419,7 +419,9 @@
                                         <div class="form-group">
                                             <label class="col-md-3 control-label">其他要求</label>
                                             <div class="input-group col-md-6">
-                                                <textarea class="form-control" rows="3" name="zo[other]"></textarea>
+                                                <textarea class="form-control" rows="3" name="zo[zo_other]">
+                                                    {{$user.info->zo_other}}
+                                                </textarea>
                                             </div>
                                         </div>
                                         <div style="display: none" id="img_hidden">
@@ -431,43 +433,60 @@
                                         <div class="form-group">
                                             <label class="col-md-3 control-label">想去的地方</label>
                                             <div class="input-group col-md-6">
-                                                <select multiple class="form-control mult_select"></select>
+
+                                                <select multiple class="form-control mult_select" data-name="want_travel">
+                                                    {{foreach from=$travel item=vo}}
+                                                    <option value="{{$vo.id}}">{{$vo.name}}</option>
+                                                    {{/foreach}}
+                                                </select>
+
+                                                <input type="hidden" name="want_travel" value="" id="want_travel">
                                             </div>
                                         </div>
                                         <div class="form-group">
                                             <label class="col-md-3 control-label">去过的地方</label>
                                             <div class="input-group col-md-6">
-                                                <select multiple class="form-control mult_select"></select>
+
+                                                <select multiple class="form-control mult_select" data-name="went_travel">
+                                                    {{foreach from=$travel item=vo}}
+                                                    <option value="{{$vo.id}}">{{$vo.name}}</option>
+                                                    {{/foreach}}
+                                                </select>
+
+                                                <input type="hidden" name="went_travel" value="" id="went_travel">
                                             </div>
                                         </div>
                                         <div class="form-group">
                                             <label class="col-md-3 control-label">喜欢的美食</label>
                                             <div class="input-group col-md-6">
-                                                <select multiple class="form-control mult_select">
+                                                <select multiple class="form-control mult_select" data-name="like_food">
                                                     {{foreach from=$food item=vo}}
                                                     <option value="{{$vo.id}}">{{$vo.name}}</option>
                                                     {{/foreach}}
                                                 </select>
+                                                <input type="hidden" name="like_food" value="" id="like_food">
                                             </div>
                                         </div>
                                         <div class="form-group">
                                             <label class="col-md-3 control-label">喜欢的运动</label>
                                             <div class="input-group col-md-6">
-                                                <select multiple class="form-control mult_select">
+                                                <select multiple class="form-control mult_select"  data-name="love_sport">
                                                     {{foreach from=$sport item=vo}}
                                                     <option value="{{$vo.id}}">{{$vo.name}}</option>
                                                     {{/foreach}}
                                                 </select>
+                                                <input type="hidden" name="love_sport" value="" id="love_sport">
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <label class="col-md-3 control-label">想看的电影</label>
+                                            <label class="col-md-3 control-label">喜欢的影视</label>
                                             <div class="input-group col-md-6">
-                                                <select multiple class="form-control mult_select">
+                                                <select multiple class="form-control mult_select" data-name="want_film">
                                                     {{foreach from=$movie item=vo}}
                                                     <option value="{{$vo.id}}">{{$vo.name}}</option>
                                                     {{/foreach}}
                                                 </select>
+                                                <input type="hidden" name="want_film" value="" id="want_film">
                                             </div>
                                         </div>
                                     </div>
@@ -658,12 +677,17 @@
                 zo.zo_zodiac = '{{if isset($user.info->zo_zodiac)}}{{$user.info->zo_zodiac}}{{/if}}';
                 zo.zo_constellation = '{{if isset($user.info->zo_constellation)}}{{$user.info->zo_constellation}}{{/if}}';
                 zo.zo_address = '{{if isset($user.info->zo_address)}}{{$user.info->zo_address}}{{/if}}';
+
+                zo.want_travel = '{{if isset($user.want_travel)}}{{$user.want_travel}}{{/if}}';
+                zo.went_travel = '{{if isset($user.went_travel)}}{{$user.went_travel}}{{/if}}';
+                zo.like_food = '{{if isset($user.like_food)}}{{$user.like_food}}{{/if}}';
+                zo.love_sport = '{{if isset($user.love_sport)}}{{$user.love_sport}}{{/if}}';
+                zo.want_film = '{{if isset($user.want_film)}}{{$user.want_film}}{{/if}}';
                 var value = eval("zo."+$(this).data('name'));
                 if (value != undefined){
                     value = value.split(",");
 
                 }
-                console.log(value)
                 $(this).val(value);
 
                 $("#"+$(this).data('name')).val($(this).val())
