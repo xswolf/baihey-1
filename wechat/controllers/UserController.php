@@ -110,7 +110,7 @@ class UserController extends BaseController
             setcookie('bhy_user_id', $user['id'], YII_BEGIN_TIME + 3600 * 24 * 30, '/wap');
         }
 
-        $url = 'http://wechat.baihey.com/wap/site/main#/main/index';
+        $url = 'http://wechat.baihey.com/wap';
         Header("Location: $url");
         exit();
     }
