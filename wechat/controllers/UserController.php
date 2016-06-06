@@ -102,10 +102,10 @@ class UserController extends BaseController
     public function actionWelcome()
     {
         $user = $this->weChatMember();
-        $url = 'http://wechat.baihey.com/wap/site?code='.\Yii::$app->request->get( 'code' );
-//        header("Cache-Control: no-cache");
-//        header("Pragma: no-cache");
-//        header("Location:$url");
+        $url = 'http://wechat.baihey.com/wap';
+        header("Cache-Control: no-cache");
+        header("Pragma: no-cache");
+        header("Location:$url");
         if (!isset($_COOKIE["bhy_u_name"]) && isset($user) && isset($user['username'])) {
 
             Cookie::getInstance()->setCookie('bhy_u_name', $user['username']);
