@@ -323,10 +323,9 @@ define(['app/module', 'app/directive/directiveApi'
 
             // 发送文本消息调用接口
             $scope.send = function () {
+                if ($scope.send_content == '' || $scope.send_content == null) return;
 
-                if ($scope.message == '' || $scope.message == null) return;
-
-                $scope.sendMessage($scope.message, $scope.sendId, $scope.receiveId, 'send');
+                $scope.sendMessage($scope.send_content, $scope.sendId, $scope.receiveId, 'send');
 
             }
 
