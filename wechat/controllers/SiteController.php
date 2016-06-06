@@ -19,7 +19,6 @@ class SiteController extends BaseController
      */
     public function actionMain()
     {
-        echo 1231;exit;
         return $this->render();
     }
 
