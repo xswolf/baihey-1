@@ -43,7 +43,7 @@ define(['app/module', 'app/directive/directiveApi'
             api.get('/wap/user/get-location', {lng: lng, lat: lat}).success(function (res) {
             });
         }
-        getLocation();
+        //getLocation();
 
 
         // 读取用户数据

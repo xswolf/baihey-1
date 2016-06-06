@@ -234,7 +234,7 @@ define(["app/module", 'app/service/serviceApi'],
                             }
                         }
                     });
-                $urlRouterProvider.otherwise("/main/index");
+                //$urlRouterProvider.otherwise("/main/index");
             }])
             .controller('main', ['$scope', '$location', 'app.serviceApi','$ionicLoading', function ($scope, $location, api, $ionicLoading) {
 

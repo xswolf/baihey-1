@@ -2867,8 +2867,13 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
 
     }]);
 
-
+    // 我的专属红娘
     module.controller("member.matchmaker", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$location', function (api, $scope, $timeout, $ionicPopup, $location) {
+
+    }]);
+
+    // 红娘服务的四大优势
+    module.controller("member.matchmaker_service", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$location', function (api, $scope, $timeout, $ionicPopup, $location) {
 
     }]);
 
