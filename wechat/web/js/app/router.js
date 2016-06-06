@@ -121,10 +121,11 @@ define(["app/module", 'app/service/serviceApi'],
                     })
                     .state('main.message_chat', { // 聊天页面
                         cache: false,
-                        url: "/chat?id&head_pic&real_name&sex&age",
+                        url: "/chat",
                         views: {
                             'message-tab': {
-                                templateUrl: "/wechat/views/message/chat.html"
+                                templateUrl: "/wechat/views/message/chat.html",
+                                controller:'message.chat'
                             }
                         },
 
