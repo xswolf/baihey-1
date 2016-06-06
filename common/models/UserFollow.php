@@ -98,7 +98,11 @@ class UserFollow extends Base
      */
     public function addFollow($where)
     {
-        if(!$this->findOne($where)) {
+        if($follow = $this->findOne($where)) {
+            $follow->status = 1;
+            $follow->update_time = YII_BEGIN_TIME;
+            return $follow->save(false);
+        } else {
             $time = YII_BEGIN_TIME;
             $this->user_id = $where['user_id'];
             $this->follow_id = $where['follow_id'];
@@ -106,8 +110,6 @@ class UserFollow extends Base
             $this->update_time = $time;
             $this->status = 1;
             return $this->insert(false);
-        } else {
-            return false;
         }
 
     }

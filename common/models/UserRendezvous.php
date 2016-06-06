@@ -81,6 +81,7 @@ class UserRendezvous extends Base
             $arr = Functions::getInstance()->getTimeByMonth($where['date']);
             $obj->andWhere(['between', 'r.create_time', $arr[0], $arr[1]]);
         }
+        $obj->andWhere(['>', 'r.rendezvous_time', time()]);
 
 //        echo $obj->createCommand()->getRawSql();exit;
         return $obj->all();

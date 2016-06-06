@@ -6,7 +6,7 @@
     </ion-header-bar>
     <ion-content class="bhy com_w_100 m_bg follow">
         <ion-list show-delete="shouldShowDelete">
-            <ion-item class="item-avatar" href="#/main/user_info?userId={{f.other}}$tempUrl=/main/member/follow" ng-repeat="f in followList">
+            <ion-item class="item-avatar" href="#/main/member/user_info?userId={{f.other}}&tempUrl=/main/member/follow" ng-repeat="f in followList">
                 <img src="{{f.info.head_pic}}">
                 <h2 class="clearfix">
                     <span class="fl">{{f.info.real_name | sex:f.sex :f.info.age}}</span>
