@@ -123,12 +123,13 @@ class MemberController extends BaseController
     /**
      * 获取发过的个人动态
      */
-    public function actionGetDynamicList(){
+    public function actionGetDynamicList()
+    {
 
         isset($this->get['page']) ? $page = $this->get['page'] : $page = 0;
         isset($this->get['user_id']) ? $userId = $this->get['user_id'] : $userId = -1;
 
-        $list = User::getInstance()->getDynamicList($userId , $page);
+        $list = User::getInstance()->getDynamicList($userId, $page);
 
 
         $this->renderAjax(['status=>1', 'data' => $list]);
@@ -137,12 +138,13 @@ class MemberController extends BaseController
     /**
      * 设置点赞
      */
-    public function actionSetClickLike(){
-        if ($this->get['add'] == 1){
-            $flag = User::getInstance()->setClickLike($this->get['dynamicId'],$this->get['user_id'] , $this->get['add']);
+    public function actionSetClickLike()
+    {
+        if ($this->get['add'] == 1) {
+            $flag = User::getInstance()->setClickLike($this->get['dynamicId'], $this->get['user_id'], $this->get['add']);
 
-        }else{
-            $flag = User::getInstance()->cancelClickLike($this->get['dynamicId'],$this->get['user_id'] , $this->get['add']);
+        } else {
+            $flag = User::getInstance()->cancelClickLike($this->get['dynamicId'], $this->get['user_id'], $this->get['add']);
 
         }
         $this->renderAjax(['status=>1', 'data' => $flag]);
@@ -151,7 +153,8 @@ class MemberController extends BaseController
     /**
      * 发布个人动态
      */
-    public function actionAddDynamic(){
+    public function actionAddDynamic()
+    {
 
         $user_id = \common\util\Cookie::getInstance()->getCookie('bhy_id')->value;
 
@@ -165,7 +168,7 @@ class MemberController extends BaseController
         if ($flag > 0) {
             $data = User::getInstance()->getDynamicById(\Yii::$app->db->lastInsertID);
             $this->renderAjax(['status=>1', 'data' => $data[0]]);
-        }else{
+        } else {
             $this->renderAjax(['status=>-1', 'data' => '发布失败']);
         }
     }
@@ -173,7 +176,8 @@ class MemberController extends BaseController
     /**
      * 获取单条动态内容
      */
-    public function actionGetDynamic(){
+    public function actionGetDynamic()
+    {
 
         $data = User::getInstance()->getDynamicById($this->get['id']);
         $data[0]['comment'] = User::getInstance()->getCommentById($this->get['id']);
@@ -183,7 +187,8 @@ class MemberController extends BaseController
     /**
      * 获取动态评论内容
      */
-    public function actionGetComment(){
+    public function actionGetComment()
+    {
 
         $list = User::getInstance()->getCommentById($this->get['id']);
         $this->renderAjax(['status=>1', 'data' => $list]);
@@ -192,20 +197,22 @@ class MemberController extends BaseController
     /**
      * 发布评论
      */
-    public function actionAddComment(){
+    public function actionAddComment()
+    {
 
         $data['content'] = $this->get['content'];
         $data['private'] = $this->get['private'] == 'true' ? 1 : 0;
         $data['dynamicId'] = $this->get['dynamicId'];
         $data['create_time'] = time();
         $id = User::getInstance()->addComment($data);
-        $this->renderAjax(['status=>1', 'data' => ['id'=>$id,'create_time'=>$data['create_time']]]);
+        $this->renderAjax(['status=>1', 'data' => ['id' => $id, 'create_time' => $data['create_time']]]);
     }
 
     /**
      * 获取关注列表
      */
-    public function actionGetFollow(){
+    public function actionGetFollow()
+    {
 
         $list = User::getInstance()->getFollowList();
         $this->renderAjax(['status=>1', 'data' => $list]);
@@ -214,7 +221,8 @@ class MemberController extends BaseController
     /**
      * 获取红包信息
      */
-    public function actionBriberyInfo(){
+    public function actionBriberyInfo()
+    {
         $user_id = \common\util\Cookie::getInstance()->getCookie('bhy_id')->value;
         $data = User::getInstance()->briberyInfo($user_id);
         $this->renderAjax(['status=>1', 'data' => $data]);
@@ -223,12 +231,22 @@ class MemberController extends BaseController
     /**
      * 获取发送或收到的红包列表
      */
-    public function actionBriberyList(){
+    public function actionBriberyList()
+    {
 
         isset($this->get['page']) ? $page = $this->get['page'] : $page = 0;
-        $flag = $this->get['flag'] ==  'true' ? true : false;
+        $flag = $this->get['flag'] == 'true' ? true : false;
         $user_id = \common\util\Cookie::getInstance()->getCookie('bhy_id')->value;
-        $data = User::getInstance()->getBriberyList($user_id , $flag , $page);
+        $data = User::getInstance()->getBriberyList($user_id, $flag, $page);
+        $this->renderAjax(['status=>1', 'data' => $data]);
+    }
+
+    /**
+     * 退出登录
+     */
+    public function actionLoginOut()
+    {
+        $data = User::getInstance()->loginOut();
         $this->renderAjax(['status=>1', 'data' => $data]);
     }
 }

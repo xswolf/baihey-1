@@ -1,6 +1,7 @@
 <?php
 namespace common\models;
 
+use common\util\Cookie;
 use Yii;
 use yii\db\Query;
 
@@ -13,6 +14,7 @@ class User extends Base
         $handle = (new Query())->from($this->tablePrefix.'user u')
             ->innerJoin($this->tablePrefix.'user_information i' , 'u.id=i.user_id')
             ->select("*")
+            ->orderBy('id desc')
             ->offset($start)
             ->limit($limit);
 
@@ -541,5 +543,16 @@ class User extends Base
             ->insert($this->tablePrefix.'user_consumption_log',$log)
             ->execute();
         return $row;
+    }
+
+    /**
+     * 退出登录
+     * @return bool
+     */
+    public function loginOut()
+    {
+        Cookie::getInstance()->getCookie('bhy_id') ? Cookie::getInstance()->delCookie('bhy_id') : true;
+        Cookie::getInstance()->getCookie('bhy_u_name') ? Cookie::getInstance()->delCookie('bhy_u_name') : true;
+        return true;
     }
 }

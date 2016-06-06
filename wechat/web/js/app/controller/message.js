@@ -87,15 +87,19 @@ define(['app/module', 'app/directive/directiveApi'
         }
 
         var viewScroll = $ionicScrollDelegate.$getByHandle('messageDetailsScroll');
+        $scope.messageNum = 0;
         $scope.doRefresh = function() {
-            $scope.messageNum += 5;
             $timeout(function() {
-                api.getAmountMessageById('url',$scope.messageNum,$location.$$search.messageId).success(function(res){
-                    // 加载5条数据
-                });
-                $scope.$broadcast('scroll.refreshComplete');
+                var num = 5;
+                var list  = ar.getStorage('chat_messageHistory' + $scope.receiveId);
+                var length = list.length;
+                $scope.messageNum += num;
+                var start = length - $scope.messageNum<=0 ? 0 : length - $scope.messageNum;
+
+                $scope.historyList = list.slice(start,length);
 
             }, 200);
+
         };
 
         window.addEventListener("native.keyboardshow", function(e){
@@ -211,15 +215,15 @@ define(['app/module', 'app/directive/directiveApi'
             })
         }
 
-        // 对方是否认证身份
-        $scope.auth_validate = function (receviceId) {
 
-            api.getUserAuthStatus(receviceId).success(function (res) {
+        var userInfoList = ar.getStorage('messageList');
+        for  ( var i in userInfoList ){
+            if ($scope.receiveId == userInfoList[i].id){
+                console.log(userInfoList[i].auth)
+                $scope.auth_validate = userInfoList[i].auth.identity_check;
+                console.log($scope.auth_validate)
 
-                // 显示警示语
-                $scope.u_auth_validate = res.status;
-
-            })
+            }
         }
 
         // 红娘评价
@@ -238,14 +242,15 @@ define(['app/module', 'app/directive/directiveApi'
         $scope.sex         = $location.search().sex;
         $scope.age         = $location.search().age;
         $scope.sendHeadPic = $scope.receiveHeadPic = $location.search().head_pic.replace(/~2F/g , "/");
-        $scope.historyList = ar.getStorage('chat_messageHistory' + $scope.receiveId);
+
         api.getUserInfo($scope.receiveId).success(function (res) {
             $rootScope.receiveUserInfo = res.data;
         });
         api.list("/wap/message/message-history", {id: $scope.receiveId}).success(function (data) {
 
-            $rootScope.historyList = $scope.historyList == null ? $scope.historyList = data : $scope.historyList = $scope.historyList.concat(data);
-            ar.setStorage('chat_messageHistory' + $scope.receiveId, $scope.historyList);
+            $scope.historyListHide = ar.getStorage('chat_messageHistory' + $scope.receiveId);
+            $rootScope.historyListHide = $scope.historyListHide == null ? $scope.historyListHide = data : $scope.historyListHide = $scope.historyListHide.concat(data);
+            ar.setStorage('chat_messageHistory' + $scope.receiveId, $scope.historyListHide);
             var messageList = ar.getStorage('messageList');
 
             for (var i in messageList) { // 设置消息列表一看状态
@@ -255,6 +260,7 @@ define(['app/module', 'app/directive/directiveApi'
                 }
             }
             ar.setStorage('messageList', messageList);
+            $scope.doRefresh();
         }).error(function () {
 
             console.log('页面message.js出现错误，代码：/wap/chat/message-history');

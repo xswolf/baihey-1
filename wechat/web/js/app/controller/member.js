@@ -9,16 +9,17 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
     // 我
     module.controller("member.index", ['app.serviceApi', '$scope', '$ionicPopup', function (api, $scope, $ionicPopup) {
 
-
         // 退出登录
         $scope.loginOut = function(){
-            // 清除cookie
-            ar.setCookie('bhy_user_id',null);
-            ar.setCookie('bhy_u_name',null);
-            ar.setCookie('bhy_u_sex',null);
-
-            // 跳转登录页
-            $location.url('/wap/user/login');
+            api.save('/wap/member/login-out', {}).success(function (res) {
+                // 跳转登录页
+                ar.delCookie('bhy_u_sex');
+                ar.delCookie('bhy_u_city');
+                ar.delCookie('bhy_user_id');
+                ar.delCookie('bhy_u_cityId');
+                ar.delCookie('bhy_u_cityPid');
+                location.href='/wap/user/login';
+            });
         }
     }]);
 
@@ -1323,7 +1324,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
     module.controller("member.zo_age", ['app.serviceApi', '$scope', '$ionicPopup', function (api, $scope, $ionicPopup) {
 
         $scope.formData = [];
-        var zo_age = $scope.userInfo.info.zo_age.split('-');
+        var zo_age = $scope.userInfo.info.zo_age.split(',');
         $scope.formData.zo_min_age = zo_age[0];
         $scope.formData.zo_msx_age = zo_age[1];
         $scope.zo_ageMaxList = [];
@@ -1345,7 +1346,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
         // 保存
         $scope.saveData = function () {
             var formData = [];
-            formData.zo_age = $scope.formData.zo_min_age + '-' + $scope.formData.zo_msx_age;
+            formData.zo_age = $scope.formData.zo_min_age + ',' + $scope.formData.zo_msx_age;
             api.save('/wap/member/save-data', formData).success(function (res) {
                 // 保存
                 $scope.userInfo.info.zo_age = formData.zo_age;
@@ -1358,7 +1359,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
     module.controller("member.zo_height", ['app.serviceApi', '$scope', '$ionicPopup', function (api, $scope, $ionicPopup) {
 
         $scope.formData = [];
-        var zo_height = $scope.userInfo.info.zo_height.split('-');
+        var zo_height = $scope.userInfo.info.zo_height.split(',');
         $scope.formData.zo_min_height = zo_height[0];
         $scope.formData.zo_msx_height = zo_height[1];
         $scope.zo_heightMaxList = [];
@@ -1380,7 +1381,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
         // 保存
         $scope.saveData = function () {
             var formData = [];
-            formData.zo_height = $scope.formData.zo_min_height + '-' + $scope.formData.zo_msx_height;
+            formData.zo_height = $scope.formData.zo_min_height + ',' + $scope.formData.zo_msx_height;
             api.save('/wap/member/save-data', formData).success(function (res) {
                 // 保存
                 $scope.userInfo.info.zo_height = formData.zo_height;
@@ -1423,7 +1424,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
         $scope.marriageList = config_infoData.marriage;
 
         $scope.formData.userMarriageIDList = [];   //用户数据  未婚、离异
-        var zo_marriage = $scope.userInfo.info.zo_marriage != '未知' && $scope.userInfo.info.zo_marriage ? $scope.userInfo.info.zo_marriage.split('-') : [];
+        var zo_marriage = $scope.userInfo.info.zo_marriage != '未知' && $scope.userInfo.info.zo_marriage ? $scope.userInfo.info.zo_marriage.split(',') : [];
         for (var i in zo_marriage) {
             if (zo_marriage[i] != '') {
                 $scope.formData.userMarriageIDList[i] = parseInt(zo_marriage[i]);
@@ -1460,7 +1461,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
         // 保存
         $scope.saveData = function () {
             var formData = [];
-            formData.zo_marriage = $scope.formData.userMarriageIDList.join('-');
+            formData.zo_marriage = $scope.formData.userMarriageIDList.join(',');
             api.save('/wap/member/save-data', formData).success(function (res) {
                 $scope.userInfo.info.zo_marriage = formData.zo_marriage;
                 $scope.setUserStorage();
@@ -1515,7 +1516,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
         $scope.zodiacList = config_infoData.zodiac;
 
         $scope.formData.userZodiacIDList = [];   //用户数据  鼠、牛
-        var zo_zodiac = $scope.userInfo.info.zo_zodiac != '未知' && $scope.userInfo.info.zo_zodiac ? $scope.userInfo.info.zo_zodiac.split('-') : [];
+        var zo_zodiac = $scope.userInfo.info.zo_zodiac != '未知' && $scope.userInfo.info.zo_zodiac ? $scope.userInfo.info.zo_zodiac.split(',') : [];
         for (var i in zo_zodiac) {
             $scope.formData.userZodiacIDList[i] = parseInt(zo_zodiac[i]);
         }
@@ -1548,7 +1549,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
         // 保存
         $scope.saveData = function () {
             var formData = [];
-            formData.zo_zodiac = $scope.formData.userZodiacIDList.join('-');
+            formData.zo_zodiac = $scope.formData.userZodiacIDList.join(',');
             api.save('/wap/member/save-data', formData).success(function (res) {
                 $scope.userInfo.info.zo_zodiac = formData.zo_zodiac;
                 $scope.setUserStorage();
@@ -1567,7 +1568,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
         $scope.constellationList = config_infoData.constellation;
 
         $scope.formData.userConstellationIDList = [];   //用户数据  狮子座、天秤座
-        var zo_constellation = $scope.userInfo.info.zo_constellation != '未知' && $scope.userInfo.info.zo_constellation ? $scope.userInfo.info.zo_constellation.split('-') : [];
+        var zo_constellation = $scope.userInfo.info.zo_constellation != '未知' && $scope.userInfo.info.zo_constellation ? $scope.userInfo.info.zo_constellation.split(',') : [];
         for (var i in zo_constellation) {
             $scope.formData.userConstellationIDList[i] = parseInt(zo_constellation[i]);
         }
@@ -1599,7 +1600,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
         // 保存
         $scope.saveData = function () {
             var formData = [];
-            formData.zo_constellation = $scope.formData.userConstellationIDList.join('-');
+            formData.zo_constellation = $scope.formData.userConstellationIDList.join(',');
             api.save('/wap/member/save-data', formData).success(function (res) {
                 $scope.userInfo.info.zo_constellation = formData.zo_constellation;
                 $scope.setUserStorage();

@@ -50,15 +50,15 @@ var ar = {
             var Days = day;
             var exp = new Date();
             exp.setTime(exp.getTime() + Days * 24 * 60 * 60 * 1000);
-            document.cookie = name + "=" + escape(value) + ";expires=" + exp.toGMTString() + ";path=/";
+            document.cookie = name + "=" + escape(value) + ";expires=" + exp.toGMTString() + ";path=/wap";
         },
 
         'delCookie': function (name) {
             var exp = new Date();
             exp.setTime(exp.getTime() - 1);
-            var cval = getCookie(name);
+            var cval = this.getCookie(name);
             if (cval != null)
-                document.cookie = name + "=" + cval + ";expires=" + exp.toGMTString() + ";path=/";
+                document.cookie = name + "=" + cval + ";expires=" + exp.toGMTString() + ";path=/wap";
         },
 
         'cookieUser': function (userName) {

@@ -41,9 +41,7 @@ class Cookie {
     }
 
     public function delCookie($name){
-        setcookie($name, "", time()-3600);//把失效日期设置为过去1小时
-        unset($_COOKIE[$name]);
-        $cookies = Yii::$app->request->cookies;
+        $cookies = \Yii::$app->response->cookies;
 
         $cookies->remove($name);
         return true;

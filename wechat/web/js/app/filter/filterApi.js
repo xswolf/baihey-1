@@ -25,7 +25,7 @@ define(['app/module'], function (module) {
         if (!input) {
             return '不限';
         }
-        var info = input.split('-');
+        var info = input.split(',');
         var name = '';
         for (var i in info) {
             name += getConfigName(config, parseInt(info[i])) + ' ';
@@ -268,7 +268,7 @@ define(['app/module'], function (module) {
     module.filter('zo_age', function () {
         return function (input, arr) {
             if (typeof(input) != 'undefined' && input != '') {
-                var info = input.split('-');
+                var info = input.split(',');
                 if (info[1] == '0') {
                     return info[0] + '-' + '不限';
                 } else {
