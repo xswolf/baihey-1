@@ -18,7 +18,7 @@
 <script data-main="/wechat/web/js/app" src="/wechat/web/js/plugin/requirejs/require.js"></script>
 <body>
 <script>
-    if(location.hash == '#/main/index'){
+    if(location.hash == '#/main/index1212'){
         addElement();
         setTimeout(function(){
             document.getElementById('welcome').className = 'animated fadeOut';
