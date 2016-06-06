@@ -33,7 +33,6 @@
         document.body.appendChild(div);
     }
 </script>
-asdfsdf
 <?= $content ?>
 <!--[if lt IE 9]>
 <script src="/wechat/web/js/plugin/h5/html5.js"></script>
