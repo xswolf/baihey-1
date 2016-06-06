@@ -76,6 +76,7 @@ define(["app/module", 'app/service/serviceApi'],
                     })
                     .state('main', {
                         url: "/main",
+                        cache:false,
                         abstract: true,
                         templateUrl: "main.html",
                         controller: 'main'
