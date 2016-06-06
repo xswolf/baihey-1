@@ -215,15 +215,15 @@ define(['app/module', 'app/directive/directiveApi'
             })
         }
 
-        // 对方是否认证身份
-        $scope.auth_validate = function (receviceId) {
 
-            api.getUserAuthStatus(receviceId).success(function (res) {
+        var userInfoList = ar.getStorage('messageList');
+        for  ( var i in userInfoList ){
+            if ($scope.receiveId == userInfoList[i].id){
+                console.log(userInfoList[i].auth)
+                $scope.auth_validate = userInfoList[i].auth.identity_check;
+                console.log($scope.auth_validate)
 
-                // 显示警示语
-                $scope.u_auth_validate = res.status;
-
-            })
+            }
         }
 
         // 红娘评价
