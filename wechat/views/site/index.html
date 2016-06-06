@@ -1,1 +1,300 @@
-1231232131
+<ion-view>
+    <ion-header-bar class="com_w_100">
+        <button ng-click="cityModal.show()" class="button button-icon "><i
+                class="fs16 ion-android-pin positive mr5"></i><span ng-bind="cityName"></span><i
+                class="ml5 fs14 ion-android-arrow-dropdown positive"></i></button>
+        <button ng-click="search()" class="button button-icon">搜索</button>
+    </ion-header-bar>
+
+    <ion-content class="com_w_100 has-header site">
+            <div class="row" ng-if="userInfo.info">
+                <div class="col col-25"><img class="item_uimg rounded" ng-if="userInfo.info.head_pic == '未知'" ng-src="/wechat/web/images/u_noimg.jpg"><img class="item_uimg rounded" ng-if="userInfo.info.head_pic != '未知'" ng-src="{{userInfo.info.head_pic}}"></div>
+                <div class="col col-75">
+                    <div class="row pl0">
+                        <div class="col" ng-if="userInfo.info.real_name != '未知'">会员{{userInfo.info.real_name}}，您好！</div>
+                        <div class="col" ng-if="userInfo.info.real_name == '未知'">会员ID:{{userInfo.id}}，您好！</div>
+                        <label class="label-right fs12 cor20">ID:{{userInfo.id}}</label>
+                    </div>
+
+                    <div class="row pl0">
+                        <div class="col"><a class="warn" href="/member/information" ng-if="userInfo.auth.identity_pic1 == '未知'"><i
+                                class="ion-ios-information cor0 mr5"></i>请您上传身份证，完善资料 >></a></div>
+                    </div>
+                </div>
+            </div>
+            <div class="row" ng-if="!userInfo.info">
+                <div class="col col-25"><img class="item_uimg rounded"  src="/wechat/web/images/u_noimg.jpg"></div>
+                <div class="col col-75">
+
+                    <div class="row pl0">
+                        <div class="col" >您好！您还没有<a href="/wap/user/login">登录</a>！</div>
+                    </div>
+
+                    <div class="row pl0">
+                        <div class="col"></div>
+                    </div>
+                </div>
+            </div>
+
+        <ion-list ng-if="userList.length > 0">
+            <ion-item ng-repeat="user in userList" ng-if="user.id != userInfo.id" item="item" href="#/main/chat?id={{user.id}}&head_pic={{user.info.head_pic}}&real_name={{user.info.real_name}}&sex={{user.sex}}&age={{user.info.age}}" >
+                <div class="row">
+                    <div class="col col-25"><img class="item_uimg rounded" src="{{user.info.head_pic}}" onerror="this.src='/wechat/web/images/no_img.png'"></div>
+
+                    <div class="col col-75">
+                        <div class="row pl0">
+                            <div class="col">
+                                <span class="fwb fs14" ng-if="user.info.real_name != '未知'">{{user.info.real_name | sex:user.sex :user.info.age}}</span>
+                                <span class="fwb fs14" ng-if="user.info.real_name == '未知'">会员ID:{{user.id}}</span>
+                                <span ng-if="user.info.age != '未知'" class="cor19 fs12">{{user.info.age | timeToAge}}岁</span> <span ng-if="user.info.height != '未知'"
+                                    class="cor19 fs12">{{user.info.height}}cm</span>
+                                <span ng-if="user.info.is_marriage != '未知'" class="cor19 fs12">{{user.info.is_marriage | marriage}}</span>
+                            </div>
+                            <div class="col-20"><label class="label-right fs12"><i
+                                    class="ion-android-pin mr5 positive"></i>{{user.info.local}}</label>
+                            </div>
+                        </div>
+
+                        <div class="row pl0">
+                            <p class="col fs12"><span class="identity sfz" ng-if="user.auth.identity_check">身份证</span> <span class="identity phone" ng-if="user.phone">手机</span> <span ng-if="user.info.level == 1" class="identity vip">vip</span> <span ng-if="user.info.level == 2" class="identity guest">贵宾</span> <span ng-if="user.info.level == 3" class="identity diamond">钻石</span></p>
+                        </div>
+
+                        <div class="row pl0">
+                            <div class="col">
+                                <p class="cor20 signature">{{user.personalized}}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </ion-item>
+        </ion-list>
+        <ion-infinite-scroll
+                ng-if="moreDataCanBeLoaded()"
+                on-infinite="loadMore()"
+                distance="1%">
+        </ion-infinite-scroll>
+
+
+        <ion-list ng-if="userList.length <= 0">
+            <ion-item>
+                <p class="tac">没有相关的数据，您可以放宽搜索条件后再试！</p>
+            </ion-item>
+        </ion-list>
+    </ion-content>
+
+
+    <script id="selCityModal.html" type="text/ng-template">
+        <ion-modal-view>
+            <ion-header-bar>
+                <button href="javascript:;" ng-click="cityModal.hide()" class="button button-icon " ng-model="searchForm.data.age"><i
+                        class="fs16 ion-android-pin positive mr5"></i>{{modalCityName}}<i
+                        class="ml5 fs14 ion-android-arrow-dropup positive"></i></button>
+            </ion-header-bar>
+            <ion-content>
+                <ion-scroll zooming="false"
+                            ng-style="scrollStyle" style="border-right: 1px solid #ccc;">
+                    <ion-list style="height: 3000px;">
+                        <ion-item ng-repeat="province in provinceList track by province.id" item="province"
+                                  class="item tac" ng-class="{true:'selected',flase:''}[pvId == province.id]"
+                                  ng-click="selected_pv({{province.id}})">
+                            {{province.name}}
+                        </ion-item>
+                    </ion-list>
+                </ion-scroll>
+                <ion-scroll zooming="false" ng-style="scrollStyle">
+                    <ion-list class="city" style="height: 3000px;">
+                        <ion-item ng-repeat="city in cityList track by city.id" item="city" class="item tac"
+                                  ng-if="pvId == city.parentId" ng-click="selected_city({{city.id}})"
+                                  ng-class="{true:'selected',flase:''}[cityId == city.id]">
+                            {{city.name}} <i class="ml25 ion-ios-checkmark-outline"></i>
+                        </ion-item>
+                    </ion-list>
+                </ion-scroll>
+            </ion-content>
+        </ion-modal-view>
+    </script>
+
+
+    <script id="MoreSearchModal.html" type="text/ng-template">
+        <ion-modal-view>
+            <ion-header-bar>
+                <a href="javascript:;" ng-click="searchModal.hide()" class="button button-icon">取消</a>
+                <h1 class="title">高级搜索</h1>
+                <a href="javascript:;" ng-click="moreSearchOk()" class="button button-icon">确定</a>
+            </ion-header-bar>
+            <ion-content class="stable-bg">
+                <div class="row mb15">
+                    <div class="col-90 mr0a">
+                        <label class="item item-input">
+                            <input type="text" ng-model="searchForm.id" placeholder="请输入ID">
+                        </label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-90 mr0a">
+                        <div class="moreSearch_form_box search_sex light-bg clearfix">
+                            <a href="javascript:;" class="sex_item" ng-click="sexChange('all')"
+                               ng-class="{1:'',0:'',all:'checked'}[searchForm.sex]">全部</a>
+                            <a href="javascript:;" class="sex_item" ng-click="sexChange('1')"
+                               ng-class="{1:'checked',0:'',all:''}[searchForm.sex]">男生</a>
+                            <a href="javascript:;" class="sex_item" ng-click="sexChange('0')"
+                               ng-class="{1:'',0:'checked',all:''}[searchForm.sex]">女生</a>
+                        </div>
+                        <div class="moreSearch_form_box mt10 clearfix">
+                            <label class="item item-input item-select">
+                                <div class="input-label">
+                                    年龄
+                                </div>
+                                <select ng-model="searchForm.age">
+                                    <option value="0" selected>不限</option>
+                                    <option value="18-22">18-22</option>
+                                    <option value="23-26">23-26</option>
+                                    <option value="27-35">27-35</option>
+                                    <option value="36-45">36-45</option>
+                                    <option value="46-55">46-55</option>
+                                    <option value="56">56以上</option>
+                                </select>
+                            </label>
+                        </div>
+                        <div class="moreSearch_form_box mt10 clearfix">
+                            <label class="item item-input item-select">
+                                <div class="input-label">
+                                    身高
+                                </div>
+                                <select ng-model="searchForm.height">
+                                    <option value="0" selected>不限</option>
+                                    <option value="140-150">140-150 厘米</option>
+                                    <option value="151-155">151-155 厘米</option>
+                                    <option value="156-160">156-160 厘米</option>
+                                    <option value="161-165">161-165 厘米</option>
+                                    <option value="166-170">166-170 厘米</option>
+                                    <option value="171-175">171-175 厘米</option>
+                                    <option value="176-180">176-180 厘米</option>
+                                    <option value="181-185">181-185 厘米</option>
+                                    <option value="186-190">186-190 厘米</option>
+                                    <option value="191">191 厘米以上</option>
+                                </select>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <a class="tac lh36 dbl cp" ng-click="moreToggle()">{{moreText}}更多条件 <i
+                        ng-class="{true:'ion-android-arrow-dropup',false:'ion-android-arrow-dropdown'}[more]"></i></a>
+                <div class="row" ng-if="more">
+                    <div class="col-90 mr0a">
+                        <div class="moreSearch_form_box mt10 clearfix">
+                            <label class="item item-input item-select">
+                                <div class="input-label">
+                                    婚姻状况
+                                </div>
+                                <select ng-model="searchForm.is_marriage">
+                                    <option value="0" selected>不限</option>
+                                    <option value="{{c.id}}" ng-repeat="c in marriage">{{c.name}}</option>
+                                </select>
+                            </label>
+                        </div>
+                        <div class="moreSearch_form_box mt10 clearfix">
+                            <label class="item item-input item-select">
+                                <div class="input-label">
+                                    有无子女
+                                </div>
+                                <select ng-model="searchForm.is_child">
+                                    <option value="0" selected>不限</option>
+                                    <option value="{{c.id}}" ng-repeat="c in children">{{c.name}}</option>
+                                </select>
+                            </label>
+                        </div>
+                        <div class="moreSearch_form_box mt10 clearfix">
+                            <label class="item item-input item-select">
+                                <div class="input-label">
+                                    学历
+                                </div>
+                                <select ng-model="searchForm.education">
+                                    <option value="0" selected>不限</option>
+                                    <option value="{{c.id}}" ng-repeat="c in education">{{c.name}}</option>
+                                </select>
+                            </label>
+                        </div>
+                        <div class="moreSearch_form_box mt10 clearfix">
+                            <label class="item item-input item-select">
+                                <div class="input-label">
+                                    年收入
+                                </div>
+                                <select ng-model="searchForm.year_income">
+                                    <option value="0" selected>不限</option>
+                                    <option value="{{c.id}}" ng-repeat="c in salary">{{c.name}}</option>
+                                </select>
+                            </label>
+                        </div>
+                        <div class="moreSearch_form_box mt10 clearfix">
+                            <label class="item item-input item-select">
+                                <div class="input-label">
+                                    购房
+                                </div>
+                                <select ng-model="searchForm.is_purchase">
+                                    <option value="0" selected>不限</option>
+                                    <option value="{{c.id}}" ng-repeat="c in house">{{c.name}}</option>
+                                </select>
+                            </label>
+                        </div>
+                        <div class="moreSearch_form_box mt10 clearfix">
+                            <label class="item item-input item-select">
+                                <div class="input-label">
+                                    购车
+                                </div>
+                                <select ng-model="searchForm.is_car">
+                                    <option value="0" selected>不限</option>
+                                    <option value="{{c.id}}" ng-repeat="c in car">{{c.name}}</option>
+                                </select>
+                            </label>
+                        </div>
+                        <div class="moreSearch_form_box mt10 clearfix">
+                            <label class="item item-input item-select">
+                                <div class="input-label">
+                                    职业
+                                </div>
+                                <select ng-model="searchForm.occupation">
+                                    <option value="0" selected>不限</option>
+                                    <option ng-repeat="occupation in occupations track by occupation.id" value="{{occupation.id}}">{{occupation.name}}</option>
+                                </select>
+                            </label>
+                        </div>
+                        <div class="moreSearch_form_box mt10 clearfix">
+                            <label class="item item-input item-select">
+                                <div class="input-label">
+                                    属相
+                                </div>
+                                <select ng-model="searchForm.zodiac">
+                                    <option value="0" selected>不限</option>
+                                    <option value="{{c.id}}" ng-repeat="c in zodiac">{{c.name}}</option>
+                                </select>
+                            </label>
+                        </div>
+                        <div class="moreSearch_form_box mt10 clearfix">
+                            <label class="item item-input item-select">
+                                <div class="input-label">
+                                    星座
+                                </div>
+                                <select ng-model="searchForm.constellation">
+                                    <option value="0" selected>不限</option>
+                                    <option value="{{c.id}}" ng-repeat="c in constellation">{{c.name}}</option>
+                                </select>
+                            </label>
+                        </div>
+                        <div class="moreSearch_form_box mt10 clearfix">
+                            <label class="item item-input item-select">
+                                <div class="input-label">
+                                    民族
+                                </div>
+                                <select ng-model="searchForm.nation">
+                                    <option value="0" selected>不限</option>
+                                    <option value="{{c.id}}" ng-repeat="c in nation">{{c.name}}</option>
+                                </select>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </ion-content>
+        </ion-modal-view>
+    </script>
+</ion-view>
