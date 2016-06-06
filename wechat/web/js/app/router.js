@@ -289,7 +289,8 @@ define(["app/module", 'app/service/serviceApi'],
                     }
                 }
 
-                if ($scope.userInfo = ar.getStorage('userInfo')) {
+                $scope.userInfo = ar.getStorage('userInfo');
+                if ($scope.userInfo != 'undefined' && $scope.userInfo) {
                     getUserStorage();
                 } else if (ar.getCookie('bhy_user_id')) {
                     api.list("/wap/user/get-user-info", []).success(function (res) {
@@ -298,7 +299,6 @@ define(["app/module", 'app/service/serviceApi'],
                         getUserStorage();
                     });
                 }
-
                 // 用于想去的地方，去过的地方等
                 $scope.getTravel = function (name, serId) {
                     if (serId != null) {
@@ -374,5 +374,6 @@ define(["app/module", 'app/service/serviceApi'],
 
                 }
                 //$scope.userInfo = [{}];
+
             }])
     });

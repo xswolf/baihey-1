@@ -118,12 +118,16 @@ var ar = {
 
         // 获取localStorage
         getStorage: function (name) {
-
             if (window.localStorage) {
                 var obj = localStorage.getItem(name);
-                obj = JSON.parse(obj);
-                return obj;
+                if (obj != 'undefined') {
+                    obj = JSON.parse(obj);
+                    return obj;
+                }else{
+                    return false;
+                }
             } else {
+
                 console.log('浏览器不支持localStorage')
             }
         },
