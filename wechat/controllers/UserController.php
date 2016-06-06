@@ -102,16 +102,16 @@ class UserController extends BaseController
     public function actionWelcome()
     {
         $user = $this->weChatMember();
-        $url = 'http://wechat.baihey.com/wap/site/main#/main/index';//.\Yii::$app->request->get( 'code' );
+        $url = 'http://wechat.baihey.com/wap/site/main#/main/index?code='.\Yii::$app->request->get( 'code' );
 //        header("Cache-Control: no-cache");
 //        header("Pragma: no-cache");
 //        header("Location:$url");
-        if (!isset($_COOKIE["bhy_u_name"]) && isset($user) && isset($user['username'])) {
-
-            Cookie::getInstance()->setCookie('bhy_u_name', $user['username']);
-            Cookie::getInstance()->setCookie('bhy_id', $user['id']);
-            setcookie('bhy_user_id', $user['id'], YII_BEGIN_TIME + 3600 * 24 * 30, '/wap');
-        }
+//        if (!isset($_COOKIE["bhy_u_name"]) && isset($user) && isset($user['username'])) {
+//
+//            Cookie::getInstance()->setCookie('bhy_u_name', $user['username']);
+//            Cookie::getInstance()->setCookie('bhy_id', $user['id']);
+//            setcookie('bhy_user_id', $user['id'], YII_BEGIN_TIME + 3600 * 24 * 30, '/wap');
+//        }
         echo "<script>location.href='".$url."'</script>";
         exit();
     }
