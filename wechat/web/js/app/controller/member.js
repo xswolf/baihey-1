@@ -2870,6 +2870,23 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
     // 我的专属红娘
     module.controller("member.matchmaker", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$location', function (api, $scope, $timeout, $ionicPopup, $location) {
 
+        $scope.matchmakerList = [];
+        var formData = [];
+        formData.matchmaker = $scope.userInfo.matchmaking ? $scope.userInfo.matchmaker + '-' + $scope.userInfo.matchmaking : $scope.userInfo.matchmaker;
+        api.list('/wap/matchmaker/user-matchmaker-list', formData).success(function (res) {
+            $scope.matchmakerList = res.data;
+            if(res.data.length > 1) {
+                if(res.data[0].id !=  $scope.userInfo.matchmaker) {
+                    $scope.matchmakerList[0] = res.data[1];
+                    $scope.matchmakerList[1] = res.data[0];
+                }
+            }
+        });
+        $scope.value = 0;
+        $scope.toggle = function(i) {
+            $scope.value = i;
+        }
+
     }]);
 
     // 红娘服务的四大优势
