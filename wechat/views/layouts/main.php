@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-CN" >
+<html lang="zh-CN" manifest="/wechat/web/appcache">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
@@ -18,15 +18,15 @@
 <script data-main="/wechat/web/js/app" src="/wechat/web/js/plugin/requirejs/require.js"></script>
 <body>
 <script>
-    if(location.hash == '#/main/index'){
-        addElement();
-        setTimeout(function(){
-            document.getElementById('welcome').className = 'animated fadeOut';
-            setTimeout(function(){
-                document.getElementById('welcome').className = 'animated fadeOut hide';
-            },1100)
-        },3000)
-    }
+//    if(location.hash == '#/main/index'){
+//        addElement();
+//        setTimeout(function(){
+//            document.getElementById('welcome').className = 'animated fadeOut';
+//            setTimeout(function(){
+//                document.getElementById('welcome').className = 'animated fadeOut hide';
+//            },1100)
+//        },3000)
+//    }
     function addElement() {
         var div = document.createElement("div");
         div.setAttribute("id", "welcome");
