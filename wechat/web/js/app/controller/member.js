@@ -9,16 +9,17 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
     // 我
     module.controller("member.index", ['app.serviceApi', '$scope', '$ionicPopup', function (api, $scope, $ionicPopup) {
 
-
         // 退出登录
         $scope.loginOut = function(){
-            // 清除cookie
-            ar.setCookie('bhy_user_id',null);
-            ar.setCookie('bhy_u_name',null);
-            ar.setCookie('bhy_u_sex',null);
-
-            // 跳转登录页
-            $location.url('/wap/user/login');
+            api.save('/wap/member/login-out', {}).success(function (res) {
+                // 跳转登录页
+                ar.delCookie('bhy_u_sex');
+                ar.delCookie('bhy_u_city');
+                ar.delCookie('bhy_user_id');
+                ar.delCookie('bhy_u_cityId');
+                ar.delCookie('bhy_u_cityPid');
+                location.href='/wap/user/login';
+            });
         }
     }]);
 

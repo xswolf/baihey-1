@@ -260,7 +260,7 @@ class User extends \common\models\Base
             ->where($condition)
             ->from(static::tableName() . ' u')
             ->innerJoin($joinTable . ' i', "u.id=i.user_id")
-            ->orderBy('last_login_time desc')
+            ->orderBy('id desc, last_login_time desc')
             ->limit($pageSize)
             ->offset($offset);
 
