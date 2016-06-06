@@ -29,7 +29,7 @@ define(['app/module'], function (module, config) {
 
         /**
          * 删除消息列表item
-         * @returns {*}
+         * @returns {*}qq
          */
         api.setMsgDisplay = function (msgId) {
             return $http.get('/wap/message/del', {params: {msgId: msgId}});

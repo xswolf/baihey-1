@@ -13,13 +13,13 @@
             <div class="item item-text-wrap">
 
                 <label class="item item-input">
-                    <input type="date" placeholder="点击选择出生年月，一旦填写不可更改" ng-model="birthday" ng-change="birthdayChange()">
+                    <input type="date" placeholder="点击选择出生年月，一旦填写不可更改" ng-model="formData.birthday" ng-change="birthdayChange()">
                 </label>
                 <label class="item item-input">
                     <input type="text" readonly placeholder="{{age}}">
                 </label>
                 <label class="item item-input">
-                    <input type="text" readonly placeholder="{{zodic.name}}">
+                    <input type="text" readonly placeholder="{{zodiac.name}}">
                 </label>
                 <label class="item item-input mb20">
                     <input type="text" readonly placeholder="{{constellation.name}}">
