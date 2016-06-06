@@ -23,7 +23,7 @@
                 </div>
             </div>
             <div class="row" ng-if="!userInfo.info">
-                <div class="col col-25"><img class="item_uimg rounded" ng-src="/wechat/web/images/u_noimg.jpg"></div>
+                <div class="col col-25"><img class="item_uimg rounded"  ng-src="/wechat/web/images/u_noimg.jpg"></div>
                 <div class="col col-75">
 
                     <div class="row pl0">
@@ -39,7 +39,7 @@
         <ion-list ng-if="userList.length > 0">
             <ion-item ng-repeat="user in userList" ng-if="user.id != userInfo.id" item="item" href="#/main/chat?id={{user.id}}&head_pic={{user.info.head_pic}}&real_name={{user.info.real_name}}&sex={{user.sex}}&age={{user.info.age}}" >
                 <div class="row">
-                    <div class="col col-25"><img class="item_uimg rounded" ng-src="{{user.info.head_pic}}"></div>
+                    <div class="col col-25"><img class="item_uimg rounded" ng-src="{{user.info.head_pic}}" onerror="this.src='/wechat/web/images/no_img.png'"></div>
 
                     <div class="col col-75">
                         <div class="row pl0">

@@ -52,8 +52,8 @@
 
                 <!-- 头像 -->
                 <div class="talk_user">
-                    <img ng-if="receiveId != vo.receiveId" ng-src="{{receiveHeadPic}}" alt=".">
-                    <img ng-if="receiveId == vo.receiveId" ng-src="{{sendHeadPic}}" alt=".">
+                    <img ng-if="receiveId != vo.receiveId" ng-src="{{receiveHeadPic}}" onerror="this.src='/wechat/web/images/no_img.png'">
+                    <img ng-if="receiveId == vo.receiveId" ng-src="{{sendHeadPic}}" onerror="this.src='/wechat/web/images/no_img.png'">
                 </div>
 
                 <!-- 消息内容 -->
@@ -157,7 +157,7 @@
         <div class="pic_zoom pa">
             <div class="pic_z_c pr">
                 <div class="pic_z_c_s">
-                    <img alt="" ng-src="{{showPicAdd}}">
+                    <img alt="." ng-src="{{showPicAdd}}">
                 </div>
             <span class="pic_closeBtn assertive-bg pa" ng-click="hidePicBox()">
                 <i class="ion-close-round"></i>
@@ -174,7 +174,7 @@
                 <i class="ion-close-round"></i>
             </span>
             <span class="bri_uimg">
-                <img src="/wechat/web/images/test.jpg">
+                <img ng-src="{{receiveHeadPic}}" onerror="this.src='/wechat/web/images/no_img.png'">
             </span>
             <span class="bri_t">
                 <p class="bri_u_name">{{real_name|sex:sex:age}}的红包</p>
@@ -196,7 +196,7 @@
             <ion-content>
                 <div class="openBri_bg">
                 <span class="openBri_uimg">
-                     <img src="/wechat/web/images/test.jpg">
+                     <img ng-src="{{receiveHeadPic}}" onerror="this.src='/wechat/web/images/no_img.png'">
                 </span>
                 </div>
                 <div class="openBri_con">
