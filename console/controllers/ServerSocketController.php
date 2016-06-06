@@ -25,8 +25,8 @@ class ServerSocketController extends Controller {
     private $sjen = [ ];//接收数据的长度
     private $ar = [ ];//加密key
     private $n = [ ];
-    private $address = '120.76.84.162';
-//    private $address = '192.168.0.112';
+//    private $address = '120.76.84.162';
+    private $address = '192.168.0.102';
     private $port = 8080;
 
 
@@ -282,10 +282,7 @@ class ServerSocketController extends Controller {
             $str        = $this->code( json_encode( $ar ) );
             $key_code        = $this->getReceived( $key );
 
-            // 发送给自己
-            socket_write( $this->users[ $k ]['socket'] , $str , strlen( $str ) );
             if ( $this->users[ $key_code ]['socket'] != null ) {
-
                 // 发送给别人
                 socket_write( $this->users[ $key_code ]['socket'] , $str , strlen( $str ) );
                 $this->e( $str . " messages is send\n" );
@@ -294,6 +291,10 @@ class ServerSocketController extends Controller {
                 $status = 2;
                 $this->e( $str . " user is not online\n" ); // 这里直接写数据库
             }
+            // 发送给自己
+            $ar ['status'] = $status;
+            $str        = $this->code( json_encode( $ar ) );
+            socket_write( $this->users[ $k ]['socket'] , $str , strlen( $str ) );
 
             // 消息记录数据库
             (new Message())->add($ar['sendId'],$ar['sendName'] , $ar['message'] , $type , $status);

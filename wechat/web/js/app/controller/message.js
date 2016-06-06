@@ -87,11 +87,19 @@ define(['app/module', 'app/directive/directiveApi'
         }
 
         var viewScroll = $ionicScrollDelegate.$getByHandle('messageDetailsScroll');
+
         $scope.messageNum = 0;
+        var list  = ar.getStorage('chat_messageHistory' + $scope.receiveId);
+        for ( var i in list){
+            if (list[i].status == 3){
+                list[i].status = 4;
+            }
+        }
         $scope.doRefresh = function() {
             $timeout(function() {
+
+                console.log($scope.historyList)
                 var num = 5;
-                var list  = ar.getStorage('chat_messageHistory' + $scope.receiveId);
                 var length = list.length;
                 $scope.messageNum += num;
                 var start = length - $scope.messageNum<=0 ? 0 : length - $scope.messageNum;
@@ -219,9 +227,7 @@ define(['app/module', 'app/directive/directiveApi'
         var userInfoList = ar.getStorage('messageList');
         for  ( var i in userInfoList ){
             if ($scope.receiveId == userInfoList[i].id){
-                console.log(userInfoList[i].auth)
                 $scope.auth_validate = userInfoList[i].auth.identity_check;
-                console.log($scope.auth_validate)
 
             }
         }
@@ -394,11 +400,13 @@ define(['app/module', 'app/directive/directiveApi'
 
                     if ($scope.sendId == response.sendId) {  // 响应自己发送的消息
                         for (var i in $scope.historyList) {
-                            console.log(response.time +"=="+ $scope.historyList[i].time +" | "+  response.message +"=="+ $scope.historyList[i].message);
+                            if (response.status == 1){
+                                $scope.historyList[i].status = 1;
+                            }
                             response.message = response.message.replace(/&quot;/g , "\"");
                             if (response.time == $scope.historyList[i].time && (response.message == $scope.historyList[i].message || response.type == 'pic')) {
                                 $scope.historyList[i].message = response.message;
-                                $scope.historyList[i].status = 2;
+                                $scope.historyList[i].status = response.status;
                             }
                         }
                     } else {
