@@ -83,6 +83,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
         // 点击img，功能
         $scope.moreImg = function (index, img) {
             var id = $scope.imgList[index].id;
+            var img = $scope.imgList[index].thumb_path;
             var hideSheet = $ionicActionSheet.show({
                 buttons: [
                     {text: '设为头像'}
@@ -104,10 +105,12 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
                 },
                 buttonClicked: function () {
                     // 设置头像
-                    api.save('/wap/member/set-head', {'id': id}).success(function (res) {
+                    api.save('/wap/member/set-head', {id: id, thumb_path:img}).success(function (res) {
                         $scope.imgList[head_id].is_head = 0;
                         $scope.imgList[index].is_head = 1;
                         head_id = index;
+                        $scope.userInfo.info.head_pic = img;
+                        $scope.setUserStorage();
                         hideSheet();
                     });
                     return true;
