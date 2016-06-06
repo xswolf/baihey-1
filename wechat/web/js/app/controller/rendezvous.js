@@ -122,7 +122,7 @@ define(['app/module', 'app/directive/directiveApi'
 
         // 发送验证码
         $scope.sendCode = function () {
-            if (!validate) {
+            if (!validate()) {
                 return false;
             }
             // 发送验证码
@@ -151,7 +151,7 @@ define(['app/module', 'app/directive/directiveApi'
 
         // 确认约会
         $scope.save = function () {
-            if (!validate) {
+            if (!validate()) {
                 return false;
             }
 

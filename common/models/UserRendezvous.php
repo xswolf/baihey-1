@@ -221,7 +221,7 @@ class UserRendezvous extends Base
         $apply->user_id = $user_id;
         $apply->create_time = YII_BEGIN_TIME;
         $apply->phone = $data['mobile'];
-        $apply->message = $data['msg'];
+        isset($data['msg']) ? $apply->message = $data['msg'] : true;
         return $apply->insert(false);
     }
 }
