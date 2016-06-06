@@ -237,7 +237,7 @@ define(["app/module", 'app/service/serviceApi'],
                     });
                 //$urlRouterProvider.otherwise("/main/index");
             }])
-            .controller('main', ['$scope', '$location', 'app.serviceApi','$ionicLoading', function ($scope, $location, api, $ionicLoading) {
+            .controller('main', ['$scope', '$location', 'app.serviceApi','$ionicLoading','$ionicPopup', function ($scope, $location, api, $ionicLoading,$ionicPopup) {
 
                 if (ar.getCookie('bhy_user_id') > 0) {
                     api.getMessageNumber().success(function (res) {
