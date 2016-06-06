@@ -113,7 +113,7 @@ class UserController extends BaseController
 //            setcookie('bhy_user_id', $user['id'], YII_BEGIN_TIME + 3600 * 24 * 30, '/wap');
 //        }
         echo "<script>location.href='".$url."'</script>";
-        exit();
+        return $this->render();
     }
 
     public function actionGetLocation()
