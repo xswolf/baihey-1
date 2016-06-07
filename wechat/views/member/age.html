@@ -1,5 +1,7 @@
 <ion-view hide-tabs="true">
     <link href="/wechat/web/css/member.css" rel="stylesheet">
+    <link href="/wechat/web/js/plugin/mobiscroll/mobiscroll.animation-2.6.2.css">
+    <link href="/wechat/web/js/plugin/mobiscroll/mobiscroll.core-2.6.2.css">
     <ion-header-bar class="com_w_100 bhy">
         <a class="button button-icon icon ion-arrow-left-c" href="#/main/member/information"></a>
         <span class="title">出生年月</span>
@@ -13,7 +15,19 @@
             <div class="item item-text-wrap">
 
                 <label class="item item-input">
-                    <input type="date" placeholder="点击选择出生年月，一旦填写不可更改" ng-model="formData.birthday" ng-change="birthdayChange()">
+                    <select class="date_select">
+                        <option>1992</option>
+                    </select>
+                    年
+                    <select class="date_select">
+                        <option>1</option>
+                    </select>
+                    月
+                    <select class="date_select">
+                        <option>2</option>
+                    </select>
+                    日
+                    <!--<input type="date" placeholder="点击选择出生年月，一旦填写不可更改" ng-model="formData.birthday" ng-change="birthdayChange()">-->
                 </label>
                 <label class="item item-input">
                     <input type="text" readonly placeholder="{{age}}">

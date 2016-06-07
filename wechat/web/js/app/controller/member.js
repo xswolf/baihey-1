@@ -10,7 +10,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
     module.controller("member.index", ['app.serviceApi', '$scope', '$ionicPopup', function (api, $scope, $ionicPopup) {
 
         // 退出登录
-        $scope.loginOut = function(){
+        $scope.loginOut = function () {
             api.save('/wap/member/login-out', {}).success(function (res) {
                 // 跳转登录页
                 ar.delCookie('bhy_u_sex');
@@ -18,7 +18,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
                 ar.delCookie('bhy_user_id');
                 ar.delCookie('bhy_u_cityId');
                 ar.delCookie('bhy_u_cityPid');
-                location.href='/wap/user/login';
+                location.href = '/wap/user/login';
             });
         }
     }]);
@@ -105,7 +105,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
                 },
                 buttonClicked: function () {
                     // 设置头像
-                    api.save('/wap/member/set-head', {id: id, thumb_path:img}).success(function (res) {
+                    api.save('/wap/member/set-head', {id: id, thumb_path: img}).success(function (res) {
                         $scope.imgList[head_id].is_head = 0;
                         $scope.imgList[index].is_head = 1;
                         head_id = index;
@@ -119,8 +119,8 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
         }
 
         $scope.dynamicList = [];
-        api.list('/wap/member/get-dynamic-list' , {user_id:$scope.userInfo.id , page:0}).success(function (res) {
-            for (var i in res.data){
+        api.list('/wap/member/get-dynamic-list', {user_id: $scope.userInfo.id, page: 0}).success(function (res) {
+            for (var i in res.data) {
                 res.data[i].imgList = JSON.parse(res.data[i].pic);
                 $scope.dynamicList.push(res.data[i]);
             }
@@ -274,6 +274,140 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
 
     // 出生年月
     module.controller("member.age", ['app.serviceApi', '$scope', '$ionicPopup', function (api, $scope, $ionicPopup) {
+
+        // 日期控件
+        requirejs(['jquery_1_11_1'], function ($) {
+            requirejs(['mobiscroll','mobiscroll_zh'], function (mobDate) {
+                function init() {
+                    $('#demo_date').mobiscroll().date({
+                        theme: 'ios',
+                        /*
+                         scroller —— 以wheel滑动方式选择
+                         clickpick —— 显示 - + 按钮选择
+                         mixed —— 兼容以上两种方式
+                         * */
+                        mode: 'scroller',
+                        /*
+                         modal —— 显示在中间
+                         inline —— 直接显示在页面中
+                         bubble —— 类似于tip弹出显示
+                         top —— 显示在顶部
+                         bottom —— 显示在底部
+                         */
+                        display: 'bottom',
+                        //设置按钮显示的样式
+                        btnClass : 'sqh_color_56 font_16 sqh_line_height_15 margin_10 sqh_font_type',
+                        minDate:new Date() ,
+                        //点击确定按钮，触发事件。
+                        onSelect:mobiscroll_select,
+                        //当时间选择的内容发生变化触发的事件
+                        onChange:mobiscroll_change,
+                        //被调用之前触发该方法，可以在显示之前修改配置文件
+                        onBeforeShow:mobiscroll_beforeShow,
+                        //点击取消按钮触发的事件
+                        onCancel:mobiscroll_cancel,
+                        //当弹出效果退出的时候执行该方法，在onSelect 和 onCancel之前执行
+                        onClose:mobiscroll_close,
+
+                        //onDestroy:mobiscroll_destroy,
+                        //生成完HTML代码之后还有显示代码之前执行这个函数，可以自定义HTML内容
+                        onMarkupReady:mobiscroll_markupReady,
+                        //显示位置之前调用该方法
+                        onPosition:mobiscroll_position,
+                        //改变一个值之后触发的时间，参数是其中一个的值
+                        //Gets called when the user taps on a value on the wheel.
+                        onValueTap:mobiscroll_valueTap,
+                        //显示之前触发的时间
+                        onShow:mobiscroll_show,
+                        //Gets called on initialization and on every wheel change
+                        validate:mobiscroll_validate,
+                        lang: 'zh'
+                    });
+                }
+
+
+                $("#show").click(function(){
+                    $("#demo_date").mobiscroll("show");
+                });
+
+                $("#clear").click(function(){
+                    $("#demo_date").mobiscroll("clear");
+                });
+
+                init();
+            });
+            function mobiscroll_validate(item, inst){
+
+            }
+
+            function mobiscroll_show(html, valueText, inst){
+
+            }
+
+            function mobiscroll_valueTap(html, inst){
+                //html是变化值控件的HTML代码，与mobiscroll_position中的第一个参数不一致，
+                console.log("valueText : " + html[0].outerHTML);
+                //mobiscroll对象
+                console.log("inst : " + inst);
+            }
+
+            function mobiscroll_position(html, inst){
+                //html是一个数组对象，用户显示HTML的内容，代表的是整个显示控件的内容
+                console.log("html : " + html[0].outerHTML);
+                console.log("inst : " + inst);
+            }
+
+            function mobiscroll_markupReady(html, inst){
+                console.log("html : " + html);
+                console.log("inst : " + inst);
+                //inst._markup 就是生成的html 对象
+                console.log(inst._markup == html);
+
+            }
+
+            function mobiscroll_destroy(valueText, btn, inst){
+                //valueText是选中的值
+                console.log("valueText : " + valueText);
+                console.log("btn : " + btn);
+                //mobiscroll对象
+                console.log("inst : " + inst);
+            }
+
+            function mobiscroll_close(valueText, btn, inst){
+                //valueText是选中的值
+                console.log("valueText : " + valueText);
+                console.log("btn : " + btn);
+                //mobiscroll对象
+                console.log("inst : " + inst);
+            }
+            function mobiscroll_cancel(valueText, inst){
+                //valueText是选中的值
+                console.log("valueText : " + valueText);
+                //mobiscroll对象
+                console.log("inst : " + inst);
+            }
+
+            function mobiscroll_beforeShow(inst){
+                //mobiscroll对象
+                console.log("inst : " + inst);
+            }
+
+            function mobiscroll_select(valueText,inst){
+                //valueText是选中的值
+                console.log("valueText : " + valueText);
+                //mobiscroll对象
+                console.log("inst : " + inst);
+            }
+
+
+            function mobiscroll_change(valueText,inst){
+                //valueText是选中的值
+                console.log("valueText : " + valueText);
+                //mobiscroll对象
+                console.log("inst : " + inst);
+            }
+            })
+        })
 
         $scope.formData = [];
         $scope.age = '年龄';
@@ -634,6 +768,9 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
         $scope.formData = [];
         $scope.formData.userAddrIdList = [];  // 用户已选择的地区，ID数据集，存数据库
         $scope.formData.userAddrList = [];    // 用户已选择的地区，name数据集，展示用
+        $scope.formData.pageIndex = 1;
+        $scope.addrList = [];
+        $scope.isMore = true;
         var dataList = $scope.userInfo.went_travel != null ? $scope.userInfo.went_travel.split(',') : [];
         var arr = [];
         var getAddrName = function (id) {
@@ -643,15 +780,29 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
                 }
             }
         }
-        // 默认数据处理
-        api.list('/wap/member/went-travel-list', []).success(function (res) {
-            $scope.addrList = res.data;
-            arr = res.data;
-            for (var i in dataList) {
-                $scope.formData.userAddrIdList[i] = parseInt(dataList[i]);
-                $scope.formData.userAddrList[i] = getAddrName($scope.formData.userAddrIdList[i]);
-            }
-        });
+        // 加载更多
+        $scope.loadMore = function () {
+            // 默认数据处理
+            api.list('/wap/member/went-travel-list', {pageIndex:$scope.formData.pageIndex}).success(function (res) {
+                if(res.data.length < 1){
+                    $scope.isMore = false;
+                }
+                $scope.addrList = $scope.addrList.concat(res.data);
+                arr = res.data;
+                for (var i in dataList) {
+                    $scope.formData.userAddrIdList[i] = parseInt(dataList[i]);
+                    $scope.formData.userAddrList[i] = getAddrName($scope.formData.userAddrIdList[i]);
+                }
+                $scope.formData.pageIndex += 1;
+                $scope.$broadcast('scroll.infiniteScrollComplete');
+            });
+
+        }
+
+        // 是否还有更多
+        $scope.moreDataCanBeLoaded = function () {
+            return $scope.isMore;
+        }
 
         var updateSelected = function (action, id, name) {
             if (action == 'add' && $scope.formData.userAddrIdList.indexOf(id) == -1) {
@@ -689,7 +840,10 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
 
         // 关键字搜索
         $scope.search = function (value) {
+            $scope.isMore = false;
             if (value == '' || typeof(value) == 'undefined') {
+                $scope.isMore = true;
+                $scope.formData.pageIndex = 1;
                 $scope.addrList = arr;
                 $scope.addrList = $filter('filter')($scope.addrList);
             } else {
@@ -725,6 +879,8 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
         $scope.formData = [];
         $scope.formData.userAddrIdList = [];  // 用户已选择的地区，ID数据集，存数据库
         $scope.formData.userAddrList = [];    // 用户已选择的地区，name数据集，展示用
+        $scope.formData.pageIndex = 1;
+        $scope.isMore = true;
         var arr = [];
         var province_id = $scope.userInfo.province != '0' ? $scope.userInfo.province : 1;
         var dataList = $scope.userInfo.want_travel != null ? $scope.userInfo.want_travel.split(',') : [];
@@ -735,19 +891,29 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
                 }
             }
         }
-        // 默认数据处理
-        api.list('/wap/member/want-travel-list', {'province_id': province_id}).success(function (res) {
-            $scope.addrListOne = res.data.local;
-            $scope.addrListTwo = res.data.province;
-            $scope.addrListThree = res.data.foreign;
-            arr = arr.concat($scope.addrListOne);
-            arr = arr.concat($scope.addrListTwo);
-            arr = arr.concat($scope.addrListThree);
-            for (var i in dataList) {
-                $scope.formData.userAddrIdList[i] = parseInt(dataList[i]);
-                $scope.formData.userAddrList[i] = getAddrName($scope.formData.userAddrIdList[i]);
-            }
-        });
+        // 加载更多
+        $scope.loadMore = function(){
+            // 默认数据处理
+            api.list('/wap/member/want-travel-list', {'province_id': province_id,pageIndex:$scope.formData.pageIndex}).success(function (res) {
+                $scope.addrListOne = res.data.local;
+                $scope.addrListTwo = res.data.province;
+                $scope.addrListThree = res.data.foreign;
+                arr = arr.concat($scope.addrListOne);
+                arr = arr.concat($scope.addrListTwo);
+                arr = arr.concat($scope.addrListThree);
+                for (var i in dataList) {
+                    $scope.formData.userAddrIdList[i] = parseInt(dataList[i]);
+                    $scope.formData.userAddrList[i] = getAddrName($scope.formData.userAddrIdList[i]);
+                }
+                $scope.formData.pageIndex += 1;
+            });
+        }
+
+        // 是否还有更多
+        $scope.moreDataCanBeLoaded = function(){
+            return $scope.isMore;
+        }
+
 
         var updateSelected = function (action, id, name) {
             if (action == 'add' && $scope.formData.userAddrIdList.indexOf(id) == -1) {
@@ -1677,14 +1843,14 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
         });
 
         $scope.dynamicList = [];
-        api.list('/wap/member/get-dynamic-list' , {user_id:$scope.formData.userId , page:0}).success(function (res) {
-            for (var i in res.data){
+        api.list('/wap/member/get-dynamic-list', {user_id: $scope.formData.userId, page: 0}).success(function (res) {
+            for (var i in res.data) {
                 res.data[i].imgList = JSON.parse(res.data[i].pic);
                 $scope.dynamicList.push(res.data[i]);
             }
         });
 
-        $scope.localChat = function(url) {
+        $scope.localChat = function (url) {
             window.location.hash = url;
         }
         $scope.getTravel('went_travel', $scope.otherUserInfo.went_travel);// 我去过的地方
@@ -1727,14 +1893,14 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
         // 未关注
         $scope.formData.follow = false;
         api.getStatus('/wap/follow/get-follow-status', followData).success(function (res) {
-            if(res.data) {
+            if (res.data) {
                 $scope.formData.follow = true;
             }
         });
         // 取消关注
         $scope.cancelFollow = function () {
             api.save('/wap/follow/del-follow', followData).success(function (res) {
-                if(res.data) {
+                if (res.data) {
                     $scope.formData.follow = false;
                     // 成功，提示
                     $ionicPopup.alert({title: '取消关注成功'});
@@ -1745,7 +1911,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
         // 关注
         $scope.addFollow = function () {
             api.save('/wap/follow/add-follow', followData).success(function (res) {
-                if(res.data) {
+                if (res.data) {
                     $scope.formData.follow = true;
                     // 成功，提示
                     $ionicPopup.alert({title: '加关注成功'});
@@ -2128,7 +2294,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
         $scope.userId = 1;
 
         // 商品列表
-        api.save('/wap/charge/get-charge-goods-list', {type:1}).success(function (res) {
+        api.save('/wap/charge/get-charge-goods-list', {type: 1}).success(function (res) {
             $scope.goodsList = res;
         });
 
@@ -2180,7 +2346,10 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
 
         // 生成订单并跳转支付
         $scope.createOrder = function (_goodsId) {
-            api.save('/wap/charge/produce-order', {goodsId: _goodsId, user_id: ar.getCookie('bhy_user_id')}).success(function (res) {
+            api.save('/wap/charge/produce-order', {
+                goodsId: _goodsId,
+                user_id: ar.getCookie('bhy_user_id')
+            }).success(function (res) {
                 if (res.status < 1) {
                     $ionicPopup.alert({title: res.msg});
                 } else {
@@ -2322,8 +2491,8 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
     module.controller("member.rendezvous_add", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$ionicModal', '$location', function (api, $scope, $timeout, $ionicPopup, $ionicModal, $location) {
 
         $scope.formData = [];
-        if($location.search().id) {
-            api.list('/wap/rendezvous/get-rendezvous-info', {id:$location.search().id}).success(function (res) {
+        if ($location.search().id) {
+            api.list('/wap/rendezvous/get-rendezvous-info', {id: $location.search().id}).success(function (res) {
                 $scope.formData = res.data;
                 $scope.formData.theme = parseInt($scope.formData.theme);
             });
@@ -2599,14 +2768,14 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
 
 
     // 我的约会-我发布的约会
-    module.controller("member.rendezvous_put", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$ionicActionSheet', '$location','$ionicScrollDelegate', function (api, $scope, $timeout, $ionicPopup, $ionicActionSheet, $location,$ionicScrollDelegate) {
+    module.controller("member.rendezvous_put", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$ionicActionSheet', '$location', '$ionicScrollDelegate', function (api, $scope, $timeout, $ionicPopup, $ionicActionSheet, $location, $ionicScrollDelegate) {
 
         $scope.formData = [];
         $scope.dateList = [];
         $scope.putList = [];
         $scope.formData.pageNum = 0;
         // 获取我发布的约会列表
-        var getPutList = function(date, pageNum) {
+        var getPutList = function (date, pageNum) {
             var formData = [];
             formData.user_id = ar.getCookie('bhy_user_id');
             formData.pageNum = pageNum + 1;
@@ -2615,17 +2784,17 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
             $scope.formData.pageNum = pageNum + 1;
             api.list('/wap/rendezvous/list', formData).success(function (res) {
                 res.data.length < 10 ? $scope.isMore = false : $scope.isMore = true;
-                for(var i in res.data) {
+                for (var i in res.data) {
                     var label = res.data[i].we_want.split(',');
                     res.data[i].label = [];
                     res.data[i].label = label;
-					$scope.putList.push(res.data[i]);
+                    $scope.putList.push(res.data[i]);
                 }
                 $scope.$broadcast('scroll.infiniteScrollComplete');
             });
         }
         // 修改约会状态
-        var upStatus = function(id,status) {
+        var upStatus = function (id, status) {
             var formData = [];
             formData.id = id;
             formData.status = status;
@@ -2650,7 +2819,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
         }
 
         // 选择日期改变样式、并查询数据
-        $scope.seletedDate = function (title,time) {
+        $scope.seletedDate = function (title, time) {
             $scope.dateTitle = title;
             var arr = time.split('-');
             $scope.formData.year = arr[0];
@@ -2668,7 +2837,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
         }
 
         // 是否还有更多
-        $scope.moreDataCanBeLoaded = function() {
+        $scope.moreDataCanBeLoaded = function () {
             return $scope.isMore;
         }
 
@@ -2737,14 +2906,14 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
         $scope.formData = [];
         $scope.partList = [];
         $scope.formData.pageNum = 0;
-        var getPutList = function(pageNum) {
+        var getPutList = function (pageNum) {
             var formData = [];
             formData.user_id = ar.getCookie('bhy_user_id');
             formData.pageNum = pageNum + 1;
             $scope.formData.pageNum = pageNum + 1;
             api.list('/wap/rendezvous/apply-list', formData).success(function (res) {
                 res.data.length < 10 ? $scope.isMore = false : $scope.isMore = true;
-                for(var i in res.data) {
+                for (var i in res.data) {
                     var label = res.data[i].we_want.split(',');
                     res.data[i].label = [];
                     res.data[i].label = label;
@@ -2764,7 +2933,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
         }
 
         // 是否还有更多
-        $scope.moreDataCanBeLoaded = function() {
+        $scope.moreDataCanBeLoaded = function () {
             return $scope.isMore;
         }
 
@@ -2778,7 +2947,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
             confirmPopup.then(function (res) {
                 if (res) {
                     // 删除
-                    api.save('/wap/rendezvous/delete-apply', {id : id}).success(function (res) {
+                    api.save('/wap/rendezvous/delete-apply', {id: id}).success(function (res) {
                         $scope.partList.splice(itemIndex, 1);
                     });
                 } else {
@@ -2795,7 +2964,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
         }
 
         $scope.acceptAlert = function (phone) {
-            if(phone == null || typeof(phone) == undefined) {
+            if (phone == null || typeof(phone) == undefined) {
                 $ionicPopup.alert({title: '请等待TA联系'});
             } else {
                 $ionicPopup.alert({title: 'TA的手机号码：' + phone});
@@ -2814,9 +2983,9 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
         $scope.rendzvous.title = $location.$$search.title;
         $scope.rendzvous.theme = $location.$$search.theme;
 
-        api.list('/wap/rendezvous/rendezvous-apply-list', {id : $location.$$search.id}).success(function (res) {
+        api.list('/wap/rendezvous/rendezvous-apply-list', {id: $location.$$search.id}).success(function (res) {
             $scope.involvedList = res.data;
-            for(var i in res.data) {
+            for (var i in res.data) {
                 $scope.involvedList[i].info = JSON.parse(res.data[i].info);
                 $scope.involvedList[i].auth = JSON.parse(res.data[i].auth);
             }
@@ -2883,15 +3052,15 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
         formData.matchmaker = $scope.userInfo.matchmaking ? $scope.userInfo.matchmaker + '-' + $scope.userInfo.matchmaking : $scope.userInfo.matchmaker;
         api.list('/wap/matchmaker/user-matchmaker-list', formData).success(function (res) {
             $scope.matchmakerList = res.data;
-            if(res.data.length > 1) {
-                if(res.data[0].id !=  $scope.userInfo.matchmaker) {
+            if (res.data.length > 1) {
+                if (res.data[0].id != $scope.userInfo.matchmaker) {
                     $scope.matchmakerList[0] = res.data[1];
                     $scope.matchmakerList[1] = res.data[0];
                 }
             }
         });
         $scope.value = 0;
-        $scope.toggle = function(i) {
+        $scope.toggle = function (i) {
             $scope.value = i;
         }
 

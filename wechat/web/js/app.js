@@ -7,6 +7,9 @@ require.config({
     paths: {
         jquery: 'plugin/jquery/jquery',
         jquery_1_8_3: 'plugin/jquery/jquery_1.8.3.min',
+        jquery_1_11_1: 'plugin/jquery/jquery_1.11.1.min',
+        mobiscroll: 'plugin/mobiscroll/mobiscroll.core-2.6.2',
+        mobiscroll_zh: 'plugin/mobiscroll/mobiscroll.core-2.6.2-zh',
         //angular: '//cdn.bootcss.com/ionic/1.2.4/js/ionic.bundle.min',
         angular: 'plugin/angular/angular.min',
         angular_animate: 'plugin/angular/angular-animate.min',
