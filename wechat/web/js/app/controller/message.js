@@ -120,16 +120,6 @@ define(['app/module', 'app/directive/directiveApi'
             return time - $scope.historyList[index-1].time > 300
         }
 
-        $scope.talk_type = 'txt';
-
-        $scope.changeType = function () {
-            if ($scope.talk_type == 'voice') {
-                $scope.talk_type = 'txt';
-            } else {
-                $scope.talk_type = 'voice';
-            }
-        }
-
         $scope.followData = [];
         $scope.followData.user_id = $scope.sendId;
         $scope.followData.follow_id = $scope.receiveId;

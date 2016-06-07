@@ -306,7 +306,7 @@
 
 #multi_con ul li {
     float: left;
-    margin: 3% 3.6%;
+    margin: 20px 0 20px 20px;
 }
 
 #multi_con ul li img {
@@ -377,6 +377,9 @@
     max-width: 125px;
     overflow: hidden;
     text-overflow: clip;
+}
+#phiz{
+    color: #f4af37;
 }
 
 /* 语音 */
