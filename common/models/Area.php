@@ -32,11 +32,14 @@ class Area extends Base
      * 去过的地方列表（type=1）
      * @return array
      */
-    public function getWentTravelList()
+    public function getWentTravelList($page = 1)
     {
+
         $result = (new Query())->select(['*'])
             ->where(['type' => 1])
             ->from(static::tableName())
+            ->offset(($page-1)*10)
+            ->limit(10)
             ->all();
         return $result;
     }
@@ -45,11 +48,13 @@ class Area extends Base
      * 获取想去的地方列表（type=1）
      * @return array
      */
-    public function getWantTravelList($province_id)
+    public function getWantTravelList($province_id , $page = 1)
     {
         $result['local'] = (new Query())->select(['*'])
             ->where(['type' => 1, 'parentId' => $province_id])
             ->from(static::tableName())
+            ->offset(($page-1)*10)
+            ->limit(10)
             ->all();
 
         $result['province'] = (new Query())->select(['*'])

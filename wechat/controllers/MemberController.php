@@ -78,7 +78,8 @@ class MemberController extends BaseController
      */
     public function actionWentTravelList()
     {
-        $list = Area::getInstance()->getWentTravelList();
+        $pageIndex = $this->get('pageIndex');
+        $list = Area::getInstance()->getWentTravelList($pageIndex);
         $this->renderAjax(['status=>1', 'data' => $list]);
     }
 
@@ -87,8 +88,9 @@ class MemberController extends BaseController
      */
     public function actionWantTravelList()
     {
+        $pageIndex = $this->get('pageIndex');
         $province_id = $this->get['province_id'] ? $this->get['province_id'] : 1;// 默认重庆
-        $list = Area::getInstance()->getWantTravelList($province_id);
+        $list = Area::getInstance()->getWantTravelList($province_id , $pageIndex);
 
         $this->renderAjax(['status=>1', 'data' => $list]);
     }
