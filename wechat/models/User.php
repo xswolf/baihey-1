@@ -10,7 +10,7 @@ use yii\db\Query;
  * Date: 2016/3/10
  * Time: 10:21
  */
-class User extends \common\models\Base
+class User extends \common\models\User
 {
 
     protected $user;
