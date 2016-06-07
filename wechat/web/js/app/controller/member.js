@@ -120,9 +120,6 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
 
         $scope.dynamicList = [];
         api.list('/wap/member/get-dynamic-list' , {user_id:$scope.userInfo.id , page:0}).success(function (res) {
-            if (res.data == ''){
-                $scope.morePage = false;
-            }
             for (var i in res.data){
                 res.data[i].imgList = JSON.parse(res.data[i].pic);
                 $scope.dynamicList.push(res.data[i]);
@@ -1679,6 +1676,17 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
             $scope.imgList = res.data;
         });
 
+        $scope.dynamicList = [];
+        api.list('/wap/member/get-dynamic-list' , {user_id:$scope.formData.userId , page:0}).success(function (res) {
+            for (var i in res.data){
+                res.data[i].imgList = JSON.parse(res.data[i].pic);
+                $scope.dynamicList.push(res.data[i]);
+            }
+        });
+
+        $scope.localChat = function(url) {
+            window.location.hash = url;
+        }
         $scope.getTravel('went_travel', $scope.otherUserInfo.went_travel);// 我去过的地方
         $scope.getTravel('want_travel', $scope.otherUserInfo.want_travel);// 我想去的地方
         $scope.getConfig('love_sport', $scope.otherUserInfo.love_sport);// 喜欢的运动

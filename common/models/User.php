@@ -475,7 +475,7 @@ class User extends Base
      */
     public function changeBalance($user_id, $money)
     {
-        $user =User::findOne($user_id);
+        $user = $this->findOne($user_id);
         $user->balance = $user->balance - $money;
         return $user->save();
     }
