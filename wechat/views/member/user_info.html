@@ -30,19 +30,14 @@
                     </span>
                 </p>
             </ion-item>
-            <ion-item>
+            <ion-item href="#/main/dynmaic?userId={{otherUserInfo.id}}&tempUrl=main/member/user_info">
                 <div class="info_l">
                     <p>个人动态</p>
-                    <p class="dyn_nb">12</p>
                 </div>
-                <div class="info_c">
-                    <div class="dyn_img_list">
-                        <img class="dyn_img" src="/wechat/web/images/test/1.jpg">
-                        <img class="dyn_img" src="/wechat/web/images/test/2.jpg">
-                        <img class="dyn_img" src="/wechat/web/images/test/3.jpg">
-                        <img class="dyn_img" src="/wechat/web/images/test/4.jpg">
+                <div class="info_c" ng-if="dynamicList.length > 0">
+                    <div class="dyn_img_list" ng-repeat="dynamic in dynamicList">
+                        <img class="dyn_img" ng-if="dynamic.imgList[0].thumb_path" src="{{dynamic.imgList[0].thumb_path}}">
                     </div>
-
                 </div>
                 <div class="info_r mt10">
                     <i class="ionc ion-ios-arrow-right"></i>
@@ -414,7 +409,7 @@
     </ion-content>
     <ion-footer-bar align-title="left" class="bar-light">
         <div class="buttons w50 bor_r_1c">
-            <button class="button w100" style="font-size: 16px; color:#e4007f;" href="#/main/chat?id={{otherUserInfo.id}}&head_pic={{otherUserInfo.info.head_pic}}&real_name={{otherUserInfo.info.real_name}}&sex={{otherUserInfo.sex}}&age={{otherUserInfo.info.age}}"><i class="ion-chatbox-working cor21 mr5 vam fs22"></i>对话</button>
+            <button class="button w100" style="font-size: 16px; color:#e4007f;" ng-click="localChat('#/main/chat?id={{otherUserInfo.id}}&head_pic={{otherUserInfo.info.head_pic}}&real_name={{otherUserInfo.info.real_name}}&sex={{otherUserInfo.sex}}&age={{otherUserInfo.info.age}}')"><i class="ion-chatbox-working cor21 mr5 vam fs22"></i>对话</button>
         </div>
         <div class="buttons w50" >
             <button ng-if="!formData.follow" class="button w100"  style="font-size: 16px;" ng-click="addFollow()">
