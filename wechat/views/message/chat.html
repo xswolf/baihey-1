@@ -54,10 +54,10 @@
 
                 <!-- 头像 -->
                 <div class="talk_user">
-                    <a href="#/main/member/user_info?userId={{receiveId}}&tempUrl=/main/message">
-                        <img ng-if="receiveId != vo.receiveId" ng-src="{{receiveHeadPic}}" onerror="this.src='/wechat/web/images/no_img.png'">
+                    <a  ng-if="sendId != vo.send_user_id"  href="#/main/member/user_info?userId={{receiveId}}&tempUrl=/main/message">
+                        <img ng-src="{{receiveHeadPic}}" onerror="this.src='/wechat/web/images/no_img.png'">
                     </a>
-                    <img ng-if="receiveId == vo.receiveId" ng-src="{{sendHeadPic}}" onerror="this.src='/wechat/web/images/no_img.png'">
+                    <img ng-if="sendId == vo.send_user_id" ng-src="{{sendHeadPic}}" onerror="this.src='/wechat/web/images/no_img.png'">
                 </div>
 
                 <!-- 消息内容 -->

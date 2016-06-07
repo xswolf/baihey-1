@@ -97,8 +97,6 @@ define(['app/module', 'app/directive/directiveApi'
         }
         $scope.doRefresh = function() {
             $timeout(function() {
-
-                console.log($scope.historyList)
                 var num = 5;
                 var length = list.length;
                 $scope.messageNum += num;
@@ -228,7 +226,6 @@ define(['app/module', 'app/directive/directiveApi'
         for  ( var i in userInfoList ){
             if ($scope.receiveId == userInfoList[i].id){
                 $scope.auth_validate = userInfoList[i].auth.identity_check;
-
             }
         }
 
@@ -247,8 +244,9 @@ define(['app/module', 'app/directive/directiveApi'
         $scope.real_name   = $location.search().real_name;
         $scope.sex         = $location.search().sex;
         $scope.age         = $location.search().age;
-        $scope.sendHeadPic = $scope.receiveHeadPic = $location.search().head_pic.replace(/~2F/g , "/");
-
+        $scope.receiveHeadPic = $location.search().head_pic.replace(/~2F/g , "/");
+        $scope.sendHeadPic = JSON.parse(ar.getStorage('userInfo').info).head_pic;
+        console.log($scope.sendHeadPic)
         api.getUserInfo($scope.receiveId).success(function (res) {
             $rootScope.receiveUserInfo = res.data;
         });
