@@ -38,8 +38,8 @@ class Area extends Base
         $result = (new Query())->select(['*'])
             ->where(['type' => 1])
             ->from(static::tableName())
-            ->offset(($page-1)*10)
-            ->limit(10)
+//            ->offset(($page-1)*10)
+//            ->limit(10)
             ->all();
         return $result;
     }
@@ -53,19 +53,23 @@ class Area extends Base
         $result['local'] = (new Query())->select(['*'])
             ->where(['type' => 1, 'parentId' => $province_id])
             ->from(static::tableName())
-            ->offset(($page-1)*10)
-            ->limit(10)
+//            ->offset(($page-1)*10)
+//            ->limit(10)
             ->all();
 
         $result['province'] = (new Query())->select(['*'])
             ->where(['type' => 1])
             ->andWhere(['not in', 'parentId', [$province_id, 3635]])
             ->from(static::tableName())
+//            ->offset(($page-1)*10)
+//            ->limit(10)
             ->all();
 
         $result['foreign'] = (new Query())->select(['*'])
             ->where(['type' => 1, 'parentId' => 3635])
             ->from(static::tableName())
+//            ->offset(($page-1)*10)
+//            ->limit(10)
             ->all();
 
         return $result;
