@@ -62,21 +62,20 @@ class User extends Base
      * @throws \yii\db\Exception
      */
     public function addUser($data){
-
         $db = $this->getDb();
         $transaction = $db->beginTransaction();// 启动事务
 
         // user表 数据处理
         if(isset($data['wx_id'])) {
-            $dataUser['wx_id'] = $data['wx_id'];
-            $dataUser['username'] = $data['username'];
-            $dataUser['password'] = md5(md5($data['password']));
+            $dataUser['wx_id']      = $data['wx_id'];
+            $dataUser['username']   = $data['username'];
+            $dataUser['password']   = md5(md5($data['password']));
             $dataUser['login_type'] = $data['login_type'];
         } else {
-            $dataUser['username'] = $data['phone'];
-            $dataUser['password'] = substr($data['phone'], -6);
-            $dataUser['password'] = md5(md5($dataUser['password']));
-            $dataUser['phone'] = $data['phone'];
+            $dataUser['username']   = $data['phone'];
+            $data['password']       = substr($data['phone'], -6);
+            $dataUser['password']   = md5(md5($data['password']));
+            $dataUser['phone']  = $data['phone'];
 
             isset($data['province']) ? $infoData['province'] = $data['province'] : true;
             isset($data['city']) ? $infoData['city'] = $data['city'] : true;
@@ -102,7 +101,6 @@ class User extends Base
             unset($data['auth']);
         }
 
-
         $infoData['auth'] = json_encode($userAuth);
         $infoData['info'] = json_encode($userInfo);
 
@@ -122,9 +120,7 @@ class User extends Base
         $info = $db->createCommand()
             ->insert('bhy_user_information', $infoData)
             ->execute();
-
         if ($user && $info) {
-
             $transaction->commit();
             // 写入用户日志表
             $log['user_id'] = $id;
@@ -132,11 +128,10 @@ class User extends Base
             $log['time'] = $time;
             $this->userLog($log);
         } else {
-
             $transaction->rollBack();
         }
 
-        return ['id' => $id, 'username' => $dataUser['username'], 'password' => $dataUser['password']];
+        return ['id' => $id, 'username' => $dataUser['username'], 'password' => $data['password']];
     }
 
     /**

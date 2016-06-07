@@ -137,24 +137,19 @@ class UserController extends BaseController
         if (\Yii::$app->request->get('mobile')) {
 
             // 验证码判断
-            if (\Yii::$app->request->get('code') == \Yii::$app->session->get('reg_code')) {
+            if ($this->get['code'] == \Yii::$app->session->get('reg_code')) {
 
                 // 注册数据处理
-//                $sex = \Yii::$app->request->get('sex');   // TODO 前端sex值已处理为1或0。 这里可以删了，
-//                $data['sex'] = json_decode($sex);
-//                $data['sex'] = $data['sex']->man ? 1 : 0;
-                $data['phone'] = \Yii::$app->request->get('mobile');
+                $data['phone'] = $this->get['mobile'];
+                $data['sex'] = $this->get['sex'];
 
                 // 验证手机号是否存在
-
                 if (\common\models\User::getInstance()->mobileIsExist($data['phone'])) {
-                    //if (User::getInstance()->getUserByName($data['username'])) {
                     return $this->renderAjax(['status' => 0, 'msg' => '手机号已存在', 'data' => []]);
                 }
 
                 // 添加用户
                 $userInfo = \common\models\User::getInstance()->addUser($data);
-                //$userId = User::getInstance()->addUser($data);
                 if ($userInfo) {
                     // 模拟登录
                     $data = User::getInstance()->login($userInfo['username'], $userInfo['password']);
