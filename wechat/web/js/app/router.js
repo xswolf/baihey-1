@@ -71,14 +71,14 @@ define(["app/module", 'app/service/serviceApi'],
                 $stateProvider
                     .state('welcome', {     // 欢迎页
                         url: "/welcome",
-                        templateUrl: "/wechat/views/user/welcome.html",
+                        templateUrl: "/wechat/views/user/welcome.html?t=" + Math.floor(Date.now() / 1000),
                         controller: 'welcome'
                     })
                     .state('main', {
                         url: "/main",
                         cache:false,
                         abstract: true,
-                        templateUrl: "main.html",
+                        templateUrl: "main.html?t=" + Math.floor(Date.now() / 1000),
                         controller: 'main'
                     })
                     .state('main.index', {   // 首页
