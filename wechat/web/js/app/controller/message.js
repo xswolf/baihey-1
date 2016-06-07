@@ -356,17 +356,6 @@ define(['app/module', 'app/directive/directiveApi'
                             $ionicPopup.alert({title: '只能发送图片类型的文件！'});
                             return false;
                         }
-
-                        if ((item.size / 1024) > 2) {    // 图片大于2M，则压缩图片
-                            api.resizeFile(item).then(function (blob_data) {
-                                var fd = new FormData();
-                                fd.append("imageFile", blob_data);
-                                console.log(fd);
-                            }, function (err_reason) {
-                                console.log(err_reason);
-                            });
-                        }
-
                         return true;
                     }
                 });
