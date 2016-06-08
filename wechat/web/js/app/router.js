@@ -120,7 +120,7 @@ define(["app/module", 'app/service/serviceApi'],
                             }
                         }
                     })
-                    .state('main.message', {  // 消息-查看用户资料
+                    .state('main.message_userInfo', {  // 消息-查看用户资料
                         cache: false,
                         url: "/user_info",
                         views: {
