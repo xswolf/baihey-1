@@ -245,7 +245,7 @@ define(['app/module', 'app/directive/directiveApi'
         });
 
         api.list("/wap/message/message-history", {id: $scope.receiveId}).success(function (data) {
-            if (list != null) list = list.concat(data);
+            list != null ? list = list.concat(data) : list = data;
             $scope.historyListHide = ar.getStorage('chat_messageHistory' + $scope.receiveId);
             $rootScope.historyListHide = $scope.historyListHide == null ? $scope.historyListHide = data : $scope.historyListHide = $scope.historyListHide.concat(data);
             ar.setStorage('chat_messageHistory' + $scope.receiveId, $scope.historyListHide);
