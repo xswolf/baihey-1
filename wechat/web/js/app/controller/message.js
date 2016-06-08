@@ -99,13 +99,14 @@ define(['app/module', 'app/directive/directiveApi'
 
         $scope.doRefresh = function() {
             $timeout(function() {
-                var num = 5;
-                var length = list.length;
-                $scope.messageNum += num;
-                var start = length - $scope.messageNum<=0 ? 0 : length - $scope.messageNum;
+                if ( list.length()>0) {
+                    var num = 5;
+                    var length = list.length;
+                    $scope.messageNum += num;
+                    var start = length - $scope.messageNum <= 0 ? 0 : length - $scope.messageNum;
 
-                $scope.historyList = list.slice(start,length);
-
+                    $scope.historyList = list.slice(start, length);
+                }
             }, 200);
 
         };
