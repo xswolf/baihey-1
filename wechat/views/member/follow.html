@@ -2,7 +2,8 @@
     <link href="/wechat/web/css/member.css" rel="stylesheet">
     <ion-header-bar class="com_w_100 bhy">
         <a class="button button-icon icon ion-arrow-left-c" href="#/main/member/index"></a>
-        <title class="title">谁关注了我</title>
+        <title class="title" ng-if="followType == 'followed'">谁关注了我</title>
+        <title class="title" ng-if="followType != 'followed'">我关注的人</title>
     </ion-header-bar>
     <ion-content class="bhy com_w_100 m_bg follow">
         <ion-list show-delete="shouldShowDelete">
