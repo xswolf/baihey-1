@@ -23,7 +23,7 @@ define(['app/module', 'app/directive/directiveApi'
 
             if (window.navigator.geolocation) {
                 var options = {
-                    enableHighAccuracy: true
+                    enableHighAccuracy: true,
                 };
                 window.navigator.geolocation.getCurrentPosition(handleSuccess, handleError, options);
             } else {
@@ -140,6 +140,7 @@ define(['app/module', 'app/directive/directiveApi'
                 titleText: '搜索',
                 cancelText: '取消',
                 buttonClicked: function (index) {
+                    $scope.pageLast = true;
                     $scope.searchForm.pageNum = 1; // 初始化页码
                     $scope.buttonsItemIndex = index;
                     if (index == 0) {   // 全部
