@@ -276,16 +276,15 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
     module.controller("member.age", ['app.serviceApi', '$scope', '$ionicPopup', function (api, $scope, $ionicPopup) {
 
         // 日期控件
-        requirejs(['jquery_1_11_1'], function ($) {
-            requirejs(['mobiscroll', 'mobiscroll_zh'], function (mobDate) {
-                $('#test_default').val('').scroller('destroy').scroller($.extend(opt['date'], {
-                    theme: 'default',
-                    mode: 'scroller',
-                    display: 'modal',
-                    lang: 'zh'
-                }));
-            })
-        });
+        $scope.settings = {
+            theme: 'mobiscroll',
+            lang: 'zh',
+            display: 'bottom',
+            controls: ['date'],
+            mode: $scope.mode
+        };
+
+
         $scope.formData = [];
         $scope.age = '年龄';
         $scope.zodiac = {id: 0, name: '生肖'};
@@ -294,17 +293,12 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
             $scope.age = ar.getAgeByBirthday(ar.DateTimeToDate($scope.formData.birthday)) + '岁';
             $scope.zodiac = ar.getZodicByBirthday(ar.DateTimeToDate($scope.formData.birthday));
             $scope.constellation = ar.getConstellationByBirthday(ar.DateTimeToDate($scope.formData.birthday));
-
-            //console.info($scope.age,$scope.zodiac,$scope.constellation);
         }
 
-        /*$scope.formData.age = ar.getTimestampByBirthday(ar.DateTimeToDate($scope.birthday)); // 年龄时间戳
-         $scope.formData.zodic = $scope.zodic.id; // 生肖ID 详见comm.js
-         $scope.formData.constellation = $scope.constellation.id; // 星座ID 详见comm.js*/
 
         $scope.formData.age = ar.getTimestampByBirthday(ar.DateTimeToDate($scope.birthday)) + '-' + $scope.zodiac.id + '-' + $scope.constellation.id;
         $scope.saveData = function () {
-            if ($scope.age < 18) {
+            if (parseInt($scope.age) < 18) {
                 $ionicPopup.alert({title: '如果您未满18岁，请退出本站，谢谢合作！'});
                 return false;
             }

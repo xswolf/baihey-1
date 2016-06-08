@@ -7,9 +7,6 @@ require.config({
     paths: {
         jquery: 'plugin/jquery/jquery',
         jquery_1_8_3: 'plugin/jquery/jquery_1.8.3.min',
-        jquery_1_11_1: 'plugin/jquery/jquery_1.11.1.min',
-        mobiscroll: 'plugin/mobiscroll/mobiscroll.core-2.6.2',
-        mobiscroll_zh: 'plugin/mobiscroll/mobiscroll.core-2.6.2-zh',
         //angular: '//cdn.bootcss.com/ionic/1.2.4/js/ionic.bundle.min',
         angular: 'plugin/angular/angular.min',
         angular_animate: 'plugin/angular/angular-animate.min',
@@ -21,6 +18,7 @@ require.config({
         bootstrap:'plugin/bootstrap/bootstrap.min',
         amezeui: 'plugin/amezeui/amazeui.min',
         comm: 'comm',
+        mobiscroll: 'plugin/mobiscroll/mobiscroll.custom-3.0.0-beta.min',
         photoswipe:'plugin/photoswipe/photoswipe.min',
         photoswipe_ui:'plugin/photoswipe/photoswipe-ui-default.min',
         klass:'plugin/photoswipe/klass.min',
@@ -37,7 +35,7 @@ require.config({
 });
 
 require(['angular','ionic'] , function (angular) {
-    require(['angular_animate','ionic_angular','angular_sanitize','angular_ui_router','comm','info_data',"app/controller/listController",'angular_upload'],function(){
+    require(['angular_animate','ionic_angular','angular_sanitize','angular_ui_router','comm','info_data',"app/controller/listController",'angular_upload','mobiscroll'],function(){
         'use strict';
 
         angular.bootstrap(document,['webApp']);
