@@ -140,9 +140,9 @@ define(['app/module', 'app/directive/directiveApi'
         api.list('/wap/member/get-dynamic' , {id:$location.$$search.id}).success(function (res) {
             res.data.imgList = JSON.parse(res.data.pic);
             $scope.dis = res.data;
-            $comment = ar.cleanQuotes(JSON.stringify(res.data.comment))
+            $comment = ar.cleanQuotes(JSON.stringify(res.data.comment));
             $scope.commentList = JSON.parse($comment);
-            console.log($scope.dis)
+            //console.log($scope.dis);
         })
 
         // 图片放大查看插件
