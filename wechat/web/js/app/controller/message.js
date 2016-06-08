@@ -99,7 +99,7 @@ define(['app/module', 'app/directive/directiveApi'
 
         $scope.doRefresh = function() {
             $timeout(function() {
-                if ( list.length()>0) {
+                if ( list != null) {
                     var num = 5;
                     var length = list.length;
                     $scope.messageNum += num;
