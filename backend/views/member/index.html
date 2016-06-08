@@ -16,6 +16,10 @@
                 pic.find("img").attr('src' , res.data[i].thumb_path);
                 $("#my-awesome-dropzone").append(pic.removeClass("preview-pic").addClass('new_item').css('width' , '100px').css('display','inline-block'));
 
+                if(res.data[i].is_head == 1){
+                    pic.find('.setHead').text('是头像')
+                }
+
                 pic.find(".setHead").click(function () {
                     $.ajax({
                         url:"/admin/member/set-head",
