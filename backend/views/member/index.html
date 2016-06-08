@@ -20,10 +20,13 @@
                     pic.find('.setHead').text('是头像')
                 }
 
-                pic.find(".setHead").attr('data-id' , res.data[i].id).click(function () {
+                pic.find(".setHead")
+                        .attr('data-id' , res.data[i].id)
+                        .attr('data-img' , res.data[i].thumb_path)
+                        .click(function () {
                     $.ajax({
                         url:"/admin/member/set-head",
-                        data:{user_id:userId,id:$(this).data('id'),thumb_path:res.data[i].thumb_path},
+                        data:{user_id:userId,id:$(this).data('id'),thumb_path:$(this).data('img')},
                         success: function () {
                             alert('设置成功');
                         }
