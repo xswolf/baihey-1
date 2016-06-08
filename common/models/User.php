@@ -274,7 +274,7 @@ class User extends Base
             ->leftJoin($this->tablePrefix.'user_click c' , 'c.dynamic_id = d.id AND c.user_id ='.$loginUserId)
             ->limit($limit)
             ->offset($offset)
-            ->select(["d.*","u.phone" ,"json_extract(i.auth , '$.identity_check') AS identity_check" ,"json_extract(i.info , '$.level') AS level" , "c.id as cid"])
+            ->select(["d.*","u.phone" ,"json_extract(i.auth , '$.identity_check') AS identity_check" ,"json_extract(i.info , '$.level') AS level" ,"json_extract(i.info , '$.head_pic') AS head_pic", "c.id as cid"])
             ->orderBy("d.create_time desc");
         if ($uid>0){
             return $obj->where(['u.id'=>$uid])->all();
