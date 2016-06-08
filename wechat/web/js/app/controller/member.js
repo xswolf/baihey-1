@@ -277,137 +277,15 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
 
         // 日期控件
         requirejs(['jquery_1_11_1'], function ($) {
-            requirejs(['mobiscroll','mobiscroll_zh'], function (mobDate) {
-                function init() {
-                    $('#demo_date').mobiscroll().date({
-                        theme: 'ios',
-                        /*
-                         scroller —— 以wheel滑动方式选择
-                         clickpick —— 显示 - + 按钮选择
-                         mixed —— 兼容以上两种方式
-                         * */
-                        mode: 'scroller',
-                        /*
-                         modal —— 显示在中间
-                         inline —— 直接显示在页面中
-                         bubble —— 类似于tip弹出显示
-                         top —— 显示在顶部
-                         bottom —— 显示在底部
-                         */
-                        display: 'bottom',
-                        //设置按钮显示的样式
-                        btnClass : 'sqh_color_56 font_16 sqh_line_height_15 margin_10 sqh_font_type',
-                        minDate:new Date() ,
-                        //点击确定按钮，触发事件。
-                        onSelect:mobiscroll_select,
-                        //当时间选择的内容发生变化触发的事件
-                        onChange:mobiscroll_change,
-                        //被调用之前触发该方法，可以在显示之前修改配置文件
-                        onBeforeShow:mobiscroll_beforeShow,
-                        //点击取消按钮触发的事件
-                        onCancel:mobiscroll_cancel,
-                        //当弹出效果退出的时候执行该方法，在onSelect 和 onCancel之前执行
-                        onClose:mobiscroll_close,
-
-                        //onDestroy:mobiscroll_destroy,
-                        //生成完HTML代码之后还有显示代码之前执行这个函数，可以自定义HTML内容
-                        onMarkupReady:mobiscroll_markupReady,
-                        //显示位置之前调用该方法
-                        onPosition:mobiscroll_position,
-                        //改变一个值之后触发的时间，参数是其中一个的值
-                        //Gets called when the user taps on a value on the wheel.
-                        onValueTap:mobiscroll_valueTap,
-                        //显示之前触发的时间
-                        onShow:mobiscroll_show,
-                        //Gets called on initialization and on every wheel change
-                        validate:mobiscroll_validate,
-                        lang: 'zh'
-                    });
-                }
-
-
-                $("#show").click(function(){
-                    $("#demo_date").mobiscroll("show");
-                });
-
-                $("#clear").click(function(){
-                    $("#demo_date").mobiscroll("clear");
-                });
-
-                init();
-            });
-            function mobiscroll_validate(item, inst){
-
-            }
-
-            function mobiscroll_show(html, valueText, inst){
-
-            }
-
-            function mobiscroll_valueTap(html, inst){
-                //html是变化值控件的HTML代码，与mobiscroll_position中的第一个参数不一致，
-                console.log("valueText : " + html[0].outerHTML);
-                //mobiscroll对象
-                console.log("inst : " + inst);
-            }
-
-            function mobiscroll_position(html, inst){
-                //html是一个数组对象，用户显示HTML的内容，代表的是整个显示控件的内容
-                console.log("html : " + html[0].outerHTML);
-                console.log("inst : " + inst);
-            }
-
-            function mobiscroll_markupReady(html, inst){
-                console.log("html : " + html);
-                console.log("inst : " + inst);
-                //inst._markup 就是生成的html 对象
-                console.log(inst._markup == html);
-
-            }
-
-            function mobiscroll_destroy(valueText, btn, inst){
-                //valueText是选中的值
-                console.log("valueText : " + valueText);
-                console.log("btn : " + btn);
-                //mobiscroll对象
-                console.log("inst : " + inst);
-            }
-
-            function mobiscroll_close(valueText, btn, inst){
-                //valueText是选中的值
-                console.log("valueText : " + valueText);
-                console.log("btn : " + btn);
-                //mobiscroll对象
-                console.log("inst : " + inst);
-            }
-            function mobiscroll_cancel(valueText, inst){
-                //valueText是选中的值
-                console.log("valueText : " + valueText);
-                //mobiscroll对象
-                console.log("inst : " + inst);
-            }
-
-            function mobiscroll_beforeShow(inst){
-                //mobiscroll对象
-                console.log("inst : " + inst);
-            }
-
-            function mobiscroll_select(valueText,inst){
-                //valueText是选中的值
-                console.log("valueText : " + valueText);
-                //mobiscroll对象
-                console.log("inst : " + inst);
-            }
-
-
-            function mobiscroll_change(valueText,inst){
-                //valueText是选中的值
-                console.log("valueText : " + valueText);
-                //mobiscroll对象
-                console.log("inst : " + inst);
-            }
-        })
-
+            requirejs(['mobiscroll', 'mobiscroll_zh'], function (mobDate) {
+                $('#test_default').val('').scroller('destroy').scroller($.extend(opt['date'], {
+                    theme: 'default',
+                    mode: 'scroller',
+                    display: 'modal',
+                    lang: 'zh'
+                }));
+            })
+        });
         $scope.formData = [];
         $scope.age = '年龄';
         $scope.zodiac = {id: 0, name: '生肖'};
@@ -782,8 +660,8 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
         // 加载更多
         $scope.loadMore = function () {
             // 默认数据处理
-            api.list('/wap/member/went-travel-list', {pageIndex:$scope.formData.pageIndex}).success(function (res) {
-                if(res.data.length < 1){
+            api.list('/wap/member/went-travel-list', {pageIndex: $scope.formData.pageIndex}).success(function (res) {
+                if (res.data.length < 1) {
                     $scope.isMore = false;
                 }
                 $scope.addrList = $scope.addrList.concat(res.data);
@@ -891,9 +769,12 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
             }
         }
         // 加载更多
-        $scope.loadMore = function(){
+        $scope.loadMore = function () {
             // 默认数据处理
-            api.list('/wap/member/want-travel-list', {'province_id': province_id,pageIndex:$scope.formData.pageIndex}).success(function (res) {
+            api.list('/wap/member/want-travel-list', {
+                'province_id': province_id,
+                pageIndex: $scope.formData.pageIndex
+            }).success(function (res) {
                 $scope.addrListOne = res.data.local;
                 $scope.addrListTwo = res.data.province;
                 $scope.addrListThree = res.data.foreign;
@@ -909,7 +790,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
         }
 
         // 是否还有更多
-        $scope.moreDataCanBeLoaded = function(){
+        $scope.moreDataCanBeLoaded = function () {
             return $scope.isMore;
         }
 
