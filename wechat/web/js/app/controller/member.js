@@ -1734,8 +1734,8 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
             }
         });
 
-        $scope.localChat = function (url) {
-            window.location.hash = url;
+        $scope.localChat = function () {
+            window.location.hash = "#/main/chat?id="+ $scope.otherUserInfo.id +"&head_pic=" + $scope.otherUserInfo.info.head_pic + "&real_name=" + $scope.otherUserInfo.info.real_name + "&sex=" + $scope.otherUserInfo.sex + "&age="+ $scope.otherUserInfo.info.age;
         }
         $scope.getTravel('went_travel', $scope.otherUserInfo.went_travel);// 我去过的地方
         $scope.getTravel('want_travel', $scope.otherUserInfo.want_travel);// 我想去的地方
