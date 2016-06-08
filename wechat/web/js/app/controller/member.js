@@ -654,7 +654,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
         // 加载更多
         $scope.loadMore = function () {
             // 默认数据处理
-            api.list('/wap/member/went-travel-list', {pageIndex: $scope.formData.pageIndex}).success(function (res) {
+            api.list('/wap/member/went-travel-list', false).success(function (res) {
                 if (res.data.length < 1) {
                     $scope.isMore = false;
                 }

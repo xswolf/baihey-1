@@ -485,7 +485,7 @@
 }
 /* been_address */
 .addr_top_box {
-  max-width: 70%;
+  max-width: 100%;
 }
 .addr_top_box .hob_addr_flag {
   float: none;

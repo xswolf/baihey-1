@@ -15,13 +15,18 @@
                         <span class="hob_addr_name">{{userAddr}}</span>
                     </span>
                 </ion-scroll>
-                <p class="addr_top_search">
-                    <input type="text" ng-model="formData.searchAddr" placeholder="搜索国家/城市" class="addr_top_searchInput" ng-change="search(this.formData.searchAddr)">
-                </p>
+                <!--<p class="addr_top_search">-->
+                    <!--<input type="text" ng-model="formData.searchAddr" placeholder="搜索国家/城市" class="addr_top_searchInput" ng-change="search(this.formData.searchAddr)">-->
+                <!--</p>-->
             </ion-item>
-            <p class="pl16 cor20">
-                热门推荐
-            </p>
+            <div class="pl16 cor20 clearfix hr_30">
+                <span class="fl">热门推荐</span>
+                <span class="fr addr_type_tab">
+                    <span ng-class="{1:'cur'}[typeTab]" ng-click="showTab(1)">重庆</span>
+                    <span ng-class="{2:'cur'}[typeTab]" ng-click="showTab(2)">省外</span>
+                    <span ng-class="{3:'cur'}[typeTab]" ng-click="showTab(3)">国外</span>
+                </span>
+            </div>
             <ion-item class="item-checkbox" ng-repeat="addr in addrList">
                 <label class="checkbox">
                     <input type="checkbox" id="{{addr.id}}" name="{{addr.name}}" ng-checked="isSelected({{addr.id}})"

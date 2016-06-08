@@ -3,7 +3,7 @@
  */
 define(["app/module", 'app/service/serviceApi'],
     function (module) {
-        module.run(['$rootScope', '$state', '$timeout', 'app.serviceApi', '$ionicLoading','$location', function ($rootScope, $state, $timeout, api, $ionicLoading,$location) {
+        module.run(['$rootScope', '$state', '$timeout', 'app.serviceApi', '$ionicLoading', '$location', function ($rootScope, $state, $timeout, api, $ionicLoading, $location) {
 
             var messageList = function () {
                 api.list('/wap/message/message-list', []).success(function (res) {
@@ -39,9 +39,9 @@ define(["app/module", 'app/service/serviceApi'],
                 }
 
                 // 判断用户是否登陆
-                if ($location.$$url != '/main/index' && $location.$$url != '/welcome'){ // 首页和欢迎页不判断
+                if ($location.$$url != '/main/index' && $location.$$url != '/welcome') { // 首页和欢迎页不判断
                     api.getLoginStatus().success(function (res) {
-                        if(!res.status) {
+                        if (!res.status) {
                             location.href = '/wap/user/login';
                             return false;
                         }
@@ -54,7 +54,7 @@ define(["app/module", 'app/service/serviceApi'],
             $rootScope
                 .$on('$stateChangeStart',
                     function (event, toState, toParams, fromState, fromParams) {
-                        if(toState.url != '/index'){
+                        if (toState.url != '/index') {
                             $ionicLoading.show();
                         }
                     });
@@ -120,13 +120,23 @@ define(["app/module", 'app/service/serviceApi'],
                             }
                         }
                     })
+                    .state('main.message', {  // 消息-查看用户资料
+                        cache: false,
+                        url: "/user_info",
+                        views: {
+                            'message-tab': {
+                                templateUrl: "/wechat/views/member/user_info.html",
+                                controller: "member.user_info"
+                            }
+                        }
+                    })
                     .state('main.message_chat', { // 聊天页面
                         cache: false,
                         url: "/chat",
                         views: {
                             'message-tab': {
                                 templateUrl: "/wechat/views/message/chat.html",
-                                controller:'message.chat'
+                                controller: 'message.chat'
                             }
                         },
 
@@ -222,8 +232,8 @@ define(["app/module", 'app/service/serviceApi'],
                     })
                     .state('charge_order', {     // 支付-订单信息
                         url: "/charge_order",
-                            templateUrl: "/wechat/views/charge/order.html",
-                            controller: 'charge.order'
+                        templateUrl: "/wechat/views/charge/order.html",
+                        controller: 'charge.order'
                     })
                     .state('main.charge', {     // 充值
                         url: "/member_charge",
@@ -236,7 +246,7 @@ define(["app/module", 'app/service/serviceApi'],
                     });
                 //$urlRouterProvider.otherwise("/main/index");
             }])
-            .controller('main', ['$scope', '$location', 'app.serviceApi','$ionicLoading','$ionicPopup', function ($scope, $location, api, $ionicLoading,$ionicPopup) {
+            .controller('main', ['$scope', '$location', 'app.serviceApi', '$ionicLoading', '$ionicPopup', function ($scope, $location, api, $ionicLoading, $ionicPopup) {
 
                 if (ar.getCookie('bhy_user_id') > 0) {
                     api.getMessageNumber().success(function (res) {
