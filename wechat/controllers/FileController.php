@@ -29,7 +29,7 @@ class FileController extends BaseController {
      * 相册上传+缩略图
      */
     public function actionThumbPhoto() {
-        $user_id = Cookie::getInstance()->getCookie('bhy_id');
+        $user_id = Cookie::getInstance()->getCookie('bhy_id')->value;
         $data = $this->thumb();
         // 保存数据
         if(1 == $data['status']) {
