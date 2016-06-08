@@ -25,6 +25,7 @@ define(['app/module'], function (module) {
         if (!input) {
             return '不限';
         }
+        input += '';
         var info = input.split(',');
         var name = '';
         for (var i in info) {
