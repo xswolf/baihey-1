@@ -104,10 +104,11 @@ class MemberController extends BaseController
             exit();
         }
         if ($postData = $request->post()){
-
+//            var_dump($postData);exit;
             $postData['zo']['other'] = trim($postData['zo']['zo_other']);
             $postData['zo']['other'] = str_replace("\t" , "" , $postData['zo']['other']);
-            $postData['user_id'] = $request->get('id');
+            $postData['user_id'] = $id;
+
             $postData['info']['age'] = strtotime($postData['info']['age']);
 
             User::getInstance()->editUser($postData);
@@ -116,6 +117,7 @@ class MemberController extends BaseController
         $user['info'] = json_decode($user['info']);
         $user['auth'] = json_decode($user['auth']);
 
+        $this->assign('id' , $id);
         $this->assign('user' , $user);
         $this->assign('sport' , Config::getInstance()->getListByType(1));
         $this->assign('movie' , Config::getInstance()->getListByType(2));
