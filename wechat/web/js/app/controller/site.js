@@ -23,7 +23,7 @@ define(['app/module', 'app/directive/directiveApi'
 
             if (window.navigator.geolocation) {
                 var options = {
-                    enableHighAccuracy: true,
+                    enableHighAccuracy: true
                 };
                 window.navigator.geolocation.getCurrentPosition(handleSuccess, handleError, options);
             } else {

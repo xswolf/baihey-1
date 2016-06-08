@@ -1696,14 +1696,24 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
     }]);
 
     // 谁关注了我
-    module.controller("member.follow", ['app.serviceApi', '$scope', '$ionicPopup', '$ionicLoading', function (api, $scope, $ionicPopup, $ionicLoading) {
-        api.list('/wap/follow/followed-list', {}).success(function (res) {
-            $scope.followList = res.data;
-            for (var i in $scope.followList) {
-                $scope.followList[i].info = JSON.parse($scope.followList[i].info);
-                $scope.followList[i].auth = JSON.parse($scope.followList[i].auth);
-            }
-        });
+    module.controller("member.follow", ['app.serviceApi', '$scope', '$ionicPopup', '$ionicLoading', '$location', function (api, $scope, $ionicPopup, $ionicLoading, $location) {
+        $scope.followType = $location.$$search.type;
+        console.log($scope.followType);
+        var getFollowList = function(url) {
+            api.list(url, {}).success(function (res) {
+                $scope.followList = res.data;
+                for (var i in $scope.followList) {
+                    $scope.followList[i].info = JSON.parse($scope.followList[i].info);
+                    $scope.followList[i].auth = JSON.parse($scope.followList[i].auth);
+                }
+            });
+        }
+        if($scope.followType == 'follow') {
+            getFollowList('/wap/follow/follow-list');
+        } else {
+            getFollowList('/wap/follow/followed-list');
+        }
+
     }]);
 
     // 查看用户资料
