@@ -16,10 +16,17 @@
                 pic.find("img").attr('src' , res.data[i].thumb_path);
                 $("#my-awesome-dropzone").append(pic.removeClass("preview-pic").addClass('new_item').css('width' , '100px').css('display','inline-block'));
 
-                pic.find(".setHead").click(function () {
+                if(res.data[i].is_head == 1){
+                    pic.find('.setHead').text('是头像')
+                }
+
+                pic.find(".setHead")
+                        .attr('data-id' , res.data[i].id)
+                        .attr('data-img' , res.data[i].thumb_path)
+                        .click(function () {
                     $.ajax({
-                        url:"/wap/member/set-head",
-                        data:{id:res.data[i].id,thumb_path:res.data[i].thumb_path},
+                        url:"/admin/member/set-head",
+                        data:{user_id:userId,id:$(this).data('id'),thumb_path:$(this).data('img')},
                         success: function () {
                             alert('设置成功');
                         }

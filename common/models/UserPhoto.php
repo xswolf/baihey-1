@@ -79,8 +79,12 @@ class UserPhoto extends Base
      */
     public function setHeadPic($user_id, $where) {
         //var_dump($where);exit;
-        $this->updateAll(['is_head' => 0],['user_id' => $user_id, 'is_head' => 1]);
-        $row = $this->updateAll(['is_head' => 1],['id' => $where['id']]);
+        $this->getDb()->createCommand()
+            ->update($this->tablePrefix.'user_photo' , ['is_head' => 0] , ['user_id' => $user_id, 'is_head' => 1])
+            ->execute();
+        $row = $this->getDb()->createCommand()
+            ->update($this->tablePrefix.'user_photo' , ['is_head' => 1] , ['id' => $where['id']])
+            ->execute();
         return $row ? UserInformation::getInstance()->updateUserInfo($user_id, ['head_pic' => $where['thumb_path']]) : false;
     }
 }

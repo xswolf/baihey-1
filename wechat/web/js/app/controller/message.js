@@ -66,7 +66,7 @@ define(['app/module', 'app/directive/directiveApi'
                     break;
                 }
             }
-            localStorage.removeItem("chat_messageHistory" + item.send_user_id);
+            localStorage.removeItem("chat_messageHistory" + item.id);
             $scope.messageList = message;
             ar.setStorage('messageList', $scope.messageList);
             api.setMsgDisplay(item.other).success(function (res) {
