@@ -170,7 +170,7 @@ class MemberController extends BaseController
         $this->renderAjax(['status'=>$result]);
     }
 
-    public function actionUp(){
+    public function actionSetHead(){
         $userId = \Yii::$app->request->get('user_id');
         $list = UserPhoto::getInstance()->setHeadPic($userId, $this->get);
         $this->renderAjax(['status=>1', 'data' => $list]);
