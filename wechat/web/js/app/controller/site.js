@@ -141,23 +141,27 @@ define(['app/module', 'app/directive/directiveApi'
                 cancelText: '取消',
                 buttonClicked: function (index) {
                     $scope.pageLast = true;
+                    $scope.searchForm.age = 0; // 初始化年龄
                     $scope.searchForm.pageNum = 1; // 初始化页码
                     $scope.buttonsItemIndex = index;
                     if (index == 0) {   // 全部
                         $scope.searchForm.sex = 'all';
-                        userListPromise();
+                        //userListPromise();
+                        $scope.loadMore();
                         hideSheet();
                     }
 
                     if (index == 1) {   //只看男
                         $scope.searchForm.sex = 1;
-                        userListPromise();
+                        //userListPromise();
+                        $scope.loadMore();
                         hideSheet();
                     }
 
                     if (index == 2) {   //只看女
                         $scope.searchForm.sex = 0;
-                        userListPromise();
+                        //userListPromise();
+                        $scope.loadMore();
                         hideSheet();
                     }
 
@@ -176,7 +180,8 @@ define(['app/module', 'app/directive/directiveApi'
                             inputPlaceholder: '请输入对方ID号'
                         }).then(function (res) {
                             $scope.searchForm.id = res;
-                            userListPromise();
+                            //userListPromise();
+                            $scope.loadMore();
                             hideSheet();
                         });
                     }
