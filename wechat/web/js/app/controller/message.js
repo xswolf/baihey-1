@@ -95,6 +95,7 @@ define(['app/module', 'app/directive/directiveApi'
                 list[i].status = 4;
             }
         }
+
         $scope.doRefresh = function() {
             $timeout(function() {
                 var num = 5;
@@ -240,8 +241,9 @@ define(['app/module', 'app/directive/directiveApi'
         api.getUserInfo($scope.receiveId).success(function (res) {
             $rootScope.receiveUserInfo = res.data;
         });
-        api.list("/wap/message/message-history", {id: $scope.receiveId}).success(function (data) {
 
+        api.list("/wap/message/message-history", {id: $scope.receiveId}).success(function (data) {
+            list = list.concat(data);
             $scope.historyListHide = ar.getStorage('chat_messageHistory' + $scope.receiveId);
             $rootScope.historyListHide = $scope.historyListHide == null ? $scope.historyListHide = data : $scope.historyListHide = $scope.historyListHide.concat(data);
             ar.setStorage('chat_messageHistory' + $scope.receiveId, $scope.historyListHide);
