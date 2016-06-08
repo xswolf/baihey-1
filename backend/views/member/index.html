@@ -15,6 +15,16 @@
                 console.log(res.data[i].thumb_path);
                 pic.find("img").attr('src' , res.data[i].thumb_path);
                 $("#my-awesome-dropzone").append(pic.removeClass("preview-pic").addClass('new_item').css('width' , '100px').css('display','inline-block'));
+
+                pic.find(".setHead").click(function () {
+                    $.ajax({
+                        url:"/wap/member/set-head",
+                        data:{id:res.data[i].id,thumb_path:res.data[i].thumb_path},
+                        success: function () {
+                            alert('设置成功');
+                        }
+                    })
+                })
             }
         }});
 
@@ -126,7 +136,7 @@
                     <div class="dz-success-mark"><span></span></div>
                     <div class="dz-error-mark"><span></span></div>
                     <div class="dz-error-message"><span data-dz-errormessage=""></span></div>
-                    <a href="javascript:undefined;" class="dz-remove">删除文件</a>
+                    <a href="javascript:undefined;" class="dz-remove setHead">设为头像</a>
                 </div>
 
             </form>
@@ -165,5 +175,6 @@
 
             }
         });
+
     });
 </script>
