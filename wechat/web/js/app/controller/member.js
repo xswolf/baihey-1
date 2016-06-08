@@ -295,16 +295,16 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
             $scope.constellation = ar.getConstellationByBirthday(ar.DateTimeToDate($scope.formData.birthday));
         }
 
-
-        $scope.formData.age = ar.getTimestampByBirthday(ar.DateTimeToDate($scope.birthday)) + '-' + $scope.zodiac.id + '-' + $scope.constellation.id;
         $scope.saveData = function () {
             if (parseInt($scope.age) < 18) {
                 $ionicPopup.alert({title: '如果您未满18岁，请退出本站，谢谢合作！'});
                 return false;
             }
-            api.save('/wap/member/save-data', $scope.formData).success(function (res) {
+            var formData = [];
+            formData.age = ar.getTimestampByBirthday(ar.DateTimeToDate($scope.formData.birthday)) + '-' + $scope.zodiac.id + '-' + $scope.constellation.id;
+            api.save('/wap/member/save-data', formData).success(function (res) {
                 // 保存
-                $scope.userInfo.info.age = ar.getTimestampByBirthday(ar.DateTimeToDate($scope.birthday));
+                $scope.userInfo.info.age = ar.getTimestampByBirthday(ar.DateTimeToDate($scope.formData.birthday));
                 $scope.userInfo.info.zodiac = $scope.zodiac.id;
                 $scope.userInfo.info.constellation = $scope.constellation.id;
                 $scope.setUserStorage();

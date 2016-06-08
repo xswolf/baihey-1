@@ -336,7 +336,7 @@ var ar = {
          * @returns {number}
          */
         getTimestampByBirthday: function (birthday) {
-            return Math.round(new Date(birthday.replace(/-/g, '/')).getTime() / 1000);
+            return Math.round(new Date(birthday.replace(/-/g, '-')).getTime() / 1000);
         },
 
         /**
