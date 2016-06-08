@@ -19,7 +19,7 @@
                 pic.find(".setHead").click(function () {
                     $.ajax({
                         url:"/wap/member/set-head",
-                        data:{id:res.data[i].id,thumb_path:res.data[i].thumb_path},
+                        data:{user_id:userId,id:res.data[i].id,thumb_path:res.data[i].thumb_path},
                         success: function () {
                             alert('设置成功');
                         }
