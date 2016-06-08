@@ -406,7 +406,6 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
                 //mobiscroll对象
                 console.log("inst : " + inst);
             }
-            })
         })
 
         $scope.formData = [];
