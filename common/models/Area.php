@@ -29,14 +29,14 @@ class Area extends Base
     }
 
     /**
-     * 去过的地方列表（type=1）
+     * 去过的地方列表（type=2,3）
      * @return array
      */
-    public function getWentTravelList($page = 1)
+    public function getWentTravelList($type = [2,3])
     {
 
         $result = (new Query())->select(['*'])
-            ->where(['type' => 1])
+            ->where(['in', 'type', $type])
             ->from(static::tableName())
 //            ->offset(($page-1)*10)
 //            ->limit(10)

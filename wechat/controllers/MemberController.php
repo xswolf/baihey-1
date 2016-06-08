@@ -74,13 +74,11 @@ class MemberController extends BaseController
     }
 
     /**
-     * 类型为1的地方列表
+     * 类型为2,3的地方列表
      */
     public function actionWentTravelList()
     {
-        $pageIndex = $this->get['pageIndex'];
-        $list = Area::getInstance()->getWentTravelList($pageIndex);
-        $this->renderAjax(['status=>1', 'data' => $list]);
+        $this->renderAjax(['status=>1', 'data' => Area::getInstance()->getWentTravelList()]);
     }
 
     /**

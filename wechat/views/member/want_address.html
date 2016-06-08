@@ -22,37 +22,35 @@
             <div class="pl16 cor20 clearfix hr_30">
                 <span class="fl">热门推荐</span>
                 <span class="fr addr_type_tab">
-                    <span ng-class="{1:'cur'}[typeTab]" ng-click="showTab(1)">重庆</span>
-                    <span ng-class="{2:'cur'}[typeTab]" ng-click="showTab(2)">省外</span>
-                    <span ng-class="{3:'cur'}[typeTab]" ng-click="showTab(3)">国外</span>
+                    <span ng-class="{1:'cur'}[typeTab]" ng-click="showTab(1)">国内</span>
+                    <span ng-class="{2:'cur'}[typeTab]" ng-click="showTab(2)">国外</span>
                 </span>
             </div>
-            <ion-item class="item-checkbox" ng-if="typeTab==1" ng-repeat="addro in addrListOne track by addro.id">
+            <div class="item item-divider">
+                <div class="padding">重庆</div>
+                <ion-checkbox name="ss" ng-model="isChecked">复选框标签</ion-checkbox>
+                <ion-checkbox name="ss" ng-model="isChecked">复选框标签</ion-checkbox>
+                <ion-checkbox name="ss" ng-model="isChecked">复选框标签</ion-checkbox>
+                <ion-checkbox name="ss" ng-model="isChecked">复选框标签</ion-checkbox>
+                <ion-checkbox name="ss" ng-model="isChecked">复选框标签</ion-checkbox>
+                <ion-checkbox name="ss" ng-model="isChecked">复选框标签</ion-checkbox>
+                <ion-checkbox name="ss" ng-model="isChecked">复选框标签</ion-checkbox>
+            </div>
+           <!-- <ion-item class="item-checkbox" ng-if="typeTab==1" ng-repeat="dom in data | filter:{type: 2} | limitTo:size">
                 <label class="checkbox checkbox-energized">
-                    <input type="checkbox" id="{{addro.id}}" name="{{addro.name}}" ng-checked="isSelected({{addro.id}})"
-                           ng-click="updateSelection($event,{{addro.id}})">
+                    <input type="checkbox" id="{{dom.id}}" name="{{dom.name}}" ng-checked="isSelected({{dom.id}})"
+                           ng-click="updateSelection($event,{{dom.id}})">
                 </label>
                 <i class="icon ion-location fs16 cor28"></i>
-                {{addro.name}}
+                {{dom.name}}
             </ion-item>
-            <ion-item class="item-checkbox" ng-if="typeTab==2" ng-repeat="addrt in addrListTwo track by addrt.id">
+            <ion-item class="item-checkbox" ng-if="typeTab==2" ng-repeat="abr in abroad track by abr.id">
                 <label class="checkbox">
-                    <input type="checkbox" id="{{addrt.id}}" name="{{addrt.name}}" ng-checked="isSelected({{addrt.id}})"
-                           ng-click="updateSelection($event,{{addrt.id}})">
+                    <input type="checkbox" id="{{abr.id}}" name="{{abr.name}}" ng-checked="isSelected({{abr.id}})"
+                           ng-click="updateSelection($event,{{abr.id}})">
                 </label>
                 <i class="icon ion-location fs16 cor28"></i>
-                {{addrt.name}}
-            </ion-item>
-            <ion-item class="item-checkbox" ng-if="typeTab==3" ng-repeat="addrthr in addrListThree track by addrthr.id">
-                <label class="checkbox">
-                    <input type="checkbox" id="{{addrthr.id}}" name="{{addrthr.name}}" ng-checked="isSelected({{addrthr.id}})"
-                           ng-click="updateSelection($event,{{addrthr.id}})">
-                </label>
-                <i class="icon ion-location fs16 cor28"></i>
-                {{addrthr.name}}
-            </ion-item>
-            <!--<ion-item ng-if="!addrListOne.length || !addrListTwo.length || !addrListThree.length">
-                <p class="tac">暂无相关数据</p>
+                {{abr.name}}
             </ion-item>-->
         </ion-list>
         <ion-infinite-scroll

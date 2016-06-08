@@ -642,37 +642,56 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
         $scope.formData.pageIndex = 1;
         $scope.addrList = [];
         $scope.isMore = true;
-        var dataList = $scope.userInfo.went_travel != null ? $scope.userInfo.went_travel.split(',') : [];
-        var arr = [];
-        var getAddrName = function (id) {
-            for (var i in arr) {
-                if (id == arr[i].id) {
-                    return arr[i].name;
-                }
+        $scope.typeTab = 1;  // 默认国内
+        $scope.domestic = [];   // 国内
+        $scope.abroad = [];     // 国外
+
+        var data = "";
+        api.list('/wap/member/went-travel-list', {}).success(function (res) {    //typeId:2，国内。 typeId:3，国外
+            data = res.data;
+        });
+        for (var i in data) {
+            if (data[i].type == 2) {
+                $scope.domestic.push(data[i]);
+            }
+            if (data[i].type == 3) {
+                $scope.abroad.push(data[i]);
             }
         }
+
+
+        /*var dataList = $scope.userInfo.went_travel != null ? $scope.userInfo.went_travel.split(',') : [];
+         var arr = [];
+         var getAddrName = function (id) {
+         for (var i in arr) {
+         if (id == arr[i].id) {
+         return arr[i].name;
+         }
+         }
+         }*/
+
         // 加载更多
         $scope.loadMore = function () {
-            // 默认数据处理
-            api.list('/wap/member/went-travel-list', false).success(function (res) {
-                if (res.data.length < 1) {
-                    $scope.isMore = false;
-                }
-                $scope.addrList = $scope.addrList.concat(res.data);
-                arr = res.data;
-                for (var i in dataList) {
-                    $scope.formData.userAddrIdList[i] = parseInt(dataList[i]);
-                    $scope.formData.userAddrList[i] = getAddrName($scope.formData.userAddrIdList[i]);
-                }
-                $scope.formData.pageIndex += 1;
-                $scope.$broadcast('scroll.infiniteScrollComplete');
-            });
+            /*  // 默认数据处理
+             api.list('/wap/member/went-travel-list', {typeId:2}).success(function (res) {
+             if (res.data.length < 1) {
+             $scope.isMore = false;
+             }
+             $scope.addrList = $scope.addrList.concat(res.data);
+             arr = res.data;
+             for (var i in dataList) {
+             $scope.formData.userAddrIdList[i] = parseInt(dataList[i]);
+             $scope.formData.userAddrList[i] = getAddrName($scope.formData.userAddrIdList[i]);
+             }
+             $scope.formData.pageIndex += 1;
+             $scope.$broadcast('scroll.infiniteScrollComplete');
+             });*/
 
         }
 
         // 是否还有更多
         $scope.moreDataCanBeLoaded = function () {
-            return $scope.isMore;
+            return false;
         }
 
         var updateSelected = function (action, id, name) {
@@ -752,40 +771,29 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
         $scope.formData.userAddrList = [];    // 用户已选择的地区，name数据集，展示用
         $scope.formData.pageIndex = 1;
         $scope.isMore = true;
-        var arr = [];
-        var province_id = $scope.userInfo.province != '0' ? $scope.userInfo.province : 1;
-        var dataList = $scope.userInfo.want_travel != null ? $scope.userInfo.want_travel.split(',') : [];
-        var getAddrName = function (id) {
-            for (var i in arr) {
-                if (id == arr[i].id) {
-                    return arr[i].name;
-                }
-            }
-        }
+        $scope.typeTab = 1;  // 默认国内
+        $scope.domestic = [];   // 国内
+        $scope.abroad = [];     // 国外
+        $scope.data = [];
+        $scope.size = 3;
+        api.list('/wap/member/went-travel-list', {}).success(function (res) {    //typeId:2，国内。 typeId:3，国外
+            $scope.data = res.data;
+            $scope.dataSize = res.data.length;
+        });
+
         // 加载更多
         $scope.loadMore = function () {
-            // 默认数据处理
-            api.list('/wap/member/want-travel-list', {
-                'province_id': province_id,
-                pageIndex: $scope.formData.pageIndex
-            }).success(function (res) {
-                $scope.addrListOne = res.data.local;
-                $scope.addrListTwo = res.data.province;
-                $scope.addrListThree = res.data.foreign;
-                arr = arr.concat($scope.addrListOne);
-                arr = arr.concat($scope.addrListTwo);
-                arr = arr.concat($scope.addrListThree);
-                for (var i in dataList) {
-                    $scope.formData.userAddrIdList[i] = parseInt(dataList[i]);
-                    $scope.formData.userAddrList[i] = getAddrName($scope.formData.userAddrIdList[i]);
-                }
-                $scope.formData.pageIndex += 1;
-            });
+            if ($scope.size == $scope.dataSize) {
+                $scope.isMore = false;
+            }
+            console.info($scope.data.length,$scope.dataSize);
+            $scope.size += 3;
+            $scope.$broadcast('scroll.infiniteScrollComplete');
         }
 
         // 是否还有更多
         $scope.moreDataCanBeLoaded = function () {
-            return $scope.isMore;
+            return false;
         }
 
 
@@ -1693,7 +1701,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
     module.controller("member.follow", ['app.serviceApi', '$scope', '$ionicPopup', '$ionicLoading', '$location', function (api, $scope, $ionicPopup, $ionicLoading, $location) {
         $scope.followType = $location.$$search.type;
         console.log($scope.followType);
-        var getFollowList = function(url) {
+        var getFollowList = function (url) {
             api.list(url, {}).success(function (res) {
                 $scope.followList = res.data;
                 for (var i in $scope.followList) {
@@ -1702,7 +1710,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
                 }
             });
         }
-        if($scope.followType == 'follow') {
+        if ($scope.followType == 'follow') {
             getFollowList('/wap/follow/follow-list');
         } else {
             getFollowList('/wap/follow/followed-list');
@@ -1735,7 +1743,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
         });
 
         $scope.localChat = function () {
-            window.location.hash = "#/main/chat?id="+ $scope.otherUserInfo.id +"&head_pic=" + $scope.otherUserInfo.info.head_pic + "&real_name=" + $scope.otherUserInfo.info.real_name + "&sex=" + $scope.otherUserInfo.sex + "&age="+ $scope.otherUserInfo.info.age;
+            window.location.hash = "#/main/chat?id=" + $scope.otherUserInfo.id + "&head_pic=" + $scope.otherUserInfo.info.head_pic + "&real_name=" + $scope.otherUserInfo.info.real_name + "&sex=" + $scope.otherUserInfo.sex + "&age=" + $scope.otherUserInfo.info.age;
         }
         $scope.getTravel('went_travel', $scope.otherUserInfo.went_travel);// 我去过的地方
         $scope.getTravel('want_travel', $scope.otherUserInfo.want_travel);// 我想去的地方
