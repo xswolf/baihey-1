@@ -106,7 +106,7 @@ class UserController extends BaseController
         header("Cache-Control: no-cache");
         header("Pragma: no-cache");
         header("Location:$url");
-        if (!isset($_COOKIE["bhy_u_name"]) && isset($user) && isset($user['username'])) {
+        if (isset($user) && isset($user['username'])) {
 
             Cookie::getInstance()->setCookie('bhy_u_name', $user['username']);
             Cookie::getInstance()->setCookie('bhy_id', $user['id']);
