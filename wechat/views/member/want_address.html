@@ -5,19 +5,16 @@
         <title class="title">最近想去的地方</title>
         <button class="button button-icon cor21" ng-click="saveData()">保存</button>
     </ion-header-bar>
-    <ion-content class="bhy com_w_100 m_bg">
-        <ion-list>
+    <ion-content class="bhy com_w_100" style="background-color:#f5f5f5;">
             <ion-item class="bhy_item_b mt10 mb10">
-                <ion-scroll delegate-handle="small" zooming="false" direction="x" scrollbar-x="false" scrollbar-y="false"
+                <ion-scroll delegate-handle="small" zooming="false" direction="x" scrollbar-x="false"
+                            scrollbar-y="false"
                             class="addr_top_box fl">
-                   <span class="hob_addr_flag f2" ng-repeat="userAddr in formData.userAddrList" >
+                   <span class="hob_addr_flag f2" ng-if="dat.checked" ng-click="remove($index)" ng-repeat="dat in data">
                         <i class="ion-location hob_addr_icon"></i>
-                        <span class="hob_addr_name">{{userAddr}}</span>
+                        <span class="hob_addr_name">{{dat.name}}</span>
                     </span>
                 </ion-scroll>
-                <!--<p class="addr_top_search">-->
-                    <!--<input type="text" ng-model="formData.searchAddr" placeholder="搜索国家/城市" class="addr_top_searchInput" ng-change="search(this.formData.searchAddr)">-->
-                <!--</p>-->
             </ion-item>
             <div class="pl16 cor20 clearfix hr_30">
                 <span class="fl">热门推荐</span>
@@ -26,36 +23,24 @@
                     <span ng-class="{2:'cur'}[typeTab]" ng-click="showTab(2)">国外</span>
                 </span>
             </div>
-            <div class="item item-divider">
-                <div class="padding">重庆</div>
-                <ion-checkbox name="ss" ng-model="isChecked">复选框标签</ion-checkbox>
-                <ion-checkbox name="ss" ng-model="isChecked">复选框标签</ion-checkbox>
-                <ion-checkbox name="ss" ng-model="isChecked">复选框标签</ion-checkbox>
-                <ion-checkbox name="ss" ng-model="isChecked">复选框标签</ion-checkbox>
-                <ion-checkbox name="ss" ng-model="isChecked">复选框标签</ion-checkbox>
-                <ion-checkbox name="ss" ng-model="isChecked">复选框标签</ion-checkbox>
-                <ion-checkbox name="ss" ng-model="isChecked">复选框标签</ion-checkbox>
+    </ion-content>
+    <ion-content class="bhy com_w_100 m_bg" style="top: 140px;">
+            <div class="item item-divider" ng-if="typeTab==1"
+                 ng-repeat="d in domestic | orderBy:['-id'] | limitTo:pageSize">
+                <div class="padding">{{d.name}}</div>
+                <ion-checkbox ng-repeat="da in data" ng-if="da.parentId == d.id" ng-click="scrollSmallToBottom()"
+                              ng-model="da.checked">{{da.name}}
+                </ion-checkbox>
             </div>
-           <!-- <ion-item class="item-checkbox" ng-if="typeTab==1" ng-repeat="dom in data | filter:{type: 2} | limitTo:size">
-                <label class="checkbox checkbox-energized">
-                    <input type="checkbox" id="{{dom.id}}" name="{{dom.name}}" ng-checked="isSelected({{dom.id}})"
-                           ng-click="updateSelection($event,{{dom.id}})">
-                </label>
-                <i class="icon ion-location fs16 cor28"></i>
-                {{dom.name}}
-            </ion-item>
-            <ion-item class="item-checkbox" ng-if="typeTab==2" ng-repeat="abr in abroad track by abr.id">
-                <label class="checkbox">
-                    <input type="checkbox" id="{{abr.id}}" name="{{abr.name}}" ng-checked="isSelected({{abr.id}})"
-                           ng-click="updateSelection($event,{{abr.id}})">
-                </label>
-                <i class="icon ion-location fs16 cor28"></i>
-                {{abr.name}}
-            </ion-item>-->
-        </ion-list>
+            <div class="item item-divider" ng-if="typeTab==2" ng-repeat="a in abroad | limitTo:pageSize">
+                <div class="padding">{{a.name}}</div>
+                <ion-checkbox ng-repeat="da in data" ng-if="da.parentId == a.id" ng-click="scrollSmallToBottom()"
+                              ng-model="da.checked">{{da.name}}
+                </ion-checkbox>
+            </div>
         <ion-infinite-scroll
                 ng-if="moreDataCanBeLoaded()"
-                on-infinite="loadMore()"
+                on-infinite="loadMore(typeTab)"
                 distance="1%">
         </ion-infinite-scroll>
     </ion-content>

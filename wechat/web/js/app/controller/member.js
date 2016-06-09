@@ -641,88 +641,59 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
     }]);
 
     // 去过的地方
-    module.controller("member.been_address", ['app.serviceApi', '$scope', '$ionicPopup', '$filter', '$ionicScrollDelegate', function (api, $scope, $ionicPopup, $filter, $ionicScrollDelegate) {
+    module.controller("member.been_address", ['app.serviceApi', '$scope', '$ionicPopup', '$filter', '$ionicScrollDelegate','$ionicLoading','$location', function (api, $scope, $ionicPopup, $filter, $ionicScrollDelegate,$ionicLoading,$location) {
 
         $scope.formData = [];
-        $scope.formData.userAddrIdList = [];  // 用户已选择的地区，ID数据集，存数据库
+        $scope.formData.userAddrIdList = [4022, 4030, 4012, 3932, 4128];  // 用户已选择的地区，ID数据集，存数据库
         $scope.formData.userAddrList = [];    // 用户已选择的地区，name数据集，展示用
-        $scope.formData.pageIndex = 1;
-        $scope.addrList = [];
         $scope.isMore = true;
-        $scope.typeTab = 1;  // 默认国内
+        $scope.typeTab = 1;     // 默认国内
         $scope.domestic = [];   // 国内
         $scope.abroad = [];     // 国外
-
-        var data = "";
+        $scope.data = [];
+        $scope.pageSize = 1;     // 默认一页显示3条
         api.list('/wap/member/went-travel-list', {}).success(function (res) {    //typeId:2，国内。 typeId:3，国外
-            data = res.data;
+            $scope.data = res.data;
+            for (var i in $scope.data) {
+                for (var j in $scope.formData.userAddrIdList) {
+                    if ($scope.formData.userAddrIdList[j] == $scope.data[i].id) {
+                        $scope.data[i].checked = true;
+                    } else {
+                        $scope.data[i].checked = false;
+                    }
+                }
+                if ($scope.data[i].type == 2 && $scope.data[i].parentId == 0) {
+                    $scope.domestic.push($scope.data[i]);
+                }
+                if ($scope.data[i].type == 3 && $scope.data[i].parentId == 0) {
+                    $scope.abroad.push($scope.data[i]);
+                }
+            }
         });
-        for (var i in data) {
-            if (data[i].type == 2) {
-                $scope.domestic.push(data[i]);
-            }
-            if (data[i].type == 3) {
-                $scope.abroad.push(data[i]);
-            }
-        }
-
-
-        /*var dataList = $scope.userInfo.went_travel != null ? $scope.userInfo.went_travel.split(',') : [];
-         var arr = [];
-         var getAddrName = function (id) {
-         for (var i in arr) {
-         if (id == arr[i].id) {
-         return arr[i].name;
-         }
-         }
-         }*/
 
         // 加载更多
-        $scope.loadMore = function () {
-            /*  // 默认数据处理
-             api.list('/wap/member/went-travel-list', {typeId:2}).success(function (res) {
-             if (res.data.length < 1) {
-             $scope.isMore = false;
-             }
-             $scope.addrList = $scope.addrList.concat(res.data);
-             arr = res.data;
-             for (var i in dataList) {
-             $scope.formData.userAddrIdList[i] = parseInt(dataList[i]);
-             $scope.formData.userAddrList[i] = getAddrName($scope.formData.userAddrIdList[i]);
-             }
-             $scope.formData.pageIndex += 1;
-             $scope.$broadcast('scroll.infiniteScrollComplete');
-             });*/
-
+        $scope.loadMore = function (typeTab) {
+            if (typeTab == 1) {
+                if ($scope.pageSize == $scope.domestic.length) {
+                    $scope.isMore = false;
+                }
+            } else {
+                if ($scope.pageSize == $scope.abroad.length) {
+                    $scope.isMore = false;
+                }
+            }
+            $scope.pageSize += 1;
+            $scope.$broadcast('scroll.infiniteScrollComplete');
         }
 
         // 是否还有更多
         $scope.moreDataCanBeLoaded = function () {
-            return false;
+            return $scope.isMore;
         }
 
-        var updateSelected = function (action, id, name) {
-            if (action == 'add' && $scope.formData.userAddrIdList.indexOf(id) == -1) {
-                $scope.formData.userAddrIdList.push(id);
-                $scope.formData.userAddrList.push(name);
-                $scope.scrollSmallToBottom();
-            }
-            if (action == 'remove' && $scope.formData.userAddrIdList.indexOf(id) != -1) {
-                var idx = $scope.formData.userAddrIdList.indexOf(id);
-                $scope.formData.userAddrIdList.splice(idx, 1);
-                $scope.formData.userAddrList.splice(idx, 1);
-                $scope.scrollSmallToTop();
-            }
-        }
-
-        $scope.updateSelection = function ($event, id) {
-            var checkbox = $event.target;
-            var action = (checkbox.checked ? 'add' : 'remove');
-            updateSelected(action, id, checkbox.name);
-        }
-
-        $scope.isSelected = function (id) {
-            return $scope.formData.userAddrIdList.indexOf(id) >= 0;
+        // 删除
+        $scope.remove = function (event) {
+            $scope.data[event].checked = false;
         }
 
         // 横向滚动至底部
@@ -730,102 +701,88 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
             $ionicScrollDelegate.$getByHandle('small').scrollBottom();
         };
 
-        // 横向滚动至顶部
-        $scope.scrollSmallToTop = function () {
-            $ionicScrollDelegate.$getByHandle('small').scrollTop();
-        };
-
-        // 关键字搜索
-        $scope.search = function (value) {
-            $scope.isMore = false;
-            if (value == '' || typeof(value) == 'undefined') {
-                $scope.isMore = true;
-                $scope.formData.pageIndex = 1;
-                $scope.addrList = arr;
-                $scope.addrList = $filter('filter')($scope.addrList);
-            } else {
-                $scope.addrList = $filter('filter')($scope.addrList, {name: value});
-            }
+        $scope.showTab = function(tab){
+            $scope.typeTab = tab;
         }
 
         // 保存
         $scope.saveData = function () {
-            if ($scope.formData.userAddrIdList.length <= 0) {
-                if (confirm('检测到您还未选择去过的地方，确定放弃吗？')) {
-                    window.location.hash = '/main/information';  //跳转
-                } else {
-                    return false;
+            $ionicLoading.show({template: '保存中...'});
+            var formData = [];
+            for (var i in $scope.data) {
+                if ($scope.data[i].checked) {
+                    formData.went_travel.push($scope.data[i].id);
                 }
-            } else {
-                var formData = [];
-                formData.went_travel = $scope.formData.userAddrIdList.join(',');
-                api.save('/wap/member/save-data', formData).success(function (res) {
-                    $scope.userInfo.went_travel = formData.went_travel;
-                    $scope.getTravel('went_travel', $scope.userInfo.went_travel);// 我去过的地方
-                    $scope.setUserStorage();
-                });
             }
+            api.save('/wap/member/save-data', formData).success(function (res) {
+                formData.went_travel = formData.went_travel.join(',');
+                $scope.getTravel('went_travel', formData.went_travel);// 我去过的地方
+                $scope.setUserStorage();
+                $ionicLoading.hide();
+                $location.url('/main/member/information');
+            });
+
+
+
         }
 
     }
     ]);
 
     // 最近想去的地方
-    module.controller("member.want_address", ['app.serviceApi', '$scope', '$ionicPopup', '$filter', '$ionicScrollDelegate', function (api, $scope, $ionicPopup, $filter, $ionicScrollDelegate) {
+    module.controller("member.want_address", ['app.serviceApi', '$scope', '$ionicPopup', '$filter', '$ionicScrollDelegate', '$ionicLoading', '$location', function (api, $scope, $ionicPopup, $filter, $ionicScrollDelegate, $ionicLoading, $location) {
 
         $scope.formData = [];
-        $scope.formData.userAddrIdList = [];  // 用户已选择的地区，ID数据集，存数据库
+        $scope.formData.userAddrIdList = [4022, 4030, 4012, 3932, 4128];  // 用户已选择的地区，ID数据集，存数据库
         $scope.formData.userAddrList = [];    // 用户已选择的地区，name数据集，展示用
-        $scope.formData.pageIndex = 1;
         $scope.isMore = true;
-        $scope.typeTab = 1;  // 默认国内
+        $scope.typeTab = 1;     // 默认国内
         $scope.domestic = [];   // 国内
         $scope.abroad = [];     // 国外
         $scope.data = [];
-        $scope.size = 3;
+        $scope.pageSize = 1;     // 默认一页显示3条
         api.list('/wap/member/went-travel-list', {}).success(function (res) {    //typeId:2，国内。 typeId:3，国外
             $scope.data = res.data;
-            $scope.dataSize = res.data.length;
+            for (var i in $scope.data) {
+                for (var j in $scope.formData.userAddrIdList) {
+                    if ($scope.formData.userAddrIdList[j] == $scope.data[i].id) {
+                        $scope.data[i].checked = true;
+                    } else {
+                        $scope.data[i].checked = false;
+                    }
+                }
+                if ($scope.data[i].type == 2 && $scope.data[i].parentId == 0) {
+                    $scope.domestic.push($scope.data[i]);
+                }
+                if ($scope.data[i].type == 3 && $scope.data[i].parentId == 0) {
+                    $scope.abroad.push($scope.data[i]);
+                }
+            }
         });
 
         // 加载更多
-        $scope.loadMore = function () {
-            if ($scope.size == $scope.dataSize) {
-                $scope.isMore = false;
+        $scope.loadMore = function (typeTab) {
+            if (typeTab == 1) {
+                if ($scope.pageSize == $scope.domestic.length) {
+                    $scope.isMore = false;
+                }
+            } else {
+                if ($scope.pageSize == $scope.abroad.length) {
+                    $scope.isMore = false;
+                }
             }
-            console.info($scope.data.length,$scope.dataSize);
-            $scope.size += 3;
+            $scope.pageSize += 1;
             $scope.$broadcast('scroll.infiniteScrollComplete');
         }
 
         // 是否还有更多
         $scope.moreDataCanBeLoaded = function () {
-            return false;
+            return $scope.isMore;
         }
 
-
-        var updateSelected = function (action, id, name) {
-            if (action == 'add' && $scope.formData.userAddrIdList.indexOf(id) == -1) {
-                $scope.formData.userAddrIdList.push(id);
-                $scope.formData.userAddrList.push(name);
-                $scope.scrollSmallToBottom();
-            }
-            if (action == 'remove' && $scope.formData.userAddrIdList.indexOf(id) != -1) {
-                var idx = $scope.formData.userAddrIdList.indexOf(id);
-                $scope.formData.userAddrIdList.splice(idx, 1);
-                $scope.formData.userAddrList.splice(idx, 1);
-                $scope.scrollSmallToTop();
-            }
-        }
-
-        $scope.updateSelection = function ($event, id) {
-            var checkbox = $event.target;
-            var action = (checkbox.checked ? 'add' : 'remove');
-            updateSelected(action, id, checkbox.name);
-        }
-
-        $scope.isSelected = function (id) {
-            return $scope.formData.userAddrIdList.indexOf(id) >= 0;
+        // 删除
+        $scope.remove = function (event) {
+            $scope.data[event].checked = false;
         }
 
         // 横向滚动至底部
@@ -833,43 +790,27 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
             $ionicScrollDelegate.$getByHandle('small').scrollBottom();
         };
 
-        // 横向滚动至顶部
-        $scope.scrollSmallToTop = function () {
-            $ionicScrollDelegate.$getByHandle('small').scrollTop();
-        };
-
-        // 关键字搜索
-        $scope.search = function (value) {
-            if (value == '' || typeof(value) == 'undefined') {
-                $scope.addrList = arr;
-                $scope.addrList = $filter('filter')($scope.addrList);
-            } else {
-                $scope.addrList = $filter('filter')($scope.addrList, {name: value});
-            }
-        }
-        $scope.typeTab = 1;
-
-        $scope.showTab = function (tab) {
+        $scope.showTab = function(tab){
             $scope.typeTab = tab;
         }
 
         // 保存
         $scope.saveData = function () {
-            if ($scope.formData.userAddrIdList.length <= 0) {
-                if (confirm('检测到您还未选择去过的地方，确定放弃吗？')) {
-                    window.location.hash = '/main/information';  //跳转
-                } else {
-                    return false;
+            $ionicLoading.show({template: '保存中...'});
+            var formData = [];
+            for (var i in $scope.data) {
+                if ($scope.data[i].checked) {
+                    formData.want_travel.push($scope.data[i].id);
                 }
-            } else {
-                var formData = [];
-                formData.want_travel = $scope.formData.userAddrIdList.join(',');
-                api.save('/wap/member/save-data', formData).success(function (res) {
-                    $scope.userInfo.want_travel = formData.want_travel;
-                    $scope.getTravel('want_travel', $scope.userInfo.want_travel);// 我想去的地方
-                    $scope.setUserStorage();
-                });
             }
+            api.save('/wap/member/save-data', formData).success(function (res) {
+                formData.want_travel = formData.want_travel.join(',');
+                $scope.getTravel('want_travel', formData.want_travel);// 我想去的地方
+                $scope.setUserStorage();
+                $ionicLoading.hide();
+                $location.url('/main/member/information');
+            });
+
         }
     }
     ]);

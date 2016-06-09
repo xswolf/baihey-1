@@ -5,42 +5,42 @@
         <title class="title">我去过的地方</title>
         <button class="button button-icon cor21" ng-click="saveData()">保存</button>
     </ion-header-bar>
-    <ion-content class="bhy com_w_100 m_bg">
-        <ion-list>
-            <ion-item class="bhy_item_b mt10 mb10">
-                <ion-scroll delegate-handle="small" zooming="false" direction="x" scrollbar-x="false" scrollbar-y="false"
-                            class="addr_top_box fl">
-                   <span class="hob_addr_flag" ng-repeat="userAddr in formData.userAddrList" >
+    <ion-content class="bhy com_w_100" style="background-color:#f5f5f5;">
+        <ion-item class="bhy_item_b mt10 mb10">
+            <ion-scroll delegate-handle="small" zooming="false" direction="x" scrollbar-x="false"
+                        scrollbar-y="false"
+                        class="addr_top_box fl">
+                   <span class="hob_addr_flag f1" ng-if="dat.checked" ng-click="remove($index)" ng-repeat="dat in data">
                         <i class="ion-location hob_addr_icon"></i>
-                        <span class="hob_addr_name">{{userAddr}}</span>
+                        <span class="hob_addr_name">{{dat.name}}</span>
                     </span>
-                </ion-scroll>
-                <!--<p class="addr_top_search">-->
-                    <!--<input type="text" ng-model="formData.searchAddr" placeholder="搜索国家/城市" class="addr_top_searchInput" ng-change="search(this.formData.searchAddr)">-->
-                <!--</p>-->
-            </ion-item>
-            <div class="pl16 cor20 clearfix hr_30">
-                <span class="fl">热门推荐</span>
+            </ion-scroll>
+        </ion-item>
+        <div class="pl16 cor20 clearfix hr_30">
+            <span class="fl">热门推荐</span>
                 <span class="fr addr_type_tab">
-                    <span ng-class="{1:'cur'}[typeTab]" ng-click="showTab(2)">国内</span>
-                    <span ng-class="{2:'cur'}[typeTab]" ng-click="showTab(3)">国外</span>
+                    <span ng-class="{1:'cur'}[typeTab]" ng-click="showTab(1)">国内</span>
+                    <span ng-class="{2:'cur'}[typeTab]" ng-click="showTab(2)">国外</span>
                 </span>
-            </div>
-            <ion-item class="item-checkbox" ng-repeat="addr in addrList">
-                <label class="checkbox">
-                    <input type="checkbox" id="{{addr.id}}" name="{{addr.name}}" ng-checked="isSelected({{addr.id}})"
-                           ng-click="updateSelection($event,{{addr.id}})">
-                </label>
-                <i class="icon ion-location fs16 cor26"></i>
-                {{addr.name}}
-            </ion-item>
-            <ion-item ng-if="!addrList.length">
-                <p class="tac">暂无相关数据</p>
-            </ion-item>
-        </ion-list>
+        </div>
+    </ion-content>
+    <ion-content class="bhy com_w_100 m_bg" style="top: 140px;">
+        <div class="item item-divider" ng-if="typeTab==1"
+             ng-repeat="d in domestic | orderBy:['-id'] | limitTo:pageSize">
+            <div class="padding">{{d.name}}</div>
+            <ion-checkbox ng-repeat="da in data" ng-if="da.parentId == d.id" ng-click="scrollSmallToBottom()"
+                          ng-model="da.checked">{{da.name}}
+            </ion-checkbox>
+        </div>
+        <div class="item item-divider" ng-if="typeTab==2" ng-repeat="a in abroad | limitTo:pageSize">
+            <div class="padding">{{a.name}}</div>
+            <ion-checkbox ng-repeat="da in data" ng-if="da.parentId == a.id" ng-click="scrollSmallToBottom()"
+                          ng-model="da.checked">{{da.name}}
+            </ion-checkbox>
+        </div>
         <ion-infinite-scroll
                 ng-if="moreDataCanBeLoaded()"
-                on-infinite="loadMore()"
+                on-infinite="loadMore(typeTab)"
                 distance="1%">
         </ion-infinite-scroll>
     </ion-content>
