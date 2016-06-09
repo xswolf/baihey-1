@@ -1,36 +1,28 @@
 <ion-view hide-tabs="true">
     <link href="/wechat/web/css/member.css" rel="stylesheet">
+    <link href="/wechat/web/css/fontIcon.css" rel="stylesheet">
     <ion-header-bar class="com_w_100 bhy">
         <a class="button button-icon icon ion-arrow-left-c" href="#/main/member/information"></a>
         <title class="title">喜欢的运动</title>
         <button class="button button-icon cor21" ng-click="saveData()">保存</button>
     </ion-header-bar>
-    <ion-content class="bhy com_w_100 m_bg sports">
-        <ion-list>
-            <ion-item class="bhy_item_b mt10 mb10">
-                <ion-scroll delegate-handle="small" zooming="false" direction="x" scrollbar-x="false" scrollbar-y="false"
-                            class="addr_top_box" style="width: 100%; max-width: 100%;">
-                   <span class="hob_sport_flag" ng-repeat="userSport in formData.userSportsList" >
-                        <i class="bhy-icon-moves hob_sport_icon"></i>
-                        <span class="hob_sport_name">{{userSport}}</span>
-                    </span>
-                </ion-scroll>
-                <p class="mt5 pb10 cor4" ng-if="!formData.userSportsList.length">请在下方选择您喜欢的运动</p>
-            </ion-item>
-            <p class="pl16 cor20">
-                热门推荐
-            </p>
-            <ion-item class="item-checkbox" ng-repeat="sport in sportsList">
-                <label class="checkbox checkbox-balanced">
-                    <input type="checkbox" id="{{sport.id}}" name="{{sport.name}}" ng-checked="isSelected({{sport.id}})"
-                           ng-click="updateSelection($event,{{sport.id}})">
-                </label>
-                <i class="icon bhy-icon-moves fs16 cor30"></i>
-                {{sport.name}}
-            </ion-item>
-            <ion-item ng-if="!sportsList.length">
-                <p class="tac">暂无相关数据</p>
-            </ion-item>
-        </ion-list>
+    <ion-content class="bhy com_w_100 sports" style="background: #f5f5f5;">
+        <ion-item class="bhy_item_b mt10 mb10">
+            <ion-scroll delegate-handle="small" zooming="false" direction="x" scrollbar-x="false" scrollbar-y="false"
+                        class="addr_top_box" style="width: 100%; max-width: 100%;">
+                   <span class="hob_sport_flag" ng-repeat="s in sportsList | filter:{checked: true}" ng-click="remove($index)">
+                        <i class="icon-sport-{{s.pic_path}} hob_sport_icon"></i>
+                        <span class="hob_sport_name">{{s.name}}</span>
+                   </span>
+            </ion-scroll>
+        </ion-item>
+        <p class="pl16 cor20">
+            热门推荐
+        </p>
+    </ion-content>
+    <ion-content class="bhy com_w_100 sports t140">
+        <ion-checkbox ng-repeat="sp in sportsList" ng-model="sp.checked" ng-click="scrollSmallToBottom($event)"><i
+                class="icon-sport-{{sp.pic_path}} fs16 cor30 mr5"></i>{{sp.name}}
+        </ion-checkbox>
     </ion-content>
 </ion-view>

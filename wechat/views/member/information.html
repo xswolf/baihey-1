@@ -1,6 +1,7 @@
 <ion-view hide-tabs="true">
     <link href="/wechat/web/css/member.css" rel="stylesheet">
     <link href="/wechat/web/css/plugin/bootstrap/css/font-awesome.min.css" rel="stylesheet">
+    <link href="/wechat/web/css/fontIcon.css" rel="stylesheet">
     <ion-header-bar>
         <a class="button button-icon icon ion-arrow-left-c" href="#/main/member/index"></a>
         <title class="title">我的资料</title>
@@ -326,7 +327,7 @@
                 <div class="info_c hob">
                     <div class="hob_sport clearfix">
                         <span class="hob_sport_flag" ng-repeat="addrt in love_sport track by addrt.id">
-                            <i class="bhy-icon-moves hob_sport_icon"></i>
+                            <i class="icon-sport-{{addrt.pic_path}} hob_sport_icon"></i>
                             <span class="hob_sport_name">{{addrt.name}}</span>
                         </span>
                     </div>
@@ -338,16 +339,15 @@
                     <p>喜欢的影视类型({{want_film_count}})</p>
                 </div>
                 <div class="info_r">
-                    <i class=" ion-ios-arrow-right"></i>
+                    <i class="ion-ios-arrow-right"></i>
                 </div>
                 <div class="info_c hob">
-                    <ion-scroll delegate-handle="small" zooming="false" direction="x" scrollbar-x="false"
-                                scrollbar-y="false" class="hob_movie clearfix">
-                        <dl ng-repeat="addrt in want_film track by addrt.id">
-                            <dt><img src="{{addrt.pic_path}}"></dt>
-                            <dd class="fs12 tac cor25 lh24 toe">{{addrt.name}}</dd>
-                        </dl>
-                    </ion-scroll>
+                    <div class="hob_sport clearfix">
+                        <span class="hob_tv_flag" ng-repeat="addrt in want_film track by addrt.id">
+                            <i class="ion-ios-play mr5"></i>
+                            <span class="hob_sport_name">{{addrt.name}}</span>
+                        </span>
+                    </div>
                 </div>
             </ion-item>
 

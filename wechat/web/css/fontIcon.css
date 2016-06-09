@@ -1,0 +1,90 @@
+@font-face {
+    font-family: 'sports';
+    src:    url('../fonts/sports.eot?n0p0lw');
+    src:    url('../fonts/sports.eot?n0p0lw#iefix') format('embedded-opentype'),
+        url('../fonts/sports.ttf?n0p0lw') format('truetype'),
+        url('../fonts/sports.woff?n0p0lw') format('woff'),
+        url('../fonts/sports.svg?n0p0lw#icomoon') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+[class^="icon-sport"], [class*=" icon-sport"] {
+    /* use !important to prevent issues with browser extensions that change fonts */
+    font-family: 'sports' !important;
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+
+    /* Better Font Rendering =========== */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-sport-9:before {
+    content: "\e900";
+}
+.icon-sport-10:before {
+    content: "\e901";
+}
+.icon-sport-11:before {
+    content: "\e902";
+}
+.icon-sport-12:before {
+    content: "\e903";
+}
+.icon-sport-7:before {
+    content: "\e904";
+}
+.icon-sport-13:before {
+    content: "\e905";
+}
+.icon-sport-14:before {
+    content: "\e906";
+}
+.icon-sport-8:before {
+    content: "\e907";
+}
+.icon-sport-15:before {
+    content: "\e908";
+}
+.icon-sport-4:before {
+    content: "\e909";
+}
+.icon-sport-6:before {
+    content: "\e90a";
+}
+.icon-sport-16:before {
+    content: "\e90b";
+}
+.icon-sport-17:before {
+    content: "\e90c";
+}
+.icon-sport-18:before {
+    content: "\e90d";
+}
+.icon-sport-19:before {
+    content: "\e90e";
+}
+.icon-sport-20:before {
+    content: "\e90f";
+}
+.icon-sport-21:before {
+    content: "\e910";
+}
+.icon-sport-5:before {
+    content: "\e911";
+}
+.icon-sport-3:before {
+    content: "\e912";
+}
+.icon-sport-2:before {
+    content: "\e913";
+}
+.icon-sport-1:before {
+    content: "\e914";
+}
+

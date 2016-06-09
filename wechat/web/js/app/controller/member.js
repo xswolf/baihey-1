@@ -66,7 +66,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
             };
             uploader.onSuccessItem = function (fileItem, response, status, headers) {  // 上传成功
                 if (response.status > 0) {
-                    if($scope.imgList.length == 0) { // 第一张上传相片默认设为头像
+                    if ($scope.imgList.length == 0) { // 第一张上传相片默认设为头像
                         $scope.imgList.push({id: response.id, thumb_path: response.thumb_path, is_head: 1});
                         $scope.userInfo.info.head_pic = response.thumb_path;
                         $scope.setUserStorage();
@@ -641,11 +641,10 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
     }]);
 
     // 去过的地方
-    module.controller("member.been_address", ['app.serviceApi', '$scope', '$ionicPopup', '$filter', '$ionicScrollDelegate','$ionicLoading','$location', function (api, $scope, $ionicPopup, $filter, $ionicScrollDelegate,$ionicLoading,$location) {
+    module.controller("member.been_address", ['app.serviceApi', '$scope', '$ionicPopup', '$filter', '$ionicScrollDelegate', '$ionicLoading', '$location', function (api, $scope, $ionicPopup, $filter, $ionicScrollDelegate, $ionicLoading, $location) {
 
         $scope.formData = [];
         $scope.formData.userAddrIdList = [4022, 4030, 4012, 3932, 4128];  // 用户已选择的地区，ID数据集，存数据库
-        $scope.formData.userAddrList = [];    // 用户已选择的地区，name数据集，展示用
         $scope.isMore = true;
         $scope.typeTab = 1;     // 默认国内
         $scope.domestic = [];   // 国内
@@ -658,6 +657,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
                 for (var j in $scope.formData.userAddrIdList) {
                     if ($scope.formData.userAddrIdList[j] == $scope.data[i].id) {
                         $scope.data[i].checked = true;
+                        break;
                     } else {
                         $scope.data[i].checked = false;
                     }
@@ -694,21 +694,26 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
         // 删除
         $scope.remove = function (event) {
             $scope.data[event].checked = false;
+            $ionicScrollDelegate.$getByHandle('small').scrollTop();
         }
 
         // 横向滚动至底部
-        $scope.scrollSmallToBottom = function () {
-            $ionicScrollDelegate.$getByHandle('small').scrollBottom();
+        $scope.scrollSmallToBottom = function (event) {
+            if (event.target.checked) {
+                $ionicScrollDelegate.$getByHandle('small').scrollBottom();
+            } else {
+                $ionicScrollDelegate.$getByHandle('small').scrollTop();
+            }
         };
 
-        $scope.showTab = function(tab){
+        $scope.showTab = function (tab) {
             $scope.typeTab = tab;
         }
 
         // 保存
         $scope.saveData = function () {
             $ionicLoading.show({template: '保存中...'});
-            var formData = [];
+            var formData = {went_travel: []};
             for (var i in $scope.data) {
                 if ($scope.data[i].checked) {
                     formData.went_travel.push($scope.data[i].id);
@@ -723,7 +728,6 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
             });
 
 
-
         }
 
     }
@@ -734,7 +738,6 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
 
         $scope.formData = [];
         $scope.formData.userAddrIdList = [4022, 4030, 4012, 3932, 4128];  // 用户已选择的地区，ID数据集，存数据库
-        $scope.formData.userAddrList = [];    // 用户已选择的地区，name数据集，展示用
         $scope.isMore = true;
         $scope.typeTab = 1;     // 默认国内
         $scope.domestic = [];   // 国内
@@ -747,6 +750,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
                 for (var j in $scope.formData.userAddrIdList) {
                     if ($scope.formData.userAddrIdList[j] == $scope.data[i].id) {
                         $scope.data[i].checked = true;
+                        break;
                     } else {
                         $scope.data[i].checked = false;
                     }
@@ -781,23 +785,28 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
         }
 
         // 删除
-        $scope.remove = function (event) {
-            $scope.data[event].checked = false;
+        $scope.remove = function (index) {
+            $scope.data[index].checked = false;
+            $ionicScrollDelegate.$getByHandle('small').scrollTop();
         }
 
         // 横向滚动至底部
-        $scope.scrollSmallToBottom = function () {
-            $ionicScrollDelegate.$getByHandle('small').scrollBottom();
+        $scope.scrollSmallToBottom = function (event) {
+            if (event.target.checked) {
+                $ionicScrollDelegate.$getByHandle('small').scrollBottom();
+            } else {
+                $ionicScrollDelegate.$getByHandle('small').scrollTop();
+            }
         };
 
-        $scope.showTab = function(tab){
+        $scope.showTab = function (tab) {
             $scope.typeTab = tab;
         }
 
         // 保存
         $scope.saveData = function () {
             $ionicLoading.show({template: '保存中...'});
-            var formData = [];
+            var formData = {want_travel: []};
             for (var i in $scope.data) {
                 if ($scope.data[i].checked) {
                     formData.want_travel.push($scope.data[i].id);
@@ -816,254 +825,173 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
     ]);
 
     // 喜欢的运动
-    module.controller("member.sports", ['app.serviceApi', '$scope', '$ionicPopup', '$ionicScrollDelegate', function (api, $scope, $ionicPopup, $ionicScrollDelegate) {
+    module.controller("member.sports", ['app.serviceApi', '$scope', '$ionicPopup', '$ionicScrollDelegate', '$ionicLoading', '$location', function (api, $scope, $ionicPopup, $ionicScrollDelegate, $ionicLoading, $location) {
 
         $scope.formData = [];
-        $scope.formData.userSportsIdList = [];
-        $scope.formData.userSportsList = [];
-        var dataList = $scope.userInfo.love_sport != null ? $scope.userInfo.love_sport.split(',') : [];
-        var getAddrName = function (arr, id) {
-            for (var i in arr) {
-                if (id == arr[i].id) {
-                    return arr[i].name;
-                }
-            }
-        }
+        $scope.formData.userSportsIdList = [12, 14, 24];  // 用户数据
+
         // 默认数据处理
         api.list('/wap/member/config-list', {'type': 1}).success(function (res) {
             $scope.sportsList = res.data;
-            for (var i in dataList) {
-                $scope.formData.userSportsIdList[i] = parseInt(dataList[i]);
-                $scope.formData.userSportsList[i] = getAddrName($scope.sportsList, $scope.formData.userSportsIdList[i]);
+            for (var i in $scope.sportsList) {
+                for (var j in $scope.formData.userSportsIdList) {
+                    if ($scope.formData.userSportsIdList[j] == $scope.sportsList[i].id) {
+                        $scope.sportsList[i].checked = true;
+                        break;
+                    } else {
+                        $scope.sportsList[i].checked = false;
+                    }
+                }
             }
         });
 
-        var updateSelected = function (action, id, name) {
-            if (action == 'add' && $scope.formData.userSportsIdList.indexOf(id) == -1) {
-                $scope.formData.userSportsIdList.push(id);
-                $scope.formData.userSportsList.push(name);
-                $scope.scrollSmallToBottom();
-            }
-            if (action == 'remove' && $scope.formData.userSportsIdList.indexOf(id) != -1) {
-                var idx = $scope.formData.userSportsIdList.indexOf(id);
-                $scope.formData.userSportsIdList.splice(idx, 1);
-                $scope.formData.userSportsList.splice(idx, 1);
-                $scope.scrollSmallToTop();
-            }
-        }
-
-        $scope.updateSelection = function ($event, id) {
-            var checkbox = $event.target;
-            var action = (checkbox.checked ? 'add' : 'remove');
-            updateSelected(action, id, checkbox.name);
-        }
-
-        // 判断是否选中
-        $scope.isSelected = function (id) {
-            return $scope.formData.userSportsIdList.indexOf(id) >= 0;
-        }
-
         // 横向滚动至底部
-        $scope.scrollSmallToBottom = function () {
-            $ionicScrollDelegate.$getByHandle('small').scrollBottom();
+        $scope.scrollSmallToBottom = function (event) {
+            if (event.target.checked) {
+                $ionicScrollDelegate.$getByHandle('small').scrollBottom();
+            } else {
+                $ionicScrollDelegate.$getByHandle('small').scrollTop();
+            }
         };
 
-        // 横向滚动至顶部
-        $scope.scrollSmallToTop = function () {
+        // 删除
+        $scope.remove = function (index) {
+            $scope.sportsList[index].checked = false;
             $ionicScrollDelegate.$getByHandle('small').scrollTop();
-        };
+        }
 
         // 保存
         $scope.saveData = function () {
-            if ($scope.formData.userSportsIdList.length <= 0) {
-                if (confirm('检测到您还未选择喜欢的运动，确定放弃吗？')) {
-                    window.location.hash = '/main/information';  //跳转
-                } else {
-                    return false;
+            $ionicLoading.show({template: '保存中...'});
+            var formData = {love_sport: []};
+            for (var i in $scope.sportsList) {
+                if ($scope.sportsList[i].checked) {
+                    formData.love_sport.push($scope.sportsList[i].id);
                 }
-            } else {
-                var formData = [];
-                formData.love_sport = $scope.formData.userSportsIdList.join(',');
-                api.save('/wap/member/save-data', formData).success(function (res) {
-                    $scope.userInfo.love_sport = formData.love_sport;
-                    $scope.getConfig('love_sport', $scope.userInfo.love_sport);// 喜欢的运动
-                    $scope.setUserStorage();
-                });
             }
+            api.save('/wap/member/save-data', formData).success(function (res) {
+                formData.love_sport = formData.love_sport.join(',');
+                $scope.getConfig('love_sport', formData.love_sport);// 喜欢的运动
+                $scope.setUserStorage();
+                $ionicLoading.hide();
+                $location.url('/main/member/information');
+            });
         }
 
     }
     ]);
 
     // 喜欢的电影
-    module.controller("member.movie", ['app.serviceApi', '$scope', '$ionicPopup', '$ionicScrollDelegate', '$filter', function (api, $scope, $ionicPopup, $ionicScrollDelegate, $filter) {
+    module.controller("member.movie", ['app.serviceApi', '$scope', '$ionicPopup', '$ionicScrollDelegate', '$filter', '$ionicLoading', '$location', function (api, $scope, $ionicPopup, $ionicScrollDelegate, $filter, $ionicLoading, $location) {
 
         $scope.formData = [];
-        $scope.formData.userMovieIdList = [];
-        $scope.formData.userMovieList = [];
-        var arr = [];
-        var dataList = $scope.userInfo.want_film != null ? $scope.userInfo.want_film.split(',') : [];
-        var getPicPath = function (arr, id) {
-            for (var i in arr) {
-                if (id == arr[i].id) {
-                    return arr[i].pic_path;
-                }
-            }
-        }
+        $scope.formData.userMovieIdList = [47, 56, 67];
+
         // 默认数据处理
         api.list('/wap/member/config-list', {'type': 2}).success(function (res) {
-            $scope.movieList = res.data;
-            arr = res.data;
-            for (var i in dataList) {
-                $scope.formData.userMovieIdList[i] = parseInt(dataList[i]);
-                $scope.formData.userMovieList[i] = getPicPath($scope.movieList, $scope.formData.userMovieIdList[i]);
+            $scope.list = res.data;
+            for (var i in $scope.list) {
+                for (var j in $scope.formData.userMovieIdList) {
+                    if ($scope.list[i].id == $scope.formData.userMovieIdList[j]) {
+                        $scope.list[i].checked = true;
+                        break;
+                    } else {
+                        $scope.list[i].checked = false;
+                    }
+                }
             }
         });
 
-        var updateSelected = function (action, id, name) {
-            if (action == 'add' && $scope.formData.userMovieIdList.indexOf(id) == -1) {
-                $scope.formData.userMovieIdList.push(id);
-                $scope.formData.userMovieList.push(name);
-                $scope.scrollSmallToBottom();
-            }
-            if (action == 'remove' && $scope.formData.userMovieIdList.indexOf(id) != -1) {
-                var idx = $scope.formData.userMovieIdList.indexOf(id);
-                $scope.formData.userMovieIdList.splice(idx, 1);
-                $scope.formData.userMovieList.splice(idx, 1);
-                $scope.scrollSmallToTop();
-            }
-        }
-
-        $scope.updateSelection = function ($event, id) {
-            var checkbox = $event.target;
-            var action = (checkbox.checked ? 'add' : 'remove');
-            updateSelected(action, id, checkbox.name);
-        }
-
-        // 判断是否选中
-        $scope.isSelected = function (id) {
-            return $scope.formData.userMovieIdList.indexOf(id) >= 0;
+        // 删除
+        $scope.remove = function (index) {
+            $scope.list[index].checked = false;
+            $ionicScrollDelegate.$getByHandle('small').scrollTop();
         }
 
         // 横向滚动至底部
-        $scope.scrollSmallToBottom = function () {
-            $ionicScrollDelegate.$getByHandle('small').scrollBottom();
-        };
-
-        // 横向滚动至顶部
-        $scope.scrollSmallToTop = function () {
-            $ionicScrollDelegate.$getByHandle('small').scrollTop();
-        };
-
-        // 搜索
-        $scope.search = function (value) {
-            if (value == '' || typeof(value) == 'undefined') {
-                $scope.movieList = arr;
-                $scope.movieList = $filter('filter')($scope.movieList);
+        $scope.scrollSmallToBottom = function (event) {
+            if (event.target.checked) {
+                $ionicScrollDelegate.$getByHandle('small').scrollBottom();
             } else {
-                $scope.movieList = $filter('filter')($scope.movieList, {name: value});
+                $ionicScrollDelegate.$getByHandle('small').scrollTop();
             }
-        }
+        };
 
         // 保存
         $scope.saveData = function () {
-            if ($scope.formData.userMovieIdList.length <= 0) {
-                if (confirm('检测到您还未选择想看的电影，确定放弃吗？')) {
-                    window.location.hash = '/main/information';  //跳转
-                } else {
-                    return false;
+
+            $ionicLoading.show({template: '保存中...'});
+            var formData = {want_film: []};
+            for (var i in $scope.list) {
+                if ($scope.list[i].checked) {
+                    formData.want_film.push($scope.list[i].id);
                 }
-            } else {
-                var formData = [];
-                formData.want_film = $scope.formData.userMovieIdList.join(',');
-                api.save('/wap/member/save-data', formData).success(function (res) {
-                    $scope.userInfo.want_film = formData.want_film;
-                    $scope.getConfig('want_film', $scope.userInfo.want_film);// 想看的电影
-                    $scope.setUserStorage();
-                });
             }
+            api.save('/wap/member/save-data', formData).success(function (res) {
+                formData.want_film = formData.want_film.join(',');
+                $scope.getConfig('want_film', formData.want_film);// 喜欢的运动
+                $scope.setUserStorage();
+                $ionicLoading.hide();
+                $location.url('/main/member/information');
+            });
         }
 
     }
     ]);
 
     // 喜欢的美食
-    module.controller("member.delicacy", ['app.serviceApi', '$scope', '$ionicPopup', '$ionicScrollDelegate', '$filter', function (api, $scope, $ionicPopup, $ionicScrollDelegate, $filter) {
+    module.controller("member.delicacy", ['app.serviceApi', '$scope', '$ionicPopup', '$ionicScrollDelegate', '$filter', '$ionicLoading', '$location', function (api, $scope, $ionicPopup, $ionicScrollDelegate, $filter,$ionicLoading,$location) {
 
         $scope.formData = [];
+        $scope.formData.userDelicacyIdList = [1,73,79];
 
-        $scope.formData.userDelicacyIdList = [];
-        $scope.formData.userDelicacyList = [];
-        var dataList = $scope.userInfo.like_food != null ? $scope.userInfo.like_food.split(',') : [];
-        var getAddrName = function (arr, id) {
-            for (var i in arr) {
-                if (id == arr[i].id) {
-                    return arr[i].name;
-                }
-            }
-        }
         // 默认数据处理
         api.list('/wap/member/config-list', {'type': 3}).success(function (res) {
-            $scope.delicacyList = res.data;
-            for (var i in dataList) {
-                $scope.formData.userDelicacyIdList[i] = parseInt(dataList[i]);
-                $scope.formData.userDelicacyList[i] = getAddrName($scope.delicacyList, $scope.formData.userDelicacyIdList[i]);
+            $scope.foodList = res.data;
+            for (var i in $scope.foodList) {
+                for (var j in $scope.formData.userDelicacyIdList) {
+                    if ($scope.foodList[i].id == $scope.formData.userDelicacyIdList[j]) {
+                        $scope.foodList[i].checked = true;
+                        break;
+                    } else {
+                        $scope.foodList[i].checked = false;
+                    }
+                }
             }
         });
 
-        var updateSelected = function (action, id, name) {
-            if (action == 'add' && $scope.formData.userDelicacyIdList.indexOf(id) == -1) {
-                $scope.formData.userDelicacyIdList.push(id);
-                $scope.formData.userDelicacyList.push(name);
-                $scope.scrollSmallToBottom();
-            }
-            if (action == 'remove' && $scope.formData.userDelicacyIdList.indexOf(id) != -1) {
-                var idx = $scope.formData.userDelicacyIdList.indexOf(id);
-                $scope.formData.userDelicacyIdList.splice(idx, 1);
-                $scope.formData.userDelicacyList.splice(idx, 1);
-                $scope.scrollSmallToTop();
-            }
-        }
-
-        $scope.updateSelection = function ($event, id) {
-            var checkbox = $event.target;
-            var action = (checkbox.checked ? 'add' : 'remove');
-            updateSelected(action, id, checkbox.name);
-        }
-
-        // 判断是否选中
-        $scope.isSelected = function (id) {
-            return $scope.formData.userDelicacyIdList.indexOf(id) >= 0;
+        // 删除
+        $scope.remove = function (index) {
+            $scope.foodList[index].checked = false;
+            $ionicScrollDelegate.$getByHandle('small').scrollTop();
         }
 
         // 横向滚动至底部
-        $scope.scrollSmallToBottom = function () {
-            $ionicScrollDelegate.$getByHandle('small').scrollBottom();
+        $scope.scrollSmallToBottom = function (event) {
+            if (event.target.checked) {
+                $ionicScrollDelegate.$getByHandle('small').scrollBottom();
+            } else {
+                $ionicScrollDelegate.$getByHandle('small').scrollTop();
+            }
         };
-
-        // 横向滚动至顶部
-        $scope.scrollSmallToTop = function () {
-            $ionicScrollDelegate.$getByHandle('small').scrollTop();
-        };
-
 
         // 保存
         $scope.saveData = function () {
-            if ($scope.formData.userDelicacyIdList.length <= 0) {
-                if (confirm('检测到您还未选择喜欢的美食，确定放弃吗？')) {
-                    window.location.hash = '/main/information';  //跳转
-                } else {
-                    return false;
+
+            $ionicLoading.show({template: '保存中...'});
+            var formData = {like_food: []};
+            for (var i in $scope.foodList) {
+                if ($scope.foodList[i].checked) {
+                    formData.like_food.push($scope.foodList[i].id);
                 }
-            } else {
-                var formData = [];
-                formData.like_food = $scope.formData.userDelicacyIdList.join(',');
-                api.save('/wap/member/save-data', formData).success(function (res) {
-                    $scope.userInfo.like_food = formData.like_food;
-                    $scope.getConfig('like_food', $scope.userInfo.like_food);// 喜欢的食物
-                    $scope.setUserStorage();
-                });
             }
+            api.save('/wap/member/save-data', formData).success(function (res) {
+                formData.like_food = formData.like_food.join(',');
+                $scope.getConfig('like_food', formData.like_food);// 喜欢的运动
+                $scope.setUserStorage();
+                $ionicLoading.hide();
+                $location.url('/main/member/information');
+            });
         }
 
     }

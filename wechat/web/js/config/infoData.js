@@ -501,7 +501,10 @@ var config_infoData = {
             {name:'小公举',hot:0},
             {name:'不限',hot:0}
         ]
-    }
+    },
+    sports:[
+        {}
+    ]
 
 };
 
