@@ -18,6 +18,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
                 ar.delCookie('bhy_user_id');
                 ar.delCookie('bhy_u_cityId');
                 ar.delCookie('bhy_u_cityPid');
+                localStorage.clear();
                 location.href = '/wap/user/login';
             });
         }
