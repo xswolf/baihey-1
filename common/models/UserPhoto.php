@@ -24,12 +24,17 @@ class UserPhoto extends Base
     public function addPhoto($user_id, $data)
     {
         // 个人相册不得多于12张
-        if (12 >= $this->find()->where(['user_id' => $user_id])->count('id')) {
+        $sum = $this->find()->where(['user_id' => $user_id])->count('id');
+        if (12 >= $sum) {
             $this->user_id = $user_id;
             $this->pic_path = $data['pic_path'];
             $this->thumb_path = $data['thumb_path'];
             $this->create_time = $data['time'];
             $this->update_time = $data['time'];
+            if(0 == $sum) {
+                $this->is_head = 1;
+                UserInformation::getInstance()->updateUserInfo($user_id, ['head_pic' => $data['thumb_path']]);
+            }
             $this->insert(false);
             return $this->getDb()->getLastInsertID();
         } else {

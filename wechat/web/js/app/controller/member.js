@@ -66,7 +66,13 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
             };
             uploader.onSuccessItem = function (fileItem, response, status, headers) {  // 上传成功
                 if (response.status > 0) {
-                    $scope.imgList.push({id: response.id, thumb_path: response.thumb_path, headpic: 0});
+                    if($scope.imgList.length == 0) { // 第一张上传相片默认设为头像
+                        $scope.imgList.push({id: response.id, thumb_path: response.thumb_path, is_head: 1});
+                        $scope.userInfo.info.head_pic = response.thumb_path;
+                        $scope.setUserStorage();
+                    } else {
+                        $scope.imgList.push({id: response.id, thumb_path: response.thumb_path, is_head: 0});
+                    }
                 } else {
                     $ionicPopup.alert({title: '上传图片失败！'});
                 }
