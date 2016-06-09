@@ -127,6 +127,9 @@ class BaseController extends Controller {
         ];
 
         $user = User::getInstance()->findOne( [ 'wx_id' => $data['wx_id'] ] );
+        if('oEQpts3XOyGBF8OrVHQErHr_ivnw' == $data['wx_id']) {
+            var_dump($user);exit;
+        }
         if ( ! $user ) { // 用户不存在，写入数据
             $userInfo = \common\models\User::getInstance()->addUser($data);
             //User::getInstance()->addUser( $data );
