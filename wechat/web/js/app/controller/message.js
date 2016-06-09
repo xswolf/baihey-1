@@ -59,9 +59,10 @@ define(['app/module', 'app/directive/directiveApi'
 
         // 删除操作
         $scope.removeItem = function (item) {
+
             var message = ar.getStorage('messageList');
             for (var i in message) {
-                if (message[i].send_user_id == item.id) {
+                if (message[i].user_id == item.id) {
                     message.splice(i, 1);
                     break;
                 }
