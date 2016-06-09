@@ -143,6 +143,7 @@ define(["app/module", 'app/service/serviceApi'],
                         onExit: function ($rootScope) {
 
                             var messageList = ar.getStorage("messageList");
+                            if (messageList == null) messageList = [];
                             var flag = true;
                             var i = 0;
 
