@@ -143,6 +143,7 @@ define(['app/module', 'app/directive/directiveApi'
                     $scope.pageLast = true;
                     $scope.searchForm.age = 0; // 初始化年龄
                     $scope.searchForm.pageNum = 1; // 初始化页码
+                    $scope.userList = [];
                     $scope.buttonsItemIndex = index;
                     if (index == 0) {   // 全部
                         $scope.searchForm.sex = 'all';
