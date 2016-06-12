@@ -1537,21 +1537,17 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
     // 预览资料
     module.controller("member.preview", ['app.serviceApi', '$scope', '$ionicPopup', '$ionicLoading', function (api, $scope, $ionicPopup, $ionicLoading) {
 
-        $scope.imgList = [
-            {src: '/wechat/web/images/test/3.jpg', w: 200, h: 200},
-            {src: '/wechat/web/images/test/7.jpg', w: 200, h: 200},
-            {src: '/wechat/web/images/test/6.jpg', w: 200, h: 200},
-            {src: '/wechat/web/images/test/3.jpg', w: 200, h: 200},
-            {src: '/wechat/web/images/test/7.jpg', w: 200, h: 200},
-            {src: '/wechat/web/images/test/6.jpg', w: 200, h: 200},
-            {src: '/wechat/web/images/test/3.jpg', w: 200, h: 200},
-            {src: '/wechat/web/images/test/7.jpg', w: 200, h: 200}
-        ]
 
         // 图片放大查看插件
         requirejs(['photoswipe', 'photoswipe_ui'], function (photoswipe, photoswipe_ui) {
 
             $scope.showImgList = function (imgList, index) {
+                var item = [];
+                for(var i in imgList){
+                    item[i].src = imgList[i].pic_path;
+                    item[i].w   = 200;
+                    item[i].h   = 200;
+                }
                 var pswpElement = document.querySelectorAll('.pswp')[0];
                 var options = {
                     index: index
@@ -1565,7 +1561,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
                 options.tapToClose = true;
                 options.tapToToggleControls = false;
 
-                var gallery = new photoswipe(pswpElement, photoswipe_ui, imgList, options);
+                var gallery = new photoswipe(pswpElement, photoswipe_ui, item, options);
                 gallery.init();
             }
 
@@ -1577,7 +1573,6 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
     // 谁关注了我
     module.controller("member.follow", ['app.serviceApi', '$scope', '$ionicPopup', '$ionicLoading', '$location', function (api, $scope, $ionicPopup, $ionicLoading, $location) {
         $scope.followType = $location.$$search.type;
-        console.log($scope.followType);
         var getFollowList = function (url) {
             api.list(url, {}).success(function (res) {
                 $scope.followList = res.data;
@@ -1632,7 +1627,12 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
         requirejs(['photoswipe', 'photoswipe_ui'], function (photoswipe, photoswipe_ui) {
 
             $scope.showImgList = function (imgList, index) {
-                console.info(imgList, index);
+                var item = [];
+                for(var i in imgList){
+                    item[i].src = imgList[i].pic_path;
+                    item[i].w   = 200;
+                    item[i].h   = 200;
+                }
                 var pswpElement = document.querySelectorAll('.pswp')[0];
                 var options = {
                     index: index
@@ -1646,7 +1646,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
                 options.tapToClose = true;
                 options.tapToToggleControls = false;
 
-                var gallery = new photoswipe(pswpElement, photoswipe_ui, imgList, options);
+                var gallery = new photoswipe(pswpElement, photoswipe_ui, item, options);
                 gallery.init();
             }
 
