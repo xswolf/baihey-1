@@ -1538,7 +1538,6 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
     // 预览资料
     module.controller("member.preview", ['app.serviceApi', '$scope', '$ionicPopup', '$ionicLoading', function (api, $scope, $ionicPopup, $ionicLoading) {
 
-
         // 图片放大查看插件
         requirejs(['photoswipe', 'photoswipe_ui'], function (photoswipe, photoswipe_ui) {
 
