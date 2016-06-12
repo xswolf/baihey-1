@@ -1543,10 +1543,13 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
 
             $scope.showImgList = function (imgList, index) {
                 var item = [{}];
-                for (var i in imgList) {
-                    item[i].src = imgList[i].pic_path;
-                    item[i].w = 200;
-                    item[i].h = 200;
+                for(var i in imgList){
+                    item[i] = [];
+                    var arr = imgList[i].thumb_path.split('.');
+                    var attr = arr[0].split('_');
+                    item[i].src = imgList[i].thumb_path.replace('thumb','picture');
+                    item[i].w   = attr[1];
+                    item[i].h   = attr[2];
                 }
                 var pswpElement = document.querySelectorAll('.pswp')[0];
                 var options = {
@@ -1641,6 +1644,15 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
         });
         api.list('/wap/member/photo-list', {'user_id': $scope.formData.userId}).success(function (res) {
             $scope.imgList = res.data;
+            /*for(var i in $scope.imgList) {
+                if(i == 0) {
+                    var arr = $scope.imgList[i].thumb_path.split('.');
+                    var attr = arr[0].split('_');
+                    $scope.imgList[i].str = $scope.imgList[i].thumb_path.replace('thumb','picture');
+                    $scope.imgList[i].w = attr[1];
+                    $scope.imgList[i].h = attr[2];
+                }
+            }*/
         });
 
         $scope.dynamicList = [];
@@ -1666,10 +1678,13 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
             $scope.showImgList = function (imgList, index) {
 
                 var item = [{}];
-                for (var i in imgList) {
-                    item[i].src = imgList[i].pic_path;
-                    item[i].w = 200;
-                    item[i].h = 200;
+                for(var i in imgList){
+                    item[i] = [];
+                    var arr = imgList[i].thumb_path.split('.');
+                    var attr = arr[0].split('_');
+                    item[i].src = imgList[i].thumb_path.replace('thumb','picture');
+                    item[i].w   = attr[1];
+                    item[i].h   = attr[2];
                 }
                 var pswpElement = document.querySelectorAll('.pswp')[0];
                 var options = {
