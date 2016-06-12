@@ -5,7 +5,7 @@ define(['app/module', 'app/directive/directiveApi'
     , 'app/service/serviceApi', 'app/filter/filterApi', 'config/city', 'config/occupation'
 ], function (module) {
 
-    module.controller("site.index", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$ionicModal', '$ionicActionSheet', '$ionicLoading', '$ionicBackdrop', function (api, $scope, $timeout, $ionicPopup, $ionicModal, $ionicActionSheet, $ionicLoading,$ionicBackdrop) {
+    module.controller("site.index", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$ionicModal', '$ionicActionSheet', '$ionicLoading', '$ionicBackdrop','$ionicScrollDelegate', function (api, $scope, $timeout, $ionicPopup, $ionicModal, $ionicActionSheet, $ionicLoading,$ionicBackdrop,$ionicScrollDelegate) {
 
         // 搜索条件
         $scope.searchForm = [];
@@ -147,22 +147,19 @@ define(['app/module', 'app/directive/directiveApi'
                     $scope.buttonsItemIndex = index;
                     if (index == 0) {   // 全部
                         $scope.searchForm.sex = 'all';
-                        //userListPromise();
-                        $scope.loadMore();
+                        $ionicScrollDelegate.$getByHandle('mainScroll').scrollBottom();
                         hideSheet();
                     }
 
                     if (index == 1) {   //只看男
                         $scope.searchForm.sex = 1;
-                        //userListPromise();
-                        $scope.loadMore();
+                        $ionicScrollDelegate.$getByHandle('mainScroll').scrollBottom();
                         hideSheet();
                     }
 
                     if (index == 2) {   //只看女
                         $scope.searchForm.sex = 0;
-                        //userListPromise();
-                        $scope.loadMore();
+                        $ionicScrollDelegate.$getByHandle('mainScroll').scrollBottom();
                         hideSheet();
                     }
 
@@ -181,8 +178,7 @@ define(['app/module', 'app/directive/directiveApi'
                             inputPlaceholder: '请输入对方ID号'
                         }).then(function (res) {
                             $scope.searchForm.id = res;
-                            //userListPromise();
-                            $scope.loadMore();
+                            $ionicScrollDelegate.$getByHandle('mainScroll').scrollBottom();
                             hideSheet();
                         });
                     }
