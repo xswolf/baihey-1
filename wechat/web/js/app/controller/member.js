@@ -1542,7 +1542,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
         requirejs(['photoswipe', 'photoswipe_ui'], function (photoswipe, photoswipe_ui) {
 
             $scope.showImgList = function (imgList, index) {
-                var item = [];
+                var item = [{}];
                 for(var i in imgList){
                     item[i].src = imgList[i].pic_path;
                     item[i].w   = 200;
@@ -1627,7 +1627,8 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
         requirejs(['photoswipe', 'photoswipe_ui'], function (photoswipe, photoswipe_ui) {
 
             $scope.showImgList = function (imgList, index) {
-                var item = [];
+
+                var item = [{}];
                 for(var i in imgList){
                     item[i].src = imgList[i].pic_path;
                     item[i].w   = 200;
