@@ -276,6 +276,7 @@ define(['app/module', 'app/directive/directiveApi'
         $scope.moreText = '展开';
         $scope.more = false;
         $scope.moreToggle = function () {
+            $ionicScrollDelegate.$getByHandle('mainScroll').resize();   // 重新计算滚动视图高度
             $scope.more = !$scope.more;
             if ($scope.more) {
                 $scope.moreText = '收起';
