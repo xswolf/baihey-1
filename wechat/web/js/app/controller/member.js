@@ -644,7 +644,8 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
     module.controller("member.been_address", ['app.serviceApi', '$scope', '$ionicPopup', '$filter', '$ionicScrollDelegate', '$ionicLoading', '$location', function (api, $scope, $ionicPopup, $filter, $ionicScrollDelegate, $ionicLoading, $location) {
 
         $scope.formData = [];
-        $scope.formData.userAddrIdList = [4022, 4030, 4012, 3932, 4128];  // 用户已选择的地区，ID数据集，存数据库
+        //$scope.formData.userAddrIdList = [4022, 4030, 4012, 3932, 4128];
+        $scope.formData.userAddrIdList = $scope.userInfo.went_travel != null && $scope.userInfo.went_travel ? $scope.userInfo.went_travel.split(',') : [];// 用户已选择的地区，ID数据集，存数据库
         $scope.isMore = true;
         $scope.typeTab = 1;     // 默认国内
         $scope.domestic = [];   // 国内
@@ -719,9 +720,9 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
                     formData.went_travel.push($scope.data[i].id);
                 }
             }
+            formData.went_travel = formData.went_travel.join(',');
             api.save('/wap/member/save-data', formData).success(function (res) {
-                formData.went_travel = formData.went_travel.join(',');
-                $scope.getTravel('went_travel', formData.went_travel);// 我去过的地方
+                $scope.userInfo.went_travel = formData.went_travel;
                 $scope.setUserStorage();
                 $ionicLoading.hide();
                 $location.url('/main/member/information');
@@ -737,7 +738,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
     module.controller("member.want_address", ['app.serviceApi', '$scope', '$ionicPopup', '$filter', '$ionicScrollDelegate', '$ionicLoading', '$location', function (api, $scope, $ionicPopup, $filter, $ionicScrollDelegate, $ionicLoading, $location) {
 
         $scope.formData = [];
-        $scope.formData.userAddrIdList = [4022, 4030, 4012, 3932, 4128];  // 用户已选择的地区，ID数据集，存数据库
+        $scope.formData.userAddrIdList = $scope.userInfo.want_travel != null && $scope.userInfo.want_travel ? $scope.userInfo.want_travel.split(',') : [];  // 用户已选择的地区，ID数据集，存数据库
         $scope.isMore = true;
         $scope.typeTab = 1;     // 默认国内
         $scope.domestic = [];   // 国内
@@ -812,9 +813,9 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
                     formData.want_travel.push($scope.data[i].id);
                 }
             }
+            formData.want_travel = formData.want_travel.join(',');
             api.save('/wap/member/save-data', formData).success(function (res) {
-                formData.want_travel = formData.want_travel.join(',');
-                $scope.getTravel('want_travel', formData.want_travel);// 我想去的地方
+                $scope.userInfo.want_travel = formData.want_travel;
                 $scope.setUserStorage();
                 $ionicLoading.hide();
                 $location.url('/main/member/information');
@@ -828,7 +829,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
     module.controller("member.sports", ['app.serviceApi', '$scope', '$ionicPopup', '$ionicScrollDelegate', '$ionicLoading', '$location', function (api, $scope, $ionicPopup, $ionicScrollDelegate, $ionicLoading, $location) {
 
         $scope.formData = [];
-        $scope.formData.userSportsIdList = [12, 14, 24];  // 用户数据
+        $scope.formData.userSportsIdList = $scope.userInfo.love_sport != null && $scope.userInfo.love_sport ? $scope.userInfo.love_sport.split(',') : [];  // 用户数据
 
         // 默认数据处理
         api.list('/wap/member/config-list', {'type': 1}).success(function (res) {
@@ -869,9 +870,9 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
                     formData.love_sport.push($scope.sportsList[i].id);
                 }
             }
+            formData.love_sport = formData.love_sport.join(',');
             api.save('/wap/member/save-data', formData).success(function (res) {
-                formData.love_sport = formData.love_sport.join(',');
-                $scope.getConfig('love_sport', formData.love_sport);// 喜欢的运动
+                $scope.userInfo.love_sport = formData.love_sport;
                 $scope.setUserStorage();
                 $ionicLoading.hide();
                 $location.url('/main/member/information');
@@ -885,7 +886,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
     module.controller("member.movie", ['app.serviceApi', '$scope', '$ionicPopup', '$ionicScrollDelegate', '$filter', '$ionicLoading', '$location', function (api, $scope, $ionicPopup, $ionicScrollDelegate, $filter, $ionicLoading, $location) {
 
         $scope.formData = [];
-        $scope.formData.userMovieIdList = [47, 56, 67];
+        $scope.formData.userMovieIdList = $scope.userInfo.want_film != null && $scope.userInfo.want_film ? $scope.userInfo.want_film.split(',') : [];
 
         // 默认数据处理
         api.list('/wap/member/config-list', {'type': 2}).success(function (res) {
@@ -927,9 +928,9 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
                     formData.want_film.push($scope.list[i].id);
                 }
             }
+            formData.want_film = formData.want_film.join(',');
             api.save('/wap/member/save-data', formData).success(function (res) {
-                formData.want_film = formData.want_film.join(',');
-                $scope.getConfig('want_film', formData.want_film);// 喜欢的运动
+                $scope.userInfo.want_film = formData.want_film;
                 $scope.setUserStorage();
                 $ionicLoading.hide();
                 $location.url('/main/member/information');
@@ -943,7 +944,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
     module.controller("member.delicacy", ['app.serviceApi', '$scope', '$ionicPopup', '$ionicScrollDelegate', '$filter', '$ionicLoading', '$location', function (api, $scope, $ionicPopup, $ionicScrollDelegate, $filter,$ionicLoading,$location) {
 
         $scope.formData = [];
-        $scope.formData.userDelicacyIdList = [1,73,79];
+        $scope.formData.userDelicacyIdList = $scope.userInfo.like_food != null && $scope.userInfo.like_food ? $scope.userInfo.like_food.split(',') : [];;
 
         // 默认数据处理
         api.list('/wap/member/config-list', {'type': 3}).success(function (res) {
@@ -985,9 +986,9 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
                     formData.like_food.push($scope.foodList[i].id);
                 }
             }
+            formData.like_food = formData.like_food.join(',');
             api.save('/wap/member/save-data', formData).success(function (res) {
-                formData.like_food = formData.like_food.join(',');
-                $scope.getConfig('like_food', formData.like_food);// 喜欢的运动
+                $scope.userInfo.like_food = formData.like_food;
                 $scope.setUserStorage();
                 $ionicLoading.hide();
                 $location.url('/main/member/information');
