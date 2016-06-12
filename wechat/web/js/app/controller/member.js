@@ -941,10 +941,11 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
     ]);
 
     // 喜欢的美食
-    module.controller("member.delicacy", ['app.serviceApi', '$scope', '$ionicPopup', '$ionicScrollDelegate', '$filter', '$ionicLoading', '$location', function (api, $scope, $ionicPopup, $ionicScrollDelegate, $filter,$ionicLoading,$location) {
+    module.controller("member.delicacy", ['app.serviceApi', '$scope', '$ionicPopup', '$ionicScrollDelegate', '$filter', '$ionicLoading', '$location', function (api, $scope, $ionicPopup, $ionicScrollDelegate, $filter, $ionicLoading, $location) {
 
         $scope.formData = [];
-        $scope.formData.userDelicacyIdList = $scope.userInfo.like_food != null && $scope.userInfo.like_food ? $scope.userInfo.like_food.split(',') : [];;
+        $scope.formData.userDelicacyIdList = $scope.userInfo.like_food != null && $scope.userInfo.like_food ? $scope.userInfo.like_food.split(',') : [];
+        ;
 
         // 默认数据处理
         api.list('/wap/member/config-list', {'type': 3}).success(function (res) {
@@ -1543,15 +1544,16 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
 
             $scope.showImgList = function (imgList, index) {
                 var item = [{}];
-                for(var i in imgList){
+                for (var i in imgList) {
                     item[i].src = imgList[i].pic_path;
-                    item[i].w   = 200;
-                    item[i].h   = 200;
+                    item[i].w = 200;
+                    item[i].h = 200;
                 }
                 var pswpElement = document.querySelectorAll('.pswp')[0];
                 var options = {
                     index: index
                 };
+
                 options.mainClass = 'pswp--minimal--dark';
                 options.barsSize = {top: 0, bottom: 0};
                 options.captionEl = false;
@@ -1571,10 +1573,14 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
     }]);
 
     // 谁关注了我
-    module.controller("member.follow", ['app.serviceApi', '$scope', '$ionicPopup', '$ionicLoading', '$location', function (api, $scope, $ionicPopup, $ionicLoading, $location) {
-        $scope.followType = $location.$$search.type;
-        var getFollowList = function (url) {
-            api.list(url, {}).success(function (res) {
+    module.controller("member.follow", ['app.serviceApi', '$scope', '$ionicPopup', '$ionicLoading', '$location','$ionicActionSheet', function (api, $scope, $ionicPopup, $ionicLoading, $location,$ionicActionSheet) {
+        $scope.followType = typeof $location.$$search.type == 'undefined' ? 'follow' : $location.$$search.type;
+        $scope.followList = [];
+        loadData();
+        function loadData(){
+            $scope.pageTitle = $scope.followType == 'follow' ? '我关注的人' : '关注我的人';
+            $scope.followTypeTitle = $scope.followType == 'follow' ? '关注我的人' : '我关注的人';
+            api.list('/wap/follow/follow-list', {type:$scope.followType}).success(function (res) {
                 $scope.followList = res.data;
                 for (var i in $scope.followList) {
                     $scope.followList[i].info = JSON.parse($scope.followList[i].info);
@@ -1582,11 +1588,43 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
                 }
             });
         }
-        if ($scope.followType == 'follow') {
-            getFollowList('/wap/follow/follow-list');
-        } else {
-            getFollowList('/wap/follow/followed-list');
+
+        // 取消关注
+        $scope.delFollow = function(item,$index){
+            api.get('/wap/follow/del-follow',{user_id:ar.getCookie("bhy_user_id"),follow_id:item.user_id}).success(function(res){
+                if(res.data){     // 成功
+                    $scope.followList.splice($index, 1);
+                }else{            // 失败
+                    $ionicPopup.alert({title:'取消关注失败'});
+                }
+            })
         }
+
+        // 切换，我关注的人，关注我的人
+        $scope.switching = function() {
+
+            var hideSheet = $ionicActionSheet.show({
+                buttons: [
+                    { text: $scope.followTypeTitle },
+                ],
+                titleText: '操作',
+                cancelText: '取消',
+                cancel: function() {
+                },
+                buttonClicked: function(index) {
+                    if(index == 0){
+                        if($scope.followType == 'follow'){
+                            $scope.followType = 'followed';
+                        }else {
+                            $scope.followType = 'follow';
+                        }
+                        loadData();
+                        hideSheet();
+                    }
+                }
+            });
+
+        };
 
     }]);
 
@@ -1629,10 +1667,10 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
             $scope.showImgList = function (imgList, index) {
 
                 var item = [{}];
-                for(var i in imgList){
+                for (var i in imgList) {
                     item[i].src = imgList[i].pic_path;
-                    item[i].w   = 200;
-                    item[i].h   = 200;
+                    item[i].w = 200;
+                    item[i].h = 200;
                 }
                 var pswpElement = document.querySelectorAll('.pswp')[0];
                 var options = {

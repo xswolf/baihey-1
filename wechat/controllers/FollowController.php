@@ -20,24 +20,17 @@ class FollowController extends BaseController
     public function actionFollowList()
     {
         $user_id = Cookie::getInstance()->getCookie('bhy_id');
-        $data = UserFollow::getInstance()->getFollowList('follow', $user_id, $this->get);
-
+        $type = $this->get['type'];
+        if(empty($type)){
+            $type = 'follow';
+        }
+        $data = UserFollow::getInstance()->getFollowList($type, $user_id, $this->get);
         return $this->renderAjax(['status' => 1, 'data' => $data]);
     }
 
-    /**
-     * 被关注列表
-     */
-    public function actionFollowedList()
-    {
-        $user_id = Cookie::getInstance()->getCookie('bhy_id');
-        $data = UserFollow::getInstance()->getFollowList('followed', $user_id, $this->get);
-
-        return $this->renderAjax(['status' => 1, 'data' => $data]);
-    }
 
     /**
-     * 被关注列表
+     * 黑名单列表
      */
     public function actionBlackList()
     {
