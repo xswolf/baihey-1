@@ -267,7 +267,7 @@ define(['app/module', 'app/directive/directiveApi'
         })
 
         // 实例化上传图片插件
-        $scope.uploader = new FileUploader({url: '/wap/file/upload'});
+        $scope.uploader = new FileUploader({url: '/wap/file/thumb'});
 
         // socket聊天
         requirejs(['chat/wechatInterface', 'chat/chat'], function (wx, chat) {
@@ -365,8 +365,9 @@ define(['app/module', 'app/directive/directiveApi'
                 };
 
                 $scope.uploader.onCompleteItem = function (fileItem, response, status, headers) {  // 上传结束
-                    console.log(response.path);
-                    $scope.sendMessage(response.path, $scope.sendId, $scope.receiveId, 'pic');  // 真实发送
+                    console.log(response.thumb_path);
+                    $scope.hideMultiOnKeyboard();
+                    $scope.sendMessage(response.thumb_path, $scope.sendId, $scope.receiveId, 'pic');  // 真实发送
                     //console.info('onCompleteItem', fileItem, response, status, headers);
                 };
 
@@ -459,6 +460,7 @@ define(['app/module', 'app/directive/directiveApi'
 
                 if (res.status == 1){
                     //成功，隐藏窗口
+                    $scope.hideMultiOnKeyboard();
                     $scope.briPageHide();
                     $scope.sendMessage(res.message, $scope.sendId, $scope.receiveId, 'bribery');
                 }else{
