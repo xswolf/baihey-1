@@ -464,12 +464,8 @@ var config_infoData = {
     ],
     'children': [
         {id: 1, name: '无小孩'},
-        {id: 2, name: '一个男孩（跟随对方）'},
-        {id: 3, name: '一个女孩（跟随对方）'},
-        {id: 4, name: '一个男孩（跟随自己）'},
-        {id: 5, name: '一个女孩（跟随自己）'},
-        {id: 6, name: '两个及以上（跟随对方）'},
-        {id: 7, name: '两个及以上（跟随自己）'}
+        {id: 2, name: '有小孩归自己'},
+        {id: 3, name: '有小孩归对方'}
     ],
     'label': {
         'man': [
