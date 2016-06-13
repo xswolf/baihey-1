@@ -5,16 +5,16 @@ define(['app/module', 'app/directive/directiveApi'
     , 'app/service/serviceApi', 'comm'
 ], function (module) {
 
-    module.controller("message.index", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$ionicModal', '$ionicActionSheet', '$ionicLoading','$location', function (api, $scope, $timeout, $ionicPopup, $ionicModal, $ionicActionSheet, $ionicLoading,$location) {
+    module.controller("message.index", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$ionicModal', '$ionicActionSheet', '$ionicLoading', '$location', function (api, $scope, $timeout, $ionicPopup, $ionicModal, $ionicActionSheet, $ionicLoading, $location) {
 
         $timeout($scope.sumSend);
         // 判断是否登录
         /*api.getLoginStatus().success(function(res) {
-            if(!res.status) {
-                location.href = '/wap/user/login';
-                return false;
-            }
-        });*/
+         if(!res.status) {
+         location.href = '/wap/user/login';
+         return false;
+         }
+         });*/
 
         $scope.userInfo = {};
         // 获取页面数据
@@ -27,7 +27,7 @@ define(['app/module', 'app/directive/directiveApi'
         }
         //console.log($scope.messageList)
         // 从服务器获取未看消息
-        $scope.listMessage = function() {
+        $scope.listMessage = function () {
             $scope.messageList = ar.getStorage("messageList");
         }
 
@@ -78,29 +78,29 @@ define(['app/module', 'app/directive/directiveApi'
     }]);
 
 
-    module.controller("message.chat", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$ionicModal', '$ionicActionSheet', '$ionicLoading', '$ionicScrollDelegate', 'FileUploader', '$http','$location','$rootScope','$animate', function (api, $scope, $timeout, $ionicPopup, $ionicModal, $ionicActionSheet, $ionicLoading, $ionicScrollDelegate, FileUploader, $http , $location,$rootScope) {
+    module.controller("message.chat", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$ionicModal', '$ionicActionSheet', '$ionicLoading', '$ionicScrollDelegate', 'FileUploader', '$http', '$location', '$rootScope', '$animate', function (api, $scope, $timeout, $ionicPopup, $ionicModal, $ionicActionSheet, $ionicLoading, $ionicScrollDelegate, FileUploader, $http, $location, $rootScope) {
         $scope.sendId = ar.getCookie("bhy_user_id");
         $scope.receiveId = $location.search().id;
 
 
-        $scope.hideMultiOnKeyboard = function(){
-            angular.element(document.querySelector('#multi_con')).css('bottom','-110px');
-            angular.element(document.querySelector('#msg_footer_bar')).css('bottom','0');
+        $scope.hideMultiOnKeyboard = function () {
+            angular.element(document.querySelector('#multi_con')).css('bottom', '-110px');
+            angular.element(document.querySelector('#msg_footer_bar')).css('bottom', '0');
         }
 
         var viewScroll = $ionicScrollDelegate.$getByHandle('messageDetailsScroll');
 
         $scope.messageNum = 0;
-        var list  = ar.getStorage('chat_messageHistory' + $scope.receiveId);
-        for ( var i in list){
-            if (list[i].status == 3){
+        var list = ar.getStorage('chat_messageHistory' + $scope.receiveId);
+        for (var i in list) {
+            if (list[i].status == 3) {
                 list[i].status = 4;
             }
         }
 
-        $scope.doRefresh = function() {
-            $timeout(function() {
-                if ( list != null) {
+        $scope.doRefresh = function () {
+            $timeout(function () {
+                if (list != null) {
                     var num = 5;
                     var length = list.length;
                     $scope.messageNum += num;
@@ -112,14 +112,14 @@ define(['app/module', 'app/directive/directiveApi'
 
         };
 
-        window.addEventListener("native.keyboardshow", function(e){
+        window.addEventListener("native.keyboardshow", function (e) {
             viewScroll.scrollBottom();
         });
 
         // 显示时间函数
-        $scope.isLongTime = function (time , index) {
-            if (index<2) return false;
-            return time - $scope.historyList[index-1].time > 300
+        $scope.isLongTime = function (time, index) {
+            if (index < 2) return false;
+            return time - $scope.historyList[index - 1].time > 300
         }
 
         $scope.followData = [];
@@ -128,7 +128,7 @@ define(['app/module', 'app/directive/directiveApi'
         // 是否已关注对方， 已关注则不显示关注按钮。
         $scope.u_isFollow = true;
         api.getStatus('/wap/follow/get-follow-status', $scope.followData).success(function (res) {
-            if(res.data) {
+            if (res.data) {
                 $scope.u_isFollow = false;
             }
         });
@@ -136,7 +136,7 @@ define(['app/module', 'app/directive/directiveApi'
         // 加关注
         $scope.addFollow = function () {
             api.save('/wap/follow/add-follow', $scope.followData).success(function (res) {
-                if(res.data) {
+                if (res.data) {
                     $scope.u_isFollow = false;
                     // 成功，提示
                     $ionicPopup.alert({title: '加关注成功'});
@@ -173,20 +173,20 @@ define(['app/module', 'app/directive/directiveApi'
             $scope.detailBriModal = modal;
         });
         $scope.detail_bri = function (briMessage) {
-            briMessage = briMessage.replace(/&quot;/g , "\"");
+            briMessage = briMessage.replace(/&quot;/g, "\"");
             var json = JSON.parse(briMessage);
             $scope.openBri = json;
             // 判断红包是否被领取过
-            api.list('/wap/message/bribery-status' , {bribery_id:json.id}).success(function (res) {
-                if ($scope.sendId == res.receive_user_id){  // 别人发的红包才能领取，自己不能领取自己的
-                    if (res.status == 0){
+            api.list('/wap/message/bribery-status', {bribery_id: json.id}).success(function (res) {
+                if ($scope.sendId == res.receive_user_id) {  // 别人发的红包才能领取，自己不能领取自己的
+                    if (res.status == 0) {
                         $scope.detailBriModal.show();
-                    }else if (res.status ==1 ) {
+                    } else if (res.status == 1) {
                         $scope.openBribery();
-                    }else{
+                    } else {
                         alert('红包已经失效')
                     }
-                }else{
+                } else {
                     alert('自己不能领取自己的红包')
                 }
 
@@ -203,12 +203,12 @@ define(['app/module', 'app/directive/directiveApi'
         });
 
         $scope.openBribery = function () {
-            api.save('/wap/message/open-bribery' , {bribery_id:$scope.openBri.id}).success(function (res) {
-                if(res.status == 1) {
+            api.save('/wap/message/open-bribery', {bribery_id: $scope.openBri.id}).success(function (res) {
+                if (res.status == 1) {
                     $scope.detaiOpenBriModal.show();
-                }else if (res.status == -1){
+                } else if (res.status == -1) {
                     $scope.detaiOpenBriModal.show();
-                }else{
+                } else {
                     alert('异常情况');
                 }
                 $scope.detailBriModal.hide();
@@ -217,8 +217,8 @@ define(['app/module', 'app/directive/directiveApi'
 
 
         var userInfoList = ar.getStorage('messageList');
-        for  ( var i in userInfoList ){
-            if ($scope.receiveId == userInfoList[i].id){
+        for (var i in userInfoList) {
+            if ($scope.receiveId == userInfoList[i].id) {
                 $scope.auth_validate = userInfoList[i].auth.identity_check;
             }
         }
@@ -234,11 +234,11 @@ define(['app/module', 'app/directive/directiveApi'
         }
 
         //  获取历史聊天数据
-        $scope.receiveId   = $location.search().id;// 获取接受者ID
-        $scope.real_name   = $location.search().real_name;
-        $scope.sex         = $location.search().sex;
-        $scope.age         = $location.search().age;
-        $scope.receiveHeadPic = $location.search().head_pic.replace(/~2F/g , "/");
+        $scope.receiveId = $location.search().id;// 获取接受者ID
+        $scope.real_name = $location.search().real_name;
+        $scope.sex = $location.search().sex;
+        $scope.age = $location.search().age;
+        $scope.receiveHeadPic = $location.search().head_pic.replace(/~2F/g, "/");
         $scope.sendHeadPic = JSON.parse(ar.getStorage('userInfo').info).head_pic;
         console.log($scope.sendHeadPic)
         api.getUserInfo($scope.receiveId).success(function (res) {
@@ -303,11 +303,12 @@ define(['app/module', 'app/directive/directiveApi'
                     status: 3,
                     time: flagTime
                 };
-                if (serverId != 'view' && type == 'pic'){}else {
+                if (serverId != 'view' && type == 'pic') {
+                } else {
                     $scope.historyList.push(message);
                     ar.setStorage('chat_messageHistory' + toUser, $scope.historyList); // 每次发送消息后把消息放到浏览器端缓存
                 }
-                if (type == 'pic' && serverId == 'view'){
+                if (type == 'pic' && serverId == 'view') {
                     return;
                 }
                 chat.sendMessage(serverId, sendId, toUser, type, flagTime);
@@ -379,14 +380,14 @@ define(['app/module', 'app/directive/directiveApi'
                 var response = JSON.parse(msg.data);
 
                 var setMessageStatus = function (response) {
-                    if (response.type=='madd' || response.type=='remove' || response.type=='add') return;
+                    if (response.type == 'madd' || response.type == 'remove' || response.type == 'add') return;
 
                     if ($scope.sendId == response.sendId) {  // 响应自己发送的消息
                         for (var i in $scope.historyList) {
-                            if (response.status == 1){
+                            if (response.status == 1) {
                                 $scope.historyList[i].status = 1;
                             }
-                            response.message = response.message.replace(/&quot;/g , "\"");
+                            response.message = response.message.replace(/&quot;/g, "\"");
                             if (response.time == $scope.historyList[i].time && (response.message == $scope.historyList[i].message || response.type == 'pic')) {
                                 $scope.historyList[i].message = response.message;
                                 $scope.historyList[i].status = response.status;
@@ -397,7 +398,7 @@ define(['app/module', 'app/directive/directiveApi'
                         $scope.historyList.push(response);
                     }
                     $rootScope.historyList = $scope.historyList;
-                    ar.setStorage('chat_messageHistory' + $scope.receiveId , $scope.historyList); // 每次发送消息后把消息放到浏览器端缓存
+                    ar.setStorage('chat_messageHistory' + $scope.receiveId, $scope.historyList); // 每次发送消息后把消息放到浏览器端缓存
                 }
 
                 switch (response.type) {
@@ -424,10 +425,9 @@ define(['app/module', 'app/directive/directiveApi'
         })
 
 
-
     }]);
 
-    module.controller("message.childBriberyController", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$ionicModal', function (api, $scope, $timeout, $ionicPopup, $ionicModal) {
+    module.controller("message.childBriberyController", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$ionicModal', '$ionicActionSheet', function (api, $scope, $timeout, $ionicPopup, $ionicModal, $ionicActionSheet) {
         $scope.bri_message = '恭喜发财，大吉大利';
 
         $scope.btnStatus = true;
@@ -446,24 +446,61 @@ define(['app/module', 'app/directive/directiveApi'
             }
         }
 
+        // 选择支付方式
+        $scope.selectPayType = function () {
+            var hideSheet = $ionicActionSheet.show({
+                buttons: [
+                    {text: '微信支付'},
+                    {text: '余额支付'}
+                ],
+                titleText: '选择支付方式',
+                cancelText: '取消',
+                cancel: function () {
+                },
+                buttonClicked: function (index) {
+                    if (index == 0) {   // 微信支付
+
+
+                        hideSheet();
+                    }
+                    if (index == 1) {   // 余额支付
+
+
+                        hideSheet();
+                    }
+                    return true;
+                }
+            });
+
+        };
+
 
         // 发红包
         $scope.bri_submit = function () {
+
+            // 选择支付方式，支付
+            $scope.selectPayType();
+
 
             if ($scope.money == 0) {
                 $ionicPopup.alert({title: '红包金额不合法'});
                 return false;
             }
-            $scope.briFormData = {sendId: $scope.sendId, receiveId: $scope.receiveId, money: $scope.money,bri_message:$scope.bri_message};
+            $scope.briFormData = {
+                sendId: $scope.sendId,
+                receiveId: $scope.receiveId,
+                money: $scope.money,
+                bri_message: $scope.bri_message
+            };
 
             api.save("/wap/message/send-bribery", $scope.briFormData).success(function (res) {
 
-                if (res.status == 1){
+                if (res.status == 1) {
                     //成功，隐藏窗口
                     $scope.hideMultiOnKeyboard();
                     $scope.briPageHide();
                     $scope.sendMessage(res.message, $scope.sendId, $scope.receiveId, 'bribery');
-                }else{
+                } else {
                     alert(res.message);
                     console.log($scope.briFormData);
                 }

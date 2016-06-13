@@ -1,0 +1,30 @@
+@font-face {
+    font-family: 'new';
+    src:    url('../fonts/new.eot?5mohu1');
+    src:    url('../fonts/new.eot?5mohu1#iefix') format('embedded-opentype'),
+    url('../fonts/new.ttf?5mohu1') format('truetype'),
+    url('../fonts/new.woff?5mohu1') format('woff'),
+    url('../fonts/new.svg?5mohu1#icomoon') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+[class^="icon-new"], [class*=" icon-new"] {
+    /* use !important to prevent issues with browser extensions that change fonts */
+    font-family: 'new' !important;
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+
+    /* Better Font Rendering =========== */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-new-bribery:before {
+    content: "\e900";
+}
+

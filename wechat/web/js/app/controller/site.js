@@ -363,6 +363,8 @@ define(['app/module', 'app/directive/directiveApi'
 
 
 
+
+
         //$scope.searchForm = {};
         $scope.salary = config_infoData.salary;
         $scope.house = config_infoData.house;

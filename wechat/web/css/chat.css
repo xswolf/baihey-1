@@ -265,7 +265,7 @@
     height: 100%;
     position: relative;
     top: 2px;
-    width: 50px;
+    width: 60px;
 }
 .rj-footer-input {
     background-color: #fff;
@@ -277,15 +277,9 @@
     position: absolute !important;
 }
 .rj-footer-btn-wrap .rj-send-button {
-    background-color: #1bbb37;
-    bottom: 3px;
-    color: #fff;
-    height: 30px;
-    left: 4px;
-    line-height: 30px;
-    position: absolute;
-    text-align: center;
-    width: 38px;
+    font-size: 12px;
+    margin-top: -2px;
+    width: 100%;
 }
 .bar-footer textarea {
     height: 21px;
@@ -304,15 +298,23 @@
     display: block;
 }
 
-#multi_con ul li {
+#multi_con ul li{
     float: left;
-    margin: 20px 0 20px 20px;
+    margin: 5px 10px;
+}
+#multi_con ul li div.bri_b{
+    padding-top: 4px;
+}
+#multi_con ul li div{
+    border: 1px solid #ccc;
+    padding: 6px 0;
+    text-align: center;
+    width: 50px;
+}
+#multi_con ul li div i{
+    font-size: 36px;
 }
 
-#multi_con ul li img {
-    width: 50px;
-    cursor: pointer;
-}
 
 /* 图片 */
 

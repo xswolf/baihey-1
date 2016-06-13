@@ -1,5 +1,6 @@
 <ion-view hide-tabs="true">
     <link href="/wechat/web/css/chat.css" rel="stylesheet">
+    <link href="/wechat/web/css/newFontIcon160613.css" rel="stylesheet">
     <ion-header>
         <div class="bar bar-header bhy com_w_100">
             <a class="button button-icon icon ion-arrow-left-c" href="#/main/message" ng-click="chat.close()"></a>
@@ -54,10 +55,12 @@
 
                 <!-- 头像 -->
                 <div class="talk_user">
-                    <a  ng-if="sendId != vo.send_user_id"  href="#/main/member/user_info?userId={{receiveId}}&tempUrl=/main/message">
+                    <a ng-if="sendId != vo.send_user_id"
+                       href="#/main/member/user_info?userId={{receiveId}}&tempUrl=/main/message">
                         <img ng-src="{{receiveHeadPic}}" onerror="this.src='/wechat/web/images/no_img.png'">
                     </a>
-                    <img ng-if="sendId == vo.send_user_id" ng-src="{{sendHeadPic}}" onerror="this.src='/wechat/web/images/no_img.png'">
+                    <img ng-if="sendId == vo.send_user_id" ng-src="{{sendHeadPic}}"
+                         onerror="this.src='/wechat/web/images/no_img.png'">
                 </div>
 
                 <!-- 消息内容 -->
@@ -125,30 +128,38 @@
         </ion-list>
     </ion-content>
 
-    <ion-footer-bar align-title="left" class="bar-light" id="msg_footer_bar" resize-foot-bar>
+    <ion-footer-bar align-title="left" class="bar-light" id="msg_footer_bar" resize-foot-bar keyboard-attach>
         <div class="rj-footer-btn-wrap">
-            <button id="phiz" class="button button-icon icon ion-happy button-energized rj-footer-btn-left" ng-click="changeType()"></button>
+            <div class="buttons">
+                <button id="multi_btn" class="button button-icon icon ion-ios-plus-outline rj-footer-btn-left"
+                        show-multi style="padding: 0;"></button>
+            </div>
         </div>
-        <label class="item item-input rj-footer-input" ng-hide="talk_type=='voice'">
-            <textarea id="txt_input" msd-elastic ng-model="send_content" style="height: 21px;resize:none;"
+        <label class="item item-input rj-footer-input" ng-hide="talk_type=='voice'" style="padding-left: 5px;">
+            <textarea id="txt_input" msd-elastic ng-model="send_content" style="height: 21px;resize:none; "
                       ng-focus="hideMultiOnKeyboard()"></textarea>
         </label>
 
-        <div class="rj-footer-btn-wrap">
-            <div class="buttons" ng-show="!send_content || send_content === ''">
-                <button id="multi_btn" class="button button-icon icon ion-ios-plus-outline rj-footer-btn-left"
-                        show-multi></button>
-            </div>
-            <div class="rj-send-button" ng-hide="!send_content || send_content === ''" ng-click="send()">
-                <p>发送</p>
-            </div>
+        <div class="rj-footer-btn-wrap ml10">
+            <button type="button" class="button button-balanced rj-send-button" ng-disabled="!send_content || send_content === ''" ng-click="send()">发送</button>
         </div>
     </ion-footer-bar>
     <div id="multi_con">
         <ul class="clearfix">
+            <li ng-click="briberyModal.show()">
+                <div class="bri_b"><i class="icon-new-bribery cor6"></i></div>
+                <p class="fs12 mb0 tac cor8">红包</p>
+            </li>
+            <li ng-click="send_pic()">
+                <div class="img_b"><i class="ion-images cor6"></i></div>
+                <p class="fs12 mb0 tac cor8">图片</p>
+            </li>
+        </ul>
+
+        <!--<ul class="clearfix">
             <li><img src="/wechat/web/images/picture.jpg" ng-click="send_pic()"></li>
             <li><img src="/wechat/web/images/bribery.jpg" ng-click="briberyModal.show()"></li>
-        </ul>
+        </ul>-->
     </div>
     <input type="file" id="pic_fileInput" class="pic_fileInput" nv-file-select="" uploader="uploader" accept="image/*"/>
     <div class="pic_zoom_layer chat_mask" ng-if="showPic" ng-cloak>
@@ -235,7 +246,7 @@
                         <span class="input-label">红包金额</span>
                         <input type="number" placeholder="请填写金额" class="tar bri_money_input" ng-model="input_money"
                                ng-keyup="valMoney(this.input_money)">
-                        <a class="button button-icon">元</a>
+                        <span class="input-label">元</span>
                     </label>
                     <label class="item item-input item-stacked-label">
                         <span class="input-label">留言</span>
