@@ -99,15 +99,15 @@ class MessageController extends BaseController
         $get        = \Yii::$app->request->get();
         $sendId     = $get['sendId'];
         $receiveId  = $get['receiveId'];
-        $money      = (float)$get['money'];
+        $money      = (int)($get['money']*100);
         $briMessage = isset($get['bri_message']) ? $get['bri_message'] : '';
 
         if (\common\util\Cookie::getInstance()->getCookie("bhy_id") != $sendId) {
             // 非自己登陆的账号
             return $this->renderAjax(['status' => -1, 'message' => '非法请求']);
-        } else if ($money <= 0.01 || $money > 200) {
+        } else if ($money < 1 || $money > 20000) {
             // 发送金额不符合要求
-            return $this->renderAjax(['status' => -2, 'message' => '非法请求']);
+            return $this->renderAjax(['status' => -2, 'message' => '金额不对']);
         }
 
         $userInfo = \wechat\models\User::getInstance()->getUserByName(\common\util\Cookie::getInstance()->getCookie('bhy_u_name'));
