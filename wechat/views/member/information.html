@@ -107,7 +107,7 @@
                             class="fs12 cor20">保密，只有您自己可以看到</span></p>
                 </div>
             </ion-item>
-            <ion-item class="brithday item16" ng-if="userInfo.info.age == '未知' || !userInfo.info.age" href="#/main/member/age">
+            <ion-item class="brithday item16" ng-if="userInfo.info.age == '未知' || userInfo.info.age <= 0" href="#/main/member/age">
                 <div class="info_l">
                     <p>出生年月</p>
                 </div>
@@ -118,7 +118,7 @@
                     <i class=" ion-ios-arrow-right"></i>
                 </div>
             </ion-item>
-            <ion-item class="brithday item16" ng-if="userInfo.info.age != '未知' && userInfo.info.age">
+            <ion-item class="brithday item16" ng-if="userInfo.info.age != '未知' && userInfo.info.age > 0">
                 <div class="info_l">
                     <p>出生年月</p>
                 </div>

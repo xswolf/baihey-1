@@ -76,9 +76,9 @@
                     <p>出生年月</p>
                 </div>
                 <div class="info_c">
-                    <p ng-if="otherUserInfo.info.age != '未知'"><i class="bhy-icon-member-birthday cor23 vam mr5"></i><span class="mr10">{{otherUserInfo.info.age * 1000 | date:'yyyy-MM-dd'}}</span><span
+                    <p ng-if="otherUserInfo.info.age != '未知' && otherUserInfo.info.age > 0"><i class="bhy-icon-member-birthday cor23 vam mr5"></i><span class="mr10">{{otherUserInfo.info.age * 1000 | date:'yyyy-MM-dd'}}</span><span
                             class="mr10">{{otherUserInfo.info.zodiac | zodiac}}</span><span>{{otherUserInfo.info.constellation | constellation}}</span></p>
-                    <p ng-if="otherUserInfo.info.age == '未知'" class="null">未知</p>
+                    <p ng-if="otherUserInfo.info.age == '未知' || otherUserInfo.info.age <= 0" class="null">未知</p>
                 </div>
             </ion-item>
             <ion-item>
