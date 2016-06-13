@@ -114,6 +114,7 @@
 
     <script id="MoreSearchModal.html" type="text/ng-template">
         <ion-modal-view>
+            <link href="/wechat/web/js/plugin/mobiscroll/mobiscroll.custom-3.0.0-beta.min.css" rel="stylesheet">
             <ion-header-bar>
                 <a href="javascript:;" ng-click="moreSearchModal.hide()" class="button button-icon">取消</a>
                 <h1 class="title">高级搜索</h1>
@@ -142,15 +143,7 @@
                                 <div class="input-label">
                                     年龄
                                 </div>
-                                <select ng-model="whereForm.age">
-                                    <option value="0" selected>不限</option>
-                                    <option value="18-22">18-22</option>
-                                    <option value="23-26">23-26</option>
-                                    <option value="27-35">27-35</option>
-                                    <option value="36-45">36-45</option>
-                                    <option value="46-55">46-55</option>
-                                    <option value="56">56以上</option>
-                                </select>
+                                <input ng-model="whereForm.age" mobiscroll-scroller="settingsAge" mobiscroll-instance="demo"  />
                             </label>
                         </div>
                         <div class="moreSearch_form_box mt10 clearfix">
@@ -158,19 +151,7 @@
                                 <div class="input-label">
                                     身高
                                 </div>
-                                <select ng-model="whereForm.height">
-                                    <option value="0" selected>不限</option>
-                                    <option value="140-150">140-150 厘米</option>
-                                    <option value="151-155">151-155 厘米</option>
-                                    <option value="156-160">156-160 厘米</option>
-                                    <option value="161-165">161-165 厘米</option>
-                                    <option value="166-170">166-170 厘米</option>
-                                    <option value="171-175">171-175 厘米</option>
-                                    <option value="176-180">176-180 厘米</option>
-                                    <option value="181-185">181-185 厘米</option>
-                                    <option value="186-190">186-190 厘米</option>
-                                    <option value="191">191 厘米以上</option>
-                                </select>
+                                <input ng-model="whereForm.height" mobiscroll-scroller="settingsHeight" mobiscroll-instance="demo"  />
                             </label>
                         </div>
                     </div>
