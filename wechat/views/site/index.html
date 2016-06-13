@@ -47,7 +47,7 @@
                                     class="cor19 fs12">{{user.info.height}}cm</span>
                                 <span ng-if="user.info.is_marriage != '未知'" class="cor19 fs12">{{user.info.is_marriage | marriage}}</span>
                             </div>
-                            <div class="col-20"><label class="label-right fs12"><i
+                            <div class="col-20" ng-if="user.info.local != '未知' && user.info.local"><label class="label-right fs12"><i
                                     class="ion-android-pin mr5 positive"></i>{{user.info.local}}</label>
                             </div>
                         </div>
@@ -123,7 +123,7 @@
                 <div class="row mb15">
                     <div class="col-90 mr0a">
                         <label class="item item-input">
-                            <input type="text" ng-model="searchForm.id" placeholder="请输入ID">
+                            <input type="text" ng-model="whereForm.id" placeholder="请输入ID">
                         </label>
                     </div>
                 </div>
@@ -131,18 +131,18 @@
                     <div class="col-90 mr0a">
                         <div class="moreSearch_form_box search_sex light-bg clearfix">
                             <a href="javascript:;" class="sex_item" ng-click="sexChange('all')"
-                               ng-class="{1:'',0:'',all:'checked'}[searchForm.sex]">全部</a>
+                               ng-class="{1:'',0:'',all:'checked'}[whereForm.sex]">全部</a>
                             <a href="javascript:;" class="sex_item" ng-click="sexChange('1')"
-                               ng-class="{1:'checked',0:'',all:''}[searchForm.sex]">男生</a>
+                               ng-class="{1:'checked',0:'',all:''}[whereForm.sex]">男生</a>
                             <a href="javascript:;" class="sex_item" ng-click="sexChange('0')"
-                               ng-class="{1:'',0:'checked',all:''}[searchForm.sex]">女生</a>
+                               ng-class="{1:'',0:'checked',all:''}[whereForm.sex]">女生</a>
                         </div>
                         <div class="moreSearch_form_box mt10 clearfix">
                             <label class="item item-input item-select">
                                 <div class="input-label">
                                     年龄
                                 </div>
-                                <select ng-model="searchForm.age">
+                                <select ng-model="whereForm.age">
                                     <option value="0" selected>不限</option>
                                     <option value="18-22">18-22</option>
                                     <option value="23-26">23-26</option>
@@ -158,7 +158,7 @@
                                 <div class="input-label">
                                     身高
                                 </div>
-                                <select ng-model="searchForm.height">
+                                <select ng-model="whereForm.height">
                                     <option value="0" selected>不限</option>
                                     <option value="140-150">140-150 厘米</option>
                                     <option value="151-155">151-155 厘米</option>
@@ -184,7 +184,7 @@
                                 <div class="input-label">
                                     婚姻状况
                                 </div>
-                                <select ng-model="searchForm.is_marriage">
+                                <select ng-model="whereForm.is_marriage">
                                     <option value="0" selected>不限</option>
                                     <option value="{{c.id}}" ng-repeat="c in marriage">{{c.name}}</option>
                                 </select>
@@ -195,7 +195,7 @@
                                 <div class="input-label">
                                     有无子女
                                 </div>
-                                <select ng-model="searchForm.is_child">
+                                <select ng-model="whereForm.is_child">
                                     <option value="0" selected>不限</option>
                                     <option value="{{c.id}}" ng-repeat="c in children">{{c.name}}</option>
                                 </select>
@@ -206,7 +206,7 @@
                                 <div class="input-label">
                                     学历
                                 </div>
-                                <select ng-model="searchForm.education">
+                                <select ng-model="whereForm.education">
                                     <option value="0" selected>不限</option>
                                     <option value="{{c.id}}" ng-repeat="c in education">{{c.name}}</option>
                                 </select>
@@ -217,7 +217,7 @@
                                 <div class="input-label">
                                     年收入
                                 </div>
-                                <select ng-model="searchForm.year_income">
+                                <select ng-model="whereForm.year_income">
                                     <option value="0" selected>不限</option>
                                     <option value="{{c.id}}" ng-repeat="c in salary">{{c.name}}</option>
                                 </select>
@@ -228,7 +228,7 @@
                                 <div class="input-label">
                                     购房
                                 </div>
-                                <select ng-model="searchForm.is_purchase">
+                                <select ng-model="whereForm.is_purchase">
                                     <option value="0" selected>不限</option>
                                     <option value="{{c.id}}" ng-repeat="c in house">{{c.name}}</option>
                                 </select>
@@ -239,7 +239,7 @@
                                 <div class="input-label">
                                     购车
                                 </div>
-                                <select ng-model="searchForm.is_car">
+                                <select ng-model="whereForm.is_car">
                                     <option value="0" selected>不限</option>
                                     <option value="{{c.id}}" ng-repeat="c in car">{{c.name}}</option>
                                 </select>
@@ -250,7 +250,7 @@
                                 <div class="input-label">
                                     职业
                                 </div>
-                                <select ng-model="searchForm.occupation">
+                                <select ng-model="whereForm.occupation">
                                     <option value="0" selected>不限</option>
                                     <option ng-repeat="occupation in occupations track by occupation.id" value="{{occupation.id}}">{{occupation.name}}</option>
                                 </select>
@@ -261,7 +261,7 @@
                                 <div class="input-label">
                                     属相
                                 </div>
-                                <select ng-model="searchForm.zodiac">
+                                <select ng-model="whereForm.zodiac">
                                     <option value="0" selected>不限</option>
                                     <option value="{{c.id}}" ng-repeat="c in zodiac">{{c.name}}</option>
                                 </select>
@@ -272,7 +272,7 @@
                                 <div class="input-label">
                                     星座
                                 </div>
-                                <select ng-model="searchForm.constellation">
+                                <select ng-model="whereForm.constellation">
                                     <option value="0" selected>不限</option>
                                     <option value="{{c.id}}" ng-repeat="c in constellation">{{c.name}}</option>
                                 </select>
@@ -283,7 +283,7 @@
                                 <div class="input-label">
                                     民族
                                 </div>
-                                <select ng-model="searchForm.nation">
+                                <select ng-model="whereForm.nation">
                                     <option value="0" selected>不限</option>
                                     <option value="{{c.id}}" ng-repeat="c in nation">{{c.name}}</option>
                                 </select>

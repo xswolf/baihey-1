@@ -9,6 +9,7 @@ define(['app/module', 'app/directive/directiveApi'
 
         // 搜索条件
         $scope.searchForm = [];
+        $scope.whereForm = [];
 
         // 用户列表
         $scope.userList = [];
@@ -50,7 +51,7 @@ define(['app/module', 'app/directive/directiveApi'
         // 读取用户数据
         function userListPromise() {
             api.list("/wap/site/user-list", $scope.searchForm).success(function (res) {
-                if (res.data.length == 0) {
+                if (res.data.length < 6) {
                     $scope.pageLast = false;
                 }
                 $scope.userList = res.data;
@@ -111,10 +112,18 @@ define(['app/module', 'app/directive/directiveApi'
             $scope.moreSearchModal = modal;
         });
 
+        // 条件初始化
+        var init = function() {
+            $scope.searchForm = [];
+            $scope.searchForm.age = 0; // 初始化年龄
+            $scope.searchForm.pageNum = 1; // 初始化页码
+        }
         // 高级搜索-点击确定
         $scope.moreSearchOk = function () {
             $scope.moreSearchModal.hide();
-            $scope.searchForm.pageNum = 1;
+            init();
+            $scope.searchForm = $scope.whereForm;
+            //$scope.searchForm.pageNum = 1;
             userListPromise();
         }
 
@@ -141,24 +150,26 @@ define(['app/module', 'app/directive/directiveApi'
                 titleText: '搜索',
                 cancelText: '取消',
                 buttonClicked: function (index) {
+                    console.log($scope.whereForm);
                     $scope.pageLast = true;
-                    $scope.searchForm.age = 0; // 初始化年龄
-                    $scope.searchForm.pageNum = 1; // 初始化页码
                     $scope.userList = [];
                     $scope.buttonsItemIndex = index;
                     if (index == 0) {   // 全部
+                        init();
                         $scope.searchForm.sex = 'all';
                         $ionicScrollDelegate.$getByHandle('mainScroll').scrollBottom();
                         hideSheet();
                     }
 
                     if (index == 1) {   //只看男
+                        init();
                         $scope.searchForm.sex = 1;
                         $ionicScrollDelegate.$getByHandle('mainScroll').scrollBottom();
                         hideSheet();
                     }
 
                     if (index == 2) {   //只看女
+                        init();
                         $scope.searchForm.sex = 0;
                         $ionicScrollDelegate.$getByHandle('mainScroll').scrollBottom();
                         hideSheet();
@@ -256,7 +267,8 @@ define(['app/module', 'app/directive/directiveApi'
         $scope.occupations = occupation;
 
         $scope.sexChange = function (value) {
-            $scope.searchForm.sex = value;
+            //$scope.searchForm.sex = value;
+            $scope.whereForm.sex = value;
         }
 
         $scope.moreText = '展开';
@@ -270,9 +282,6 @@ define(['app/module', 'app/directive/directiveApi'
                 $scope.moreText = '展开';
             }
         }
-
-        // 默认搜索条件
-
 
     }]);
 
