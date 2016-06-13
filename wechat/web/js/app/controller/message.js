@@ -446,41 +446,8 @@ define(['app/module', 'app/directive/directiveApi'
             }
         }
 
-        // 选择支付方式
-        $scope.selectPayType = function () {
-            var hideSheet = $ionicActionSheet.show({
-                buttons: [
-                    {text: '微信支付'},
-                    {text: '余额支付'}
-                ],
-                titleText: '选择支付方式',
-                cancelText: '取消',
-                cancel: function () {
-                },
-                buttonClicked: function (index) {
-                    if (index == 0) {   // 微信支付
-
-
-                        hideSheet();
-                    }
-                    if (index == 1) {   // 余额支付
-
-
-                        hideSheet();
-                    }
-                    return true;
-                }
-            });
-
-        };
-
-
         // 发红包
         $scope.bri_submit = function () {
-
-            // 选择支付方式，支付
-            $scope.selectPayType();
-
 
             if ($scope.money == 0) {
                 $ionicPopup.alert({title: '红包金额不合法'});
