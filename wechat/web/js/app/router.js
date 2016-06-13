@@ -89,6 +89,15 @@ define(["app/module", 'app/service/serviceApi'],
                             }
                         }
                     })
+                    .state('main.chat', {   // 首页-消息
+                        url: "/chat",
+                        views: {
+                            'home-tab': {
+                                templateUrl: "/wechat/views/message/chat.html",
+                                controller: 'message.chat'
+                            }
+                        }
+                    })
                     .state('main.member', {   // 我
                         url: "/member",
                         views: {
@@ -120,15 +129,11 @@ define(["app/module", 'app/service/serviceApi'],
                             }
                         }
                     })
-                    .state('main.message_userInfo', {  // 消息-查看用户资料
+                    .state('userInfo', {  // 消息-查看用户资料
                         cache: false,
-                        url: "/user_info",
-                        views: {
-                            'message-tab': {
-                                templateUrl: "/wechat/views/member/user_info.html",
-                                controller: "member.user_info"
-                            }
-                        }
+                        url: "/userInfo",
+                        templateUrl: "/wechat/views/site/user_info.html",
+                        controller: "member.user_info"
                     })
                     .state('main.message_chat', { // 聊天页面
                         cache: false,

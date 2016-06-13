@@ -1,12 +1,34 @@
 <ion-view hide-tabs="true">
     <link href="/wechat/web/css/member.css" rel="stylesheet">
     <ion-header-bar class="com_w_100 bhy">
-        <a class="button button-icon icon ion-arrow-left-c" href="#/main/member/index"></a>
-        <title class="title" ng-bind="pageTitle">我关注的人</title>
-        <button class="button button-icon ion-android-arrow-dropdown" ng-click="switching()"></button>
+        <title class="title">关注的人</title>
     </ion-header-bar>
-    <ion-content class="bhy com_w_100 m_bg follow">
-        <ion-list show-delete="shouldShowDelete">
+    <ion-content class="bhy com_w_100 follow">
+        <div class="tabs" style="top: 0;">
+            <a class="tab-item" ng-class="{'follow':'cur'}[followType]" ng-click="switching('follow')">
+                我关注的人(544)
+            </a>
+            <a class="tab-item" ng-class="{'followed':'cur'}[followType]" ng-click="switching('followed')">
+                关注我的人(154)
+            </a>
+        </div>
+        <ion-list ng-if="followType=='follow'">
+            <ion-item class="item-avatar" href="#/main/member/user_info?userId={{f.other}}&tempUrl=/main/member/follow"
+                      ng-repeat="f in followList">
+                <img src="{{f.info.head_pic}}" onerror="this.src='/wechat/web/images/no_img.png'">
+                <h2 class="clearfix">
+                    <span class="fl">{{f.info.real_name | sex:f.sex :f.info.age}}</span>
+                </h2>
+                <p>{{f.info.age | timeToAge}}岁 {{f.info.height}}cm {{f.info.is_marriage | marriage}}
+                    {{f.info.is_purchase | purchase}} {{f.info.is_car | car}}</p>
+                <ion-option-button class="button-info"
+                                   ng-click="delFollow(f,$index)">
+                    取消关注
+                </ion-option-button>
+            </ion-item>
+        </ion-list>
+
+        <ion-list show-delete="shouldShowDelete" ng-if="followType=='followed'">
             <ion-item class="item-avatar" href="#/main/member/user_info?userId={{f.other}}&tempUrl=/main/member/follow"
                       ng-repeat="f in followList">
                 <img src="{{f.info.head_pic}}" onerror="this.src='/wechat/web/images/no_img.png'">
@@ -23,18 +45,5 @@
             </ion-item>
         </ion-list>
 
-        <!-- 判断userVIP -->
-        <ion-list ng-if="followList.lenght == 0">
-            <ion-item>
-                <div class="No_Vip">
-
-                    <img src="/wechat/web/images/test.jpg">
-
-                    <p> Hi，张先生</p>
-                    <p>目前还没有人关注您哦</p>
-
-                </div>
-            </ion-item>
-        </ion-list>
     </ion-content>
 </ion-view>

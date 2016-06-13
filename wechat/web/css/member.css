@@ -538,6 +538,9 @@
 .follow .item-content {
   padding-right: 8px;
 }
+.follow .tab-item.cur {
+  color: #e4007f;
+}
 /* honesty_sfz */
 .upload_box {
   float: left;

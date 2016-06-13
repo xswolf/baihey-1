@@ -50,7 +50,7 @@ class UserFollow extends Base
             ->limit($pageSize)
             ->offset($offset);
 
-        //echo $result->createCommand()->getRawSql();
+        echo $result->createCommand()->getRawSql();
         $result = $result->all();
         return $result;
     }

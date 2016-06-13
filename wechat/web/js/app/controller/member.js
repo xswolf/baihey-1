@@ -1574,14 +1574,12 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
 
     }]);
 
-    // 谁关注了我
+    // 关注的人
     module.controller("member.follow", ['app.serviceApi', '$scope', '$ionicPopup', '$ionicLoading', '$location','$ionicActionSheet', function (api, $scope, $ionicPopup, $ionicLoading, $location,$ionicActionSheet) {
         $scope.followType = typeof $location.$$search.type == 'undefined' ? 'follow' : $location.$$search.type;
         $scope.followList = [];
         loadData();
         function loadData(){
-            $scope.pageTitle = $scope.followType == 'follow' ? '我关注的人' : '关注我的人';
-            $scope.followTypeTitle = $scope.followType == 'follow' ? '关注我的人' : '我关注的人';
             api.list('/wap/follow/follow-list', {type:$scope.followType}).success(function (res) {
                 $scope.followList = res.data;
                 for (var i in $scope.followList) {
@@ -1603,29 +1601,8 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
         }
 
         // 切换，我关注的人，关注我的人
-        $scope.switching = function() {
-
-            var hideSheet = $ionicActionSheet.show({
-                buttons: [
-                    { text: $scope.followTypeTitle },
-                ],
-                titleText: '操作',
-                cancelText: '取消',
-                cancel: function() {
-                },
-                buttonClicked: function(index) {
-                    if(index == 0){
-                        if($scope.followType == 'follow'){
-                            $scope.followType = 'followed';
-                        }else {
-                            $scope.followType = 'follow';
-                        }
-                        loadData();
-                        hideSheet();
-                    }
-                }
-            });
-
+        $scope.switching = function(value) {
+            $scope.followType = value;
         };
 
     }]);
