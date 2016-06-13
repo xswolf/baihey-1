@@ -58,6 +58,27 @@
                     <p ng-if="otherUserInfo.personalized != null" class="null">{{otherUserInfo.personalized}}</p>
                 </div>
             </ion-item>
+            <ion-item ng-if="otherUserInfo.info.education != '未知' && otherUserInfo.info.education">
+                <div class="info_l">
+                    <p>学历</p>
+                </div>
+                <div class="info_c">
+                    <p class="null">
+                        <i class="icon ion-university positive fs16 mr5 vam"></i>
+                        {{otherUserInfo.info.education | education}}
+                    </p>
+                </div>
+            </ion-item>
+            <ion-item ng-if="otherUserInfo.info.occupation != '未知' && otherUserInfo.info.occupation">
+                <div class="info_l">
+                    <p>职业</p>
+                </div>
+                <div class="info_c">
+                    <p class="null">
+                        <span>{{otherUserInfo.info.occupation | occupation : otherUserInfo.info.children_occupation}}</span>
+                    </p>
+                </div>
+            </ion-item>
             <ion-item class="brithday" ng-if="otherUserInfo.info.age != '未知' && otherUserInfo.info.age > 0">
                 <div class="info_l">
                     <p>年龄</p>
@@ -82,28 +103,7 @@
                     <p class="null">{{otherUserInfo.info.is_marriage | marriage}}</p>
                 </div>
             </ion-item>
-            <ion-item ng-if="otherUserInfo.info.education != '未知' && otherUserInfo.info.education">
-                <div class="info_l">
-                    <p>学历</p>
-                </div>
-                <div class="info_c">
-                    <p class="null">
-                        <i class="icon ion-university positive fs16 mr5 vam"></i>
-                        {{otherUserInfo.info.education | education}}
-                    </p>
-                </div>
-            </ion-item>
-            <ion-item ng-if="otherUserInfo.info.occupation != '未知' && otherUserInfo.info.occupation">
-                <div class="info_l">
-                    <p>职业</p>
-                </div>
-                <div class="info_c">
-                    <p class="null">
-                        <span>{{otherUserInfo.info.occupation | occupation : otherUserInfo.info.children_occupation}}</span>
-                    </p>
-                </div>
-            </ion-item>
-            <ion-item ng-if="otherUserInfo.province != null && otherUserInfo.province">
+            <ion-item ng-if="otherUserInfo.province != null && otherUserInfo.province > 0">
                 <div class="info_l">
                     <p>地区</p>
                 </div>
