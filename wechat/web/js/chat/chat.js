@@ -55,9 +55,10 @@ define(function(){
             socket.close();
             if (chat.flag){
                 chat.init(chat.name);
-                //location.reload()
+                console.log('socket reload');
+            }else{
+                console.log('socket close');
             }
-            console.log('socket close');
         };
 
         socket.onmessage = function (msg) {
