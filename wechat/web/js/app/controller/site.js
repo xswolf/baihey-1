@@ -16,7 +16,8 @@ define(['app/module', 'app/directive/directiveApi'
         // 默认还有更多
         $scope.pageLast = true;
 
-        function getLocation(){
+        // 查询地区  // TODO 此功能暂时屏蔽
+        /*function getLocation(){
             // 默认重庆
             var lng = 106.51228345689027;
             var lat = 29.54206567258729;
@@ -42,7 +43,7 @@ define(['app/module', 'app/directive/directiveApi'
 
             api.get('/wap/user/get-location', {lng: lng, lat: lat}).success(function (res) {
             });
-        }
+        }*/
         //getLocation();
 
 
@@ -68,38 +69,39 @@ define(['app/module', 'app/directive/directiveApi'
         }
 
         // 获取用户地理位置。 如果未获取到，则默认重庆
-        if (ar.getCookie('bhy_u_city') && ar.getCookie('bhy_u_cityId')) {
-            $scope.cityName = eval(ar.getCookie('bhy_u_city'));
-            $scope.cityId = ar.getCookie('bhy_u_cityId');
-            $scope.searchForm.city = ar.getCookie('bhy_u_cityId');
-        } else {
+        //if (ar.getCookie('bhy_u_city') && ar.getCookie('bhy_u_cityId')) {   // TODO 此功能暂时屏蔽
+        //    $scope.cityName = eval(ar.getCookie('bhy_u_city'));
+        //    $scope.cityId = ar.getCookie('bhy_u_cityId');
+        //    $scope.searchForm.city = ar.getCookie('bhy_u_cityId');
+        //} else {
             $scope.cityName = '重庆';
             $scope.cityId = 2;
             $scope.searchForm.city = 2
-        }
+        //}
+
 
         // 默认查询条件：年龄范围，页码，每页数量
         $scope.searchForm.age = '18-28';
         $scope.searchForm.pageNum = 1;
         $scope.searchForm.pageSize = 6;
 
-        // 监听地区变化
-        $scope.$on('cityName', function (event, data) {
+        // 监听地区变化 // TODO 此功能暂时屏蔽
+        /*$scope.$on('cityName', function (event, data) {
             $scope.cityName = data.name;
             $scope.cityId = data.id;
             $scope.searchForm.city = data.id;
             $scope.searchForm.cityName = data.name;
             $scope.searchForm.pageNum = 0;
-        });
+        });*/
 
 
-        // 选择城市模版
+        /*// 选择城市模版 // TODO 此功能暂时屏蔽
         $ionicModal.fromTemplateUrl('selCityModal.html', {
             scope: $scope,
             animation: 'slide-in-up'
         }).then(function (modal) {
             $scope.cityModal = modal;
-        });
+        });*/
 
         // 高级搜索模版
         $ionicModal.fromTemplateUrl('MoreSearchModal.html', {
@@ -126,7 +128,6 @@ define(['app/module', 'app/directive/directiveApi'
                 {text: '只看男'},
                 {text: '只看女'},
                 {text: '高级搜索'},
-                {text: 'ID搜索'}
             ];
 
             if ($scope.buttonsItemIndex != '') {
@@ -167,21 +168,6 @@ define(['app/module', 'app/directive/directiveApi'
                         $scope.moreSearchModal.show();
                         hideSheet();
                     }
-
-                    if (index == 4) {   //ID搜索
-                        $ionicPopup.prompt({
-                            title: 'ID搜索',
-                            cancelText: '取消',
-                            cancelType: 'button-light',
-                            okText: '确认搜索',
-                            okType: 'button-energized',
-                            inputPlaceholder: '请输入对方ID号'
-                        }).then(function (res) {
-                            $scope.searchForm.id = res;
-                            $ionicScrollDelegate.$getByHandle('mainScroll').scrollBottom();
-                            hideSheet();
-                        });
-                    }
                 }
             });
         }
@@ -208,17 +194,17 @@ define(['app/module', 'app/directive/directiveApi'
             return $scope.pageLast;
         }
 
-        // 选择城市
+       /* // 选择城市
         $scope.bodyHeight = document.body.scrollHeight;
         if ($scope.bodyHeight == 0) $scope.bodyHeight = window.screen.height;
         $scope.scrollStyle = {
             'height': ($scope.bodyHeight - 44) + 'px',
             'float': 'left',
             'width': '50%'
-        }
+        }*/
 
         // modal内左上角地理位置名称
-        $scope.modalCityName = $scope.cityName;
+        /*$scope.modalCityName = $scope.cityName;
 
         $scope.pvId = 1;
         $scope.cityId = 2;
@@ -250,7 +236,7 @@ define(['app/module', 'app/directive/directiveApi'
         }
 
         $scope.provinceList = provines;
-        $scope.cityList = citys;
+        $scope.cityList = citys;*/
 
         /* 高级搜索 */
         //$scope.searchForm = {};
