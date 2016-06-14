@@ -15,9 +15,8 @@
                     <div class="input-label">
                         购房情况
                     </div>
-                    <select ng-model="formData.is_purchase" ng-change="houseSelect(formData.is_purchase)" >
+                    <select ng-model="formData.is_purchase" ng-options="house.id as house.name for house in houseList">
                         <option value="">请选择</option>
-                        <option value="{{h.id}}" ng-repeat="h in houseList">{{h.name}}</option>
                     </select>
                 </label>
 

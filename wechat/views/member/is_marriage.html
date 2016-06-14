@@ -15,9 +15,8 @@
                     <div class="input-label">
                         婚姻状况
                     </div>
-                    <select ng-model="formData.is_marriage" ng-change="marriageSelect(this.formData.is_marriage)">
+                    <select ng-model="formData.is_marriage" ng-options="marriage.id as marriage.name for marriage in marriageList">
                         <option value="">请选择</option>
-                        <option value="{{m.id}}" ng-repeat="m in marriageModel">{{m.name}}</option>
                     </select>
                 </label>
 

@@ -98,6 +98,15 @@ define(["app/module", 'app/service/serviceApi'],
                             }
                         }
                     })
+                    .state('main.information', {   // 首页-个人资料
+                        url: "/information",
+                        views: {
+                            'home-tab': {
+                                templateUrl: "/wechat/views/member/information.html",
+                                controller: 'member.information'
+                            }
+                        }
+                    })
                     .state('main.member', {   // 我
                         url: "/member",
                         views: {

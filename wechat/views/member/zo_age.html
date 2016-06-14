@@ -1,5 +1,6 @@
 <ion-view hide-tabs="true">
     <link href="/wechat/web/css/member.css" rel="stylesheet">
+    <link href="/wechat/web/js/plugin/mobiscroll/mobiscroll.custom-3.0.0-beta.min.css" rel="stylesheet">
     <ion-header-bar class="com_w_100 bhy">
         <title class="title">年龄要求</title>
         <button class="button button-icon cor21" ng-click="saveData()">保存</button>
@@ -13,22 +14,11 @@
 
                 <label class="item item-input item-select">
                     <div class="input-label">
-                        最小年龄
+                        年龄范围
                     </div>
-                    <select ng-model="formData.zo_min_age" ng-change="zo_ageMinSelect(this.formData.zo_min_age)" >
-                        <option value="{{a}}" ng-repeat="a in zo_ageMinList">{{a}}岁</option>
-                    </select>
+                    <input ng-model="formData.zo_age" mobiscroll-scroller="settingsAge" mobiscroll-instance="demo"  />
                 </label>
 
-                <label class="item item-input item-select">
-                    <div class="input-label">
-                        最大年龄
-                    </div>
-                    <select ng-model="formData.zo_msx_age">
-                        <option value="0">不限</option>
-                        <option value="{{a}}" ng-repeat="a in zo_ageMaxList">{{a}}岁</option>
-                    </select>
-                </label>
                 <div class="m_b_bg w100 mt20 tal">
                     <img src="/wechat/web/images/member/children_bg.png">
                 </div>

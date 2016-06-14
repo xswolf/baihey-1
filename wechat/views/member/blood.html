@@ -15,9 +15,8 @@
                     <div class="input-label">
                         血型
                     </div>
-                    <select ng-model="formData.blood" ng-change="bloodSelect(formData.blood)" >
+                    <select ng-model="formData.blood" ng-options="blood.id as blood.name for blood in bloodList">
                         <option value="">请选择</option>
-                        <option value="{{b.id}}" ng-repeat="b in bloodList">{{b.name}}</option>
                     </select>
                 </label>
 

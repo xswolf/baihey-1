@@ -270,7 +270,7 @@ define(['app/module', 'app/directive/directiveApi'
                     data: minAge,
                     label: '最低年龄'
                 }, {
-                    circular: false,            // More info about circular: https://docs.mobiscroll.com/3-0-0_beta/angular/scroller#!opt-circular
+                    circular: false,
                     data: maxAge,
                     label: '最高年龄'
                 }]
@@ -290,7 +290,7 @@ define(['app/module', 'app/directive/directiveApi'
                 }
 
                 return {
-                    disabled: [                 // More info about disabled: https://docs.mobiscroll.com/3-0-0_beta/angular/scroller#!opt-disabled
+                    disabled: [
                         [], disabledValues
                     ]
                 }
@@ -323,11 +323,11 @@ define(['app/module', 'app/directive/directiveApi'
                 [{
                     circular: false,
                     data: minHeight,
-                    label: '最低身高'
+                    label: '最低身高(厘米)'
                 }, {
                     circular: false,
                     data: maxHeight,
-                    label: '最高身高'
+                    label: '最高身高(厘米)'
                 }]
             ],
             showLabel: true,
@@ -345,7 +345,7 @@ define(['app/module', 'app/directive/directiveApi'
                 }
 
                 return {
-                    disabled: [                 // More info about disabled: https://docs.mobiscroll.com/3-0-0_beta/angular/scroller#!opt-disabled
+                    disabled: [
                         [], disabledValues
                     ]
                 }
@@ -357,7 +357,7 @@ define(['app/module', 'app/directive/directiveApi'
                 if (valueText) {
                     return valueText.replace(/\s/gi, '').split('-');
                 }
-                return [18, 22];
+                return [160, 180];
             }
         };
 

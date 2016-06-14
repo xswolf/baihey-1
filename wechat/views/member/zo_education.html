@@ -15,9 +15,8 @@
                     <div class="input-label">
                         最低学历要求
                     </div>
-                    <select ng-model="formData.zo_education">
-                        <option value="">请选择</option>
-                        <option value="{{e.id}}" ng-repeat="e in zo_educationList">{{e.name}}</option>
+                    <select ng-model="formData.zo_education" ng-options="zo_education.id as zo_education.name for zo_education in zo_educationList">
+                        <option value="">不限</option>
                     </select>
                 </label>
 

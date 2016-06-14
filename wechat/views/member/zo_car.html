@@ -15,9 +15,8 @@
                     <div class="input-label">
                         购车要求
                     </div>
-                    <select ng-model="formData.zo_car">
-                        <option value="0">不限</option>
-                        <option value="{{c.id}}" ng-repeat="c in zo_carList | limitTo:2">{{c.name}}</option>
+                    <select ng-model="formData.zo_car" ng-options="zo_car.id as zo_car.name for zo_car in zo_carList">
+                        <option value="">不限</option>
                     </select>
                 </label>
 

@@ -1,7 +1,7 @@
 <ion-view hide-tabs="true">
     <link href="/wechat/web/css/member.css" rel="stylesheet">
     <ion-header-bar class="com_w_100 bhy">
-        <title class="title">购车情况</title>
+        <title class="title">子女状况</title>
         <button class="button button-icon cor21" ng-click="saveData()">保存</button>
     </ion-header-bar>
     <ion-content class="bhy com_w_100 m_bg">
@@ -13,15 +13,15 @@
 
                 <label class="item item-input item-select">
                     <div class="input-label">
-                        购车情况
+                        子女状况
                     </div>
-                    <select ng-model="formData.is_car" ng-options="car.id as car.name for car in carList">
-                        <option value="">请选择</option>
+                    <select ng-model="formData.zo_children" ng-options="children.id as children.name for children in childrenList">
+                        <option value="">不限</option>
                     </select>
                 </label>
 
-                <div class="m_b_bg w100 mt20 tar">
-                    <img src="/wechat/web/images/member/car_bg.png">
+                <div class="m_b_bg w100 mt20 tal">
+                    <img src="/wechat/web/images/member/children_bg.png">
                 </div>
             </div>
 

@@ -15,9 +15,8 @@
                     <div class="input-label">
                         民族
                     </div>
-                    <select ng-model="formData.nation" ng-change="nationSelect(formData.nation)" >
-                        <option value="0">请选择</option>
-                        <option value="{{n.id}}" ng-repeat="n in nationList">{{n.name}}</option>
+                    <select ng-model="formData.nation" ng-options="nation.id as nation.name for nation in nationList">
+                        <option value="">请选择</option>
                     </select>
                 </label>
 

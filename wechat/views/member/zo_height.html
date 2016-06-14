@@ -1,5 +1,6 @@
 <ion-view hide-tabs="true">
     <link href="/wechat/web/css/member.css" rel="stylesheet">
+    <link href="/wechat/web/js/plugin/mobiscroll/mobiscroll.custom-3.0.0-beta.min.css" rel="stylesheet">
     <ion-header-bar class="com_w_100 bhy">
         <title class="title">身高要求</title>
         <button class="button button-icon cor21" ng-click="saveData()">保存</button>
@@ -15,19 +16,7 @@
                     <div class="input-label">
                         最小身高
                     </div>
-                    <select ng-model="formData.zo_min_height" ng-change="zo_heightMinSelect(this.formData.zo_min_height)" >
-                        <option value="{{h}}" ng-repeat="h in zo_heightMinList">{{h}}厘米</option>
-                    </select>
-                </label>
-
-                <label class="item item-input item-select">
-                    <div class="input-label">
-                        最大身高
-                    </div>
-                    <select ng-model="formData.zo_msx_height">
-                        <option value="0">不限</option>
-                        <option value="{{h}}" ng-repeat="h in zo_heightMaxList">{{h}}厘米</option>
-                    </select>
+                    <input ng-model="formData.zo_height" mobiscroll-scroller="settingsHeight" mobiscroll-instance="demo"  />
                 </label>
                 <div class="m_b_bg w100 mt20 tal">
                     <img src="/wechat/web/images/member/children_bg.png">

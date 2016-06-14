@@ -288,6 +288,15 @@ define(['app/module'], function (module) {
         }
     });
 
+    // 返回择偶子女状况
+    module.filter('zo_children', function () {
+        return function (input, arr) {
+            if (typeof(input) != 'undefined') {
+                return getMoreName(input, config_infoData.children);
+            }
+        }
+    });
+
     // 返回择偶属相
     module.filter('zo_zodiac', function () {
         return function (input, arr) {

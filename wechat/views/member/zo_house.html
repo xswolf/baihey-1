@@ -15,9 +15,8 @@
                     <div class="input-label">
                         购房要求
                     </div>
-                    <select ng-model="formData.zo_house">
-                        <option value="0">不限</option>
-                        <option value="{{h.id}}" ng-repeat="h in zo_houseList | limitTo:2">{{h.name}}</option>
+                    <select ng-model="formData.zo_house" ng-options="zo_house.id as zo_house.name for zo_house in zo_houseList">
+                        <option value="">不限</option>
                     </select>
                 </label>
 

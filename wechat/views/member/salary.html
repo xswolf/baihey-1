@@ -15,9 +15,8 @@
                     <div class="input-label">
                         年收入
                     </div>
-                    <select ng-model="formData.year_income" ng-change="salarySelect(formData.year_income)" >
+                    <select ng-model="formData.year_income" ng-options="salary.id as salary.name for salary in salaryList">
                         <option value="">请选择</option>
-                        <option value="{{s.id}}" ng-repeat="s in salaryList">{{s.name}}</option>
                     </select>
                 </label>
 

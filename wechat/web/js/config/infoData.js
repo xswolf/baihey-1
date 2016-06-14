@@ -448,8 +448,7 @@ var config_infoData = {
     ],
     'house': [
         {id: 1, name: '已购房'},
-        {id: 2, name: '未购房'},
-        {id: 3, name: '与父母同住'}
+        {id: 2, name: '未购房'}
     ],
     'car': [
         {id: 1, name: '已购车'},

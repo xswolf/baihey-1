@@ -15,9 +15,8 @@
                     <div class="input-label">
                         身高
                     </div>
-                    <select ng-model="formData.height" ng-change="heightSelect(this.formData.height)">
+                    <select ng-model="formData.height" ng-options="height.id as height.name for height in heightList">
                         <option value="">请选择</option>
-                        <option value="{{h.id}}" ng-repeat="h in heightModel">{{h.name}}</option>
                     </select>
                 </label>
 

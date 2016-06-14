@@ -123,7 +123,7 @@ var ar = {
                 if (obj != 'undefined') {
                     obj = JSON.parse(obj);
                     return obj;
-                }else{
+                } else {
                     return false;
                 }
             } else {
@@ -399,8 +399,23 @@ var ar = {
         cleanQuotes: function (string) {
             var str = string.replace(/\\"/g, "");
             return str;
-        }
+        },
 
+        saveDataConfirm: function (confirm, title) {
+            var confirmPopup = confirm.confirm({
+                template: title,
+                cancelText: '取消',
+                okText: '确认'
+            });
+            return confirmPopup;
+        },
+
+        saveDataAlert:function (alert,title){
+            alert.alert({
+                template: title,
+                okText: '确定'
+            })
+        }
 
     }
     ;
