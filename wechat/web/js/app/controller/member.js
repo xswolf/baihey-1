@@ -153,32 +153,12 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
 
     // 个人动态
     module.controller("member.dynamic", ['app.serviceApi', '$scope', '$ionicPopup', '$location', function (api, $scope, $ionicPopup, $location) {
+        requirejs(['amezeui', 'amezeui_ie8'], function (amezeui, amezeui_ie8) {
+
+        });
 
         $scope.formData = [];
         $scope.formData.userId = $location.$$search.userId;
-
-        // 图片放大查看插件
-        requirejs(['photoswipe', 'photoswipe_ui'], function (photoswipe, photoswipe_ui) {
-
-            $scope.showImgList = function (imgList, index) {
-                var pswpElement = document.querySelectorAll('.pswp')[0];
-                var options = {
-                    index: index
-                };
-                options.mainClass = 'pswp--minimal--dark';
-                options.barsSize = {top: 0, bottom: 0};
-                options.captionEl = false;
-                options.fullscreenEl = false;
-                options.shareEl = false;
-                options.bgOpacity = 0.85;
-                options.tapToClose = true;
-                options.tapToToggleControls = false;
-
-                var gallery = new photoswipe(pswpElement, photoswipe_ui, imgList, options);
-                gallery.init();
-            }
-
-        })
 
         $scope.dynamic = [];
 
@@ -1599,7 +1579,9 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
 
     // 查看用户资料
     module.controller("member.user_info", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$ionicModal', '$ionicActionSheet', '$ionicLoading', '$location', function (api, $scope, $timeout, $ionicPopup, $ionicModal, $ionicActionSheet, $ionicLoading, $location) {
+        requirejs(['amezeui', 'amezeui_ie8'], function (amezeui, amezeui_ie8) {
 
+        });
         // 用于想去的地方，去过的地方等
         var getTravel = function (name, serId) {
             if (serId != null && serId) {
@@ -1658,39 +1640,6 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
         $scope.localChat = function () {
             window.location.hash = "#/main/chat?id=" + $scope.otherUserInfo.id + "&head_pic=" + $scope.otherUserInfo.info.head_pic + "&real_name=" + $scope.otherUserInfo.info.real_name + "&sex=" + $scope.otherUserInfo.sex + "&age=" + $scope.otherUserInfo.info.age;
         }
-
-        // 图片放大查看插件
-        requirejs(['photoswipe', 'photoswipe_ui'], function (photoswipe, photoswipe_ui) {
-
-            $scope.showImgList = function (imgList, index) {
-
-                var item = [{}];
-                for (var i in imgList) {
-                    item[i] = [];
-                    var arr = imgList[i].thumb_path.split('.');
-                    var attr = arr[0].split('_');
-                    item[i].src = imgList[i].thumb_path.replace('thumb', 'picture');
-                    item[i].w = attr[1];
-                    item[i].h = attr[2];
-                }
-                var pswpElement = document.querySelectorAll('.pswp')[0];
-                var options = {
-                    index: index
-                };
-                options.mainClass = 'pswp--minimal--dark';
-                options.barsSize = {top: 0, bottom: 0};
-                options.captionEl = false;
-                options.fullscreenEl = false;
-                options.shareEl = false;
-                options.bgOpacity = 0.85;
-                options.tapToClose = true;
-                options.tapToToggleControls = false;
-
-                var gallery = new photoswipe(pswpElement, photoswipe_ui, item, options);
-                gallery.init();
-            }
-
-        })
 
         $scope.jump = function () {
             $location.url($location.$$search.tempUrl);

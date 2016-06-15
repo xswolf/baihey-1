@@ -205,21 +205,20 @@
   margin-bottom: 1%;
   border-radius: 10%;
 }
+.imgList_handle .addItem {
+  display: table;
+}
+.imgList_handle .addItem i {
+  color: #fff;
+  display: table-cell;
+  font-size: 23vmin;
+  opacity: 0.5;
+  overflow: hidden;
+  text-align: center;
+  vertical-align: middle;
+}
 .imgList_con .tip {
   color: #999;
-}
-.imgList_con .imgList_handle .imgItem .removepic {
-  position: absolute;
-  top: 0;
-  right: 0;
-  text-align: center;
-  width: 15%;
-  background-color: rgba(255, 255, 255, 0.3);
-  cursor: pointer;
-}
-.imgList_con .imgList_handle .imgItem .removepic i {
-  font-size: 14px;
-  color: #888;
 }
 .imgList_con .imgList_handle .imgItem .headpic {
   position: absolute;

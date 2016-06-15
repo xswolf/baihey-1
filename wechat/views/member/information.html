@@ -1,14 +1,10 @@
 <ion-view hide-tabs="true">
     <link href="/wechat/web/css/member.css" rel="stylesheet">
-    <link href="/wechat/web/css/plugin/bootstrap/css/font-awesome.min.css" rel="stylesheet">
     <link href="/wechat/web/css/fontIcon.css" rel="stylesheet">
-    <link href="/wechat/web/js/plugin/amezeui/css/amazeui.min.css" rel="stylesheet">
-
     <ion-header-bar>
         <title class="title">我的资料</title>
-        <!--<a class="button button-icon" href="#/main/member/preview">预览</a>-->
     </ion-header-bar>
-    <ion-content ng-controller="member.information" class="bhy com_w_100 infomation m_bg">
+    <ion-content ng-controller="member.information" class="bhy com_w_100 infomation">
         <ion-list>
             <div class="imgList_con">
                 <div class="imgList_handle clearfix" data-am-widget="gallery" data-am-gallery="{pureview: {target: 'a'}}">
@@ -18,10 +14,8 @@
                         </a>
                         <span class="headpic" ng-if="img.is_head == 1">头像</span>
                     </div>
-                    <div ng-if="imgList.length<12" class="imgItem addItem">
-                        <a href="javascript:;" ng-click="addNewImg()">
-                            <img src="/wechat/web/images/addImg.png">
-                        </a>
+                    <div ng-if="imgList.length<12" class="imgItem addItem" ng-click="addNewImg()">
+                            <i class="am-icon-plus"></i>
                     </div>
                     <div class="tip fl w100">温馨提示：您最多可以上传12张照片；长按照片可设置头像。</div>
                 </div>

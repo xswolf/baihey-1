@@ -7,9 +7,11 @@
     <ion-content class="bhy com_w_100 infomation m_bg">
         <ion-list>
             <div class="imgList_con">
-                <div class="imgList_handle clearfix">
-                    <div class="imgItem" ng-repeat="img in imgList" ng-click="showImgList(imgList,$index)">
-                        <img src="{{img.thumb_path}}">
+                <div class="imgList_handle clearfix" data-am-widget="gallery" data-am-gallery="{pureview: {target: 'a'}}">
+                    <div class="imgItem" ng-repeat="img in imgList">
+                        <a class="am-gallery-item" href="{{img.thumb_path | picture}}">
+                            <img src="{{img.thumb_path}}">
+                        </a>
                     </div>
                 </div>
             </div>
