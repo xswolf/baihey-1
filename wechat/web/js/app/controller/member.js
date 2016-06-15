@@ -1637,12 +1637,30 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
             }
         });
 
-        $scope.localChat = function () {
-            window.location.hash = "#/main/chat?id=" + $scope.otherUserInfo.id + "&head_pic=" + $scope.otherUserInfo.info.head_pic + "&real_name=" + $scope.otherUserInfo.info.real_name + "&sex=" + $scope.otherUserInfo.sex + "&age=" + $scope.otherUserInfo.info.age;
+        // 查看微信号
+        $scope.showWX = function(){
+            $scope.wxAuth = true;    // 是否有权限
+            $scope.wechatNumber = 'wsx16144';
+            if($scope.WX){
+                ar.saveDataAlert($ionicPopup,'TA的微信号是：'+$scope.wechat);
+            }else{
+                ar.saveDataAlert($ionicPopup,'该用户暂未公开微信号');
+            }
         }
 
-        $scope.jump = function () {
-            $location.url($location.$$search.tempUrl);
+        // 查看QQ号
+        $scope.showQQ = function(){
+            $scope.qqAuth = true;    // 是否有权限
+            $scope.qqNumber = '654165122';
+            if($scope.WX){
+                ar.saveDataAlert($ionicPopup,'TA的QQ号是：'+$scope.wechat);
+            }else{
+                ar.saveDataAlert($ionicPopup,'该用户暂未公开QQ号');
+            }
+        }
+
+        $scope.localChat = function () {
+            window.location.hash = "#/main/chat?id=" + $scope.otherUserInfo.id + "&head_pic=" + $scope.otherUserInfo.info.head_pic + "&real_name=" + $scope.otherUserInfo.info.real_name + "&sex=" + $scope.otherUserInfo.sex + "&age=" + $scope.otherUserInfo.info.age;
         }
 
         var followData = [];

@@ -38,7 +38,7 @@ define(['app/module'], function (module) {
     module.filter('timeToAge', function () {
         return function (input, args1, args2) {
             if (typeof(input) != 'undefined' && input != '' && input != 'NaN' && input != '未知') {
-                return getAge(input);
+                return getAge(input) + '岁';
             } else {
                 return '未知';
             }
@@ -433,6 +433,12 @@ define(['app/module'], function (module) {
     module.filter('picture',function(){
         return function (path){
             return path.replace('thumb', 'picture');
+        }
+    })
+
+    module.filter('height',function(){
+        return function (value){
+            return value ? value+'cm' : '';
         }
     })
 
