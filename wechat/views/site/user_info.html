@@ -8,11 +8,9 @@
     <ion-content class="bhy com_w_100 infomation has-footer">
         <ion-list>
             <div class="imgList_con">
-                <div class="imgList_handle clearfix" data-am-widget="gallery" data-am-gallery="{pureview: {target: 'a'}}">
-                    <div class="imgItem" ng-repeat="img in imgList">
-                        <a class="am-gallery-item" href="{{img.thumb_path | picture}}">
-                            <img src="{{img.thumb_path}}">
-                        </a>
+                <div class="imgList_handle clearfix" data-am-widget="gallery" data-am-gallery="{pureview: 1}">
+                    <div class="imgItem am-gallery-item" ng-repeat="img in imgList">
+                        <img src="{{img.thumb_path}}" data-rel="{{img.thumb_path | picture}}">
                     </div>
                 </div>
             </div>
