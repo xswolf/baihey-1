@@ -429,13 +429,14 @@ class User extends Base
      */
     public function briberyInfo($userId){
 
-        $data =  (new Query())
+        $handle =  (new Query())
             ->from($this->tablePrefix.'user u')
-            ->innerJoin("(SELECT send_user_id , COUNT(*) AS sendBribery , sum(money) sendMoney FROM {$this->tablePrefix}user_bribery WHERE send_user_id=12 AND STATUS=1) send ","send.send_user_id = u.id")
-            ->innerJoin("(SELECT receive_user_id , COUNT(*) AS receiveBribery ,sum(money) recMoney FROM {$this->tablePrefix}user_bribery WHERE receive_user_id=12 AND STATUS=1) receive" , "receive.receive_user_id = u.id")
+            ->leftJoin("(SELECT send_user_id , COUNT(*) AS sendBribery , sum(money) sendMoney FROM {$this->tablePrefix}user_bribery WHERE send_user_id={$userId} AND STATUS=1) send ","send.send_user_id = u.id")
+            ->leftJoin("(SELECT receive_user_id , COUNT(*) AS receiveBribery ,sum(money) recMoney FROM {$this->tablePrefix}user_bribery WHERE receive_user_id={$userId} AND STATUS=1) receive" , "receive.receive_user_id = u.id")
             ->where(['u.id'=>$userId])
-            ->select("u.id,u.balance,send.sendBribery , receive.receiveBribery,sendMoney,recMoney")
-            ->all();
+            ->select("u.id,u.balance,send.sendBribery , receive.receiveBribery,sendMoney,recMoney");
+
+        $data = $handle->all();
         return $data[0];
     }
 
@@ -454,7 +455,7 @@ class User extends Base
         return (new Query())
             ->from($this->tablePrefix."user_bribery  b")
             ->innerJoin($this->tablePrefix."user_information i" , "b.{$joinOnField} = i.user_id")
-            ->where(["b.{$whereField}"=>$userId])
+            ->where(["b.{$whereField}"=>$userId , 'status'=>1])
             ->select(["b.*","json_extract(i.info , '$.real_name') as realName"])
             ->limit($limit)
             ->offset($offset)
