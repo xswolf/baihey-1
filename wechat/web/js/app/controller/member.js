@@ -26,7 +26,15 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
 
     // 资料首页
     module.controller("member.information", ['app.serviceApi', '$scope', '$ionicPopup', 'FileUploader', '$ionicLoading', '$ionicActionSheet', function (api, $scope, $ionicPopup, FileUploader, $ionicLoading, $ionicActionSheet) {
+        requirejs(['amezeui', 'amezeui_ie8'], function (amezeui, amezeui_ie8) {
 
+        });
+        $scope.onTouch = function () {
+            console.log('ononon');
+        }
+        $scope.onRelease = function () {
+            console.log('lelele');
+        }
         // 实例化上传图片插件
         var uploader = $scope.uploader = new FileUploader({
             url: '/wap/file/thumb-photo'
@@ -94,9 +102,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
             var img = $scope.imgList[index].thumb_path;
             var hideSheet = $ionicActionSheet.show({
                 buttons: [
-                    {text: '查看'},
                     {text: '设为头像'}
-
                 ],
                 destructiveText: '删除',
                 titleText: '操作照片',
@@ -114,49 +120,15 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
                     }
                 },
                 buttonClicked: function (i) {
-                    if (i == 0) {    // 查看
-                        // 图片放大查看插件
-                        requirejs(['photoswipe', 'photoswipe_ui'], function (photoswipe, photoswipe_ui) {
-                            var item = [{}];
-                            for (var i in $scope.imgList) {
-                                item[i] = [];
-                                var arr = $scope.imgList[i].thumb_path.split('.');
-                                var attr = arr[0].split('_');
-                                item[i].src = $scope.imgList[i].thumb_path.replace('thumb', 'picture');
-                                item[i].w = attr[1];
-                                item[i].h = attr[2];
-                            }
-                            var pswpElement = document.querySelectorAll('.pswp')[0];
-                            var options = {
-                                index: index
-                            };
-
-                            options.mainClass = 'pswp--minimal--dark';
-                            options.barsSize = {top: 0, bottom: 0};
-                            options.captionEl = false;
-                            options.fullscreenEl = false;
-                            options.shareEl = false;
-                            options.history = false;
-                            options.bgOpacity = 0.85;
-                            options.tapToClose = true;
-                            options.tapToToggleControls = false;
-
-                            var gallery = new photoswipe(pswpElement, photoswipe_ui, item, options);
-                            gallery.init();
-                        });
+                    // 设置头像
+                    api.save('/wap/member/set-head', {id: id, thumb_path: img}).success(function (res) {
+                        $scope.imgList[head_id].is_head = 0;
+                        $scope.imgList[index].is_head = 1;
+                        head_id = index;
+                        $scope.userInfo.info.head_pic = img;
+                        $scope.setUserStorage();
                         hideSheet();
-                    }
-                    if (i == 1) {
-                        // 设置头像
-                        api.save('/wap/member/set-head', {id: id, thumb_path: img}).success(function (res) {
-                            $scope.imgList[head_id].is_head = 0;
-                            $scope.imgList[index].is_head = 1;
-                            head_id = index;
-                            $scope.userInfo.info.head_pic = img;
-                            $scope.setUserStorage();
-                            hideSheet();
-                        });
-                    }
+                    });
                     return true;
                 }
 

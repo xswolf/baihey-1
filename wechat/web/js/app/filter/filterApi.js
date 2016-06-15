@@ -430,4 +430,10 @@ define(['app/module'], function (module) {
         }
     })
 
+    module.filter('picture',function(){
+        return function (path){
+            return path.replace('thumb', 'picture');
+        }
+    })
+
 })
