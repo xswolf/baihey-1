@@ -10,7 +10,7 @@
                 <div class="imgList_handle clearfix" data-am-widget="gallery" data-am-gallery="{pureview: {target: 'a'}}">
                    <div class="imgItem" ng-repeat="img in imgList" on-hold="moreImg($index)" >
                         <a class="am-gallery-item" href="{{img.thumb_path | picture}}">
-                            <img src="{{img.thumb_path}}">
+                            <img ng-src="{{img.thumb_path}}">
                         </a>
                         <span class="headpic" ng-if="img.is_head == 1">头像</span>
                     </div>
@@ -47,8 +47,8 @@
                     <p>个人动态</p>
                 </div>
                 <div class="info_c" ng-if="dynamicList.length > 0">
-                    <div class="dyn_img_list" ng-repeat="dynamic in dynamicList">
-                        <img class="dyn_img" ng-if="dynamic.imgList[0].thumb_path" src="{{dynamic.imgList[0].thumb_path}}">
+                    <div class="dyn_img_list" ng-repeat="dynamic in dynamicList" ng-if="dynamic.imgList.length != null">
+                        <img class="dyn_img"  ng-src="{{dynamic.imgList[0].thumb_path}}">
                     </div>
 
                 </div>
