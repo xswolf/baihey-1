@@ -470,6 +470,7 @@ class User extends Base
      */
     public function changeBalance($user_id, $money)
     {
+        if ($money<1 || $money>90000000) return false;
         $user = $this->findOne($user_id);
         $user->balance = $user->balance - $money;
         return $user->save();
