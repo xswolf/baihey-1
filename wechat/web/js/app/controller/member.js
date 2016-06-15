@@ -1639,8 +1639,8 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
 
         // 查看微信号
         $scope.showWX = function(){
-            $scope.wxAuth = true;    // 是否有权限
-            $scope.wechatNumber = 'wsx16144';
+            $scope.wxAuth = true;    // 是否有权限 //TODO
+            $scope.wechatNumber = 'wsx16144';  //TODO
             if($scope.WX){
                 ar.saveDataAlert($ionicPopup,'TA的微信号是：'+$scope.wechat);
             }else{
@@ -1650,9 +1650,9 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
 
         // 查看QQ号
         $scope.showQQ = function(){
-            $scope.qqAuth = true;    // 是否有权限
-            $scope.qqNumber = '654165122';
-            if($scope.WX){
+            $scope.qqAuth = true;    // 是否有权限  //TODO
+            $scope.qqNumber = '654165122'; //TODO
+            if($scope.qqAuth){
                 ar.saveDataAlert($ionicPopup,'TA的QQ号是：'+$scope.wechat);
             }else{
                 ar.saveDataAlert($ionicPopup,'该用户暂未公开QQ号');
