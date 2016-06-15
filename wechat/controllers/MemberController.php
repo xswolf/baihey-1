@@ -258,7 +258,8 @@ class MemberController extends BaseController
         isset($this->get['page']) ? $page = $this->get['page'] : $page = 0;
         $flag = $this->get['flag'] == 'true' ? true : false;
         $user_id = \common\util\Cookie::getInstance()->getCookie('bhy_id')->value;
-        $data = User::getInstance()->getBriberyList($user_id, $flag, $page);
+        $year = isset($this->get['year']) ?  $this->get['year'] : 0;
+        $data = User::getInstance()->getBriberyList($user_id, $flag, $page , $year);
         $this->renderAjax(['status=>1', 'data' => $data]);
     }
 

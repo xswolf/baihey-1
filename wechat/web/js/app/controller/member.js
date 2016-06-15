@@ -2136,7 +2136,17 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
         $scope.money = $location.$$search.money;
         $scope.briberyList = [];
         $scope.loadMore = function () {
-            api.list('/wap/member/bribery-list', {flag: true, page: $scope.page}).success(function (res) {
+            var args = {flag: false, page: $scope.page};
+            if (year != 'undefined'){
+                if (year != 1){
+                    $scope.queryYear = year;
+                    $scope.briberyList = [];
+                    $scope.moreData = true;
+                    $scope.page = 0;
+                }
+            }
+            args.year = $scope.queryYear;
+            api.list('/wap/member/bribery-list',args).success(function (res) {
                 if (res.data == '') {
                     $scope.moreData = false;
                     return;
@@ -2164,8 +2174,19 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
         $scope.moreData = true;
         $scope.money = $location.$$search.money;
         $scope.briberyList = [];
-        $scope.loadMore = function () {
-            api.list('/wap/member/bribery-list', {flag: false, page: $scope.page}).success(function (res) {
+
+        $scope.loadMore = function (year) {
+            var args = {flag: false, page: $scope.page};
+            if (year != 'undefined'){
+                if (year != 1){
+                    $scope.queryYear = year;
+                    $scope.briberyList = [];
+                    $scope.moreData = true;
+                    $scope.page = 0;
+                }
+            }
+            args.year = $scope.queryYear;
+            api.list('/wap/member/bribery-list', args).success(function (res) {
                 if (res.data == '') {
                     $scope.moreData = false;
                     return;

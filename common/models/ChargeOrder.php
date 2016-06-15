@@ -95,7 +95,7 @@ class ChargeOrder extends Base
         $input = new \WxPayUnifiedOrder();
         $input->SetBody("嘉瑞百合缘-【" . $goods['name'] . "】");
         $input->SetAttach("手机网站");
-        $input->SetOut_trade_no($orderId);
+        $input->SetOut_trade_no($this->get['orderId']);
         $input->SetTotal_fee((string)$orderInfo['money']);
         $input->SetTime_start(date("YmdHis"));
         $input->SetTime_expire(date("YmdHis", time() + 600));
