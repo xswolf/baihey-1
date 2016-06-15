@@ -63,19 +63,6 @@ class ChargeController extends BaseController
         return $this->render();
     }
 
-    public function actionAjaxPay(){
-        $data = [
-            'goodsId'=>8,
-            'user_id'=>Cookie::getInstance()->getCookie('bhy_id')->value,
-            'money'=>$this->get['money'],
-            'chargeTypeId'=>5
-        ];
-        $orderId = ChargeOrder::getInstance()->createOrder($data); // 创建订单
-        $data = ChargeOrder::getInstance()->weiXinPay($orderId); // 发起支付
-        $this->assign('param', $data['jsApiParameters']);
-        $this->assign('orderId', $data['orderInfo']['order_id']);
-        $this->renderAjax();
-    }
 
     // 支付宝通知
     public function actionNotifyUrl()
@@ -152,8 +139,18 @@ class ChargeController extends BaseController
 
     public function actionProduceOrder()
     {
-        if (isset($this->get['goodsId'])) {
-            $orderId = ChargeOrder::getInstance()->createOrder($this->get);
+        if (isset($this->get['flag_h'])){  // 微信发红包数据
+            $data = [
+                'goodsId'=>8,
+                'user_id'=>Cookie::getInstance()->getCookie('bhy_id')->value,
+                'money'=>$this->get['money'],
+                'chargeTypeId'=>5
+            ];
+        }else{
+            $data = $this->get;
+        }
+        if (isset($data['goodsId'])) {
+            $orderId = ChargeOrder::getInstance()->createOrder($data);
             if ($orderId) {
                 $this->renderAjax(['status' => 1, 'msg' => '下单成功', 'data' => $orderId]);
             } else {

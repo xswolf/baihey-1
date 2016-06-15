@@ -475,10 +475,13 @@ define(['app/module', 'app/directive/directiveApi'
 
                 });
             }else if ($scope.payType == 2) {// 微信支付
-                api.list('/wap/charge/ajax-pay'  , $scope.briFormData).success(function () {
-                    requirejs(["jquery"] , function ($) {
-                        ar.weiXinPayCallBack($, param , orderId);
-                    })
+                api.list('/wap/charge/produce-order'  , {flag_h:1,money: $scope.money}).success(function (res) {
+                    if (res.status == 1){
+                        window.location.href='/wap/charge/pay?orderId=' + res.data;
+                    }
+                    //requirejs(["jquery"] , function ($) {
+                    //    ar.weiXinPayCallBack($, param , orderId);
+                    //})
                 })
 
             }
