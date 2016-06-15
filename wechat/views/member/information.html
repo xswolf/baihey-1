@@ -16,7 +16,7 @@
                     <div ng-if="imgList.length<12" class="imgItem addItem" ng-click="addNewImg()">
                             <i class="am-icon-plus"></i>
                     </div>
-                    <div class="tip fl w100">温馨提示：您最多可以上传12张照片；长按照片可设置头像。</div>
+                    <div class="tip fl w100">温馨提示：长按照片可设置头像，您最多可以上传12张照片。</div>
                 </div>
             </div>
             <input id="pic_fileInput" type="file" nv-file-select="" uploader="uploader"
@@ -29,16 +29,8 @@
                     <span class="identity guest" ng-if="userInfo.info.level == 2">贵宾</span>
                     <span class="identity diamond" ng-if="userInfo.info.level == 3">钻石</span>
                     <span class="ml10">
-                        <span ng-if="userInfo.info.zodiac">{{userInfo.info.zodiac | zodiac}}</span>
-                        <span class="sx" ng-if="userInfo.info.constellation">| {{userInfo.info.constellation | constellation}}</span>
+                        {{userInfo.info.constellation | constellation}} {{userInfo.info.constellation | constellation}}
                     </span>
-                </p>
-            </ion-item>
-            <ion-item class="idt mt10">
-                <p>
-                    <span ng-if="userInfo.info.age > 0">{{userInfo.info.age | timeToAge}}岁</span>
-                    <span class="sx" ng-if="userInfo.info.height">| {{userInfo.info.height}}cm</span>
-                    <span class="sx" ng-if="userInfo.info.is_marriage">| {{userInfo.info.is_marriage | marriage}}</span>
                 </p>
             </ion-item>
             <ion-item class="item16" href="#/main/dynmaic?userId={{userInfo.id}}&tempUrl=/main/member/information">
@@ -60,7 +52,7 @@
                     <p>个人签名</p>
                 </div>
                 <div class="info_c">
-                    <p ng-if="userInfo.personalized == null">这人很懒，什么也没留下~</p>
+                    <span class="cor21 mr10">立即填写</span>
                     <p ng-if="userInfo.personalized != null">{{userInfo.personalized}}</p>
                 </div>
                 <div class="info_r">
@@ -70,15 +62,15 @@
             <ion-item class="idv mb10" href="#/main/member/honesty">
                 <div class="info_c">
                     <p>
-                        <i class="icon ion-android-alert fs16 mr5 energized vam"></i>
-                        <span class="vam">诚信认证：您还未上传有效身份证明、婚姻证明、学历证明、资产证明~</span>
+                        <i class="icon ion-android-alert fs16 mr5 assertive vam"></i>
+                        <span class="vam fwb">诚信认证：您还未上传有效身份证明、婚姻证明、学历证明、资产证明~</span>
                     </p>
                 </div>
                 <div class="info_r">
                     <i class=" ion-ios-arrow-right"></i>
                 </div>
             </ion-item>
-            <ion-item class="item16">
+            <ion-item class="item16f">
                 <div class="info_l">
                     <p>性别</p>
                 </div>
@@ -98,24 +90,13 @@
                     <i class=" ion-ios-arrow-right"></i>
                 </div>
             </ion-item>
-            <ion-item ng-if="userInfo.info.real_name">
-                <div class="info_l item16">
+            <ion-item ng-if="userInfo.info.real_name" class="item16f">
+                <div class="info_l">
                     <p>真实姓名</p>
                 </div>
                 <div class="info_c">
                     <p><span class="cor21 mr10">{{userInfo.info.real_name}}</span><span
                             class="fs12 cor20">保密，只有您自己可以看到</span></p>
-                </div>
-            </ion-item>
-            <ion-item class="item16" ng-if="!userInfo.info.education" href="#/main/member/education">
-                <div class="info_l">
-                    <p>学历</p>
-                </div>
-                <div class="info_c">
-                    <p><span class="cor21">立即填写</span></p>
-                </div>
-                <div class="info_r">
-                    <i class=" ion-ios-arrow-right"></i>
                 </div>
             </ion-item>
             <ion-item class="brithday item16" ng-if="userInfo.info.age <= 0" href="#/main/member/age">
@@ -129,7 +110,7 @@
                     <i class=" ion-ios-arrow-right"></i>
                 </div>
             </ion-item>
-            <ion-item class="brithday item16" ng-if="userInfo.info.age > 0">
+            <ion-item class="brithday item16f" ng-if="userInfo.info.age > 0">
                 <div class="info_l">
                     <p>年龄</p>
                 </div>
@@ -149,12 +130,34 @@
                     <i class=" ion-ios-arrow-right"></i>
                 </div>
             </ion-item>
-            <ion-item class="item16" ng-if="userInfo.info.height">
+            <ion-item class="item16f" ng-if="userInfo.info.height">
                 <div class="info_l">
                     <p>身高</p>
                 </div>
                 <div class="info_c">
                     <p>{{userInfo.info.height}}</p>
+                </div>
+            </ion-item>
+            <ion-item class="item16" ng-if="!userInfo.info.education" href="#/main/member/education">
+                <div class="info_l">
+                    <p>学历</p>
+                </div>
+                <div class="info_c">
+                    <p><span class="cor21">立即填写</span></p>
+                </div>
+                <div class="info_r">
+                    <i class=" ion-ios-arrow-right"></i>
+                </div>
+            </ion-item>
+            <ion-item class="item16f" ng-if="userInfo.info.education">
+                <div class="info_l">
+                    <p>学历</p>
+                </div>
+                <div class="info_c">
+                    <p>
+                        <i class="icon ion-university positive fs16 mr5 vam"></i>
+                        {{userInfo.info.education | education}}
+                    </p>
                 </div>
             </ion-item>
             <ion-item class="item16" ng-if="!userInfo.info.is_marriage" href="#/main/member/is_marriage">
@@ -168,23 +171,12 @@
                     <i class=" ion-ios-arrow-right"></i>
                 </div>
             </ion-item>
-            <ion-item class="item16" ng-if="userInfo.info.is_marriage">
+            <ion-item class="item16f" ng-if="userInfo.info.is_marriage">
                 <div class="info_l">
                     <p>婚姻状况</p>
                 </div>
                 <div class="info_c">
                     <p>{{userInfo.info.is_marriage | marriage}}</p>
-                </div>
-            </ion-item>
-            <ion-item class="item16" ng-if="userInfo.info.education">
-                <div class="info_l">
-                    <p>学历</p>
-                </div>
-                <div class="info_c">
-                    <p>
-                        <i class="icon ion-university positive fs16 mr5 vam"></i>
-                        {{userInfo.info.education | education}}
-                    </p>
                 </div>
             </ion-item>
             <ion-item class="item16" href="#/main/member/occupation">
@@ -369,7 +361,7 @@
             </ion-item>
             <ion-item class="item16" href="#/main/member/mate">
                 <div class="info_l">
-                    <p>对伴侣的期望</p>
+                    <p>梦里的TA</p>
                 </div>
                 <div ng-if="!userInfo.info.mate" class="info_c">
                     <p><span class="cor21 mr10">立即填写</span></p>
@@ -409,7 +401,7 @@
                     <i class=" ion-ios-arrow-right"></i>
                 </div>
             </ion-item>
-            <ion-item class="item16" ng-if="userInfo.info.nation">
+            <ion-item class="item16f" ng-if="userInfo.info.nation">
                 <div class="info_l">
                     <p>民族</p>
                 </div>
@@ -632,71 +624,6 @@
             </ion-item>
         </ion-list>
     </ion-content>
-    <!-- Root element of PhotoSwipe. Must have class pswp. -->
-    <div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
 
-        <!-- Background of PhotoSwipe.
-             It's a separate element as animating opacity is faster than rgba(). -->
-        <div class="pswp__bg"></div>
-
-        <!-- Slides wrapper with overflow:hidden. -->
-        <div class="pswp__scroll-wrap">
-
-            <!-- Container that holds slides.
-                PhotoSwipe keeps only 3 of them in the DOM to save memory.
-                Don't modify these 3 pswp__item elements, data is added later on. -->
-            <div class="pswp__container">
-                <div class="pswp__item"></div>
-                <div class="pswp__item"></div>
-                <div class="pswp__item"></div>
-            </div>
-
-            <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
-            <div class="pswp__ui pswp__ui--hidden">
-
-                <div class="pswp__top-bar">
-
-                    <!--  Controls are self-explanatory. Order can be changed. -->
-
-                    <div class="pswp__counter"></div>
-
-                    <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
-
-                    <button class="pswp__button pswp__button--share" title="Share"></button>
-
-                    <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
-
-                    <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
-
-                    <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
-                    <!-- element will get class pswp__preloader--active when preloader is running -->
-                    <div class="pswp__preloader">
-                        <div class="pswp__preloader__icn">
-                            <div class="pswp__preloader__cut">
-                                <div class="pswp__preloader__donut"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
-                    <div class="pswp__share-tooltip"></div>
-                </div>
-
-                <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
-                </button>
-
-                <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
-                </button>
-
-                <div class="pswp__caption">
-                    <div class="pswp__caption__center"></div>
-                </div>
-
-            </div>
-
-        </div>
-
-    </div>
 
 </ion-view>

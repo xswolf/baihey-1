@@ -231,7 +231,8 @@
   font-size: 12px;
   line-height: 1.4;
 }
-.item.item16 > a {
+.item.item16 > a,
+.item.item16f {
   padding: 16px 16px 16px 0 !important;
 }
 .imgList_con .imgList_handle .imgItem img {
