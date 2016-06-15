@@ -460,19 +460,30 @@ define(['app/module', 'app/directive/directiveApi'
                 bri_message: $scope.bri_message
             };
 
-            api.save("/wap/message/send-bribery", $scope.briFormData).success(function (res) {
+            if ($scope.payType == 1){ // 余额支付
+                api.save("/wap/message/send-bribery", $scope.briFormData).success(function (res) {
 
-                if (res.status == 1) {
-                    //成功，隐藏窗口
-                    $scope.hideMultiOnKeyboard();
-                    $scope.briPageHide();
-                    $scope.sendMessage(res.message, $scope.sendId, $scope.receiveId, 'bribery');
-                } else {
-                    alert(res.message);
-                    console.log($scope.briFormData);
-                }
+                    if (res.status == 1) {
+                        //成功，隐藏窗口
+                        $scope.hideMultiOnKeyboard();
+                        $scope.briPageHide();
+                        $scope.sendMessage(res.message, $scope.sendId, $scope.receiveId, 'bribery');
+                    } else {
+                        alert(res.message);
+                        console.log($scope.briFormData);
+                    }
 
-            });
+                });
+            }else if ($scope.payType == 2) {// 微信支付
+                api.list('/wap/charge/ajax-pay'  , $scope.briFormData).success(function () {
+                    requirejs(["jquery"] , function ($) {
+                        ar.weiXinPayCallBack($, param , orderId);
+                    })
+                })
+
+            }
+
+
         }
 
     }]);

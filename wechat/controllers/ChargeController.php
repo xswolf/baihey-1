@@ -4,6 +4,7 @@ namespace wechat\controllers;
 use common\models\ChargeGoods;
 use common\models\ChargeOrder;
 use common\models\ChargeType;
+use common\util\Cookie;
 
 require_once('../../common/util/pay/wechat/lib/WxPay.Api.php');
 require_once('../../common/util/pay/wechat/WxPay.JsApiPay.php');
@@ -56,27 +57,24 @@ class ChargeController extends BaseController
 
     public function actionPay()
     {
-        //①、获取用户openid
-        $tools = new \JsApiPay();
-        $openId = $tools->GetOpenid();
-        //②、统一下单
-        $orderInfo = ChargeOrder::getInstance()->getOne($this->get['orderId']);
-        $goods = ChargeGoods::getInstance()->getOne($orderInfo['charge_goods_id']);
-        $input = new \WxPayUnifiedOrder();
-        $input->SetBody("嘉瑞百合缘-【" . $goods['name'] . "】");
-        $input->SetAttach("手机网站");
-        $input->SetOut_trade_no($this->get['orderId']);
-        $input->SetTotal_fee((string)$orderInfo['money']);
-        $input->SetTime_start(date("YmdHis"));
-        $input->SetTime_expire(date("YmdHis", time() + 600));
-        $input->SetNotify_url("http://wechat.baihey.com/wap/charge/notify-url");
-        $input->SetTrade_type("JSAPI");
-        $input->SetOpenid($openId);
-        $order = \WxPayApi::unifiedOrder($input);
-        $jsApiParameters = $tools->GetJsApiParameters($order);
-        $this->assign('param', $jsApiParameters);
-        $this->assign('orderId', $orderInfo['order_id']);
+        $data = ChargeOrder::getInstance()->weiXinPay($this->get['orderId']);
+        $this->assign('param', $data['jsApiParameters']);
+        $this->assign('orderId', $data['orderInfo']['order_id']);
         return $this->render();
+    }
+
+    public function actionAjaxPay(){
+        $data = [
+            'goodsId'=>8,
+            'user_id'=>Cookie::getInstance()->getCookie('bhy_id')->value,
+            'money'=>$this->get['money'],
+            'chargeTypeId'=>5
+        ];
+        $orderId = ChargeOrder::getInstance()->createOrder($data); // 创建订单
+        $data = ChargeOrder::getInstance()->weiXinPay($orderId); // 发起支付
+        $this->assign('param', $data['jsApiParameters']);
+        $this->assign('orderId', $data['orderInfo']['order_id']);
+        $this->renderAjax();
     }
 
     // 支付宝通知

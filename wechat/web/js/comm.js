@@ -415,7 +415,42 @@ var ar = {
                 template: title,
                 okText: '确定'
             })
+        },
+        // 微信支付回调
+        weiXinPayCallBack:function ($ , param , orderId) {
+            function onBridgeReady() {
+                WeixinJSBridge.invoke(
+                    'getBrandWCPayRequest', param,
+                    function (res) {
+                        $.get('http://wechat.baihey.com/wap/charge/order-query', {out_trade_no: orderId}, function (res) {
+                            res = JSON.parse(res);
+                            if (res.trade_state && res.trade_state == "SUCCESS") {
+                                $.get('http://wechat.baihey.com/wap/charge/set-order-status', {orderId: orderId}, function (res) {
+                                    res = JSON.parse(res);
+                                    if (res.data) {
+                                        window.location.href = '/wap/site/main#/charge_order?orderId=' + orderId + '&payType=5';
+                                    } else {
+                                        alert('设置订单状态失败');
+                                    }
+                                })
+                            } else {
+                                window.location.href = '/wap/site/main#/charge_order?orderId=' + orderId + '&payType=5';
+                            }
+                        });
+                    }
+                );
+            }
+
+            if (typeof WeixinJSBridge == "undefined") {
+                if (document.addEventListener) {
+                    document.addEventListener('WeixinJSBridgeReady', onBridgeReady, false);
+                } else if (document.attachEvent) {
+                    document.attachEvent('WeixinJSBridgeReady', onBridgeReady);
+                    document.attachEvent('onWeixinJSBridgeReady', onBridgeReady);
+                }
+            } else {
+                onBridgeReady();
+            }
         }
 
-    }
-    ;
+    };
