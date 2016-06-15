@@ -3,6 +3,7 @@ namespace wechat\controllers;
 
 use common\models\Area;
 use common\models\User;
+use common\models\UserFollow;
 use common\models\UserInformation;
 use common\models\UserPhoto;
 use common\util\Cookie;
@@ -125,14 +126,34 @@ class MemberController extends BaseController
      */
     public function actionGetDynamicList()
     {
-
         isset($this->get['page']) ? $page = $this->get['page'] : $page = 0;
         isset($this->get['user_id']) ? $userId = $this->get['user_id'] : $userId = -1;
 
         $list = User::getInstance()->getDynamicList($userId, $page);
-
-
         $this->renderAjax(['status=>1', 'data' => $list]);
+    }
+
+    /**
+     * 获取user_info页面所需信息
+     */
+    public function actionUserInfoPageById()
+    {
+        $user_id = Cookie::getInstance()->getCookie('bhy_id');
+        // 获取用户信息
+        $userInfo = User::getInstance()->getUserById($this->get['id']);
+        // 获取用户相册
+        $userPhoto = UserPhoto::getInstance()->getPhotoList($this->get['id']);
+        // 获取用户动态
+        $dynamic = User::getInstance()->getDynamicList($this->get['id']);
+        // 获取关注状态
+        $followStatus = UserFollow::getInstance()->getFollowStatus(['user_id' => $user_id, 'follow_id' => $this->get['id']]);
+        $followStatus = $followStatus ? $followStatus['status'] : false;
+
+        if($userInfo) {
+            $this->renderAjax(['status'=>1, 'userInfo' => $userInfo, 'userPhoto' => $userPhoto, 'dynamic' => $dynamic, 'followStatus' => $followStatus, 'smg' => 'user_info页面获取信息成功']);
+        } else {
+            $this->renderAjax(['status'=>0, 'userInfo' => $userInfo, 'userPhoto' => $userPhoto, 'dynamic' => $dynamic, 'followStatus' => $followStatus, 'smg' => 'user_info页面获取信息失败']);
+        }
     }
 
     /**
