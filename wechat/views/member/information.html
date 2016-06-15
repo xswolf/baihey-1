@@ -13,7 +13,7 @@
             <div class="imgList_con">
                 <div class="imgList_handle clearfix">
                     <div class="imgItem" ng-repeat="img in imgList" on-hold="moreImg($index)" data-am-widget="gallery" data-am-gallery="{pureview: 1}">
-                        <span>
+                        <span class="am-gallery-item">
                             <img src="{{img.thumb_path}}">
                         </span>
                         <span class="headpic" ng-if="img.is_head == 1">头像</span>
