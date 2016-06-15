@@ -12,7 +12,7 @@ if (@get_magic_quotes_gpc ()) {
     $_COOKIE = sec ( $_COOKIE );
     $_FILES = sec ( $_FILES );
 }
-$_SERVER = sec ( $_SERVER );
+//$_SERVER = sec ( $_SERVER );
 function sec(&$array) {
     //如果是数组，遍历数组，递归调用
     if (is_array ( $array )) {
@@ -22,6 +22,7 @@ function sec(&$array) {
     } else if (is_string ( $array )) {
         //使用addslashes函数来处理
         $array = addslashes ( $array );
+        str_check($array);
     } else if (is_numeric ( $array )) {
         $array = intval ( $array );
     }
@@ -46,6 +47,7 @@ function num_check($id) {
 //字符过滤函数
 function str_check($str) {
     if (inject_check ( $str )) {
+        echo $str;
         die ( '非法参数' );
     }
     //注入判断
