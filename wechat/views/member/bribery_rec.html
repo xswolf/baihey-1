@@ -12,7 +12,7 @@
                     <p class="mt20 tac fs18">共收到</p>
                     <p class="mt30 fs50 tac ">{{money | currency:'￥'}}</p>
                     <div class="date">
-                        <select class="cor24">
+                        <select class="cor24" ng-model="year" ng-change="loadMore(year)">
                             <option value="2016">2016年</option>
                             <option value="2015">2015年</option>
                             <option value="2014">2014年</option>
@@ -30,7 +30,7 @@
         </ion-list>
         <ion-infinite-scroll
                 ng-if="moreDataCanBeLoaded()"
-                on-infinite="loadMore()"
+                on-infinite="loadMore(1)"
                 distance="1%">
         </ion-infinite-scroll>
     </ion-content>
