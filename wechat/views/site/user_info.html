@@ -14,7 +14,7 @@
                     </div>
                 </div>
             </div>
-            <ion-item class="idt mt10" ng-if="otherUserInfo.auth.identity_check || otherUserInfo.phone != '' || otherUserInfo.info.level != '未知' || otherUserInfo.info.zodiac != '未知' || otherUserInfo.info.constellation != '未知'">
+            <ion-item class="idt mt10" ng-if="otherUserInfo.auth.identity_check || otherUserInfo.phone != '' || otherUserInfo.info.level || otherUserInfo.info.zodiac || otherUserInfo.info.constellation">
                 <p>{{otherUserInfo.info.age | timeToAge}} {{otherUserInfo.info.height | height}} {{otherUserInfo.info.is_marriage | marriage}}</p>
                 <p class="mt0">
                     <span class="identity sfz" ng-if="otherUserInfo.auth.identity_check">身份证</span>
@@ -22,16 +22,16 @@
                     <span class="identity vip" ng-if="otherUserInfo.info.level == 1">vip</span>
                     <span class="identity guest" ng-if="otherUserInfo.info.level == 2">贵宾</span>
                     <span class="identity diamond" ng-if="otherUserInfo.info.level == 3">钻石</span>
-                    <span ng-if="otherUserInfo.info.zodiac != '未知' && otherUserInfo.info.zodiac" class="ml10">{{otherUserInfo.info.zodiac | zodiac}} {{otherUserInfo.info.constellation | constellation}}</span>
+                    <span ng-if="otherUserInfo.info.zodiac" class="ml10">{{otherUserInfo.info.zodiac | zodiac}} {{otherUserInfo.info.constellation | constellation}}</span>
                 </p>
             </ion-item>
-            <ion-item ng-if="dynamicList.length > 0" href="#/main/dynmaic?userId={{otherUserInfo.id}}&tempUrl=main/member/user_info">
+            <ion-item ng-if="dynamicList.length > 0" ng-click="showPER()">
                 <div class="info_l">
                     <p>个人动态</p>
                 </div>
                 <div class="info_c">
-                    <div class="dyn_img_list" ng-repeat="dynamic in dynamicList">
-                        <img class="dyn_img" ng-if="dynamic.imgList[0].thumb_path" src="{{dynamic.imgList[0].thumb_path}}">
+                    <div class="dyn_img_list" ng-repeat="dynamic in dynamicList" ng-if="dynamic.imgList.length != null">
+                        <img class="dyn_img" ng-src="{{dynamic.imgList[0].thumb_path}}">
                     </div>
                 </div>
                 <div class="info_r">
@@ -46,7 +46,7 @@
                     <p>{{otherUserInfo.personalized}}</p>
                 </div>
             </ion-item>
-            <ion-item ng-if="otherUserInfo.info.education != '未知' && otherUserInfo.info.education">
+            <ion-item ng-if="otherUserInfo.info.education">
                 <div class="info_l">
                     <p>学历</p>
                 </div>
@@ -57,7 +57,7 @@
                     </p>
                 </div>
             </ion-item>
-            <ion-item ng-if="otherUserInfo.info.occupation != '未知' && otherUserInfo.info.occupation">
+            <ion-item ng-if="otherUserInfo.info.occupation">
                 <div class="info_l">
                     <p>职业</p>
                 </div>
@@ -76,7 +76,7 @@
                     <p class="null"><span>{{otherUserInfo.province | address : otherUserInfo.city :otherUserInfo.area}}</span></p>
                 </div>
             </ion-item>
-            <ion-item ng-if="otherUserInfo.info.haunt_address != '未知' && otherUserInfo.info.haunt_address">
+            <ion-item ng-if="otherUserInfo.info.haunt_address">
                 <div class="info_l">
                     <p>常出没地</p>
                 </div>
@@ -84,7 +84,7 @@
                     <p class="null"><span>{{otherUserInfo.info.haunt_address}}</span></p>
                 </div>
             </ion-item>
-            <ion-item ng-if="otherUserInfo.info.wechat != '未知' && otherUserInfo.info.wechat">
+            <ion-item ng-if="otherUserInfo.info.wechat">
                 <div class="info_l">
                     <p>微信号</p>
                 </div>
@@ -92,7 +92,7 @@
                     <p class="null"><span>******</span><button type="button" ng-click="showWX()" class="am-btn am-btn-danger am-radius am-btn-xs ml20">查看<!--{{otherUserInfo.info.wechat}}--></button></p>
                 </div>
             </ion-item>
-            <ion-item ng-if="otherUserInfo.info.qq != '未知' && otherUserInfo.info.qq">
+            <ion-item ng-if="otherUserInfo.info.qq">
                 <div class="info_l">
                     <p>QQ号</p>
                 </div>
@@ -188,7 +188,7 @@
                     </div>
                 </div>
             </ion-item>
-            <ion-item ng-if="otherUserInfo.info.mate != '未知' && otherUserInfo.info.mate">
+            <ion-item ng-if="otherUserInfo.info.mate">
                 <div class="info_l">
                     <p>对未来伴侣的期望</p>
                 </div>
@@ -199,7 +199,7 @@
             <ion-item class="member_t">
                 <p>详细资料</p>
             </ion-item>
-            <ion-item ng-if="otherUserInfo.info.is_child != '未知' && otherUserInfo.info.is_child">
+            <ion-item ng-if="otherUserInfo.info.is_child">
                 <div class="info_l">
                     <p>子女状况</p>
                 </div>
@@ -207,7 +207,7 @@
                     <p class="null"><span>{{otherUserInfo.info.is_child | child}}</span></p>
                 </div>
             </ion-item>
-            <ion-item ng-if="otherUserInfo.info.nation != '未知' && otherUserInfo.info.nation">
+            <ion-item ng-if="otherUserInfo.info.nation">
                 <div class="info_l">
                     <p>民族</p>
                 </div>
@@ -215,7 +215,7 @@
                     <p class="null"><span>{{otherUserInfo.info.nation | nation}}</span></p>
                 </div>
             </ion-item>
-            <ion-item ng-if="otherUserInfo.info.work != '未知' && otherUserInfo.info.work">
+            <ion-item ng-if="otherUserInfo.info.work">
                 <div class="info_l">
                     <p>工作单位</p>
                 </div>
@@ -223,7 +223,7 @@
                     <p class="null">{{otherUserInfo.info.work}}</p>
                 </div>
             </ion-item>
-            <ion-item ng-if="otherUserInfo.info.year_income != '未知' && otherUserInfo.info.year_income">
+            <ion-item ng-if="ootherUserInfo.info.year_income">
                 <div class="info_l">
                     <p>年收入</p>
                 </div>
@@ -231,7 +231,7 @@
                     <p class="null"><span>{{otherUserInfo.info.year_income | yearIncome}}</span></p>
                 </div>
             </ion-item>
-            <ion-item ng-if="otherUserInfo.info.is_purchase != '未知' && otherUserInfo.info.is_purchase">
+            <ion-item ng-if="otherUserInfo.info.is_purchase">
                 <div class="info_l">
                     <p>购房情况</p>
                 </div>
@@ -239,7 +239,7 @@
                     <p class="null"><span>{{otherUserInfo.info.is_purchase | purchase}}</span></p>
                 </div>
             </ion-item>
-            <ion-item ng-if="otherUserInfo.info.is_car != '未知' && otherUserInfo.info.is_car">
+            <ion-item ng-if="otherUserInfo.info.is_car">
                 <div class="info_l">
                     <p>购车情况</p>
                 </div>
@@ -247,7 +247,7 @@
                     <p class="null"><span>{{otherUserInfo.info.is_car | car}}</span></p>
                 </div>
             </ion-item>
-            <ion-item ng-if="otherUserInfo.info.blood != '未知' && otherUserInfo.info.blood">
+            <ion-item ng-if="otherUserInfo.info.blood">
                 <div class="info_l">
                     <p>血型</p>
                 </div>
@@ -255,7 +255,7 @@
                     <p class="null"><span>{{otherUserInfo.info.blood | blood}}</span></p>
                 </div>
             </ion-item>
-            <ion-item ng-if="otherUserInfo.info.school != '未知' && otherUserInfo.info.school">
+            <ion-item ng-if="otherUserInfo.info.school">
                 <div class="info_l">
                     <p>毕业院校</p>
                 </div>
@@ -263,10 +263,10 @@
                     <p class="null">{{otherUserInfo.info.school}}</p>
                 </div>
             </ion-item>
-            <ion-item class="member_t" ng-if="otherUserInfo.info.zo_age != '未知' || otherUserInfo.info.zo_height != '未知' || otherUserInfo.info.zo_education != '未知' || otherUserInfo.info.zo_marriage != '未知' || otherUserInfo.info.zo_house != '未知' || otherUserInfo.info.zo_car != '未知' || otherUserInfo.info.zo_zodiac != '未知' || otherUserInfo.info.zo_constellation != '未知'">
+            <ion-item class="member_t" ng-if="otherUserInfo.info.zo_age || otherUserInfo.info.zo_height || otherUserInfo.info.zo_education || otherUserInfo.info.zo_marriage || otherUserInfo.info.zo_house || otherUserInfo.info.zo_car || otherUserInfo.info.zo_zodiac || otherUserInfo.info.zo_constellation">
                 <p>择偶标准</p>
             </ion-item>
-            <ion-item ng-if="otherUserInfo.info.zo_age != '未知' && otherUserInfo.info.zo_age">
+            <ion-item ng-if="otherUserInfo.info.zo_age">
                 <div class="info_l">
                     <p>年龄</p>
                 </div>
@@ -274,7 +274,7 @@
                     <p class="null"><span>{{otherUserInfo.info.zo_age | zo_age}}</span></p>
                 </div>
             </ion-item>
-            <ion-item ng-if="otherUserInfo.info.zo_height != '未知' && otherUserInfo.info.zo_height">
+            <ion-item ng-if="otherUserInfo.info.zo_height">
                 <div class="info_l">
                     <p>身高</p>
                 </div>
@@ -282,7 +282,7 @@
                     <p class="null"><span>{{otherUserInfo.info.zo_height | zo_age}}</span></p>
                 </div>
             </ion-item>
-            <ion-item ng-if="otherUserInfo.info.zo_education != '未知' && otherUserInfo.info.zo_education">
+            <ion-item ng-if="otherUserInfo.info.zo_education">
                 <div class="info_l">
                     <p>学历</p>
                 </div>
@@ -290,7 +290,7 @@
                     <p class="null"><span>{{otherUserInfo.info.zo_education | education}}</span></p>
                 </div>
             </ion-item>
-            <ion-item ng-if="otherUserInfo.info.zo_marriage != '未知' && otherUserInfo.info.zo_marriage">
+            <ion-item ng-if="otherUserInfo.info.zo_marriage">
                 <div class="info_l">
                     <p>婚姻状况</p>
                 </div>
@@ -298,7 +298,7 @@
                     <p class="null"><span>{{otherUserInfo.info.zo_marriage | zo_marriage}}</span></p>
                 </div>
             </ion-item>
-            <ion-item ng-if="otherUserInfo.info.zo_house != '未知' && otherUserInfo.info.zo_house">
+            <ion-item ng-if="otherUserInfo.info.zo_house">
                 <div class="info_l">
                     <p>购房情况</p>
                 </div>
@@ -306,7 +306,7 @@
                     <p class="null"><span>{{otherUserInfo.info.zo_house | purchase}}</span></p>
                 </div>
             </ion-item>
-            <ion-item ng-if="otherUserInfo.info.zo_car != '未知' && otherUserInfo.info.zo_car">
+            <ion-item ng-if="otherUserInfo.info.zo_car">
                 <div class="info_l">
                     <p>购车情况</p>
                 </div>
@@ -314,7 +314,7 @@
                     <p class="null"><span>{{otherUserInfo.info.zo_car | car}}</span></p>
                 </div>
             </ion-item>
-            <ion-item ng-if="otherUserInfo.info.zo_zodiac != '未知' && otherUserInfo.info.zo_zodiac">
+            <ion-item ng-if="otherUserInfo.info.zo_zodiac">
                 <div class="info_l">
                     <p>属相</p>
                 </div>
@@ -322,7 +322,7 @@
                     <p class="null"><span>{{otherUserInfo.info.zo_zodiac | zo_zodiac}}</span></p>
                 </div>
             </ion-item>
-            <ion-item class="mb30" ng-if="otherUserInfo.info.zo_constellation != '未知' && otherUserInfo.info.zo_constellation">
+            <ion-item class="mb30" ng-if="otherUserInfo.info.zo_constellation">
                 <div class="info_l">
                     <p>星座</p>
                 </div>

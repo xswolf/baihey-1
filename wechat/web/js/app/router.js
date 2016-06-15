@@ -200,7 +200,7 @@ define(["app/module", 'app/service/serviceApi'],
                     })
                     .state('main.dynmaic', {       // 个人动态
                         cache: false,
-                        url: "/dynmaic",
+                        url: "/dynmaic?userId?real_name?sex?age",
                         views: {
                             'member-tab': {
                                 templateUrl: "/wechat/views/discovery/index.html",

@@ -43,12 +43,9 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
         $scope.formData = [];
         $scope.imgList = [];
         var head_id = 0;
-        var getImgList = function () {
-            api.list('/wap/member/photo-list', []).success(function (res) {
-                $scope.imgList = res.data;
-            });
-        }
-        getImgList();
+        api.list('/wap/member/photo-list', []).success(function (res) {
+            $scope.imgList = res.data;
+        });
 
         $scope.addNewImg = function () {
             var e = document.getElementById("pic_fileInput");
@@ -134,20 +131,19 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
 
             });
 
-            $scope.dynamicList = [];
-            api.list('/wap/member/get-dynamic-list', {user_id: $scope.userInfo.id, page: 0}).success(function (res) {
-                for (var i in res.data) {
-                    res.data[i].imgList = JSON.parse(res.data[i].pic);
-                    $scope.dynamicList.push(res.data[i]);
-                }
-            });
-
-            $scope.getTravel('went_travel', $scope.userInfo.went_travel);// 我去过的地方
-            $scope.getTravel('want_travel', $scope.userInfo.want_travel);// 我想去的地方
-            $scope.getConfig('love_sport', $scope.userInfo.love_sport);// 喜欢的运动
-            $scope.getConfig('want_film', $scope.userInfo.want_film);// 想看的电影
-            $scope.getConfig('like_food', $scope.userInfo.like_food);// 喜欢的食物
         }
+        $scope.dynamicList = [];
+        api.list('/wap/member/get-dynamic-list', {user_id: $scope.userInfo.id, page: 0}).success(function (res) {
+            for (var i in res.data) {
+                res.data[i].imgList = JSON.parse(res.data[i].pic);
+                $scope.dynamicList.push(res.data[i]);
+            }
+        });
+        $scope.getTravel('went_travel', $scope.userInfo.went_travel);// 我去过的地方
+        $scope.getTravel('want_travel', $scope.userInfo.want_travel);// 我想去的地方
+        $scope.getConfig('love_sport', $scope.userInfo.love_sport);// 喜欢的运动
+        $scope.getConfig('want_film', $scope.userInfo.want_film);// 想看的电影
+        $scope.getConfig('like_food', $scope.userInfo.like_food);// 喜欢的食物
     }
     ]);
 
@@ -1582,6 +1578,11 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
         requirejs(['amezeui', 'amezeui_ie8'], function (amezeui, amezeui_ie8) {
 
         });
+        var userInfo = ar.getStorage('userInfo');
+        if (userInfo != null) {
+            userInfo.info = JSON.parse(userInfo.info);
+            userInfo.auth = JSON.parse(userInfo.auth);
+        }
         // 用于想去的地方，去过的地方等
         var getTravel = function (name, serId) {
             if (serId != null && serId) {
@@ -1627,8 +1628,8 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
                         $scope.dynamicList.push(res.dynamic[i]);
                     }
                 }
-                // 关注状态
-                $scope.formData.follow = res.followStatus;
+                $scope.formData.follow = res.followStatus;// 关注状态
+                $scope.formData.followed = res.followedStatus;// 被关注状态
                 $scope.otherUserInfo.went_travel ? getTravel('went_travel', $scope.otherUserInfo.went_travel) : true;// 我去过的地方
                 $scope.otherUserInfo.want_travel ? getTravel('want_travel', $scope.otherUserInfo.want_travel) : true;// 我想去的地方
                 $scope.otherUserInfo.love_sport ? getConfig('love_sport', $scope.otherUserInfo.love_sport) : true;// 喜欢的运动
@@ -1637,12 +1638,35 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
             }
         });
 
+        var is_privacy = function(val) {
+            switch (val) {
+                case '1':
+                    return true;
+                case '2':
+                    return $scope.formData.followed == 1 ? true : false;
+                case '3':
+                    return $scope.otherUserInfo.info.level > 0 ? true : false;
+                case '4':
+                    return false;
+            }
+        }
+
+        // 相册权限 $scope.otherUserInfo.privacy_pic;
+        // 相册权限 $scope.otherUserInfo.privacy_per;
+        // 查看个人动态
+        $scope.showPER = function(){
+            if(is_privacy($scope.otherUserInfo.privacy_per)){
+                window.location.hash = '#/main/dynmaic?userId=' + $scope.otherUserInfo.user_id + '&real_name=' + $scope.otherUserInfo.info.real_name + '&sex=' + $scope.otherUserInfo.sex + '&age=' + $scope.otherUserInfo.info.age;
+            }else{
+                ar.saveDataAlert($ionicPopup,'该用户暂未公开个人动态');
+            }
+        }
         // 查看微信号
         $scope.showWX = function(){
-            $scope.wxAuth = true;    // 是否有权限 //TODO
-            $scope.wechatNumber = 'wsx16144';  //TODO
-            if($scope.WX){
-                ar.saveDataAlert($ionicPopup,'TA的微信号是：'+$scope.wechat);
+            $scope.wxAuth = is_privacy($scope.otherUserInfo.privacy_wechat);
+            //$scope.wxAuth = true;    // 是否有权限 //TODO
+            if($scope.wxAuth){
+                ar.saveDataAlert($ionicPopup,'TA的微信号是：' + $scope.otherUserInfo.info.wechat);
             }else{
                 ar.saveDataAlert($ionicPopup,'该用户暂未公开微信号');
             }
@@ -1650,10 +1674,10 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
 
         // 查看QQ号
         $scope.showQQ = function(){
-            $scope.qqAuth = true;    // 是否有权限  //TODO
-            $scope.qqNumber = '654165122'; //TODO
+            $scope.qqAuth = is_privacy($scope.otherUserInfo.privacy_qq);
+            //$scope.qqAuth = true;    // 是否有权限  //TODO
             if($scope.qqAuth){
-                ar.saveDataAlert($ionicPopup,'TA的QQ号是：'+$scope.wechat);
+                ar.saveDataAlert($ionicPopup,'TA的QQ号是：' + $scope.otherUserInfo.info.qq);
             }else{
                 ar.saveDataAlert($ionicPopup,'该用户暂未公开QQ号');
             }

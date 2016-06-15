@@ -6,13 +6,14 @@ define(['app/module', 'app/directive/directiveApi'
 ], function (module) {
 
     // 发现
-    module.controller("discovery.index", ['app.serviceApi', '$rootScope', '$scope', '$timeout', '$ionicPopup', '$ionicModal', '$ionicActionSheet', '$ionicLoading', '$location', function (api, $rootScope, $scope, $timeout, $ionicPopup, $ionicModal, $ionicActionSheet, $ionicLoading, $location) {
+    module.controller("discovery.index", ['app.serviceApi', '$rootScope', '$scope', '$timeout', '$ionicPopup', '$ionicModal', '$ionicActionSheet', '$ionicLoading', '$location', '$filter', function (api, $rootScope, $scope, $timeout, $ionicPopup, $ionicModal, $ionicActionSheet, $ionicLoading, $location, $filter) {
 
         var userInfo = ar.getStorage('userInfo');
-
+console.log($location.$$search);
         if ($location.$$search.userId) {
             // 显示个人
-            $scope.title = JSON.parse(userInfo['info']).real_name + '的个人动态';
+            $scope.title = $filter('sex')($location.$$search.real_name,$location.$$search.sex,$location.$$search.age) + '的个人动态';
+            //$scope.title = JSON.parse(userInfo['info']).real_name + '的个人动态';
             $rootScope.hideTabs = true;
         } else {
             // 显示所有

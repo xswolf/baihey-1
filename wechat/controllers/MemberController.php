@@ -148,11 +148,14 @@ class MemberController extends BaseController
         // 获取关注状态
         $followStatus = UserFollow::getInstance()->getFollowStatus(['user_id' => $user_id, 'follow_id' => $this->get['id']]);
         $followStatus = $followStatus ? $followStatus['status'] : false;
+        // 获取被关注状态
+        $followedStatus = UserFollow::getInstance()->getFollowStatus(['user_id' => $this->get['id'], 'follow_id' => $user_id]);
+        $followedStatus = $followedStatus ? $followedStatus['status'] : false;
 
         if($userInfo) {
-            $this->renderAjax(['status'=>1, 'userInfo' => $userInfo, 'userPhoto' => $userPhoto, 'dynamic' => $dynamic, 'followStatus' => $followStatus, 'smg' => 'user_info页面获取信息成功']);
+            $this->renderAjax(['status'=>1, 'userInfo' => $userInfo, 'userPhoto' => $userPhoto, 'dynamic' => $dynamic, 'followStatus' => $followStatus, 'followedStatus' => $followedStatus, 'smg' => 'user_info页面获取信息成功']);
         } else {
-            $this->renderAjax(['status'=>0, 'userInfo' => $userInfo, 'userPhoto' => $userPhoto, 'dynamic' => $dynamic, 'followStatus' => $followStatus, 'smg' => 'user_info页面获取信息失败']);
+            $this->renderAjax(['status'=>0, 'userInfo' => $userInfo, 'userPhoto' => $userPhoto, 'dynamic' => $dynamic, 'followStatus' => $followStatus, 'followedStatus' => $followedStatus, 'smg' => 'user_info页面获取信息失败']);
         }
     }
 
