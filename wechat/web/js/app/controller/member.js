@@ -102,9 +102,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
             var img = $scope.imgList[index].thumb_path;
             var hideSheet = $ionicActionSheet.show({
                 buttons: [
-                    {text: '查看'},
                     {text: '设为头像'}
-
                 ],
                 destructiveText: '删除',
                 titleText: '操作照片',
@@ -122,7 +120,6 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
                     }
                 },
                 buttonClicked: function (i) {
-
                     // 设置头像
                     api.save('/wap/member/set-head', {id: id, thumb_path: img}).success(function (res) {
                         $scope.imgList[head_id].is_head = 0;
