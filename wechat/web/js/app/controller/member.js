@@ -1498,44 +1498,6 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
 
     }]);
 
-    // 预览资料
-    module.controller("member.preview", ['app.serviceApi', '$scope', '$ionicPopup', '$ionicLoading', function (api, $scope, $ionicPopup, $ionicLoading) {
-
-        // 图片放大查看插件
-        requirejs(['photoswipe', 'photoswipe_ui'], function (photoswipe, photoswipe_ui) {
-
-            $scope.showImgList = function (imgList, index) {
-                var item = [{}];
-                for (var i in imgList) {
-                    item[i] = [];
-                    var arr = imgList[i].thumb_path.split('.');
-                    var attr = arr[0].split('_');
-                    item[i].src = imgList[i].thumb_path.replace('thumb', 'picture');
-                    item[i].w = attr[1];
-                    item[i].h = attr[2];
-                }
-                var pswpElement = document.querySelectorAll('.pswp')[0];
-                var options = {
-                    index: index
-                };
-
-                options.mainClass = 'pswp--minimal--dark';
-                options.barsSize = {top: 0, bottom: 0};
-                options.captionEl = false;
-                options.fullscreenEl = false;
-                options.shareEl = false;
-                options.bgOpacity = 0.85;
-                options.tapToClose = true;
-                options.tapToToggleControls = false;
-
-                var gallery = new photoswipe(pswpElement, photoswipe_ui, item, options);
-                gallery.init();
-            }
-
-        })
-
-
-    }]);
 
     // 关注的人
     module.controller("member.follow", ['app.serviceApi', '$scope', '$ionicPopup', '$ionicLoading', '$location', '$ionicActionSheet', function (api, $scope, $ionicPopup, $ionicLoading, $location, $ionicActionSheet) {
@@ -1980,7 +1942,10 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
     }]);
 
     // 诚信认证-身份认证
-    module.controller("member.honesty_sfz", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', 'FileUploader', function (api, $scope, $timeout, $ionicPopup, FileUploader) {
+    module.controller("member.honesty_sfz", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', 'FileUploader','$location', function (api, $scope, $timeout, $ionicPopup, FileUploader,$location) {
+        requirejs(['amezeui', 'amezeui_ie8'], function (amezeui, amezeui_ie8) {
+
+        });
         // 实例化上传图片插件
         var uploader1 = $scope.uploader1 = new FileUploader({
             url: '/wap/file/auth-pictures?auth=identity_pic1'
@@ -1995,6 +1960,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
         $scope.formData.identity_address = $scope.userInfo.info.identity_address != '未知' ? $scope.userInfo.info.identity_address : '';
 
         $scope.addNewImg = function (name) {
+
             if (name == 'identity_pic1') {
                 var uploader = uploader1;
             } else {
@@ -2005,16 +1971,18 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
 
         $scope.saveData = function () {
             if ($scope.formData.real_name == '' || $scope.formData.identity_id == '' || $scope.formData.identity_address == '') {
-                if (confirm('检测到您还未填写完整，确定放弃吗？')) {
-                    window.location.hash = '#/main/member/honesty';  //跳转
-                } else {
-                    return false;
-                }
+                var confirm = ar.saveDataConfirm($ionicPopup,'检测到身份证信息未填写，确认放弃吗？');
+                confirm.then(function(res){
+                    if(res){
+                        $location.url('/main/member/honesty');
+                    }else{
+                        return false;
+                    }
+                })
             } else {
                 var formData = [];
                 formData.identity = $scope.formData.real_name + '_' + $scope.formData.identity_id + '_' + $scope.formData.identity_address;
                 api.save('/wap/member/save-data', formData).success(function (res) {
-                    // 保存
                     $scope.userInfo.info.real_name = $scope.formData.real_name;
                     $scope.userInfo.info.identity_id = $scope.formData.identity_id;
                     $scope.userInfo.info.identity_address = $scope.formData.identity_address;

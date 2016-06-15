@@ -1,8 +1,8 @@
 /**
  * Created by Administrator on 2016/3/22.
  */
-define(["app/module", 'app/service/serviceApi'],
-    function (module) {
+define(["app/module", 'app/service/serviceApi','jquery'],
+    function (module,api,$) {
         module.run(['$rootScope', '$state', '$timeout', 'app.serviceApi', '$ionicLoading', '$location', function ($rootScope, $state, $timeout, api, $ionicLoading, $location) {
 
             var messageList = function () {
@@ -386,7 +386,7 @@ define(["app/module", 'app/service/serviceApi'],
                             eval('$scope.userInfo.auth.' + name + ' = ' + "'" + response.thumb_path + "'");
                             $scope.getUserPrivacyStorage('');
                         } else {
-                            $ionicPopup.alert({title: '上传图片失败！'});
+                            ar.saveDataAlert($ionicPopup,response.info);
                         }
                     };
                     uploader.onErrorItem = function (fileItem, response, status, headers) {  // 上传出错
@@ -395,9 +395,10 @@ define(["app/module", 'app/service/serviceApi'],
                     };
                     uploader.onCompleteItem = function (fileItem, response, status, headers) {  // 上传结束
                         $scope.hideLoading();  // 隐藏loading
-                    };
 
+                    };
                 }
+
                 //$scope.userInfo = [{}];
 
             }])

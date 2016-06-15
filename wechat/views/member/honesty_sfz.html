@@ -5,42 +5,23 @@
         <title class="title">身份认证</title>
         <button class="button button-icon cor21" ng-click="saveData()">保存</button>
     </ion-header-bar>
-    <ion-content class="bhy com_w_100 m_bg honesty">
+    <ion-content class="bhy com_w_100 honesty">
         <div class="card">
             <div class="item item-divider">
                 请您上传身份证照片（正反两面）
             </div>
             <div class="item item-text-wrap">
-                <div class="upload_box">
-                    <span class="upload_text tac" ng-click="addNewImg('identity_pic1')">
-                        <span ng-show="userInfo.auth.identity_pic1 != '未知'">
-                            <img src="{{userInfo.auth.identity_pic1}}">
-                        </span>
-                        <p class="tac" ng-show="userInfo.auth.identity_pic1 == '未知'">
-                            <i class="icon ion-plus-round upload_icon"></i>
-                        </p>
-                        <p class="tac">
-                            <span class="upload_title">身份证正面</span>
-                        </p>
-                    </span>
-                </div>
-                <div class="upload_box">
-                    <span class="upload_text tac" ng-click="addNewImg('identity_pic2')">
-                        <span ng-show="userInfo.auth.identity_pic2 != '未知'">
-                            <img src="{{userInfo.auth.identity_pic2}}">
-                        </span>
-                        <p class="tac" ng-show="userInfo.auth.identity_pic2 == '未知'">
-                            <i class="icon ion-plus-round upload_icon"></i>
-                        </p>
-                        <p class="tac">
-                            <span class="upload_title">身份证反面</span>
-                        </p>
-                    </span>
-                </div>
+
+                <ul class="am-avg-sm-2 am-thumbnails tac" data-am-widget="gallery" data-am-gallery="{ pureview: {target: 'a'} }">
+                    <li class="am-gallery-item"><button type="button" class="am-btn am-btn-primary am-btn-sm am-radius" ng-click="addNewImg('identity_pic1')">上传正面</button><a href="{{userInfo.auth.identity_pic1 | picture}}"><img ng-if="userInfo.auth.identity_pic1 != '未知'" class="am-thumbnail mt10" src="{{userInfo.auth.identity_pic1}}" alt="正面"/></a></li>
+                    <li class="am-gallery-item"><button type="button" class="am-btn am-btn-secondary am-btn-sm am-radius" ng-click="addNewImg('identity_pic2')">上传反面</button><a href="{{userInfo.auth.identity_pic2 | picture}}"><img ng-if="userInfo.auth.identity_pic2 != '未知'" class="am-thumbnail mt10" src="{{userInfo.auth.identity_pic2}}" alt="反面"/></a></li>
+                </ul>
+
+
                 <input id="identity_pic1" type="file" nv-file-select uploader="uploader1"
-                       style="visibility: hidden; display: none;" accept="image/*" >
+                       style="visibility: hidden; display: none;" accept="image/*">
                 <input id="identity_pic2" type="file" nv-file-select uploader="uploader2"
-                       style="visibility: hidden; display: none;" accept="image/*" >
+                       style="visibility: hidden; display: none;" accept="image/*">
             </div>
         </div>
 
