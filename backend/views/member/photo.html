@@ -4,9 +4,6 @@
         <div class="ibox-title"><h5>会员列表</h5>
             <div class="ibox-tools rboor">
                 <button id="multiple-select" class="btn btn-green btn-xs p310"><i class="fa fa-check-square-o"></i> 批量审核</button>
-                <button id="tb-refresh" href="projects.html" class="btn btn-green btn-xs p310"><i
-                        class="fa fa-refresh"></i> 刷新
-                </button>
             </div>
         </div>
 
@@ -89,7 +86,11 @@
             id += "0";
             $.ajax({
                 url: "/admin/member/auth-photo", data: {id: id, status: 1}, success: function (res) {
-
+                    res = JSON.parse(res);
+                    if (res.status == 1){
+                       alert("操作成功")
+                        window.location.reload(true);
+                    }
                 }
             });
         })
