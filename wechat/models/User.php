@@ -90,60 +90,60 @@ class User extends \common\models\User
         // user_information表 数据处理
         $infoData['user_id'] = $id;
         $userInfo = [
-            'age'                   => '未知',// 出生年月时间戳
-            'level'                 => '未知',// vip等级
-            'local'                 => '未知',// 当地地区（地区切换使用）
-            'height'                => '未知',// 身高
-            'head_pic'              => '未知',// 头像
-            'real_name'             => '未知',// 真实姓名
-            'identity_id'           => '未知',// 身份证号码
-            'identity_address'      => '未知',// 身份证地址
-            'is_marriage'           => '未知',// 婚姻状况
-            'is_child'              => '未知',// 子女状况
-            'education'             => '未知',// 学历
-            'year_income'           => '未知',// 年收入
-            'is_purchase'           => '未知',// 购房状况
-            'is_car'                => '未知',// 购车状况
-            'occupation'            => '未知',// 职业
-            'children_occupation'   => '未知',// 子职业
-            'zodiac'                => '未知',// 属相生肖
-            'constellation'         => '未知',// 星座
-            'mate'                  => '未知',// 对未来伴侣的期望
-            'nation'                => '未知',// 民族
-            'wechat'                => '未知',// 微信
-            'qq'                    => '未知',// QQ
-            'haunt_address'         => '未知',// 常出没地
-            'work'                  => '未知',// 工作单位
-            'blood'                 => '未知',// 血型
-            'school'                => '未知',// 学校
+            'age'                   => '',// 出生年月时间戳
+            'level'                 => '',// vip等级
+            'local'                 => '',// 当地地区（地区切换使用）
+            'height'                => '',// 身高
+            'head_pic'              => '',// 头像
+            'real_name'             => '',// 真实姓名
+            'identity_id'           => '',// 身份证号码
+            'identity_address'      => '',// 身份证地址
+            'is_marriage'           => '',// 婚姻状况
+            'is_child'              => '',// 子女状况
+            'education'             => '',// 学历
+            'year_income'           => '',// 年收入
+            'is_purchase'           => '',// 购房状况
+            'is_car'                => '',// 购车状况
+            'occupation'            => '',// 职业
+            'children_occupation'   => '',// 子职业
+            'zodiac'                => '',// 属相生肖
+            'constellation'         => '',// 星座
+            'mate'                  => '',// 对未来伴侣的期望
+            'nation'                => '',// 民族
+            'wechat'                => '',// 微信
+            'qq'                    => '',// QQ
+            'haunt_address'         => '',// 常出没地
+            'work'                  => '',// 工作单位
+            'blood'                 => '',// 血型
+            'school'                => '',// 学校
             // 择偶标准
             'zo_age'                => '18-0',// 年龄
             'zo_height'             => '140-0',// 最小身高
-            'zo_education'          => '未知',// 最小学历
-            'zo_marriage'           => '未知',// 婚姻状况
-            'zo_house'              => '未知',// 购房
-            'zo_car'                => '未知',// 购车
-            'zo_zodiac'             => '未知',// 属相
-            'zo_constellation'      => '未知',// 星座
+            'zo_education'          => '',// 最小学历
+            'zo_marriage'           => '',// 婚姻状况
+            'zo_house'              => '',// 购房
+            'zo_car'                => '',// 购车
+            'zo_zodiac'             => '',// 属相
+            'zo_constellation'      => '',// 星座
         ];
         // 身份证照片
         $userAuth = [
-            'identity_pic1'     => '未知',// 身份证正面
-            'identity_pic2'     => '未知',// 反面
+            'identity_pic1'     => '',// 身份证正面
+            'identity_pic2'     => '',// 反面
             'identity_check'    => false,// 审核状态true通过，false未通过
-            'identity_time'     => '未知',// 时间
-            'marriage_pic1'     => '未知',// 离婚证正面
-            'marriage_pic2'     => '未知',// 反面
+            'identity_time'     => '',// 时间
+            'marriage_pic1'     => '',// 离婚证正面
+            'marriage_pic2'     => '',// 反面
             'marriage_check'    => false,// 审核状态true通过，false未通过
-            'marriage_time'     => '未知',// 时间
-            'education_pic1'    => '未知',// 学历学位证
-            'education_pic2'    => '未知',// 毕业证
+            'marriage_time'     => '',// 时间
+            'education_pic1'    => '',// 学历学位证
+            'education_pic2'    => '',// 毕业证
             'education_check'   => false,// 审核状态true通过，false未通过
-            'education_time'    => '未知',// 时间
-            'house_pic1'        => '未知',// 房产证正面
-            'house_pic2'        => '未知',// 反面
+            'education_time'    => '',// 时间
+            'house_pic1'        => '',// 房产证正面
+            'house_pic2'        => '',// 反面
             'house_check'       => false,// 审核状态true通过，false未通过
-            'house_time'        => '未知',// 时间
+            'house_time'        => '',// 时间
         ];
         $infoData['auth'] = json_encode($userAuth);
         $infoData['info'] = json_encode($userInfo);
@@ -302,15 +302,16 @@ class User extends \common\models\User
                     case 'age':
                         if (is_numeric($val)) {
                             if ($val != 0) {
-                                $age = $this->getTimestampByAge($val);
-                                $data['where']["json_extract(info,'$.age')"] = ['>=', $age];
+                                //$age = $this->getTimestampByAge($val);
+                                //$data['where']["json_extract(info,'$.age')"] = ['>=', $age];
+                                $data['where']['age'] = ['>=', $val];
                             }
                         } else {
-
                             $age = explode('-', $val);
-                            $age1 = $this->getTimestampByAge($age[0]);
-                            $age2 = $this->getTimestampByAge($age[1]);
-                            $data['where']["json_extract(info,'$.age')"] = ['between' => [$age2, $age1]];
+                            //$age1 = $this->getTimestampByAge($age[0]);
+                            //$age2 = $this->getTimestampByAge($age[1]);
+                            //$data['where']["json_extract(info,'$.age')"] = ['between' => [$age2, $age1]];
+                            $data['where']['age'] = ['between' => [$age[0], $age[1]]];
                         }
                         break;
 
@@ -329,7 +330,7 @@ class User extends \common\models\User
             }
         }
         $data['where']['is_show'] = 1;
-        $data['where']["json_extract(info,'$.head_pic')"] = ['!=' => '未知'];
+        $data['where']["json_extract(info,'$.head_pic')"] = ['!=' => ''];
 
         return $data;
     }

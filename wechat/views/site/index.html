@@ -49,7 +49,7 @@
                                 <div class="col">
                                     <span class="fwb fs14" ng-if="user.info.real_name">{{user.info.real_name | sex:user.sex :user.info.age}}</span>
                                     <span class="fwb fs14" ng-if="!user.info.real_name">会员ID:{{user.id}}</span>
-                                    <span ng-if="user.info.age" class="cor19 fs12">{{user.info.age | timeToAge}}岁</span> <span
+                                    <span ng-if="user.info.age" class="cor19 fs12">{{user.age}}岁</span> <span
                                         ng-if="user.info.height"
                                         class="cor19 fs12">{{user.info.height}}cm</span>
                                     <span ng-if="user.info.is_marriage" class="cor19 fs12">{{user.info.is_marriage | marriage}}</span>
