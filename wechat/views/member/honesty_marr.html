@@ -1,6 +1,8 @@
 <ion-view hide-tabs="true">
     <link href="/wechat/web/css/member.css" rel="stylesheet">
-    <link href="/wechat/web/css/plugin/bootstrap/css/font-awesome.min.css" rel="stylesheet">
+    <link href="/wechat/web/js/plugin/amezeui/css/amazeui.min.css" rel="stylesheet">
+    <link href="/wechat/web/css/plugin/photoswipe/photoswipe.css" rel="stylesheet">
+    <link href="/wechat/web/css/plugin/photoswipe/default-skin.css" rel="stylesheet">
     <ion-header-bar class="com_w_100 bhy">
         <title class="title">婚姻认证</title>
     </ion-header-bar>
@@ -10,32 +12,31 @@
                 请您上传户口簿、离婚证照片
             </div>
             <div class="item item-text-wrap">
-                <div class="upload_box">
-                    <span class="upload_text tac" ng-click="addNewImg('marriage_pic1')">
-                        <span ng-show="userInfo.auth.marriage_pic1 != '未知'">
-                            <img src="{{userInfo.auth.marriage_pic1}}">
-                        </span>
-                        <p class="tac" ng-show="userInfo.auth.marriage_pic1 == '未知'">
-                            <i class="icon ion-plus-round upload_icon"></i>
-                        </p>
-                        <p class="tac">
-                            <span class="upload_title">添加照片</span>
-                        </p>
-                    </span>
-                </div>
-                <div class="upload_box">
-                    <span class="upload_text tac" ng-click="addNewImg('marriage_pic2')">
-                        <span ng-show="userInfo.auth.marriage_pic2 != '未知'">
-                            <img src="{{userInfo.auth.marriage_pic2}}">
-                        </span>
-                        <p class="tac" ng-show="userInfo.auth.marriage_pic2 == '未知'">
-                            <i class="icon ion-plus-round upload_icon"></i>
-                        </p>
-                        <p class="tac">
-                            <span class="upload_title">添加照片</span>
-                        </p>
-                    </span>
-                </div>
+                <ul class="am-avg-sm-2 am-thumbnails tac">
+                    <li>
+                        <button type="button" class="am-btn am-btn-primary am-btn-sm am-radius"
+                                ng-click="addNewImg('marriage_pic1')">点击上传
+                        </button>
+                        <div class="pr">
+                            <img ng-if="userInfo.auth.marriage_pic1" ng-click="showImg(0)" style="margin-bottom: 0;"
+                                 class="am-thumbnail mt10"
+                                 src="{{userInfo.auth.marriage_pic1}}" alt="婚姻证明"/>
+                            <div class="underReview"><span class="">审核中</span></div>
+                        </div>
+
+                    </li>
+                    <li>
+                        <button type="button" class="am-btn am-btn-secondary am-btn-sm am-radius"
+                                ng-click="addNewImg('marriage_pic2')">点击上传
+                        </button>
+                        <div class="pr">
+                            <img ng-if="userInfo.auth.marriage_pic2" ng-click="showImg(1)" style="margin-bottom: 0;"
+                                 class="am-thumbnail mt10"
+                                 src="{{userInfo.auth.marriage_pic2}}" alt="婚姻证明"/>
+                            <div class="underReview"><span>审核中</span></div>
+                        </div>
+                    </li>
+                </ul>
                 <input id="marriage_pic1" type="file" nv-file-select uploader="uploader1"
                        style="visibility: hidden; display: none;" accept="image/*" >
                 <input id="marriage_pic2" type="file" nv-file-select uploader="uploader2"

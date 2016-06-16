@@ -1,6 +1,9 @@
 <ion-view hide-tabs="true">
     <link href="/wechat/web/css/member.css" rel="stylesheet">
     <link href="/wechat/web/js/plugin/amezeui/css/amazeui.min.css" rel="stylesheet">
+    <link href="/wechat/web/css/plugin/photoswipe/photoswipe.css" rel="stylesheet">
+    <link href="/wechat/web/css/plugin/photoswipe/default-skin.css" rel="stylesheet">
+
     <ion-header-bar class="com_w_100 bhy">
         <title class="title">身份认证</title>
         <button class="button button-icon cor21" ng-click="saveData()">保存</button>
@@ -12,12 +15,31 @@
             </div>
             <div class="item item-text-wrap">
 
-                <ul class="am-avg-sm-2 am-thumbnails tac" data-am-widget="gallery" data-am-gallery="{ pureview: {target: 'a'} }">
-                    <li class="am-gallery-item"><button type="button" class="am-btn am-btn-primary am-btn-sm am-radius" ng-click="addNewImg('identity_pic1')">上传正面</button><a href="{{userInfo.auth.identity_pic1 | picture}}"><img ng-if="userInfo.auth.identity_pic1 != '未知'" class="am-thumbnail mt10" src="{{userInfo.auth.identity_pic1}}" alt="正面"/></a></li>
-                    <li class="am-gallery-item"><button type="button" class="am-btn am-btn-secondary am-btn-sm am-radius" ng-click="addNewImg('identity_pic2')">上传反面</button><a href="{{userInfo.auth.identity_pic2 | picture}}"><img ng-if="userInfo.auth.identity_pic2 != '未知'" class="am-thumbnail mt10" src="{{userInfo.auth.identity_pic2}}" alt="反面"/></a></li>
+                <ul class="am-avg-sm-2 am-thumbnails tac">
+                    <li>
+                        <button type="button" class="am-btn am-btn-primary am-btn-sm am-radius"
+                                ng-click="addNewImg('identity_pic1')">上传正面
+                        </button>
+                        <div class="pr">
+                            <img ng-if="userInfo.auth.identity_pic1" ng-click="showImg(0)" style="margin-bottom: 0;"
+                                 class="am-thumbnail mt10"
+                                 src="{{userInfo.auth.identity_pic1}}" alt="正面"/>
+                            <div class="underReview"><span class="">审核中</span></div>
+                        </div>
+
+                    </li>
+                    <li>
+                        <button type="button" class="am-btn am-btn-secondary am-btn-sm am-radius"
+                                ng-click="addNewImg('identity_pic2')">上传反面
+                        </button>
+                        <div class="pr">
+                            <img ng-if="userInfo.auth.identity_pic2" ng-click="showImg(1)" style="margin-bottom: 0;"
+                                 class="am-thumbnail mt10"
+                                 src="{{userInfo.auth.identity_pic2}}" alt="反面"/>
+                            <div class="underReview"><span>审核中</span></div>
+                        </div>
+                    </li>
                 </ul>
-
-
                 <input id="identity_pic1" type="file" nv-file-select uploader="uploader1"
                        style="visibility: hidden; display: none;" accept="image/*">
                 <input id="identity_pic2" type="file" nv-file-select uploader="uploader2"
@@ -32,17 +54,85 @@
             <div class="item item-text-wrap ">
                 <label class="item item-input">
                     <span class="input-label">真实姓名</span>
-                    <input type="text" ng-model="formData.real_name" placeholder="请输入您的真实姓名">
+                    <input type="text" ng-model="formData.real_name" placeholder="保密，不会向第三方公开">
                 </label>
                 <label class="item item-input">
                     <span class="input-label">身份证号码</span>
-                    <input type="text" ng-model="formData.identity_id" placeholder="请输入您的身份证号码">
+                    <input type="text" ng-model="formData.identity_id" placeholder="保密，不会向第三方公开">
                 </label>
                 <label class="item item-input">
                     <span class="input-label">身份证地址</span>
-                    <input type="text" ng-model="formData.identity_address" placeholder="请输入您的身份证地址">
+                    <input type="text" ng-model="formData.identity_address" placeholder="保密，不会向第三方公开">
                 </label>
             </div>
         </div>
     </ion-content>
+
+    <!-- Root element of PhotoSwipe. Must have class pswp. -->
+    <div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+        <!-- Background of PhotoSwipe.
+             It's a separate element as animating opacity is faster than rgba(). -->
+        <div class="pswp__bg"></div>
+
+        <!-- Slides wrapper with overflow:hidden. -->
+        <div class="pswp__scroll-wrap">
+
+            <!-- Container that holds slides.
+                PhotoSwipe keeps only 3 of them in the DOM to save memory.
+                Don't modify these 3 pswp__item elements, data is added later on. -->
+            <div class="pswp__container">
+                <div class="pswp__item"></div>
+                <div class="pswp__item"></div>
+                <div class="pswp__item"></div>
+            </div>
+
+            <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+            <div class="pswp__ui pswp__ui--hidden">
+
+                <div class="pswp__top-bar">
+
+                    <!--  Controls are self-explanatory. Order can be changed. -->
+
+                    <div class="pswp__counter"></div>
+
+                    <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                    <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                    <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                    <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                    <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                    <!-- element will get class pswp__preloader--active when preloader is running -->
+                    <div class="pswp__preloader">
+                        <div class="pswp__preloader__icn">
+                            <div class="pswp__preloader__cut">
+                                <div class="pswp__preloader__donut"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                    <div class="pswp__share-tooltip"></div>
+                </div>
+
+                <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+                </button>
+
+                <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+                </button>
+
+                <div class="pswp__caption">
+                    <div class="pswp__caption__center"></div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
 </ion-view>

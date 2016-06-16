@@ -139,6 +139,9 @@ a.weibo {
     max-width: 100%;
   }
 }
+.site .list .item {
+  padding: 0;
+}
 .site p.signature {
   font-size: 12px;
 }

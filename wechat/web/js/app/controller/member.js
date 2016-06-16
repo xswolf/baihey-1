@@ -29,12 +29,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
         requirejs(['amezeui', 'amezeui_ie8'], function (amezeui, amezeui_ie8) {
 
         });
-        $scope.onTouch = function () {
-            console.log('ononon');
-        }
-        $scope.onRelease = function () {
-            console.log('lelele');
-        }
+
         // 实例化上传图片插件
         var uploader = $scope.uploader = new FileUploader({
             url: '/wap/file/thumb-photo'
@@ -1568,6 +1563,21 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
                 eval("$scope." + name + "_count = " + 0);
             }
         }
+        // 权限判断
+        var is_privacy = function(val) {
+            switch (val) {
+                case '1':
+                    return true;
+                case '2':
+                    return $scope.formData.followed == 1 ? true : false;
+                case '3':
+                    return $scope.otherUserInfo.info.level > 0 ? true : false;
+                case '4':
+                    return false;
+                default :
+                    return false;
+            }
+        }
         $scope.formData = [];
         $scope.formData.userId = $location.$$search.userId;
         $scope.otherUserInfo = [];
@@ -1592,6 +1602,10 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
                 }
                 $scope.formData.follow = res.followStatus;// 关注状态
                 $scope.formData.followed = res.followedStatus;// 被关注状态
+                $scope.qqAuth   = is_privacy($scope.otherUserInfo.privacy_qq);// qq权限
+                $scope.perAuth  = is_privacy($scope.otherUserInfo.privacy_per);// 个人动态权限
+                $scope.wxAuth   = is_privacy($scope.otherUserInfo.privacy_wechat);// 微信权限
+                $scope.picAuth  = is_privacy($scope.otherUserInfo.privacy_pic);// 相册权限 // TODO
                 $scope.otherUserInfo.went_travel ? getTravel('went_travel', $scope.otherUserInfo.went_travel) : true;// 我去过的地方
                 $scope.otherUserInfo.want_travel ? getTravel('want_travel', $scope.otherUserInfo.want_travel) : true;// 我想去的地方
                 $scope.otherUserInfo.love_sport ? getConfig('love_sport', $scope.otherUserInfo.love_sport) : true;// 喜欢的运动
@@ -1599,51 +1613,6 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
                 $scope.otherUserInfo.like_food ? getConfig('like_food', $scope.otherUserInfo.like_food) : true;// 喜欢的食物
             }
         });
-
-        var is_privacy = function(val) {
-            switch (val) {
-                case '1':
-                    return true;
-                case '2':
-                    return $scope.formData.followed == 1 ? true : false;
-                case '3':
-                    return $scope.otherUserInfo.info.level > 0 ? true : false;
-                case '4':
-                    return false;
-            }
-        }
-
-        // 相册权限 $scope.otherUserInfo.privacy_pic;
-        // 相册权限 $scope.otherUserInfo.privacy_per;
-        // 查看个人动态
-        $scope.showPER = function(){
-            if(is_privacy($scope.otherUserInfo.privacy_per)){
-                window.location.hash = '#/main/dynmaic?userId=' + $scope.otherUserInfo.user_id + '&real_name=' + $scope.otherUserInfo.info.real_name + '&sex=' + $scope.otherUserInfo.sex + '&age=' + $scope.otherUserInfo.info.age;
-            }else{
-                ar.saveDataAlert($ionicPopup,'该用户暂未公开个人动态');
-            }
-        }
-        // 查看微信号
-        $scope.showWX = function(){
-            $scope.wxAuth = is_privacy($scope.otherUserInfo.privacy_wechat);
-            //$scope.wxAuth = true;    // 是否有权限 //TODO
-            if($scope.wxAuth){
-                ar.saveDataAlert($ionicPopup,'TA的微信号是：' + $scope.otherUserInfo.info.wechat);
-            }else{
-                ar.saveDataAlert($ionicPopup,'该用户暂未公开微信号');
-            }
-        }
-
-        // 查看QQ号
-        $scope.showQQ = function(){
-            $scope.qqAuth = is_privacy($scope.otherUserInfo.privacy_qq);
-            //$scope.qqAuth = true;    // 是否有权限  //TODO
-            if($scope.qqAuth){
-                ar.saveDataAlert($ionicPopup,'TA的QQ号是：' + $scope.otherUserInfo.info.qq);
-            }else{
-                ar.saveDataAlert($ionicPopup,'该用户暂未公开QQ号');
-            }
-        }
 
         $scope.localChat = function () {
             window.location.hash = "#/main/chat?id=" + $scope.otherUserInfo.id + "&head_pic=" + $scope.otherUserInfo.info.head_pic + "&real_name=" + $scope.otherUserInfo.info.real_name + "&sex=" + $scope.otherUserInfo.sex + "&age=" + $scope.otherUserInfo.info.age;
@@ -1943,8 +1912,28 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
 
     // 诚信认证-身份认证
     module.controller("member.honesty_sfz", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', 'FileUploader','$location', function (api, $scope, $timeout, $ionicPopup, FileUploader,$location) {
-        requirejs(['amezeui', 'amezeui_ie8'], function (amezeui, amezeui_ie8) {
-
+        requirejs(['photoswipe', 'photoswipe_ui'], function (photoswipe, photoswipe_ui) {
+            $scope.showImg =function(index){
+                $scope.imgAttr1 = $scope.userInfo.auth.identity_pic1.split('.')[0].split('_');
+                $scope.imgAttr2 = $scope.userInfo.auth.identity_pic2.split('.')[0].split('_');
+                $scope.imgList = [
+                    {src:$scope.userInfo.auth.identity_pic1.replace('thumb', 'picture'),w:$scope.imgAttr1[1],h:$scope.imgAttr1[2]},
+                    {src:$scope.userInfo.auth.identity_pic2.replace('thumb', 'picture'),w:$scope.imgAttr2[1],h:$scope.imgAttr2[2]}
+                ];
+                var pswpElement = document.querySelectorAll('.pswp')[0];
+                var options ={index:index};
+                options.mainClass = 'pswp--minimal--dark';
+                options.barsSize = {top:0,bottom:0};
+                options.captionEl = false;
+                options.fullscreenEl = false;
+                options.shareEl = false;
+                options.history = false;
+                options.bgOpacity = 0.85;
+                options.tapToClose = true;
+                options.tapToToggleControls = false;
+                var gallery = new photoswipe( pswpElement, photoswipe_ui, $scope.imgList, options);
+                gallery.init();
+            }
         });
         // 实例化上传图片插件
         var uploader1 = $scope.uploader1 = new FileUploader({
@@ -1994,6 +1983,31 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
 
     // 诚信认证-婚姻认证
     module.controller("member.honesty_marr", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', 'FileUploader', function (api, $scope, $timeout, $ionicPopup, FileUploader) {
+        requirejs(['photoswipe', 'photoswipe_ui'], function (photoswipe, photoswipe_ui) {
+            $scope.showImg =function(index){
+                $scope.imgAttr1 = $scope.userInfo.auth.marriage_pic1.split('.')[0].split('_');
+                $scope.imgAttr2 = $scope.userInfo.auth.marriage_pic2.split('.')[0].split('_');
+                $scope.imgList = [
+                    {src:$scope.userInfo.auth.marriage_pic1.replace('thumb', 'picture'),w:$scope.imgAttr1[1],h:$scope.imgAttr1[2]},
+                    {src:$scope.userInfo.auth.marriage_pic2.replace('thumb', 'picture'),w:$scope.imgAttr2[1],h:$scope.imgAttr2[2]}
+                ];
+                var pswpElement = document.querySelectorAll('.pswp')[0];
+                var options ={index:index};
+                options.mainClass = 'pswp--minimal--dark';
+                options.barsSize = {top:0,bottom:0};
+                options.captionEl = false;
+                options.fullscreenEl = false;
+                options.shareEl = false;
+                options.history = false;
+                options.bgOpacity = 0.85;
+                options.tapToClose = true;
+                options.tapToToggleControls = false;
+                var gallery = new photoswipe( pswpElement, photoswipe_ui, $scope.imgList, options);
+                gallery.init();
+            }
+        });
+
+
         // 实例化上传图片插件
         var uploader1 = $scope.uploader1 = new FileUploader({
             url: '/wap/file/auth-pictures?auth=marriage_pic1'
@@ -2014,6 +2028,30 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
 
     // 诚信认证-学历认证
     module.controller("member.honesty_edu", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', 'FileUploader', function (api, $scope, $timeout, $ionicPopup, FileUploader) {
+        requirejs(['photoswipe', 'photoswipe_ui'], function (photoswipe, photoswipe_ui) {
+            $scope.showImg =function(index){
+                $scope.imgAttr1 = $scope.userInfo.auth.education_pic1.split('.')[0].split('_');
+                $scope.imgAttr2 = $scope.userInfo.auth.education_pic2.split('.')[0].split('_');
+                $scope.imgList = [
+                    {src:$scope.userInfo.auth.education_pic1.replace('thumb', 'picture'),w:$scope.imgAttr1[1],h:$scope.imgAttr1[2]},
+                    {src:$scope.userInfo.auth.education_pic2.replace('thumb', 'picture'),w:$scope.imgAttr2[1],h:$scope.imgAttr2[2]}
+                ];
+                var pswpElement = document.querySelectorAll('.pswp')[0];
+                var options ={index:index};
+                options.mainClass = 'pswp--minimal--dark';
+                options.barsSize = {top:0,bottom:0};
+                options.captionEl = false;
+                options.fullscreenEl = false;
+                options.shareEl = false;
+                options.history = false;
+                options.bgOpacity = 0.85;
+                options.tapToClose = true;
+                options.tapToToggleControls = false;
+                var gallery = new photoswipe( pswpElement, photoswipe_ui, $scope.imgList, options);
+                gallery.init();
+            }
+        });
+
         // 实例化上传图片插件
         var uploader1 = $scope.uploader1 = new FileUploader({
             url: '/wap/file/auth-pictures?auth=education_pic1'
@@ -2034,6 +2072,31 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
 
     // 诚信认证-房产认证
     module.controller("member.honesty_housing", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', 'FileUploader', function (api, $scope, $timeout, $ionicPopup, FileUploader) {
+        requirejs(['photoswipe', 'photoswipe_ui'], function (photoswipe, photoswipe_ui) {
+            $scope.showImg =function(index){
+                $scope.imgAttr1 = $scope.userInfo.auth.house_pic1.split('.')[0].split('_');
+                $scope.imgAttr2 = $scope.userInfo.auth.house_pic2.split('.')[0].split('_');
+                $scope.imgList = [
+                    {src:$scope.userInfo.auth.house_pic1.replace('thumb', 'picture'),w:$scope.imgAttr1[1],h:$scope.imgAttr1[2]},
+                    {src:$scope.userInfo.auth.house_pic2.replace('thumb', 'picture'),w:$scope.imgAttr2[1],h:$scope.imgAttr2[2]}
+                ];
+                var pswpElement = document.querySelectorAll('.pswp')[0];
+                var options ={index:index};
+                options.mainClass = 'pswp--minimal--dark';
+                options.barsSize = {top:0,bottom:0};
+                options.captionEl = false;
+                options.fullscreenEl = false;
+                options.shareEl = false;
+                options.history = false;
+                options.bgOpacity = 0.85;
+                options.tapToClose = true;
+                options.tapToToggleControls = false;
+                var gallery = new photoswipe( pswpElement, photoswipe_ui, $scope.imgList, options);
+                gallery.init();
+            }
+        });
+
+
         // 实例化上传图片插件
         var uploader1 = $scope.uploader1 = new FileUploader({
             url: '/wap/file/auth-pictures?auth=house_pic1'
