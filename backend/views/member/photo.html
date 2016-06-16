@@ -44,7 +44,7 @@
                         <td class="tn">{{$vo.id}}</td>
                         <td>{{$vo.user_id}}</td>
                         <td>{{getName($vo.real_name)}}</td>
-                        <td><img src="{{$vo.thumb_path}}"></img></td>
+                        <td><img width="100" height="100" src="{{$vo.thumb_path}}"></img></td>
                         <td>{{date('Y-m-d H:i:s',$vo.create_time)}}</td>
                         <td>
                             <div class="make-switch switch-small" data-on-label="已审核" data-off-label="未审核" data-on="success" data-off="danger">
