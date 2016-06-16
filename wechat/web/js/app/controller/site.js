@@ -47,6 +47,14 @@ define(['app/module', 'app/directive/directiveApi'
         }*/
         //getLocation();
 
+        // 判断手机是否认证
+        $scope.checkPhone = function(url) {
+            if($scope.userInfo.phone) {
+                window.location.hash = url;
+            } else {
+                window.location.hash = '#/main/member/security_phone';
+            }
+        }
 
         // 读取用户数据
         function userListPromise() {
