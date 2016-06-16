@@ -96,6 +96,7 @@ class UserPhoto extends Base
     /**
      * 获取用户上传的照片
      * @param int $isCheck 2：未审核 1：审核通过 0：不通过
+     * @param int $type 1:照片 2：身份证，3：学历证 ， 4：离婚证 5房产证
      * @return array
      */
     public function lists($isCheck = 2){
@@ -103,7 +104,8 @@ class UserPhoto extends Base
             ->innerJoin($this->tablePrefix.'user_information i' , 'u.user_id=i.user_id')
             ->where(['is_check' => $isCheck])
             ->limit(1000)
-            ->select(['u.id','u.user_id','u.thumb_path','u.create_time','is_check','is_head',"json_extract(i.info , '$.real_name') as real_name"])
+            ->orderBy("u.create_time")
+            ->select(['u.id','u.user_id','u.type','u.thumb_path','u.create_time','is_check','is_head',"json_extract(i.info , '$.real_name') as real_name"])
             ->all();
     }
 
