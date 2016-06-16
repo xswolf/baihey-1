@@ -25,7 +25,7 @@
                     <span ng-if="otherUserInfo.info.zodiac" class="ml10">{{otherUserInfo.info.zodiac | zodiac}} {{otherUserInfo.info.constellation | constellation}}</span>
                 </p>
             </ion-item>
-            <ion-item ng-if="dynamicList.length > 0" ng-click="showPER()">
+            <ion-item ng-if="dynamicList.length > 0 && perAuth" href="#/main/dynmaic?userId={{otherUserInfo.id}}&real_name={{otherUserInfo.info.real_name}}&sex={{otherUserInfo.sex}}&age={{otherUserInfo.info.age}}">
                 <div class="info_l">
                     <p>个人动态</p>
                 </div>
@@ -84,20 +84,20 @@
                     <p class="null"><span>{{otherUserInfo.info.haunt_address}}</span></p>
                 </div>
             </ion-item>
-            <ion-item ng-if="otherUserInfo.info.wechat">
+            <ion-item ng-if="otherUserInfo.info.wechat && wxAuth">
                 <div class="info_l">
                     <p>微信号</p>
                 </div>
                 <div class="info_c">
-                    <p class="null"><span>******</span><button type="button" ng-click="showWX()" class="am-btn am-btn-danger am-radius am-btn-xs ml20">查看<!--{{otherUserInfo.info.wechat}}--></button></p>
+                    <p class="null"><span>{{otherUserInfo.info.wechat}}</span></p>
                 </div>
             </ion-item>
-            <ion-item ng-if="otherUserInfo.info.qq">
+            <ion-item ng-if="otherUserInfo.info.qq && qqAuth">
                 <div class="info_l">
                     <p>QQ号</p>
                 </div>
                 <div class="info_c">
-                    <p class="null"><span>******</span><button type="button" ng-click="showQQ()" class="am-btn am-btn-danger am-radius am-btn-xs ml20">查看<!--{{otherUserInfo.info.qq}}--></button></p>
+                    <p class="null"><span>{{otherUserInfo.info.qq}}</span></p>
                 </div>
             </ion-item>
             <div class="hobby">
