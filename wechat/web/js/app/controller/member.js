@@ -2911,10 +2911,14 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
                 }
             }
         });
-        $scope.value = 0;
-        $scope.toggle = function (i) {
-            $scope.value = i;
+        $scope.showPhone = function () {
+            ar.saveDataAlert($ionicPopup,'电话：023-68800967');
         }
+
+    }]);
+
+    // 专属红娘资料
+    module.controller("member.matchmaker_info", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$location', function (api, $scope, $timeout, $ionicPopup, $location) {
 
     }]);
 

@@ -1,63 +1,45 @@
 <ion-view hide-tabs="true">
     <link href="/wechat/web/css/member.css" rel="stylesheet">
     <link href="/wechat/web/css/plugin/animate/animate.css" rel="stylesheet">
-    <ion-header-bar class="com_w_100 bhy">
+    <ion-header-bar class="com_w_100 bhy maker_hdr">
         <p class="title">我的专属红娘</p>
     </ion-header-bar>
     <ion-content class="bhy com_w_100 matchmaker">
-        <div class="m_top clearfix">
-            <div class="m_top_head mr0a" ng-if="value == 0">
-                <p><img src="{{matchmakerList[0].photo}}"></p>
-                <p class="tac cor18 fs16">{{matchmakerList[0].name}}</p>
+        <div class="list mb0">
+            <div class="item item-thumbnail-left pr bor_b_n" >
+                <img src="/wechat/web/images/member/maker.jpg">
+                <h2 style="margin-top: 10px;">郭禹杉</h2>
+                <p class="mt10">工号：5188</p>
+                <p>服务：
+                    <i class="ion-ios-star fs16 cor51"></i>
+                    <i class="ion-ios-star fs16 cor51"></i>
+                    <i class="ion-ios-star fs16 cor51"></i>
+                    <i class="ion-ios-star fs16 cor51"></i>
+                    <i class="ion-ios-star fs16 cor51"></i>
+                </p>
+                <div class="maker_info fr">
+                    <a href="#/main/member/matchmaker_info" class="hdr_info_btn button-light rounded mt20">资料<i class="ml5 ion-ios-arrow-right"></i></a>
+                    <span ng-click="showPhone()" class="hdr_tell_btn"><i class="ion-ios-telephone"></i></span>
+                </div>
             </div>
-            <div class="m_top_head mr0a" ng-if="value == 1">
-                <p><img src="{{matchmakerList[1].photo}}"></p>
-                <p class="tac cor18 fs16">{{matchmakerList[1].name}}</p>
+            <ion-item class="bor_t_n pt0">
+                <p class="ti28 wsn">张小姐您好！ 郭伊山老师是您的专属红娘顾问，她的牵线经验非常的丰富，如果您遇到心仪的人却又不知道该怎么去了解，这时可以求助于您的专属红娘。</p>
+            </ion-item>
+            <div class="introduction">
+                <img src="/wechat/web/images/member/maker1.png">
+                <p class="ti28 wsn mt10">嘉瑞百合缘红娘均接受过专业培训，并获得国家职业<span class="cor28">“婚姻家庭咨询师”</span>资格证书，具有优秀的观察判断沟通交流能力，为您提供细致贴心的个性化专属服务，帮您更快找到心仪对象。</p>
+            </div>
+            <div class="introduction">
+                <img src="/wechat/web/images/member/maker2.png">
+                <p class="ti28 wsn mt10">嘉瑞百合缘红娘<span class="cor28">不仅为您牵线搭桥，更贴心关注您的情感生活。</span>结合多年婚恋服务经验，为您的恋爱交往、婚姻经营提供最有效的建议和指导。</p>
+            </div>
+            <div class="introduction">
+                <img src="/wechat/web/images/member/maker3.png">
+                <p class="ti28 wsn bot">嘉瑞百合缘红娘与每位认证会员均有面谈或电话沟通记录，详细了解到您的综合素养及家庭背景，<span class="cor28">熟知您的征婚要求，精心为您筛选最佳人选并定制专属相亲方案，</span>大大提高您的婚恋成功率。</p>
+                <p class="tac fwb cor28">选择专属红娘服务是您幸福婚姻的有力保障！</p>
             </div>
         </div>
-        <div class="m_con item" ng-if="matchmakerList.length == 1">
-            <p class="hello">{{userInfo.info.real_name | sex:userInfo.sex :userInfo.info.age}}您好：</p>
-
-            <p class="info mt15">
-                {{matchmakerList[0].name}}老师是您的专属红娘顾问，她的牵线经验非常的丰富，如果您遇到心仪的人却又不知道该怎么去了解，这时可以求助于您的专属红娘。</p>
-        </div>
-        <div class="m_con item" ng-if="matchmakerList.length != 1">
-            <p class="hello">{{userInfo.info.real_name | sex:userInfo.sex :userInfo.info.age}}您好：</p>
-
-            <p class="info mt15">目前有 2 位红娘为您服务。</p>
-
-            <p class="info">更多时候是服务红娘和您联系！</p>
-
-            <div class="mt15">
-                <p class="info">专属红娘：<a class="" ng-click="toggle(0)" href="javascript:;">{{matchmakerList[0].name}}</a></p>
-
-                <p class="info">服务红娘：<a class="" ng-click="toggle(1)" href="javascript:;">{{matchmakerList[1].name}}</a></p>
-            </div>
-        </div>
-        <div class="item m_con bor_0" ng-if="value == 0">
-            <p class="info">微信：{{matchmakerList[0].wechat}}</p>
-
-            <p class="info">Q  Q：{{matchmakerList[0].qq}}</p>
-
-            <p class="info">手机：{{matchmakerList[0].phone}}</p>
-
-            <p class="info">座机：{{matchmakerList[0].landline}}</p>
-        </div>
-        <div class="item m_con bor_0" ng-if="value == 1">
-            <p class="info">微信：{{matchmakerList[1].wechat}}</p>
-
-            <p class="info">Q  Q：{{matchmakerList[1].qq}}</p>
-
-            <p class="info">手机：{{matchmakerList[1].phone}}</p>
-
-            <p class="info">座机：{{matchmakerList[1].landline}}</p>
-        </div>
-        <div class="m_bot">
-            <img src="/wechat/web/images/member/matchmaker_bot.jpg">
-        </div>
-        <a href="#/main/member/matchmaker_service" class="button button-block bot_btn button-royal">红娘服务四大优势 <i
-                class="ion-ios-arrow-right"></i><i class="ion-ios-arrow-right"></i>
-        </a>
+            <a href="#/main/member/matchmaker_service" class="button w100 maker_footer_btn">红娘服务四大优势<i class="ml10 ion-ios-arrow-right"></i><i class="ion-ios-arrow-right"></i></a>
     </ion-content>
 
 </ion-view>

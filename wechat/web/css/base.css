@@ -76,7 +76,7 @@
 .mt50{ margin-top: 50px;}
 p.mt0{ margin-top: 0;}
 p.mb0{ margin-bottom: 0;}
-
+.pt0{ padding-top: 0;}
 .ml5{ margin-left: 5px;}
 .ml10{ margin-left: 10px;}
 .ml15{ margin-left: 15px;}
@@ -141,6 +141,7 @@ p.mb0{ margin-bottom: 0;}
 .cor48{color:#a9b7b7;}
 .cor49{color:#000000;}
 .cor50{color:#cccccc;}
+.cor51{color:#fec52b;}
 
 .fs11{ font-size: 11px;}
 .fs12{ font-size: 12px;}
@@ -155,6 +156,7 @@ p.mb0{ margin-bottom: 0;}
 .fs30{ font-size: 30px;}
 .fs50{ font-size: 50px;}
 
+.ls1{letter-spacing:1px;}
 .ls3{letter-spacing:3.5px;}
 .fwn{font-weight:normal;}
 .tal{text-align:left}
@@ -190,6 +192,7 @@ p.mb0{ margin-bottom: 0;}
 .bhy_item_b{ padding:8px 16px 0 16px;}
 .bhy_textarea{ min-height: 80px}
 .ti24{text-indent: 24px}
+.ti28{text-indent: 28px}
 .bor_r_n{border-right:none;}
 .bor_b_n{border-bottom:none;}
 .bor_l_n{border-left:none;}
@@ -199,7 +202,7 @@ p.mb0{ margin-bottom: 0;}
 .bor_imp{ border: 1px solid #eeeeee !important; }
 .pd5{ padding: 0 5px;}
 .cbh{clear:both;}
-
+.bg5{background-color: #f5f5f5;}
 .comm_bg_1{ background-color: #111111 !important;}
 .comm_bg_2{ background-color: #222222 !important;}
 .comm_bg_3{ background-color: #333333 !important;}
