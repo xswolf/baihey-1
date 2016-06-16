@@ -95,7 +95,7 @@
                                             <div id="dtp_input" class="input-group date form_date col-md-6" data-date=""
                                                  data-date-format="yyyy-mm-dd" data-link-field="dtp_input"
                                                  data-link-format="yyyy-mm-dd">
-                                                <input id="age" name="info[age]" class="form-control" size="16" type="text" value="{{date('Y-m-d',$user.info->age)}}"
+                                                <input id="age" name="info[age]" class="form-control" size="16" type="text" value="{{if ($user.info->age !='')}}{{date('Y-m-d',$user.info->age)}}{{/if}}"
                                                        readonly>
                             <span class="input-group-addon"><span
                                     class="glyphicon glyphicon-remove"></span></span>
