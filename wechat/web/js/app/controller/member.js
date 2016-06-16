@@ -1943,8 +1943,28 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
 
     // 诚信认证-身份认证
     module.controller("member.honesty_sfz", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', 'FileUploader','$location', function (api, $scope, $timeout, $ionicPopup, FileUploader,$location) {
-        requirejs(['amezeui', 'amezeui_ie8'], function (amezeui, amezeui_ie8) {
-
+        requirejs(['photoswipe', 'photoswipe_ui'], function (photoswipe, photoswipe_ui) {
+            $scope.showImg =function(index){
+                $scope.imgAttr1 = $scope.userInfo.auth.identity_pic1.split('.')[0].split('_');
+                $scope.imgAttr2 = $scope.userInfo.auth.identity_pic2.split('.')[0].split('_');
+                $scope.imgList = [
+                    {src:$scope.userInfo.auth.identity_pic1.replace('thumb', 'picture'),w:$scope.imgAttr1[1],h:$scope.imgAttr1[2]},
+                    {src:$scope.userInfo.auth.identity_pic2.replace('thumb', 'picture'),w:$scope.imgAttr2[1],h:$scope.imgAttr2[2]}
+                ];
+                var pswpElement = document.querySelectorAll('.pswp')[0];
+                var options ={index:index};
+                options.mainClass = 'pswp--minimal--dark';
+                options.barsSize = {top:0,bottom:0};
+                options.captionEl = false;
+                options.fullscreenEl = false;
+                options.shareEl = false;
+                options.history = false;
+                options.bgOpacity = 0.85;
+                options.tapToClose = true;
+                options.tapToToggleControls = false;
+                var gallery = new photoswipe( pswpElement, photoswipe_ui, $scope.imgList, options);
+                gallery.init();
+            }
         });
         // 实例化上传图片插件
         var uploader1 = $scope.uploader1 = new FileUploader({
@@ -1994,6 +2014,31 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
 
     // 诚信认证-婚姻认证
     module.controller("member.honesty_marr", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', 'FileUploader', function (api, $scope, $timeout, $ionicPopup, FileUploader) {
+        requirejs(['photoswipe', 'photoswipe_ui'], function (photoswipe, photoswipe_ui) {
+            $scope.showImg =function(index){
+                $scope.imgAttr1 = $scope.userInfo.auth.marriage_pic1.split('.')[0].split('_');
+                $scope.imgAttr2 = $scope.userInfo.auth.marriage_pic2.split('.')[0].split('_');
+                $scope.imgList = [
+                    {src:$scope.userInfo.auth.marriage_pic1.replace('thumb', 'picture'),w:$scope.imgAttr1[1],h:$scope.imgAttr1[2]},
+                    {src:$scope.userInfo.auth.marriage_pic2.replace('thumb', 'picture'),w:$scope.imgAttr2[1],h:$scope.imgAttr2[2]}
+                ];
+                var pswpElement = document.querySelectorAll('.pswp')[0];
+                var options ={index:index};
+                options.mainClass = 'pswp--minimal--dark';
+                options.barsSize = {top:0,bottom:0};
+                options.captionEl = false;
+                options.fullscreenEl = false;
+                options.shareEl = false;
+                options.history = false;
+                options.bgOpacity = 0.85;
+                options.tapToClose = true;
+                options.tapToToggleControls = false;
+                var gallery = new photoswipe( pswpElement, photoswipe_ui, $scope.imgList, options);
+                gallery.init();
+            }
+        });
+
+
         // 实例化上传图片插件
         var uploader1 = $scope.uploader1 = new FileUploader({
             url: '/wap/file/auth-pictures?auth=marriage_pic1'
@@ -2014,6 +2059,30 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
 
     // 诚信认证-学历认证
     module.controller("member.honesty_edu", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', 'FileUploader', function (api, $scope, $timeout, $ionicPopup, FileUploader) {
+        requirejs(['photoswipe', 'photoswipe_ui'], function (photoswipe, photoswipe_ui) {
+            $scope.showImg =function(index){
+                $scope.imgAttr1 = $scope.userInfo.auth.education_pic1.split('.')[0].split('_');
+                $scope.imgAttr2 = $scope.userInfo.auth.education_pic2.split('.')[0].split('_');
+                $scope.imgList = [
+                    {src:$scope.userInfo.auth.education_pic1.replace('thumb', 'picture'),w:$scope.imgAttr1[1],h:$scope.imgAttr1[2]},
+                    {src:$scope.userInfo.auth.education_pic2.replace('thumb', 'picture'),w:$scope.imgAttr2[1],h:$scope.imgAttr2[2]}
+                ];
+                var pswpElement = document.querySelectorAll('.pswp')[0];
+                var options ={index:index};
+                options.mainClass = 'pswp--minimal--dark';
+                options.barsSize = {top:0,bottom:0};
+                options.captionEl = false;
+                options.fullscreenEl = false;
+                options.shareEl = false;
+                options.history = false;
+                options.bgOpacity = 0.85;
+                options.tapToClose = true;
+                options.tapToToggleControls = false;
+                var gallery = new photoswipe( pswpElement, photoswipe_ui, $scope.imgList, options);
+                gallery.init();
+            }
+        });
+
         // 实例化上传图片插件
         var uploader1 = $scope.uploader1 = new FileUploader({
             url: '/wap/file/auth-pictures?auth=education_pic1'
@@ -2034,6 +2103,31 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
 
     // 诚信认证-房产认证
     module.controller("member.honesty_housing", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', 'FileUploader', function (api, $scope, $timeout, $ionicPopup, FileUploader) {
+        requirejs(['photoswipe', 'photoswipe_ui'], function (photoswipe, photoswipe_ui) {
+            $scope.showImg =function(index){
+                $scope.imgAttr1 = $scope.userInfo.auth.house_pic1.split('.')[0].split('_');
+                $scope.imgAttr2 = $scope.userInfo.auth.house_pic2.split('.')[0].split('_');
+                $scope.imgList = [
+                    {src:$scope.userInfo.auth.house_pic1.replace('thumb', 'picture'),w:$scope.imgAttr1[1],h:$scope.imgAttr1[2]},
+                    {src:$scope.userInfo.auth.house_pic2.replace('thumb', 'picture'),w:$scope.imgAttr2[1],h:$scope.imgAttr2[2]}
+                ];
+                var pswpElement = document.querySelectorAll('.pswp')[0];
+                var options ={index:index};
+                options.mainClass = 'pswp--minimal--dark';
+                options.barsSize = {top:0,bottom:0};
+                options.captionEl = false;
+                options.fullscreenEl = false;
+                options.shareEl = false;
+                options.history = false;
+                options.bgOpacity = 0.85;
+                options.tapToClose = true;
+                options.tapToToggleControls = false;
+                var gallery = new photoswipe( pswpElement, photoswipe_ui, $scope.imgList, options);
+                gallery.init();
+            }
+        });
+
+
         // 实例化上传图片插件
         var uploader1 = $scope.uploader1 = new FileUploader({
             url: '/wap/file/auth-pictures?auth=house_pic1'
