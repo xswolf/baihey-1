@@ -1,10 +1,10 @@
 @font-face {
     font-family: 'new';
-    src:    url('../fonts/new.eot?5mohu1');
-    src:    url('../fonts/new.eot?5mohu1#iefix') format('embedded-opentype'),
-    url('../fonts/new.ttf?5mohu1') format('truetype'),
-    url('../fonts/new.woff?5mohu1') format('woff'),
-    url('../fonts/new.svg?5mohu1#icomoon') format('svg');
+    src:    url('../fonts/new.eot?k7qys9');
+    src:    url('../fonts/new.eot?k7qys9#iefix') format('embedded-opentype'),
+    url('../fonts/new.ttf?k7qys9') format('truetype'),
+    url('../fonts/new.woff?k7qys9') format('woff'),
+    url('../fonts/new.svg?k7qys9#icomoon') format('svg');
     font-weight: normal;
     font-style: normal;
 }
@@ -24,6 +24,18 @@
     -moz-osx-font-smoothing: grayscale;
 }
 
+.icon-new-record:before {
+    content: "\e901";
+}
+.icon-new-bri:before {
+    content: "\e902";
+}
+.icon-new-withdraw:before {
+    content: "\e903";
+}
+.icon-new-bankCard:before {
+    content: "\e904";
+}
 .icon-new-bribery:before {
     content: "\e900";
 }

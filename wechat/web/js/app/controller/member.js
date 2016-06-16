@@ -2216,13 +2216,17 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
     }]);
 
 
-    // 嘉瑞红包
-    module.controller("member.bribery", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', function (api, $scope, $timeout, $ionicPopup) {
+    // 我的账户
+    module.controller("member.account", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', function (api, $scope, $timeout, $ionicPopup) {
+
 
         api.list('/wap/member/bribery-info').success(function (res) {
             $scope.bribery = res.data;
         })
-
+        $scope.money = false;
+        $scope.showMoney = function(){
+            $scope.money = true;
+        }
     }]);
 
     // 嘉瑞红包-收到的红包
