@@ -1501,6 +1501,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
         loadData();
         function loadData() {
             api.list('/wap/follow/follow-list', {type: $scope.followType}).success(function (res) {
+                console.log(res.data);
                 $scope.followList = res.data;
                 for (var i in $scope.followList) {
                     $scope.followList[i].info = JSON.parse($scope.followList[i].info);
@@ -1508,6 +1509,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
                 }
             });
         }
+
 
         // 取消关注
         $scope.delFollow = function (item, $index) {
@@ -1526,6 +1528,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
         // 切换，我关注的人，关注我的人
         $scope.switching = function (value) {
             $scope.followType = value;
+            loadData();
         };
 
     }]);

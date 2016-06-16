@@ -658,3 +658,9 @@ input[type="number"]{-moz-appearance:textfield;}
     vertical-align: baseline;
     white-space: nowrap;
 }
+.nullData{
+    display: block;
+    position: relative;
+    width: 100%;
+    margin-top: 30px;
+}
