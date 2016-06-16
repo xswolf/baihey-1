@@ -11,13 +11,11 @@
                     <p>
                         <strong class="fs14" ng-if="userInfo.info.real_name != '未知'">{{userInfo.info.real_name}}</strong>
                         <strong class="fs14" ng-if="userInfo.info.real_name == '未知'">ID:{{userInfo.id}}</strong>
-                                        <span class="ml5 cor22">
-                                            {{userInfo.info.age | timeToAge}}岁
-                                            <span class="sx">|</span>
-                                            {{userInfo.info.is_marriage | marriage}}
-                                            <span class="sx">|</span>
-                                            {{userInfo.info.education | education}}
-                                        </span>
+                            <span class="ml5 cor22">
+                                <span ng-if="userInfo.info.age">{{userInfo.age}}岁 </span>
+                                {{userInfo.info.is_marriage | marriage}}
+                                <span ng-if="userInfo.info.education"> {{userInfo.info.education | education}}</span>
+                            </span>
                     </p>
                     <p class="mt5">
                         <span class="identity sfz" ng-if="userInfo.auth.identity_check">身份证</span>
