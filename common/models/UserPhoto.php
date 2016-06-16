@@ -103,6 +103,7 @@ class UserPhoto extends Base
             ->innerJoin($this->tablePrefix.'user_information i' , 'u.user_id=i.user_id')
             ->where(['is_check' => $isCheck])
             ->limit(1000)
+            ->orderBy("u.create_time")
             ->select(['u.id','u.user_id','u.thumb_path','u.create_time','is_check','is_head',"json_extract(i.info , '$.real_name') as real_name"])
             ->all();
     }

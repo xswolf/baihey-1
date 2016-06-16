@@ -19,13 +19,13 @@
                             <a href="/admin/member/photo?is_check=1" class="btn {{if (\Yii::$app->request->get('is_check') == 1)}}btn-success{{else}}btn-grey{{/if}}">已审核</a>
                             <a href="/admin/member/photo?is_check=2" class="btn {{if (\Yii::$app->request->get('is_check') == 2)}}btn-success{{else}}btn-grey{{/if}}">未审核</a>
                             <a href="/admin/member/photo?is_check=0" class="btn {{if (\Yii::$app->request->get('is_check') == 0)}}btn-success{{else}}btn-grey{{/if}}">审核未通过</a>
-                            <button class="btn" id="select-all">全选</button>
+                            <button class="btn" id="select-all">反选</button>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <table id="demo1" class="table display table-striped table-bordered table-hover dataTables-example dataTable j-datatables"
+            <table id="demo1" class="table display  dataTable j-datatables"
 
                    cellspacing="0" width="100%">
                 <thead>
