@@ -29,12 +29,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
         requirejs(['amezeui', 'amezeui_ie8'], function (amezeui, amezeui_ie8) {
 
         });
-        $scope.onTouch = function () {
-            console.log('ononon');
-        }
-        $scope.onRelease = function () {
-            console.log('lelele');
-        }
+
         // 实例化上传图片插件
         var uploader = $scope.uploader = new FileUploader({
             url: '/wap/file/thumb-photo'
