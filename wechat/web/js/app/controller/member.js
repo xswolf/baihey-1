@@ -293,9 +293,10 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
                 confirm.then(function (res) {
                     if (res) {
                         var formData = [];
-                        formData.age = ar.getTimestampByBirthday(ar.DateTimeToDate($scope.formData.birthday)) + '-' + $scope.zodiac.id + '-' + $scope.constellation.id;
+                        formData.age = ar.getTimestampByBirthday(ar.DateTimeToDate($scope.formData.birthday)) + '-' + $scope.zodiac.id + '-' + $scope.constellation.id + '-' + ar.getAgeByBirthday(ar.DateTimeToDate($scope.formData.birthday));
                         api.save('/wap/member/save-data', formData).success(function (res) {
                             // 保存
+                            $scope.userInfo.age = ar.getAgeByBirthday(ar.DateTimeToDate($scope.formData.birthday));
                             $scope.userInfo.info.age = ar.getTimestampByBirthday(ar.DateTimeToDate($scope.formData.birthday));
                             $scope.userInfo.info.zodiac = $scope.zodiac.id;
                             $scope.userInfo.info.constellation = $scope.constellation.id;
@@ -1309,7 +1310,12 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
     module.controller("member.zo_marriage", ['app.serviceApi', '$scope', '$ionicPopup', '$location', '$ionicLoading', function (api, $scope, $ionicPopup, $location, $ionicLoading) {
         $scope.formData = [];
         $scope.marriageList = config_infoData.marriage;
-        $scope.isNull = $scope.userInfo.info.zo_marriage == '未知' || !$scope.userInfo.info.zo_marriage ? true : false;
+        if(!$scope.userInfo.info.zo_marriage) {
+            $scope.isNull = true;
+        } else {
+            $scope.isNull = false;
+            $scope.userInfo.info.zo_marriage = $scope.userInfo.info.zo_marriage.split(',');
+        }
         for (var i in $scope.marriageList) {
             for (var j in $scope.userInfo.info.zo_marriage) {
                 if ($scope.userInfo.info.zo_marriage[j] == $scope.marriageList[i].id) {
@@ -1333,12 +1339,13 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
         $scope.saveData = function () {
             $ionicLoading.show({template: '保存中...'});
             var formData = [];
+            var zo_marriage = [];
             for (var i in $scope.marriageList) {
                 if ($scope.marriageList[i].checked) {
-                    formData.zo_marriage.push($scope.marriageList[i].id);
+                    zo_marriage.push($scope.marriageList[i].id);
                 }
             }
-
+            formData.zo_marriage = zo_marriage.join(',');
             api.save('/wap/member/save-data', formData).success(function (res) {
                 $scope.userInfo.info.zo_marriage = formData.zo_marriage;
                 $scope.setUserStorage();
@@ -1408,7 +1415,12 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
     module.controller("member.zo_zodiac", ['app.serviceApi', '$scope', '$ionicPopup', '$ionicLoading', '$location', function (api, $scope, $ionicPopup, $ionicLoading, $location) {
 
         $scope.formData = [];
-        $scope.isNull = $scope.userInfo.info.zo_zodiac == '未知' || !$scope.userInfo.info.zo_zodiac ? true : false;
+        if(!$scope.userInfo.info.zo_zodiac) {
+            $scope.isNull = true;
+        } else {
+            $scope.isNull = false;
+            $scope.userInfo.info.zo_zodiac = $scope.userInfo.info.zo_zodiac.split(',');
+        }
         $scope.isSelectedNull = false;
         $scope.zodiacList = config_infoData.zodiac;
         for (var i in $scope.zodiacList) {
@@ -1434,11 +1446,13 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
         $scope.saveData = function () {
             $ionicLoading.show({template: '保存中...'});
             var formData = [];
+            var zo_zodiac = [];
             for (var i in $scope.zodiacList) {
                 if ($scope.zodiacList[i].checked) {
-                    formData.zo_zodiac.push($scope.zodiacList[i].id);
+                    zo_zodiac.push($scope.zodiacList[i].id);
                 }
             }
+            formData.zo_zodiac = zo_zodiac.join(',');
             api.save('/wap/member/save-data', formData).success(function (res) {
                 $scope.userInfo.info.zo_zodiac = formData.zo_zodiac;
                 $scope.setUserStorage();
@@ -1454,7 +1468,12 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
 
         $scope.formData = [];
         $scope.constellationList = config_infoData.constellation;
-        $scope.isNull = $scope.userInfo.info.zo_constellation == '未知' || !$scope.userInfo.info.zo_constellation ? true : false;
+        if(!$scope.userInfo.info.zo_constellation) {
+            $scope.isNull = true;
+        } else {
+            $scope.isNull = false;
+            $scope.userInfo.info.zo_constellation = $scope.userInfo.info.zo_constellation.split(',');
+        }
         for (var i in $scope.constellationList) {
             for (var j in $scope.userInfo.info.zo_constellation) {
                 if ($scope.userInfo.info.zo_constellation[j] == $scope.constellationList[i].id) {
@@ -1478,11 +1497,13 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
         $scope.saveData = function () {
             $ionicLoading.show({template: '保存中...'});
             var formData = [];
+            var zo_constellation = [];
             for (var i in $scope.constellationList) {
                 if ($scope.constellationList[i].checked) {
-                    formData.zo_constellation.push($scope.constellationList[i].id);
+                    zo_constellation.push($scope.constellationList[i].id);
                 }
             }
+            formData.zo_constellation = zo_constellation.join(',');
             api.save('/wap/member/save-data', formData).success(function (res) {
                 $scope.userInfo.info.zo_constellation = formData.zo_constellation;
                 $scope.setUserStorage();

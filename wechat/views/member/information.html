@@ -34,7 +34,7 @@
                     </span>
                 </p>
             </ion-item>
-            <ion-item class="item16" href="#/main/dynmaic?userId={{userInfo.id}}&tempUrl=/main/member/information">
+            <ion-item class="item16" href="#/main/dynmaic?userId={{userInfo.id}}&real_name={{userInfo.info.real_name}}&sex={{userInfo.sex}}&age={{userInfo.info.age}}&tempUrl=/main/member/information">
                 <div class="info_l">
                     <p>个人动态</p>
                 </div>
@@ -52,8 +52,10 @@
                 <div class="info_l">
                     <p>个人签名</p>
                 </div>
-                <div class="info_c">
+                <div class="info_c" ng-if="!userInfo.personalized">
                     <span class="cor21 mr10">立即填写</span>
+                </div>
+                <div class="info_c" ng-if="userInfo.personalized">
                     <p ng-if="userInfo.personalized != null">{{userInfo.personalized}}</p>
                 </div>
                 <div class="info_r">
@@ -116,7 +118,7 @@
                     <p>年龄</p>
                 </div>
                 <div class="info_c">
-                    <p><i class="bhy-icon-member-birthday cor23 vam mr5"></i><span class="mr10">{{userInfo.info.age * 1000 | date:'yyyy-MM-dd'}}</span><!--<span
+                    <p><span class="mr10">{{userInfo.age}}</span><!--<i class="bhy-icon-member-birthday cor23 vam mr5"></i><span
                             class="mr10">{{userInfo.info.zodiac | zodiac}}</span><span>{{userInfo.info.constellation | constellation}}</span>--></p>
                 </div>
             </ion-item>

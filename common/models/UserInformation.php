@@ -66,7 +66,8 @@ class UserInformation extends Base
                     $arr[0] = (int)$arr[0];
                     $arr[1] = (int)$arr[1];
                     $arr[2] = (int)$arr[2];
-                    $sql = "UPDATE {$_user_information_table} SET info = JSON_REPLACE(info,'$.age','".$arr[0]."'), info = JSON_REPLACE(info,'$.zodiac','".$arr[1]."'), info = JSON_REPLACE(info,'$.constellation','".$arr[2]."') WHERE user_id={$user_id}";
+                    $arr[3] = (int)$arr[3];
+                    $sql = "UPDATE {$_user_information_table} SET info = JSON_REPLACE(info,'$.age','".$arr[0]."'), info = JSON_REPLACE(info,'$.zodiac','".$arr[1]."'), info = JSON_REPLACE(info,'$.constellation','".$arr[2]."'), age = {$arr[3]} WHERE user_id={$user_id}";
                     break;
 
                 default:
