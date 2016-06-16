@@ -180,4 +180,31 @@ class MemberController extends BaseController
         $this->renderAjax(['status=>1', 'data' => $list]);
     }
 
+    /**
+     * 照片列表
+     * @return string
+     */
+    public function actionPhoto(){
+
+        $isCheck = \Yii::$app->request->get('is_check');
+        if ($isCheck == '') $isCheck = 2;
+        $list = UserPhoto::getInstance()->lists($isCheck);
+        $this->assign('list' , $list);
+        return $this->render();
+    }
+
+    /**
+     * 审核照片
+     */
+    public function actionAuthPhoto(){
+
+        $data = \Yii::$app->request->get();
+        $flag = UserPhoto::getInstance()->auth($data['id'] , $data['status']);
+        if ($flag > 0) {
+            $this->renderAjax(['status' => 1, 'message'=>'操作成功' , 'data' => $flag]);
+        }else{
+            $this->renderAjax(['status' => 0, 'message'=>'操作失败' , 'data' => $flag]);
+        }
+    }
+
 }

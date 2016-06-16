@@ -93,3 +93,7 @@ function getTitleByOrderListValue($value){
     $title = $value == 0 ? '' : '('.$value.'个月)';
     return $title;
 }
+
+function getName($name){
+    return str_replace("\"" , "" , $name);
+}

@@ -16,6 +16,8 @@
     <link rel="stylesheet" type="text/css" href="/backend/web/CloudAdmin/css/cloud-admin.css" >
     <link rel="stylesheet" type="text/css"  href="/backend/web/CloudAdmin/css/responsive.css" >
     <link rel="stylesheet" type="text/css" href="/backend/web/CloudAdmin/layer/skin/layer.css">
+    <!----switch 插件---->
+    <link rel="stylesheet" type="text/css" href="/backend/web/CloudAdmin/js/bootstrap-switch/bootstrap-switch.min.css" />
     <!-- css3动画 -->
     <link rel="stylesheet" type="text/css"  href="/backend/web/css/animate.css" >
 
@@ -287,7 +289,8 @@
                     </a>
                     <ul class="sub">
                         <li class="has-sub-sub"><a data-menu="7" class="has-sub-sub"  href="/admin/member/index"><span class="sub-menu-text">会员查找</span></a></li>
-                        <li class="has-sub-sub"><a data-menu="8" class="has-sub-sub"  href="/admin/member/order"><span class="sub-menu-text">订单列表</span></a></li>
+                        <li class="has-sub-sub"><a data-menu="8" class="has-sub-sub"  href="/admin/member/photo?is_check=2"><span class="sub-menu-text">照&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;片</span></a></li>
+                        <li class="has-sub-sub"><a data-menu="9" class="has-sub-sub"  href="/admin/member/order"><span class="sub-menu-text">订单列表</span></a></li>
                     </ul>
                 </li>
 
@@ -384,7 +387,8 @@
 
 <!-- layer -->
 <script src="/backend/web/CloudAdmin/layer/layer.js"></script>
-
+<!-- BOOTSTRAP SWITCH -->
+<script type="text/javascript" src="/backend/web/CloudAdmin/js/bootstrap-switch/bootstrap-switch.min.js"></script>
 <!-- CUSTOM SCRIPT -->
 <script src="/backend/web/js/dataTableQuery.js"></script>
 <script src="/backend/web/js/app.js"></script>

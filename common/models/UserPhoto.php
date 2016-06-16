@@ -92,4 +92,34 @@ class UserPhoto extends Base
             ->execute();
         return $row ? UserInformation::getInstance()->updateUserInfo($user_id, ['head_pic' => $where['thumb_path']]) : false;
     }
+
+    /**
+     * 获取用户上传的照片
+     * @param int $isCheck 2：未审核 1：审核通过 0：不通过
+     * @return array
+     */
+    public function lists($isCheck = 2){
+        return (new Query())->from($this->tablePrefix.'user_photo u')
+            ->innerJoin($this->tablePrefix.'user_information i' , 'u.user_id=i.user_id')
+            ->where(['is_check' => $isCheck])
+            ->limit(1000)
+            ->select(['u.id','u.user_id','u.thumb_path','u.create_time','is_check','is_head',"json_extract(i.info , '$.real_name') as real_name"])
+            ->all();
+    }
+
+    /**
+     * 审核照片
+     * @param $id
+     * @param $status
+     * @return int
+     * @throws \yii\db\Exception
+     */
+    public function auth($id , $status){
+        $ids = explode("," , $id);
+
+        $handle = $this->getDb()->createCommand()
+            ->update($this->tablePrefix.'user_photo' , ['is_check'=>$status] , ['id'=>$ids]);
+        $r = $handle->execute();
+        return $r;
+    }
 }
