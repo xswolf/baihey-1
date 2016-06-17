@@ -123,6 +123,11 @@ class MemberController extends BaseController
         $this->assign('movie' , Config::getInstance()->getListByType(2));
         $this->assign('food' , Config::getInstance()->getListByType(3));
         $this->assign('travel' , Area::getInstance()->getWentTravelList());
+
+        $list = UserPhoto::getInstance()->lists('' , '2,3,4,5,6');
+        $this->assign('list' , $list);
+
+
         return $this->render();
     }
 
@@ -190,6 +195,9 @@ class MemberController extends BaseController
         $type = \Yii::$app->request->get('type');
         if ($isCheck == '') $isCheck = 2;
         $list = UserPhoto::getInstance()->lists($isCheck , $type);
+        if (\Yii::$app->request->isAjax){
+            return $this->renderAjax(['status'=>1 , 'data'=>$list]);
+        }
         $this->assign('list' , $list);
         return $this->render();
     }

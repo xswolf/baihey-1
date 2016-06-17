@@ -100,13 +100,17 @@ class UserPhoto extends Base
      * @return array
      */
     public function lists($isCheck = 2 , $type = 1){
-        return (new Query())->from($this->tablePrefix.'user_photo u')
+
+        $handle = (new Query())->from($this->tablePrefix.'user_photo u')
             ->innerJoin($this->tablePrefix.'user_information i' , 'u.user_id=i.user_id')
             ->where(['is_check' => $isCheck , 'type'=>$type])
             ->limit(1000)
             ->orderBy("u.create_time")
-            ->select(['u.id','u.user_id','u.type','u.thumb_path','u.create_time','is_check','is_head',"json_extract(i.info , '$.real_name') as real_name"])
-            ->all();
+            ->select(['u.id','u.user_id','u.type','u.thumb_path','u.create_time','is_check','is_head',"json_extract(i.info , '$.real_name') as real_name"]);
+        if ($isCheck != ''){
+            $handle->andWhere(['is_check'=>$isCheck]);
+        }
+        return $handle->all();
     }
 
     /**

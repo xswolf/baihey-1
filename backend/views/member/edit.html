@@ -490,10 +490,13 @@
                                         <div class="form-group">
                                             <label class="col-md-3 control-label">身份证</label>
                                             <div class="input-group col-md-6">
-                                                //HTML示例
                                                 <div id="layer-photos-demo" class="layer-photos-demo">
-                                                    <img layer-pid="图片id，可以不写" layer-src="http://www.helloweba.com/attachments/fck/fancybox.jpg" src="http://www.helloweba.com/attachments/fck/fancybox.jpg" alt="图片名">
-                                                    <img layer-pid="图片id，可以不写" layer-src="http://www.helloweba.com/attachments/fck/fancybox.jpg" src="http://www.helloweba.com/attachments/fck/fancybox.jpg" alt="图片名">
+                                                    {{foreach from=$list item=vo}}
+                                                        {{if ($vo.type == 2)}}
+                                                            <img layer-src="{{$vo.thumb_path}}" src="{{getPathByThumb($vo.thumb_path)}}" alt="">
+                                                        {{/if}}
+                                                    {{/foreach}}
+
                                                 </div>
                                             </div>
                                         </div>
@@ -958,11 +961,15 @@
         }
 
 
-        layer.ready(function(){ //为了layer.ext.js加载完毕再执行
-            layer.photos({
-                photos: '#layer-photos-demo'
-            });
-        });
+
+
+                layer.ready(function(){ //为了layer.ext.js加载完毕再执行
+                    layer.photos({
+                        photos: '#layer-photos-demo'
+                    });
+                });
+
+
 
 
     });

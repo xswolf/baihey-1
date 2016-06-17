@@ -97,3 +97,7 @@ function getTitleByOrderListValue($value){
 function getName($name){
     return str_replace("\"" , "" , $name);
 }
+
+function getPathByThumb($thumb){
+    return str_replace('thumb','picture',$thumb);
+}
