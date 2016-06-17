@@ -19,6 +19,11 @@ var ar = {
             return myDate.toLocaleString();        //获取日期与时间
         },
 
+        'currentYmd' : function() {
+            var myDate = new Date();
+            return myDate.getFullYear() + '' + myDate.getMonth() + '' + myDate.getDate();
+        },
+
         'timeStamp': function () { // 当前时间戳
 
             return Date.parse(new Date()) / 1000;
@@ -105,7 +110,6 @@ var ar = {
 
         // 设置localStorage
         setStorage: function (name, data) {
-
             if (data instanceof Object) {
                 data = JSON.stringify(data);
             }

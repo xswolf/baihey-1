@@ -19,7 +19,7 @@
                 <h2 class="clearfix">
                     <span class="fl">{{f.info.real_name | sex:f.sex :f.info.age}}</span>
                 </h2>
-                <p>{{f.info.age | timeToAge}}岁 {{f.info.height}}cm {{f.info.is_marriage | marriage}}
+                <p>{{f.info.age | timeToAge}} {{f.info.height}} {{f.info.is_marriage | marriage}}
                     {{f.info.is_purchase | purchase}} {{f.info.is_car | car}}</p>
                 <ion-option-button ng-if="followType=='follow'" class="button-info"
                                    ng-click="delFollow(f,$index)">

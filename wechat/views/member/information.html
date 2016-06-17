@@ -24,11 +24,11 @@
                    style="visibility: hidden; display: none;" accept="image/*">
             <ion-item class="idt mt10">
                 <p>
-                    <span class="identity sfz" ng-if="userInfo.auth.identity_check">身份证</span>
-                    <span class="identity phone" ng-if="userInfo.phone">手机</span>
-                    <span class="identity vip" ng-if="userInfo.info.level == 1">vip</span>
-                    <span class="identity guest" ng-if="userInfo.info.level == 2">贵宾</span>
-                    <span class="identity diamond" ng-if="userInfo.info.level == 3">钻石</span>
+                    <i ng-if="userInfo.auth.identity_check" class="identity icon-new-id"></i>
+                    <i ng-if="userInfo.phone" class="identity icon-new-phone"></i>
+                    <i ng-if="userInfo.info.level == 1" class="identity icon-new-vip"></i>
+                    <i ng-if="userInfo.info.level == 2" class="identity icon-new-guest"></i>
+                    <i ng-if="userInfo.info.level == 3" class="identity icon-new-diamond"></i>
                     <span class="ml10">
                         {{userInfo.info.constellation | constellation}} {{userInfo.info.constellation | constellation}}
                     </span>

@@ -22,13 +22,13 @@
                     {{inv.info.real_name | sex:inv.sex :inv.info.age}}
                 </h2>
                 <p>
-                    <span class="identity sfz" ng-if="inv.auth.identity_check">身份证</span>
-                    <span class="identity phone" ng-if="inv.phone">手机</span>
-                    <span class="identity vip" ng-if="inv.info.level == 1">vip</span>
-                    <span class="identity guest" ng-if="inv.info.level == 2">贵宾</span>
-                    <span class="identity diamond" ng-if="inv.info.level == 3">钻石</span>
+                    <i ng-if="inv.auth.identity_check" class="identity icon-new-id"></i>
+                    <i ng-if="inv.phone" class="identity icon-new-phone"></i>
+                    <i ng-if="inv.info.level == 1" class="identity icon-new-vip"></i>
+                    <i ng-if="inv.info.level == 2" class="identity icon-new-guest"></i>
+                    <i ng-if="inv.info.level == 3" class="identity icon-new-diamond"></i>
                 </p>
-                <p>{{inv.info.age | timeToAge}}岁 {{inv.info.is_marriage | marriage}}</p>
+                <p>{{inv.info.age | timeToAge}} {{inv.info.is_marriage | marriage}}</p>
                 <p>手机号码：{{inv.mobile}}</p>
             </div>
             <div class="item item-body">

@@ -1936,7 +1936,19 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
 
     // 诚信认证
     module.controller("member.honesty", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', function (api, $scope, $timeout, $ionicPopup) {
-
+        if (ar.getCookie('bhy_user_id')) {
+            api.list("/wap/user/get-user-info", []).success(function (res) {
+                $scope.userInfo = res.data;
+                ar.setStorage('userInfo', res.data);
+                if ($scope.userInfo != null) {
+                    $scope.userInfo.info = JSON.parse($scope.userInfo.info);
+                    $scope.userInfo.auth = JSON.parse($scope.userInfo.auth);
+                }
+            });
+        }
+        $scope.honesty = function(val) {
+            return $scope.userInfo.honesty & val;
+        }
     }]);
 
     // 诚信认证-身份认证
