@@ -1,0 +1,20 @@
+<ion-view hide-tabs="true">
+    <link href="/wechat/web/css/member.css" rel="stylesheet">
+    <ion-header-bar class="com_w_100 bhy">
+        <title class="title">消费记录</title>
+    </ion-header-bar>
+
+    <ion-content class="com_w_100" ion-sticky ion-sticky-class="positive">
+        <ion-list>
+            <div ng-repeat="date in dateList">
+                <ion-item class="item-divider">
+                    <span class="fl">{{date.title}}</span><span class="fr">消费：{{date.money | currency:'￥'}}</span>
+                </ion-item>
+                <ion-item ng-repeat="record in recordList | filter:{dateTitle: date.title}">
+                    <span class="fl">{{record.type}}</span>
+                    <span class="fr">{{record.date * 1000 | date:"M月d日 hh:mm"}}</span>
+                </ion-item>
+            </div>
+        </ion-list>
+    </ion-content>
+</ion-view>

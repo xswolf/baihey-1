@@ -180,7 +180,7 @@ class ChargeController extends BaseController
         $alipay_config['seller_id'] = $alipay_config['partner'];
 
         // MD5密钥，安全检验码，由数字和字母组成的32位字符串，查看地址：https://b.alipay.com/order/pidAndKey.htm
-        $alipay_config['key'] = 'np84w319xyg4r1p9uo69tiexwqhmy3w3';
+        $alipay_config['key'] = 'bmk976ad50xpl2yquc1rdw216a00enmv';
         // 服务器异步通知页面路径  需http://格式的完整路径，不能加?id=123这类自定义参数，必须外网可以正常访问
         $alipay_config['notify_url'] = "http://wechat.baihey.com/wap/charge/notify-url";
 

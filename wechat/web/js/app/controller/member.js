@@ -2246,43 +2246,33 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
         }
     }]);
 
-    // 嘉瑞红包-收到的红包
-    module.controller("member.bribery_rec", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$location', function (api, $scope, $timeout, $ionicPopup, $location) {
+    // 我的账户-消费记录
+    module.controller("member.account_record", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$location', function (api, $scope, $timeout, $ionicPopup, $location) {
+        $scope.curDate = ar.timeStamp();  // 当前时间
+        $scope.dateList = [
+            {title:'2016年6月',money:188.05},
+            {title:'2016年5月',money:512.00},
+            {title:'2016年4月',money:186.57},
+            {title:'2016年3月',money:44.57},
+            {title:'2016年2月',money:877.57},
+            {title:'2016年1月',money:1888.57}
+        ]
 
-        $scope.items = [];
-        $scope.moreData = true;
-        $scope.money = $location.$$search.money;
-        $scope.briberyList = [];
-        $scope.loadMore = function () {
-            var args = {flag: false, page: $scope.page};
-            if (year != 'undefined'){
-                if (year != 1){
-                    $scope.queryYear = year;
-                    $scope.briberyList = [];
-                    $scope.moreData = true;
-                    $scope.page = 0;
-                }
-            }
-            args.year = $scope.queryYear;
-            api.list('/wap/member/bribery-list',args).success(function (res) {
-                if (res.data == '') {
-                    $scope.moreData = false;
-                    return;
-                }
-                var data = ar.cleanQuotes(JSON.stringify(res.data))
-                $scope.briberyList = $scope.briberyList.concat(JSON.parse(data));
-                $scope.page++;
-                $scope.$broadcast('scroll.infiniteScrollComplete');
-            })
-        };
-        $scope.$on('$ionicView.beforeEnter', function () {
-            $scope.page = 0;
-        });
+        $scope.recordList = [
+            {date:1451965812,type:'转账',dateTitle:'2016年6月'},
+            {date:1452533636,type:'红包',dateTitle:'2016年6月'},
+            {date:1454378584,type:'红包',dateTitle:'2016年6月'},
+            {date:1454474084,type:'红包',dateTitle:'2016年5月'},
+            {date:1457165104,type:'红包',dateTitle:'2016年5月'},
+            {date:1458254518,type:'红包',dateTitle:'2016年5月'},
+            {date:1461575123,type:'红包',dateTitle:'2016年4月'},
+            {date:1461854935,type:'红包',dateTitle:'2016年4月'},
+            {date:1462321087,type:'红包',dateTitle:'2016年3月'},
+            {date:1462975094,type:'红包',dateTitle:'2016年3月'},
+            {date:1465084084,type:'红包',dateTitle:'2016年2月'},
+            {date:1465756982,type:'红包',dateTitle:'2016年1月'}
+        ];
 
-        $scope.moreDataCanBeLoaded = function () {
-
-            return $scope.moreData;
-        }
 
     }]);
 
