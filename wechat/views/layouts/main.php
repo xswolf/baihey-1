@@ -12,6 +12,7 @@
     <link href="/wechat/web/css/index.css" rel="stylesheet">
     <link href="/wechat/web/css/android.css" rel="stylesheet">
     <link href="/wechat/web/css/plugin/animate/animate.css" rel="stylesheet">
+    <link href="/wechat/web/css/newFontIcon160613.css" rel="stylesheet">
     <!-- STYLESHEETS --><!--[if lt IE 9]>
     <script src="/backend/web/CloudAdmin/js/flot/excanvas.min.js"></script>
     <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>

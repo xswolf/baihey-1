@@ -1,10 +1,10 @@
 @font-face {
     font-family: 'new';
-    src:    url('../fonts/new.eot?k7qys9');
-    src:    url('../fonts/new.eot?k7qys9#iefix') format('embedded-opentype'),
-    url('../fonts/new.ttf?k7qys9') format('truetype'),
-    url('../fonts/new.woff?k7qys9') format('woff'),
-    url('../fonts/new.svg?k7qys9#icomoon') format('svg');
+    src:    url('../fonts/new.eot?vd2fap');
+    src:    url('../fonts/new.eot?vd2fap#iefix') format('embedded-opentype'),
+    url('../fonts/new.ttf?vd2fap') format('truetype'),
+    url('../fonts/new.woff?vd2fap') format('woff'),
+    url('../fonts/new.svg?vd2fap#icomoon') format('svg');
     font-weight: normal;
     font-style: normal;
 }
@@ -24,6 +24,21 @@
     -moz-osx-font-smoothing: grayscale;
 }
 
+.icon-new-vip:before {
+    content: "\e905";
+}
+.icon-new-guest:before {
+    content: "\e906";
+}
+.icon-new-diamond:before {
+    content: "\e907";
+}
+.icon-new-id:before {
+    content: "\e908";
+}
+.icon-new-phone:before {
+    content: "\e909";
+}
 .icon-new-record:before {
     content: "\e901";
 }

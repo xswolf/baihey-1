@@ -62,17 +62,17 @@
 
                             <div class="row pl0">
                                 <p class="col fs12">
-                                    <span class="identity sfz" ng-if="user.auth.identity_check">身份证</span>
-                                    <span class="identity phone" ng-if="user.phone"> 手机</span>
-                                    <span ng-if="user.info.level == 1" class="identity vip"> vip</span>
-                                    <span ng-if="user.info.level == 2" class="identity guest"> 贵宾</span>
-                                    <span ng-if="user.info.level == 3" class="identity diamond"> 钻石</span>
+                                    <i ng-if="user.auth.identity_check" class="identity icon-new-id"></i>
+                                    <i ng-if="user.phone" class="identity icon-new-phone"></i>
+                                    <i ng-if="user.info.level == 1" class="identity icon-new-vip"></i>
+                                    <i ng-if="user.info.level == 2" class="identity icon-new-guest"></i>
+                                    <i ng-if="user.info.level == 3" class="identity icon-new-diamond"></i>
                                 </p>
                             </div>
 
                             <div class="row pl0">
                                 <div class="col">
-                                    <p class="cor20 signature">{{user.personalized}}</p>
+                                    <p class="cor20 signature">{{user.personalized}}规划局法规和肌肤光滑肌肤光滑结过婚飞过海</p>
                                 </div>
                             </div>
                         </a>
