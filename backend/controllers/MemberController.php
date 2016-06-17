@@ -187,8 +187,9 @@ class MemberController extends BaseController
     public function actionPhoto(){
 
         $isCheck = \Yii::$app->request->get('is_check');
+        $type = \Yii::$app->request->get('type');
         if ($isCheck == '') $isCheck = 2;
-        $list = UserPhoto::getInstance()->lists($isCheck);
+        $list = UserPhoto::getInstance()->lists($isCheck , $type);
         $this->assign('list' , $list);
         return $this->render();
     }

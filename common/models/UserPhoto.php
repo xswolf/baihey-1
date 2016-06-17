@@ -31,10 +31,10 @@ class UserPhoto extends Base
             $this->thumb_path = $data['thumb_path'];
             $this->create_time = $data['time'];
             $this->update_time = $data['time'];
-            if(0 == $sum) {
+            /*if(0 == $sum) {
                 $this->is_head = 1;
                 UserInformation::getInstance()->updateUserInfo($user_id, ['head_pic' => $data['thumb_path']]);
-            }
+            }*/
             $this->insert(false);
             return $this->getDb()->getLastInsertID();
         } else {
@@ -99,10 +99,10 @@ class UserPhoto extends Base
      * @param int $type 1:照片 2：身份证，3：学历证 ， 4：离婚证 5房产证
      * @return array
      */
-    public function lists($isCheck = 2){
+    public function lists($isCheck = 2 , $type = 1){
         return (new Query())->from($this->tablePrefix.'user_photo u')
             ->innerJoin($this->tablePrefix.'user_information i' , 'u.user_id=i.user_id')
-            ->where(['is_check' => $isCheck])
+            ->where(['is_check' => $isCheck , 'type'=>$type])
             ->limit(1000)
             ->orderBy("u.create_time")
             ->select(['u.id','u.user_id','u.type','u.thumb_path','u.create_time','is_check','is_head',"json_extract(i.info , '$.real_name') as real_name"])

@@ -10,13 +10,19 @@
         <div class="ibox-content">
 
             <div class="form-horizontal clearfix">
-                <div class="col-lg-4 col-sm-5">
+                <div class="col-lg-12 col-sm-12">
                     <div class="form-group">
-                        <div class="col-lg-8 col-sm-8 input-group date">
-                            <a href="/admin/member/photo?is_check=1" class="btn {{if (\Yii::$app->request->get('is_check') == 1)}}btn-success{{else}}btn-grey{{/if}}">已审核</a>
-                            <a href="/admin/member/photo?is_check=2" class="btn {{if (\Yii::$app->request->get('is_check') == 2)}}btn-success{{else}}btn-grey{{/if}}">未审核</a>
-                            <a href="/admin/member/photo?is_check=0" class="btn {{if (\Yii::$app->request->get('is_check') == 0)}}btn-success{{else}}btn-grey{{/if}}">审核未通过</a>
+                        <div class="col-lg-12 col-sm-12 input-group date">
+                            <a href="/admin/member/photo?is_check=1&type=1" class="btn {{if (\Yii::$app->request->get('is_check') == 1 and \Yii::$app->request->get('type') == 1)}} btn-success {{else}} btn-grey {{/if}}">已审核</a>
+                            <a href="/admin/member/photo?is_check=2&type=1" class="btn {{if (\Yii::$app->request->get('is_check') == 2 and \Yii::$app->request->get('type') == 1)}} btn-success {{else}} btn-grey {{/if}}">未审核</a>
+                            <a href="/admin/member/photo?is_check=0&type=1" class="btn {{if (\Yii::$app->request->get('is_check') == 0 and \Yii::$app->request->get('type') == 1)}} btn-success {{else}} btn-grey {{/if}}">审核未通过</a>
+                            <a href="/admin/member/photo?is_check=2&type=2" class="btn {{if (\Yii::$app->request->get('is_check') == 2 and \Yii::$app->request->get('type') == 2)}} btn-success {{else}} btn-grey {{/if}}">身份证</a>
+                            <a href="/admin/member/photo?is_check=2&type=3" class="btn {{if (\Yii::$app->request->get('is_check') == 2 and \Yii::$app->request->get('type') == 3)}} btn-success {{else}} btn-grey {{/if}}">学历</a>
+                            <a href="/admin/member/photo?is_check=2&type=4" class="btn {{if (\Yii::$app->request->get('is_check') == 2 and \Yii::$app->request->get('type') == 4)}} btn-success {{else}} btn-grey {{/if}}">离婚证</a>
+                            <a href="/admin/member/photo?is_check=2&type=5" class="btn {{if (\Yii::$app->request->get('is_check') == 2 and \Yii::$app->request->get('type') == 5)}} btn-success {{else}} btn-grey {{/if}}">房产证</a>
                             <button class="btn" id="select-all">反选</button>
+
+
                         </div>
                     </div>
                 </div>
@@ -41,7 +47,7 @@
                     <tr data-id="{{$vo.id}}">
                         <td class="tn">{{$vo.id}}</td>
                         <td>{{$vo.user_id}}</td>
-                        <td>{{getName($vo.real_name)}}</td>
+                        <td><a href="/admin/member/edit?id={{$vo.user_id}}">{{getName($vo.real_name)}}</a></td>
                         <td>
                             {{if ($vo.type ==1)}}
                                 照片
