@@ -31,10 +31,10 @@ class UserPhoto extends Base
             $this->thumb_path = $data['thumb_path'];
             $this->create_time = $data['time'];
             $this->update_time = $data['time'];
-            if(0 == $sum) {
+            /*if(0 == $sum) {
                 $this->is_head = 1;
                 UserInformation::getInstance()->updateUserInfo($user_id, ['head_pic' => $data['thumb_path']]);
-            }
+            }*/
             $this->insert(false);
             return $this->getDb()->getLastInsertID();
         } else {

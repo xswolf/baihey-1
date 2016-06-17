@@ -67,13 +67,13 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
             };
             uploader.onSuccessItem = function (fileItem, response, status, headers) {  // 上传成功
                 if (response.status > 0) {
-                    if ($scope.imgList.length == 0) { // 第一张上传相片默认设为头像
+                    /*if ($scope.imgList.length == 0) { // 第一张上传相片默认设为头像
                         $scope.imgList.push({id: response.id, thumb_path: response.thumb_path, is_head: 1});
                         $scope.userInfo.info.head_pic = response.thumb_path;
                         $scope.setUserStorage();
-                    } else {
+                    } else {*/
                         $scope.imgList.push({id: response.id, thumb_path: response.thumb_path, is_head: 0});
-                    }
+                    //}
                 } else {
                     $ionicPopup.alert({title: '上传图片失败！'});
                 }
@@ -112,6 +112,11 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
                     }
                 },
                 buttonClicked: function (i) {
+                    if($scope.imgList[index].is_check != 1) {
+                        $ionicPopup.alert({title: '图片未审核'});
+                        hideSheet();
+                        return false;
+                    }
                     // 设置头像
                     api.save('/wap/member/set-head', {id: id, thumb_path: img}).success(function (res) {
                         $scope.imgList[head_id].is_head = 0;
