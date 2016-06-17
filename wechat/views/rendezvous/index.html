@@ -12,7 +12,7 @@
                 <img src="{{vo.info.head_pic}}">
                 <h2>
                     <span class="fl">{{vo.info.real_name | sex:vo.sex :vo.info.age}}</span>
-                    <span class="fl cor5 fs12 ml5 lh20">{{vo.info.age | timeToAge}}岁 {{vo.info.is_marriage | marriage}}</span>
+                    <span class="fl cor5 fs12 ml5 lh20">{{vo.info.age | timeToAge}} {{vo.info.is_marriage | marriage}}</span>
                     <span class="fr fs12 lh20 cor5">
                         {{vo.create_time * 1000 | date:'MM-dd HH:mm'}}
                     </span>
