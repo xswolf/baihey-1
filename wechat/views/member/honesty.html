@@ -13,8 +13,9 @@
                     <p>身份认证</p>
                 </div>
                 <div class="menu_arrow">
-                    <span class="cor15 mr15 fs12">此项必须认证</span>
-                    <i class="ion-ios-arrow-right vam"></i>
+                    <span class="cor8 mr15 fs12" ng-if="honesty(1)">已认证</span>
+                    <span class="cor15 mr15 fs12" ng-if="!honesty(1)">此项必须认证</span>
+                    <i class="ion-ios-arrow-right vam" ng-if="!identityAuth"></i>
                 </div>
             </ion-item>
             <ion-item class="item item-icon-left" href="#/main/member/honesty_marr">
@@ -23,8 +24,8 @@
                     <p>婚姻认证</p>
                 </div>
                 <div class="menu_arrow">
-                    <span class="cor8 mr15 fs12">已认证</span>
-                    <!--<i class="ion-ios-arrow-right vam"></i>-->
+                    <span class="cor8 mr15 fs12" ng-if="honesty(2)">已认证</span>
+                    <i class="ion-ios-arrow-right vam"></i>
                 </div>
             </ion-item>
             <ion-item class="item item-icon-left" href="#/main/member/honesty_edu">
@@ -33,6 +34,7 @@
                     <p>学历认证</p>
                 </div>
                 <div class="menu_arrow">
+                    <span class="cor8 mr15 fs12" ng-if="honesty(4)">已认证</span>
                     <i class="ion-ios-arrow-right vam"></i>
                 </div>
             </ion-item>
@@ -42,6 +44,7 @@
                     <p>房产认证</p>
                 </div>
                 <div class="menu_arrow">
+                    <span class="cor8 mr15 fs12" ng-if="honesty(8)">已认证</span>
                     <i class="ion-ios-arrow-right vam"></i>
                 </div>
             </ion-item>
