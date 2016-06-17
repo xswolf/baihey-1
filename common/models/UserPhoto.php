@@ -24,13 +24,18 @@ class UserPhoto extends Base
     public function addPhoto($user_id, $data)
     {
         // 个人相册不得多于12张
-        $sum = $this->find()->where(['user_id' => $user_id])->count('id');
-        if (12 >= $sum) {
+        $type = isset($data['type']) ? $data['type'] : 1;
+        $sum = $this->find()->where(['user_id' => $user_id, 'type' => $type])->count('id');
+        $count = isset($data['type']) ? 2 : 12;
+        if ($count >= $sum) {
             $this->user_id = $user_id;
             $this->pic_path = $data['pic_path'];
             $this->thumb_path = $data['thumb_path'];
             $this->create_time = $data['time'];
             $this->update_time = $data['time'];
+            if(isset($data['type'])) {
+                $this->type = $data['type'];
+            }
             /*if(0 == $sum) {
                 $this->is_head = 1;
                 UserInformation::getInstance()->updateUserInfo($user_id, ['head_pic' => $data['thumb_path']]);
@@ -51,15 +56,17 @@ class UserPhoto extends Base
     /**
      * 获取相册列表
      * @param $user_id
+     * @param int $type
+     * @param int $pageSize
      * @return $this|array
      */
-    public function getPhotoList($user_id)
+    public function getPhotoList($user_id, $type = 1, $pageSize = 12)
     {
         $result = (new Query())->select(['*'])
-            ->where(['user_id' => $user_id])
+            ->where(['user_id' => $user_id, 'type' => $type])
             ->from(static::tableName())
             ->orderBy('is_head desc, update_time asc')
-            ->limit(12);
+            ->limit($pageSize);
 
         $result = $result->all();
         return $result;

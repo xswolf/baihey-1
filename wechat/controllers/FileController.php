@@ -33,6 +33,7 @@ class FileController extends BaseController {
         $data = $this->thumb();
         // 保存数据
         if(1 == $data['status']) {
+            isset($this->get['type']) ? $data['type'] = $this->get['type'] :true;
             if($id = UserPhoto::getInstance()->addPhoto($user_id, $data)) {
                 $data['id'] = $id;
             } else {

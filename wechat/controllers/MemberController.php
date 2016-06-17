@@ -50,8 +50,10 @@ class MemberController extends BaseController
     public function actionPhotoList()
     {
         $user_id = isset($this->get['user_id']) ? $this->get['user_id'] : \common\util\Cookie::getInstance()->getCookie('bhy_id');
+        $type = isset($this->get['type']) ? $this->get['type'] : 1;
+        $pageSize = isset($this->get['pageSize']) ? $this->get['pageSize'] : 12;
 
-        $list = UserPhoto::getInstance()->getPhotoList($user_id);
+        $list = UserPhoto::getInstance()->getPhotoList($user_id, $type, $pageSize);
         $this->renderAjax(['status=>1', 'data' => $list]);
     }
 
