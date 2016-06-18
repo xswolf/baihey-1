@@ -21,10 +21,17 @@ class AuthUser extends Base
      */
     public function getUserMatchmaker($where)
     {
-        $arr = explode('-', $where['matchmaker']);
-        $row = (new Query())->select('*')
+
+        if($where['matchmaker']) {
+            $arr = explode('-', $where['matchmaker']);
+            $condition = ['in', 'id', $arr];
+        } else {
+            $condition = ['type' => 3];
+        }
+        $row = (new Query())->select(['real_name', 'id as job', 'phone', 'landline', 'qq', 'wechat', 'email', 'introduction', 'photo', 'address'])
             ->from(static::tableName())
-            ->where(['in', 'id', $arr])
+            ->where($condition)
+            ->andWhere(['status' => 1])
             ->all();
 
         return $row;

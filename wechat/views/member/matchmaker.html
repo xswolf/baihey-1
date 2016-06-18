@@ -2,14 +2,15 @@
     <link href="/wechat/web/css/member.css" rel="stylesheet">
     <link href="/wechat/web/css/plugin/animate/animate.css" rel="stylesheet">
     <ion-header-bar class="com_w_100 bhy maker_hdr">
-        <p class="title">我的专属红娘</p>
+        <p class="title">我的{{title}}</p>
     </ion-header-bar>
     <ion-content class="bhy com_w_100 matchmaker">
         <div class="list mb0">
             <div class="item item-thumbnail-left pr bor_b_n" >
-                <img src="/wechat/web/images/member/maker.jpg">
-                <h2 style="margin-top: 10px;">郭禹杉</h2>
-                <p class="mt10">工号：5188</p>
+                <img src="{{matchmakerList[0].photo}}">
+                <h2 style="margin-top: 10px;">{{matchmakerList[0].real_name}}</h2>
+                <button ng-if="matchmakerList.length > 1" ng-click="getMatchmakerList()">查看{{showTitle}}</button>
+                <p class="mt10">工号：{{matchmakerList[0].job}}</p>
                 <p>服务：
                     <i class="ion-ios-star fs16 cor51"></i>
                     <i class="ion-ios-star fs16 cor51"></i>
@@ -18,12 +19,12 @@
                     <i class="ion-ios-star fs16 cor51"></i>
                 </p>
                 <div class="maker_info fr">
-                    <a href="#/main/member/matchmaker_info" class="hdr_info_btn button-light rounded mt20">资料<i class="ml5 ion-ios-arrow-right"></i></a>
+                    <a href="#/main/member/matchmaker_info?job={{matchmakerList[0].job}}" class="hdr_info_btn button-light rounded mt20">资料<i class="ml5 ion-ios-arrow-right"></i></a>
                     <span ng-click="showPhone()" class="hdr_tell_btn"><i class="ion-ios-telephone"></i></span>
                 </div>
             </div>
             <ion-item class="bor_t_n pt0">
-                <p class="ti28 wsn">张小姐您好！ 郭伊山老师是您的专属红娘顾问，她的牵线经验非常的丰富，如果您遇到心仪的人却又不知道该怎么去了解，这时可以求助于您的专属红娘。</p>
+                <p class="ti28 wsn">{{userName}}您好！ {{matchmakerList[0].introduction}}</p>
             </ion-item>
             <div class="introduction">
                 <img src="/wechat/web/images/member/maker1.png">

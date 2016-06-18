@@ -68,11 +68,11 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
             uploader.onSuccessItem = function (fileItem, response, status, headers) {  // 上传成功
                 if (response.status > 0) {
                     /*if ($scope.imgList.length == 0) { // 第一张上传相片默认设为头像
-                     $scope.imgList.push({id: response.id, thumb_path: response.thumb_path, is_head: 1});
-                     $scope.userInfo.info.head_pic = response.thumb_path;
-                     $scope.setUserStorage();
-                     } else {*/
-                    $scope.imgList.push({id: response.id, thumb_path: response.thumb_path, is_head: 0});
+                        $scope.imgList.push({id: response.id, thumb_path: response.thumb_path, is_head: 1});
+                        $scope.userInfo.info.head_pic = response.thumb_path;
+                        $scope.setUserStorage();
+                    } else {*/
+                        $scope.imgList.push({id: response.id, thumb_path: response.thumb_path, is_head: 0});
                     //}
                 } else {
                     $ionicPopup.alert({title: '上传图片失败！'});
@@ -1652,11 +1652,11 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
         followData.follow_id = $scope.formData.userId;
         // 未关注
         /*$scope.formData.follow = false;
-         api.getStatus('/wap/follow/get-follow-status', followData).success(function (res) {
-         if (res.data) {
-         $scope.formData.follow = true;
-         }
-         });*/
+        api.getStatus('/wap/follow/get-follow-status', followData).success(function (res) {
+            if (res.data) {
+                $scope.formData.follow = true;
+            }
+        });*/
         // 取消关注
         $scope.cancelFollow = function () {
             api.save('/wap/follow/del-follow', followData).success(function (res) {
@@ -1957,7 +1957,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
             $scope.authList = res.data;
             $scope.authList.length > 0 ? ar.setStorage('authList', $scope.authList) : ar.setStorage('authList', [{}, {}]);
             /*res.data[0] ? $scope.imgList.identity_pic1 = res.data[0].thumb_path : true;
-             res.data[1] ? $scope.imgList.identity_pic2 = res.data[1].thumb_path : true;*/
+            res.data[1] ? $scope.imgList.identity_pic2 = res.data[1].thumb_path : true;*/
             console.log($scope.authList);
         });
         $scope.imgList = [];
@@ -1975,9 +1975,9 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
                     };
                 }
                 /*$scope.imgList = [
-                 {src:$scope.userInfo.auth.identity_pic1.replace('thumb', 'picture'),w:$scope.imgAttr1[1],h:$scope.imgAttr1[2]},
-                 {src:$scope.userInfo.auth.identity_pic2.replace('thumb', 'picture'),w:$scope.imgAttr2[1],h:$scope.imgAttr2[2]}
-                 ];*/
+                    {src:$scope.userInfo.auth.identity_pic1.replace('thumb', 'picture'),w:$scope.imgAttr1[1],h:$scope.imgAttr1[2]},
+                    {src:$scope.userInfo.auth.identity_pic2.replace('thumb', 'picture'),w:$scope.imgAttr2[1],h:$scope.imgAttr2[2]}
+                ];*/
                 var pswpElement = document.querySelectorAll('.pswp')[0];
                 var options = {index: index};
                 options.mainClass = 'pswp--minimal--dark';
@@ -2985,28 +2985,68 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
     }]);
 
     // 我的专属红娘
-    module.controller("member.matchmaker", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$location', function (api, $scope, $timeout, $ionicPopup, $location) {
+    module.controller("member.matchmaker", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$location','$filter', function (api, $scope, $timeout, $ionicPopup, $location, $filter) {
 
+        $scope.userName = $filter('sex')($scope.userInfo.info.real_name, $scope.userInfo.sex, $scope.userInfo.info.age);
         $scope.matchmakerList = [];
         var formData = [];
-        formData.matchmaker = $scope.userInfo.matchmaking ? $scope.userInfo.matchmaker + '-' + $scope.userInfo.matchmaking : $scope.userInfo.matchmaker;
+        if($scope.userInfo.matchmaking) {
+            $scope.title = '服务红娘';
+            $scope.showTitle = '专属红娘';
+            $scope.showMatchmaker = true;
+            formData.matchmaker = $scope.userInfo.matchmaking + '-' + $scope.userInfo.matchmaker;
+        } else if($scope.userInfo.matchmaker) {
+            $scope.showMatchmaker = true;
+            $scope.title = '专属红娘';
+            formData.matchmaker = $scope.userInfo.matchmaker;
+        } else {
+            $scope.showMatchmaker = false;
+            $scope.title = '值班红娘';
+            formData.matchmaker = 0;
+        }
         api.list('/wap/matchmaker/user-matchmaker-list', formData).success(function (res) {
             $scope.matchmakerList = res.data;
-            if (res.data.length > 1) {
-                if (res.data[0].id != $scope.userInfo.matchmaker) {
-                    $scope.matchmakerList[0] = res.data[1];
-                    $scope.matchmakerList[1] = res.data[0];
-                }
+            if(formData.matchmaker == 0 && $scope.matchmakerList.length > 1) {
+                $scope.matchmakerList = [];
+                $scope.matchmakerList[0] = res.data[0];
             }
-        });
+         });
+        $scope.getMatchmakerList = function() {
+            if($scope.title == '服务红娘') {
+                $scope.title = '专属红娘';
+                $scope.showTitle = '服务红娘';
+                $scope.matchmakerList.reverse();
+            } else {
+                $scope.title = '服务红娘';
+                $scope.showTitle = '专属红娘';
+                $scope.matchmakerList.reverse();
+            }
+        }
+
         $scope.showPhone = function () {
-            ar.saveDataAlert($ionicPopup, '电话：023-68800967');
+            $scope.phone = $scope.matchmakerList[0].landline ? $scope.matchmakerList[0].landline : $scope.matchmakerList[0].phone;
+            ar.saveDataAlert($ionicPopup, '电话：' + $scope.phone);
         }
 
     }]);
 
     // 专属红娘资料
     module.controller("member.matchmaker_info", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$location', function (api, $scope, $timeout, $ionicPopup, $location) {
+
+        $scope.matchmakerList = [];
+        var formData = [];
+        formData.matchmaker = $location.$$search.job;
+        api.list('/wap/matchmaker/user-matchmaker-list', formData).success(function (res) {
+            $scope.matchmakerList = res.data;
+        });
+
+        if($scope.userInfo.matchmaking == formData.matchmaker) {
+            $scope.title = '服务红娘';
+        } else if($scope.userInfo.matchmaker == formData.matchmaker) {
+            $scope.title = '专属红娘';
+        } else {
+            $scope.title = '值班红娘';
+        }
 
     }]);
 
