@@ -128,6 +128,7 @@ define(['app/module', 'app/directive/directiveApi'
         }
         // 高级搜索-点击确定
         $scope.moreSearchOk = function () {
+            $scope.userList = [];
             $scope.moreSearchModal.hide();
             init();
             $scope.searchForm = $scope.whereForm;
@@ -160,9 +161,9 @@ define(['app/module', 'app/directive/directiveApi'
                 buttonClicked: function (index) {
                     console.log($scope.whereForm);
                     $scope.pageLast = true;
-                    $scope.userList = [];
                     $scope.buttonsItemIndex = index;
                     if (index == 0) {   // 全部
+                        $scope.userList = [];
                         init();
                         $scope.searchForm.sex = 'all';
                         $ionicScrollDelegate.$getByHandle('mainScroll').scrollBottom();
@@ -170,6 +171,7 @@ define(['app/module', 'app/directive/directiveApi'
                     }
 
                     if (index == 1) {   //只看男
+                        $scope.userList = [];
                         init();
                         $scope.searchForm.sex = 1;
                         $ionicScrollDelegate.$getByHandle('mainScroll').scrollBottom();
@@ -177,6 +179,7 @@ define(['app/module', 'app/directive/directiveApi'
                     }
 
                     if (index == 2) {   //只看女
+                        $scope.userList = [];
                         init();
                         $scope.searchForm.sex = 0;
                         $ionicScrollDelegate.$getByHandle('mainScroll').scrollBottom();
