@@ -44,7 +44,7 @@
                     </div>
 
                     <div class="col col-75">
-                        <a class="tdn" ng-click="checkPhone('#/main/chat?id={{user.id}}&head_pic={{user.info.head_pic}}&real_name={{user.info.real_name}}&sex={{user.sex}}&age={{user.info.age}}')">
+                        <a class="tdn" href="#/main/chat?id={{user.id}}&head_pic={{user.info.head_pic}}&real_name={{user.info.real_name}}&sex={{user.sex}}&age={{user.info.age}}">
                             <div class="row pl0">
                                 <div class="col">
                                     <span class="fwb fs14" ng-if="user.info.real_name">{{user.info.real_name | sex:user.sex :user.info.age}}</span>
