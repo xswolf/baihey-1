@@ -9,7 +9,7 @@ define(['app/module', 'app/directive/directiveApi'
     module.controller("discovery.index", ['app.serviceApi', '$rootScope', '$scope', '$timeout', '$ionicPopup', '$ionicModal', '$ionicActionSheet', '$ionicLoading', '$location', '$filter', function (api, $rootScope, $scope, $timeout, $ionicPopup, $ionicModal, $ionicActionSheet, $ionicLoading, $location, $filter) {
 
         var userInfo = ar.getStorage('userInfo');
-console.log($location.$$search);
+        console.log($location.$$search);
         if ($location.$$search.userId) {
             // 显示个人
             $scope.title = $location.$$search.real_name ? $filter('sex')($location.$$search.real_name,$location.$$search.sex,$location.$$search.age) + '的个人动态' : $location.$$search.userId + '的个人动态';

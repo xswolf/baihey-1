@@ -1953,14 +1953,27 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
 
     // 诚信认证-身份认证
     module.controller("member.honesty_sfz", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', 'FileUploader','$location', function (api, $scope, $timeout, $ionicPopup, FileUploader,$location) {
+        api.list('/wap/member/photo-list', {type : 2 ,pageSize : 2}).success(function (res) {
+            $scope.authList = res.data;
+            $scope.authList.length > 0 ? ar.setStorage('authList', $scope.authList) : ar.setStorage('authList', [{},{}]);
+            /*res.data[0] ? $scope.imgList.identity_pic1 = res.data[0].thumb_path : true;
+            res.data[1] ? $scope.imgList.identity_pic2 = res.data[1].thumb_path : true;*/
+            console.log($scope.authList);
+        });
+        $scope.imgList = [];
         requirejs(['photoswipe', 'photoswipe_ui'], function (photoswipe, photoswipe_ui) {
             $scope.showImg =function(index){
-                $scope.imgAttr1 = $scope.userInfo.auth.identity_pic1.split('.')[0].split('_');
-                $scope.imgAttr2 = $scope.userInfo.auth.identity_pic2.split('.')[0].split('_');
-                $scope.imgList = [
+                //$scope.imgAttr1 = $scope.userInfo.auth.identity_pic1.split('.')[0].split('_');
+                //$scope.imgAttr2 = $scope.userInfo.auth.identity_pic2.split('.')[0].split('_');
+                var imgAttr = [];
+                for(var i in $scope.authList) {
+                    imgAttr[i] = $scope.authList[i].thumb_path.split('.')[0].split('_');
+                    $scope.imgList[i] = {src:$scope.authList[i].thumb_path.replace('thumb', 'picture'),w:imgAttr[i][1],h:imgAttr[i][2]};
+                }
+                /*$scope.imgList = [
                     {src:$scope.userInfo.auth.identity_pic1.replace('thumb', 'picture'),w:$scope.imgAttr1[1],h:$scope.imgAttr1[2]},
                     {src:$scope.userInfo.auth.identity_pic2.replace('thumb', 'picture'),w:$scope.imgAttr2[1],h:$scope.imgAttr2[2]}
-                ];
+                ];*/
                 var pswpElement = document.querySelectorAll('.pswp')[0];
                 var options ={index:index};
                 options.mainClass = 'pswp--minimal--dark';
@@ -1977,11 +1990,13 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
             }
         });
         // 实例化上传图片插件
-        var uploader1 = $scope.uploader1 = new FileUploader({
-            url: '/wap/file/auth-pictures?auth=identity_pic1'
+        var uploader = $scope.uploader = new FileUploader({
+            url: '/wap/file/thumb-photo?type=2'
+            //url: '/wap/file/auth-pictures?auth=identity_pic1'
         });
         var uploader2 = $scope.uploader2 = new FileUploader({
-            url: '/wap/file/auth-pictures?auth=identity_pic2'
+            url: '/wap/file/thumb-photo?type=2'
+            //url: '/wap/file/auth-pictures?auth=identity_pic2'
         });
 
         $scope.formData = [];
@@ -1990,12 +2005,6 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
         $scope.formData.identity_address = $scope.userInfo.info.identity_address != '未知' ? $scope.userInfo.info.identity_address : '';
 
         $scope.addNewImg = function (name) {
-
-            if (name == 'identity_pic1') {
-                var uploader = uploader1;
-            } else {
-                var uploader = uploader2;
-            }
             $scope.uploaderImage(uploader, name);
         }
 

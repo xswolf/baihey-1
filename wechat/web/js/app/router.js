@@ -357,6 +357,7 @@ define(["app/module", 'app/service/serviceApi','jquery'],
                     $ionicLoading.hide();
                 }
 
+                $scope.authList = [];
                 // 图片上传目前用于诚信认证（obj，str）
                 $scope.uploaderImage = function (uploader, name) {
                     var e = document.getElementById(name);
@@ -383,8 +384,12 @@ define(["app/module", 'app/service/serviceApi','jquery'],
                     };
                     uploader.onSuccessItem = function (fileItem, response, status, headers) {  // 上传成功
                         if (response.status > 0) {
-                            eval('$scope.userInfo.auth.' + name + ' = ' + "'" + response.thumb_path + "'");
-                            $scope.getUserPrivacyStorage('');
+                            if(name == 'honesty1') {
+                                eval('$scope.authList[0].thumb_path = ' + "'" + response.thumb_path + "'");
+                            } else {
+                                eval('$scope.authList[1].thumb_path = ' + "'" + response.thumb_path + "'");
+                            }
+                            //$scope.getUserPrivacyStorage('');
                         } else {
                             ar.saveDataAlert($ionicPopup,response.info);
                         }
@@ -399,6 +404,10 @@ define(["app/module", 'app/service/serviceApi','jquery'],
                     };
                 }
 
+                // 身份证认证判断
+                $scope.honesty = function(val) {
+                    return 1 & val;
+                }
                 //$scope.userInfo = [{}];
 
             }])

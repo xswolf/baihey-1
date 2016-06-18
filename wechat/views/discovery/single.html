@@ -20,7 +20,7 @@
                             <span class="fr fs12 cor5">{{dis.create_time*1000 | date:'yyyy-MM-dd hh:mm:ss'}}</span>
                         </p>
                         <p class="mt10">
-                            <i ng-if="dis.auth.identity_check" class="identity icon-new-id"></i>
+                            <i ng-if="honesty(dis.honesty_value)" class="identity icon-new-id"></i>
                             <i ng-if="dis.phone" class="identity icon-new-phone"></i>
                             <i ng-if="dis.info.level == 1" class="identity icon-new-vip"></i>
                             <i ng-if="dis.info.level == 2" class="identity icon-new-guest"></i>

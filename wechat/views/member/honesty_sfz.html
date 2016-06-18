@@ -18,31 +18,31 @@
                 <ul class="am-avg-sm-2 am-thumbnails tac">
                     <li>
                         <button type="button" class="am-btn am-btn-primary am-btn-sm am-radius"
-                                ng-click="addNewImg('identity_pic1')">上传正面
+                                ng-click="addNewImg('honesty1')">上传正面
                         </button>
                         <div class="pr">
-                            <img ng-if="userInfo.auth.identity_pic1" ng-click="showImg(0)" style="margin-bottom: 0;"
+                            <img ng-if="authList[0].thumb_path" ng-click="showImg(0)" style="margin-bottom: 0;"
                                  class="am-thumbnail mt10"
-                                 src="{{userInfo.auth.identity_pic1}}" alt="正面"/>
+                                 src="{{authList[0].thumb_path}}" alt="正面"/>
                             <div class="underReview"><span class="">审核中</span></div>
                         </div>
 
                     </li>
                     <li>
                         <button type="button" class="am-btn am-btn-secondary am-btn-sm am-radius"
-                                ng-click="addNewImg('identity_pic2')">上传反面
+                                ng-click="addNewImg('honesty2')">上传反面
                         </button>
                         <div class="pr">
-                            <img ng-if="userInfo.auth.identity_pic2" ng-click="showImg(1)" style="margin-bottom: 0;"
+                            <img ng-if="authList[1].thumb_path" ng-click="showImg(1)" style="margin-bottom: 0;"
                                  class="am-thumbnail mt10"
-                                 src="{{userInfo.auth.identity_pic2}}" alt="反面"/>
+                                 src="{{authList[1].thumb_path}}" alt="反面"/>
                             <div class="underReview"><span>审核中</span></div>
                         </div>
                     </li>
                 </ul>
-                <input id="identity_pic1" type="file" nv-file-select uploader="uploader1"
+                <input id="honesty1" type="file" nv-file-select uploader="uploader"
                        style="visibility: hidden; display: none;" accept="image/*">
-                <input id="identity_pic2" type="file" nv-file-select uploader="uploader2"
+                <input id="honesty2" type="file" nv-file-select uploader="uploader"
                        style="visibility: hidden; display: none;" accept="image/*">
             </div>
         </div>

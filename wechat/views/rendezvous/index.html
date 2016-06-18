@@ -18,7 +18,7 @@
                     </span>
                 </h2>
                 <p>
-                    <i ng-if="vo.auth.identity_check" class="identity icon-new-id"></i>
+                    <i ng-if="honesty(vo.honesty_value)" class="identity icon-new-id"></i>
                     <i ng-if="vo.phone" class="identity icon-new-phone"></i>
                     <i ng-if="vo.info.level == 1" class="identity icon-new-vip"></i>
                     <i ng-if="vo.info.level == 2" class="identity icon-new-guest"></i>
