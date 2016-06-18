@@ -6,13 +6,13 @@
 
     <ion-content class="com_w_100" ion-sticky ion-sticky-class="positive">
         <ion-list>
-            <div ng-repeat="date in dateList">
+            <div ng-repeat="record in recordList">
                 <ion-item class="item-divider">
-                    <span class="fl">{{date.title}}</span><span class="fr">消费：{{date.money | currency:'￥'}}</span>
+                    <span class="fl">{{record.date}}</span><span class="fr">消费：{{record.amount | currency:'￥'}}</span>
                 </ion-item>
-                <ion-item ng-repeat="record in recordList | filter:{dateTitle: date.title}">
-                    <span class="fl">{{record.type}}</span>
-                    <span class="fr">{{record.date * 1000 | date:"M月d日 hh:mm"}}</span>
+                <ion-item ng-repeat="i in record.items">
+                    <p><span class="fl fwb">{{i.title}}</span><span class="fr fs16">{{i.money | currency:'￥'}}</span></p>
+                    <p><span class="fs12 cor8">{{i.datetime * 1000 | date:"M月d日 HH:mm"}}</span></p>
                 </ion-item>
             </div>
         </ion-list>

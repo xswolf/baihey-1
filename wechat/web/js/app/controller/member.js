@@ -68,11 +68,11 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
             uploader.onSuccessItem = function (fileItem, response, status, headers) {  // 上传成功
                 if (response.status > 0) {
                     /*if ($scope.imgList.length == 0) { // 第一张上传相片默认设为头像
-                        $scope.imgList.push({id: response.id, thumb_path: response.thumb_path, is_head: 1});
-                        $scope.userInfo.info.head_pic = response.thumb_path;
-                        $scope.setUserStorage();
-                    } else {*/
-                        $scope.imgList.push({id: response.id, thumb_path: response.thumb_path, is_head: 0});
+                     $scope.imgList.push({id: response.id, thumb_path: response.thumb_path, is_head: 1});
+                     $scope.userInfo.info.head_pic = response.thumb_path;
+                     $scope.setUserStorage();
+                     } else {*/
+                    $scope.imgList.push({id: response.id, thumb_path: response.thumb_path, is_head: 0});
                     //}
                 } else {
                     $ionicPopup.alert({title: '上传图片失败！'});
@@ -112,7 +112,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
                     }
                 },
                 buttonClicked: function (i) {
-                    if($scope.imgList[index].is_check != 1) {
+                    if ($scope.imgList[index].is_check != 1) {
                         $ionicPopup.alert({title: '图片未审核'});
                         hideSheet();
                         return false;
@@ -1315,7 +1315,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
     module.controller("member.zo_marriage", ['app.serviceApi', '$scope', '$ionicPopup', '$location', '$ionicLoading', function (api, $scope, $ionicPopup, $location, $ionicLoading) {
         $scope.formData = [];
         $scope.marriageList = config_infoData.marriage;
-        if(!$scope.userInfo.info.zo_marriage) {
+        if (!$scope.userInfo.info.zo_marriage) {
             $scope.isNull = true;
         } else {
             $scope.isNull = false;
@@ -1420,7 +1420,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
     module.controller("member.zo_zodiac", ['app.serviceApi', '$scope', '$ionicPopup', '$ionicLoading', '$location', function (api, $scope, $ionicPopup, $ionicLoading, $location) {
 
         $scope.formData = [];
-        if(!$scope.userInfo.info.zo_zodiac) {
+        if (!$scope.userInfo.info.zo_zodiac) {
             $scope.isNull = true;
         } else {
             $scope.isNull = false;
@@ -1473,7 +1473,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
 
         $scope.formData = [];
         $scope.constellationList = config_infoData.constellation;
-        if(!$scope.userInfo.info.zo_constellation) {
+        if (!$scope.userInfo.info.zo_constellation) {
             $scope.isNull = true;
         } else {
             $scope.isNull = false;
@@ -1593,7 +1593,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
             }
         }
         // 权限判断
-        var is_privacy = function(val) {
+        var is_privacy = function (val) {
             switch (val) {
                 case '1':
                     return true;
@@ -1615,15 +1615,15 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
         $scope.formData.follow = false;
 
         api.list("/wap/member/user-info-page-by-id", {'id': $scope.formData.userId}).success(function (res) {
-            if(res.status) {
+            if (res.status) {
                 // 用户信息
                 $scope.otherUserInfo = res.userInfo;
                 $scope.otherUserInfo.info = JSON.parse($scope.otherUserInfo.info);
                 $scope.otherUserInfo.auth = JSON.parse($scope.otherUserInfo.auth);
                 // 用户相册
-                $scope.imgList = res.userPhoto.length > 0 ?  res.userPhoto : [];
+                $scope.imgList = res.userPhoto.length > 0 ? res.userPhoto : [];
                 // 用户动态
-                if(res.dynamic) {
+                if (res.dynamic) {
                     for (var i in res.dynamic) {
                         res.dynamic[i].imgList = JSON.parse(res.dynamic[i].pic);
                         $scope.dynamicList.push(res.dynamic[i]);
@@ -1631,10 +1631,10 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
                 }
                 $scope.formData.follow = res.followStatus;// 关注状态
                 $scope.formData.followed = res.followedStatus;// 被关注状态
-                $scope.qqAuth   = is_privacy($scope.otherUserInfo.privacy_qq);// qq权限
-                $scope.perAuth  = is_privacy($scope.otherUserInfo.privacy_per);// 个人动态权限
-                $scope.wxAuth   = is_privacy($scope.otherUserInfo.privacy_wechat);// 微信权限
-                $scope.picAuth  = is_privacy($scope.otherUserInfo.privacy_pic);// 相册权限 // TODO
+                $scope.qqAuth = is_privacy($scope.otherUserInfo.privacy_qq);// qq权限
+                $scope.perAuth = is_privacy($scope.otherUserInfo.privacy_per);// 个人动态权限
+                $scope.wxAuth = is_privacy($scope.otherUserInfo.privacy_wechat);// 微信权限
+                $scope.picAuth = is_privacy($scope.otherUserInfo.privacy_pic);// 相册权限 // TODO
                 $scope.otherUserInfo.went_travel ? getTravel('went_travel', $scope.otherUserInfo.went_travel) : true;// 我去过的地方
                 $scope.otherUserInfo.want_travel ? getTravel('want_travel', $scope.otherUserInfo.want_travel) : true;// 我想去的地方
                 $scope.otherUserInfo.love_sport ? getConfig('love_sport', $scope.otherUserInfo.love_sport) : true;// 喜欢的运动
@@ -1652,11 +1652,11 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
         followData.follow_id = $scope.formData.userId;
         // 未关注
         /*$scope.formData.follow = false;
-        api.getStatus('/wap/follow/get-follow-status', followData).success(function (res) {
-            if (res.data) {
-                $scope.formData.follow = true;
-            }
-        });*/
+         api.getStatus('/wap/follow/get-follow-status', followData).success(function (res) {
+         if (res.data) {
+         $scope.formData.follow = true;
+         }
+         });*/
         // 取消关注
         $scope.cancelFollow = function () {
             api.save('/wap/follow/del-follow', followData).success(function (res) {
@@ -1946,38 +1946,42 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
                 }
             });
         }
-        $scope.honesty = function(val) {
+        $scope.honesty = function (val) {
             return $scope.userInfo.honesty & val;
         }
     }]);
 
     // 诚信认证-身份认证
-    module.controller("member.honesty_sfz", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', 'FileUploader','$location', function (api, $scope, $timeout, $ionicPopup, FileUploader,$location) {
-        api.list('/wap/member/photo-list', {type : 2 ,pageSize : 2}).success(function (res) {
+    module.controller("member.honesty_sfz", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', 'FileUploader', '$location', function (api, $scope, $timeout, $ionicPopup, FileUploader, $location) {
+        api.list('/wap/member/photo-list', {type: 2, pageSize: 2}).success(function (res) {
             $scope.authList = res.data;
-            $scope.authList.length > 0 ? ar.setStorage('authList', $scope.authList) : ar.setStorage('authList', [{},{}]);
+            $scope.authList.length > 0 ? ar.setStorage('authList', $scope.authList) : ar.setStorage('authList', [{}, {}]);
             /*res.data[0] ? $scope.imgList.identity_pic1 = res.data[0].thumb_path : true;
-            res.data[1] ? $scope.imgList.identity_pic2 = res.data[1].thumb_path : true;*/
+             res.data[1] ? $scope.imgList.identity_pic2 = res.data[1].thumb_path : true;*/
             console.log($scope.authList);
         });
         $scope.imgList = [];
         requirejs(['photoswipe', 'photoswipe_ui'], function (photoswipe, photoswipe_ui) {
-            $scope.showImg =function(index){
+            $scope.showImg = function (index) {
                 //$scope.imgAttr1 = $scope.userInfo.auth.identity_pic1.split('.')[0].split('_');
                 //$scope.imgAttr2 = $scope.userInfo.auth.identity_pic2.split('.')[0].split('_');
                 var imgAttr = [];
-                for(var i in $scope.authList) {
+                for (var i in $scope.authList) {
                     imgAttr[i] = $scope.authList[i].thumb_path.split('.')[0].split('_');
-                    $scope.imgList[i] = {src:$scope.authList[i].thumb_path.replace('thumb', 'picture'),w:imgAttr[i][1],h:imgAttr[i][2]};
+                    $scope.imgList[i] = {
+                        src: $scope.authList[i].thumb_path.replace('thumb', 'picture'),
+                        w: imgAttr[i][1],
+                        h: imgAttr[i][2]
+                    };
                 }
                 /*$scope.imgList = [
-                    {src:$scope.userInfo.auth.identity_pic1.replace('thumb', 'picture'),w:$scope.imgAttr1[1],h:$scope.imgAttr1[2]},
-                    {src:$scope.userInfo.auth.identity_pic2.replace('thumb', 'picture'),w:$scope.imgAttr2[1],h:$scope.imgAttr2[2]}
-                ];*/
+                 {src:$scope.userInfo.auth.identity_pic1.replace('thumb', 'picture'),w:$scope.imgAttr1[1],h:$scope.imgAttr1[2]},
+                 {src:$scope.userInfo.auth.identity_pic2.replace('thumb', 'picture'),w:$scope.imgAttr2[1],h:$scope.imgAttr2[2]}
+                 ];*/
                 var pswpElement = document.querySelectorAll('.pswp')[0];
-                var options ={index:index};
+                var options = {index: index};
                 options.mainClass = 'pswp--minimal--dark';
-                options.barsSize = {top:0,bottom:0};
+                options.barsSize = {top: 0, bottom: 0};
                 options.captionEl = false;
                 options.fullscreenEl = false;
                 options.shareEl = false;
@@ -1985,7 +1989,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
                 options.bgOpacity = 0.85;
                 options.tapToClose = true;
                 options.tapToToggleControls = false;
-                var gallery = new photoswipe( pswpElement, photoswipe_ui, $scope.imgList, options);
+                var gallery = new photoswipe(pswpElement, photoswipe_ui, $scope.imgList, options);
                 gallery.init();
             }
         });
@@ -2010,11 +2014,11 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
 
         $scope.saveData = function () {
             if ($scope.formData.real_name == '' || $scope.formData.identity_id == '' || $scope.formData.identity_address == '') {
-                var confirm = ar.saveDataConfirm($ionicPopup,'检测到身份证信息未填写，确认放弃吗？');
-                confirm.then(function(res){
-                    if(res){
+                var confirm = ar.saveDataConfirm($ionicPopup, '检测到身份证信息未填写，确认放弃吗？');
+                confirm.then(function (res) {
+                    if (res) {
                         $location.url('/main/member/honesty');
-                    }else{
+                    } else {
                         return false;
                     }
                 })
@@ -2034,17 +2038,25 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
     // 诚信认证-婚姻认证
     module.controller("member.honesty_marr", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', 'FileUploader', function (api, $scope, $timeout, $ionicPopup, FileUploader) {
         requirejs(['photoswipe', 'photoswipe_ui'], function (photoswipe, photoswipe_ui) {
-            $scope.showImg =function(index){
+            $scope.showImg = function (index) {
                 $scope.imgAttr1 = $scope.userInfo.auth.marriage_pic1.split('.')[0].split('_');
                 $scope.imgAttr2 = $scope.userInfo.auth.marriage_pic2.split('.')[0].split('_');
                 $scope.imgList = [
-                    {src:$scope.userInfo.auth.marriage_pic1.replace('thumb', 'picture'),w:$scope.imgAttr1[1],h:$scope.imgAttr1[2]},
-                    {src:$scope.userInfo.auth.marriage_pic2.replace('thumb', 'picture'),w:$scope.imgAttr2[1],h:$scope.imgAttr2[2]}
+                    {
+                        src: $scope.userInfo.auth.marriage_pic1.replace('thumb', 'picture'),
+                        w: $scope.imgAttr1[1],
+                        h: $scope.imgAttr1[2]
+                    },
+                    {
+                        src: $scope.userInfo.auth.marriage_pic2.replace('thumb', 'picture'),
+                        w: $scope.imgAttr2[1],
+                        h: $scope.imgAttr2[2]
+                    }
                 ];
                 var pswpElement = document.querySelectorAll('.pswp')[0];
-                var options ={index:index};
+                var options = {index: index};
                 options.mainClass = 'pswp--minimal--dark';
-                options.barsSize = {top:0,bottom:0};
+                options.barsSize = {top: 0, bottom: 0};
                 options.captionEl = false;
                 options.fullscreenEl = false;
                 options.shareEl = false;
@@ -2052,7 +2064,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
                 options.bgOpacity = 0.85;
                 options.tapToClose = true;
                 options.tapToToggleControls = false;
-                var gallery = new photoswipe( pswpElement, photoswipe_ui, $scope.imgList, options);
+                var gallery = new photoswipe(pswpElement, photoswipe_ui, $scope.imgList, options);
                 gallery.init();
             }
         });
@@ -2079,17 +2091,25 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
     // 诚信认证-学历认证
     module.controller("member.honesty_edu", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', 'FileUploader', function (api, $scope, $timeout, $ionicPopup, FileUploader) {
         requirejs(['photoswipe', 'photoswipe_ui'], function (photoswipe, photoswipe_ui) {
-            $scope.showImg =function(index){
+            $scope.showImg = function (index) {
                 $scope.imgAttr1 = $scope.userInfo.auth.education_pic1.split('.')[0].split('_');
                 $scope.imgAttr2 = $scope.userInfo.auth.education_pic2.split('.')[0].split('_');
                 $scope.imgList = [
-                    {src:$scope.userInfo.auth.education_pic1.replace('thumb', 'picture'),w:$scope.imgAttr1[1],h:$scope.imgAttr1[2]},
-                    {src:$scope.userInfo.auth.education_pic2.replace('thumb', 'picture'),w:$scope.imgAttr2[1],h:$scope.imgAttr2[2]}
+                    {
+                        src: $scope.userInfo.auth.education_pic1.replace('thumb', 'picture'),
+                        w: $scope.imgAttr1[1],
+                        h: $scope.imgAttr1[2]
+                    },
+                    {
+                        src: $scope.userInfo.auth.education_pic2.replace('thumb', 'picture'),
+                        w: $scope.imgAttr2[1],
+                        h: $scope.imgAttr2[2]
+                    }
                 ];
                 var pswpElement = document.querySelectorAll('.pswp')[0];
-                var options ={index:index};
+                var options = {index: index};
                 options.mainClass = 'pswp--minimal--dark';
-                options.barsSize = {top:0,bottom:0};
+                options.barsSize = {top: 0, bottom: 0};
                 options.captionEl = false;
                 options.fullscreenEl = false;
                 options.shareEl = false;
@@ -2097,7 +2117,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
                 options.bgOpacity = 0.85;
                 options.tapToClose = true;
                 options.tapToToggleControls = false;
-                var gallery = new photoswipe( pswpElement, photoswipe_ui, $scope.imgList, options);
+                var gallery = new photoswipe(pswpElement, photoswipe_ui, $scope.imgList, options);
                 gallery.init();
             }
         });
@@ -2123,17 +2143,25 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
     // 诚信认证-房产认证
     module.controller("member.honesty_housing", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', 'FileUploader', function (api, $scope, $timeout, $ionicPopup, FileUploader) {
         requirejs(['photoswipe', 'photoswipe_ui'], function (photoswipe, photoswipe_ui) {
-            $scope.showImg =function(index){
+            $scope.showImg = function (index) {
                 $scope.imgAttr1 = $scope.userInfo.auth.house_pic1.split('.')[0].split('_');
                 $scope.imgAttr2 = $scope.userInfo.auth.house_pic2.split('.')[0].split('_');
                 $scope.imgList = [
-                    {src:$scope.userInfo.auth.house_pic1.replace('thumb', 'picture'),w:$scope.imgAttr1[1],h:$scope.imgAttr1[2]},
-                    {src:$scope.userInfo.auth.house_pic2.replace('thumb', 'picture'),w:$scope.imgAttr2[1],h:$scope.imgAttr2[2]}
+                    {
+                        src: $scope.userInfo.auth.house_pic1.replace('thumb', 'picture'),
+                        w: $scope.imgAttr1[1],
+                        h: $scope.imgAttr1[2]
+                    },
+                    {
+                        src: $scope.userInfo.auth.house_pic2.replace('thumb', 'picture'),
+                        w: $scope.imgAttr2[1],
+                        h: $scope.imgAttr2[2]
+                    }
                 ];
                 var pswpElement = document.querySelectorAll('.pswp')[0];
-                var options ={index:index};
+                var options = {index: index};
                 options.mainClass = 'pswp--minimal--dark';
-                options.barsSize = {top:0,bottom:0};
+                options.barsSize = {top: 0, bottom: 0};
                 options.captionEl = false;
                 options.fullscreenEl = false;
                 options.shareEl = false;
@@ -2141,7 +2169,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
                 options.bgOpacity = 0.85;
                 options.tapToClose = true;
                 options.tapToToggleControls = false;
-                var gallery = new photoswipe( pswpElement, photoswipe_ui, $scope.imgList, options);
+                var gallery = new photoswipe(pswpElement, photoswipe_ui, $scope.imgList, options);
                 gallery.init();
             }
         });
@@ -2250,36 +2278,52 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
             $scope.bribery = res.data;
         })
         $scope.money = false;
-        $scope.showMoney = function(){
+        $scope.showMoney = function () {
             $scope.money = true;
         }
     }]);
 
     // 我的账户-消费记录
     module.controller("member.account_record", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$location', function (api, $scope, $timeout, $ionicPopup, $location) {
-        $scope.curDate = ar.timeStamp();  // 当前时间
-        $scope.dateList = [
-            {title:'2016年6月',money:188.05},
-            {title:'2016年5月',money:512.00},
-            {title:'2016年4月',money:186.57},
-            {title:'2016年3月',money:44.57},
-            {title:'2016年2月',money:877.57},
-            {title:'2016年1月',money:1888.57}
-        ]
 
         $scope.recordList = [
-            {date:1451965812,type:'转账',dateTitle:'2016年6月'},
-            {date:1452533636,type:'红包',dateTitle:'2016年6月'},
-            {date:1454378584,type:'红包',dateTitle:'2016年6月'},
-            {date:1454474084,type:'红包',dateTitle:'2016年5月'},
-            {date:1457165104,type:'红包',dateTitle:'2016年5月'},
-            {date:1458254518,type:'红包',dateTitle:'2016年5月'},
-            {date:1461575123,type:'红包',dateTitle:'2016年4月'},
-            {date:1461854935,type:'红包',dateTitle:'2016年4月'},
-            {date:1462321087,type:'红包',dateTitle:'2016年3月'},
-            {date:1462975094,type:'红包',dateTitle:'2016年3月'},
-            {date:1465084084,type:'红包',dateTitle:'2016年2月'},
-            {date:1465756982,type:'红包',dateTitle:'2016年1月'}
+            {
+                date: '2016年6月', amount: 258.50, items: [
+                {id: 1, datetime: 1451965812, title: '嘉瑞红包', dateTitle: '2016年6月', money: 88.50,type:1},
+                {id: 2, datetime: 1452533636, title: '嘉瑞红包', dateTitle: '2016年6月', money: 48.00,type:1},
+                {id: 3, datetime: 1454378584, title: '嘉瑞红包', dateTitle: '2016年6月', money: 122.00,type:1}
+            ]
+            },
+            {
+                date: '2016年5月', amount: 514.20, items: [
+                {id: 4, datetime: 1454474084, title: '提现', dateTitle: '2016年5月', money: 189.00,type:1},
+                {id: 5, datetime: 1457165104, title: '嘉瑞红包', dateTitle: '2016年5月', money: 320.00,type:1},
+                {id: 6, datetime: 1458254518, title: '嘉瑞红包', dateTitle: '2016年5月', money: 5.20,type:1}
+            ]
+            },
+            {
+                date: '2016年4月', amount: 1186.00, items: [
+                {id: 7, datetime: 1461575123, title: '嘉瑞红包', dateTitle: '2016年4月', money: 187.00,type:1},
+                {id: 8, datetime: 1461854935, title: '嘉瑞红包', dateTitle: '2016年4月', money: 999.00,type:1}
+            ]
+            },
+            {
+                date: '2016年3月', amount: 115.00, items: [
+                {id: 9, datetime: 1462321087, title: '嘉瑞红包', dateTitle: '2016年3月', money: 87.00,type:1},
+                {id: 10, datetime: 1462975094, title: '嘉瑞红包', dateTitle: '2016年3月', money: 18.00,type:1}
+            ]
+            },
+            {
+                date: '2016年2月', amount: 254.00, items: [
+                {id: 11, datetime: 1465084084, title: '提现', dateTitle: '2016年2月', money: 254.00,type:1}
+            ]
+            },
+            {
+                date: '2016年1月', amount: 97.00, items: [
+                {id: 12, datetime: 1465756982, title: '嘉瑞红包', money: 55.00},
+                {id: 13, datetime: 1465797015, title: '嘉瑞红包', money: 42.00}
+            ]
+            }
         ];
 
 
@@ -2294,8 +2338,8 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
 
         $scope.loadMore = function (year) {
             var args = {flag: false, page: $scope.page};
-            if (year != 'undefined'){
-                if (year != 1){
+            if (year != 'undefined') {
+                if (year != 1) {
                     $scope.queryYear = year;
                     $scope.briberyList = [];
                     $scope.moreData = true;
@@ -2956,7 +3000,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
             }
         });
         $scope.showPhone = function () {
-            ar.saveDataAlert($ionicPopup,'电话：023-68800967');
+            ar.saveDataAlert($ionicPopup, '电话：023-68800967');
         }
 
     }]);

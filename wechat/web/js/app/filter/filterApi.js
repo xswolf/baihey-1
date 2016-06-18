@@ -442,16 +442,4 @@ define(['app/module'], function (module) {
         }
     })
 
-    module.filter('groupBy', function() {
-        return function (data, key) {
-            if (!(data && key)) return;
-            var result = {};
-            for (var i=0;i<data.length;i++) {
-                if (!result[data[i][key]])
-                    result[data[i][key]]=[];
-                result[data[i][key]].push(data[i])
-            }
-            return result;
-        };
-    });
 })
