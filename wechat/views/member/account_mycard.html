@@ -1,0 +1,21 @@
+<ion-view hide-tabs="true">
+    <link href="/wechat/web/css/member.css" rel="stylesheet">
+    <ion-header-bar class="com_w_100 bhy">
+        <title class="title">我的银行卡</title>
+        <a class="button button-icon" href="#/main/member/account_add_card">添加</a>
+    </ion-header-bar>
+
+    <ion-content class="com_w_100 bhy">
+        <ion-list>
+            <ion-item class="item-icon-right" href="#/main/member/account_mycard_info?id=1">
+                <span class="fl">农业银行</span>
+                <span class="ml15 cor4 fs12">借记卡 5566</span>
+                <i class="icon ion-ios-arrow-right cor4 fr"></i>
+                <ion-option-button class="button-assertive"
+                                   ng-click="edit(item)">
+                    删除
+                </ion-option-button>
+            </ion-item>
+        </ion-list>
+    </ion-content>
+</ion-view>

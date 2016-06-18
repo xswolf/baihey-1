@@ -2273,7 +2273,6 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
     // 我的账户
     module.controller("member.account", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', function (api, $scope, $timeout, $ionicPopup) {
 
-
         api.list('/wap/member/bribery-info').success(function (res) {
             $scope.bribery = res.data;
         })
@@ -2285,50 +2284,77 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
 
     // 我的账户-消费记录
     module.controller("member.account_record", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$location', function (api, $scope, $timeout, $ionicPopup, $location) {
+        /*api.get('url',{}).success(function(res){
+         $scope.recordList = res.data;   // 一次性查询出所有数据
 
-        $scope.recordList = [
+         })*/
+        $scope.recordList = [        // TODO 测试数据
             {
-                date: '2016年6月', amount: 258.50, items: [
-                {id: 1, datetime: 1451965812, title: '嘉瑞红包', dateTitle: '2016年6月', money: 88.50,type:1},
-                {id: 2, datetime: 1452533636, title: '嘉瑞红包', dateTitle: '2016年6月', money: 48.00,type:1},
-                {id: 3, datetime: 1454378584, title: '嘉瑞红包', dateTitle: '2016年6月', money: 122.00,type:1}
+                date: '2016年6月', amount: 351.00, items: [
+                {id: 11, datetime: 1465084084, title: '提现', money: 254.00},
+                {id: 12, datetime: 1465756982, title: '嘉瑞红包', money: 55.00},
+                {id: 13, datetime: 1465797015, title: '嘉瑞红包', money: 42.00}
             ]
             },
             {
-                date: '2016年5月', amount: 514.20, items: [
-                {id: 4, datetime: 1454474084, title: '提现', dateTitle: '2016年5月', money: 189.00,type:1},
-                {id: 5, datetime: 1457165104, title: '嘉瑞红包', dateTitle: '2016年5月', money: 320.00,type:1},
-                {id: 6, datetime: 1458254518, title: '嘉瑞红包', dateTitle: '2016年5月', money: 5.20,type:1}
+                date: '2016年5月', amount: 115.00, items: [
+                {id: 9, datetime: 1462321087, title: '嘉瑞红包', money: 87.00},
+                {id: 10, datetime: 1462975094, title: '嘉瑞红包', money: 18.00}
             ]
             },
             {
                 date: '2016年4月', amount: 1186.00, items: [
-                {id: 7, datetime: 1461575123, title: '嘉瑞红包', dateTitle: '2016年4月', money: 187.00,type:1},
-                {id: 8, datetime: 1461854935, title: '嘉瑞红包', dateTitle: '2016年4月', money: 999.00,type:1}
+                {id: 7, datetime: 1461575123, title: '嘉瑞红包', money: 187.00},
+                {id: 8, datetime: 1461854935, title: '嘉瑞红包', money: 999.00}
             ]
             },
             {
-                date: '2016年3月', amount: 115.00, items: [
-                {id: 9, datetime: 1462321087, title: '嘉瑞红包', dateTitle: '2016年3月', money: 87.00,type:1},
-                {id: 10, datetime: 1462975094, title: '嘉瑞红包', dateTitle: '2016年3月', money: 18.00,type:1}
+                date: '2016年3月', amount: 514.20, items: [
+                {id: 5, datetime: 1457165104, title: '嘉瑞红包', money: 320.00},
+                {id: 6, datetime: 1458254518, title: '嘉瑞红包', money: 5.20}
+
             ]
             },
             {
-                date: '2016年2月', amount: 254.00, items: [
-                {id: 11, datetime: 1465084084, title: '提现', dateTitle: '2016年2月', money: 254.00,type:1}
+                date: '2016年2月', amount: 311.00, items: [
+                {id: 4, datetime: 1454474084, title: '提现', money: 189.00},
+                {id: 3, datetime: 1454378584, title: '嘉瑞红包', money: 122.00}
             ]
             },
             {
-                date: '2016年1月', amount: 97.00, items: [
-                {id: 12, datetime: 1465756982, title: '嘉瑞红包', money: 55.00},
-                {id: 13, datetime: 1465797015, title: '嘉瑞红包', money: 42.00}
+                date: '2016年1月', amount: 136.50, items: [
+                {id: 1, datetime: 1451965812, title: '嘉瑞红包', money: 88.50},
+                {id: 2, datetime: 1452533636, title: '嘉瑞红包', money: 48.00}
+
             ]
             }
         ];
+        $scope.pageSize = 1;
+        $scope.isMore = true;
+
+        // 加载更多
+        $scope.loadMoreData = function () {
+            if ($scope.pageSize > $scope.recordList.length) {
+                $scope.isMore = false;
+            }
+            $scope.pageSize += 1;
+            $scope.$broadcast('scroll.infiniteScrollComplete');
+        }
+
+        // 是否还有更多
+        $scope.moreDataCanBeLoaded = function () {
+            return $scope.isMore
+        }
 
 
     }]);
 
+    // 我的账户-消费记录详情
+    module.controller("member.account_record_info", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup','$location', function (api, $scope, $timeout, $ionicPopup,$location) {
+        $scope.recordId = $location.$$search.id; // 记录ID
+
+
+    }]);
     // 嘉瑞红包-发出的红包
     module.controller("member.bribery_send", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$location', function (api, $scope, $timeout, $ionicPopup, $location) {
         $scope.items = [];
@@ -2370,9 +2396,21 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
 
     }]);
 
-    // 嘉瑞红包-红包提现
-    module.controller("member.bribery_withdraw", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', function (api, $scope, $timeout, $ionicPopup) {
+    // 我的账户-提现
+    module.controller("member.account_withdraw", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', function (api, $scope, $timeout, $ionicPopup) {
 
+
+    }]);
+
+    // 我的账户-我的银行卡
+    module.controller("member.account_mycard", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', function (api, $scope, $timeout, $ionicPopup) {
+
+
+    }]);
+
+    // 我的账户-银行卡详情
+    module.controller("member.account_mycard_info", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup','$location', function (api, $scope, $timeout, $ionicPopup,$location) {
+            $scope.cardId = $location.$$search.id;  // 银行卡ID
 
     }]);
 
@@ -2389,8 +2427,8 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
 
     }]);
 
-    // 嘉瑞红包-新卡提现
-    module.controller("member.add_bank_card", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', function (api, $scope, $timeout, $ionicPopup) {
+    //  我的银行卡-添加
+    module.controller("member.account_add_card", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', function (api, $scope, $timeout, $ionicPopup) {
 
 
     }]);
