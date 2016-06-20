@@ -67,6 +67,15 @@ class MemberController extends BaseController
     }
 
     /**
+     * 保存图片(目前用于诚信认证)
+     */
+    public function actionSavePhoto()
+    {
+        $list = UserPhoto::getInstance()->savePhoto($this->get);
+        $this->renderAjax(['status=>1', 'data' => $list]);
+    }
+
+    /**
      * 设置头像
      */
     public function actionSetHead()

@@ -73,12 +73,51 @@ class UserPhoto extends Base
     }
 
     /**
+     * 保存图片(目前用于诚信认证)
+     * @param $where [{},{}]数组 对象
+     * @return bool
+     * @throws \yii\db\Exception
+     */
+    public function savePhoto($where)
+    {
+        //var_dump($where);
+        foreach($where as $k => $v) {
+            $where[$k] = json_decode($v);
+            $pic_arr = explode('/', $where[$k]->pic_path);
+            $thumb_arr = explode('/', $where[$k]->thumb_path);
+            if($pic_arr[5] != $thumb_arr[5]) {
+                // 删除旧图片
+                $pic_path = __DIR__."/../..".$where[$k]->pic_path;
+                if($pic_arr[3] == 'picture' && is_file($pic_path) && unlink($pic_path)) {
+                    $thumb_path = str_replace('picture', 'thumb', $pic_path);
+                    unlink($thumb_path);
+                }
+                $where[$k]->pic_path = str_replace('thumb', 'picture', $where[$k]->thumb_path);
+                // 更新数据
+                $row = $this->getDb()->createCommand()
+                    ->update(static::tableName(), ['pic_path' => $where[$k]->pic_path, 'thumb_path' => $where[$k]->thumb_path], ['id' => $where[$k]->id])
+                    ->execute();
+            }
+        }
+
+        return true;
+    }
+
+    /**
      * 删除相片
      * @param $where
      * @return int
      */
     public function delPhoto($where)
     {
+        $photo = $this->findOne($where);
+        // 删除旧图片
+        $thumb_path = __DIR__."/../..".$photo->thumb_path;
+        if(is_file($thumb_path) && unlink($thumb_path)) {
+            $pic_path = str_replace('thumb', 'picture', $thumb_path);
+            unlink($pic_path);
+        }
+        // 删除数据
         $row = $this->deleteAll(['id' => $where['id']]);
         return $row;
     }
