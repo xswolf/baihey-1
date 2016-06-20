@@ -151,12 +151,12 @@ define(['app/module'], function (module, config) {
                 url: url,
                 params: params
             });
-        },
+        }
 
         // 获取未读消息总数
         api.getMessageNumber = function () {
             return $http.get('/wap/message/get-message-sum');
-        },
+        }
 
         /**
          * 获取关注我的总数
@@ -164,6 +164,7 @@ define(['app/module'], function (module, config) {
         api.getSumFollow = function () {
             return $http.get('/wap/follow/get-sum-follow');
         }
+
 
         return api;
     }])
