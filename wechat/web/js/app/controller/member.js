@@ -2378,10 +2378,13 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
     }]);
 
     // 我的账户-提现
-    module.controller("member.account_withdraw", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$ionicModal', function (api, $scope, $timeout, $ionicPopup, $ionicModal) {
+    module.controller("member.account_withdraw", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$ionicModal', '$interval', function (api, $scope, $timeout, $ionicPopup, $ionicModal, $interval) {
 
         $scope.formData = [];
+        $scope.form = [];
+        $scope.codeTitle = '获取验证码';
         $scope.money = 530; // 用户当前余额
+        $scope.phone = '15084410950'; // 用户绑定的手机号码
         $ionicModal.fromTemplateUrl('selectCardModal.html', {
             scope: $scope,
             animation: 'slide-in-up'
@@ -2402,7 +2405,45 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
         ];
         $scope.formData.bank = $scope.cardList[0];
 
+        // 倒计时
+        $scope.getCode = function () {
+            if ($scope.form.phone != $scope.phone) {
+                ar.saveDataAlert($ionicPopup, '输入的手机号码与绑定手机号码不符，请检查！' + $scope.phone.substring(0, 3) + "****" + $scope.phone.substring(7, 11));
+                return false;
+            }
 
+            // 发送验证码
+            api.sendCodeMsg($scope.form.phone).success(function(res){
+                if(!res){
+                    ar.saveDataAlert($ionicPopup,'获取验证码失败');
+                }
+            })
+
+            var timeTitle = 60;
+            var timer = $interval(function () {
+                $scope.codeTitle = '重新获取(' + timeTitle + ')';
+            }, 1000, 60);
+            timer.then(function () {
+                $scope.codeTitle = '获取验证码';
+                $interval.cancel(timer);
+            }, function () {
+                ar.saveDataAlert($ionicPopup, '倒计时出错');
+            }, function () {
+                timeTitle -= 1;
+            });
+        }
+
+        $scope.saveData = function(){
+            // 比对验证码
+            api.validateCode($scope.form.code).success(function(res){
+                if(res){
+                    // 保存数据到消费记录，用户余额减少
+
+                }else {
+                    ar.saveDataAlert($ionicPopup,'验证码错误');
+                }
+            })
+        }
 
 
     }]);

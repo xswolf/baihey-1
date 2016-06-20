@@ -1,29 +1,36 @@
 <ion-view hide-tabs="true">
     <link href="/wechat/web/css/member.css" rel="stylesheet">
-    <link href="/wechat/web/css/plugin/bootstrap/css/font-awesome.min.css" rel="stylesheet">
+    <link href="/wechat/web/css/plugin/amezeui/amazeui.min.css" rel="stylesheet">
     <ion-header-bar class="com_w_100 bhy">
         <title class="title">提现</title>
     </ion-header-bar>
     <ion-content class="bhy com_w_100 m_bg bribery padding">
         <div class="card">
-            <ion-item class="item item-input">
+            <ion-item class="item-input">
                 <span class="input-label">到账银行卡</span>
                 <a href="javascript:;" ng-click="showSelectCard()" class="bankCard_t">{{ formData.bank.name | bank:'name'}}({{ formData.bank.name | bank:'type'}} {{ formData.bank.card_no | bank:'card'}})</a>
             </ion-item>
-            <ion-item class="item item-input">
+            <ion-item class="item-input">
                 <span class="input-label">提现金额</span>
                 ￥<input type="number" ng-model="formData.money">
             </ion-item>
             <ion-item class="item-divider">
                 余额{{money | currency:'￥'}}，<a ng-click="formData.money = money">全部提现</a>
             </ion-item>
-
-            <ion-item>
-
+            <ion-item class="item-input">
+                <span class="input-label">手机验证</span>
+                <input type="number" ng-model="form.phone" placeholder="请输入您绑定的手机号码">
+            </ion-item>
+            <ion-item class="pd0">
+                <button type="button" class="am-btn am-btn-primary am-btn-block" ng-disabled="codeTitle!='获取验证码' || !form.phone" ng-click="getCode()" style="font-size: 16px">{{codeTitle}}</button>
+            </ion-item>
+            <ion-item class="item-input">
+                <span class="input-label">验证码</span>
+                <input type="number" ng-model="form.code" placeholder="请输入短信验证码">
             </ion-item>
         </div>
-        <p class="tac cor5">24小时内到账</p>
-        <button class="button button-block button-balanced" ng-disabled="!formData.money || formData.money > money">提现</button>
+        <p class="tac cor5" ng-click="cons()">24小时内到账</p>
+        <button class="button button-block button-balanced" ng-click="saveData()" ng-disabled="!formData.money || formData.money > money || !form.code || form.code.toString().length != 6 || !form.phone || form.phone.toString().length != 11">提现</button>
     </ion-content>
 
 
@@ -39,7 +46,7 @@
                     <ion-radio ng-repeat="card in cardList" ng-value="card" ng-model="formData.bank" ng-click="selectedCard()">
                         {{ card.name | bank:'name'}}（{{ card.name | bank:'type'}} {{ card.card_no | bank:'card'}}）
                     </ion-radio>
-                    <ion-item href="#/main/member/add_bank_card">
+                    <ion-item ng-click="selectedCard()" href="#/main/member/account_add_card?tempUrl=/main/member/account_withdraw">
                         使用新卡提现
                     </ion-item>
                 </div>
