@@ -2378,14 +2378,43 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
     }]);
 
     // 我的账户-提现
-    module.controller("member.account_withdraw", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', function (api, $scope, $timeout, $ionicPopup) {
+    module.controller("member.account_withdraw", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$ionicModal', function (api, $scope, $timeout, $ionicPopup, $ionicModal) {
+
+        $scope.formData = [];
+        $scope.money = 530; // 用户当前余额
+        $ionicModal.fromTemplateUrl('selectCardModal.html', {
+            scope: $scope,
+            animation: 'slide-in-up'
+        }).then(function (modal) {
+            $scope.modal = modal;
+        });
+        $scope.showSelectCard = function () {
+            $scope.modal.show();
+        };
+        $scope.selectedCard = function () {
+            $scope.modal.hide();
+        };
+        $scope.cardList = [
+            {id: 1, name: '农业银行-借记卡', card_no: '6228480470845648832'},
+            {id: 2, name: '中国银行-借记卡', card_no: '6228480470845642411'},
+            {id: 3, name: '工商银行-借记卡', card_no: '6228480470845643984'},
+            {id: 4, name: '重庆农村商业银行-借记卡', card_no: '62284804708456418060'}
+        ];
+        $scope.formData.bank = $scope.cardList[0];
+
+
 
 
     }]);
 
     // 我的账户-我的银行卡
     module.controller("member.account_mycard", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', function (api, $scope, $timeout, $ionicPopup) {
-
+        $scope.cardList = [
+            {id: 1, name: '农业银行-借记卡', card_no: '6228480470845648832'},
+            {id: 2, name: '中国银行-借记卡', card_no: '6228480470845642411'},
+            {id: 3, name: '工商银行-借记卡', card_no: '6228480470845643984'},
+            {id: 4, name: '重庆农村商业银行-借记卡', card_no: '62284804708456418060'}
+        ];
 
     }]);
 
@@ -2395,24 +2424,14 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
 
     }]);
 
-    // 嘉瑞红包-选择银行卡
-    module.controller("member.bank_card", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', function (api, $scope, $timeout, $ionicPopup) {
-
-        $scope.formData = [];
-
-        $scope.formData.userBankCardList = [
-            {id: 1, name: '中国农业银行', 'type': '储蓄卡', cardNumber: '6228480470845947715', 'ad': '农业银行（7715）'},
-            {id: 2, name: '中国工商银行', 'type': '储蓄卡', cardNumber: '1565248947890794255', 'ad': '工商银行（4255）'},
-            {id: 3, name: '中国建设银行', 'type': '储蓄卡', cardNumber: '3875317856415236881', 'ad': '建设银行（6881）'}
-        ]
-
-    }]);
 
     //  我的银行卡-添加
     module.controller("member.account_add_card", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$location', function (api, $scope, $timeout, $ionicPopup, $location) {
         $scope.formData = [];
+        $scope.userInfo.info.realname = '张晓三';
         // 卡类型联动
         $scope.bankNameChain = function () {
+            $scope.formData.card_no = '';
             $scope.bankData = [
                 {
                     "bin": "621098",
@@ -13529,7 +13548,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
             for (var i in $scope.bankData) {
                 if ($scope.formData.card_no.indexOf($scope.bankData[i].bin) != -1) {
                     $scope.bankData[i].bankName.split('-');
-                    $scope.formData.name = $scope.bankData[i].bankName.split('-')[0] +'-'+ $scope.bankData[i].bankName.split('-')[2];
+                    $scope.formData.name = $scope.bankData[i].bankName.split('-')[0] + '-' + $scope.bankData[i].bankName.split('-')[2];
                     break;
                 }
             }

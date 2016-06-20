@@ -1,24 +1,49 @@
 <ion-view hide-tabs="true">
     <link href="/wechat/web/css/member.css" rel="stylesheet">
     <link href="/wechat/web/css/plugin/bootstrap/css/font-awesome.min.css" rel="stylesheet">
-    <ion-header-bar class="com_w_100 bhy assertive-bg cor23">
+    <ion-header-bar class="com_w_100 bhy">
         <title class="title">提现</title>
     </ion-header-bar>
     <ion-content class="bhy com_w_100 m_bg bribery padding">
         <div class="card">
             <ion-item class="item item-input">
                 <span class="input-label">到账银行卡</span>
-                <a href="#/main/member/bank_card" class="bankCard_t">农业银行（9913）</a>
+                <a href="javascript:;" ng-click="showSelectCard()" class="bankCard_t">{{ formData.bank.name | bank:'name'}}({{ formData.bank.name | bank:'type'}} {{ formData.bank.card_no | bank:'card'}})</a>
             </ion-item>
             <ion-item class="item item-input">
                 <span class="input-label">提现金额</span>
-                ￥<input type="number">
+                ￥<input type="number" ng-model="formData.money">
             </ion-item>
-            <div class="item item-divider">
-                余额￥135.00，<a>全部提现</a>
-            </div>
+            <ion-item class="item-divider">
+                余额{{money | currency:'￥'}}，<a ng-click="formData.money = money">全部提现</a>
+            </ion-item>
+
+            <ion-item>
+
+            </ion-item>
         </div>
         <p class="tac cor5">24小时内到账</p>
-        <button class="button button-block button-balanced">提现</button>
+        <button class="button button-block button-balanced" ng-disabled="!formData.money || formData.money > money">提现</button>
     </ion-content>
+
+
+    <script id="selectCardModal.html" type="text/ng-template">
+        <ion-modal-view>
+            <link href="/wechat/web/css/member.css" rel="stylesheet">
+            <ion-header-bar>
+                <span class="title">选择银行卡</span>
+            </ion-header-bar>
+            <ion-content>
+                <div class="list">
+                    <p class="padding cor5 mb0 pl16">到账银行卡</p>
+                    <ion-radio ng-repeat="card in cardList" ng-value="card" ng-model="formData.bank" ng-click="selectedCard()">
+                        {{ card.name | bank:'name'}}（{{ card.name | bank:'type'}} {{ card.card_no | bank:'card'}}）
+                    </ion-radio>
+                    <ion-item href="#/main/member/add_bank_card">
+                        使用新卡提现
+                    </ion-item>
+                </div>
+            </ion-content>
+        </ion-modal-view>
+    </script>
 </ion-view>

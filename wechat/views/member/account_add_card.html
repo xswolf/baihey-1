@@ -9,8 +9,8 @@
             <p class="padding cor5 mb0 pl16">请绑定您本人的银行卡</p>
             <label class="item item-input">
                 <span class="input-label">持卡人</span>
-                <input type="text"  disabled value="张晓三">
-                <input type="text" placeholder="请输入持卡人姓名">
+                <input type="text" ng-if="userInfo.info.realname" ng-value="userInfo.info.realname" readonly>
+                <input type="text" ng-model="userInfo.info.realname" ng-if="!userInfo.info.realname" placeholder="请输入持卡人姓名">
             </label>
             <label class="item item-input">
                 <span class="input-label">卡号</span>
@@ -20,7 +20,7 @@
                 <span class="input-label">卡类型</span>
                 <input ng-model="formData.name" type="text" value="" readonly>
             </label>
-            <p class="remark">注：如果您的卡号输入正确，但是卡类型未能自动补全，请<a href="javascript:;">点击这里</a>直接输入卡类型，例如：农业银行-借记卡</p>
+            <!--<p class="remark">注：如果您的卡号输入正确，但是卡类型未能自动补全，请<a href="javascript:;">点击这里</a>直接输入卡类型，例如：农业银行-借记卡</p>-->
         </ion-list>
     </ion-content>
 </ion-view>

@@ -7,9 +7,9 @@
 
     <ion-content class="com_w_100 bhy">
         <ion-list>
-            <ion-item class="item-icon-right" href="#/main/member/account_mycard_info?id=1">
-                <span class="fl">农业银行</span>
-                <span class="ml15 cor4 fs12">借记卡 5566</span>
+            <ion-item class="item-icon-right" ng-repeat="card in cardList" href="#/main/member/account_mycard_info?id={{card.id}}">
+                <span class="fl">{{card.name | bank:'name'}}</span>
+                <span class="ml15 cor4 fs12">{{card.name | bank:'type'}} {{card.card_no | bank:'card'}}</span>
                 <i class="icon ion-ios-arrow-right cor4 fr"></i>
                 <ion-option-button class="button-assertive"
                                    ng-click="edit(item)">

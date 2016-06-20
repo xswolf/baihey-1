@@ -382,19 +382,19 @@ define(['app/module'], function (module) {
         }
     });
 
-    module.filter('sexDisplay' , function () {
+    module.filter('sexDisplay', function () {
         return function (input) {
-            if (input == 0){
+            if (input == 0) {
                 return "女生"
-            }else if (input == 1){
+            } else if (input == 1) {
                 return "男生"
-            }else {
+            } else {
                 return "不限"
             }
         }
     });
 
-    module.filter('themeDisplay' , function () {
+    module.filter('themeDisplay', function () {
         return function (input) {
             switch (input) {
                 case 1:
@@ -411,34 +411,49 @@ define(['app/module'], function (module) {
         }
     });
 
-    module.filter('feeDisplay' , function () {
+    module.filter('feeDisplay', function () {
         return function (input) {
-            if (input == 1){
+            if (input == 1) {
                 return "免费"
-            }else if (input == 3){
+            } else if (input == 3) {
                 return "你请客"
-            }else if (input == 2){
+            } else if (input == 2) {
                 return "我请客"
-            }else if(input ==4){
+            } else if (input == 4) {
                 return "AA制"
             }
         }
     });
 
-    module.filter('unix',function(){
-        return function (time){
+    module.filter('unix', function () {
+        return function (time) {
         }
     })
 
-    module.filter('picture',function(){
-        return function (path){
+    module.filter('picture', function () {
+        return function (path) {
             return path.replace('thumb', 'picture');
         }
     })
 
-    module.filter('height',function(){
-        return function (value){
-            return value ? value+'cm' : '';
+    module.filter('height', function () {
+        return function (value) {
+            return value ? value + 'cm' : '';
+        }
+    })
+
+    module.filter('bank', function () {
+        return function (value, type) {
+            if (type == 'name') {
+                return value.split('-')[0];
+            }
+            if (type == 'type') {
+                return value.split('-')[1];
+            }
+            if (type == 'card') {
+                return value.substring((value.length - 4), value.length);
+            }
+            return value;
         }
     })
 
