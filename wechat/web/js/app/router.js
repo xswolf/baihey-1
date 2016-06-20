@@ -383,13 +383,8 @@ define(["app/module", 'app/service/serviceApi','jquery'],
                     };
                     uploader.onSuccessItem = function (fileItem, response, status, headers) {  // 上传成功
                         if (response.status > 0) {
+                            // 将返回数据广播至 子member.js
                             $scope.$broadcast('thumb_path', name, response);
-                            /*if(name == 'honesty1') {
-                                eval('$scope.authList[0].thumb_path = ' + "'" + response.thumb_path + "'");
-                            } else {
-                                eval('$scope.authList[1].thumb_path = ' + "'" + response.thumb_path + "'");
-                            }*/
-                            //$scope.getUserPrivacyStorage('');
                         } else {
                             ar.saveDataAlert($ionicPopup,response.info);
                         }

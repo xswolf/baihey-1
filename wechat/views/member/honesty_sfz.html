@@ -18,25 +18,27 @@
                 <ul class="am-avg-sm-2 am-thumbnails tac">
                     <li>
                         <button type="button" class="am-btn am-btn-primary am-btn-sm am-radius"
-                                ng-click="addNewImg('honesty1')">上传正面
+                                ng-click="addNewImg('honesty1')">点击上传
                         </button>
-                        <div class="pr">
-                            <img ng-if="authList[0].thumb_path" ng-click="showImg(0)" style="margin-bottom: 0;"
+                        <div class="pr" ng-if="authList[0].thumb_path">
+                            <img ng-click="showImg(0)" style="margin-bottom: 0;"
                                  class="am-thumbnail mt10"
                                  src="{{authList[0].thumb_path}}" alt="正面"/>
-                            <div class="underReview"><span class="">审核中</span></div>
+                            <div class="underReview" ng-if="authList[0].is_check == 2"><span>审核中</span></div>
+                            <div class="underReview" ng-if="authList[0].is_check == 0"><span>审核不通过</span></div>
                         </div>
 
                     </li>
                     <li>
                         <button type="button" class="am-btn am-btn-secondary am-btn-sm am-radius"
-                                ng-click="addNewImg('honesty2')">上传反面
+                                ng-click="addNewImg('honesty2')">点击上传
                         </button>
-                        <div class="pr">
-                            <img ng-if="authList[1].thumb_path" ng-click="showImg(1)" style="margin-bottom: 0;"
+                        <div class="pr" ng-if="authList[1].thumb_path">
+                            <img ng-click="showImg(1)" style="margin-bottom: 0;"
                                  class="am-thumbnail mt10"
                                  src="{{authList[1].thumb_path}}" alt="反面"/>
-                            <div class="underReview"><span>审核中</span></div>
+                            <div class="underReview" ng-if="authList[1].is_check == 2"><span>审核中</span></div>
+                            <div class="underReview" ng-if="authList[1].is_check == 0"><span>审核不通过</span></div>
                         </div>
                     </li>
                 </ul>

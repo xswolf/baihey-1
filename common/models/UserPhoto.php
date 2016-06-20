@@ -95,7 +95,7 @@ class UserPhoto extends Base
                 $where[$k]->pic_path = str_replace('thumb', 'picture', $where[$k]->thumb_path);
                 // 更新数据
                 $row = $this->getDb()->createCommand()
-                    ->update(static::tableName(), ['pic_path' => $where[$k]->pic_path, 'thumb_path' => $where[$k]->thumb_path], ['id' => $where[$k]->id])
+                    ->update(static::tableName(), ['pic_path' => $where[$k]->pic_path, 'thumb_path' => $where[$k]->thumb_path, 'update_time' => time()], ['id' => $where[$k]->id])
                     ->execute();
             }
         }

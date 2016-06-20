@@ -70,15 +70,23 @@ class FileController extends BaseController {
         // 保存数据
         if(1 == $data['status']) {
             //删除旧图片
-            $imgPath = UserInformation::getInstance()->getAuthImgPath($user_id, $this->get['auth']);
-            $path = str_replace('"', '', __DIR__."/../..".$imgPath[$this->get['auth']]);
-            if($imgPath[$this->get['auth']] != '未知' && $imgPath[$this->get['auth']] != '' && is_file($path) && unlink($path)) {
-                $pic_path = str_replace('thumb', 'picture', $path);
-                unlink($pic_path);
-            }
-            if(UserInformation::getInstance()->updateUserInfo($user_id, ['auth' => $this->get['auth'] . '_' . $data['thumb_path']])) {
+            if($photo = UserPhoto::getInstance()->getPhotoList($user_id, $this->get['type'])) {
+                $thumb_path = __DIR__ . "/../.." . $photo[0]->thumb_path;
+                if (is_file($thumb_path) && unlink($thumb_path)) {
+                    $pic_path = str_replace('thumb', 'picture', $thumb_path);
+                    unlink($pic_path);
+                }
+                $photo[0]->thumb_path = $data['thumb_path'];
+                $photo[0]->pic_path = $data['pic_path'];
+                $photo[0]->update_time = $data['time'];
+                if (!UserPhoto::getInstance()->savePhoto($photo)) {
+                    $data = ['status' => -1, 'info' => '保存失败!~'];
+                }
             } else {
-                $data = ['status' => -1, 'info' => '保存失败!~'];
+                $data['type'] = $this->get['type'];
+                if (!UserPhoto::getInstance()->addPhoto($user_id, $data)) {
+                    $data = ['status' => -1, 'info' => '保存失败!~'];
+                }
             }
         }
         $this->renderAjax($data);
