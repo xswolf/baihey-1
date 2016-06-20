@@ -154,6 +154,7 @@ p.mb0{ margin-bottom: 0;}
 .fs26{ font-size: 26px;}
 .fs28{ font-size: 28px;}
 .fs30{ font-size: 30px;}
+.fs40{ font-size: 40px;}
 .fs50{ font-size: 50px;}
 
 .ls1{letter-spacing:1px;}
@@ -177,6 +178,7 @@ p.mb0{ margin-bottom: 0;}
 .mr16{margin-right: 16px;}
 .pl0{padding-left: 0 !important;}
 .pd0{padding: 0 !important;}
+.pd5{padding: 5px !important;}
 .pr0{padding-right: 0 !important;}
 .pr10{padding-right: 10px !important;}
 .pl15{ padding-left: 15px;}

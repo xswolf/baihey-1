@@ -1,23 +1,23 @@
 <ion-view hide-tabs="true">
     <link href="/wechat/web/css/member.css" rel="stylesheet">
-    <link href="/wechat/web/css/plugin/bootstrap/css/font-awesome.min.css" rel="stylesheet">
-    <ion-header-bar class="com_w_100 bhy assertive-bg cor23">
-        <title class="title">收到的红包</title>
+    <ion-header-bar class="com_w_100 bhy bri_tabs">
+        <button class="button button-icon w50 bri_tabs_btn cur">收到的红包</button>
+        <button class="button button-icon w50 bri_tabs_btn">发出的红包</button>
     </ion-header-bar>
     <ion-content class="bhy com_w_100 bribery">
         <ion-list>
-            <div class="user_bri_rec_info mb30">
+            <div class="user_bri_rec_info mb15">
                 <div class="padding pr">
                     <p class="tac mt40"><img class="u_img" src="/wechat/web/images/test.jpg" width="80" height="80"></p>
-                    <p class="mt20 tac fs18">共收到</p>
-                    <p class="mt30 fs50 tac ">{{money | currency:'￥'}}</p>
+                    <p class="tac fs18">共收到534个红包</p>
+                    <p class="mt20 fs40 tac mb0">￥5158.00{{money | currency:'￥'}}</p>
                     <div class="date">
-                        <select class="cor24" ng-model="year" ng-change="loadMore(year)">
+                        <select class="cor24 pd5" ng-model="year" ng-change="loadMore(year)">
                             <option value="2016">2016年</option>
                             <option value="2015">2015年</option>
                             <option value="2014">2014年</option>
                         </select>
-                        <p class="ion-ios-arrow-down tac cor24"></p>
+                        <p class="ion-ios-arrow-down tac cor24 mb0"></p>
                     </div>
 
                 </div>

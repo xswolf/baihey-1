@@ -2337,13 +2337,13 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
         $scope.recordId = $location.$$search.id; // 记录ID
     }]);
 
-    // 嘉瑞红包-发出的红包
-    module.controller("member.bribery_send", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$location', function (api, $scope, $timeout, $ionicPopup, $location) {
+    // 我的账户-嘉瑞红包
+    module.controller("member.account_bribery", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$location', function (api, $scope, $timeout, $ionicPopup, $location) {
         $scope.items = [];
         $scope.moreData = true;
         $scope.money = $location.$$search.money;
         $scope.briberyList = [];
-
+        $scope.year = new Date().getFullYear().toString();
         $scope.loadMore = function (year) {
             var args = {flag: false, page: $scope.page};
             if (year != 'undefined') {
@@ -13614,33 +13614,6 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
                 }
             })
         }
-    }]);
-
-    // 嘉瑞红包-发红包
-    module.controller("member.bribery_award", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$ionicModal', function (api, $scope, $timeout, $ionicPopup, $ionicModal) {
-
-        $ionicModal.fromTemplateUrl('selectUser.html', {
-            scope: $scope,
-            animation: 'slide-in-up'
-        }).then(function (modal) {
-            $scope.modal = modal;
-        });
-        $scope.openModal = function () {
-            $scope.modal.show();
-        };
-        $scope.closeModal = function () {
-            $scope.modal.hide();
-        };
-
-        $scope.bri_submit = function () {
-            $scope.openModal();
-        }
-
-    }]);
-
-    // 嘉瑞红包-发红包-选择我关注的好友
-    module.controller("member.bribery_selectUser", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', function (api, $scope, $timeout, $ionicPopup) {
-
     }]);
 
     // 我的约会
