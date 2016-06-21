@@ -2338,42 +2338,72 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
     }]);
 
     // 我的账户-嘉瑞红包
-    module.controller("member.account_bribery", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$location', function (api, $scope, $timeout, $ionicPopup, $location) {
-        $scope.items = [];
-        $scope.moreData = true;
-        $scope.money = $location.$$search.money;
-        $scope.briberyList = [];
-        $scope.year = new Date().getFullYear().toString();
-        $scope.loadMore = function (year) {
-            var args = {flag: false, page: $scope.page};
-            if (year != 'undefined') {
-                if (year != 1) {
-                    $scope.queryYear = year;
-                    $scope.briberyList = [];
-                    $scope.moreData = true;
-                    $scope.page = 0;
-                }
+    module.controller("member.account_bribery", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$location', '$filter', function (api, $scope, $timeout, $ionicPopup, $location, $filter) {
+        $scope.tab = 1;  // 1:收到的红包，2：发出的红包
+
+        $scope.yearList = [];   // 年份
+        for (var i = 2016; i <= new Date().getFullYear(); i++) {
+            $scope.yearList.push({id: i, name: i + '年'});
+        }
+        $scope.year = $scope.yearList[$scope.yearList.length - 1].id;
+
+        // 模拟数据  flag:1标识收到的红包,flag:2标识发出的红包,一次查询出一年的数据
+        $scope.briberyList = [
+            {realName: '张小姐', money: 53.00, create_time: '6月20日 17:50', year: 2016, flag: 1, status: 1},
+            {realName: '张小姐', money: 53.00, create_time: '6月20日 17:50', year: 2016, flag: 1, status: 1},
+            {realName: '张小姐', money: 53.00, create_time: '6月20日 17:50', year: 2016, flag: 2, status: 1},
+            {realName: '张小姐', money: 53.00, create_time: '6月20日 17:50', year: 2016, flag: 2, status: 1},
+            {realName: '张小姐', money: 53.00, create_time: '6月20日 17:50', year: 2016, flag: 2, status: 1},
+            {realName: '张小姐', money: 53.00, create_time: '6月20日 17:50', year: 2016, flag: 1, status: 1},
+            {realName: '张小姐', money: 53.00, create_time: '6月20日 17:50', year: 2016, flag: 2, status: 1},
+            {realName: '张小姐', money: 53.00, create_time: '6月20日 17:50', year: 2016, flag: 2, status: 1},
+            {realName: '张小姐', money: 53.00, create_time: '6月20日 17:50', year: 2016, flag: 2, status: 1},
+            {realName: '张小姐', money: 53.00, create_time: '6月20日 17:50', year: 2016, flag: 2, status: 1},
+            {realName: '张小姐', money: 53.00, create_time: '6月20日 17:50', year: 2016, flag: 1, status: 1},
+            {realName: '张小姐', money: 53.00, create_time: '6月20日 17:50', year: 2016, flag: 1, status: 0},
+            {realName: '张小姐', money: 53.00, create_time: '6月20日 17:50', year: 2016, flag: 1, status: 1},
+            {realName: '张小姐', money: 53.00, create_time: '6月20日 17:50', year: 2016, flag: 1, status: 1},
+            {realName: '张小姐', money: 53.00, create_time: '6月20日 17:50', year: 2016, flag: 2, status: 0},
+            {realName: '张小姐', money: 53.00, create_time: '6月20日 17:50', year: 2016, flag: 2, status: 1},
+            {realName: '张小姐', money: 53.00, create_time: '6月20日 17:50', year: 2016, flag: 2, status: 1}
+        ];
+
+        $scope.numAndmoney = {number: 0, money: 0.00};   // 发出的、收到的红包， 数量，总额
+        for (var i in $scope.briberyList) {
+            if ($scope.briberyList[i].flag == $scope.tab && $scope.briberyList[i].status == 1 && $scope.briberyList[i].year == $scope.year) {
+                $scope.numAndmoney.number += 1;
+                $scope.numAndmoney.money += $scope.briberyList[i].money;
             }
-            args.year = $scope.queryYear;
-            api.list('/wap/member/bribery-list', args).success(function (res) {
-                if (res.data == '') {
-                    $scope.moreData = false;
-                    return;
-                }
-                var data = ar.cleanQuotes(JSON.stringify(res.data))
-                $scope.briberyList = $scope.briberyList.concat(JSON.parse(data));
-                $scope.page++;
-                $scope.$broadcast('scroll.infiniteScrollComplete');
-            })
+        }
+        $scope.isMore = true;  // 是否还有更多
+        $scope.pageSize = 5;   // 一次加载5条
+
+        //加载更多
+        $scope.loadMore = function () {
+            if ($scope.pageSize > $scope.numAndmoney.number) {
+                $scope.isMore = false;
+            }
+            $scope.pageSize += 5;
+            $scope.$broadcast('scroll.infiniteScrollComplete');
         };
-        $scope.$on('$ionicView.beforeEnter', function () {
-            $scope.page = 0;
-        });
 
         $scope.moreDataCanBeLoaded = function () {
-
-            return $scope.moreData;
+            return $scope.isMore;
         }
+
+        // 切换
+        $scope.showTab = function (value) {
+            $scope.numAndmoney.number = 0;
+            $scope.numAndmoney.money = 0;
+            $scope.tab = value;
+            for (var i in $scope.briberyList) {
+                if ($scope.briberyList[i].flag == value && $scope.briberyList[i].status == 1 && $scope.briberyList[i].year == $scope.year) {
+                    $scope.numAndmoney.number += 1;
+                    $scope.numAndmoney.money += $scope.briberyList[i].money;
+                }
+            }
+        }
+
 
     }]);
 
@@ -2413,9 +2443,9 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
             }
 
             // 发送验证码
-            api.sendCodeMsg($scope.form.phone).success(function(res){
-                if(!res){
-                    ar.saveDataAlert($ionicPopup,'获取验证码失败');
+            api.sendCodeMsg($scope.form.phone).success(function (res) {
+                if (!res) {
+                    ar.saveDataAlert($ionicPopup, '获取验证码失败');
                 }
             })
 
@@ -2433,14 +2463,14 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
             });
         }
 
-        $scope.saveData = function(){
+        $scope.saveData = function () {
             // 比对验证码
-            api.validateCode($scope.form.code).success(function(res){
-                if(res){
+            api.validateCode($scope.form.code).success(function (res) {
+                if (res) {
                     // 保存数据到消费记录，用户余额减少
 
-                }else {
-                    ar.saveDataAlert($ionicPopup,'验证码错误');
+                } else {
+                    ar.saveDataAlert($ionicPopup, '验证码错误');
                 }
             })
         }
