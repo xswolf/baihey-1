@@ -1634,12 +1634,18 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
                 $scope.qqAuth = is_privacy($scope.otherUserInfo.privacy_qq);// qq权限
                 $scope.perAuth = is_privacy($scope.otherUserInfo.privacy_per);// 个人动态权限
                 $scope.wxAuth = is_privacy($scope.otherUserInfo.privacy_wechat);// 微信权限
-                $scope.picAuth = is_privacy($scope.otherUserInfo.privacy_pic);// 相册权限 // TODO
+                $scope.picAuth = is_privacy($scope.otherUserInfo.privacy_pic);// 相册权限
                 $scope.otherUserInfo.went_travel ? getTravel('went_travel', $scope.otherUserInfo.went_travel) : true;// 我去过的地方
                 $scope.otherUserInfo.want_travel ? getTravel('want_travel', $scope.otherUserInfo.want_travel) : true;// 我想去的地方
                 $scope.otherUserInfo.love_sport ? getConfig('love_sport', $scope.otherUserInfo.love_sport) : true;// 喜欢的运动
                 $scope.otherUserInfo.want_film ? getConfig('want_film', $scope.otherUserInfo.want_film) : true;// 想看的电影
                 $scope.otherUserInfo.like_food ? getConfig('like_food', $scope.otherUserInfo.like_food) : true;// 喜欢的食物
+                $scope.isPermissions =function(event){
+                    if(!$scope.picAuth){
+                        event.stopPropagation();
+                        ar.saveDataAlert($ionicPopup,'对方已设置不公开相册');
+                    }
+                }
             }
         });
 

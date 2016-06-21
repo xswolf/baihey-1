@@ -9,7 +9,7 @@
         <ion-list>
             <div class="imgList_con">
                 <div class="imgList_handle clearfix" data-am-widget="gallery" data-am-gallery="{pureview: 1}">
-                    <div class="imgItem am-gallery-item" ng-repeat="img in imgList">
+                    <div class="imgItem am-gallery-item" ng-click="isPermissions($event)" ng-repeat="img in imgList">
                         <img src="{{img.thumb_path}}" data-rel="{{img.thumb_path | picture}}">
                     </div>
                 </div>
