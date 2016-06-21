@@ -26,3 +26,5 @@ RewriteRule ^images(/.+)?$ /images$1 [L,PT]
 
 #RewriteCond %{REQUEST_URI} ^.*$
 #RewriteRule ^(.*)$ /frontend/web/$1
+
+#/usr/local/lib/php/extensions/no-debug-non-zts-20131226/pdo_mysql.so

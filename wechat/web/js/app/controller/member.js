@@ -2353,25 +2353,34 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
         $scope.year = $scope.yearList[$scope.yearList.length - 1].id;
 
         // 模拟数据  flag:1标识收到的红包,flag:2标识发出的红包,一次查询出一年的数据
-        $scope.briberyList = [
-            {realName: '张小姐', money: 53.00, create_time: '6月20日 17:50', year: 2016, flag: 1, status: 1},
-            {realName: '张小姐', money: 53.00, create_time: '6月20日 17:50', year: 2016, flag: 1, status: 1},
-            {realName: '张小姐', money: 53.00, create_time: '6月20日 17:50', year: 2016, flag: 2, status: 1},
-            {realName: '张小姐', money: 53.00, create_time: '6月20日 17:50', year: 2016, flag: 2, status: 1},
-            {realName: '张小姐', money: 53.00, create_time: '6月20日 17:50', year: 2016, flag: 2, status: 1},
-            {realName: '张小姐', money: 53.00, create_time: '6月20日 17:50', year: 2016, flag: 1, status: 1},
-            {realName: '张小姐', money: 53.00, create_time: '6月20日 17:50', year: 2016, flag: 2, status: 1},
-            {realName: '张小姐', money: 53.00, create_time: '6月20日 17:50', year: 2016, flag: 2, status: 1},
-            {realName: '张小姐', money: 53.00, create_time: '6月20日 17:50', year: 2016, flag: 2, status: 1},
-            {realName: '张小姐', money: 53.00, create_time: '6月20日 17:50', year: 2016, flag: 2, status: 1},
-            {realName: '张小姐', money: 53.00, create_time: '6月20日 17:50', year: 2016, flag: 1, status: 1},
-            {realName: '张小姐', money: 53.00, create_time: '6月20日 17:50', year: 2016, flag: 1, status: 0},
-            {realName: '张小姐', money: 53.00, create_time: '6月20日 17:50', year: 2016, flag: 1, status: 1},
-            {realName: '张小姐', money: 53.00, create_time: '6月20日 17:50', year: 2016, flag: 1, status: 1},
-            {realName: '张小姐', money: 53.00, create_time: '6月20日 17:50', year: 2016, flag: 2, status: 0},
-            {realName: '张小姐', money: 53.00, create_time: '6月20日 17:50', year: 2016, flag: 2, status: 1},
-            {realName: '张小姐', money: 53.00, create_time: '6月20日 17:50', year: 2016, flag: 2, status: 1}
-        ];
+        //$scope.briberyList = [
+        //    {realName: '张小姐', money: 53.00, create_time: '6月20日 17:50', year: 2016, flag: 1, status: 1},
+        //    {realName: '张小姐', money: 53.00, create_time: '6月20日 17:50', year: 2016, flag: 1, status: 1},
+        //    {realName: '张小姐', money: 53.00, create_time: '6月20日 17:50', year: 2016, flag: 2, status: 1},
+        //    {realName: '张小姐', money: 53.00, create_time: '6月20日 17:50', year: 2016, flag: 2, status: 1},
+        //    {realName: '张小姐', money: 53.00, create_time: '6月20日 17:50', year: 2016, flag: 2, status: 1},
+        //    {realName: '张小姐', money: 53.00, create_time: '6月20日 17:50', year: 2016, flag: 1, status: 1},
+        //    {realName: '张小姐', money: 53.00, create_time: '6月20日 17:50', year: 2016, flag: 2, status: 1},
+        //    {realName: '张小姐', money: 53.00, create_time: '6月20日 17:50', year: 2016, flag: 2, status: 1},
+        //    {realName: '张小姐', money: 53.00, create_time: '6月20日 17:50', year: 2016, flag: 2, status: 1},
+        //    {realName: '张小姐', money: 53.00, create_time: '6月20日 17:50', year: 2016, flag: 2, status: 1},
+        //    {realName: '张小姐', money: 53.00, create_time: '6月20日 17:50', year: 2016, flag: 1, status: 1},
+        //    {realName: '张小姐', money: 53.00, create_time: '6月20日 17:50', year: 2016, flag: 1, status: 0},
+        //    {realName: '张小姐', money: 53.00, create_time: '6月20日 17:50', year: 2016, flag: 1, status: 1},
+        //    {realName: '张小姐', money: 53.00, create_time: '6月20日 17:50', year: 2016, flag: 1, status: 1},
+        //    {realName: '张小姐', money: 53.00, create_time: '6月20日 17:50', year: 2016, flag: 2, status: 0},
+        //    {realName: '张小姐', money: 53.00, create_time: '6月20日 17:50', year: 2016, flag: 2, status: 1},
+        //    {realName: '张小姐', money: 53.00, create_time: '6月20日 17:50', year: 2016, flag: 2, status: 1}
+        //];
+        $scope.briberyList = [];
+        api.list('/wap/member/bribery-list', {flag: false, page: $scope.page}).success(function (res) {
+            var data = ar.cleanQuotes(JSON.stringify(res.data))
+            $scope.briberyList = $scope.briberyList.concat(JSON.parse(data));
+        })
+        api.list('/wap/member/bribery-list', {flag: true, page: $scope.page}).success(function (res) {
+            var data = ar.cleanQuotes(JSON.stringify(res.data))
+            $scope.briberyList = $scope.briberyList.concat(JSON.parse(data));
+        })
 
         $scope.numAndmoney = {number: 0, money: 0.00};   // 发出的、收到的红包， 数量，总额
         for (var i in $scope.briberyList) {
