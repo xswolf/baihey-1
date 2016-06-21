@@ -38,7 +38,7 @@
         <ion-list ng-if="userList.length > 0">
             <ion-item ng-repeat="user in userList" ng-if="user.id != userInfo.id">
                 <div class="row">
-                    <div class="col col-25"><a class="tdn" href="#/userInfo?userId={{user.user_id}}"><img class="item_uimg rounded"
+                    <div class="col col-25"><a class="tdn" href="#/main/userInfo?userId={{user.user_id}}"><img class="item_uimg rounded"
                                                                        src="{{user.info.head_pic}}"
                                                                        onerror="this.src='/wechat/web/images/no_img.png'"></a>
                     </div>

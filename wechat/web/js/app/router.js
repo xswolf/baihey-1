@@ -69,11 +69,6 @@ define(["app/module", 'app/service/serviceApi','jquery'],
                 $ionicConfigProvider.templates.maxPrefetch(0);
                 $ionicConfigProvider.tabs.position("bottom");
                 $stateProvider
-                    .state('welcome', {     // 欢迎页
-                        url: "/welcome",
-                        templateUrl: "/wechat/views/user/welcome.html",
-                        controller: 'welcome'
-                    })
                     .state('main', {
                         url: "/main",
                         abstract: true,
@@ -138,11 +133,60 @@ define(["app/module", 'app/service/serviceApi','jquery'],
                             }
                         }
                     })
-                    .state('userInfo', {  // 消息-查看用户资料
+                    .state('main.userInfo', {  // 首页-查看用户资料
                         cache: false,
                         url: "/userInfo",
-                        templateUrl: "/wechat/views/site/user_info.html",
-                        controller: "member.user_info"
+                        views: {
+                            'home-tab': {
+                                templateUrl: "/wechat/views/site/user_info.html",
+                                controller: "member.user_info"
+                            }
+                        }
+
+                    })
+                    .state('main.message_userInfo', {  // 消息-查看用户资料
+                        cache: false,
+                        url: "/userInfo",
+                        views: {
+                            'message-tab': {
+                                templateUrl: "/wechat/views/site/user_info.html",
+                                controller: "member.user_info"
+                            }
+                        }
+
+                    })
+                    .state('main.member_userInfo', {  // 我-查看用户资料
+                        cache: false,
+                        url: "/userInfo",
+                        views: {
+                            'member-tab': {
+                                templateUrl: "/wechat/views/site/user_info.html",
+                                controller: "member.user_info"
+                            }
+                        }
+
+                    })
+                    .state('main.discovery_userInfo', {  // 发现-查看用户资料
+                        cache: false,
+                        url: "/userInfo",
+                        views: {
+                            'discovery-tab': {
+                                templateUrl: "/wechat/views/site/user_info.html",
+                                controller: "member.user_info"
+                            }
+                        }
+
+                    })
+                    .state('main.rendezvous_userInfo', {  // 约会-查看用户资料
+                        cache: false,
+                        url: "/userInfo",
+                        views: {
+                            'rendezvous-tab': {
+                                templateUrl: "/wechat/views/site/user_info.html",
+                                controller: "member.user_info"
+                            }
+                        }
+
                     })
                     .state('main.message_chat', { // 聊天页面
                         cache: false,

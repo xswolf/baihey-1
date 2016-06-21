@@ -14,7 +14,7 @@
             <!-- 固定item -->
             <ion-item class="talk_item_u">
                 <div class="talk_user">
-                    <a href="#/userInfo?userId={{receiveId}}&tempUrl=/main/message">
+                    <a href="#/main/userInfo?userId={{receiveId}}&tempUrl=/main/message">
                         <img ng-src="{{receiveHeadPic}}" alt="" onerror="this.src='/wechat/web/images/no_img.png'">
                     </a>
                 </div>
@@ -54,7 +54,7 @@
                 <!-- 头像 -->
                 <div class="talk_user">
                     <a ng-if="sendId != vo.send_user_id"
-                       href="#/userInfo?userId={{receiveId}}">
+                       href="#/main/userInfo?userId={{receiveId}}">
                         <img ng-src="{{receiveHeadPic}}" onerror="this.src='/wechat/web/images/no_img.png'">
                     </a>
                     <img ng-if="sendId == vo.send_user_id" ng-src="{{sendHeadPic}}"
