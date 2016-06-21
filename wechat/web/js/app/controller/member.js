@@ -2263,6 +2263,11 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
         $scope.showMoney = function () {
             $scope.money = true;
         }
+
+        // 正在使用的服务(未到期)
+        $scope.serviceList = [
+            {serviceName:'VIP',endTime:'2017-06-21 17:20:15'}
+        ];
     }]);
 
     // 我的账户-消费记录

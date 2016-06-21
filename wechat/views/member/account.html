@@ -12,8 +12,9 @@
             <div class="item item-divider">
                 我正在使用的服务
             </div>
-            <div class="item">
-                暂无您正在使用的服务记录
+            <div class="item" ng-repeat="service in serviceList">
+                 <span class="cor33 fl fwb">{{service.serviceName}}</span>  <span class="cor33 fr" ng-if="serviceList.length > 0">到期时间：{{service.endTime}}</span>
+                <span ng-if="serviceList.length < 1">暂无您正在使用的服务记录</span>
             </div>
             <a class="item item-icon-left item-icon-right mt20" href="#/main/member/account_record">
                 <i class="icon icon-new-record cor9"></i>
