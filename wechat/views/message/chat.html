@@ -54,7 +54,7 @@
                 <!-- 头像 -->
                 <div class="talk_user">
                     <a ng-if="sendId != vo.send_user_id"
-                       href="#/main/member/user_info?userId={{receiveId}}&tempUrl=/main/message">
+                       href="#/userInfo?userId={{receiveId}}">
                         <img ng-src="{{receiveHeadPic}}" onerror="this.src='/wechat/web/images/no_img.png'">
                     </a>
                     <img ng-if="sendId == vo.send_user_id" ng-src="{{sendHeadPic}}"

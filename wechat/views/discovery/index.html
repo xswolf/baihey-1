@@ -13,7 +13,7 @@
         <ion-content class="com_w_100 bhy has-header discovery">
             <ion-list>
                 <ion-item class="mt10" ng-repeat="dis in discoveryList" ng-if="display(dis.auth,dis.user_id)">
-                    <div class="dis_u_img" href="#/main/member/user_info?userId={{dis.user_id}}&tempUrl=/main/discovery">
+                    <div class="dis_u_img" href="#/userInfo?userId={{dis.user_id}}">
                         <img ng-src="{{dis.head_pic}}" onerror="this.src='/wechat/web/images/no_img.png'">
                     </div>
                     <div class="dis_con clearfix">
