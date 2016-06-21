@@ -12,7 +12,7 @@
                 <span class="ml15 cor4 fs12">{{card.name | bank:'type'}} {{card.card_no | bank:'card'}}</span>
                 <i class="icon ion-ios-arrow-right cor4 fr"></i>
                 <ion-option-button class="button-assertive"
-                                   ng-click="edit(item)">
+                                   ng-click="delete($index,card)">
                     删除
                 </ion-option-button>
             </ion-item>

@@ -2,6 +2,8 @@
 namespace wechat\controllers;
 
 use common\models\Area;
+use common\models\Bank;
+use common\models\ConsumptionLog;
 use common\models\User;
 use common\models\UserFollow;
 use common\models\UserInformation;
@@ -164,9 +166,9 @@ class MemberController extends BaseController
         $followedStatus = $followedStatus ? $followedStatus['status'] : false;
 
         if($userInfo) {
-            $this->renderAjax(['status'=>1, 'userInfo' => $userInfo, 'userPhoto' => $userPhoto, 'dynamic' => $dynamic, 'followStatus' => $followStatus, 'followedStatus' => $followedStatus, 'smg' => 'user_info页面获取信息成功']);
+            $this->renderAjax(['status'=>1, 'userInfo' => $userInfo, 'userPhoto' => $userPhoto, 'dynamic' => $dynamic, 'followStatus' => $followStatus, 'followedStatus' => $followedStatus, 'msg' => 'user_info页面获取信息成功']);
         } else {
-            $this->renderAjax(['status'=>0, 'userInfo' => $userInfo, 'userPhoto' => $userPhoto, 'dynamic' => $dynamic, 'followStatus' => $followStatus, 'followedStatus' => $followedStatus, 'smg' => 'user_info页面获取信息失败']);
+            $this->renderAjax(['status'=>0, 'userInfo' => $userInfo, 'userPhoto' => $userPhoto, 'dynamic' => $dynamic, 'followStatus' => $followStatus, 'followedStatus' => $followedStatus, 'msg' => 'user_info页面获取信息失败']);
         }
     }
 
@@ -275,6 +277,80 @@ class MemberController extends BaseController
         $year = isset($this->get['year']) ?  $this->get['year'] : 0;
         $data = User::getInstance()->getBriberyList($user_id, $flag, $page , $year);
         $this->renderAjax(['status=>1', 'data' => $data]);
+    }
+
+    public function actionConsumptionList()
+    {
+        $user_id = Cookie::getInstance()->getCookie('bhy_id');
+        if($data = ConsumptionLog::getInstance()->getUserConsumptionLogList($user_id)) {
+            $this->renderAjax(['status=>1', 'data' => $data, 'msg' => '获取数据成功']);
+        } else {
+            $this->renderAjax(['status=>0', 'data' => $data, 'msg' => '获取数据失败']);
+        }
+    }
+
+    /**
+     * 获取用户银行卡列表
+     */
+    public function actionCashCardList()
+    {
+        $user_id = Cookie::getInstance()->getCookie('bhy_id');
+        if($data = User::getInstance()->getCashCardList($user_id)) {
+            $this->renderAjax(['status=>1', 'data' => $data, 'msg' => '获取数据成功']);
+        } else {
+            $this->renderAjax(['status=>0', 'data' => $data, 'msg' => '获取数据失败']);
+        }
+    }
+
+    /**
+     * 删除银行卡
+     */
+    public function actionDelCard()
+    {
+        $user_id = Cookie::getInstance()->getCookie('bhy_id');
+        if($data = User::getInstance()->delCard($user_id, $this->get['id'])) {
+            $this->renderAjax(['status=>1', 'data' => $data, 'msg' => '删除数据成功']);
+        } else {
+            $this->renderAjax(['status=>0', 'data' => $data, 'msg' => '删除数据失败']);
+        }
+    }
+
+    /**
+     * 添加银行卡
+     */
+    public function actionAddCashCard()
+    {
+        $user_id = Cookie::getInstance()->getCookie('bhy_id')->value;
+        if($data = User::getInstance()->addCashCard($user_id, $this->get)) {
+            $this->renderAjax(['status=>1', 'data' => $data, 'msg' => '添加银行卡成功']);
+        } else {
+            $this->renderAjax(['status=>0', 'data' => $data, 'msg' => '添加银行卡失败']);
+        }
+    }
+
+    /**
+     * 获取单张银行卡信息
+     */
+    public function actionCashCardById()
+    {
+        $user_id = Cookie::getInstance()->getCookie('bhy_id')->value;
+        if($data = User::getInstance()->getCashCardById($user_id, $this->get['id'])) {
+            $this->renderAjax(['status=>1', 'data' => $data, 'msg' => '获取数据成功']);
+        } else {
+            $this->renderAjax(['status=>0', 'data' => $data, 'msg' => '获取数据失败']);
+        }
+    }
+
+    /**
+     * 银行卡列表
+     */
+    public function actionBankList()
+    {
+        if($data = Bank::getInstance()->bankList()) {
+            $this->renderAjax(['status=>1', 'data' => $data, 'msg' => '删除数据成功']);
+        } else {
+            $this->renderAjax(['status=>0', 'data' => $data, 'msg' => '删除数据失败']);
+        }
     }
 
     /**

@@ -522,7 +522,9 @@ class User extends Base
         if($user && $info) {
             $transaction->commit();
             // 写入用户消费日志表
-            $this->userConsumptionLog($user_id, $goods_id);
+            $goods['receive_name'] = '嘉瑞百合缘';
+            $goods['type'] = 1;
+            ConsumptionLog::getInstance()->addConsumptionLog($user_id, $goods);
             return true;
         } else {
             $transaction->rollBack();
@@ -530,22 +532,59 @@ class User extends Base
         }
     }
 
-
     /**
-     * 消费日志
+     * 获取用户银行卡
      * @param $user_id
-     * @param $goods_id
-     * @return int
-     * @throws \yii\db\Exception
+     * @return array
      */
-    public function userConsumptionLog($user_id, $goods_id)
+    public function getCashCardList($user_id)
     {
-        $log['user_id'] = $user_id;
-        $log['goods_id'] = $goods_id;
-        $log['create_time'] = YII_BEGIN_TIME;
+        $_cash_card_table = $this->tablePrefix.'cash_card';
+        $result = (new Query())
+            ->from($_cash_card_table)
+            ->select('*')
+            ->where(['user_id' => $user_id])
+            ->orderBy('create_time desc')
+            ->all();
+        return $result;
+    }
+
+    public function getCashCardById($user_id, $id)
+    {
+        $_cash_card_table = $this->tablePrefix.'cash_card';
+        $result = (new Query())
+            ->from($_cash_card_table)
+            ->select('*')
+            ->where(['user_id' => $user_id,'id' => $id])
+            ->one();
+        return $result;
+    }
+
+    public function addCashCard($user_id, $data)
+    {
+        $_cash_card_table = $this->tablePrefix.'cash_card';
+        $data['create_time'] = time();
+        $data['user_id'] = $user_id;
+        $_cash_card = $this->getInstance($_cash_card_table);
+        if($_cash_card->findOne(['user_id' => $user_id, 'card_no' => $data['card_no']])) {
+            return false;
+        }
         $row = $this->getDb()->createCommand()
-            ->insert($this->tablePrefix.'user_consumption_log',$log)
+            ->insert($_cash_card_table,$data)
             ->execute();
+        return $row;
+    }
+
+    public function delCard($user_id, $id)
+    {
+        $_cash_card_table = $this->tablePrefix.'cash_card';
+        $_cash_card = $this->getInstance($_cash_card_table);
+        $card = $_cash_card->findOne(['user_id' => $user_id, 'id' => $id]);
+        $row = false;
+        if($card) {
+            $row = $_cash_card->deleteAll(['id' => $id]);
+        }
+
         return $row;
     }
 

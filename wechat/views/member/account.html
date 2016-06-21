@@ -7,7 +7,7 @@
     <ion-content class="bhy com_w_100 bg5">
         <div class="list">
             <div class="item">
-                我的余额：<button class="am-btn am-btn-primary am-btn-xs am-radius ml10" ng-if="!money" ng-click="showMoney()">查询余额</button><span ng-if="money" class="am-text-warning">198.00元</span>
+                我的余额：<button class="am-btn am-btn-primary am-btn-xs am-radius ml10" ng-if="!money" ng-click="showMoney()">查询余额</button><span ng-if="money" class="am-text-warning">{{userInfo.balance}}元</span>
             </div>
             <div class="item item-divider">
                 我正在使用的服务

@@ -9,8 +9,22 @@
 namespace common\models;
 
 
+use yii\db\Query;
+
 class Bank extends Base
 {
+
+    public function bankList()
+    {
+        $_bank_table = $this->tablePrefix.'bank';
+        $result = (new Query())
+            ->from($_bank_table)
+            ->select('*')
+            ->all();
+        //echo $result->createCommand()->getRawSql();exit;
+
+        return $result;
+    }
 
     /**
      * 初始化银行表数据
