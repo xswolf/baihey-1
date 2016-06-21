@@ -448,14 +448,15 @@ class User extends Base
      * @param int $limit
      * @return array
      */
-    public function getBriberyList($userId , $flag = true,$page = 0 , $year = 0 ,$limit = 5){
+    public function getBriberyList($userId , $flag = true,$page = 0 , $year = 0 ,$limit = 10000){
         $joinOnField = $flag == true ? 'receive_user_id':'send_user_id';
         $whereField = $flag == true ? 'receive_user_id':'send_user_id';
+        $flagd = $flag == true ? 1 : 2;
         $offset = $page * $limit;
         $handle = (new Query())
             ->from($this->tablePrefix."user_bribery  b")
             ->innerJoin($this->tablePrefix."user_information i" , "b.{$joinOnField} = i.user_id")
-            ->select(["b.*","json_extract(i.info , '$.real_name') as realName"])
+            ->select(["b.*","json_extract(i.info , '$.real_name') as realName, '$flagd' as flag , FROM_UNIXTIME(b.create_time , '%Y') as year"])
             ->limit($limit)
             ->offset($offset);
         $where = ["b.{$whereField}"=>$userId ,'status'=>1];
