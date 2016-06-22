@@ -216,4 +216,8 @@ class MemberController extends BaseController
         }
     }
 
+    public function actionChat(){
+        return $this->render();
+    }
+
 }
