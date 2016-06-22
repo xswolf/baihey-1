@@ -24,7 +24,9 @@ require.config({
         photoswipe_ui:'plugin/photoswipe/photoswipe-ui-default.min',
         klass:'plugin/photoswipe/klass.min',
         info_data: 'config/infoData',
-        ionic_gallery:'plugin/ionic/ion-gallery.min'
+        ionic_gallery:'plugin/ionic/ion-gallery.min',
+        ng_cordova:'plugin/cordova/ng-cordova.min',
+        cordova:'plugin/cordova/cordova'
     },
     shim:{
         angular:{
@@ -37,7 +39,7 @@ require.config({
 });
 
 require(['angular','ionic'] , function (angular) {
-    require(['angular_animate','ionic_angular','angular_sanitize','angular_ui_router','comm','info_data',"app/controller/listController",'angular_upload','mobiscroll','ionic_gallery'],function(){
+    require(['angular_animate','ionic_angular','angular_sanitize','angular_ui_router','comm','info_data',"app/controller/listController",'angular_upload','mobiscroll'],function(){
         'use strict';
 
         angular.bootstrap(document,['webApp']);

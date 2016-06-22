@@ -3,7 +3,7 @@
  */
 define(["app/module", 'app/service/serviceApi','jquery'],
     function (module,api,$) {
-        module.run(['$rootScope', '$state', '$timeout', 'app.serviceApi', '$ionicLoading', '$location', function ($rootScope, $state, $timeout, api, $ionicLoading, $location) {
+        module.run(['$rootScope', '$state', '$timeout', 'app.serviceApi', '$ionicLoading', '$location','$templateCache', function ($rootScope, $state, $timeout, api, $ionicLoading, $location,$templateCache) {
 
             var messageList = function () {
                 api.list('/wap/message/message-list', []).success(function (res) {
@@ -63,6 +63,7 @@ define(["app/module", 'app/service/serviceApi','jquery'],
                 .$on('$stateChangeSuccess',
                     function (event, toState, toParams, fromState, fromParams) {
                         $ionicLoading.hide();
+                        $templateCache.removeAll();  // 清除模版缓存
                     });
         }]);
         return module.config(["$stateProvider", "$urlRouterProvider", "$ionicConfigProvider", "$controllerProvider", function ($stateProvider, $urlRouterProvider, $ionicConfigProvider, $controllerProvider) {

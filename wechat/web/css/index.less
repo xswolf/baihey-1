@@ -1,77 +1,340 @@
-#welcome{ background: url("/wechat/web/images/welcome.jpg") no-repeat top ; background-size: 100% 100%; height: 100%; margin-left: auto; margin-right: auto; right: 0; left: 0; overflow: hidden; }
-#welcome{position: absolute; width: 100%;z-index: 99;}
+/* portrait */
+@media screen and (orientation: portrait) {
+  #welcome {
+    background: url("/wechat/web/images/vertical.jpg") no-repeat top;
+  }
+}
+
+/* landscape */
+@media screen and (orientation: landscape) {
+  #welcome {
+    background: url("/wechat/web/images/horizontal.jpg") no-repeat top;
+  }
+}
+
+#welcome {
+  background-size: 100% 100%;
+  height: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  right: 0;
+  left: 0;
+  overflow: hidden;
+}
+
+#welcome {
+  position: absolute;
+  width: 100%;
+  z-index: 99;
+}
 
 /* login */
-.login_bg{background: url("/wechat/web/images/login/login_bg.jpg") no-repeat top ;  margin-left: auto; margin-right: auto; right: 0; left: 0; overflow: hidden;}
-.login_box{margin: 45px 15px;}
-.login_title{ height: 36px; line-height: 36px;}
-.login_title .t_f{ font-size: 1.42857em;}
-.t_line{height: 8px; border-top: 1px solid #b2949d; width: 30%; display: inline-block; }
-.login_form{ width: 80%;}
-.login_form .icon-input{color: #ea8214;  display: block !important;  font-size: 20px;  height: 20px;  margin: 9px 2px 4px 10px;  position: absolute !important;  text-align: center;  width: 20px;  z-index: 1;}
-.login_form i.ck{ color: #fff;}
-.login_form .forgetpass_link{ text-decoration: none;}
-.login_form .reg_link{ text-decoration: underline;}
-.login_form .reg_link:hover,.login_form .forgetpass_link:hover{ text-decoration: none; color: #fff;}
-.login_form .check_pass{ cursor: pointer;}
-.login_input{   }
-.third-party{ display: inline-block; background: url("/wechat/web/images/login/third-party.png") no-repeat; width: 68px; height: 68px;margin-right: 3%; }
-a.qq{ background-position: left top;}
-a.wechat{ background-position: -1px -68px;}
-a.weibo{background-position: -1px -136px;}
-.third-party:last-child{margin-right: 0;}
+.login_bg {
+  background: url("/wechat/web/images/login/login_bg.jpg") no-repeat top;
+  margin-left: auto;
+  margin-right: auto;
+  right: 0;
+  left: 0;
+  overflow: hidden;
+}
+
+.login_box {
+  margin: 45px 15px;
+}
+
+.login_title {
+  height: 36px;
+  line-height: 36px;
+}
+
+.login_title .t_f {
+  font-size: 1.42857em;
+}
+
+.t_line {
+  height: 8px;
+  border-top: 1px solid #b2949d;
+  width: 30%;
+  display: inline-block;
+}
+
+.login_form {
+  width: 80%;
+}
+
+.login_form .icon-input {
+  color: #ea8214;
+  display: block !important;
+  font-size: 20px;
+  height: 20px;
+  margin: 9px 2px 4px 10px;
+  position: absolute !important;
+  text-align: center;
+  width: 20px;
+  z-index: 1;
+}
+
+.login_form i.ck {
+  color: #fff;
+}
+
+.login_form .forgetpass_link {
+  text-decoration: none;
+}
+
+.login_form .reg_link {
+  text-decoration: underline;
+}
+
+.login_form .reg_link:hover, .login_form .forgetpass_link:hover {
+  text-decoration: none;
+  color: #fff;
+}
+
+.login_form .check_pass {
+  cursor: pointer;
+}
+
+.login_input {
+}
+
+.third-party {
+  display: inline-block;
+  background: url("/wechat/web/images/login/third-party.png") no-repeat;
+  width: 68px;
+  height: 68px;
+  margin-right: 3%;
+}
+
+a.qq {
+  background-position: left top;
+}
+
+a.wechat {
+  background-position: -1px -68px;
+}
+
+a.weibo {
+  background-position: -1px -136px;
+}
+
+.third-party:last-child {
+  margin-right: 0;
+}
 
 /* register */
-.dslb,.dslb:hover,.dslb:focus{ color: #ccc; background: #eee;}
-.agree,.agree:hover{ color: #00adef; text-decoration: none;}
-.sex{ background-color: #fff;  color: #fc6da2;  cursor: pointer;  display: inline-block;  font-size: 16px;  padding: 6px 20px;}
-.checked{ background-color: #fc6da2; color: #fff; }
-.login_form .sexButton{ border-right:1px solid #ddd !important; }
+.dslb, .dslb:hover, .dslb:focus {
+  color: #ccc;
+  background: #eee;
+}
+
+.agree, .agree:hover {
+  color: #00adef;
+  text-decoration: none;
+}
+
+.sex {
+  background-color: #fff;
+  color: #fc6da2;
+  cursor: pointer;
+  display: inline-block;
+  font-size: 16px;
+  padding: 6px 20px;
+}
+
+.checked {
+  background-color: #fc6da2;
+  color: #fff;
+}
+
+.login_form .sexButton {
+  border-right: 1px solid #ddd !important;
+}
+
 /* forgetpass */
-.ft_btn{ margin-top:20px; }
+.ft_btn {
+  margin-top: 20px;
+}
 
 /* 首页 */
-.site .item-content,.message .item-content{ padding: 0;}
-.site .item_uimg,.message .item_uimg{ vertical-align: middle;  }
+.site .item-content, .message .item-content {
+  padding: 0;
+}
+
+.site .item_uimg, .message .item_uimg {
+  vertical-align: middle;
+}
+
 @media screen and (max-width: 400px) {
-.site .item_uimg{
+  .site .item_uimg {
     width: 74px;
     height: 90px;
   }
 }
+
 @media screen and (min-width: 400px) {
-.site .item_uimg{
+  .site .item_uimg {
     max-width: 100%;
   }
 }
-.site .list .item{ padding: 0;}
-.site p.signature{ font-size: 12px;}
-.warn,.warn:hover,.warn:active{color: #fff; text-decoration: none; width: 109%; height: 36px; line-height: 36px; display: block; background-color: #69b1f3; padding-left: 10px; }
-.selected{ color: #387ef5; }
-.city .selected{ color: #fc6da2;}
-.identity{ font-size: 16px;}
-.identity.icon-new-id{ color: #64c041;}
-.identity.icon-new-phone{ color: #6db9ff;}
-.identity.icon-new-vip{ color: #f4af36;}
-.identity.icon-new-guest{ color: #ee7fef;}
-.identity.icon-new-diamond{ color: #fb79a1;}
-/* 高级搜索 */
-.moreSearch_form_box{ width: 100%;}
-.moreSearch_form_box .sex_item,.moreSearch_form_box .sex_item:hover,.moreSearch_form_box .sex_item:active{ display:block; float: left; width: 33.3%; height: 45px; line-height: 45px; text-align: center; text-decoration: none; color: #3f3f3f; border-right: 1px solid #ddd;}
-.moreSearch_form_box .sex_item:last-child{ border-right: 0;}
-.search_sex{ border: 1px solid #ddd;}
-.search_sex>a.checked{ background-color: #eaf1f6;}
 
+.site .list .item {
+  padding: 0;
+}
+
+.site p.signature {
+  font-size: 12px;
+}
+
+.warn, .warn:hover, .warn:active {
+  color: #fff;
+  text-decoration: none;
+  width: 109%;
+  height: 36px;
+  line-height: 36px;
+  display: block;
+  background-color: #69b1f3;
+  padding-left: 10px;
+}
+
+.selected {
+  color: #387ef5;
+}
+
+.city .selected {
+  color: #fc6da2;
+}
+
+.identity {
+  font-size: 16px;
+}
+
+.identity.icon-new-id {
+  color: #64c041;
+}
+
+.identity.icon-new-phone {
+  color: #6db9ff;
+}
+
+.identity.icon-new-vip {
+  color: #f4af36;
+}
+
+.identity.icon-new-guest {
+  color: #ee7fef;
+}
+
+.identity.icon-new-diamond {
+  color: #fb79a1;
+}
+
+/* 高级搜索 */
+.moreSearch_form_box {
+  width: 100%;
+}
+
+.moreSearch_form_box .sex_item, .moreSearch_form_box .sex_item:hover, .moreSearch_form_box .sex_item:active {
+  display: block;
+  float: left;
+  width: 33.3%;
+  height: 45px;
+  line-height: 45px;
+  text-align: center;
+  text-decoration: none;
+  color: #3f3f3f;
+  border-right: 1px solid #ddd;
+}
+
+.moreSearch_form_box .sex_item:last-child {
+  border-right: 0;
+}
+
+.search_sex {
+  border: 1px solid #ddd;
+}
+
+.search_sex > a.checked {
+  background-color: #eaf1f6;
+}
 
 /* 消息 index */
-.red-point:after{  position: absolute;  content: ' ';  height: 6px;  width: 6px;  border-radius: 3px;  background-color: red;  }
-.red-point:after{  top: 4px; left: 70%; right: 35%;}
-.msg_type_pop{ background: #ffffff;  border: 1px solid #dcdcdc; border-bottom: 0; border-top: 0; right: 0;  top: 43px;  width: auto; max-width: 40%;  z-index: 2; }
-.msg_type_pop>p{ margin: 0;}
-.msg_type_pop>p>a,.msg_type_pop>p>a:hover,.msg_type_pop>p>a:active{ padding: 0 5px;  border-bottom: 1px solid #dcdcdc; color: #6c6c6c;  display: block;  font-size: 14px;  height: 32px;  line-height: 32px;  text-align: left; text-decoration: none;}
-.msg_u_img{ width: 56px; height: 56px;}
-.msg_text{ color: #999999; overflow: hidden;  text-overflow: ellipsis;  white-space: nowrap; }
-.send_time{ color: #aaaaaa;  font-size: 10px;  position: absolute;  right: 5%;  top: 10%;}
-.message .info_nb{ background: #ff2727;  border-radius: 50%;  color: #ffffff;  font-size: 9px;  height: 16px;  line-height: 16px;  position: absolute;  right: -5px;  text-align: center;  top: -5px;  width: 16px; z-index: 1;}
+.red-point:after {
+  position: absolute;
+  content: ' ';
+  height: 6px;
+  width: 6px;
+  border-radius: 3px;
+  background-color: red;
+}
+
+.red-point:after {
+  top: 4px;
+  left: 70%;
+  right: 35%;
+}
+
+.msg_type_pop {
+  background: #ffffff;
+  border: 1px solid #dcdcdc;
+  border-bottom: 0;
+  border-top: 0;
+  right: 0;
+  top: 43px;
+  width: auto;
+  max-width: 40%;
+  z-index: 2;
+}
+
+.msg_type_pop > p {
+  margin: 0;
+}
+
+.msg_type_pop > p > a, .msg_type_pop > p > a:hover, .msg_type_pop > p > a:active {
+  padding: 0 5px;
+  border-bottom: 1px solid #dcdcdc;
+  color: #6c6c6c;
+  display: block;
+  font-size: 14px;
+  height: 32px;
+  line-height: 32px;
+  text-align: left;
+  text-decoration: none;
+}
+
+.msg_u_img {
+  width: 56px;
+  height: 56px;
+}
+
+.msg_text {
+  color: #999999;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.send_time {
+  color: #aaaaaa;
+  font-size: 10px;
+  position: absolute;
+  right: 5%;
+  top: 10%;
+}
+
+.message .info_nb {
+  background: #ff2727;
+  border-radius: 50%;
+  color: #ffffff;
+  font-size: 9px;
+  height: 16px;
+  line-height: 16px;
+  position: absolute;
+  right: -5px;
+  text-align: center;
+  top: -5px;
+  width: 16px;
+  z-index: 1;
+}
 
 

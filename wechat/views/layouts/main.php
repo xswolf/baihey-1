@@ -21,14 +21,14 @@
 <script data-main="/wechat/web/js/app" src="/wechat/web/js/plugin/requirejs/require.js"></script>
 <body>
 <script>
-    if(location.hash == '#/main/index'){
+    if (location.hash == '#/main/index') {
         addElement();
-        setTimeout(function(){
+        setTimeout(function () {
             document.getElementById('welcome').className = 'animated fadeOut';
-            setTimeout(function(){
+            setTimeout(function () {
                 document.getElementById('welcome').className = 'animated fadeOut hide';
-            },1100)
-        },3000)
+            }, 1100)
+        }, 3000);
     }
     function addElement() {
         var div = document.createElement("div");

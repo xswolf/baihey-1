@@ -1,5 +1,16 @@
+/* portrait */
+@media screen and (orientation: portrait) {
+  #welcome {
+    background: url("/wechat/web/images/vertical.jpg") no-repeat top;
+  }
+}
+/* landscape */
+@media screen and (orientation: landscape) {
+  #welcome {
+    background: url("/wechat/web/images/horizontal.jpg") no-repeat top;
+  }
+}
 #welcome {
-  background: url("/wechat/web/images/welcome.jpg") no-repeat top;
   background-size: 100% 100%;
   height: 100%;
   margin-left: auto;
