@@ -356,7 +356,21 @@ class MemberController extends BaseController
         }
     }
 
+    // 提现
+    public function actionAddCashInfo()
+    {
+        $user_id = Cookie::getInstance()->getCookie('bhy_id')->value;
+        var_dump(\common\models\User::getInstance()->getUserPropertyValue($user_id, 'balance'));
+         exit();
+        if ($data = \common\models\User::getInstance()->addCashInfo($user_id, $this->get)) {
+            $this->renderAjax(['status' => 1, 'data' => $data]);
+        } else {
+            $this->renderAjax(['status' => 0, 'data' => $data, 'msg' => '提现失败！']);
+        }
+    }
 
+
+    // 获取当前用户余额
     public function actionGetUserBalance()
     {
         $user_id = Cookie::getInstance()->getCookie('bhy_id')->value;

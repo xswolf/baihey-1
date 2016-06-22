@@ -2451,14 +2451,14 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
     }]);
 
     // 我的账户-提现
-    module.controller("member.account_withdraw", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$ionicModal', '$interval', function (api, $scope, $timeout, $ionicPopup, $ionicModal, $interval) {
+    module.controller("member.account_withdraw", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$ionicModal', '$interval', '$ionicLoading', function (api, $scope, $timeout, $ionicPopup, $ionicModal, $interval,$ionicLoading) {
 
         $scope.formData = [];
         $scope.form = [];
         $scope.codeTitle = '获取验证码';
 
         api.get('/wap/member/get-user-balance',{}).success(function(res){
-            $scope.money = res.data;   // 用户当前余额
+            $scope.money = parseInt(res.data.balance);   // 用户当前余额
         })
 
         $scope.phone = $scope.userInfo.phone; // 用户绑定的手机号码
@@ -2484,11 +2484,10 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
         });
 
 
-
         // 倒计时
         $scope.getCode = function () {
             if ($scope.form.phone != $scope.phone) {
-                ar.saveDataAlert($ionicPopup, '输入的手机号码与绑定手机号码不符，请检查！' + $scope.phone.substring(0, 3) + "****" + $scope.phone.substring(7, 11));
+                ar.saveDataAlert($ionicPopup, '输入的手机号码与绑定手机号码不符，请检查！');//+ $scope.phone.substring(0, 3) + "****" + $scope.phone.substring(7, 11)
                 return false;
             }
 
@@ -2515,12 +2514,17 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
 
         $scope.saveData = function () {
             // 比对验证码
+            $ionicLoading.show({template: '处理中...'});
             api.validateCode($scope.form.code).success(function (res) {
-                if (res) {
-                    // 保存数据到消费记录，用户余额减少
-
+                if (res.status) {
+                    api.get('/wap/member/add-cash-info').success(function(re){
+                        console.log(re);
+                        $ionicLoading.hide();
+                    })
                 } else {
+                    $ionicLoading.hide();
                     ar.saveDataAlert($ionicPopup, '验证码错误');
+                    return;
                 }
             })
         }

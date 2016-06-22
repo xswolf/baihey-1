@@ -7,115 +7,82 @@ define(['app/module', 'app/directive/directiveApi'
 ], function (module) {
 
     // 注册
-    module.controller("User.register", ['app.serviceApi', '$scope', '$ionicPopup', function (api, $scope, $ionicPopup) {
+    module.controller("User.register", ['app.serviceApi', '$scope', '$ionicPopup', '$ionicLoading','$interval', function (api, $scope, $ionicPopup, $ionicLoading,$interval) {
 
         $scope.User = {};
 
-        $scope.User.codeBtn = '获取验证码';
+        $scope.codeTitle = '获取验证码';
 
         //如果文档高度大于屏幕高度，使用文档高度。 否则使用屏幕高度
         if (document.body.scrollHeight > document.documentElement.clientHeight) {
-            $scope.User.winHeight = {
+            $scope.winHeight = {
                 'height': document.body.scrollHeight + 'px'
             }
         } else {
-            $scope.User.winHeight = {
+            $scope.winHeight = {
                 'height': document.documentElement.clientHeight + 'px'
             }
         }
 
-
-        $scope.sexToggle = function(sex,event){
+        $scope.sexToggle = function (sex, event) {
             event.stopPropagation();
             $scope.User.sex = sex;
         }
 
-        function validatePhone(phone) {
-
-            if (!ar.validateMobile(phone)) {  // 验证手机格式
-                $ionicPopup.alert({title: '手机号码格式不正确'});
-                return false;
+        // 验证手机号是否存在
+        $scope.isExist = function () {
+            if ($scope.User.mobile && $scope.User.mobile.length == 11) {
+                api.getMobileIsExist($scope.User.mobile).success(function (data) {
+                    if (data.status < 1) {
+                        ar.saveDataAlert($ionicPopup, data.msg);
+                        $scope.User.mobile = '';
+                    }
+                })
             }
-
-            api.getMobileIsExist(phone).success(function (data) {
-                if (!data.status) {
-                    $ionicPopup.alert({title: data.msg});
-                    return true;
-                } else {
-                    return false;
-                }
-            })
-
-            return true;
         }
-
-        // 开始计时
-        $scope.User.startTime = function () {
-            $scope.User.max_time -= 1;
-            $scope.User.codeBtn = "重新发送" + $scope.User.max_time;
-            $scope.$apply();
-        }
-
-        // 结束计时，还原文字
-        $scope.User.endTime = function () {
-            $scope.User.codeSwitch = false;
-            $scope.User.codeCls = false;
-            $scope.User.codeBtn = '获取验证码';
-            clearInterval($scope.User.timer);
-            $scope.$apply();
-        }
-
-        // 获取验证码
-        $scope.User.getCode = function () {
-
-            if (!validatePhone($scope.User.mobile)) return;
-
-            //计时
-            $scope.User.codeSwitch = true;
-            $scope.User.codeCls = true;
-            $scope.User.max_time = 60;
-            $scope.User.timer = setInterval($scope.User.startTime, 1000);
-            setTimeout($scope.User.endTime, $scope.User.max_time * 1000);
-
-            // 发送验证码
-            api.sendCodeMsg($scope.User.mobile).success(function (data) {
-
-                if (!data.status) {
-                    $ionicPopup.alert({title: '短信发送失败，请稍后重试。'});
-                    return false;
-                }
+        // 倒计时
+        $scope.getCode = function () {
+            var timeTitle = 60;
+            var timer = $interval(function () {
+                $scope.codeTitle = '重新获取(' + timeTitle + ')';
+            }, 1000, 60);
+            timer.then(function () {
+                $scope.codeTitle = '获取验证码';
+                $interval.cancel(timer);
+            }, function () {
+                ar.saveDataAlert($ionicPopup, '倒计时出错');
+            }, function () {
+                timeTitle -= 1;
             });
 
-
+            // 发送验证码
+            api.sendCodeMsg($scope.User.mobile).success(function (res) {
+                if (res.status < 1) {
+                    ar.saveDataAlert($ionicPopup, res.msg);
+                    $interval.cancel(timer);
+                    return;
+                }
+            });
         }
 
         //注册提交
-        $scope.User.register = function () {
-
-            if (!$scope.User.sex) {
-                $ionicPopup.alert({title: '请选择您的性别'});
-                return false;
-            }
-
-            if (!ar.trim($scope.User.code)) {
-
-                $ionicPopup.alert({title: '请填写正确短信验证码'});
-                return false;
-            }
-
+        $scope.register = function () {
+            $ionicLoading.show({template: '注册中...'});
             var result = api.save('/wap/user/register', $scope.User);
             result.success(function (data) {
+                $ionicLoading.hide();
                 if (data.status == 1) {
                     // 存储userInfo
                     ar.setStorage('userInfo', data.data);
                     window.location.href = '/wap/site/main#/main/index';
                 } else if (data.status == 2) {
-                    $ionicPopup.alert({title: '验证码错误'});
+                    ar.saveDataAlert($ionicPopup, '验证码错误');
                 } else {
-                    $ionicPopup.alert({title: '注册失败'});
+                    ar.saveDataAlert($ionicPopup, '注册失败');
                 }
             }).error(function () {
-                $ionicPopup.alert({title: '网络连接错误，请重试'});
+                $ionicLoading.hide();
+                ar.saveDataAlert($ionicPopup, '网络连接错误，请重试！');
             })
 
         }
@@ -123,7 +90,7 @@ define(['app/module', 'app/directive/directiveApi'
     }])
 
     // 登录
-    module.controller("User.login", ['app.serviceApi', '$scope', '$ionicPopup','$location', function (api, $scope, $ionicPopup,$location) {
+    module.controller("User.login", ['app.serviceApi', '$scope', '$ionicPopup', '$location', function (api, $scope, $ionicPopup, $location) {
 
         $scope.User = {};
 

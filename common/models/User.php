@@ -125,7 +125,7 @@ class User extends Base
             // 写入用户日志表
             $log['user_id'] = $id;
             $log['type'] = 2;
-            $log['time'] = $time;
+            $log['create_time'] = $time;
             $this->userLog($log);
         } else {
             $transaction->rollBack();
@@ -146,7 +146,7 @@ class User extends Base
             'local'                 => '',// 当地地区（地区切换使用）
             'height'                => '',// 身高 1
             'weight'                => '',// 体重
-            'head_pic'              => '',// 头像 1
+            'head_pic'              => ' ',// 头像 1
             'real_name'             => '',// 真实姓名
             'identity_id'           => '',// 身份证号码
             'identity_address'      => '',// 身份证地址
@@ -222,7 +222,7 @@ class User extends Base
         $userLog = \common\models\Base::getInstance('user_log');
         $userLog->user_id = $log['user_id'];
         $userLog->type = $log['type'];
-        $userLog->create_time = $log['time'];
+        $userLog->create_time = $log['create_time'];
         $userLog->ip = ip2long($_SERVER["REMOTE_ADDR"]);
         return $userLog->insert(false);
     }
@@ -585,6 +585,23 @@ class User extends Base
             $row = $_cash_card->deleteAll(['id' => $id]);
         }
 
+        return $row;
+    }
+
+    /**
+     * 提现
+     * @param $data
+     * @return int
+     * @throws \yii\db\Exception
+     */
+    public function addCashInfo($user_id,$data){
+        $_cash_card_table = $this->tablePrefix.'cash';
+        $data['create_time'] = time();
+        $data['status'] = 2;
+        $data['user_id'] = $user_id;
+        $row = $this->getDb()->createCommand()
+            ->insert($_cash_card_table,$data)
+            ->execute();
         return $row;
     }
 

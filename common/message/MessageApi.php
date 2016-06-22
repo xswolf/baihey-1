@@ -17,7 +17,7 @@ class MessageApi extends Component{
      * @return mixed
      */
     public function passwordMsg($phone, $password) {
-        $nr = '您好，恭喜注册成功！您的初始密码为：'.$password.'，请及时前往个人中心修改您的密码。【嘉瑞百合缘】';
+        $nr = '您好，感谢您注册嘉瑞百合缘，您的初始密码为：'.$password.'，请及时前往个人中心修改您的密码。【嘉瑞百合缘】';
         $nr = mb_convert_encoding($nr, "GB2312", "UTF-8");
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, 'http://www.106168.net/smsComputer/smsComputersend.asp?zh=cqjr&mm=55352177&hm='.$phone.'&nr='.$nr.'&dxlbid=15');

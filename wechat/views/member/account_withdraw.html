@@ -13,7 +13,7 @@
             </ion-item>
             <ion-item class="item-input">
                 <span class="input-label">提现金额</span>
-                ￥<input type="number" ng-model="formData.money" placeholder="单次提现限额10万" max="100000">
+                ￥<input type="number" ng-model="formData.money" placeholder="单次提现限额10万"  max="100000">
             </ion-item>
             <ion-item class="item-divider">
                 余额 <span ng-if="!money"> <ion-spinner icon="ios-small"></ion-spinner></span><span ng-if="money">{{money | currency:'￥'}}</span>，<a ng-click="formData.money = money">全部提现</a>
