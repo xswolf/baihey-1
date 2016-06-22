@@ -37,7 +37,7 @@ define(function(){
                 console.log('x t b')
                 chat.socket.send('&nr=' + chat.esc('heartbeat') + '&key=heartbeat');
             }
-            window.setInterval(send_message , 6000);
+            window.setInterval(send_message , 10000);
         }
 
         return this.socket;
