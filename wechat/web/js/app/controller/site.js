@@ -56,20 +56,6 @@ define(['app/module', 'app/directive/directiveApi'
             }
         }
 
-        // 读取用户数据
-        function userListPromise() {
-            api.list("/wap/site/user-list", $scope.searchForm).success(function (res) {
-                if (res.data.length < 6) {
-                    $scope.pageLast = false;
-                }
-                $scope.userList = res.data;
-                for (var i in $scope.userList) {
-                    $scope.userList[i].info = JSON.parse($scope.userList[i].info);
-                    $scope.userList[i].auth = JSON.parse($scope.userList[i].auth);
-                }
-            })
-        }
-
         // 根据登录状态，登录用户性别默认查询条件：性别
         if (ar.getCookie('bhy_u_sex') && (ar.getCookie('bhy_u_sex') == 0)) {
             $scope.searchForm.sex = 1;
@@ -130,10 +116,10 @@ define(['app/module', 'app/directive/directiveApi'
         $scope.moreSearchOk = function () {
             $scope.userList = [];
             $scope.moreSearchModal.hide();
-            init();
             $scope.searchForm = $scope.whereForm;
-            //$scope.searchForm.pageNum = 1;
-            userListPromise();
+            $scope.searchForm.pageNum = 1;
+            //userListPromise();
+            $scope.loadMore();
         }
 
         $scope.buttonsItemIndex = '';
@@ -198,7 +184,7 @@ define(['app/module', 'app/directive/directiveApi'
         $scope.loadMore = function () {
 
             api.list('/wap/site/user-list', $scope.searchForm).success(function (res) {
-                if (res.data.length == 0) {
+                if (res.data.length < 6) {
                     $scope.pageLast = false;
                 }
                 for (var i in res.data) {
