@@ -13,10 +13,10 @@
             </ion-item>
             <ion-item class="item-input">
                 <span class="input-label">提现金额</span>
-                ￥<input type="number" ng-model="formData.money">
+                ￥<input type="number" ng-model="formData.money" placeholder="单次提现限额10万" max="100000">
             </ion-item>
             <ion-item class="item-divider">
-                余额{{money | currency:'￥'}}，<a ng-click="formData.money = money">全部提现</a>
+                余额 <span ng-if="!money"> <ion-spinner icon="ios-small"></ion-spinner></span><span ng-if="money">{{money | currency:'￥'}}</span>，<a ng-click="formData.money = money">全部提现</a>
             </ion-item>
             <ion-item class="item-input">
                 <span class="input-label">手机验证</span>
@@ -31,7 +31,7 @@
             </ion-item>
         </div>
         <p class="tac cor5" ng-click="cons()">24小时内到账</p>
-        <button class="button button-block button-balanced" ng-click="saveData()" ng-disabled="!formData.money || formData.money > money || !form.code || form.code.toString().length != 6 || !form.phone || form.phone.toString().length != 11">提现</button>
+        <button class="button button-block button-balanced" ng-click="saveData()" ng-disabled="!formData.bank || !formData.money || formData.money > money || !form.code || form.code.toString().length != 6 || !form.phone || form.phone.toString().length != 11">提现</button>
     </ion-content>
 
 

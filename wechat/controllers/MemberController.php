@@ -322,6 +322,9 @@ class MemberController extends BaseController
     {
         $user_id = Cookie::getInstance()->getCookie('bhy_id')->value;
         if ($data = User::getInstance()->addCashCard($user_id, $this->get)) {
+            if (empty(json_decode(\common\models\User::getInstance()->getUserById($user_id)['info'])->real_name)) {  // 如果当前用户姓名为空，则保存持卡人姓名到userinfo
+                UserInformation::getInstance()->updateUserInfo($user_id, ['real_name' => $this->get('user_name')]);
+            }
             $this->renderAjax(['status' => 1, 'data' => $data, 'msg' => '添加银行卡成功']);
         } else {
             $this->renderAjax(['status' => 0, 'data' => $data, 'msg' => '添加银行卡失败，可能是您已添加过该银行卡。']);
@@ -352,6 +355,19 @@ class MemberController extends BaseController
             $this->renderAjax(['status' => 0, 'data' => $data, 'msg' => '删除数据失败']);
         }
     }
+
+
+    public function actionGetUserBalance()
+    {
+        $user_id = Cookie::getInstance()->getCookie('bhy_id')->value;
+        if ($data = \common\models\User::getInstance()->getUserPropertyValue($user_id, 'balance')) {
+            $this->renderAjax(['data' => $data]);
+        } else {
+            $this->renderAjax(['data' => 0]);
+        }
+
+    }
+
 
     /**
      * 退出登录

@@ -7,7 +7,13 @@
         <ion-list show-delete="shouldShowDelete">
             <ion-item class="item-avatar" href="#/main/userInfo?userId={{f.other}}" ng-repeat="f in followList">
                 <img src="{{f.info.head_pic}}">
-                <h2>{{f.info.real_name | sex:f.sex :f.info.age}} <span class="identity sfz" ng-if="honesty(f.honesty_value)">身份证</span> <span class="identity phone" ng-if="f.phone">手机</span> <span ng-if="f.info.level == 1" class="identity vip">vip</span> <span ng-if="f.info.level == 2" class="identity guest">贵宾</span> <span ng-if="f.info.level == 3" class="identity diamond">钻石</span></h2>
+                <h2>{{f.info.real_name | sex:f.sex :f.info.age}}
+                    <span ng-if="honesty(f.honesty_value)" class="identity id">身份证</span>
+                    <span ng-if="f.phone" class="identity phone">手机</span>
+                    <span ng-if="f.info.level == 1" class="identity vip">VIP</span>
+                    <span ng-if="f.info.level == 2" class="identity guest">贵宾</span>
+                    <span ng-if="f.info.level == 3" class="identity diamond">钻石</span>
+                </h2>
                 <p>拉黑时间 {{f.update_time * 1000 | date:'yyyy-MM-dd HH:mm:ss'}}</p>
                 <ion-option-button class="button-assertive" ng-click="removeItem($index,f)">
                     解除

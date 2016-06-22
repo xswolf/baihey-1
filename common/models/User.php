@@ -598,4 +598,27 @@ class User extends Base
         Cookie::getInstance()->getCookie('bhy_u_name') ? Cookie::getInstance()->delCookie('bhy_u_name') : true;
         return true;
     }
+
+
+    /**
+     * 根据用户ID、字段名称获取字段值
+     * @param $user_id
+     * @param $propertyKey
+     * @return array|bool|null
+     */
+    public function getUserPropertyValue($user_id,$propertyKey){
+        $userTable = static::tableName();
+        $userInformationTable = $this->tablePrefix.'user_information';
+        $row = (new Query)
+            ->select("$propertyKey")
+            ->from($userTable)
+            ->leftJoin($this->tablePrefix.'user_information',"$userTable.id = ".$userInformationTable.'.user_id')
+            ->where(['id' => $user_id])
+            ->one();
+
+        if ($row === false) {
+            return null;
+        }
+        return $row;
+    }
 }

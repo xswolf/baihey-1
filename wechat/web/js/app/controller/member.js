@@ -2456,21 +2456,28 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
         $scope.formData = [];
         $scope.form = [];
         $scope.codeTitle = '获取验证码';
-        $scope.money = $scope.userInfo.balance; // 用户当前余额
+
+        api.get('/wap/member/get-user-balance',{}).success(function(res){
+            $scope.money = res.data;   // 用户当前余额
+        })
+
         $scope.phone = $scope.userInfo.phone; // 用户绑定的手机号码
-        console.log($scope.userInfo);
+
         $ionicModal.fromTemplateUrl('selectCardModal.html', {
             scope: $scope,
             animation: 'slide-in-up'
         }).then(function (modal) {
             $scope.modal = modal;
         });
+
         $scope.showSelectCard = function () {
             $scope.modal.show();
         };
+
         $scope.selectedCard = function () {
             $scope.modal.hide();
         };
+
         api.list('/wap/member/cash-card-list').success(function (res) {
             $scope.cardList = res.data;
             $scope.formData.bank = $scope.cardList[0];
@@ -2606,6 +2613,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
                 ar.saveDataAlert($ionicPopup, '未自动补全卡类型，请核对您的银行卡号！');
                 return false;
             }
+
             // 保存
             api.save('/wap/member/add-cash-card', $scope.formData).success(function (res) {
                 if (res.status > 0) {
