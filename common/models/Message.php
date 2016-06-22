@@ -52,13 +52,15 @@ class Message extends Base {
      * @throws \Exception
      */
     public function add( $sendId,$receiveId , $messageContent , $type = 1 ,$status) {
-        $this->send_user_id    = $sendId;
-        $this->receive_user_id = $receiveId;
-        $this->message         = $messageContent;
-        $this->message_type    = $type;
-        $this->create_time     = time();
-        $this->status          = $status;
+        $data = [
+            'send_user_id' => $sendId,
+            'receive_user_id' => $receiveId,
+            'message' => $messageContent,
+            'message_type' => $type,
+            'create_time' => time(),
+            'status' => $status,
+        ];
+        return \Yii::$app->db->createCommand($this->tablePrefix.'message' , $data);
 
-        return $this->insert(true);
     }
 }
