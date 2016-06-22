@@ -130,9 +130,8 @@ define(['app/module', 'app/directive/directiveApi'
         $scope.moreSearchOk = function () {
             $scope.userList = [];
             $scope.moreSearchModal.hide();
-            init();
             $scope.searchForm = $scope.whereForm;
-            //$scope.searchForm.pageNum = 1;
+            $scope.searchForm.pageNum = 1;
             //userListPromise();
             $scope.loadMore();
         }
