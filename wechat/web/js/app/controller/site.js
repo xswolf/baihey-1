@@ -196,9 +196,8 @@ define(['app/module', 'app/directive/directiveApi'
 
         // 加载更多
         $scope.loadMore = function () {
-
+            $scope.searchForm.pageNum += 1;
             api.list('/wap/site/user-list', $scope.searchForm).success(function (res) {
-                $scope.searchForm.pageNum += 1;
                 if (res.data.length == 0) {
                     $scope.pageLast = false;
                 }
