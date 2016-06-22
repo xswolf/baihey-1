@@ -132,7 +132,7 @@ define(['app/module', 'app/directive/directiveApi'
             $scope.moreSearchModal.hide();
             init();
             $scope.searchForm = $scope.whereForm;
-            //$scope.searchForm.pageNum = 1;
+            $scope.searchForm.pageNum = 1;
             userListPromise();
         }
 
