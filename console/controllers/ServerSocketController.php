@@ -29,7 +29,6 @@ class ServerSocketController extends Controller {
 //    private $address = '192.168.0.102';
     private $port = 8080;
 
-
     public function actionRun() {
         $this->master  = $this->WebSocket( $this->address , $this->port );
         $this->sockets = [ $this->master ];
