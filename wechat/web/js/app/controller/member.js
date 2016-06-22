@@ -242,7 +242,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
     module.controller("member.real_name", ['app.serviceApi', '$scope', '$ionicPopup', '$location', function (api, $scope, $ionicPopup, $location) {
 
         $scope.formData = [];
-        $scope.formData.real_name = $scope.userInfo.info.real_name != '未知' ? $scope.userInfo.info.real_name : '';
+        $scope.formData.real_name = $scope.userInfo.info.real_name;
         $scope.sex = ar.getCookie('bhy_u_sex') == 1 ? 1 : 0;  // 用户性别
         $scope.saveData = function () {
 
@@ -323,7 +323,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
     module.controller("member.height", ['app.serviceApi', '$scope', '$ionicPopup', '$location', function (api, $scope, $ionicPopup, $location) {
 
         $scope.formData = [];
-        $scope.formData.height = $scope.userInfo.info.height == '未知' ? '' : $scope.userInfo.info.height;
+        $scope.formData.height = $scope.userInfo.info.height;
 
         $scope.heightList = config_infoData.height;
 
@@ -353,7 +353,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
     module.controller("member.is_marriage", ['app.serviceApi', '$scope', '$ionicPopup', '$location', function (api, $scope, $ionicPopup, $location) {
 
         $scope.formData = [];
-        $scope.formData.is_marriage = $scope.userInfo.info.is_marriage == '未知' ? '' : $scope.userInfo.info.is_marriage;
+        $scope.formData.is_marriage = $scope.userInfo.info.is_marriage;
 
         $scope.marriageList = config_infoData.marriage;
 
@@ -382,7 +382,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
     module.controller("member.education", ['app.serviceApi', '$scope', '$ionicPopup', '$location', function (api, $scope, $ionicPopup, $location) {
 
         $scope.formData = [];
-        $scope.formData.education = $scope.userInfo.info.education == '未知' ? '' : $scope.userInfo.info.education;
+        $scope.formData.education = $scope.userInfo.info.education;
 
         $scope.educationList = config_infoData.education;
 
@@ -401,8 +401,8 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
     module.controller("member.occupation", ['app.serviceApi', '$scope', '$ionicPopup', '$location', function (api, $scope, $ionicPopup, $location) {
 
         $scope.formData = [];
-        $scope.occupation = $scope.userInfo.info.occupation != '未知' && $scope.userInfo.info.occupation ? $scope.userInfo.info.occupation : 1;
-        $scope.children_occupation = $scope.userInfo.info.children_occupation != '未知' && $scope.userInfo.info.children_occupation ? $scope.userInfo.info.children_occupation : 1;
+        $scope.occupation = $scope.userInfo.info.occupation ? $scope.userInfo.info.occupation : 1;
+        $scope.children_occupation = $scope.userInfo.info.children_occupation ? $scope.userInfo.info.children_occupation : 1;
 
         // 获取文档高度以适应ion-scroll
         $scope.bodyHeight = document.body.scrollHeight;
@@ -540,7 +540,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
     module.controller("member.haunt_address", ['app.serviceApi', '$scope', '$ionicPopup', '$location', function (api, $scope, $ionicPopup, $location) {
 
         $scope.formData = [];
-        $scope.formData.haunt_address = $scope.userInfo.info.haunt_address != '未知' ? $scope.userInfo.info.haunt_address : '';
+        $scope.formData.haunt_address = $scope.userInfo.info.haunt_address;
         $scope.saveData = function () {
             if ($scope.formData.haunt_address != '' && $scope.formData.haunt_address) {
                 api.save('/wap/member/save-data', $scope.formData).success(function (res) {
@@ -560,7 +560,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
     module.controller("member.wechat_number", ['app.serviceApi', '$scope', '$ionicPopup', '$location', function (api, $scope, $ionicPopup, $location) {
 
         $scope.formData = [];
-        $scope.formData.wechat = $scope.userInfo.info.wechat != '未知' ? $scope.userInfo.info.wechat : '';
+        $scope.formData.wechat = $scope.userInfo.info.wechat;
         $scope.saveData = function () {
             if ($scope.formData.wechat != '' && $scope.formData.wechat) {
                 api.save('/wap/member/save-data', $scope.formData).success(function (res) {
@@ -580,7 +580,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
     module.controller("member.qq_number", ['app.serviceApi', '$scope', '$ionicPopup', '$location', function (api, $scope, $ionicPopup, $location) {
 
         $scope.formData = [];
-        $scope.formData.qq = $scope.userInfo.info.qq != '未知' ? $scope.userInfo.info.qq : '';
+        $scope.formData.qq = $scope.userInfo.info.qq;
         $scope.saveData = function () {
             if ($scope.formData.qq != '' && $scope.formData) {
                 api.save('/wap/member/save-data', $scope.formData).success(function (res) {
@@ -957,7 +957,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
     module.controller("member.mate", ['app.serviceApi', '$scope', '$ionicPopup', '$location', function (api, $scope, $ionicPopup, $location) {
 
         $scope.formData = [];
-        $scope.formData.mate = $scope.userInfo.info.mate != '未知' && $scope.userInfo.info.mate != undefined ? $scope.userInfo.info.mate : '';
+        $scope.formData.mate = $scope.userInfo.info.mate;
 
         // 保存
         $scope.saveData = function () {
@@ -977,7 +977,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
     module.controller("member.children", ['app.serviceApi', '$scope', '$ionicPopup', '$location', function (api, $scope, $ionicPopup, $location) {
 
         $scope.formData = [];
-        $scope.formData.is_child = $scope.userInfo.info.is_child != '未知' && $scope.userInfo.info.is_child ? $scope.userInfo.info.is_child : '';
+        $scope.formData.is_child = $scope.userInfo.info.is_child;
         $scope.childrenList = config_infoData.children;
 
         // 保存
@@ -999,7 +999,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
     module.controller("member.nation", ['app.serviceApi', '$scope', '$ionicPopup', '$location', function (api, $scope, $ionicPopup, $location) {
 
         $scope.formData = [];
-        $scope.formData.nation = $scope.userInfo.info.nation != '未知' && $scope.userInfo.info.nation ? $scope.userInfo.info.nation : '';
+        $scope.formData.nation = $scope.userInfo.info.nation;
         $scope.nationList = config_infoData.nation;
 
         // 保存
@@ -1027,7 +1027,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
     module.controller("member.work", ['app.serviceApi', '$scope', '$ionicPopup', '$location', function (api, $scope, $ionicPopup, $location) {
 
         $scope.formData = [];
-        $scope.formData.work = $scope.userInfo.info.work != '未知' ? $scope.userInfo.info.work : '';
+        $scope.formData.work = $scope.userInfo.info.work;
 
         // 保存
         $scope.saveData = function () {
@@ -1047,7 +1047,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
     module.controller("member.salary", ['app.serviceApi', '$scope', '$ionicPopup', '$location', function (api, $scope, $ionicPopup, $location) {
 
         $scope.formData = [];
-        $scope.formData.year_income = $scope.userInfo.info.year_income != '未知' ? $scope.userInfo.info.year_income : '';
+        $scope.formData.year_income = $scope.userInfo.info.year_income;
         $scope.salaryList = config_infoData.salary;
 
         // 保存
@@ -1068,7 +1068,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
     module.controller("member.house", ['app.serviceApi', '$scope', '$ionicPopup', '$location', function (api, $scope, $ionicPopup, $location) {
 
         $scope.formData = [];
-        $scope.formData.is_purchase = $scope.userInfo.info.is_purchase != '未知' ? $scope.userInfo.info.is_purchase : '';
+        $scope.formData.is_purchase = $scope.userInfo.info.is_purchase;
         $scope.houseList = config_infoData.house;
 
         // 保存
@@ -1089,7 +1089,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
     module.controller("member.car", ['app.serviceApi', '$scope', '$ionicPopup', '$location', function (api, $scope, $ionicPopup, $location) {
 
         $scope.formData = [];
-        $scope.formData.is_car = $scope.userInfo.info.is_car != '未知' ? $scope.userInfo.info.is_car : '';
+        $scope.formData.is_car = $scope.userInfo.info.is_car;
         $scope.carList = config_infoData.car;
 
         // 保存
@@ -1110,7 +1110,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
     module.controller("member.blood", ['app.serviceApi', '$scope', '$ionicPopup', '$location', function (api, $scope, $ionicPopup, $location) {
 
         $scope.formData = [];
-        $scope.formData.blood = $scope.userInfo.info.blood != '未知' ? $scope.userInfo.info.blood : '';
+        $scope.formData.blood = $scope.userInfo.info.blood;
         $scope.bloodList = config_infoData.blood;
 
         // 保存
@@ -1132,7 +1132,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
     module.controller("member.school", ['app.serviceApi', '$scope', '$ionicPopup', '$location', function (api, $scope, $ionicPopup, $location) {
 
         $scope.formData = [];
-        $scope.formData.school = $scope.userInfo.info.school != '未知' ? $scope.userInfo.info.school : '';
+        $scope.formData.school = $scope.userInfo.info.school;
 
         // 保存
         $scope.saveData = function () {
@@ -1298,7 +1298,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
     module.controller("member.zo_education", ['app.serviceApi', '$scope', '$ionicPopup', '$location', function (api, $scope, $ionicPopup, $location) {
 
         $scope.formData = [];
-        $scope.formData.zo_education = $scope.userInfo.info.zo_education != '未知' ? $scope.userInfo.info.zo_education : '';
+        $scope.formData.zo_education = $scope.userInfo.info.zo_education;
         $scope.zo_educationList = config_infoData.education;
 
         // 保存
@@ -1366,7 +1366,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
     module.controller("member.zo_children", ['app.serviceApi', '$scope', '$ionicPopup', '$location', function (api, $scope, $ionicPopup, $location) {
 
         $scope.formData = [];
-        $scope.formData.zo_children = $scope.userInfo.info.zo_children != '未知' && $scope.userInfo.info.zo_children ? $scope.userInfo.info.zo_children : '';
+        $scope.formData.zo_children = $scope.userInfo.info.zo_children;
         $scope.childrenList = config_infoData.children;
 
         // 保存
@@ -1385,7 +1385,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
 
         $scope.formData = [];
 
-        $scope.formData.zo_house = $scope.userInfo.info.zo_house != '未知' && $scope.userInfo.info.zo_house ? $scope.userInfo.info.zo_house : '';
+        $scope.formData.zo_house = $scope.userInfo.info.zo_house;
         $scope.zo_houseList = config_infoData.house;
 
         // 保存
@@ -1403,7 +1403,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
 
         $scope.formData = [];
 
-        $scope.formData.zo_car = $scope.userInfo.info.zo_car != '未知' && $scope.userInfo.info.zo_car ? $scope.userInfo.info.zo_car : '';
+        $scope.formData.zo_car = $scope.userInfo.info.zo_car;
         $scope.zo_carList = config_infoData.car;
 
         // 保存
@@ -1902,7 +1902,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
     // 账户安全-微信绑定
     module.controller("member.security_wechat", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', function (api, $scope, $timeout, $ionicPopup) {
         $scope.formData = [];
-        $scope.formData.wechat = $scope.userInfo.info.wechat != '未知' ? $scope.userInfo.info.wechat : '';
+        $scope.formData.wechat = $scope.userInfo.info.wechat;
         $scope.saveData = function () {
             alert($scope.formData.wechat);
             if ($scope.formData.wechat == '' || typeof($scope.formData.wechat) == 'undefined') {
@@ -1924,7 +1924,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
     // 账户安全-QQ绑定
     module.controller("member.security_qq", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', function (api, $scope, $timeout, $ionicPopup) {
         $scope.formData = [];
-        $scope.formData.qq = $scope.userInfo.info.qq != '未知' ? $scope.userInfo.info.qq : '';
+        $scope.formData.qq = $scope.userInfo.info.qq;
         $scope.saveData = function () {
             if ($scope.formData.qq == '' || typeof($scope.formData.qq) == 'undefined') {
                 if (confirm('检测到您还未填写微信号，确定放弃吗？')) {
@@ -1998,9 +1998,9 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
         });
 
         $scope.formData = [];
-        $scope.formData.real_name = $scope.userInfo.info.real_name != '未知' ? $scope.userInfo.info.real_name : '';
-        $scope.formData.identity_id = $scope.userInfo.info.identity_id != '未知' ? $scope.userInfo.info.identity_id : '';
-        $scope.formData.identity_address = $scope.userInfo.info.identity_address != '未知' ? $scope.userInfo.info.identity_address : '';
+        $scope.formData.real_name = $scope.userInfo.info.real_name;
+        $scope.formData.identity_id = $scope.userInfo.info.identity_id;
+        $scope.formData.identity_address = $scope.userInfo.info.identity_address;
 
         $scope.addNewImg = function (name) {
             $scope.uploaderImage(uploader, name);
@@ -2456,8 +2456,9 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
         $scope.formData = [];
         $scope.form = [];
         $scope.codeTitle = '获取验证码';
-        $scope.money = 530; // 用户当前余额
-        $scope.phone = '15084410950'; // 用户绑定的手机号码
+        $scope.money = $scope.userInfo.balance; // 用户当前余额
+        $scope.phone = $scope.userInfo.phone; // 用户绑定的手机号码
+        console.log($scope.userInfo);
         $ionicModal.fromTemplateUrl('selectCardModal.html', {
             scope: $scope,
             animation: 'slide-in-up'
@@ -2470,13 +2471,12 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
         $scope.selectedCard = function () {
             $scope.modal.hide();
         };
-        $scope.cardList = [
-            {id: 1, name: '农业银行-借记卡', card_no: '6228480470845648832'},
-            {id: 2, name: '中国银行-借记卡', card_no: '6228480470845642411'},
-            {id: 3, name: '工商银行-借记卡', card_no: '6228480470845643984'},
-            {id: 4, name: '重庆农村商业银行-借记卡', card_no: '62284804708456418060'}
-        ];
-        $scope.formData.bank = $scope.cardList[0];
+        api.list('/wap/member/cash-card-list').success(function (res) {
+            $scope.cardList = res.data;
+            $scope.formData.bank = $scope.cardList[0];
+        });
+
+
 
         // 倒计时
         $scope.getCode = function () {
@@ -2529,7 +2529,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
 
         $scope.delete = function (index, card) {
             var confirmPopup = $ionicPopup.confirm({
-                title: '确定删除此条记录？删除后将不显示在对方参与列表。',
+                title: '确定删除？',
                 template: false,
                 cancelText: '点错了',
                 okText: '确定'
@@ -2537,9 +2537,11 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
             confirmPopup.then(function (res) {
                 if (res) {
                     // 删除
-                    api.save('/wap/user/delete-mycard', {id: card.id}).success(function (res) {
-                        if(res.status) {
-                            $scope.cardList.plice(index, 1);
+                    api.save('/wap/member/del-card', {id: card.id}).success(function (res) {
+                        if(res.status > 0) {
+                            $scope.cardList.splice(index, 1);
+                        }else{
+                            ar.saveDataAlert($ionicPopup,res.msg);
                         }
                     });
                 } else {
@@ -2553,10 +2555,10 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
     // 我的账户-银行卡详情
     module.controller("member.account_mycard_info", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$location', function (api, $scope, $timeout, $ionicPopup, $location) {
         $scope.cardId = $location.$$search.id;  // 银行卡ID
-        $scope.bankData = [];
         api.list('/wap/member/cash-card-by-id', {id : $scope.cardId}).success(function (res) {
             $scope.bankData = res.data;
         });
+
     }]);
 
 
@@ -2569,6 +2571,15 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
         });
         // 卡类型联动
         $scope.bankNameChain = function () {
+            if(!$scope.formData.card_no){
+                ar.saveDataAlert($ionicPopup, '请输入银行卡号');
+                return false;
+            }
+            if ($scope.formData.card_no.length == 19 || $scope.formData.card_no.length == 16) {
+            }else{
+                ar.saveDataAlert($ionicPopup, '请核对银行卡号是否正确');
+                return false;
+            }
             for (var i in $scope.bankData) {
                 if ($scope.formData.card_no.indexOf($scope.bankData[i].bin) != -1) {
                     $scope.bankData[i].name.split('-');
@@ -2580,15 +2591,21 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
 
         $scope.saveData = function () {
             // 验证
-            if (!$scope.formData.card_no) {
+            if(!$scope.formData.card_no){
                 ar.saveDataAlert($ionicPopup, '请输入银行卡号');
                 return false;
             }
-            if (!$scope.formData.name) {
+
+            if ($scope.formData.card_no.length == 19 || $scope.formData.card_no.length == 16) {
+            }else{
                 ar.saveDataAlert($ionicPopup, '请核对银行卡号是否正确');
                 return false;
             }
-            console.log($scope.formData);
+
+            if(!$scope.formData.name){
+                ar.saveDataAlert($ionicPopup, '未自动补全卡类型，请核对您的银行卡号！');
+                return false;
+            }
             // 保存
             api.save('/wap/member/add-cash-card', $scope.formData).success(function (res) {
                 if (res.status > 0) {

@@ -9,8 +9,8 @@
                 </div>
                 <div class="fl u_info ml10">
                     <p>
-                        <strong class="fs14" ng-if="userInfo.info.real_name != '未知'">{{userInfo.info.real_name}}</strong>
-                        <strong class="fs14" ng-if="userInfo.info.real_name == '未知'">ID:{{userInfo.id}}</strong>
+                        <strong class="fs14" ng-if="userInfo.info.real_name">{{userInfo.info.real_name}}</strong>
+                        <strong class="fs14" ng-if="!userInfo.info.real_name">ID:{{userInfo.id}}</strong>
                             <span class="ml5 cor22">
                                 <span ng-if="userInfo.info.age">{{userInfo.age}}岁 </span>
                                 {{userInfo.info.is_marriage | marriage}}

@@ -565,7 +565,7 @@ class User extends Base
         $_cash_card_table = $this->tablePrefix.'cash_card';
         $data['create_time'] = time();
         $data['user_id'] = $user_id;
-        $_cash_card = $this->getInstance($_cash_card_table);
+        $_cash_card = $this->getInstance('cash_card');
         if($_cash_card->findOne(['user_id' => $user_id, 'card_no' => $data['card_no']])) {
             return false;
         }

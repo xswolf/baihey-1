@@ -8,7 +8,8 @@
         <div class="card">
             <ion-item class="item-input">
                 <span class="input-label">到账银行卡</span>
-                <a href="javascript:;" ng-click="showSelectCard()" class="bankCard_t">{{ formData.bank.name | bank:'name'}}({{ formData.bank.name | bank:'type'}} {{ formData.bank.card_no | bank:'card'}})</a>
+                <a href="javascript:;" ng-click="showSelectCard()" class="bankCard_t" ng-if="formData.bank">{{ formData.bank.name | bank:'name'}}({{ formData.bank.name | bank:'type'}} {{ formData.bank.card_no | bank:'card'}})</a>
+                <a href="#/main/member/account_add_card?tempUrl=/main/member/account_withdraw" class="bankCard_t" ng-if="!formData.bank">现在去绑卡</a>
             </ion-item>
             <ion-item class="item-input">
                 <span class="input-label">提现金额</span>

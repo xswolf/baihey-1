@@ -38,7 +38,7 @@ class Base extends \yii\db\ActiveRecord{
         if ($tableName != "") self::$_table = $tableName;
         $class = get_called_class();
 
-        if (!isset(self::$instance[$class])){
+        if (!isset(self::$instance[$class.$tableName])){
             self::$instance[$class.$tableName]  = new  $class();
         }
         return self::$instance[$class.$tableName];
