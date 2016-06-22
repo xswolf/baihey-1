@@ -7,11 +7,11 @@
     <ion-content class="com_w_100 bhy bg5">
         <ion-list>
             <ion-item class="mt20">
-                <p><span class="fl mb5">银行名称：</span><span class="fr">农业银行</span></p>
-                <p><span class="fl mb5">卡类型：</span><span class="fr">借记卡</span></p>
-                <p><span class="fl mb5">卡号：</span><span class="fr">6224846546484165166</span></p>
-                <p><span class="fl mb5">持卡人：</span><span class="fr">张小三</span></p>
-                <p><span class="fl mb5">添加时间：</span><span class="fr">2016-06-18 15:11:02</span></p>
+                <p><span class="fl mb5">银行名称：</span><span class="fr">{{bankData.name | bank:'name'}}</span></p>
+                <p><span class="fl mb5">卡类型：</span><span class="fr">{{bankData.name | bank:'type'}}</span></p>
+                <p><span class="fl mb5">卡号：</span><span class="fr">{{bankData.card_no}}</span></p>
+                <p><span class="fl mb5">持卡人：</span><span class="fr">{{bankData.user_name}}</span></p>
+                <p><span class="fl mb5">添加时间：</span><span class="fr">{{bankData.create_time | date:'yyyy-MM-dd HH:mm:ss'}}</span></p>
             </ion-item>
         </ion-list>
     </ion-content>

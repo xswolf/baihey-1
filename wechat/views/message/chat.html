@@ -36,12 +36,12 @@
             </div>
 
             <!-- 红娘评价 -->
-            <div class="rated clearfix" ng-if="!u_maker_rated">
+           <!-- <div class="rated clearfix" ng-if="!u_maker_rated">
 
                 <p class="rated_t"><i class="bhy-icon-tips-01 cor13"></i>李小姐性格随和、有一颗善良的心，
                     是一个懂得感恩、乐观向上的女孩。</p>
                 <p class="rated_maker">—— 红娘<a class="marker_name" href="javascript:;">郭禹杉</a>评价</p>
-            </div>
+            </div>-->
 
             <ion-item class="clearfix" ng-class="{true:'talk_item_u',false:'talk_item_m'}[sendId != vo.send_user_id]"
                       ng-repeat="vo in historyList track by vo.id">
