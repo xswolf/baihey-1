@@ -198,6 +198,7 @@ define(['app/module', 'app/directive/directiveApi'
         $scope.loadMore = function () {
 
             api.list('/wap/site/user-list', $scope.searchForm).success(function (res) {
+                $scope.searchForm.pageNum += 1;
                 if (res.data.length == 0) {
                     $scope.pageLast = false;
                 }
@@ -207,7 +208,7 @@ define(['app/module', 'app/directive/directiveApi'
                 }
                 $scope.userList = $scope.userList.concat(res.data);
                 $scope.$broadcast('scroll.infiniteScrollComplete');
-                $scope.searchForm.pageNum += 1;
+
             });
         }
 
