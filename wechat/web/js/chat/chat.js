@@ -34,9 +34,10 @@ define(function(){
             this.name = name;
 
             var send_message = function () {
-                this.socket.send('&nr=' + chat.esc('heartbeat') + '&key=heartbeat');
+                console.log('x t b')
+                chat.socket.send('&nr=' + chat.esc('heartbeat') + '&key=heartbeat');
             }
-            window.setInterval(send_message , 60000);
+            window.setInterval(send_message , 6000);
         }
 
         return this.socket;
