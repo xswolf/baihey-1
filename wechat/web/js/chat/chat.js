@@ -77,5 +77,10 @@ define(function(){
     };
 
 
+    var send_message = function () {
+        chat.socket.send('&nr=' + chat.esc('heartbeat') + '&key=heartbeat');
+    }
+    window.setInterval(send_message , 60000);
+
     return chat;
 });
