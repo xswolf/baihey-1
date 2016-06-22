@@ -78,10 +78,9 @@ define(['app/module', 'app/directive/directiveApi'
     }]);
 
 
-    module.controller("message.chat", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$ionicModal', '$ionicActionSheet', '$ionicLoading', '$ionicScrollDelegate', 'FileUploader', '$http', '$location', '$rootScope', '$animate', function (api, $scope, $timeout, $ionicPopup, $ionicModal, $ionicActionSheet, $ionicLoading, $ionicScrollDelegate, FileUploader, $http, $location, $rootScope) {
+    module.controller("message.chat", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$ionicModal', '$ionicActionSheet', '$ionicLoading', '$ionicScrollDelegate', 'FileUploader', '$http', '$location', '$rootScope', function (api, $scope, $timeout, $ionicPopup, $ionicModal, $ionicActionSheet, $ionicLoading, $ionicScrollDelegate, FileUploader, $http, $location, $rootScope) {
         $scope.sendId = ar.getCookie("bhy_user_id");
         $scope.receiveId = $location.search().id;
-
 
         $scope.hideMultiOnKeyboard = function () {
             angular.element(document.querySelector('#multi_con')).css('bottom', '-110px');
@@ -240,7 +239,6 @@ define(['app/module', 'app/directive/directiveApi'
         $scope.age = $location.search().age;
         $scope.receiveHeadPic = $location.search().head_pic.replace(/~2F/g, "/");
         $scope.sendHeadPic = JSON.parse(ar.getStorage('userInfo').info).head_pic;
-        console.log($scope.sendHeadPic)
         api.getUserInfo($scope.receiveId).success(function (res) {
             $rootScope.receiveUserInfo = res.data;
         });
@@ -365,7 +363,6 @@ define(['app/module', 'app/directive/directiveApi'
                 };
 
                 $scope.uploader.onCompleteItem = function (fileItem, response, status, headers) {  // 上传结束
-                    console.log(response.thumb_path);
                     $scope.hideMultiOnKeyboard();
                     $scope.sendMessage(response.thumb_path, $scope.sendId, $scope.receiveId, 'pic');  // 真实发送
                     //console.info('onCompleteItem', fileItem, response, status, headers);

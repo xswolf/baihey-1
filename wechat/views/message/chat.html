@@ -7,7 +7,7 @@
         </div>
     </ion-header>
     <ion-content class="bhy com_w_100 has-header chat" id="message-detail-content"
-                 delegate-handle="messageDetailsScroll">
+                 delegate-handle="messageDetailsScroll" has-bouncing="false">
         <ion-refresher pulling-text="下拉加载更多" refreshing-text="加载成功" on-refresh="doRefresh()"
                        pulling-icon="ion-arrow-down-c"></ion-refresher>
         <ion-list>
@@ -126,7 +126,7 @@
         </ion-list>
     </ion-content>
 
-    <ion-footer-bar align-title="left" class="bar-light" id="msg_footer_bar" resize-foot-bar keyboard-attach>
+    <ion-footer-bar align-title="left" class="bar-light" id="msg_footer_bar" resize-foot-bar>
         <div class="rj-footer-btn-wrap">
             <div class="buttons">
                 <button id="multi_btn" class="button button-icon icon ion-ios-plus-outline rj-footer-btn-left"

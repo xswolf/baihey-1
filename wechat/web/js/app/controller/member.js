@@ -1562,128 +1562,130 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
     // 查看用户资料
     module.controller("member.user_info", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$ionicModal', '$ionicActionSheet', '$ionicLoading', '$location', function (api, $scope, $timeout, $ionicPopup, $ionicModal, $ionicActionSheet, $ionicLoading, $location) {
         requirejs(['amezeui', 'amezeui_ie8'], function (amezeui, amezeui_ie8) {
+            var userInfo = ar.getStorage('userInfo');
+            if (userInfo != null) {
+                userInfo.info = JSON.parse(userInfo.info);
+                userInfo.auth = JSON.parse(userInfo.auth);
+            }
+            // 用于想去的地方，去过的地方等
+            var getTravel = function (name, serId) {
+                if (serId != null && serId) {
+                    var arrSer = serId.split(',');
+                    eval("$scope." + name + "_count = " + arrSer.length);
+                    api.list('/wap/member/get-travel-list', {'area_id': serId}).success(function (res) {
+                        eval("$scope." + name + " = " + JSON.stringify(res.data));
+                    });
+                } else {
+                    eval("$scope." + name + "_count = " + 0);
+                }
+            }
+            var getConfig = function (name, serId) {
+                if (serId != null) {
+                    var arrSer = serId.split(',');
+                    eval("$scope." + name + "_count = " + arrSer.length);
+                    api.list('/wap/member/get-config-list', {'config_id': serId}).success(function (res) {
+                        eval("$scope." + name + " = " + JSON.stringify(res.data));
+                    });
+                } else {
+                    eval("$scope." + name + "_count = " + 0);
+                }
+            }
+            // 权限判断
+            var is_privacy = function (val) {
+                switch (val) {
+                    case '1':
+                        return true;
+                    case '2':
+                        return $scope.formData.followed == 1 ? true : false;
+                    case '3':
+                        return $scope.otherUserInfo.info.level > 0 ? true : false;
+                    case '4':
+                        return false;
+                    default :
+                        return false;
+                }
+            }
+            $scope.formData = [];
+            $scope.formData.userId = $location.$$search.userId;
+            $scope.otherUserInfo = [];
+            $scope.imgList = [];
+            $scope.dynamicList = [];
+            $scope.formData.follow = false;
 
-        });
-        var userInfo = ar.getStorage('userInfo');
-        if (userInfo != null) {
-            userInfo.info = JSON.parse(userInfo.info);
-            userInfo.auth = JSON.parse(userInfo.auth);
-        }
-        // 用于想去的地方，去过的地方等
-        var getTravel = function (name, serId) {
-            if (serId != null && serId) {
-                var arrSer = serId.split(',');
-                eval("$scope." + name + "_count = " + arrSer.length);
-                api.list('/wap/member/get-travel-list', {'area_id': serId}).success(function (res) {
-                    eval("$scope." + name + " = " + JSON.stringify(res.data));
-                });
-            } else {
-                eval("$scope." + name + "_count = " + 0);
-            }
-        }
-        var getConfig = function (name, serId) {
-            if (serId != null) {
-                var arrSer = serId.split(',');
-                eval("$scope." + name + "_count = " + arrSer.length);
-                api.list('/wap/member/get-config-list', {'config_id': serId}).success(function (res) {
-                    eval("$scope." + name + " = " + JSON.stringify(res.data));
-                });
-            } else {
-                eval("$scope." + name + "_count = " + 0);
-            }
-        }
-        // 权限判断
-        var is_privacy = function (val) {
-            switch (val) {
-                case '1':
-                    return true;
-                case '2':
-                    return $scope.formData.followed == 1 ? true : false;
-                case '3':
-                    return $scope.otherUserInfo.info.level > 0 ? true : false;
-                case '4':
-                    return false;
-                default :
-                    return false;
-            }
-        }
-        $scope.formData = [];
-        $scope.formData.userId = $location.$$search.userId;
-        $scope.otherUserInfo = [];
-        $scope.imgList = [];
-        $scope.dynamicList = [];
-        $scope.formData.follow = false;
-
-        api.list("/wap/member/user-info-page-by-id", {'id': $scope.formData.userId}).success(function (res) {
-            if (res.status) {
-                // 用户信息
-                $scope.otherUserInfo = res.userInfo;
-                $scope.otherUserInfo.info = JSON.parse($scope.otherUserInfo.info);
-                $scope.otherUserInfo.auth = JSON.parse($scope.otherUserInfo.auth);
-                // 用户相册
-                $scope.imgList = res.userPhoto.length > 0 ? res.userPhoto : [];
-                // 用户动态
-                if (res.dynamic) {
-                    for (var i in res.dynamic) {
-                        res.dynamic[i].imgList = JSON.parse(res.dynamic[i].pic);
-                        $scope.dynamicList.push(res.dynamic[i]);
+            api.list("/wap/member/user-info-page-by-id", {'id': $scope.formData.userId}).success(function (res) {
+                if (res.status) {
+                    // 用户信息
+                    $scope.otherUserInfo = res.userInfo;
+                    $scope.otherUserInfo.info = JSON.parse($scope.otherUserInfo.info);
+                    $scope.otherUserInfo.auth = JSON.parse($scope.otherUserInfo.auth);
+                    // 用户相册
+                    $scope.imgList = res.userPhoto.length > 0 ? res.userPhoto : [];
+                    // 用户动态
+                    if (res.dynamic) {
+                        for (var i in res.dynamic) {
+                            res.dynamic[i].imgList = JSON.parse(res.dynamic[i].pic);
+                            $scope.dynamicList.push(res.dynamic[i]);
+                        }
+                    }
+                    $scope.formData.follow = res.followStatus;// 关注状态
+                    $scope.formData.followed = res.followedStatus;// 被关注状态
+                    $scope.qqAuth = is_privacy($scope.otherUserInfo.privacy_qq);// qq权限
+                    $scope.perAuth = is_privacy($scope.otherUserInfo.privacy_per);// 个人动态权限
+                    $scope.wxAuth = is_privacy($scope.otherUserInfo.privacy_wechat);// 微信权限
+                    $scope.picAuth = is_privacy($scope.otherUserInfo.privacy_pic);// 相册权限
+                    $scope.otherUserInfo.went_travel ? getTravel('went_travel', $scope.otherUserInfo.went_travel) : true;// 我去过的地方
+                    $scope.otherUserInfo.want_travel ? getTravel('want_travel', $scope.otherUserInfo.want_travel) : true;// 我想去的地方
+                    $scope.otherUserInfo.love_sport ? getConfig('love_sport', $scope.otherUserInfo.love_sport) : true;// 喜欢的运动
+                    $scope.otherUserInfo.want_film ? getConfig('want_film', $scope.otherUserInfo.want_film) : true;// 想看的电影
+                    $scope.otherUserInfo.like_food ? getConfig('like_food', $scope.otherUserInfo.like_food) : true;// 喜欢的食物
+                    $scope.isPermissions =function(event){
+                        if(!$scope.picAuth){
+                            event.stopPropagation();
+                            ar.saveDataAlert($ionicPopup,'对方已设置不公开相册');
+                        }
                     }
                 }
-                $scope.formData.follow = res.followStatus;// 关注状态
-                $scope.formData.followed = res.followedStatus;// 被关注状态
-                $scope.qqAuth = is_privacy($scope.otherUserInfo.privacy_qq);// qq权限
-                $scope.perAuth = is_privacy($scope.otherUserInfo.privacy_per);// 个人动态权限
-                $scope.wxAuth = is_privacy($scope.otherUserInfo.privacy_wechat);// 微信权限
-                $scope.picAuth = is_privacy($scope.otherUserInfo.privacy_pic);// 相册权限
-                $scope.otherUserInfo.went_travel ? getTravel('went_travel', $scope.otherUserInfo.went_travel) : true;// 我去过的地方
-                $scope.otherUserInfo.want_travel ? getTravel('want_travel', $scope.otherUserInfo.want_travel) : true;// 我想去的地方
-                $scope.otherUserInfo.love_sport ? getConfig('love_sport', $scope.otherUserInfo.love_sport) : true;// 喜欢的运动
-                $scope.otherUserInfo.want_film ? getConfig('want_film', $scope.otherUserInfo.want_film) : true;// 想看的电影
-                $scope.otherUserInfo.like_food ? getConfig('like_food', $scope.otherUserInfo.like_food) : true;// 喜欢的食物
-                $scope.isPermissions =function(event){
-                    if(!$scope.picAuth){
-                        event.stopPropagation();
-                        ar.saveDataAlert($ionicPopup,'对方已设置不公开相册');
-                    }
-                }
+            });
+
+            $scope.localChat = function () {
+                window.location.hash = "#/main/chat?id=" + $scope.otherUserInfo.id + "&head_pic=" + $scope.otherUserInfo.info.head_pic + "&real_name=" + $scope.otherUserInfo.info.real_name + "&sex=" + $scope.otherUserInfo.sex + "&age=" + $scope.otherUserInfo.info.age;
             }
+
+            var followData = [];
+            followData.user_id = ar.getCookie("bhy_user_id");
+            followData.follow_id = $scope.formData.userId;
+            // 未关注
+            /*$scope.formData.follow = false;
+             api.getStatus('/wap/follow/get-follow-status', followData).success(function (res) {
+             if (res.data) {
+             $scope.formData.follow = true;
+             }
+             });*/
+            // 取消关注
+            $scope.cancelFollow = function () {
+                api.save('/wap/follow/del-follow', followData).success(function (res) {
+                    if (res.data) {
+                        $scope.formData.follow = false;
+                        // 成功，提示
+                        $ionicPopup.alert({title: '取消关注成功'});
+                    }
+                });
+            }
+
+            // 关注
+            $scope.addFollow = function () {
+                api.save('/wap/follow/add-follow', followData).success(function (res) {
+                    if (res.data) {
+                        $scope.formData.follow = true;
+                        // 成功，提示
+                        $ionicPopup.alert({title: '加关注成功'});
+                    }
+                });
+            }
+
+            amezeui.gallery.init();
         });
 
-        $scope.localChat = function () {
-            window.location.hash = "#/main/chat?id=" + $scope.otherUserInfo.id + "&head_pic=" + $scope.otherUserInfo.info.head_pic + "&real_name=" + $scope.otherUserInfo.info.real_name + "&sex=" + $scope.otherUserInfo.sex + "&age=" + $scope.otherUserInfo.info.age;
-        }
-
-        var followData = [];
-        followData.user_id = ar.getCookie("bhy_user_id");
-        followData.follow_id = $scope.formData.userId;
-        // 未关注
-        /*$scope.formData.follow = false;
-         api.getStatus('/wap/follow/get-follow-status', followData).success(function (res) {
-         if (res.data) {
-         $scope.formData.follow = true;
-         }
-         });*/
-        // 取消关注
-        $scope.cancelFollow = function () {
-            api.save('/wap/follow/del-follow', followData).success(function (res) {
-                if (res.data) {
-                    $scope.formData.follow = false;
-                    // 成功，提示
-                    $ionicPopup.alert({title: '取消关注成功'});
-                }
-            });
-        }
-
-        // 关注
-        $scope.addFollow = function () {
-            api.save('/wap/follow/add-follow', followData).success(function (res) {
-                if (res.data) {
-                    $scope.formData.follow = true;
-                    // 成功，提示
-                    $ionicPopup.alert({title: '加关注成功'});
-                }
-            });
-        }
 
     }]);
 
