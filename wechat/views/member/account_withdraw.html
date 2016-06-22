@@ -7,7 +7,7 @@
     <ion-content class="bhy com_w_100 m_bg bribery padding">
         <div class="card">
             <ion-item class="item-input">
-                <span class="input-label">到账银行卡</span>
+                <span class="input-label" ng-click="ss()">到账银行卡</span>
                 <a href="javascript:;" ng-click="showSelectCard()" class="bankCard_t" ng-if="formData.bank">{{ formData.bank.name | bank:'name'}}({{ formData.bank.name | bank:'type'}} {{ formData.bank.card_no | bank:'card'}})</a>
                 <a href="#/main/member/account_add_card?tempUrl=/main/member/account_withdraw" class="bankCard_t" ng-if="!formData.bank">现在去绑卡</a>
             </ion-item>
@@ -16,7 +16,7 @@
                 ￥<input type="number" ng-model="formData.money" placeholder="单次提现限额10万"  max="100000">
             </ion-item>
             <ion-item class="item-divider">
-                余额 <span ng-if="!money"> <ion-spinner icon="ios-small"></ion-spinner></span><span ng-if="money">{{money | currency:'￥'}}</span>，<a ng-click="formData.money = money">全部提现</a>
+                余额 <span ng-if="!money && money != 0"> <ion-spinner icon="ios-small"></ion-spinner></span><span ng-if="money">{{money | currency:'￥'}}</span>，<a ng-click="formData.money = money">全部提现</a>
             </ion-item>
             <ion-item class="item-input">
                 <span class="input-label">手机验证</span>

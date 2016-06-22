@@ -9,8 +9,8 @@
             <p class="padding cor5 mb0 pl16">请绑定您本人的银行卡</p>
             <label class="item item-input">
                 <span class="input-label">持卡人</span>
-                <input type="text" ng-if="formData.user_name" ng-value="formData.user_name" readonly>
-                <input type="text" ng-model="formData.user_name" ng-if="!formData.user_name" placeholder="请输入持卡人姓名">
+                <input type="text" ng-if="userInfo.info.real_name" ng-value="formData.user_name" readonly>
+                <input type="text" ng-model="formData.user_name" ng-if="!userInfo.info.real_name" placeholder="请输入持卡人姓名">
             </label>
             <label class="item item-input">
                 <span class="input-label">卡号</span>

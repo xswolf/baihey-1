@@ -2483,7 +2483,6 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
             $scope.formData.bank = $scope.cardList[0];
         });
 
-
         // 倒计时
         $scope.getCode = function () {
             if ($scope.form.phone != $scope.phone) {

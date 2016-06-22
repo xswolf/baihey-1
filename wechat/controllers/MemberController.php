@@ -323,7 +323,7 @@ class MemberController extends BaseController
         $user_id = Cookie::getInstance()->getCookie('bhy_id')->value;
         if ($data = User::getInstance()->addCashCard($user_id, $this->get)) {
             if (empty(json_decode(\common\models\User::getInstance()->getUserById($user_id)['info'])->real_name)) {  // 如果当前用户姓名为空，则保存持卡人姓名到userinfo
-                UserInformation::getInstance()->updateUserInfo($user_id, ['real_name' => $this->get('user_name')]);
+                UserInformation::getInstance()->updateUserInfo($user_id, ['real_name' => $this->get['user_name']]);
             }
             $this->renderAjax(['status' => 1, 'data' => $data, 'msg' => '添加银行卡成功']);
         } else {
@@ -360,8 +360,12 @@ class MemberController extends BaseController
     public function actionAddCashInfo()
     {
         $user_id = Cookie::getInstance()->getCookie('bhy_id')->value;
-        var_dump(\common\models\User::getInstance()->getUserPropertyValue($user_id, 'balance'));
-         exit();
+        if(intval(\common\models\User::getInstance()->getUserPropertyValue($user_id, 'balance')->balance) < intval($this->get) ){
+            $this->renderAjax(['status' => -1, 'msg' => '提现失败，您当前余额不足']);
+        }
+        // 减少余额，插入提现记录，插入消费记录
+
+
         if ($data = \common\models\User::getInstance()->addCashInfo($user_id, $this->get)) {
             $this->renderAjax(['status' => 1, 'data' => $data]);
         } else {
