@@ -32,7 +32,13 @@ define(function(){
         if (this.socket == null){
             this.socket = this.so();
             this.name = name;
+
+            var send_message = function () {
+                this.socket.send('&nr=' + chat.esc('heartbeat') + '&key=heartbeat');
+            }
+            window.setInterval(send_message , 60000);
         }
+
         return this.socket;
 
     };
@@ -75,12 +81,6 @@ define(function(){
 
         return socket;
     };
-
-
-    var send_message = function () {
-        chat.socket.send('&nr=' + chat.esc('heartbeat') + '&key=heartbeat');
-    }
-    window.setInterval(send_message , 60000);
 
     return chat;
 });
