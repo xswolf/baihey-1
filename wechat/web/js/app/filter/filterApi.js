@@ -374,7 +374,6 @@ define(['app/module'], function (module) {
             if (typeof(input) != 'undefined' && input != '') {
                 input = input.replace(/&quot;/g, "\"");
                 var json = JSON.parse(input);
-                console.log(json)
                 return json.bri_message;
             }
         }
