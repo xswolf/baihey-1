@@ -43,9 +43,9 @@ class User extends Base
 
     public function getUserById($id)
     {
-        $userTable = static::tableName();
+        $userTable            = static::tableName();
         $userInformationTable = $this->tablePrefix . 'user_information';
-        $row = (new Query)
+        $row                  = (new Query)
             ->select('*')
             ->from($userTable)
             ->leftJoin($this->tablePrefix . 'user_information', "$userTable.id = " . $userInformationTable . '.user_id')
@@ -66,31 +66,31 @@ class User extends Base
      */
     public function addUser($data)
     {
-        $db = $this->getDb();
+        $db          = $this->getDb();
         $transaction = $db->beginTransaction();// 启动事务
 
         // user表 数据处理
         if (isset($data['wx_id'])) {
-            $dataUser['wx_id'] = $data['wx_id'];
-            $dataUser['username'] = $data['username'];
-            $dataUser['password'] = md5(md5($data['password']));
+            $dataUser['wx_id']      = $data['wx_id'];
+            $dataUser['username']   = $data['username'];
+            $dataUser['password']   = md5(md5($data['password']));
             $dataUser['login_type'] = $data['login_type'];
         } else {
             $dataUser['username'] = $data['phone'];
-            $data['password'] = substr($data['phone'], -6);
+            $data['password']     = substr($data['phone'], -6);
             $dataUser['password'] = md5(md5($data['password']));
-            $dataUser['phone'] = $data['phone'];
+            $dataUser['phone']    = $data['phone'];
 
             isset($data['province']) ? $infoData['province'] = $data['province'] : true;
             isset($data['city']) ? $infoData['city'] = $data['city'] : true;
             isset($data['area']) ? $infoData['area'] = $data['area'] : true;
             isset($data['personalized']) ? $infoData['personalized'] = $data['personalized'] : true;
         }
-        $time = YII_BEGIN_TIME;
-        $dataUser['reg_time'] = $time;
+        $time                        = YII_BEGIN_TIME;
+        $dataUser['reg_time']        = $time;
         $dataUser['last_login_time'] = $time;
         $dataUser['reset_pass_time'] = $time;
-        $dataUser['sex'] = $data['sex'];
+        $dataUser['sex']             = $data['sex'];
         // userinformation表 数据处理
         // info
         $userInfo = $this->getDefaultInfo();
@@ -127,8 +127,8 @@ class User extends Base
         if ($user && $info) {
             $transaction->commit();
             // 写入用户日志表
-            $log['user_id'] = $id;
-            $log['type'] = 2;
+            $log['user_id']     = $id;
+            $log['type']        = 2;
             $log['create_time'] = $time;
             $this->userLog($log);
         } else {
@@ -223,11 +223,11 @@ class User extends Base
     public function userLog($log)
     {
 
-        $userLog = \common\models\Base::getInstance('user_log');
-        $userLog->user_id = $log['user_id'];
-        $userLog->type = $log['type'];
+        $userLog              = \common\models\Base::getInstance('user_log');
+        $userLog->user_id     = $log['user_id'];
+        $userLog->type        = $log['type'];
         $userLog->create_time = $log['create_time'];
-        $userLog->ip = ip2long($_SERVER["REMOTE_ADDR"]);
+        $userLog->ip          = ip2long($_SERVER["REMOTE_ADDR"]);
         return $userLog->insert(false);
     }
 
@@ -248,7 +248,7 @@ class User extends Base
 
     public function editUser($data)
     {
-        $user = $data['user'];
+        $user       = $data['user'];
         $user['id'] = $data['user_id'];
         unset($data['user']);
         $userInfo = $data;
@@ -274,8 +274,8 @@ class User extends Base
     public function getDynamicList($uid, $page = 0, $limit = 5)
     {
         $loginUserId = \common\util\Cookie::getInstance()->getCookie('bhy_id')->value;
-        $offset = $page * $limit;
-        $obj = (new Query())
+        $offset      = $page * $limit;
+        $obj         = (new Query())
             ->from($this->tablePrefix . "user_dynamic d")
             ->innerJoin($this->tablePrefix . 'user_information i', 'd.user_id=i.user_id')
             ->innerJoin($this->tablePrefix . 'user u', 'd.user_id=u.id')
@@ -320,14 +320,14 @@ class User extends Base
     public function setClickLike($dynamicId, $userId, $add)
     {
 
-        $tran = \Yii::$app->db->beginTransaction();
-        $click = \common\models\Base::getInstance('user_click');
-        $click->user_id = $userId;
-        $click->dynamic_id = $dynamicId;
+        $tran               = \Yii::$app->db->beginTransaction();
+        $click              = \common\models\Base::getInstance('user_click');
+        $click->user_id     = $userId;
+        $click->dynamic_id  = $dynamicId;
         $click->create_time = time();
-        $clickFlag = $click->save();
-        $dynamic = \common\models\Base::getInstance("user_dynamic")->findOne($dynamicId);
-        $dynamic->like_num = $dynamic->like_num + $add;
+        $clickFlag          = $click->save();
+        $dynamic            = \common\models\Base::getInstance("user_dynamic")->findOne($dynamicId);
+        $dynamic->like_num  = $dynamic->like_num + $add;
 
         if ($clickFlag && $dynamic->save()) {
             $tran->commit();
@@ -348,10 +348,10 @@ class User extends Base
     public function cancelClickLike($dynamicId, $userId, $add)
     {
 
-        $tran = \Yii::$app->db->beginTransaction();
-        $click = \common\models\Base::getInstance('user_click')->findOne(['user_id' => $userId, 'dynamic_id' => $dynamicId]);
-        $clickFlag = $click->delete();
-        $dynamic = \common\models\Base::getInstance("user_dynamic")->findOne($dynamicId);
+        $tran              = \Yii::$app->db->beginTransaction();
+        $click             = \common\models\Base::getInstance('user_click')->findOne(['user_id' => $userId, 'dynamic_id' => $dynamicId]);
+        $clickFlag         = $click->delete();
+        $dynamic           = \common\models\Base::getInstance("user_dynamic")->findOne($dynamicId);
         $dynamic->like_num = $dynamic->like_num + $add;
         if ($clickFlag && $dynamic->save()) {
             $tran->commit();
@@ -369,13 +369,13 @@ class User extends Base
     public function addDynamic($data)
     {
 
-        $dynamic = \common\models\Base::getInstance("user_dynamic");
-        $dynamic->user_id = $data['user_id'];
-        $dynamic->name = $data['name'];
-        $dynamic->content = $data['content'];
-        $dynamic->pic = $data['pic'];
-        $dynamic->auth = $data['auth'];
-        $dynamic->address = $data['address'];
+        $dynamic              = \common\models\Base::getInstance("user_dynamic");
+        $dynamic->user_id     = $data['user_id'];
+        $dynamic->name        = $data['name'];
+        $dynamic->content     = $data['content'];
+        $dynamic->pic         = $data['pic'];
+        $dynamic->auth        = $data['auth'];
+        $dynamic->address     = $data['address'];
         $dynamic->create_time = time();
         return $dynamic->save();
     }
@@ -404,17 +404,17 @@ class User extends Base
     public function addComment($data)
     {
 
-        $tran = \Yii::$app->db->beginTransaction();
-        $comment = \common\models\Base::getInstance("user_comment");
-        $comment->user_id = \common\util\Cookie::getInstance()->getCookie('bhy_id')->value;
-        $comment->content = $data['content'];
-        $comment->dynamic_id = $data['dynamicId'];
-        $comment->private = $data['private'];
+        $tran                 = \Yii::$app->db->beginTransaction();
+        $comment              = \common\models\Base::getInstance("user_comment");
+        $comment->user_id     = \common\util\Cookie::getInstance()->getCookie('bhy_id')->value;
+        $comment->content     = $data['content'];
+        $comment->dynamic_id  = $data['dynamicId'];
+        $comment->private     = $data['private'];
         $comment->create_time = $data['create_time'];
 
-        $flag = $comment->save();
-        $id = Yii::$app->db->lastInsertID;
-        $dynamic = \common\models\Base::getInstance("user_dynamic")->findOne($data['dynamicId']);
+        $flag                 = $comment->save();
+        $id                   = Yii::$app->db->lastInsertID;
+        $dynamic              = \common\models\Base::getInstance("user_dynamic")->findOne($data['dynamicId']);
         $dynamic->comment_num = $dynamic->comment_num + 1;
         if ($flag && $dynamic->save()) {
             $tran->commit();
@@ -467,16 +467,16 @@ class User extends Base
     public function getBriberyList($userId, $flag = true, $page = 0, $year = 0, $limit = 10000)
     {
         $joinOnField = $flag == true ? 'receive_user_id' : 'send_user_id';
-        $whereField = $flag == true ? 'receive_user_id' : 'send_user_id';
-        $flagd = $flag == true ? 1 : 2;
-        $offset = $page * $limit;
-        $handle = (new Query())
+        $whereField  = $flag == true ? 'receive_user_id' : 'send_user_id';
+        $flagd       = $flag == true ? 1 : 2;
+        $offset      = $page * $limit;
+        $handle      = (new Query())
             ->from($this->tablePrefix . "user_bribery  b")
             ->innerJoin($this->tablePrefix . "user_information i", "b.{$joinOnField} = i.user_id")
             ->select(["b.*", "json_extract(i.info , '$.real_name') as realName, '$flagd' as flag , FROM_UNIXTIME(b.create_time , '%Y') as year"])
             ->limit($limit)
             ->offset($offset);
-        $where = ["b.{$whereField}" => $userId, 'status' => 1];
+        $where       = ["b.{$whereField}" => $userId, 'status' => 1];
         $handle->where($where);
         if ($year > 1) {
             $handle->andWhere([">=", "create_time", strtotime($year . "-01-01")]);
@@ -495,11 +495,11 @@ class User extends Base
      */
     public function changeBalance($user_id, $money)
     {
-        $money = intval($money);
-        $userInfo = $this->getUserById($user_id);
+        $money               = intval($money);
+        $userInfo            = $this->getUserById($user_id);
         $userInfo['balance'] = $userInfo['balance'] - $money;
-        $db = $this->getDb();
-        $balance = $db->createCommand()
+        $db                  = $this->getDb();
+        $balance             = $db->createCommand()
             ->update(static::tableName(), ['balance' => $userInfo['balance']], ['id' => $user_id])
             ->execute();
         return $balance;
@@ -515,13 +515,13 @@ class User extends Base
      */
     public function changeMatureTime($user_id, $goods_id, $level = 1)
     {
-        $goods = ChargeGoods::getInstance()->findOne($goods_id);
+        $goods    = ChargeGoods::getInstance()->findOne($goods_id);
         $userInfo = $this->getUserById($user_id);
         //  金额是否大于余额
         if ($goods['price'] > $userInfo['balance']) {
             return false;
         }
-        $db = $this->getDb();
+        $db          = $this->getDb();
         $transaction = $db->beginTransaction();// 启动事务
 
         // 计算时间
@@ -536,14 +536,14 @@ class User extends Base
         // 修改到期时间
         $_user_information_table = $this->tablePrefix . 'user_information';// 表名
         $userInfo['mature_time'] = YII_BEGIN_TIME > $userInfo['mature_time'] ? YII_BEGIN_TIME + $time : $userInfo['mature_time'] + $time;
-        $sql = "UPDATE {$_user_information_table} SET info = JSON_REPLACE(info,'$.level','" . $level . "'), mature_time = " . $userInfo['mature_time'] . " WHERE user_id={$user_id}";
-        $info = $db->createCommand($sql)->execute();
+        $sql                     = "UPDATE {$_user_information_table} SET info = JSON_REPLACE(info,'$.level','" . $level . "'), mature_time = " . $userInfo['mature_time'] . " WHERE user_id={$user_id}";
+        $info                    = $db->createCommand($sql)->execute();
 
         if ($user && $info) {
             $transaction->commit();
             // 写入用户消费日志表
             $goods['receive_name'] = '嘉瑞百合缘';
-            $goods['type'] = 1;
+            $goods['type']         = 1;
             ConsumptionLog::getInstance()->addConsumptionLog($user_id, $goods);
             return true;
         } else {
@@ -560,7 +560,7 @@ class User extends Base
     public function getCashCardList($user_id)
     {
         $_cash_card_table = $this->tablePrefix . 'cash_card';
-        $result = (new Query())
+        $result           = (new Query())
             ->from($_cash_card_table)
             ->select('*')
             ->where(['user_id' => $user_id])
@@ -572,7 +572,7 @@ class User extends Base
     public function getCashCardById($user_id, $id)
     {
         $_cash_card_table = $this->tablePrefix . 'cash_card';
-        $result = (new Query())
+        $result           = (new Query())
             ->from($_cash_card_table)
             ->select('*')
             ->where(['user_id' => $user_id, 'id' => $id])
@@ -582,10 +582,10 @@ class User extends Base
 
     public function addCashCard($user_id, $data)
     {
-        $_cash_card_table = $this->tablePrefix . 'cash_card';
+        $_cash_card_table    = $this->tablePrefix . 'cash_card';
         $data['create_time'] = time();
-        $data['user_id'] = $user_id;
-        $_cash_card = $this->getInstance('cash_card');
+        $data['user_id']     = $user_id;
+        $_cash_card          = $this->getInstance('cash_card');
         if ($_cash_card->findOne(['user_id' => $user_id, 'card_no' => $data['card_no']])) {
             return false;
         }
@@ -598,9 +598,9 @@ class User extends Base
     public function delCard($user_id, $id)
     {
         $_cash_card_table = $this->tablePrefix . 'cash_card';
-        $_cash_card = $this->getInstance($_cash_card_table);
-        $card = $_cash_card->findOne(['user_id' => $user_id, 'id' => $id]);
-        $row = false;
+        $_cash_card       = $this->getInstance($_cash_card_table);
+        $card             = $_cash_card->findOne(['user_id' => $user_id, 'id' => $id]);
+        $row              = false;
         if ($card) {
             $row = $_cash_card->deleteAll(['id' => $id]);
         }
@@ -616,12 +616,12 @@ class User extends Base
      */
     public function addCashInfo($user_id, $data)
     {
-        $_cash_card_table = $this->tablePrefix . 'cash';
+        $_cash_card_table    = $this->tablePrefix . 'cash';
         $data['create_time'] = time();
-        $data['status'] = 2;
-        $data['user_id'] = $user_id;
+        $data['status']      = 2;
+        $data['user_id']     = $user_id;
 
-        $db = $this->getDb();
+        $db          = $this->getDb();
         $transaction = $db->beginTransaction();// 启动事务
 
         // 减少余额
@@ -631,7 +631,7 @@ class User extends Base
         $row = $this->getDb()->createCommand()
             ->insert($_cash_card_table, $data)
             ->execute();
-        $id = \Yii::$app->db->lastInsertID;
+        $id  = \Yii::$app->db->lastInsertID;
 
         if ($balance && $row) {
             $transaction->commit();
@@ -650,26 +650,26 @@ class User extends Base
      */
     public function getCashInfo($id, $user_id = null)
     {
-        $cashTable = $this->tablePrefix . 'cash';
+        $cashTable     = $this->tablePrefix . 'cash';
         $cashCardTable = $this->tablePrefix . 'cash_card';
         if (isset($id)) {         // 根据提现记录ID查询单条记录
             $row = (new Query)
-                ->select(['cash.id','card.user_name','cash.money','card.name','cash.create_time','cash.status','card.card_no'])
-                ->from($cashTable.' cash')
+                ->select(['cash.id', 'card.user_name', 'cash.money', 'card.name', 'cash.create_time', 'cash.status', 'card.card_no'])
+                ->from($cashTable . ' cash')
                 ->leftJoin($cashCardTable . ' card', 'cash.cash_card_id = card.id')
                 ->where(['cash.id' => $id])
                 ->one();
             return $row;
         } else {
-            if(!empty($user_id)){      // 根据user_id查询所属用户全部提现记录
+            if (!empty($user_id)) {      // 根据user_id查询所属用户全部提现记录
                 $row = (new Query)
-                    ->select(['1 as type','cash.money','card.name','card.card_no','cash.create_time','cash.status'])
-                    ->from($cashTable.' cash')
+                    ->select(['1 as type', 'cash.money', 'card.name', 'card.card_no', 'cash.create_time', 'cash.status'])
+                    ->from($cashTable . ' cash')
                     ->leftJoin($cashCardTable . ' card', 'cash.cash_card_id = card.id')
                     ->where(['cash.user_id' => $user_id])
                     ->all();
                 return $row;
-            }else{
+            } else {
                 return false;
             }
         }
@@ -680,13 +680,14 @@ class User extends Base
      * @param $user_id
      * @return array|bool
      */
-    public function getBriberyInfo($user_id){
-        $briberyTable = $this->tablePrefix . 'user_bribery';
+    public function getBriberyInfo($user_id)
+    {
+        $briberyTable     = $this->tablePrefix . 'user_bribery';
         $informationTable = $this->tablePrefix . 'user_information';
-        if(isset($user_id)){
+        if (isset($user_id)) {
             $row = (new Query)
-                ->select(['2 as type','b.money','json_extract (i.info, \'$.real_name\') AS name','b.create_time','b.status'])
-                ->from($briberyTable.' b')
+                ->select(['2 as type', 'b.money', 'json_extract (i.info, \'$.real_name\') AS name', 'b.create_time', 'b.status'])
+                ->from($briberyTable . ' b')
                 ->leftJoin($informationTable . ' i', 'b.receive_user_id = i.user_id')
                 ->where(['b.send_user_id' => $user_id])
                 ->all();
@@ -715,9 +716,9 @@ class User extends Base
      */
     public function getUserPropertyValue($user_id, $propertyKey)
     {
-        $userTable = static::tableName();
+        $userTable            = static::tableName();
         $userInformationTable = $this->tablePrefix . 'user_information';
-        $row = (new Query)
+        $row                  = (new Query)
             ->select("$propertyKey")
             ->from($userTable)
             ->leftJoin($this->tablePrefix . 'user_information', "$userTable.id = " . $userInformationTable . '.user_id')
