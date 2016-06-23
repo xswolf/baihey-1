@@ -1,6 +1,6 @@
-<script src="/wechat/web/socket.io.1.4.0.js"></script>
+<script src="/wechat/web/js/plugin/socket/socket.io.1.4.0.js"></script>
 <script>
-    var socket = io.connect('http://localhost');
+    var socket = io.connect('http://wechat.baihey.com:8088');
 
     socket.on("notice", function(data){
         var msg = document.getElementById('all').value;

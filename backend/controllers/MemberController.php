@@ -38,6 +38,9 @@ class MemberController extends BaseController
         if ($request->get('agee') >=18){
             $andWhere[] = ["<=" ,"age", $request->get('agee')];
         }
+        if ($request->get('sex') >=0 ){
+            $andWhere[] = ["=","sex",$request->get('sex')];
+        }
 
 
         $list  = User::getInstance()->lists($start, $limit ,$andWhere);
