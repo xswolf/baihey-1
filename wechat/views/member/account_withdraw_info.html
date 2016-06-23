@@ -1,0 +1,75 @@
+<ion-view hide-tabs="true">
+    <link href="/wechat/web/css/member.css" rel="stylesheet">
+    <ion-header-bar class="com_w_100 bhy">
+        <title class="title">提示</title>
+    </ion-header-bar>
+    <ion-content class="bhy com_w_100 bg5">
+        <ion-item>
+            <p class="tac">
+                <i class="ion-checkmark-circled fs50 balanced vam mr5"></i>
+                <span class="vam fs24">申请提现成功</span>
+            </p>
+        </ion-item>
+        <ion-item>
+            <p class="wsn">您的提现申请已提交，工作人员会在24小时内处理。</p>
+        </ion-item>
+        <div class="item item-button-right">
+            查询提现进度
+            <button type="button" class="button button-positive" ng-click="showStatus()">
+                查询
+            </button>
+
+        </div>
+        <ion-item class="mt20 item-icon-right" href="#/main/member/account_record">
+            查看提现记录
+            <i class="icon ion-ios-arrow-right cor34"></i>
+        </ion-item>
+        <ion-item class="item-icon-right" href="#/main/member/index">
+            返回个人中心
+            <i class="icon ion-ios-arrow-right cor34"></i>
+        </ion-item>
+        <ion-item class="item-icon-right" href="#/main/index">
+            返回首页
+            <i class="icon ion-ios-arrow-right cor34"></i>
+        </ion-item>
+    </ion-content>
+
+    <script id="statusModal.html" type="text/ng-template">
+        <ion-modal-view>
+            <link href="/wechat/web/css/member.css" rel="stylesheet">
+            <ion-header-bar>
+                <button class="button button-icon" ng-click="hideStatus()">关闭</button>
+                <span class="title">提现详情</span>
+            </ion-header-bar>
+            <ion-content>
+                <ion-list>
+                    <ion-item>
+                        <span class="fl cor14">流水号</span>
+                        <span class="fr cor14">{{withdrawInfo.id}}</span>
+                    </ion-item>
+                    <ion-item>
+                        <span class="fl cor14">申请人</span>
+                        <span class="fr cor14">{{withdrawInfo.user_name}}</span>
+                    </ion-item>
+                    <ion-item>
+                        <span class="fl cor14">提现金额</span>
+                        <span class="fr cor14">{{withdrawInfo.money}}</span>
+                    </ion-item>
+                    <ion-item>
+                        <span class="fl cor14">到账银行卡</span>
+                        <span class="fr cor14">{{withdrawInfo.name}} {{withdrawInfo.card_no}}</span>
+                    </ion-item>
+                    <ion-item>
+                        <span class="fl cor14">申请时间</span>
+                        <span class="fr cor14">{{withdrawInfo.create_time | date:'yyyy-MM-dd HH:mm:ss'}}</span>
+                    </ion-item>
+                    <ion-item>
+                        <span class="fl cor14">提现进度</span>
+                        <span class="fr cor14">{{withdrawInfo.status}}</span>
+                    </ion-item>
+                </ion-list>
+            </ion-content>
+        </ion-modal-view>
+    </script>
+
+</ion-view>

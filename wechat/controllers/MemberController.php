@@ -360,17 +360,45 @@ class MemberController extends BaseController
     public function actionAddCashInfo()
     {
         $user_id = Cookie::getInstance()->getCookie('bhy_id')->value;
-        if(intval(\common\models\User::getInstance()->getUserPropertyValue($user_id, 'balance')->balance) < intval($this->get) ){
+        $data = $this->get;
+        $data['money'] = intval($this->get['money']) * 100;   // 单位：分
+        $balance = intval(\common\models\User::getInstance()->getUserPropertyValue($user_id, 'balance')['balance']);  // 获取当前用户余额
+        if ($balance < intval($data['money'])) {
             $this->renderAjax(['status' => -1, 'msg' => '提现失败，您当前余额不足']);
-        }
-        // 减少余额，插入提现记录，插入消费记录
-
-
-        if ($data = \common\models\User::getInstance()->addCashInfo($user_id, $this->get)) {
-            $this->renderAjax(['status' => 1, 'data' => $data]);
         } else {
-            $this->renderAjax(['status' => 0, 'data' => $data, 'msg' => '提现失败！']);
+            if ($data['money'] < 100 || $data['money']  > 10000000) {
+                $this->renderAjax(['status' => -2, 'msg' => '提现失败，提现金额异常！']);
+            } else {
+                if ($id = \common\models\User::getInstance()->addCashInfo($user_id, $data)) {   // 减少余额、插入提现记录
+                    $this->renderAjax(['status' => 1, 'data' => $id]);            // 成功
+                } else {
+                    $this->renderAjax(['status' => 0, 'msg' => '提现失败！']);
+                }
+            }
         }
+    }
+
+    /**
+     * 根据ID查询单条提现记录
+     */
+    public function actionGetWithdrawInfoById()
+    {
+        if (isset($this->get['id'])) {
+            if ($data = \common\models\User::getInstance()->getCashInfo($this->get['id'])) {
+                $this->renderAjax(['status' => 1, 'data' => $data]);
+            } else {
+                $this->renderAjax(['status' => 0, 'msg' => '查询失败或没有相应记录']);
+            }
+        } else {
+            $this->renderAjax(['status' => -1, 'msg' => '参数错误，未获取到参数：id']);
+        }
+    }
+
+    public function actionGetWithdrawList()
+    {
+        $user_id = Cookie::getInstance()->getCookie('bhy_id')->value;
+
+        $withdrawInfo = \common\models\User::getInstance()->getCashInfo(null, $user_id);
     }
 
 

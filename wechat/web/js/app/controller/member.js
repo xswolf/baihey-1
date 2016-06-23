@@ -1638,10 +1638,10 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
                     $scope.otherUserInfo.love_sport ? getConfig('love_sport', $scope.otherUserInfo.love_sport) : true;// 喜欢的运动
                     $scope.otherUserInfo.want_film ? getConfig('want_film', $scope.otherUserInfo.want_film) : true;// 想看的电影
                     $scope.otherUserInfo.like_food ? getConfig('like_food', $scope.otherUserInfo.like_food) : true;// 喜欢的食物
-                    $scope.isPermissions =function(event){
-                        if(!$scope.picAuth){
+                    $scope.isPermissions = function (event) {
+                        if (!$scope.picAuth) {
                             event.stopPropagation();
-                            ar.saveDataAlert($ionicPopup,'对方已设置不公开相册');
+                            ar.saveDataAlert($ionicPopup, '对方已设置不公开相册');
                         }
                     }
                 }
@@ -2278,7 +2278,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
 
         // 正在使用的服务(未到期)
         $scope.serviceList = [
-            {serviceName:'VIP',endTime:'2017-06-21 17:20:15'}
+            {serviceName: 'VIP', endTime: '2017-06-21 17:20:15'}
         ];
     }]);
 
@@ -2286,16 +2286,16 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
     module.controller("member.account_record", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$location', function (api, $scope, $timeout, $ionicPopup, $location) {
         api.list('/wap/member/consumption-list').success(function (res) {
             var arr = [];
-            for(var k in res.data) {
+            for (var k in res.data) {
                 var yap = false;
-                for(var j in arr){
-                    if(res.data[k]['months'] == arr[j]['months']) {
+                for (var j in arr) {
+                    if (res.data[k]['months'] == arr[j]['months']) {
                         yap = true;
                         break;
                     }
                 }
                 arr.push(res.data[k]);
-                if(!yap) {
+                if (!yap) {
                     arr[k]['is_head'] = 1;
                 }
             }
@@ -2451,14 +2451,14 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
     }]);
 
     // 我的账户-提现
-    module.controller("member.account_withdraw", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$ionicModal', '$interval', '$ionicLoading', function (api, $scope, $timeout, $ionicPopup, $ionicModal, $interval,$ionicLoading) {
+    module.controller("member.account_withdraw", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$ionicModal', '$interval', '$ionicLoading','$location', function (api, $scope, $timeout, $ionicPopup, $ionicModal, $interval, $ionicLoading,$location) {
 
         $scope.formData = [];
         $scope.form = [];
         $scope.codeTitle = '获取验证码';
 
-        api.get('/wap/member/get-user-balance',{}).success(function(res){
-            $scope.money = parseInt(res.data.balance);   // 用户当前余额
+        api.get('/wap/member/get-user-balance', {}).success(function (res) {
+            $scope.money = parseInt(res.data.balance) / 100;   // 用户当前余额
         })
 
         $scope.phone = $scope.userInfo.phone; // 用户绑定的手机号码
@@ -2512,13 +2512,20 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
         }
 
         $scope.saveData = function () {
-            // 比对验证码
+
             $ionicLoading.show({template: '处理中...'});
-            api.validateCode($scope.form.code).success(function (res) {
+            api.validateCode($scope.form.code).success(function (res) { // 比对验证码
                 if (res.status) {
-                    api.get('/wap/member/add-cash-info').success(function(re){
-                        console.log(re);
+                    api.get('/wap/member/add-cash-info', {
+                        money: $scope.formData.money,
+                        cash_card_id: $scope.formData.bank.id
+                    }).success(function (re) {
                         $ionicLoading.hide();
+                        if (re.status > 0) {
+                            $location.url('/main/member/account_withdraw_info?id='+re.data);
+                        } else {
+                            ar.saveDataAlert($ionicPopup, re.msg);
+                        }
                     })
                 } else {
                     $ionicLoading.hide();
@@ -2528,6 +2535,29 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
             })
         }
 
+    }]);
+
+    // 我的账户-提现-提现状态提示
+    module.controller("member.account_withdraw_info", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$ionicModal', '$interval', '$ionicLoading','$location', function (api, $scope, $timeout, $ionicPopup, $ionicModal, $interval, $ionicLoading,$location) {
+
+        $ionicModal.fromTemplateUrl('statusModal.html', {
+            scope: $scope,
+            animation: 'slide-in-up'
+        }).then(function (modal) {
+            $scope.modal = modal;
+        });
+
+        $scope.showStatus = function () {
+            $scope.modal.show();
+        };
+
+        $scope.hideStatus = function () {
+            $scope.modal.hide();
+        };
+        $scope.withdrawInfo = {};
+        api.get('/wap/member/get-withdraw-info-by-id',{id:$location.$$search.id}).success(function(res){
+            $scope.withdrawInfo = res.data;
+        })
 
     }]);
 
@@ -2548,10 +2578,10 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
                 if (res) {
                     // 删除
                     api.save('/wap/member/del-card', {id: card.id}).success(function (res) {
-                        if(res.status > 0) {
+                        if (res.status > 0) {
                             $scope.cardList.splice(index, 1);
-                        }else{
-                            ar.saveDataAlert($ionicPopup,res.msg);
+                        } else {
+                            ar.saveDataAlert($ionicPopup, res.msg);
                         }
                     });
                 } else {
@@ -2565,7 +2595,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
     // 我的账户-银行卡详情
     module.controller("member.account_mycard_info", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$location', function (api, $scope, $timeout, $ionicPopup, $location) {
         $scope.cardId = $location.$$search.id;  // 银行卡ID
-        api.list('/wap/member/cash-card-by-id', {id : $scope.cardId}).success(function (res) {
+        api.list('/wap/member/cash-card-by-id', {id: $scope.cardId}).success(function (res) {
             $scope.bankData = res.data;
         });
 
@@ -2581,12 +2611,12 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
         });
         // 卡类型联动
         $scope.bankNameChain = function () {
-            if(!$scope.formData.card_no){
+            if (!$scope.formData.card_no) {
                 ar.saveDataAlert($ionicPopup, '请输入银行卡号');
                 return false;
             }
             if ($scope.formData.card_no.length == 19 || $scope.formData.card_no.length == 16) {
-            }else{
+            } else {
                 ar.saveDataAlert($ionicPopup, '请核对银行卡号是否正确');
                 return false;
             }
@@ -2601,18 +2631,18 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
 
         $scope.saveData = function () {
             // 验证
-            if(!$scope.formData.card_no){
+            if (!$scope.formData.card_no) {
                 ar.saveDataAlert($ionicPopup, '请输入银行卡号');
                 return false;
             }
 
             if ($scope.formData.card_no.length == 19 || $scope.formData.card_no.length == 16) {
-            }else{
+            } else {
                 ar.saveDataAlert($ionicPopup, '请核对银行卡号是否正确');
                 return false;
             }
 
-            if(!$scope.formData.name){
+            if (!$scope.formData.name) {
                 ar.saveDataAlert($ionicPopup, '未自动补全卡类型，请核对您的银行卡号！');
                 return false;
             }
