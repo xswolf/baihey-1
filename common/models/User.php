@@ -663,10 +663,10 @@ class User extends Base
         } else {
             if (!empty($user_id)) {      // 根据user_id查询所属用户全部提现记录
                 $row = (new Query)
-                    ->select(['1 as type', 'cash.money', 'card.name', 'card.card_no', 'cash.create_time', 'cash.status'])
-                    ->from($cashTable . ' cash')
+                    ->select(['cash.money','card.name','card.card_no','cash.create_time','cash.status'])
+                    ->from($cashTable.' cash')
                     ->leftJoin($cashCardTable . ' card', 'cash.cash_card_id = card.id')
-                    ->where(['cash.user_id' => $user_id])
+                    ->where(['cash.user_id' => $user_id])   //TODO cash.status = 1
                     ->all();
                 return $row;
             } else {
@@ -686,11 +686,12 @@ class User extends Base
         $informationTable = $this->tablePrefix . 'user_information';
         if (isset($user_id)) {
             $row = (new Query)
-                ->select(['2 as type', 'b.money', 'json_extract (i.info, \'$.real_name\') AS name', 'b.create_time', 'b.status'])
-                ->from($briberyTable . ' b')
+                ->select(['b.money','json_extract (i.info, \'$.real_name\') AS name','b.create_time','b.status'])
+                ->from($briberyTable.' b')
                 ->leftJoin($informationTable . ' i', 'b.receive_user_id = i.user_id')
-                ->where(['b.send_user_id' => $user_id])
+                ->where(['b.send_user_id' => $user_id])   //TODO b.status = 1
                 ->all();
+//            ->createCommand()->getRawSql();
             return $row;
         }
         return false;
@@ -718,8 +719,8 @@ class User extends Base
     {
         $userTable            = static::tableName();
         $userInformationTable = $this->tablePrefix . 'user_information';
-        $row                  = (new Query)
-            ->select("$propertyKey")
+        $row = (new Query)
+            ->select($propertyKey)
             ->from($userTable)
             ->leftJoin($this->tablePrefix . 'user_information', "$userTable.id = " . $userInformationTable . '.user_id')
             ->where(['id' => $user_id])

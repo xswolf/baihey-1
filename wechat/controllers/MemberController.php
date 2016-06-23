@@ -10,6 +10,7 @@ use common\models\UserInformation;
 use common\models\UserPhoto;
 use common\util\Cookie;
 use wechat\models\Config;
+use yii\helpers\ArrayHelper;
 
 
 /**
@@ -362,11 +363,11 @@ class MemberController extends BaseController
         $user_id = Cookie::getInstance()->getCookie('bhy_id')->value;
         $data = $this->get;
         $data['money'] = intval($this->get['money']) * 100;   // 单位：分
-        $balance = intval(\common\models\User::getInstance()->getUserPropertyValue($user_id, 'balance')['balance']);  // 获取当前用户余额
+        $balance = intval(\common\models\User::getInstance()->getUserPropertyValue($user_id, ['balance'])['balance']);  // 获取当前用户余额
         if ($balance < intval($data['money'])) {
             $this->renderAjax(['status' => -1, 'msg' => '提现失败，您当前余额不足']);
         } else {
-            if ($data['money'] < 100 || $data['money']  > 10000000) {
+            if ($data['money'] < 100 || $data['money'] > 10000000) {
                 $this->renderAjax(['status' => -2, 'msg' => '提现失败，提现金额异常！']);
             } else {
                 if ($id = \common\models\User::getInstance()->addCashInfo($user_id, $data)) {   // 减少余额、插入提现记录
@@ -394,24 +395,42 @@ class MemberController extends BaseController
         }
     }
 
-    public function actionGetWithdrawList()
+    // 消费记录
+    public function actionGetRecordList()
     {
         $user_id = Cookie::getInstance()->getCookie('bhy_id')->value;
-
         $withdrawInfo = \common\models\User::getInstance()->getCashInfo(null, $user_id);
-    }
+        $briberyInfoInfo = \common\models\User::getInstance()->getBriberyInfo($user_id);
+        $newArr = ArrayHelper::merge($withdrawInfo, $briberyInfoInfo);
+        foreach ($newArr as $key => $value) {
+            foreach ($newArr[$key] as $k => $v) {
+                //时间戳转日期
+                $newArr[$key]['create_time'] = \Yii::$app->formatter->asDate($newArr[$key]['create_time'], 'yyyy年M月');
+                break;
+            }
+        }
+        var_dump($newArr);
 
+    }
 
     // 获取当前用户余额
     public function actionGetUserBalance()
     {
         $user_id = Cookie::getInstance()->getCookie('bhy_id')->value;
-        if ($data = \common\models\User::getInstance()->getUserPropertyValue($user_id, 'balance')) {
+        if ($data = \common\models\User::getInstance()->getUserPropertyValue($user_id, ['balance'])) {
             $this->renderAjax(['data' => $data]);
         } else {
             $this->renderAjax(['data' => 0]);
         }
 
+    }
+
+    // 获取用户正在使用的服务
+    public function actionGetUserServiceInfo()
+    {
+        $user_id = Cookie::getInstance()->getCookie('bhy_id')->value;
+        $data = \common\models\User::getInstance()->getUserPropertyValue($user_id, ['json_extract (info, \'$.level\') AS level', 'mature_time']);
+        $this->renderAjax(['data' => $data]);
     }
 
 

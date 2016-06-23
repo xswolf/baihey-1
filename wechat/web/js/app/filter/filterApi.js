@@ -66,7 +66,7 @@ define(['app/module'], function (module) {
         return function (input, arg) {
             if (input) {
                 return input.substr(0, 1) + '**';
-            }else {
+            } else {
                 return '';
             }
         }
@@ -439,9 +439,9 @@ define(['app/module'], function (module) {
         }
     })
 
-    module.filter('bank',['$sce', function ($sce) {
+    module.filter('bank', ['$sce', function ($sce) {
         return function (value, type) {
-            if(!value){
+            if (!value) {
                 return $sce.trustAsHtml('<img src="/wechat/web/images/loading.gif">');
             }
             if (type == 'name') {
@@ -457,4 +457,21 @@ define(['app/module'], function (module) {
         }
     }])
 
+    module.filter('withdrawStatusTitle', function () {
+        return function (value) {
+            if (!value) {
+                return '失败';
+            }
+            if (value == 1) {
+                return '已打款';
+            }
+            if (value == 2) {
+                return '处理中';
+            }
+            if (value == 3) {
+                return '失败';
+            }
+            return '失败';
+        }
+    })
 })

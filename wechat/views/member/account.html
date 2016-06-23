@@ -7,14 +7,18 @@
     <ion-content class="bhy com_w_100 bg5">
         <div class="list">
             <div class="item">
-                我的余额：<button class="am-btn am-btn-primary am-btn-xs am-radius ml10" ng-if="!money" ng-click="showMoney()">查询余额</button><span ng-if="money" class="am-text-warning">{{userInfo.balance}}元</span>
+                我的余额：
+                <button class="am-btn am-btn-primary am-btn-xs am-radius ml10" ng-if="find" ng-click="showMoney()">查询余额</button>
+                <span ng-if="loading"><ion-spinner icon="ios-small"></ion-spinner></span>
+                <span ng-if="money" class="am-text-warning">{{money | currency:''}}元</span>
             </div>
             <div class="item item-divider">
                 我正在使用的服务
             </div>
-            <div class="item" ng-repeat="service in serviceList">
-                 <span class="cor33 fl fwb">{{service.serviceName}}</span>  <span class="cor33 fr" ng-if="serviceList.length > 0">到期时间：{{service.endTime}}</span>
-                <span ng-if="serviceList.length < 1">暂无您正在使用的服务记录</span>
+            <div class="item">
+                 <span ng-if="serviceInfo.level && serviceInfo.mature_time > timestamp" class="cor33 fl fwb">{{serviceInfo.level}}</span>
+                <span class="cor33 fr" ng-if="serviceInfo.level && serviceInfo.mature_time > timestamp">到期时间：{{serviceInfo.mature_time * 1000 | date:'yyyy-mm-dd HH:mm:ss'}}</span>
+                <span ng-if="!serviceInfo.level || serviceInfo.mature_time < timestamp || !serviceInfo.mature_time">暂无您正在使用的服务记录</span>
             </div>
             <a class="item item-icon-left item-icon-right mt20" href="#/main/member/account_record">
                 <i class="icon icon-new-record cor9"></i>

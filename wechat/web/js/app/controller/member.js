@@ -2264,47 +2264,35 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
     // 我的账户
     module.controller("member.account", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', function (api, $scope, $timeout, $ionicPopup) {
 
-        api.list('/wap/member/bribery-info').success(function (res) {
-            $scope.bribery = res.data;
-        })
-        $scope.money = false;
+        $scope.find = true;
         $scope.showMoney = function () {
-            api.list('/wap/user/get-user-info').success(function (res) {
-                $scope.userInfo.balance = res.data.balance;
-                $scope.getUserPrivacyStorage('');
-            })
-            $scope.money = true;
+            $scope.find = false;
+            $timeout(function () {
+                $scope.loading = true;
+                api.get('/wap/member/get-user-balance', {}).success(function (res) {
+                    $scope.loading = false;
+                    $scope.money = parseInt(res.data.balance) / 100;   // 用户当前余额
+                })
+            }, 800)
         }
 
+        $scope.timestamp = new Date().getTime();  // 当前时间戳
+
         // 正在使用的服务(未到期)
-        $scope.serviceList = [
-            {serviceName: 'VIP', endTime: '2017-06-21 17:20:15'}
-        ];
+        api.get('/wap/member/get-user-service-info', {}).success(function (res) {
+            $scope.serviceInfo = res.data;
+            $scope.serviceInfo.level = ar.cleanQuotes($scope.serviceInfo.level);
+        })
+
     }]);
 
     // 我的账户-消费记录
     module.controller("member.account_record", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$location', function (api, $scope, $timeout, $ionicPopup, $location) {
-        api.list('/wap/member/consumption-list').success(function (res) {
-            var arr = [];
-            for (var k in res.data) {
-                var yap = false;
-                for (var j in arr) {
-                    if (res.data[k]['months'] == arr[j]['months']) {
-                        yap = true;
-                        break;
-                    }
-                }
-                arr.push(res.data[k]);
-                if (!yap) {
-                    arr[k]['is_head'] = 1;
-                }
-            }
-            //$scope.recordList = arr;
-        })
-        /*api.get('url',{}).success(function(res){
-         $scope.recordList = res.data;   // 一次性查询出所有数据
 
-         })*/
+        api.get('/wap/member/get-record-list', {}).success(function (res) {
+            console.log(res);
+        })
+
         $scope.recordList = [        // TODO 测试数据
             {
                 date: '2016年6月', amount: 351.00, items: [
@@ -2363,6 +2351,55 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
             return $scope.isMore
         }
 
+        var data =
+            [
+                { Phase: "Phase 1", Step: "Step 1", Task: "Task 1", Value: "5" },
+                { Phase: "Phase 1", Step: "Step 1", Task: "Task 2", Value: "10" },
+                { Phase: "Phase 1", Step: "Step 2", Task: "Task 1", Value: "15" },
+                { Phase: "Phase 1", Step: "Step 2", Task: "Task 2", Value: "20" },
+                { Phase: "Phase 2", Step: "Step 1", Task: "Task 1", Value: "25" },
+                { Phase: "Phase 2", Step: "Step 1", Task: "Task 2", Value: "30" },
+                { Phase: "Phase 2", Step: "Step 2", Task: "Task 1", Value: "35" },
+                { Phase: "Phase 2", Step: "Step 2", Task: "Task 2", Value: "40" }
+            ];
+
+        Array.prototype.groupBy = function(hash){
+            var _hash = hash ? hash : function(o){return o;};
+
+            var _map = {};
+            var put = function(map, key, value){
+                if (!map[_hash(key)]) {
+                    map[_hash(key)] = {};
+                    map[_hash(key)].group = [];
+                    map[_hash(key)].key = key;
+
+                }
+                map[_hash(key)].group.push(value);
+            }
+
+            this.map(function(obj){
+                put(_map, obj, obj);
+            });
+
+            return Object.keys(_map).map(function(key){
+                return {key: _map[key].key, group: _map[key].group};
+            });
+        }
+
+        data = data.groupBy(function(o){return JSON.stringify({a: o.Phase});})
+            /* aggreagating */
+            .map(function(el){
+                var sum = el.group.reduce(
+                    function(l,c){
+                        return l + parseInt(c.Value);
+                    },
+                    0
+                );
+                el.key.Value = sum;
+                return el.key;
+            });
+
+        console.dir(data);
 
     }]);
 
@@ -2451,7 +2488,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
     }]);
 
     // 我的账户-提现
-    module.controller("member.account_withdraw", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$ionicModal', '$interval', '$ionicLoading','$location', function (api, $scope, $timeout, $ionicPopup, $ionicModal, $interval, $ionicLoading,$location) {
+    module.controller("member.account_withdraw", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$ionicModal', '$interval', '$ionicLoading', '$location', function (api, $scope, $timeout, $ionicPopup, $ionicModal, $interval, $ionicLoading, $location) {
 
         $scope.formData = [];
         $scope.form = [];
@@ -2522,7 +2559,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
                     }).success(function (re) {
                         $ionicLoading.hide();
                         if (re.status > 0) {
-                            $location.url('/main/member/account_withdraw_info?id='+re.data);
+                            $location.url('/main/member/account_withdraw_info?id=' + re.data);
                         } else {
                             ar.saveDataAlert($ionicPopup, re.msg);
                         }
@@ -2538,7 +2575,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
     }]);
 
     // 我的账户-提现-提现状态提示
-    module.controller("member.account_withdraw_info", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$ionicModal', '$interval', '$ionicLoading','$location', function (api, $scope, $timeout, $ionicPopup, $ionicModal, $interval, $ionicLoading,$location) {
+    module.controller("member.account_withdraw_info", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$ionicModal', '$interval', '$ionicLoading', '$location', function (api, $scope, $timeout, $ionicPopup, $ionicModal, $interval, $ionicLoading, $location) {
 
         $ionicModal.fromTemplateUrl('statusModal.html', {
             scope: $scope,
@@ -2555,7 +2592,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
             $scope.modal.hide();
         };
         $scope.withdrawInfo = {};
-        api.get('/wap/member/get-withdraw-info-by-id',{id:$location.$$search.id}).success(function(res){
+        api.get('/wap/member/get-withdraw-info-by-id', {id: $location.$$search.id}).success(function (res) {
             $scope.withdrawInfo = res.data;
         })
 

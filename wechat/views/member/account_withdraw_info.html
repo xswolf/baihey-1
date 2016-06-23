@@ -41,31 +41,27 @@
                 <button class="button button-icon" ng-click="hideStatus()">关闭</button>
                 <span class="title">提现详情</span>
             </ion-header-bar>
-            <ion-content>
+            <ion-content class="bg5">
                 <ion-list>
                     <ion-item>
-                        <span class="fl cor14">流水号</span>
-                        <span class="fr cor14">{{withdrawInfo.id}}</span>
-                    </ion-item>
-                    <ion-item>
-                        <span class="fl cor14">申请人</span>
+                        <span class="fl cor4">申请人</span>
                         <span class="fr cor14">{{withdrawInfo.user_name}}</span>
                     </ion-item>
                     <ion-item>
-                        <span class="fl cor14">提现金额</span>
-                        <span class="fr cor14">{{withdrawInfo.money}}</span>
+                        <span class="fl cor4">提现金额</span>
+                        <span class="fr cor14">{{withdrawInfo.money / 100 | currency:'￥'}}</span>
                     </ion-item>
                     <ion-item>
-                        <span class="fl cor14">到账银行卡</span>
-                        <span class="fr cor14">{{withdrawInfo.name}} {{withdrawInfo.card_no}}</span>
+                        <span class="fl cor4 mt10">到账银行卡</span>
+                        <span class="fr cor14 tar">{{withdrawInfo.name}} <br />{{withdrawInfo.card_no}}</span>
                     </ion-item>
                     <ion-item>
-                        <span class="fl cor14">申请时间</span>
-                        <span class="fr cor14">{{withdrawInfo.create_time | date:'yyyy-MM-dd HH:mm:ss'}}</span>
+                        <span class="fl cor4">申请时间</span>
+                        <span class="fr cor14">{{withdrawInfo.create_time * 1000 | date:'yyyy-MM-dd HH:mm:ss'}}</span>
                     </ion-item>
                     <ion-item>
-                        <span class="fl cor14">提现进度</span>
-                        <span class="fr cor14">{{withdrawInfo.status}}</span>
+                        <span class="fl cor4">提现进度</span>
+                        <span class="fr " ng-class="{'1':'balanced','2':'energized','3':'assertive'}[withdrawInfo.status]">{{withdrawInfo.status | withdrawStatusTitle}}</span>
                     </ion-item>
                 </ion-list>
             </ion-content>
