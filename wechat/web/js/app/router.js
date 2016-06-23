@@ -233,7 +233,50 @@ define(["app/module", 'app/service/serviceApi','jquery'],
 
                         }
                     })
-                    .state('main.discovery', {       // 发现
+                    .state('main.message_chat1', { // 聊天页面
+                        cache: false,
+                        url: "/chat1",
+                        views: {
+                            'message-tab': {
+                                templateUrl: "/wechat/views/message/chat1.html",
+                                controller: 'message.chat1'
+                            }
+                        },
+
+                        onExit: function ($rootScope) {
+
+                            var messageList = ar.getStorage("messageList");
+                            if (messageList == null) messageList = [];
+                            var flag = true;
+                            var i = 0;
+
+                            if (messageList != undefined && messageList != '') {
+                                for (i in messageList) {
+                                    if (messageList[i].receive_user_id == $rootScope.receiveUserInfo.id || messageList[i].send_user_id == $rootScope.receiveUserInfo.id) {
+                                        if ($rootScope.historyListHide != undefined && $rootScope.historyListHide.length > 0) {
+
+                                            messageList[i].message = $rootScope.historyListHide[$rootScope.historyListHide.length - 1].message
+                                        }
+                                        flag = false;
+                                    }
+                                }
+                            }
+                            if (flag) {
+                                $rootScope.receiveUserInfo.info = JSON.parse($rootScope.receiveUserInfo.info);
+                                $rootScope.receiveUserInfo.auth = JSON.parse($rootScope.receiveUserInfo.auth);
+                                $rootScope.receiveUserInfo.receive_user_id = $rootScope.receiveUserInfo.id;
+                                $rootScope.receiveUserInfo.other = $rootScope.receiveUserInfo.id;
+                                $rootScope.receiveUserInfo.send_user_id = $rootScope.receiveUserInfo.send_user_id;
+                                if ($rootScope.historyListHide != undefined && $rootScope.historyListHide.length > 0) {
+                                    $rootScope.receiveUserInfo.message = $rootScope.historyListHide[$rootScope.historyListHide.length - 1].message
+                                }
+
+                                messageList.push($rootScope.receiveUserInfo);
+                            }
+                            ar.setStorage('messageList', messageList);
+
+                        }
+                    }).state('main.discovery', {       // 发现
                         cache: false,
                         url: "/discovery?userId?tempUrl",
                         views: {

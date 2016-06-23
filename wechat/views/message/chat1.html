@@ -1,0 +1,270 @@
+<ion-view hide-tabs="true">
+    <link href="/wechat/web/css/chat.css" rel="stylesheet">
+    <ion-header>
+        <div class="bar bar-header bhy com_w_100">
+            <h1 class="title">{{real_name | sex:sex:age}}</h1>
+            <button class="button button-icon" ng-click="addFollow()" ng-if="u_isFollow">关注</button>
+        </div>
+    </ion-header>
+    <ion-content class="bhy com_w_100 has-header chat" id="message-detail-content"
+                 delegate-handle="messageDetailsScroll" has-bouncing="false">
+        <ion-refresher pulling-text="下拉加载更多" refreshing-text="加载成功" on-refresh="doRefresh()"
+                       pulling-icon="ion-arrow-down-c"></ion-refresher>
+        <ion-list>
+            <!-- 固定item -->
+            <ion-item class="talk_item_u">
+                <div class="talk_user">
+                    <a href="#/main/userInfo?userId={{receiveId}}&tempUrl=/main/message">
+                        <img ng-src="{{receiveHeadPic}}" alt="" onerror="this.src='/wechat/web/images/no_img.png'">
+                    </a>
+                </div>
+                <div class="talk_r">
+                    <div class="talk_con clearfix">
+                        <div class="content normal">
+                            <p>你好，我们可以开始聊天了！</p>
+                        </div>
+                    </div>
+                </div>
+            </ion-item>
+            <!-- 固定item/ -->
+
+            <!-- 身份认证提示 -->
+            <div class="r_warning" ng-if="u_auth_validate == false">
+                <p>
+                    <i class="ion-alert-circled assertive fs14 warning_ico"></i>您好，对方身份未在本站验证，需谨慎交流！
+                </p>
+            </div>
+
+            <!-- 红娘评价 -->
+           <!-- <div class="rated clearfix" ng-if="!u_maker_rated">
+
+                <p class="rated_t"><i class="bhy-icon-tips-01 cor13"></i>李小姐性格随和、有一颗善良的心，
+                    是一个懂得感恩、乐观向上的女孩。</p>
+                <p class="rated_maker">—— 红娘<a class="marker_name" href="javascript:;">郭禹杉</a>评价</p>
+            </div>-->
+
+            <ion-item class="clearfix" ng-class="{true:'talk_item_u',false:'talk_item_m'}[sendId != vo.send_user_id]"
+                      ng-repeat="vo in historyList track by vo.id">
+
+                <!-- 时间 -->
+                <div class="s_date">
+                    <p class="line" ng-if="isLongTime(vo.time,$index)">{{vo.time*1000|date:'yyyy-MM-dd:HH:mm:ss'}}</p>
+                </div>
+
+                <!-- 头像 -->
+                <div class="talk_user">
+                    <a ng-if="sendId != vo.send_user_id"
+                       href="#/main/userInfo?userId={{receiveId}}">
+                        <img ng-src="{{receiveHeadPic}}" onerror="this.src='/wechat/web/images/no_img.png'">
+                    </a>
+                    <img ng-if="sendId == vo.send_user_id" ng-src="{{sendHeadPic}}"
+                         onerror="this.src='/wechat/web/images/no_img.png'">
+                </div>
+
+                <!-- 消息内容 -->
+                <div class="talk_r">
+                    <div class="talk_con clearfix">
+                        <!-- 文本 -->
+                        <div class="content normal" ng-if="vo.type=='send' || vo.message_type==1">
+                            <p>{{vo.message}}</p>
+                        </div>
+
+                        <!-- 语音 -->
+                        <div class="content normal voice" ng-click="detail_record('{{vo.message}}')"
+                             ng-if="vo.type=='record' || vo.message_type==2">
+                            <div class="voice_con">
+                                <i class="bhy-icon-msg-voice voice_icon"></i>
+                            </div>
+                        </div>
+
+                        <!-- 图片 -->
+                        <div class="content normal" ng-click="detail_pic('{{vo.message}}')"
+                             ng-if="vo.type=='pic' || vo.message_type==3">
+                            <span class="pic">
+                                <img ng-if="vo.message != 'view'" ng-src="{{vo.message}}">
+                                <div ng-if="vo.message == 'view'" ng-show="uploader.isHTML5"
+                                     ng-thumb="{ file: uploader.queue, height: 100 }"></div>
+                            </span>
+                        </div>
+
+                        <!-- 红包 -->
+                        <div class="content normal bri" ng-click="detail_bri(vo.message)"
+                             ng-if="vo.type=='bribery' || vo.message_type==4">
+                            <div class="bri_con clearfix">
+                                <div class="bhy-icon-bribery bri_con_icon"></div>
+                                <div class="bri_con_txt">
+                                    <p>{{vo.message | briMessage }}</p>
+                                    <p>领取红包</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 已读 -->
+                        <div class="status" ng-if="vo.status==1 && sendId == vo.send_user_id">
+                            <span class="delivered">已读</span>
+                        </div>
+
+                        <!-- 未读 自己发送的消息显示 或别人发的语言显示-->
+                        <div class="status" ng-if="vo.status==2 && (sendId == vo.send_user_id || vo.message_type==2)">
+                            <span class="read">未读</span>
+                        </div>
+
+                        <!-- 发送中 -->
+                        <div class="status" ng-if="vo.status==3 && sendId == vo.send_user_id">
+                            <img class="loading" src="/wechat/web/images/loading.gif">
+                        </div>
+
+                        <!-- 发送失败 -->
+                        <div class="status" ng-if="vo.status==4 && sendId == vo.send_user_id">
+                            <span class="lost ion ion-alert "></span>
+                        </div>
+
+                    </div>
+                </div>
+            </ion-item>
+
+        </ion-list>
+    </ion-content>
+
+    <ion-footer-bar align-title="left" class="bar-light" id="msg_footer_bar" resize-foot-bar>
+        <div class="rj-footer-btn-wrap">
+            <div class="buttons">
+                <button id="multi_btn" class="button button-icon icon ion-ios-plus-outline rj-footer-btn-left"
+                        show-multi style="padding: 0;"></button>
+            </div>
+        </div>
+        <label class="item item-input rj-footer-input" ng-hide="talk_type=='voice'" style="padding-left: 5px;">
+            <textarea id="txt_input" msd-elastic ng-model="send_content" style="height: 21px;resize:none; "
+                      ng-focus="hideMultiOnKeyboard()"></textarea>
+        </label>
+
+        <div class="rj-footer-btn-wrap ml10">
+            <button type="button" class="button button-balanced rj-send-button" ng-disabled="!send_content || send_content === ''" ng-click="send()">发送</button>
+        </div>
+    </ion-footer-bar>
+    <div id="multi_con">
+        <ul class="clearfix">
+            <li ng-click="briberyModal.show()">
+                <div class="bri_b"><i class="icon-new-bribery cor6"></i></div>
+                <p class="fs12 mb0 tac cor8">红包</p>
+            </li>
+            <li ng-click="send_pic()">
+                <div class="img_b"><i class="ion-images cor6"></i></div>
+                <p class="fs12 mb0 tac cor8">图片</p>
+            </li>
+        </ul>
+
+        <!--<ul class="clearfix">
+            <li><img src="/wechat/web/images/picture.jpg" ng-click="send_pic()"></li>
+            <li><img src="/wechat/web/images/bribery.jpg" ng-click="briberyModal.show()"></li>
+        </ul>-->
+    </div>
+    <input type="file" id="pic_fileInput" class="pic_fileInput" nv-file-select="" uploader="uploader" accept="image/*"/>
+    <div class="pic_zoom_layer chat_mask" ng-if="showPic" ng-cloak>
+        <div class="pic_zoom pa">
+            <div class="pic_z_c pr">
+                <div class="pic_z_c_s">
+                    <img alt="." ng-src="{{showPicAdd}}">
+                </div>
+            <span class="pic_closeBtn assertive-bg pa" ng-click="hidePicBox()">
+                <i class="ion-close-round"></i>
+            </span>
+            </div>
+        </div>
+    </div>
+
+
+    <script id="detailBriModal.html" type="text/ng-template">
+        <ion-modal-view class="detailBg" ng-controller="message.childDetailBriController">
+            <div class="bri_big">
+            <span class="bri_closeBtn" ng-click="detailBriModal.hide()">
+                <i class="ion-close-round"></i>
+            </span>
+            <span class="bri_uimg">
+                <img ng-src="{{receiveHeadPic}}" onerror="this.src='/wechat/web/images/no_img.png'">
+            </span>
+            <span class="bri_t">
+                <p class="bri_u_name">{{real_name|sex:sex:age}}的红包</p>
+                <p class="bri_u_name2">{{openBri.bri_message}}</p>
+            </span>
+            <span class="bri_btn">
+                <button class="button button-assertive" ng-click="openBribery()">拆开看看</button>
+            </span>
+            </div>
+        </ion-modal-view>
+    </script>
+
+    <script id="detaiOpenBriModal.html" type="text/ng-template">
+        <ion-modal-view>
+            <ion-header-bar>
+                <button class="button button-icon ion-arrow-left-c" ng-click="detaiOpenBriModal.hide()"></button>
+                <title class="title">红包详情</title>
+            </ion-header-bar>
+            <ion-content>
+                <div class="openBri_bg">
+                <span class="openBri_uimg">
+                     <img ng-src="{{receiveHeadPic}}" onerror="this.src='/wechat/web/images/no_img.png'">
+                </span>
+                </div>
+                <div class="openBri_con">
+                    <p class="openBri_name">
+                        {{real_name|sex:sex:age}}的红包
+                    </p>
+                    <p class="openBri_name2">
+                        {{openBri.bri_message}}
+                    </p>
+
+                    <p class="openBri_money">
+                        {{openBri.money|currency:"￥"}}元
+                    </p>
+                    <p class="openBri_disc">已存入账户，可用于发红包、提现。</p>
+
+                    <div class="openBri_line">
+
+                    </div>
+                    <p class="openBri_account">
+                        <a href="javascript:;">
+                            查看我的红包账户
+                        </a>
+                    </p>
+                </div>
+            </ion-content>
+        </ion-modal-view>
+    </script>
+
+    <script id="briberyModal.html" type="text/ng-template">
+        <ion-modal-view>
+            <ion-header-bar>
+                <a href="javascript:;" ng-click="briPageHide()" class="button button-icon">关闭</a>
+                <title class="title">发红包</title>
+            </ion-header-bar>
+            <ion-content class="bribery has-header" ng-controller="message.childBriberyController">
+                <div class="list">
+                    <label class="item item-input">
+                        <span class="input-label">红包金额</span>
+                        <input type="number" placeholder="请填写金额" class="tar bri_money_input" ng-model="input_money"
+                               ng-keyup="valMoney(this.input_money)">
+                        <span class="input-label">元</span>
+                    </label>
+                    <label class="item item-input item-stacked-label">
+                        <span class="input-label">留言</span>
+                        <input type="text" ng-model="bri_message" placeholder="恭喜发财">
+                    </label>
+                    <label class="item item-input item-stacked-label" style="background: #fff;">
+                        <span class="input-label">支付方式</span>
+                        <ion-radio ng-model="payType" ng-value="1">余额支付</ion-radio>
+                        <ion-radio ng-model="payType" ng-value="2">微信支付</ion-radio>
+                    </label>
+                    <label class="item tac">
+                        <span class="bri_money">{{money | currency:'￥'}}</span>
+                    </label>
+                    <div class="item tac">
+                        <input type="button" class="button button-block"
+                               ng-class="{true:'bri_dsbd',false:'button-assertive'}[btnStatus]" ng-disabled="btnStatus"
+                               value="塞钱进红包" ng-click="bri_submit()">
+                    </div>
+                </div>
+            </ion-content>
+        </ion-modal-view>
+    </script>
+</ion-view>
