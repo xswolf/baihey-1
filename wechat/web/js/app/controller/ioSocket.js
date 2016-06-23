@@ -103,6 +103,7 @@ define(['app/module', 'app/directive/directiveApi'
         $scope.detail_bri = function (briMessage) {
             briMessage = briMessage.replace(/&quot;/g, "\"");
             var json = JSON.parse(briMessage);
+            json.money = json.money/100; // 页面显示元
             $scope.openBri = json;
             // 判断红包是否被领取过
             api.list('/wap/message/bribery-status', {bribery_id: json.id}).success(function (res) {
