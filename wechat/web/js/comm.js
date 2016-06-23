@@ -154,7 +154,7 @@ var ar = {
      */
     DateTimeToDate: function (DateStr) {
         if (typeof(DateStr) == 'undefined') {
-            return '未知';
+            return '';
         }
         return new Date((DateStr / 1000 + 86400) * 1000).toISOString().split("T")[0];
     },
@@ -207,7 +207,7 @@ var ar = {
     getZodicByBirthday: function (birthday) {
         var toyear = 1997;
         var birthyear = new Date(birthday).getFullYear();
-        var zodic = [{id: 0, name: '未知'}]
+        var zodic = [{id: 0, name: ''}]
         x = (toyear - birthyear) % 12
         if ((x == 1) || (x == -11)) {
             zodic.id = 1;
@@ -291,7 +291,7 @@ var ar = {
     getConstellationByBirthday: function (birthday) {
         var start = 1901, date = new Date(birthday).getDate(), month = new Date(birthday).getMonth() + 1, constellation = [{
             id: 0,
-            name: '未知'
+            name: ''
         }];
         if (month == 1 && date >= 20 || month == 2 && date <= 18) {
             constellation.id = 1;

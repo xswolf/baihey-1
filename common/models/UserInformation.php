@@ -24,7 +24,6 @@ class UserInformation extends Base
         $row = false;
         if ($data && $this->findOne($user_id)) {
             $_user_information_table = static::tableName();// 表名
-
             switch (key($data)) {
                 case 'personalized'     :// 个性签名
                 case 'went_travel'      :// 去过的地方
@@ -96,4 +95,5 @@ class UserInformation extends Base
         }
         return $row;
     }
+
 }

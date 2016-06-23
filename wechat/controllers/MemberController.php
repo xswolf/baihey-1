@@ -56,7 +56,7 @@ class MemberController extends BaseController
         $pageSize = isset($this->get['pageSize']) ? $this->get['pageSize'] : 12;
 
         $list = UserPhoto::getInstance()->getPhotoList($user_id, $type, $pageSize);
-        $this->renderAjax(['status=>1', 'data' => $list]);
+        $this->renderAjax(['status' => 1, 'data' => $list]);
     }
 
     /**
@@ -65,7 +65,7 @@ class MemberController extends BaseController
     public function actionDelPhoto()
     {
         $list = UserPhoto::getInstance()->delPhoto($this->get);
-        $this->renderAjax(['status=>1', 'data' => $list]);
+        $this->renderAjax(['status' => 1, 'data' => $list]);
     }
 
     /**
@@ -74,7 +74,7 @@ class MemberController extends BaseController
     public function actionSavePhoto()
     {
         $list = UserPhoto::getInstance()->savePhoto($this->get);
-        $this->renderAjax(['status=>1', 'data' => $list]);
+        $this->renderAjax(['status' => 1, 'data' => $list]);
     }
 
     /**
@@ -84,7 +84,7 @@ class MemberController extends BaseController
     {
         $user_id = \common\util\Cookie::getInstance()->getCookie('bhy_id');
         $list = UserPhoto::getInstance()->setHeadPic($user_id, $this->get);
-        $this->renderAjax(['status=>1', 'data' => $list]);
+        $this->renderAjax(['status' => 1, 'data' => $list]);
     }
 
     /**
@@ -92,7 +92,7 @@ class MemberController extends BaseController
      */
     public function actionWentTravelList()
     {
-        $this->renderAjax(['status=>1', 'data' => Area::getInstance()->getWentTravelList()]);
+        $this->renderAjax(['status' => 1, 'data' => Area::getInstance()->getWentTravelList()]);
     }
 
     /**
@@ -102,9 +102,9 @@ class MemberController extends BaseController
     {
         $pageIndex = $this->get['pageIndex'];
         $province_id = $this->get['province_id'] ? $this->get['province_id'] : 1;// 默认重庆
-        $list = Area::getInstance()->getWantTravelList($province_id , $pageIndex);
+        $list = Area::getInstance()->getWantTravelList($province_id, $pageIndex);
 
-        $this->renderAjax(['status=>1', 'data' => $list]);
+        $this->renderAjax(['status' => 1, 'data' => $list]);
     }
 
     /**
@@ -113,7 +113,7 @@ class MemberController extends BaseController
     public function actionConfigList()
     {
         $list = Config::getInstance()->getListByType($this->get['type']);
-        $this->renderAjax(['status=>1', 'data' => $list]);
+        $this->renderAjax(['status' => 1, 'data' => $list]);
     }
 
     /**
@@ -122,7 +122,7 @@ class MemberController extends BaseController
     public function actionGetTravelList()
     {
         $list = Area::getInstance()->getTravelListById($this->get['area_id']);
-        $this->renderAjax(['status=>1', 'data' => $list]);
+        $this->renderAjax(['status' => 1, 'data' => $list]);
     }
 
     /**
@@ -131,7 +131,7 @@ class MemberController extends BaseController
     public function actionGetConfigList()
     {
         $list = Config::getInstance()->getListById($this->get['config_id']);
-        $this->renderAjax(['status=>1', 'data' => $list]);
+        $this->renderAjax(['status' => 1, 'data' => $list]);
     }
 
     /**
@@ -143,7 +143,7 @@ class MemberController extends BaseController
         isset($this->get['user_id']) ? $userId = $this->get['user_id'] : $userId = -1;
 
         $list = User::getInstance()->getDynamicList($userId, $page);
-        $this->renderAjax(['status=>1', 'data' => $list]);
+        $this->renderAjax(['status' => 1, 'data' => $list]);
     }
 
     /**
@@ -165,10 +165,10 @@ class MemberController extends BaseController
         $followedStatus = UserFollow::getInstance()->getFollowStatus(['user_id' => $this->get['id'], 'follow_id' => $user_id]);
         $followedStatus = $followedStatus ? $followedStatus['status'] : false;
 
-        if($userInfo) {
-            $this->renderAjax(['status'=>1, 'userInfo' => $userInfo, 'userPhoto' => $userPhoto, 'dynamic' => $dynamic, 'followStatus' => $followStatus, 'followedStatus' => $followedStatus, 'msg' => 'user_info页面获取信息成功']);
+        if ($userInfo) {
+            $this->renderAjax(['status' => 1, 'userInfo' => $userInfo, 'userPhoto' => $userPhoto, 'dynamic' => $dynamic, 'followStatus' => $followStatus, 'followedStatus' => $followedStatus, 'msg' => 'user_info页面获取信息成功']);
         } else {
-            $this->renderAjax(['status'=>0, 'userInfo' => $userInfo, 'userPhoto' => $userPhoto, 'dynamic' => $dynamic, 'followStatus' => $followStatus, 'followedStatus' => $followedStatus, 'msg' => 'user_info页面获取信息失败']);
+            $this->renderAjax(['status' => 0, 'userInfo' => $userInfo, 'userPhoto' => $userPhoto, 'dynamic' => $dynamic, 'followStatus' => $followStatus, 'followedStatus' => $followedStatus, 'msg' => 'user_info页面获取信息失败']);
         }
     }
 
@@ -184,7 +184,7 @@ class MemberController extends BaseController
             $flag = User::getInstance()->cancelClickLike($this->get['dynamicId'], $this->get['user_id'], $this->get['add']);
 
         }
-        $this->renderAjax(['status=>1', 'data' => $flag]);
+        $this->renderAjax(['status' => 1, 'data' => $flag]);
     }
 
     /**
@@ -204,9 +204,9 @@ class MemberController extends BaseController
         $flag = User::getInstance()->addDynamic($data);
         if ($flag > 0) {
             $data = User::getInstance()->getDynamicById(\Yii::$app->db->lastInsertID);
-            $this->renderAjax(['status=>1', 'data' => $data[0]]);
+            $this->renderAjax(['status' => 1, 'data' => $data[0]]);
         } else {
-            $this->renderAjax(['status=>-1', 'data' => '发布失败']);
+            $this->renderAjax(['status' => -1, 'data' => '发布失败']);
         }
     }
 
@@ -218,7 +218,7 @@ class MemberController extends BaseController
 
         $data = User::getInstance()->getDynamicById($this->get['id']);
         $data[0]['comment'] = User::getInstance()->getCommentById($this->get['id']);
-        $this->renderAjax(['status=>1', 'data' => $data[0]]);
+        $this->renderAjax(['status' => 1, 'data' => $data[0]]);
     }
 
     /**
@@ -228,7 +228,7 @@ class MemberController extends BaseController
     {
 
         $list = User::getInstance()->getCommentById($this->get['id']);
-        $this->renderAjax(['status=>1', 'data' => $list]);
+        $this->renderAjax(['status' => 1, 'data' => $list]);
     }
 
     /**
@@ -242,7 +242,7 @@ class MemberController extends BaseController
         $data['dynamicId'] = $this->get['dynamicId'];
         $data['create_time'] = time();
         $id = User::getInstance()->addComment($data);
-        $this->renderAjax(['status=>1', 'data' => ['id' => $id, 'create_time' => $data['create_time']]]);
+        $this->renderAjax(['status' => 1, 'data' => ['id' => $id, 'create_time' => $data['create_time']]]);
     }
 
     /**
@@ -252,7 +252,7 @@ class MemberController extends BaseController
     {
 
         $list = User::getInstance()->getFollowList();
-        $this->renderAjax(['status=>1', 'data' => $list]);
+        $this->renderAjax(['status' => 1, 'data' => $list]);
     }
 
     /**
@@ -262,7 +262,7 @@ class MemberController extends BaseController
     {
         $user_id = \common\util\Cookie::getInstance()->getCookie('bhy_id')->value;
         $data = User::getInstance()->briberyInfo($user_id);
-        $this->renderAjax(['status=>1', 'data' => $data]);
+        $this->renderAjax(['status' => 1, 'data' => $data]);
     }
 
     /**
@@ -274,18 +274,18 @@ class MemberController extends BaseController
         isset($this->get['page']) ? $page = $this->get['page'] : $page = 0;
         $flag = $this->get['flag'] == 'true' ? true : false;
         $user_id = \common\util\Cookie::getInstance()->getCookie('bhy_id')->value;
-        $year = isset($this->get['year']) ?  $this->get['year'] : 0;
-        $data = User::getInstance()->getBriberyList($user_id, $flag, $page , $year);
-        $this->renderAjax(['status=>1', 'data' => $data]);
+        $year = isset($this->get['year']) ? $this->get['year'] : 0;
+        $data = User::getInstance()->getBriberyList($user_id, $flag, $page, $year);
+        $this->renderAjax(['status' => 1, 'data' => $data]);
     }
 
     public function actionConsumptionList()
     {
         $user_id = Cookie::getInstance()->getCookie('bhy_id');
-        if($data = ConsumptionLog::getInstance()->getUserConsumptionLogList($user_id)) {
-            $this->renderAjax(['status=>1', 'data' => $data, 'msg' => '获取数据成功']);
+        if ($data = ConsumptionLog::getInstance()->getUserConsumptionLogList($user_id)) {
+            $this->renderAjax(['status' => 1, 'data' => $data, 'msg' => '获取数据成功']);
         } else {
-            $this->renderAjax(['status=>0', 'data' => $data, 'msg' => '获取数据失败']);
+            $this->renderAjax(['status' => 0, 'data' => $data, 'msg' => '获取数据失败']);
         }
     }
 
@@ -295,10 +295,10 @@ class MemberController extends BaseController
     public function actionCashCardList()
     {
         $user_id = Cookie::getInstance()->getCookie('bhy_id');
-        if($data = User::getInstance()->getCashCardList($user_id)) {
-            $this->renderAjax(['status=>1', 'data' => $data, 'msg' => '获取数据成功']);
+        if ($data = User::getInstance()->getCashCardList($user_id)) {
+            $this->renderAjax(['status' => 1, 'data' => $data, 'msg' => '获取数据成功']);
         } else {
-            $this->renderAjax(['status=>0', 'data' => $data, 'msg' => '获取数据失败']);
+            $this->renderAjax(['status' => 0, 'data' => $data, 'msg' => '获取数据失败']);
         }
     }
 
@@ -308,10 +308,10 @@ class MemberController extends BaseController
     public function actionDelCard()
     {
         $user_id = Cookie::getInstance()->getCookie('bhy_id');
-        if($data = User::getInstance()->delCard($user_id, $this->get['id'])) {
-            $this->renderAjax(['status=>1', 'data' => $data, 'msg' => '删除数据成功']);
+        if ($data = User::getInstance()->delCard($user_id, $this->get['id'])) {
+            $this->renderAjax(['status' => 1, 'data' => $data, 'msg' => '删除数据成功']);
         } else {
-            $this->renderAjax(['status=>0', 'data' => $data, 'msg' => '删除数据失败']);
+            $this->renderAjax(['status' => 0, 'data' => $data, 'msg' => '删除数据失败']);
         }
     }
 
@@ -321,10 +321,13 @@ class MemberController extends BaseController
     public function actionAddCashCard()
     {
         $user_id = Cookie::getInstance()->getCookie('bhy_id')->value;
-        if($data = User::getInstance()->addCashCard($user_id, $this->get)) {
-            $this->renderAjax(['status=>1', 'data' => $data, 'msg' => '添加银行卡成功']);
+        if ($data = User::getInstance()->addCashCard($user_id, $this->get)) {
+            if (empty(json_decode(\common\models\User::getInstance()->getUserById($user_id)['info'])->real_name)) {  // 如果当前用户姓名为空，则保存持卡人姓名到userinfo
+                UserInformation::getInstance()->updateUserInfo($user_id, ['real_name' => $this->get['user_name']]);
+            }
+            $this->renderAjax(['status' => 1, 'data' => $data, 'msg' => '添加银行卡成功']);
         } else {
-            $this->renderAjax(['status=>0', 'data' => $data, 'msg' => '添加银行卡失败']);
+            $this->renderAjax(['status' => 0, 'data' => $data, 'msg' => '添加银行卡失败，可能是您已添加过该银行卡。']);
         }
     }
 
@@ -334,10 +337,10 @@ class MemberController extends BaseController
     public function actionCashCardById()
     {
         $user_id = Cookie::getInstance()->getCookie('bhy_id')->value;
-        if($data = User::getInstance()->getCashCardById($user_id, $this->get['id'])) {
-            $this->renderAjax(['status=>1', 'data' => $data, 'msg' => '获取数据成功']);
+        if ($data = User::getInstance()->getCashCardById($user_id, $this->get['id'])) {
+            $this->renderAjax(['status' => 1, 'data' => $data, 'msg' => '获取数据成功']);
         } else {
-            $this->renderAjax(['status=>0', 'data' => $data, 'msg' => '获取数据失败']);
+            $this->renderAjax(['status' => 0, 'data' => $data, 'msg' => '获取数据失败']);
         }
     }
 
@@ -346,12 +349,43 @@ class MemberController extends BaseController
      */
     public function actionBankList()
     {
-        if($data = Bank::getInstance()->bankList()) {
-            $this->renderAjax(['status=>1', 'data' => $data, 'msg' => '删除数据成功']);
+        if ($data = Bank::getInstance()->bankList()) {
+            $this->renderAjax(['status' => 1, 'data' => $data, 'msg' => '删除数据成功']);
         } else {
-            $this->renderAjax(['status=>0', 'data' => $data, 'msg' => '删除数据失败']);
+            $this->renderAjax(['status' => 0, 'data' => $data, 'msg' => '删除数据失败']);
         }
     }
+
+    // 提现
+    public function actionAddCashInfo()
+    {
+        $user_id = Cookie::getInstance()->getCookie('bhy_id')->value;
+        if(intval(\common\models\User::getInstance()->getUserPropertyValue($user_id, 'balance')->balance) < intval($this->get) ){
+            $this->renderAjax(['status' => -1, 'msg' => '提现失败，您当前余额不足']);
+        }
+        // 减少余额，插入提现记录，插入消费记录
+
+
+        if ($data = \common\models\User::getInstance()->addCashInfo($user_id, $this->get)) {
+            $this->renderAjax(['status' => 1, 'data' => $data]);
+        } else {
+            $this->renderAjax(['status' => 0, 'data' => $data, 'msg' => '提现失败！']);
+        }
+    }
+
+
+    // 获取当前用户余额
+    public function actionGetUserBalance()
+    {
+        $user_id = Cookie::getInstance()->getCookie('bhy_id')->value;
+        if ($data = \common\models\User::getInstance()->getUserPropertyValue($user_id, 'balance')) {
+            $this->renderAjax(['data' => $data]);
+        } else {
+            $this->renderAjax(['data' => 0]);
+        }
+
+    }
+
 
     /**
      * 退出登录
@@ -359,6 +393,6 @@ class MemberController extends BaseController
     public function actionLoginOut()
     {
         $data = User::getInstance()->loginOut();
-        $this->renderAjax(['status=>1', 'data' => $data]);
+        $this->renderAjax(['status' => 1, 'data' => $data]);
     }
 }

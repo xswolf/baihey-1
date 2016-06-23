@@ -9,8 +9,8 @@
                 </div>
                 <div class="fl u_info ml10">
                     <p>
-                        <strong class="fs14" ng-if="userInfo.info.real_name != '未知'">{{userInfo.info.real_name}}</strong>
-                        <strong class="fs14" ng-if="userInfo.info.real_name == '未知'">ID:{{userInfo.id}}</strong>
+                        <strong class="fs14" ng-if="userInfo.info.real_name">{{userInfo.info.real_name}}</strong>
+                        <strong class="fs14" ng-if="!userInfo.info.real_name">ID:{{userInfo.id}}</strong>
                             <span class="ml5 cor22">
                                 <span ng-if="userInfo.info.age">{{userInfo.age}}岁 </span>
                                 {{userInfo.info.is_marriage | marriage}}
@@ -18,11 +18,11 @@
                             </span>
                     </p>
                     <p class="mt5">
-                        <i ng-if="honesty(userInfo.honesty_value)" class="identity icon-new-id"></i>
-                        <i ng-if="userInfo.phone" class="identity icon-new-phone"></i>
-                        <i ng-if="userInfo.info.level == 1" class="identity icon-new-vip"></i>
-                        <i ng-if="userInfo.info.level == 2" class="identity icon-new-guest"></i>
-                        <i ng-if="userInfo.info.level == 3" class="identity icon-new-diamond"></i>
+                        <span ng-if="honesty(userInfo.honesty_value)" class="identity id">身份证</span>
+                        <span ng-if="userInfo.phone" class="identity phone">手机</span>
+                        <span ng-if="userInfo.info.level == 1" class="identity vip">VIP</span>
+                        <span ng-if="userInfo.info.level == 2" class="identity guest">贵宾</span>
+                        <span ng-if="userInfo.info.level == 3" class="identity diamond">钻石</span>
                     </p>
                     <p class="mt5 u_id">
                         ID：{{userInfo.id}}

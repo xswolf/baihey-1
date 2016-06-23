@@ -195,7 +195,7 @@ class UserController extends BaseController
             // 通过手机号查询用户信息
             if (User::getInstance()->mobileIsExist($this->get['mobile'])) {
 
-                $this->renderAjax(['status' => 0, 'msg' => '手机号码已存在']);
+                $this->renderAjax(['status' => 0, 'msg' => '该手机号码已存在']);
             } else {
 
                 $this->renderAjax(['status' => 1, 'msg' => '该手机号可以注册']);
@@ -210,10 +210,13 @@ class UserController extends BaseController
     {
         if (\Yii::$app->request->isGet) {
 
-            $data = \Yii::$app->request->get();
-            $this->renderAjax(['status' => \Yii::$app->messageApi->sendCode($data['mobile']),
-                'reg_code' => \Yii::$app->session->get('reg_code')
-            ]);
+            $get = \Yii::$app->request->get();
+            if(\Yii::$app->messageApi->sendCode($get['mobile'])){
+                $this->renderAjax(['status' => 1]);
+            }else{
+                $this->renderAjax(['status' => 0,'msg'=>'发送验证码失败！']);
+            }
+
         }
     }
 

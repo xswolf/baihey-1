@@ -175,22 +175,24 @@ a.weibo {
   color: #fc6da2;
 }
 .identity {
-  font-size: 16px;
+  font-size: 11px;
+  padding: 1px 5px;
+  color: #fff;
 }
-.identity.icon-new-id {
-  color: #64c041;
+.identity.id {
+  background-color: #64c041;
 }
-.identity.icon-new-phone {
-  color: #6db9ff;
+.identity.phone {
+  background-color: #6db9ff;
 }
-.identity.icon-new-vip {
-  color: #f4af36;
+.identity.vip {
+  background-color: #f4af36;
 }
-.identity.icon-new-guest {
-  color: #ee7fef;
+.identity.guest {
+  background-color: #ee7fef;
 }
-.identity.icon-new-diamond {
-  color: #fb79a1;
+.identity.diamond {
+  background-color: #fb79a1;
 }
 /* 高级搜索 */
 .moreSearch_form_box {

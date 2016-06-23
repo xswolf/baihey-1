@@ -48,8 +48,8 @@
                     <p>微信绑定</p>
                 </div>
                 <div class="menu_arrow">
-                    <span class="cor5 fs14 mr15 vam" ng-if="userInfo.info.wechat != '未知'">已绑定 {{userInfo.info.wechat}}</span>
-                    <span class="cor5 fs14 mr15 vam" ng-if="userInfo.info.wechat == '未知'">未绑定</span>
+                    <span class="cor5 fs14 mr15 vam" ng-if="userInfo.info.wechat">已绑定 {{userInfo.info.wechat}}</span>
+                    <span class="cor5 fs14 mr15 vam" ng-if="!userInfo.info.wechat">未绑定</span>
                     <i class="ion-ios-arrow-right vam"></i>
                 </div>
             </ion-item>
@@ -61,8 +61,8 @@
                     <p>QQ绑定</p>
                 </div>
                 <div class="menu_arrow">
-                    <span class="cor5 fs14 mr15 vam" ng-if="userInfo.info.wechat != '未知'">已绑定 {{userInfo.info.qq}}</span>
-                    <span class="cor5 fs14 mr15 vam" ng-if="userInfo.info.wechat == '未知'">未绑定</span>
+                    <span class="cor5 fs14 mr15 vam" ng-if="userInfo.info.wechat">已绑定 {{userInfo.info.qq}}</span>
+                    <span class="cor5 fs14 mr15 vam" ng-if="!userInfo.info.wechat">未绑定</span>
                     <i class="ion-ios-arrow-right vam"></i>
                 </div>
             </ion-item>

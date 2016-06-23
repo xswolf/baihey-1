@@ -37,10 +37,10 @@ define(['app/module'], function (module) {
     // 由时间戳计算年龄
     module.filter('timeToAge', function () {
         return function (input, args1, args2) {
-            if (typeof(input) != 'undefined' && input != '' && input != 'NaN' && input != '未知') {
+            if (input) {
                 return getAge(input) + '岁';
             } else {
-                return '未知';
+                return '';
             }
         };
     });
@@ -64,12 +64,10 @@ define(['app/module'], function (module) {
     // 返回真实姓名（姓**）
     module.filter('realName', function () {
         return function (input, arg) {
-            if (typeof(input) != 'undefined' && input != '') {
-                if (input != '未知') {
-                    return input.substr(0, 1) + '**';
-                } else {
-                    return input;
-                }
+            if (input) {
+                return input.substr(0, 1) + '**';
+            }else {
+                return '';
             }
         }
     });
@@ -345,7 +343,7 @@ define(['app/module'], function (module) {
                 case '3':
                     return '已关闭';
                 default:
-                    return '未知状态';
+                    return '状态错误';
             }
 
         }
@@ -442,8 +440,11 @@ define(['app/module'], function (module) {
         }
     })
 
-    module.filter('bank', function () {
+    module.filter('bank',['$sce', function ($sce) {
         return function (value, type) {
+            if(!value){
+                return $sce.trustAsHtml('<img src="/wechat/web/images/loading.gif">');
+            }
             if (type == 'name') {
                 return value.split('-')[0];
             }
@@ -455,6 +456,6 @@ define(['app/module'], function (module) {
             }
             return value;
         }
-    })
+    }])
 
 })
