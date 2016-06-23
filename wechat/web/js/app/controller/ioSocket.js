@@ -20,6 +20,7 @@ define(['app/module', 'app/directive/directiveApi'
 
         $scope.messageNum = 0;
         var list = ar.getStorage('chat_messageHistory' + $scope.receiveId);
+        // 状态发送中的全部改为发送失败
         for (var i in list) {
             if (list[i].status == 3) {
                 list[i].status = 4;
@@ -148,7 +149,7 @@ define(['app/module', 'app/directive/directiveApi'
         var userInfoList = ar.getStorage('messageList');
         for (var i in userInfoList) {
             if ($scope.receiveId == userInfoList[i].id) {
-                $scope.auth_validate = true;//userInfoList[i].auth.identity_check;
+                $scope.auth_validate = userInfoList[i].auth.identity_check;
             }
         }
 
