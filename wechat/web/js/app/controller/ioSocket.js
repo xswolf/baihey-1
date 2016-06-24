@@ -337,6 +337,7 @@ define(['app/module', 'app/directive/directiveApi'
                     $rootScope.historyList = $scope.historyList;
                     console.log($scope.historyList)
                     ar.setStorage('chat_messageHistory' + $scope.receiveId, $scope.historyList); // 每次发送消息后把消息放到浏览器端缓存
+                    $rootScope.historyListHide = $scope.historyList;
                 }
 
                 switch (response.type) {
