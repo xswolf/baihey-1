@@ -186,7 +186,7 @@ define(['app/module', 'app/directive/directiveApi'
             if (data.length > 0){ // 如果有新消息，所有消息状态为已看
                 list = $scope.setMessageStatus(list);
             }
-            list                       = list != null ?  list.concat(data) : data;
+            $rootScope.historyListHide = list = list != null ?  list.concat(data) : data;
             ar.setStorage('chat_messageHistory' + $scope.receiveId, list);
             var messageList = ar.getStorage('messageList');
             for (var i in messageList) { // 设置消息列表已看状态
