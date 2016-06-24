@@ -208,9 +208,9 @@ define(['app/module', 'app/directive/directiveApi'
         requirejs(['chat/wechatInterface', 'plugin/socket/socket.io.1.4.0'], function (wx, socket) {
 
             // 配置微信
-            api.wxConfig().success(function (data) {
-                wx.setConfig(JSON.parse(data.config));
-            })
+            //api.wxConfig().success(function (data) {
+            //    wx.setConfig(JSON.parse(data.config));
+            //})
 
             socket = socket.connect("http://120.76.84.162:8088");
             //socket = socket.connect("http://127.0.0.1:8088");
