@@ -6,7 +6,7 @@ http.listen(8088, function () {
     console.log('listening on *:8088');
 });
 
-var userList = [];
+var userList = []; // 存储在线的用户
 
 Array.prototype.remove = function (val) {
     var index = this.indexOf(val);
@@ -14,6 +14,8 @@ Array.prototype.remove = function (val) {
         this.splice(index, 1);
     }
 };
+
+var Message = require('./model/Message');
 
 io.on('connection', function (socket) {
 
@@ -28,8 +30,7 @@ io.on('connection', function (socket) {
         }
 
         io.emit(msg.send_user_id + '-' + msg.receive_user_id, msg); // 广播给自己
-
-        var Message = require('./model/Message');
+        
         var message = new Message();
         console.log(message)
         message.add(msg , function (err,res) {
