@@ -181,7 +181,7 @@ define(['app/module', 'app/directive/directiveApi'
             ar.setStorage('chat_messageHistory' + $scope.receiveId, $scope.historyListHide);
             var messageList = ar.getStorage('messageList');
 
-            for (var i in messageList) { // 设置消息列表一看状态
+            for (var i in messageList) { // 设置消息列表已看状态
                 if (messageList[i].send_user_id == $scope.receiveId) {
                     messageList[i].sumSend = 0;
                     messageList[i].status = 1;
@@ -206,13 +206,14 @@ define(['app/module', 'app/directive/directiveApi'
                 wx.setConfig(JSON.parse(data.config));
             })
 
-            socket = socket.connect("http://120.76.84.162:8088");
+            //socket = socket.connect("http://120.76.84.162:8088");
+            socket = socket.connect("http://127.0.0.1:8088");
 
             // 告诉服务器你已经上线
-            socket.emit('tell name', {send_user_id: $scope.sendId, status: 1});
+            socket.emit('tell name', {send_user_id: $scope.sendId, receive_user_id:$scope.receiveId, status: 1});
             // 监听离开聊天页面，断掉socket
             $scope.$on('$destroy', function () {
-                socket.emit('tell name', {send_user_id: $scope.sendId, status: 0});
+                socket.emit('tell name', {send_user_id: $scope.sendId, receive_user_id:$scope.receiveId, status: 0});
                 socket.removeListener($scope.sendId);
             });
 
@@ -308,9 +309,8 @@ define(['app/module', 'app/directive/directiveApi'
 
             }
 
-
             // 消息响应回调函数
-            socket.on($scope.sendId, function (msg) {
+            socket.on($scope.sendId + '-' + $scope.receiveId, function (msg) {
                 var response = msg;
 
                 var setMessageStatus = function (response) {

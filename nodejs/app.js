@@ -8,19 +8,26 @@ http.listen(8088, function () {
 
 var userList = [];
 
+Array.prototype.remove = function (val) {
+    var index = this.indexOf(val);
+    if (index > -1) {
+        this.splice(index, 1);
+    }
+};
+
 io.on('connection', function (socket) {
 
     // 聊天发信息用接口
     socket.on('chat message', function (msg) {
 
-        if (userList.indexOf(msg.receive_user_id) > -1) { // 接受者在线 ， 广播给接受者
+        if (userList.indexOf(msg.receive_user_id + '-' + msg.send_user_id) > -1) { // 接受者在线 ， 广播给接受者
             msg.status = 1;
-            io.emit(msg.receive_user_id, msg);
+            io.emit(msg.receive_user_id + '-' + msg.send_user_id, msg);
         } else {
             msg.status = 2;
         }
 
-        io.emit(msg.send_user_id, msg); // 广播给自己
+        io.emit(msg.send_user_id + '-' + msg.receive_user_id, msg); // 广播给自己
 
         var Message = require('./model/Message');
         var message = new Message();
@@ -33,19 +40,14 @@ io.on('connection', function (socket) {
 
     // 告诉服务器你加入了聊天
     socket.on('tell name', function (msg) {
+        socket.username = msg.send_user_id + '-' + msg.receive_user_id;
         if (msg.status == 1) {  // 用户上线
-            if (userList.indexOf(msg.send_user_id) == -1) {
-                userList.push(msg.send_user_id);
+            if (userList.indexOf(socket.username) == -1) {
+                userList.push(socket.username);
             }
             console.log(' user id:' + msg.send_user_id + ' is connected', userList);
         } else {  // 用户下线
-            Array.prototype.remove = function (val) {
-                var index = this.indexOf(val);
-                if (index > -1) {
-                    this.splice(index, 1);
-                }
-            };
-            userList.remove(msg.send_user_id);
+            userList.remove(socket.username);
             console.log(' user id:' + msg.send_user_id + ' is disconnected', userList);
         }
 
@@ -53,7 +55,8 @@ io.on('connection', function (socket) {
 
     //  断开连接
     socket.on('disconnect', function () {
-        console.log('a user disconnected');
+        userList.remove(socket.username);
+        console.log('user :' + socket.username + ' disconnect');
     });
 
 });
