@@ -5,7 +5,7 @@ define(['app/module', 'app/directive/directiveApi'
     , 'app/service/serviceApi', 'comm'
 ], function (module) {
 
-    module.controller("message.index", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$ionicModal', '$ionicActionSheet', '$ionicLoading', '$location', function (api, $scope, $timeout, $ionicPopup, $ionicModal, $ionicActionSheet, $ionicLoading, $location) {
+    module.controller("message.index", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$ionicModal', '$ionicActionSheet', '$ionicLoading', '$location','$ionicListDelegate', function (api, $scope, $timeout, $ionicPopup, $ionicModal, $ionicActionSheet, $ionicLoading, $location,$ionicListDelegate) {
 
         $timeout($scope.sumSend);
         // 判断是否登录
@@ -70,8 +70,8 @@ define(['app/module', 'app/directive/directiveApi'
             $scope.messageList = message;
             ar.setStorage('messageList', $scope.messageList);
             api.setMsgDisplay(item.other).success(function (res) {
-
             });
+            $ionicListDelegate.closeOptionButtons();
             return true;
         }
 
