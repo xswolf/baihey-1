@@ -482,7 +482,7 @@ define(['app/module'], function (module) {
                 for(var i in arr){
                     sum += parseInt(arr[i].money);
                 }
-                return sum;
+                return sum / 100;
             }
             return sum;
         }
@@ -495,6 +495,32 @@ define(['app/module'], function (module) {
            }else{
                return ' ';
            }
+        }
+    })
+
+    module.filter('recordName', function () {
+        return function (value,type) {
+            if(type == '提现'){
+                var cardName = value.split('-');
+                //console.log(cardName);
+                return cardName[0] + '(' + cardName[1] + ' ' + cardName[2].substr(cardName[2].length-4) + ')';
+            }
+            if(type == '嘉瑞红包'){
+                return ar.cleanQuotes(value);
+            }
+            return value;
+        }
+    })
+
+    module.filter('recordStatus', function () {
+        return function (value,type) {
+            if(type == '提现'){
+                 return '已打款';
+            }
+            if(type == '嘉瑞红包'){
+                return '对方已领取';
+            }
+            return value;
         }
     })
 })

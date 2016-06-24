@@ -10,7 +10,7 @@
                 我的余额：
                 <button class="am-btn am-btn-primary am-btn-xs am-radius ml10" ng-if="find" ng-click="showMoney()">查询余额</button>
                 <span ng-if="loading"><ion-spinner icon="ios-small"></ion-spinner></span>
-                <span ng-if="money" class="am-text-warning">{{money | currency:''}}元</span>
+                <span ng-if="money" class="am-text-warning">{{money / 100 | currency:''}}元</span>
             </div>
             <div class="item item-divider">
                 我正在使用的服务
