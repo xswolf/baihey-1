@@ -59,7 +59,6 @@ define(['app/module', 'app/directive/directiveApi'
 
         // 删除操作
         $scope.removeItem = function (item) {
-
             var message = ar.getStorage('messageList');
             for (var i in message) {
                 if (message[i].user_id == item.id) {
@@ -73,6 +72,7 @@ define(['app/module', 'app/directive/directiveApi'
             api.setMsgDisplay(item.other).success(function (res) {
 
             });
+            return true;
         }
 
     }]);
