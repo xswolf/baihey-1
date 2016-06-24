@@ -183,15 +183,11 @@ define(['app/module', 'app/directive/directiveApi'
 
         api.list("/wap/message/message-history", {id: $scope.receiveId}).success(function (data) {
 
-            list                       = list != null ?  list.concat(data) : data;
-            $scope.historyListHide     = ar.getStorage('chat_messageHistory' + $scope.receiveId);
-            $rootScope.historyListHide = $scope.historyListHide == null ? data : $scope.historyListHide.concat(data);
-
             if (data.length > 0){ // 如果有新消息，所有消息状态为已看
                 list = $scope.setMessageStatus(list);
             }
-            ar.setStorage('chat_messageHistory' + $scope.receiveId, $scope.historyListHide);
-
+            list                       = list != null ?  list.concat(data) : data;
+            ar.setStorage('chat_messageHistory' + $scope.receiveId, list);
             var messageList = ar.getStorage('messageList');
             for (var i in messageList) { // 设置消息列表已看状态
                 if (messageList[i].send_user_id == $scope.receiveId) {
@@ -316,6 +312,7 @@ define(['app/module', 'app/directive/directiveApi'
             socket.on($scope.sendId + '-' + $scope.receiveId, function (response) {
                 if(response == "10086"){
                     $scope.historyList = $scope.setMessageStatus($scope.historyList);
+                    ar.setStorage('chat_messageHistory' + $scope.receiveId, $scope.historyList); // 每次发送消息后把消息放到浏览器端缓存
                     return ;
                 }
                 var setMessageStatus = function (response) {
