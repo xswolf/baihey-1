@@ -490,7 +490,7 @@ define(['app/module'], function (module) {
 
     module.filter('isNull', function () {
         return function (value) {
-           if(value.toString()){
+           if(value){
                return value;
            }else{
                return ' ';

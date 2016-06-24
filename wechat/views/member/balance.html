@@ -1,0 +1,36 @@
+<ion-view hide-tabs="true">
+    <link href="/wechat/web/css/member.css" rel="stylesheet">
+    <ion-header-bar class="com_w_100 bhy">
+        <span class="title">充值余额</span>
+    </ion-header-bar>
+
+    <ion-content class="com_w_100 bhy balance">
+        <div class="list">
+            <a class="item item-avatar pl16" href="#">
+                <h2>嘉瑞账户余额</h2>
+                <p class="wsn">可用于购买产品及开通服务，也可用于用户提现。</p>
+            </a>
+        </div>
+        <div class="item item-divider bor_b_n mt10">
+            请选择充值金额
+        </div>
+        <ion-radio ng-model="formData.money" ng-value="10" ng-click="pay()">
+            <span class="cor21">10元</span>
+        </ion-radio>
+        <ion-radio ng-model="formData.money" ng-value="50" ng-click="pay()">
+            <span class="cor21">50元</span>
+        </ion-radio >
+        <ion-radio ng-model="formData.money" ng-value="100" ng-click="pay()">
+            <span class="cor21">100元</span>
+        </ion-radio>
+
+        <div class="item item-button-right">
+            自定义<input type="number" ng-model="formData.customize" id="customize" min="1" max="20000"> 元
+            <button type="button" class="button button-positive mt8" ng-click="customizePay()" ng-disabled="!formData.customize">
+                去支付
+            </button>
+        </div>
+        <p class="cor4 fs12 wsn pl16">温馨提示：单次最少充值1元，最多充值20000元。</p>
+    </ion-content>
+
+</ion-view>

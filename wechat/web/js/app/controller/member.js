@@ -2253,7 +2253,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
                 if (res.status < 1) {
                     $ionicPopup.alert({title: res.msg});
                 } else {
-                    $location.url('/main/member_charge?orderId=' + res.data + '&tempUrl=/main/member/vip');
+                    $location.url('/main/charge_index?orderId=' + res.data);
                 }
             })
         }
@@ -2286,12 +2286,56 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
 
     }]);
 
+    // 充值余额
+    module.controller("member.balance", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$location', function (api, $scope, $timeout, $ionicPopup, $location) {
+        $scope.formData = {};
+        $scope.formData.customize = 10;
+        $scope.pay = function () {
+            if (!$scope.formData.money || $scope.formData.money < 1) {
+                ar.saveDataAlert($ionicPopup, '选择充值金额异常，请刷新重试！');
+                return false;
+            }
+            // 生成订单并跳转支付
+            api.save('/wap/charge/produce-order', {
+                goodsId: 9,
+                money: $scope.formData.money
+            }).success(function (res) {
+                if (res.status < 1) {
+                    $ionicPopup.alert({title: res.msg});
+                } else {
+                    $location.url('/main/charge_index?orderId=' + res.data);
+                }
+            })
+        }
+
+        $scope.customizePay = function () {
+            if (!$scope.formData.customize) {
+                ar.saveDataAlert($ionicPopup, '请您输入充值金额！');
+                return false;
+            }
+            if ($scope.formData.customize < 1 || $scope.formData.customize > 20000) {
+                ar.saveDataAlert($ionicPopup, '单次最少充值1元，最多充值20000元。');
+                return false;
+            }
+            // 生成订单并跳转支付
+            api.save('/wap/charge/produce-order', {
+                goodsId: 9,
+                money: $scope.formData.customize
+            }).success(function (res) {
+                if (res.status < 1) {
+                    $ionicPopup.alert({title: res.msg});
+                } else {
+                    $location.url('/main/charge_index?orderId=' + res.data);
+                }
+            })
+        }
+    }]);
     // 我的账户-消费记录
     module.controller("member.account_record", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$location', function (api, $scope, $timeout, $ionicPopup, $location) {
 
         $scope.recordList = [];
         api.get('/wap/member/get-record-list', {}).success(function (res) {
-            if(res.status > 0){
+            if (res.status > 0) {
                 $scope.recordList = res.data;
             }
         })

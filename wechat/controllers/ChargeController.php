@@ -111,7 +111,7 @@ class ChargeController extends BaseController
             "out_trade_no" => $orderInfo['order_id'],
             "subject" => '嘉瑞百合缘-【' . $goods['name'] . '】',
             "total_fee" => $orderInfo['money'] / 100,
-            "show_url" => 'http://wechat.baihey.com/wap/site/main#/main/member/vip',
+            "show_url" => $goods['id'] == '9' ? 'http://wechat.baihey.com/wap/site/main#/main/member/balance' : 'http://wechat.baihey.com/wap/site/main#/main/member/vip',
             "body" => '',
             //其他业务参数根据在线开发文档，添加参数.文档地址:https://doc.open.alipay.com/doc2/detail.htm?spm=a219a.7629140.0.0.2Z6TSk&treeId=60&articleId=103693&docType=1
 
@@ -139,7 +139,7 @@ class ChargeController extends BaseController
 
     public function actionProduceOrder()
     {
-        if (isset($this->get['flag_h'])){  // 微信发红包数据
+        /*if (isset($this->get['flag_h'])){  // 微信发红包数据
             $data = [
                 'goodsId'=>8,
                 'user_id'=>Cookie::getInstance()->getCookie('bhy_id')->value,
@@ -148,16 +148,26 @@ class ChargeController extends BaseController
             ];
         }else{
             $data = $this->get;
-        }
+        }*/
+        $data = $this->get;
         if (isset($data['goodsId'])) {
-            $orderId = ChargeOrder::getInstance()->createOrder($data);
+            $userId = Cookie::getInstance()->getCookie('bhy_id')->value;
+            if(!$userId){
+                $this->renderAjax(['status' => -1, 'msg' => '用户未登录']);
+            }
+            if(isset($data['money'])){
+                if(intval($data['money']) < 1 || intval($data['money']) > 20000){
+                    $this->renderAjax(['status' => -2, 'msg' => '充值金额异常']);
+                }
+            }
+            $orderId = ChargeOrder::getInstance()->createOrder($userId,$data);
             if ($orderId) {
                 $this->renderAjax(['status' => 1, 'msg' => '下单成功', 'data' => $orderId]);
             } else {
                 $this->renderAjax(['status' => 0, 'msg' => '下单失败']);
             }
         } else {
-            $this->renderAjax(['status' => 0, 'msg' => '没有商品信息']);
+            $this->renderAjax(['status' => -2, 'msg' => '没有商品信息']);
         }
 
     }

@@ -20,7 +20,7 @@
             <span>商品名称：</span>
             <b>{{orderInfo.name}}</b>
         </ion-item>
-        <ion-item>
+        <ion-item ng-if="orderInfo.charge_goods_id != 9">
             <span>开通时长：</span>
             <b>{{orderInfo.value}}个月</b>
         </ion-item>

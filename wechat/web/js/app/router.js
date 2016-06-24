@@ -339,7 +339,7 @@ define(["app/module", 'app/service/serviceApi','jquery'],
                         controller: 'charge.order'
                     })
                     .state('main.charge', {     // 充值
-                        url: "/member_charge",
+                        url: "/charge_index",
                         views: {
                             'member-tab': {
                                 templateUrl: "/wechat/views/charge/index.html",

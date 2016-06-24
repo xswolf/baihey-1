@@ -7,11 +7,12 @@
     <ion-content class="com_w_100 bhy m_bg pay_type">
         <ion-list>
                 <ion-item class="mb10">
-                    <img class="fl mr20 vam goods_img" src="{{goods.img}}" height="40">
+                    <img ng-if="goods.charge_goods_id != 9" class="fl mr20 vam goods_img" src="{{goods.img}}" height="40">
                     <p>商品：<span class="cor14">{{goods.name}}</span></p>
-                    <p>时长：<span class="cor14">{{goods.value}}个月</span></p>
-                    <p>现价：<span class="cor14">{{goods.price / 100 | currency:'￥'}}</span></p>
-                    <p><s>原价：<span class="cor14">{{goods.native_price / 100 | currency:'￥'}}</span></s></p>
+                    <p ng-if="goods.charge_goods_id != 9">时长：<span class="cor14">{{goods.value}}个月</span></p>
+                    <p ng-if="goods.charge_goods_id != 9">现价：<span class="cor14">{{goods.price / 100 | currency:'￥'}}</span></p>
+                    <p ng-if="goods.charge_goods_id != 9"><s>原价：<span class="cor14">{{goods.native_price / 100 | currency:'￥'}}</span></s></p>
+                    <p ng-if="goods.charge_goods_id == 9">金额：<span class="cor14">{{goods.money / 100 | currency:'￥'}}</span></p>
                 </ion-item>
 
                 <ion-radio ng-if="iswx" ng-model="formData.payType" ng-value="5">

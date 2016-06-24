@@ -1,10 +1,10 @@
 @font-face {
     font-family: 'new';
-    src:    url('../fonts/new.eot?vd2fap');
-    src:    url('../fonts/new.eot?vd2fap#iefix') format('embedded-opentype'),
-    url('../fonts/new.ttf?vd2fap') format('truetype'),
-    url('../fonts/new.woff?vd2fap') format('woff'),
-    url('../fonts/new.svg?vd2fap#icomoon') format('svg');
+    src:    url('../fonts/new.eot?z5blta');
+    src:    url('../fonts/new.eot?z5blta#iefix') format('embedded-opentype'),
+    url('../fonts/new.ttf?z5blta') format('truetype'),
+    url('../fonts/new.woff?z5blta') format('woff'),
+    url('../fonts/new.svg?z5blta#icomoon') format('svg');
     font-weight: normal;
     font-style: normal;
 }
@@ -24,6 +24,9 @@
     -moz-osx-font-smoothing: grayscale;
 }
 
+.icon-new-balance:before {
+    content: "\e90a";
+}
 .icon-new-vip:before {
     content: "\e905";
 }

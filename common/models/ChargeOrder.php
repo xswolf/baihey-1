@@ -52,15 +52,15 @@ class ChargeOrder extends Base
      * @param $data
      * @return mixed
      */
-    public function createOrder($data)
+    public function createOrder($user_id,$data)
     {
 
         $order = $this->getInstance();
         $goods = ChargeGoods::getInstance()->getOne($data['goodsId']);
-        $order['user_id'] = $data['user_id'];
+        $order['user_id'] = $user_id;
         $order['order_id'] = ChargeOrder::getInstance()->createOrderId();
         $order['native_money'] = $goods['native_price'];
-        if ($data['goodsId'] == 8) {
+        if ($data['goodsId'] == 8 || $data['goodsId'] == 9) {
             $order['money'] = $data['money'] * 100;
         } else {
             $order['money'] = $goods['price'];
