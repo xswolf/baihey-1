@@ -146,6 +146,7 @@ define(['app/module', 'app/directive/directiveApi'
         }
 
 
+        // 用户身份是否验证 TODO 用户验证了之后localStorage是否能够得到更新
         var userInfoList = ar.getStorage('messageList');
         for (var i in userInfoList) {
             if ($scope.receiveId == userInfoList[i].id) {
@@ -164,20 +165,19 @@ define(['app/module', 'app/directive/directiveApi'
         }
 
         //  获取历史聊天数据
-        $scope.receiveId = $location.search().id;// 获取接受者ID
-        $scope.real_name = $location.search().real_name;
-        $scope.sex = $location.search().sex;
-        $scope.age = $location.search().age;
+        $scope.real_name      = $location.search().real_name;
+        $scope.sex            = $location.search().sex;
+        $scope.age            = $location.search().age;
         $scope.receiveHeadPic = $location.search().head_pic.replace(/~2F/g, "/");
-        $scope.sendHeadPic = JSON.parse(ar.getStorage('userInfo').info).head_pic;
+        $scope.sendHeadPic    = JSON.parse(ar.getStorage('userInfo').info).head_pic;
         api.getUserInfo($scope.receiveId).success(function (res) {
             $rootScope.receiveUserInfo = res.data;
         });
 
         api.list("/wap/message/message-history", {id: $scope.receiveId}).success(function (data) {
-            list != null ? list = list.concat(data) : list = data;
-            $scope.historyListHide = ar.getStorage('chat_messageHistory' + $scope.receiveId);
-            $rootScope.historyListHide = $scope.historyListHide == null ? $scope.historyListHide = data : $scope.historyListHide = $scope.historyListHide.concat(data);
+            list                       = list != null ?  list.concat(data) : data;
+            $scope.historyListHide     = ar.getStorage('chat_messageHistory' + $scope.receiveId);
+            $rootScope.historyListHide = $scope.historyListHide == null ? data : $scope.historyListHide.concat(data);
             ar.setStorage('chat_messageHistory' + $scope.receiveId, $scope.historyListHide);
             var messageList = ar.getStorage('messageList');
 
@@ -190,9 +190,7 @@ define(['app/module', 'app/directive/directiveApi'
             ar.setStorage('messageList', messageList);
             $scope.doRefresh();
         }).error(function () {
-
             console.log('页面message.js出现错误，代码：/wap/chat/message-history');
-
         })
 
         // 实例化上传图片插件
@@ -230,16 +228,9 @@ define(['app/module', 'app/directive/directiveApi'
 
                 flagTime != undefined ? '' : flagTime = ar.timeStamp();
                 var id = ar.getId($scope.historyList);
-                var message = {
-                    id: id,
-                    message: serverId,
-                    send_user_id: sendId,
-                    receive_user_id: receiveID,
-                    type: type,
-                    status: 3,
-                    time: flagTime
-                };
+                var message = {id: id,message: serverId,send_user_id: sendId,receive_user_id: receiveID,type: type,status: 3,time: flagTime};
 
+                // 图片上传发送消息回调时不写localStorage,因为上传的时候已经写过了
                 if (!(serverId != 'view' && type == 'pic')) {
                     $scope.historyList.push(message);
                     ar.setStorage('chat_messageHistory' + receiveID, $scope.historyList); // 每次发送消息后把消息放到浏览器端缓存
