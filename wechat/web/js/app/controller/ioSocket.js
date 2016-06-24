@@ -8,7 +8,7 @@ define(['app/module', 'app/directive/directiveApi'
 
     module.controller("message.chat1", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$ionicModal', '$ionicActionSheet', '$ionicLoading', '$ionicScrollDelegate', 'FileUploader', '$http', '$location', '$rootScope', function (api, $scope, $timeout, $ionicPopup, $ionicModal, $ionicActionSheet, $ionicLoading, $ionicScrollDelegate, FileUploader, $http, $location, $rootScope) {
 
-        $scope.sendId = ar.getCookie("bhy_user_id");
+        $scope.sendId    = ar.getCookie("bhy_user_id");
         $scope.receiveId = $location.search().id;
 
         $scope.hideMultiOnKeyboard = function () {
