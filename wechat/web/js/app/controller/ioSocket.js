@@ -220,7 +220,7 @@ define(['app/module', 'app/directive/directiveApi'
             // 监听离开聊天页面，断掉socket
             $scope.$on('$destroy', function () {
                 socket.emit('tell name', {send_user_id: $scope.sendId, receive_user_id:$scope.receiveId, status: 0});
-                socket.removeListener($scope.sendId);
+                socket.disconnect();
             });
 
             // 播放语音
@@ -315,15 +315,14 @@ define(['app/module', 'app/directive/directiveApi'
                     ar.setStorage('chat_messageHistory' + $scope.receiveId, $scope.historyList); // 每次发送消息后把消息放到浏览器端缓存
                     return ;
                 }
-                var setMessageStatus = function (response) {
+                var setMessage = function (response) {
                     if (response.type == 'madd' || response.type == 'remove' || response.type == 'add') return;
-
+                    response.message = response.message.replace(/&quot;/g, "\"");
                     if ($scope.sendId == response.send_user_id) {  // 响应自己发送的消息
                         for (var i in $scope.historyList) {
                             if (response.status == 1) { // 如果对方在线，所有消息均设置已读
                                 $scope.historyList[i].status = 1;
                             }
-                            response.message = response.message.replace(/&quot;/g, "\"");
                             if (response.time == $scope.historyList[i].time &&
                                 (response.message == $scope.historyList[i].message ||
                                 response.type == 'pic')) {
@@ -336,6 +335,7 @@ define(['app/module', 'app/directive/directiveApi'
                         $scope.historyList.push(response);
                     }
                     $rootScope.historyList = $scope.historyList;
+                    console.log($scope.historyList)
                     ar.setStorage('chat_messageHistory' + $scope.receiveId, $scope.historyList); // 每次发送消息后把消息放到浏览器端缓存
                 }
 
@@ -345,7 +345,7 @@ define(['app/module', 'app/directive/directiveApi'
                             serverId: response.message, // 需要下载的音频的服务器端ID，由uploadVoice接口获得
                             success: function (res) {
                                 //response.message = res.localId;
-                                setMessageStatus(response);
+                                setMessage(response);
                                 viewScroll.scrollBottom(); // 滚动至底部
                                 $scope.$apply();
                             }
@@ -353,7 +353,7 @@ define(['app/module', 'app/directive/directiveApi'
                         break;
 
                     default :
-                        setMessageStatus(response);
+                        setMessage(response);
                         viewScroll.scrollBottom();  // 滚动至底部
                         $scope.$apply();
                         break;
