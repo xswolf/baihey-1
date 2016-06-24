@@ -318,7 +318,7 @@ define(['app/module', 'app/directive/directiveApi'
 
                     if ($scope.sendId == response.send_user_id) {  // 响应自己发送的消息
                         for (var i in $scope.historyList) {
-                            if (response.status == 1) {
+                            if (response.status == 1) { // 如果对方在线，所有消息均设置已读
                                 $scope.historyList[i].status = 1;
                             }
                             response.message = response.message.replace(/&quot;/g, "\"");
