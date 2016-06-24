@@ -2,7 +2,6 @@
 namespace wechat\models;
 
 use common\models\Base;
-use common\util\Cookie;
 use yii\db\Query;
 
 /**
@@ -15,7 +14,7 @@ class UserMessage extends \common\models\Base
 {
 
     protected $_user_information_table = 'user_information';
-    protected $_user_table = 'user';
+    protected $_user_table             = 'user';
 
     /**
      * 查询消息列表
@@ -24,19 +23,19 @@ class UserMessage extends \common\models\Base
      */
     public function messageList($where = [], $user_id)
     {
-        $pageSize = 20;
-        $where['pageNum'] = isset($where['pageNum']) ? $where['pageNum'] : 1;
-        $offset = ($where['pageNum'] - 1) * $pageSize;
-        $userTable = $this->getDb()->tablePrefix . $this->_user_table;
+        $pageSize             = 20;
+        $where['pageNum']     = isset($where['pageNum']) ? $where['pageNum'] : 1;
+        $offset               = ($where['pageNum'] - 1) * $pageSize;
+        $userTable            = $this->getDb()->tablePrefix . $this->_user_table;
         $userInformationTable = $this->getDb()->tablePrefix . $this->_user_information_table;
-        $sql = "SELECT u.username,u.sex,u.phone,i.info,i.auth,c.* FROM $userTable u INNER JOIN $userInformationTable i ON u.id=i.user_id
+        $sql                  = "SELECT u.username,u.sex,u.phone,i.info,i.auth,c.* FROM $userTable u INNER JOIN $userInformationTable i ON u.id=i.user_id
 INNER JOIN
 (
 SELECT m.id,m.send_user_id,m.receive_user_id,message,m.create_time,STATUS,tmp.sumSend, m.send_user_id other FROM bhy_user_message  m INNER JOIN (
 SELECT send_user_id,COUNT(send_user_id) sumSend,MAX(create_time) create_time FROM bhy_user_message WHERE receive_user_id = $user_id AND STATUS=2 GROUP BY send_user_id
 )tmp ON m.send_user_id = tmp.send_user_id AND m.create_time = tmp.create_time
 ) c ON u.id=c.other GROUP BY c.other ORDER BY create_time DESC limit $offset,$pageSize";
-        $result = $this->getDb()->createCommand($sql)->queryAll();
+        $result               = $this->getDb()->createCommand($sql)->queryAll();
 
         return $result;
     }
@@ -48,7 +47,7 @@ SELECT send_user_id,COUNT(send_user_id) sumSend,MAX(create_time) create_time FRO
     public function messageSum($user_id)
     {
         $condition = ['receive_user_id' => $user_id, 'status' => 2];
-        $result = (new Query())
+        $result    = (new Query())
             ->select(['count(id) sumSend'])
             ->where($condition)
             ->from(static::tableName())
@@ -80,17 +79,17 @@ SELECT send_user_id,COUNT(send_user_id) sumSend,MAX(create_time) create_time FRO
      */
     public function sendBribery($sendId, $receiveId, $money, $bri_message)
     {
-        $tran = \Yii::$app->db->beginTransaction();
-        $model = Base::getInstance('user_bribery');
-        $model->send_user_id = $sendId;
+        $tran                   = \Yii::$app->db->beginTransaction();
+        $model                  = Base::getInstance('user_bribery');
+        $model->send_user_id    = $sendId;
         $model->receive_user_id = $receiveId;
-        $model->money = $money;
-        $model->create_time = time();
-        $model->status = 0;
-        $model->bri_message = $bri_message;
-        if ($model->insert(true) ) {
-            $id  = \Yii::$app->db->lastInsertID;
-            if ( User::getInstance()->changeBalance($sendId , $money)){
+        $model->money           = $money;
+        $model->create_time     = time();
+        $model->status          = 0;
+        $model->bri_message     = $bri_message;
+        if ($model->insert(true)) {
+            $id = \Yii::$app->db->lastInsertID;
+            if (User::getInstance()->changeBalance($sendId, $money)) {
                 $tran->commit();
             }
 
