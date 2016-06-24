@@ -204,8 +204,8 @@ define(['app/module', 'app/directive/directiveApi'
                 wx.setConfig(JSON.parse(data.config));
             })
 
-            //socket = socket.connect("http://120.76.84.162:8088");
-            socket = socket.connect("http://127.0.0.1:8088");
+            socket = socket.connect("http://120.76.84.162:8088");
+            //socket = socket.connect("http://127.0.0.1:8088");
 
             // 告诉服务器你已经上线
             socket.emit('tell name', {send_user_id: $scope.sendId, receive_user_id:$scope.receiveId, status: 1});
