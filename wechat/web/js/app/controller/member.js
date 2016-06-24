@@ -2289,51 +2289,13 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
     // 我的账户-消费记录
     module.controller("member.account_record", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$location', function (api, $scope, $timeout, $ionicPopup, $location) {
 
+        $scope.recordList = [];
         api.get('/wap/member/get-record-list', {}).success(function (res) {
-            console.log(res);
+            if(res.status > 0){
+                $scope.recordList = res.data;
+            }
         })
 
-        $scope.recordList = [        // TODO 测试数据
-            {
-                date: '2016年6月', amount: 351.00, items: [
-                {id: 11, datetime: 1465084084, title: '提现', money: 254.00},
-                {id: 12, datetime: 1465756982, title: '嘉瑞红包', money: 55.00},
-                {id: 13, datetime: 1465797015, title: '嘉瑞红包', money: 42.00}
-            ]
-            },
-            {
-                date: '2016年5月', amount: 115.00, items: [
-                {id: 9, datetime: 1462321087, title: '嘉瑞红包', money: 87.00},
-                {id: 10, datetime: 1462975094, title: '嘉瑞红包', money: 18.00}
-            ]
-            },
-            {
-                date: '2016年4月', amount: 1186.00, items: [
-                {id: 7, datetime: 1461575123, title: '嘉瑞红包', money: 187.00},
-                {id: 8, datetime: 1461854935, title: '嘉瑞红包', money: 999.00}
-            ]
-            },
-            {
-                date: '2016年3月', amount: 514.20, items: [
-                {id: 5, datetime: 1457165104, title: '嘉瑞红包', money: 320.00},
-                {id: 6, datetime: 1458254518, title: '嘉瑞红包', money: 5.20}
-
-            ]
-            },
-            {
-                date: '2016年2月', amount: 311.00, items: [
-                {id: 4, datetime: 1454474084, title: '提现', money: 189.00},
-                {id: 3, datetime: 1454378584, title: '嘉瑞红包', money: 122.00}
-            ]
-            },
-            {
-                date: '2016年1月', amount: 136.50, items: [
-                {id: 1, datetime: 1451965812, title: '嘉瑞红包', money: 88.50},
-                {id: 2, datetime: 1452533636, title: '嘉瑞红包', money: 48.00}
-
-            ]
-            }
-        ];
         $scope.pageSize = 1;
         $scope.isMore = true;
 
@@ -2350,56 +2312,6 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
         $scope.moreDataCanBeLoaded = function () {
             return $scope.isMore
         }
-
-        var data =
-            [
-                { Phase: "Phase 1", Step: "Step 1", Task: "Task 1", Value: "5" },
-                { Phase: "Phase 1", Step: "Step 1", Task: "Task 2", Value: "10" },
-                { Phase: "Phase 1", Step: "Step 2", Task: "Task 1", Value: "15" },
-                { Phase: "Phase 1", Step: "Step 2", Task: "Task 2", Value: "20" },
-                { Phase: "Phase 2", Step: "Step 1", Task: "Task 1", Value: "25" },
-                { Phase: "Phase 2", Step: "Step 1", Task: "Task 2", Value: "30" },
-                { Phase: "Phase 2", Step: "Step 2", Task: "Task 1", Value: "35" },
-                { Phase: "Phase 2", Step: "Step 2", Task: "Task 2", Value: "40" }
-            ];
-
-        Array.prototype.groupBy = function(hash){
-            var _hash = hash ? hash : function(o){return o;};
-
-            var _map = {};
-            var put = function(map, key, value){
-                if (!map[_hash(key)]) {
-                    map[_hash(key)] = {};
-                    map[_hash(key)].group = [];
-                    map[_hash(key)].key = key;
-
-                }
-                map[_hash(key)].group.push(value);
-            }
-
-            this.map(function(obj){
-                put(_map, obj, obj);
-            });
-
-            return Object.keys(_map).map(function(key){
-                return {key: _map[key].key, group: _map[key].group};
-            });
-        }
-
-        data = data.groupBy(function(o){return JSON.stringify({a: o.Phase});})
-            /* aggreagating */
-            .map(function(el){
-                var sum = el.group.reduce(
-                    function(l,c){
-                        return l + parseInt(c.Value);
-                    },
-                    0
-                );
-                el.key.Value = sum;
-                return el.key;
-            });
-
-        console.dir(data);
 
     }]);
 

@@ -23,7 +23,7 @@
                       href="#/main/chat1?id={{messageInfo.other}}&head_pic={{messageInfo.info.head_pic}}&real_name={{messageInfo.info.real_name}}&sex={{messageInfo.sex}}&age={{messageInfo.info.age}}">
                 <div class="row">
                     <div class="msg_u_img mr20 pr fl">
-                        <img class="item_uimg rounded" ng-src="{{messageInfo.info.head_pic}}" width="56" height="56" onerror="this.src='/wechat/web/images/no_img.png'">
+                        <img class="item_uimg rounded" ng-src="{{messageInfo.info.head_pic | isNull}}" width="56" height="56" onerror="this.src='/wechat/web/images/no_img.png'">
                         <i class="info_nb" ng-if="messageInfo.receive_user_id == userInfo.id && messageInfo.sumSend > 0">{{messageInfo.sumSend}}</i>
                     </div>
                     <p style="width: 65%;" class="">

@@ -399,17 +399,23 @@ class MemberController extends BaseController
     public function actionGetRecordList()
     {
         $user_id = Cookie::getInstance()->getCookie('bhy_id')->value;
-        $withdrawInfo = \common\models\User::getInstance()->getCashInfo(null, $user_id);
-        $briberyInfoInfo = \common\models\User::getInstance()->getBriberyInfo($user_id);
-        $newArr = ArrayHelper::merge($withdrawInfo, $briberyInfoInfo);
-        foreach ($newArr as $key => $value) {
-            foreach ($newArr[$key] as $k => $v) {
-                //时间戳转日期
-                $newArr[$key]['create_time'] = \Yii::$app->formatter->asDate($newArr[$key]['create_time'], 'yyyy年M月');
-                break;
-            }
+        $withdrawInfo = \common\models\User::getInstance()->getCashInfo(null, $user_id) ? \common\models\User::getInstance()->getCashInfo(null, $user_id) : [];
+        $briberyInfoInfo = \common\models\User::getInstance()->getBriberyInfo($user_id) ? \common\models\User::getInstance()->getBriberyInfo($user_id) : [];
+        foreach($withdrawInfo as $v){
+            array_unshift($v, "tx");
         }
-        var_dump($newArr);
+
+        $newArr = ArrayHelper::merge($withdrawInfo, $briberyInfoInfo);
+        $lastArr = [];
+            foreach ($newArr as $k => $v) {
+                $lastArr[date('Y年m月',$v['create_time'])]['date'] = date('Y年m月',$v['create_time']);
+                $lastArr[date('Y年m月',$v['create_time'])]['items'][] = $v;
+            }
+        if(count($lastArr) < 1){
+            $this->renderAjax(['status'=> 0, 'msg'=>'没有数据']);
+        }else{
+            $this->renderAjax(['status'=> 1, 'data'=>$lastArr]);
+        }
 
     }
 

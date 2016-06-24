@@ -15,7 +15,7 @@
             </div>
             <ion-item class="item-avatar" href="#/main/userInfo?userId={{f.other}}"
                       ng-repeat="f in followList">
-                <img src="{{f.info.head_pic}}" onerror="this.src='/wechat/web/images/no_img.png'">
+                <img ng-src="{{f.info.head_pic | isNull}}" onerror="this.src='/wechat/web/images/no_img.png'">
                 <h2 class="clearfix">
                     <span class="fl">{{f.info.real_name | sex:f.sex :f.info.age}}</span>
                 </h2>

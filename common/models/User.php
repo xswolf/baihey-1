@@ -150,7 +150,7 @@ class User extends Base
             'local' => '',// 当地地区（地区切换使用）
             'height' => '',// 身高 1
             'weight' => '',// 体重
-            'head_pic' => ' ',// 头像 1
+            'head_pic' => '',// 头像 1
             'real_name' => '',// 真实姓名
             'identity_id' => '',// 身份证号码
             'identity_address' => '',// 身份证地址
@@ -663,7 +663,7 @@ class User extends Base
         } else {
             if (!empty($user_id)) {      // 根据user_id查询所属用户全部提现记录
                 $row = (new Query)
-                    ->select(['cash.money','card.name','card.card_no','cash.create_time','cash.status'])
+                    ->select(['cash.money','concat_ws(\'-\',card.name,card.card_no) as name','cash.create_time','cash.status','concat(\'提现\') as type'])
                     ->from($cashTable.' cash')
                     ->leftJoin($cashCardTable . ' card', 'cash.cash_card_id = card.id')
                     ->where(['cash.user_id' => $user_id])   //TODO cash.status = 1
@@ -686,7 +686,7 @@ class User extends Base
         $informationTable = $this->tablePrefix . 'user_information';
         if (isset($user_id)) {
             $row = (new Query)
-                ->select(['b.money','json_extract (i.info, \'$.real_name\') AS name','b.create_time','b.status'])
+                ->select(['b.money','json_extract (i.info, \'$.real_name\') AS name','b.create_time','b.status','concat(\'嘉瑞红包\') as type'])
                 ->from($briberyTable.' b')
                 ->leftJoin($informationTable . ' i', 'b.receive_user_id = i.user_id')
                 ->where(['b.send_user_id' => $user_id])   //TODO b.status = 1

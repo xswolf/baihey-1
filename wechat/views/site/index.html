@@ -6,7 +6,7 @@
     </ion-header-bar>
     <ion-content class="com_w_100 has-header site" delegate-handle="mainScroll">
         <div class="row" ng-if="userInfo.info">
-            <div class="col col-25"><img class="item_uimg rounded" ng-src="{{userInfo.info.head_pic}}"
+            <div class="col col-25"><img class="item_uimg rounded" ng-src="{{userInfo.info.head_pic | isNull}}"
                                          onerror="this.src='/wechat/web/images/u_noimg.jpg'"></div>
             <div class="col col-75">
                 <div class="row pl0">
@@ -39,7 +39,7 @@
             <ion-item ng-repeat="user in userList" ng-if="user.id != userInfo.id">
                 <div class="row">
                     <div class="col col-25"><a class="tdn" href="#/main/userInfo?userId={{user.user_id}}"><img class="item_uimg rounded"
-                                                                       ng-src="{{user.info.head_pic}}"
+                                                                       ng-src="{{user.info.head_pic | isNull}}"
                                                                        onerror="this.src='/wechat/web/images/no_img.png'"></a>
                     </div>
 

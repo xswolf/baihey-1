@@ -12,7 +12,7 @@
             <div class="ask_top_bg clearfix">
                 <div class="ask_user_box">
                     <p class="mt10">
-                        <img src="{{userInfo.head_pic}}">
+                        <img ng-src="{{userInfo.head_pic | isNull}}" onerror="this.src='/wechat/web/images/no_img.png'">
                     </p>
                     <p class="mb0">{{userInfo.real_name | sex:vo.sex :userInfo.age}}</p>
                     <p class="mb10">

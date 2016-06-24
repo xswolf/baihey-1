@@ -8,7 +8,8 @@ return [
         // ...
         'db' => [
             'class' => 'yii\db\Connection',
-            'dsn' => 'mysql:host=120.76.84.162;dbname=bhy', // MySQL, MariaDB
+            'dsn' => 'mysql:host=120.76.84.162;dbname=bhy', // MySQL, MariaDB 线上
+//            'dsn' => 'mysql:host=localhost;dbname=bhy', // MySQL, MariaDB 本地
             'username' => 'jrbaihe', //数据库用户名
             'password' => 'jrbh*2016', //数据库密码
             'charset' => 'utf8',
@@ -50,4 +51,3 @@ return [
         'debug' => 'yii\debug\Module',
     ]
 ];
-
