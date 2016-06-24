@@ -8,6 +8,13 @@ define(['app/module', 'app/directive/directiveApi'
 
     module.controller("message.chat1", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$ionicModal', '$ionicActionSheet', '$ionicLoading', '$ionicScrollDelegate', 'FileUploader', '$http', '$location', '$rootScope', function (api, $scope, $timeout, $ionicPopup, $ionicModal, $ionicActionSheet, $ionicLoading, $ionicScrollDelegate, FileUploader, $http, $location, $rootScope) {
 
+        // 设置消息状态为已看
+        $scope.setMessageStatus = function (list) {
+            for (var i in list){
+                list[i].status = 1;
+            }
+            return list;
+        }
         $scope.sendId    = ar.getCookie("bhy_user_id");
         $scope.receiveId = $location.search().id;
 
@@ -175,12 +182,17 @@ define(['app/module', 'app/directive/directiveApi'
         });
 
         api.list("/wap/message/message-history", {id: $scope.receiveId}).success(function (data) {
+
             list                       = list != null ?  list.concat(data) : data;
             $scope.historyListHide     = ar.getStorage('chat_messageHistory' + $scope.receiveId);
             $rootScope.historyListHide = $scope.historyListHide == null ? data : $scope.historyListHide.concat(data);
-            ar.setStorage('chat_messageHistory' + $scope.receiveId, $scope.historyListHide);
-            var messageList = ar.getStorage('messageList');
 
+            if (data.length > 0){ // 如果有新消息，所有消息状态为已看
+                list = $scope.setMessageStatus(list);
+            }
+            ar.setStorage('chat_messageHistory' + $scope.receiveId, $scope.historyListHide);
+
+            var messageList = ar.getStorage('messageList');
             for (var i in messageList) { // 设置消息列表已看状态
                 if (messageList[i].send_user_id == $scope.receiveId) {
                     messageList[i].sumSend = 0;
@@ -301,9 +313,11 @@ define(['app/module', 'app/directive/directiveApi'
             }
 
             // 消息响应回调函数
-            socket.on($scope.sendId + '-' + $scope.receiveId, function (msg) {
-                var response = msg;
-
+            socket.on($scope.sendId + '-' + $scope.receiveId, function (response) {
+                if(response == "10086"){
+                    $scope.historyList = $scope.setMessageStatus($scope.historyList);
+                    return ;
+                }
                 var setMessageStatus = function (response) {
                     if (response.type == 'madd' || response.type == 'remove' || response.type == 'add') return;
 

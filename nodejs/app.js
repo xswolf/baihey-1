@@ -46,6 +46,7 @@ io.on('connection', function (socket) {
             if (userList.indexOf(socket.username) == -1) {
                 userList.push(socket.username);
             }
+            io.emit(msg.receive_user_id + '-' + msg.send_user_id, '10086'); // 消息内容10086为用户上线广播
             console.log(' user id:' + msg.send_user_id + ' is connected', userList);
         } else {  // 用户下线
             userList.remove(socket.username);
