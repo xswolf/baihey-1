@@ -6,7 +6,7 @@
     <ion-content class="bhy com_w_100 m_bg">
         <ion-list show-delete="shouldShowDelete">
             <ion-item class="item-avatar" href="#/main/userInfo?userId={{f.other}}" ng-repeat="f in followList">
-                <img src="{{f.info.head_pic}}">
+                <img ng-src="{{f.info.head_pic | isNull}}" onerror="this.src='/wechat/web/images/no_img.png'">
                 <h2>{{f.info.real_name | sex:f.sex :f.info.age}}
                     <span ng-if="honesty(f.honesty_value)" class="identity id">身份证</span>
                     <span ng-if="f.phone" class="identity phone">手机</span>

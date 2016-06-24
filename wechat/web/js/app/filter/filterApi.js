@@ -474,4 +474,27 @@ define(['app/module'], function (module) {
             return '失败';
         }
     })
+
+    module.filter('amount', function () {
+        return function (arr) {
+            var sum = 0;
+            if(arr){
+                for(var i in arr){
+                    sum += parseInt(arr[i].money);
+                }
+                return sum;
+            }
+            return sum;
+        }
+    })
+
+    module.filter('isNull', function () {
+        return function (value) {
+           if(value.toString()){
+               return value;
+           }else{
+               return ' ';
+           }
+        }
+    })
 })

@@ -9,7 +9,7 @@
     <ion-content class="bhy com_w_100 rendezvous" style="background: #e1e2e1;" delegate-handle="mainScroll">
         <div class="list card" ng-repeat = "vo in list" ng-if="list.length > 0">
             <div class="item item-avatar">
-                <img src="{{vo.info.head_pic}}">
+                <img ng-src="{{vo.info.head_pic | isNull}}" onerror="this.src='/wechat/web/images/no_img.png'">
                 <h2>
                     <span class="fl">{{vo.info.real_name | sex:vo.sex :vo.info.age}}</span>
                     <span class="fl cor5 fs12 ml5 lh20">{{vo.info.age | timeToAge}} {{vo.info.is_marriage | marriage}}</span>

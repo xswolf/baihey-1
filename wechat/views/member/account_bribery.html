@@ -9,7 +9,7 @@
     <ion-content class="bhy com_w_100 bribery">
         <div class="user_bri_rec_info mb15">
             <div class="padding pr">
-                <p class="tac mt40"><img class="u_img" src="/wechat/web/images/test.jpg" width="80" height="80"></p>
+                <p class="tac mt40"><img class="u_img" width="80" height="80" ng-src="{{userInfo.info.head_pic | isNull}}" onerror="this.src='/wechat/web/images/no_img.png'"></p>
                 <p class="tac fs18">共{{tab==1 ? '收到' : '发出'}}{{numAndmoney.number}}个红包</p>
                 <p class="mt20 fs40 tac mb0">{{numAndmoney.money | currency:'￥'}}</p>
                 <div class="date">

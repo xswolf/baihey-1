@@ -5,7 +5,7 @@
     <ion-list>
             <ion-item class="member_hdr" href="#/main/member/information" style="padding: 0;">
                 <div class="fl u_img">
-                    <img class="rounded" src="{{userInfo.info.head_pic}}" onerror="this.src='/wechat/web/images/u_noimg.jpg'">
+                    <img class="rounded" src="{{userInfo.info.head_pic | isNull}}" onerror="this.src='/wechat/web/images/u_noimg.jpg'">
                 </div>
                 <div class="fl u_info ml10">
                     <p>
