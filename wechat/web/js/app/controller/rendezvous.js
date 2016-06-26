@@ -110,11 +110,11 @@ define(['app/module', 'app/directive/directiveApi'
         // 验证
         function validate() {
             if (!$scope.formData.mobile || $scope.formData.mobile == '') {
-                $ionicPopup.alert({title: '请输入您的手机号码'});
+                ar.saveDataAlert($ionicPopup, '请输入您的手机号码');
                 return false;
             }
             if (!ar.validateMobile($scope.formData.mobile)) {
-                $ionicPopup.alert({title: '手机号码格式有误'});
+                ar.saveDataAlert($ionicPopup, '手机号码格式有误');
                 return false;
             }
             return true;
@@ -128,7 +128,7 @@ define(['app/module', 'app/directive/directiveApi'
             // 发送验证码
             api.sendCodeMsg($scope.formData.mobile).success(function (data) {
                 if (!data.status) {
-                    $ionicPopup.alert({title: '短信发送失败，请稍后重试。'});
+                    ar.saveDataAlert($ionicPopup, '短信发送失败，请稍后重试。');
                     return false;
                 }
             });
@@ -162,18 +162,18 @@ define(['app/module', 'app/directive/directiveApi'
                     api.save('/wap/rendezvous/add-apply', $scope.formData).success(function (res) {
                         if (res.status) {  // 提交数据成功
 
-                            $ionicPopup.alert({title: '已向对方发送约会信息，请耐心等待对方回复'});
+                            ar.saveDataAlert($ionicPopup, '已向对方发送约会信息，请耐心等待对方回复');
                             window.location.hash = '#/rendezvous';
                             $timeout(function () {
                                 $location.url('/rendezvous');
                             }, 800);
 
                         } else {
-                            $ionicPopup.alert({title: '网络错误，请稍候重试！'});
+                            ar.saveDataAlert($ionicPopup, '网络错误，请稍候重试！');
                         }
                     })
                 } else {   // 错误
-                    $ionicPopup.alert({title: '验证码错误，请核对！'});
+                    ar.saveDataAlert($ionicPopup, '验证码错误，请核对！');
                 }
             })
         }

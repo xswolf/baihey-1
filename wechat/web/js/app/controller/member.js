@@ -52,7 +52,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
                 name: 'file-type-Res',
                 fn: function (item) {
                     if (!ar.msg_file_res_img(item)) {   // 验证文件是否是图片格式
-                        $ionicPopup.alert({title: '只能上传图片类型的文件！'});
+                        ar.saveDataAlert($ionicPopup, '只能上传图片类型的文件！');
                         return false;
                     }
                     return true;
@@ -75,11 +75,11 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
                     $scope.imgList.push({id: response.id, thumb_path: response.thumb_path, is_head: 0});
                     //}
                 } else {
-                    $ionicPopup.alert({title: '上传图片失败！'});
+                    ar.saveDataAlert($ionicPopup, '上传图片失败！');
                 }
             };
             uploader.onErrorItem = function (fileItem, response, status, headers) {  // 上传出错
-                $ionicPopup.alert({title: '上传图片出错！'});
+                ar.saveDataAlert($ionicPopup, '上传图片出错！');
                 $scope.hideLoading();  // 隐藏loading
             };
             uploader.onCompleteItem = function (fileItem, response, status, headers) {  // 上传结束
@@ -113,7 +113,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
                 },
                 buttonClicked: function (i) {
                     if ($scope.imgList[index].is_check != 1) {
-                        $ionicPopup.alert({title: '图片未审核'});
+                        ar.saveDataAlert($ionicPopup, '图片未审核');
                         hideSheet();
                         return false;
                     }
@@ -434,7 +434,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
         $scope.saveData = function () {
 
             if ($scope.useroccSmall == 0) {
-                $ionicPopup.alert({title: '请选择工作岗位'});
+                ar.saveDataAlert($ionicPopup, '请选择工作岗位');
                 return false;
             } else {
                 $scope.formData.occupation = $scope.useroccBig + '-' + $scope.useroccSmall;
@@ -1546,7 +1546,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
                 if (res.data) {     // 成功
                     $scope.followList.splice($index, 1);
                 } else {            // 失败
-                    $ionicPopup.alert({title: '取消关注失败'});
+                    ar.saveDataAlert($ionicPopup, '取消关注失败');
                 }
             })
         }
@@ -1850,7 +1850,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
 
             api.getMobileIsExist($scope.User.mobile).success(function (data) {
                 if (!data.status) {
-                    $ionicPopup.alert({title: data.msg});
+                    ar.saveDataAlert($ionicPopup, data.msg);
                     return false;
                 } else {
                     //计时
@@ -1864,7 +1864,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
                     api.sendCodeMsg($scope.User.mobile).success(function (data) {
 
                         if (!data.status) {
-                            $ionicPopup.alert({title: '短信发送失败，请稍后重试。'});
+                            ar.saveDataAlert($ionicPopup, '短信发送失败，请稍后重试。');
                             return false;
                         }
                     });
@@ -1874,23 +1874,23 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
             $scope.saveData = function () {
 
                 if ($scope.User.mobile == '') {
-                    $ionicPopup.alert({title: '手机号不能为空'});
+                    ar.saveDataAlert($ionicPopup, '手机号不能为空');
                     return false;
                 }
                 api.validateCode($scope.User.code).success(function (res) {
                     if (!res.status) {
-                        $ionicPopup.alert({title: '验证码错误'});
+                        ar.saveDataAlert($ionicPopup, '验证码错误');
                         return false;
                     } else {
                         var formData = [];
                         formData.phone = $scope.User.mobile;
                         api.save('/wap/user/update-user-data', formData).success(function (res) {
                             if (res.data) {
-                                $ionicPopup.alert({title: '手机绑定成功'});
+                                ar.saveDataAlert($ionicPopup, '手机绑定成功');
                                 $scope.userInfo.phone = $scope.User.mobile;
                                 $scope.getUserPrivacyStorage('#/member/security');
                             } else {
-                                $ionicPopup.alert({title: '手机绑定失败'});
+                                ar.saveDataAlert($ionicPopup, '手机绑定失败');
                             }
                         })
                     }
@@ -2251,7 +2251,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
                 user_id: ar.getCookie('bhy_user_id')
             }).success(function (res) {
                 if (res.status < 1) {
-                    $ionicPopup.alert({title: res.msg});
+                    ar.saveDataAlert($ionicPopup, res.msg);
                 } else {
                     $location.url('/charge_index?orderId=' + res.data);
                 }
@@ -2301,7 +2301,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
                 money: $scope.formData.money
             }).success(function (res) {
                 if (res.status < 1) {
-                    $ionicPopup.alert({title: res.msg});
+                    ar.saveDataAlert($ionicPopup, res.msg);
                 } else {
                     $location.url('/charge_index?orderId=' + res.data);
                 }
@@ -2323,7 +2323,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
                 money: $scope.formData.customize
             }).success(function (res) {
                 if (res.status < 1) {
-                    $ionicPopup.alert({title: res.msg});
+                    ar.saveDataAlert($ionicPopup, res.msg);
                 } else {
                     $location.url('/charge_index?orderId=' + res.data);
                 }
@@ -2785,30 +2785,30 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
         $scope.saveData = function () {
             $scope.formData.rendezvous_time = ar.currentDate;
             if (!$scope.formData.theme) {
-                $ionicPopup.alert({title: '请选择约会主题'});
+                ar.saveDataAlert($ionicPopup, '请选择约会主题');
                 return false;
             }
             if (!$scope.formData.title) {
-                $ionicPopup.alert({title: '请填写约会标题'});
+                ar.saveDataAlert($ionicPopup, '请填写约会标题');
                 return false;
             }
 
             if (!$scope.formData.destination) {
-                $ionicPopup.alert({title: '请填写目的地'});
+                ar.saveDataAlert($ionicPopup, '请填写目的地');
                 return false;
             }
             if (!$scope.formData.rendezvous_time) {
-                $ionicPopup.alert({title: '请填写出发时间'});
+                ar.saveDataAlert($ionicPopup, '请填写出发时间');
                 return false;
             }
             if (!$scope.formData.fee_des) {
-                $ionicPopup.alert({title: '请选择费用说明'});
+                ar.saveDataAlert($ionicPopup, '请选择费用说明');
                 return false;
             }
 
             api.save('/wap/rendezvous/release', $scope.formData).success(function (res) {
                 if (res.data) {
-                    $ionicPopup.alert({title: '发布成功！'});
+                    ar.saveDataAlert($ionicPopup, '发布成功！');
                     $location.url('/member/rendezvous_put');
                 }
             })
@@ -3114,9 +3114,9 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
 
         $scope.acceptAlert = function (phone) {
             if (phone == null || typeof(phone) == undefined) {
-                $ionicPopup.alert({title: '请等待TA联系'});
+                ar.saveDataAlert($ionicPopup, '请等待TA联系');
             } else {
-                $ionicPopup.alert({title: 'TA的手机号码：' + phone});
+                ar.saveDataAlert($ionicPopup, 'TA的手机号码：' + phone);
             }
         }
 

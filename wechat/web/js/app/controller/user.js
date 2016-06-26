@@ -117,11 +117,11 @@ define(['app/module', 'app/directive/directiveApi'
                     ar.setStorage('userInfo', data.data);
                     $location.url('/index');
                 } else {
-                    $ionicPopup.alert({title: '用户名或者密码错误'});
+                    ar.saveDataAlert($ionicPopup, '用户名或者密码错误');
                 }
 
             }).error(function () {
-                $ionicPopup.alert({title: '网络连接错误，请重试'});
+                ar.saveDataAlert($ionicPopup, '网络连接错误，请重试');
             })
 
         }
@@ -129,12 +129,12 @@ define(['app/module', 'app/directive/directiveApi'
         $scope.User.validateFrom = function () {
 
             if (!$scope.User.username) {
-                $ionicPopup.alert({title: '请输入您的手机号码或ID'});
+                ar.saveDataAlert($ionicPopup, '请输入您的手机号码或ID');
                 return false;
             }
 
             if (!$scope.User.password) {
-                $ionicPopup.alert({title: '请输入您的密码'});
+                ar.saveDataAlert($ionicPopup, '请输入您的密码');
                 return false;
             }
             return true;
@@ -161,13 +161,13 @@ define(['app/module', 'app/directive/directiveApi'
             setTimeout($scope.User.endTime, $scope.User.max_time * 1000);
 
             if (!ar.validateMobile($scope.User.mobile)) {  // 验证手机格式
-                $ionicPopup.alert({title: '手机号码格式不正确'});
+                ar.saveDataAlert($ionicPopup, '手机号码格式不正确');
                 return false;
             }
 
             api.sendCodeMsg($scope.User.mobile).success(function (data) {
                 if (!data.status) {
-                    $ionicPopup.alert({title: '短信发送失败，请稍后重试。'});
+                    ar.saveDataAlert($ionicPopup, '短信发送失败，请稍后重试。');
                     return false;
                 }
 
@@ -201,7 +201,7 @@ define(['app/module', 'app/directive/directiveApi'
                 if (data.status) {   //验证成功则跳转设置新密码页
                     window.location.href = '/wap/user/setpass?mobile=' + $scope.User.mobile;
                 } else {
-                    $ionicPopup.alert({title: '验证码不正确'});
+                    ar.saveDataAlert($ionicPopup, '验证码不正确');
                     return false;
                 }
             });
@@ -222,12 +222,12 @@ define(['app/module', 'app/directive/directiveApi'
         $scope.User.setpass = function () {
 
             if (!ar.validatePass($scope.User.password)) {
-                $ionicPopup.alert({title: '密码不能少于6位字符'})
+                ar.saveDataAlert($ionicPopup, '密码不能少于6位字符');
                 return false;
             }
 
             if ($scope.User.password != $scope.User.repassword) {
-                $ionicPopup.alert({title: '两次输入的密码不一致'});
+                ar.saveDataAlert($ionicPopup, '两次输入的密码不一致');
                 return false;
             }
 
@@ -237,10 +237,10 @@ define(['app/module', 'app/directive/directiveApi'
                     window.location.href = '/wap/user/login'
 
                 } else {
-                    $ionicPopup.alert({title: '设置密码失败'});
+                    ar.saveDataAlert($ionicPopup, '设置密码失败');
                 }
             }).error(function () {
-                $ionicPopup.alert({title: '网络错误，请稍候再试'});
+                ar.saveDataAlert($ionicPopup, '网络错误，请稍候再试');
             });
 
         }

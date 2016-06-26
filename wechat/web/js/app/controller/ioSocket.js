@@ -86,7 +86,7 @@ define(['app/module', 'app/directive/directiveApi'
                 if (res.data) {
                     $scope.u_isFollow = false;
                     // 成功，提示
-                    $ionicPopup.alert({title: '加关注成功'});
+                    ar.saveDataAlert($ionicPopup, '加关注成功');
                 }
             });
         }
@@ -316,7 +316,7 @@ define(['app/module', 'app/directive/directiveApi'
                     fn: function (item) {
 
                         if (!ar.msg_file_res_img(item)) {   // 验证文件是否是图片格式
-                            $ionicPopup.alert({title: '只能发送图片类型的文件！'});
+                            ar.saveDataAlert($ionicPopup, '只能发送图片类型的文件！');
                             return false;
                         }
                         return true;
@@ -420,7 +420,7 @@ define(['app/module', 'app/directive/directiveApi'
         $scope.bri_submit = function () {
 
             if ($scope.money == 0) {
-                $ionicPopup.alert({title: '红包金额不合法'});
+                ar.saveDataAlert($ionicPopup, '红包金额不合法');
                 return false;
             }
             $scope.briFormData = {

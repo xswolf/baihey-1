@@ -247,7 +247,7 @@ define(['app/module', 'app/directive/directiveApi'
                 name: 'file-type-Res',
                 fn: function (item) {
                     if (!ar.msg_file_res_img(item)) {   // 验证文件是否是图片格式
-                        $ionicPopup.alert({title: '只能上传图片类型的文件！'});
+                        ar.saveDataAlert($ionicPopup, '只能上传图片类型的文件！');
                         return false;
                     }
                     return true;
@@ -265,11 +265,11 @@ define(['app/module', 'app/directive/directiveApi'
                     $scope.imgList.push({id: id, thumb_path: response.thumb_path});
                     id++;
                 } else {
-                    $ionicPopup.alert({title: '上传图片失败！'});
+                    ar.saveDataAlert($ionicPopup, '上传图片失败！');
                 }
             };
             uploader.onErrorItem = function (fileItem, response, status, headers) {  // 上传出错
-                $ionicPopup.alert({title: '上传图片出错！'});
+                ar.saveDataAlert($ionicPopup, '上传图片出错！');
                 $scope.hideLoading();  // 隐藏loading
             };
             uploader.onCompleteItem = function (fileItem, response, status, headers) {  // 上传结束
