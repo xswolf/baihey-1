@@ -24,6 +24,28 @@
   width: 100%;
   z-index: 99;
 }
+a.menuBtn {
+  color: #444;
+  float: left;
+  font-size: 10.5pt;
+  line-height: 13.5pt;
+  position: relative;
+  text-align: center;
+  width: 20%;
+  text-decoration: none;
+}
+a.menuBtn > i {
+  font-size: 20px;
+}
+a.menuBtn > p {
+  font-size: 12px;
+}
+a.menuBtn.cur,
+a.menuBtn.cur:hover,
+a.menuBtn.cur:active {
+  color: #e4007f;
+  text-decoration: none;
+}
 /* login */
 .login_bg {
   background: url("/wechat/web/images/login/login_bg.jpg") no-repeat top;

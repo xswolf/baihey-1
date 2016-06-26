@@ -1,4 +1,4 @@
-<ion-view hide-tabs="true">
+<ion-view>
     <link href="/wechat/web/css/member.css" rel="stylesheet">
     <link href="/wechat/web/js/plugin/amezeui/css/amazeui.min.css" rel="stylesheet">
     <ion-header-bar class="com_w_100 bhy">
@@ -12,7 +12,7 @@
                 <span ng-if="loading"><ion-spinner icon="ios-small"></ion-spinner></span>
                 <span ng-if="money || money==0" class="am-text-warning">{{money / 100 | currency:''}}元</span>
             </div>
-            <ion-item class="item item-icon-left item-icon-right mb20" href="#/main/member/balance">
+            <ion-item class="item item-icon-left item-icon-right mb20" href="#/member/balance">
                 <i class="icon icon-new-balance cor21"></i>
                 充值余额
                 <i class="icon ion-ios-arrow-right cor12"></i>
@@ -25,22 +25,22 @@
                 <span class="cor33 fr" ng-if="serviceInfo.level && serviceInfo.mature_time > timestamp">到期时间：{{serviceInfo.mature_time * 1000 | date:'yyyy-mm-dd HH:mm:ss'}}</span>
                 <span ng-if="!serviceInfo.level || serviceInfo.mature_time < timestamp || !serviceInfo.mature_time">暂无您正在使用的服务记录</span>
             </div>
-            <a class="item item-icon-left item-icon-right mt20" href="#/main/member/account_record">
+            <a class="item item-icon-left item-icon-right mt20" href="#/member/account_record">
                 <i class="icon icon-new-record cor9"></i>
                 消费记录
                 <i class="icon ion-ios-arrow-right cor12"></i>
             </a>
-            <a class="item item-icon-left item-icon-right" href="#/main/member/account_bribery">
+            <a class="item item-icon-left item-icon-right" href="#/member/account_bribery">
                 <i class="icon icon-new-bri cor15"></i>
                 嘉瑞红包
                 <i class="icon ion-ios-arrow-right cor12"></i>
             </a>
-            <a class="item item-icon-left item-icon-right" href="#/main/member/account_mycard">
+            <a class="item item-icon-left item-icon-right" href="#/member/account_mycard">
                 <i class="icon icon-new-bankCard cor33"></i>
                 我的银行卡
                 <i class="icon ion-ios-arrow-right cor12"></i>
             </a>
-            <a class="item item-icon-left item-icon-right" href="#/main/member/account_withdraw">
+            <a class="item item-icon-left item-icon-right" href="#/member/account_withdraw">
                 <i class="icon icon-new-withdraw cor35"></i>
                 提现
                 <i class="icon ion-ios-arrow-right cor12"></i>

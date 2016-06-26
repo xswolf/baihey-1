@@ -16,7 +16,8 @@
                 </div>
 
                 <div class="row pl0">
-                    <div class="col"><a class="warn" href="#/main/index_information" ng-if="!userInfo.auth.identity_pic1"><i
+                    <div class="col"><a class="warn" href="#/member/information"
+                                        ng-if="!userInfo.auth.identity_pic1"><i
                             class="ion-ios-information cor0 mr5"></i>请您上传身份证，完善资料 >></a></div>
                 </div>
             </div>
@@ -38,13 +39,15 @@
         <ion-list ng-if="userList.length > 0">
             <ion-item ng-repeat="user in userList" ng-if="user.id != userInfo.id">
                 <div class="row">
-                    <div class="col col-25"><a class="tdn" href="#/main/index_userInfo?userId={{user.user_id}}"><img class="item_uimg rounded"
-                                                                       ng-src="{{user.info.head_pic | isNull}}"
-                                                                       onerror="this.src='/wechat/web/images/no_img.png'"></a>
+                    <div class="col col-25"><a class="tdn" href="#/userInfo?userId={{user.user_id}}"><img
+                            class="item_uimg rounded"
+                            ng-src="{{user.info.head_pic | isNull}}"
+                            onerror="this.src='/wechat/web/images/no_img.png'"></a>
                     </div>
 
                     <div class="col col-75">
-                        <a class="tdn" href="#/main/index_chat1?id={{user.id}}&head_pic={{user.info.head_pic}}&real_name={{user.info.real_name}}&sex={{user.sex}}&age={{user.info.age}}">
+                        <a class="tdn"
+                           href="#/chat1?id={{user.id}}&head_pic={{user.info.head_pic}}&real_name={{user.info.real_name}}&sex={{user.sex}}&age={{user.info.age}}">
                             <div class="row pl0">
                                 <div class="col">
                                     <span class="fwb fs14" ng-if="user.info.real_name">{{user.info.real_name | sex:user.sex :user.info.age}}</span>
@@ -93,8 +96,6 @@
             </ion-item>
         </ion-list>
     </ion-content>
-
-
     <!-- <script id="selCityModal.html" type="text/ng-template">  TODO 此功能暂时屏蔽
          <ion-modal-view>
              <ion-header-bar>
@@ -125,8 +126,6 @@
              </ion-content>
          </ion-modal-view>
      </script>-->
-
-
     <script id="MoreSearchModal.html" type="text/ng-template">
         <ion-modal-view>
             <link href="/wechat/web/js/plugin/mobiscroll/mobiscroll.custom-3.0.0-beta.min.css" rel="stylesheet">
@@ -294,4 +293,26 @@
             </ion-content>
         </ion-modal-view>
     </script>
+    <ion-footer-bar class="bar-stable">
+        <a class="menuBtn cur" href="/wap/site/main#/index">
+            <i class="icon-new-menu-home"></i>
+            <p>首页</p>
+        </a>
+        <a class="menuBtn" href="/wap/site/main#/message">
+            <i class="icon-new-menu-bubble"></i>
+            <p>消息</p>
+        </a>
+        <a class="menuBtn" href="/wap/site/main#/member">
+            <i class="icon-new-menu-user"></i>
+            <p>个人</p>
+        </a>
+        <a class="menuBtn" href="/wap/site/main#/discovery">
+            <i class="icon-new-menu-eye"></i>
+            <p>发现</p>
+        </a>
+        <a class="menuBtn" href="/wap/site/main#/rendezvous">
+            <i class="icon-new-menu-heart"></i>
+            <p>约会</p>
+        </a>
+    </ion-footer-bar>
 </ion-view>

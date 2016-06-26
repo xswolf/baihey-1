@@ -4,7 +4,7 @@
     <ion-header-bar>
         <button class="button button-icon" ng-click="showScreenModal()">筛选</button>
         <title class="title">约会</title>
-        <a class="button button-icon icon ion-ios-plus-outline energized" href="#/main/rendezvous_add?userId=1&tempUrl=1"></a>
+        <a class="button button-icon icon ion-ios-plus-outline energized" href="#/rendezvous_add?userId=1&tempUrl=1"></a>
     </ion-header-bar>
     <ion-content class="bhy com_w_100 rendezvous" style="background: #e1e2e1;" delegate-handle="mainScroll">
         <div class="list card" ng-repeat = "vo in list" ng-if="list.length > 0">
@@ -46,12 +46,12 @@
             </div>
 
             <div class="item tabs tabs-secondary tabs-icon-left" ng-if="vo.id != userInfo.user_id">
-                <a class="tab-item func" ng-if="!vo.is_apply" href="#/main/rendezvous_ask?rendezvous_id={{vo.r_id}}&user_id={{vo.id}}&head_pic={{vo.info.head_pic}}&real_name={{vo.info.real_name}}&sex={{vo.sex}}&age={{vo.info.age}}&is_marriage={{vo.info.is_marriage}}&education={{vo.info.education}}">
+                <a class="tab-item func" ng-if="!vo.is_apply" href="#/rendezvous_ask?rendezvous_id={{vo.r_id}}&user_id={{vo.id}}&head_pic={{vo.info.head_pic}}&real_name={{vo.info.real_name}}&sex={{vo.sex}}&age={{vo.info.age}}&is_marriage={{vo.info.is_marriage}}&education={{vo.info.education}}">
                     <i class="ion-heart fs16"></i>
                     约TA
                 </a>
                 <p class="tab-item func" ng-if="vo.is_apply">已约</p>
-                <a class="tab-item func" href="#/main/chat?id={{vo.id}}&head_pic={{vo.info.head_pic}}&real_name={{vo.info.real_name}}&sex={{vo.sex}}&age={{vo.info.age}}">
+                <a class="tab-item func" href="#/chat1?id={{vo.id}}&head_pic={{vo.info.head_pic}}&real_name={{vo.info.real_name}}&sex={{vo.sex}}&age={{vo.info.age}}">
                     <i class="ion-chatbox fs16"></i>
                     对话
                 </a>
@@ -115,4 +115,27 @@
             </ion-content>
         </ion-modal-view>
     </script>
+
+    <ion-footer-bar class="bar-stable">
+        <a class="menuBtn" href="/wap/site/main#/index">
+            <i class="icon-new-menu-home"></i>
+            <p>首页</p>
+        </a>
+        <a class="menuBtn" href="/wap/site/main#/message">
+            <i class="icon-new-menu-bubble"></i>
+            <p>消息</p>
+        </a>
+        <a class="menuBtn" href="/wap/site/main#/member">
+            <i class="icon-new-menu-user"></i>
+            <p>个人</p>
+        </a>
+        <a class="menuBtn" href="/wap/site/main#/discovery">
+            <i class="icon-new-menu-eye"></i>
+            <p>发现</p>
+        </a>
+        <a class="menuBtn cur" href="/wap/site/main#/rendezvous">
+            <i class="icon-new-menu-heart"></i>
+            <p>约会</p>
+        </a>
+    </ion-footer-bar>
 </ion-view>

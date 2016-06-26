@@ -68,117 +68,38 @@ define(["app/module", 'app/service/serviceApi', 'jquery'],
         }]);
         return module.config(["$stateProvider", "$urlRouterProvider", "$ionicConfigProvider", "$controllerProvider", function ($stateProvider, $urlRouterProvider, $ionicConfigProvider, $controllerProvider) {
                 $ionicConfigProvider.templates.maxPrefetch(0);
-                $ionicConfigProvider.tabs.position("bottom");
                 $stateProvider
-                    .state('main', {
-                        url: "/main",
-                        abstract: true,
-                        templateUrl: "main.html",
-                        controller: 'main'
-                    })
-                    .state('main.index', {   // 首页
+                    .state('index', {   // 首页
                         url: "/index",
-                        views: {
-                            'home-tab': {
-                                templateUrl: "/wechat/views/site/index.html",
-                                controller: 'site.index'
-                            }
-                        }
+                        templateUrl: "/wechat/views/site/index.html",
+                        controller: 'site.index'
                     })
-                    .state('main.index_information', {   // 首页-个人资料
-                        url: "/index_information",
-                        views: {
-                            'home-tab': {
-                                templateUrl: "/wechat/views/member/information.html",
-                                controller: 'member.information'
-                            }
-                        }
-                    })
-                    .state('main.member', {   // 我
+                    .state('member', {   // 我
                         url: "/member",
-                        views: {
-                            'member-tab': {
-                                templateUrl: "/wechat/views/member/index.html",
-                                controller: 'member.index'
-                            }
-                        }
+                        templateUrl: "/wechat/views/member/index.html",
+                        controller: 'member.index'
                     })
-                    .state('main.member_children', {   // 我-子页
+                    .state('member_children', {   // 我-子页
                         cache: false,
                         url: '/member/:tempName',
-                        views: {
-                            'member-tab': {
-                                templateUrl: function ($stateParams) {
-                                    return "/wechat/views/member/" + $stateParams.tempName + ".html";
-                                },
-                                controllerProvider: function ($stateParams) {
-                                    return 'member.' + $stateParams.tempName;
-                                }
-                            }
+                        templateUrl: function ($stateParams) {
+                            return "/wechat/views/member/" + $stateParams.tempName + ".html";
+                        },
+                        controllerProvider: function ($stateParams) {
+                            return 'member.' + $stateParams.tempName;
                         }
                     })
-                    .state('main.message', {  // 消息首页
+                    .state('message', {  // 消息首页
                         cache: false,
                         url: "/message",
-                        views: {
-                            'message-tab': {
-                                templateUrl: "/wechat/views/message/index.html"
-                            }
-                        }
+                        templateUrl: "/wechat/views/message/index.html",
+                        controller: "message.index"
                     })
-                    .state('main.index_userInfo', {  // 首页-查看用户资料
+                    .state('userInfo', {  // 查看用户资料
                         cache: false,
-                        url: "/index_userInfo",
-                        views: {
-                            'home-tab': {
-                                templateUrl: "/wechat/views/site/user_info.html",
-                                controller: "member.user_info"
-                            }
-                        }
-
-                    })
-                    .state('main.message_userInfo', {  // 消息-查看用户资料
-                        cache: false,
-                        url: "/message_userInfo",
-                        views: {
-                            'message-tab': {
-                                templateUrl: "/wechat/views/site/user_info.html",
-                                controller: "member.user_info"
-                            }
-                        }
-
-                    })
-                    .state('main.member_userInfo', {  // 我-查看用户资料
-                        cache: false,
-                        url: "/member_userInfo",
-                        views: {
-                            'member-tab': {
-                                templateUrl: "/wechat/views/site/user_info.html",
-                                controller: "member.user_info"
-                            }
-                        }
-
-                    })
-                    .state('main.discovery_userInfo', {  // 发现-查看用户资料
-                        cache: false,
-                        url: "/discovery_userInfo",
-                        views: {
-                            'discovery-tab': {
-                                templateUrl: "/wechat/views/site/user_info.html",
-                                controller: "member.user_info"
-                            }
-                        }
-
-                    })
-                    .state('main.rendezvous_userInfo', {  // 约会-查看用户资料
-                        cache: false,
-                        url: "/rendezvous_userInfo",
-                        views: {
-                            'rendezvous-tab': {
-                                templateUrl: "/wechat/views/site/user_info.html",
-                                controller: "member.user_info"
-                            }
-                        }
+                        url: "/userInfo",
+                        templateUrl: "/wechat/views/site/user_info.html",
+                        controller: "member.user_info"
 
                     })
                     /*.state('main.message_chat', { // 聊天页面
@@ -225,16 +146,11 @@ define(["app/module", 'app/service/serviceApi', 'jquery'],
 
                         }
                     })*/
-                    .state('main.message_chat1', { // 聊天页面
+                    .state('chat', { // 聊天页面
                         cache: false,
-                        url: "/message_chat1",
-                        views: {
-                            'message-tab': {
-                                templateUrl: "/wechat/views/message/chat1.html",
-                                controller: 'message.chat1'
-                            }
-                        },
-
+                        url: "/chat1",
+                        templateUrl: "/wechat/views/message/chat1.html",
+                        controller: 'message.chat1',
                         onExit: function ($rootScope) {
 
                             var messageList = ar.getStorage("messageList");
@@ -269,125 +185,53 @@ define(["app/module", 'app/service/serviceApi', 'jquery'],
 
                         }
                     })
-                    .state('main.index_chat1', { // 聊天页面
-                        cache: false,
-                        url: "/index_chat1",
-                        views: {
-                            'home-tab': {
-                                templateUrl: "/wechat/views/message/chat1.html",
-                                controller: 'message.chat1'
-                            }
-                        },
 
-                        onExit: function ($rootScope) {
-
-                            var messageList = ar.getStorage("messageList");
-                            if (messageList == null) messageList = [];
-                            var flag = true;
-                            var i = 0;
-
-                            if (messageList != undefined && messageList != '') {
-                                for (i in messageList) {
-                                    if (messageList[i].receive_user_id == $rootScope.receiveUserInfo.id || messageList[i].send_user_id == $rootScope.receiveUserInfo.id) {
-                                        if ($rootScope.historyListHide != undefined && $rootScope.historyListHide.length > 0) {
-
-                                            messageList[i].message = $rootScope.historyListHide[$rootScope.historyListHide.length - 1].message
-                                        }
-                                        flag = false;
-                                    }
-                                }
-                            }
-                            if (flag) {
-                                $rootScope.receiveUserInfo.info = JSON.parse($rootScope.receiveUserInfo.info);
-                                $rootScope.receiveUserInfo.auth = JSON.parse($rootScope.receiveUserInfo.auth);
-                                $rootScope.receiveUserInfo.receive_user_id = $rootScope.receiveUserInfo.id;
-                                $rootScope.receiveUserInfo.other = $rootScope.receiveUserInfo.id;
-                                $rootScope.receiveUserInfo.send_user_id = $rootScope.receiveUserInfo.send_user_id;
-                                if ($rootScope.historyListHide != undefined && $rootScope.historyListHide.length > 0) {
-                                    $rootScope.receiveUserInfo.message = $rootScope.historyListHide[$rootScope.historyListHide.length - 1].message
-                                }
-
-                                messageList.push($rootScope.receiveUserInfo);
-                            }
-                            ar.setStorage('messageList', messageList);
-
-                        }
-                    })
-                    .state('main.discovery', {       // 发现
+                    .state('discovery', {       // 发现
                         cache: false,
                         url: "/discovery",
-                        views: {
-                            'discovery-tab': {
-                                templateUrl: "/wechat/views/discovery/index.html",
-                                controller: 'discovery.index'
-                            }
-                        }
+                        templateUrl: "/wechat/views/discovery/index.html",
+                        controller: 'discovery.index'
                     })
-                    .state('main.member_dynmaic', {       // 个人动态
+                    .state('member_dynmaic', {       // 个人动态
                         cache: false,
                         url: "/member_dynmaic",
-                        views: {
-                            'member-tab': {
-                                templateUrl: "/wechat/views/discovery/index.html",
-                                controller: 'discovery.index'
-                            }
-                        }
+                        templateUrl: "/wechat/views/discovery/index.html",
+                        controller: 'discovery.index'
                     })
-                    .state('main.discovery_single', {       // 发现-个人
+                    .state('discovery_single', {       // 发现-个人
                         cache: false,
                         url: "/discovery_single",
-                        views: {
-                            'discovery-tab': {
-                                templateUrl: "/wechat/views/discovery/single.html",
-                                controller: 'discovery.single'
-                            }
-                        }
+                        templateUrl: "/wechat/views/discovery/single.html",
+                        controller: 'discovery.single'
                     })
-                    .state('main.rendezvous', {     // 约会
+                    .state('rendezvous', {     // 约会
                         url: "/rendezvous",
-                        views: {
-                            'rendezvous-tab': {
-                                templateUrl: "/wechat/views/rendezvous/index.html",
-                                controller: 'rendezvous.index'
-                            }
-                        }
+                        templateUrl: "/wechat/views/rendezvous/index.html",
+                        controller: 'rendezvous.index'
                     })
-                    .state('main.rendezvous_add', {     // 约会-发布约会
+                    .state('rendezvous_add', {     // 约会-发布约会
                         url: "/rendezvous_add",
-                        views: {
-                            'rendezvous-tab': {
-                                templateUrl: "/wechat/views/member/rendezvous_add.html",
-                                controller: 'member.rendezvous_add'
-                            }
-                        }
+                        templateUrl: "/wechat/views/member/rendezvous_add.html",
+                        controller: 'member.rendezvous_add'
                     })
-                    .state('main.rendezvous_ask', {     // 约会-约TA
+                    .state('rendezvous_ask', {     // 约会-约TA
                         url: "/rendezvous_ask",
-                        views: {
-                            'rendezvous-tab': {
-                                templateUrl: "/wechat/views/rendezvous/ask.html",
-                                controller: 'rendezvous.ask'
-                            }
-                        }
+                        templateUrl: "/wechat/views/rendezvous/ask.html",
+                        controller: 'rendezvous.ask'
                     })
                     .state('charge_order', {     // 支付-订单信息
                         url: "/charge_order",
                         templateUrl: "/wechat/views/charge/order.html",
                         controller: 'charge.order'
                     })
-                    .state('main.charge', {     // 充值
+                    .state('charge', {     // 充值
                         url: "/charge_index",
-                        views: {
-                            'member-tab': {
-                                templateUrl: "/wechat/views/charge/index.html",
-                                controller: 'charge.index'
-                            }
-                        }
+                        templateUrl: "/wechat/views/charge/index.html",
+                        controller: 'charge.index'
                     });
                 //$urlRouterProvider.otherwise("/main/index");
             }])
             .controller('main', ['$scope', '$location', 'app.serviceApi', '$ionicLoading', '$ionicPopup', function ($scope, $location, api, $ionicLoading, $ionicPopup) {
-
                 if (ar.getCookie('bhy_user_id') > 0) {
                     api.getMessageNumber().success(function (res) {
                         $scope.msgNumber = parseInt(res.data);

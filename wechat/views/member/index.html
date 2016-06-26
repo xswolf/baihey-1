@@ -3,7 +3,7 @@
 <link href="/wechat/web/css/plugin/animate/animate.css" rel="stylesheet">
 <ion-content class="member com_w_100">
     <ion-list>
-            <ion-item class="member_hdr" href="#/main/member/information" style="padding: 0;">
+            <ion-item class="member_hdr" href="#/member/information" style="padding: 0;">
                 <div class="fl u_img">
                     <img class="rounded" src="{{userInfo.info.head_pic | isNull}}" onerror="this.src='/wechat/web/images/u_noimg.jpg'">
                 </div>
@@ -36,14 +36,14 @@
                     </button>
                 </div>
             </ion-item>
-            <a class="hdr_tips pr clearfix pl16" ng-if="!userInfo.auth.identity_pic1" href="#/main/member/honesty_sfz">
+            <a class="hdr_tips pr clearfix pl16" ng-if="!userInfo.auth.identity_pic1" href="#/member/honesty_sfz">
                 <p class="tips fl">
                     <i class="fl bhy-icon-tips-02 mr5"></i>
                     <span class="fl">您还未上传身份证！</span>
                     <i class="fr ion-ios-arrow-right vam fs20"></i>
                 </p>
             </a>
-        <ion-item class="personal_info mt10" href="#/main/dynmaic?userId={{userInfo.id}}&real_name={{userInfo.real_name}}&sex={{userInfo.sex}}$age={{userInfo.info.age}}&tempUrl=main/member">
+        <ion-item class="personal_info mt10" href="#/dynmaic?userId={{userInfo.id}}&real_name={{userInfo.real_name}}&sex={{userInfo.sex}}$age={{userInfo.info.age}}&tempUrl=member/index">
             <div class="member_menu_i rounded per">
                 <i class="bhy-icon-member-menu-01"></i>
             </div>
@@ -54,7 +54,7 @@
                 <i class="ion-ios-arrow-right vam"></i>
             </div>
         </ion-item>
-        <ion-item class="follow_info" href="#/main/member/follow">
+        <ion-item class="follow_info" href="#/member/follow">
             <div class="member_menu_i rounded follow">
                 <i class="bhy-icon-member-menu-02"></i>
             </div>
@@ -65,7 +65,7 @@
                 <i class="ion-ios-arrow-right vam"></i>
             </div>
         </ion-item>
-        <ion-item class="engagements_info" href="#/main/member/rendezvous">
+        <ion-item class="engagements_info" href="#/member/rendezvous">
             <div class="member_menu_i rounded eng">
                 <i class="bhy-icon-member-menu-03"></i>
             </div>
@@ -76,7 +76,7 @@
                 <i class="ion-ios-arrow-right vam"></i>
             </div>
         </ion-item>
-        <ion-item class="marker_info" href="#/main/member/matchmaker">
+        <ion-item class="marker_info" href="#/member/matchmaker">
             <div class="member_menu_i rounded marker">
                 <i class="bhy-icon-member-menu-04"></i>
             </div>
@@ -87,7 +87,7 @@
                 <i class="ion-ios-arrow-right vam"></i>
             </div>
         </ion-item>
-        <ion-item class="privacy_info" href="#/main/member/privacy">
+        <ion-item class="privacy_info" href="#/member/privacy">
             <div class="member_menu_i rounded privacy">
                 <i class="bhy-icon-member-menu-05"></i>
             </div>
@@ -98,7 +98,7 @@
                 <i class="ion-ios-arrow-right vam"></i>
             </div>
         </ion-item>
-        <ion-item class="security_info" href="#/main/member/security">
+        <ion-item class="security_info" href="#/member/security">
             <div class="member_menu_i rounded security">
                 <i class="bhy-icon-member-menu-06"></i>
             </div>
@@ -109,7 +109,7 @@
                 <i class="ion-ios-arrow-right vam"></i>
             </div>
         </ion-item>
-        <ion-item class="honesty_info" href="#/main/member/honesty">
+        <ion-item class="honesty_info" href="#/member/honesty">
             <div class="member_menu_i rounded honesty">
                 <i class="bhy-icon-member-menu-07"></i>
             </div>
@@ -120,7 +120,7 @@
                 <i class="ion-ios-arrow-right vam"></i>
             </div>
         </ion-item>
-        <ion-item class="vip_info" href="#/main/member/vip">
+        <ion-item class="vip_info" href="#/member/vip">
             <div class="member_menu_i rounded vip">
                 <i class="bhy-icon-member-menu-08"></i>
             </div>
@@ -131,7 +131,7 @@
                 <i class="ion-ios-arrow-right vam"></i>
             </div>
         </ion-item>
-        <ion-item class="money_info" href="#/main/member/account">
+        <ion-item class="money_info" href="#/member/account">
             <div class="member_menu_i rounded money">
                 <i class="bhy-icon-member-menu-09"></i>
             </div>
@@ -142,7 +142,7 @@
                 <i class="ion-ios-arrow-right vam"></i>
             </div>
         </ion-item>
-        <ion-item class="about_info" href="#/main/member/about">
+        <ion-item class="about_info" href="#/member/about">
             <div class="member_menu_i rounded about">
                 <i class="bhy-icon-member-menu-10"></i>
             </div>
@@ -153,7 +153,7 @@
                 <i class="ion-ios-arrow-right vam"></i>
             </div>
         </ion-item>
-        <ion-item class="help_info" href="#/main/member/help">
+        <ion-item class="help_info" href="#/member/help">
             <div class="member_menu_i rounded help">
                 <i class="bhy-icon-member-menu-11"></i>
             </div>
@@ -167,4 +167,27 @@
         <button class="button button-light button-block" ng-click="loginOut()">退出登录</button>
     </ion-list>
 </ion-content>
+
+    <ion-footer-bar class="bar-stable">
+        <a class="menuBtn" href="/wap/site/main#/index">
+            <i class="icon-new-menu-home"></i>
+            <p>首页</p>
+        </a>
+        <a class="menuBtn" href="/wap/site/main#/message">
+            <i class="icon-new-menu-bubble"></i>
+            <p>消息</p>
+        </a>
+        <a class="menuBtn cur" href="/wap/site/main#/member">
+            <i class="icon-new-menu-user"></i>
+            <p>个人</p>
+        </a>
+        <a class="menuBtn" href="/wap/site/main#/discovery">
+            <i class="icon-new-menu-eye"></i>
+            <p>发现</p>
+        </a>
+        <a class="menuBtn" href="/wap/site/main#/rendezvous">
+            <i class="icon-new-menu-heart"></i>
+            <p>约会</p>
+        </a>
+    </ion-footer-bar>
 </ion-view>

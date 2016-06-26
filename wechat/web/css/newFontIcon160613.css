@@ -1,10 +1,10 @@
 @font-face {
     font-family: 'new';
-    src:    url('../fonts/new.eot?z5blta');
-    src:    url('../fonts/new.eot?z5blta#iefix') format('embedded-opentype'),
-    url('../fonts/new.ttf?z5blta') format('truetype'),
-    url('../fonts/new.woff?z5blta') format('woff'),
-    url('../fonts/new.svg?z5blta#icomoon') format('svg');
+    src:    url('../fonts/new.eot?e2we7z');
+    src:    url('../fonts/new.eot?e2we7z#iefix') format('embedded-opentype'),
+    url('../fonts/new.ttf?e2we7z') format('truetype'),
+    url('../fonts/new.woff?e2we7z') format('woff'),
+    url('../fonts/new.svg?e2we7z#icomoon') format('svg');
     font-weight: normal;
     font-style: normal;
 }
@@ -24,6 +24,21 @@
     -moz-osx-font-smoothing: grayscale;
 }
 
+.icon-new-menu-bubble:before {
+    content: "\e90b";
+}
+.icon-new-menu-eye:before {
+    content: "\e90c";
+}
+.icon-new-menu-heart:before {
+    content: "\e90d";
+}
+.icon-new-menu-home:before {
+    content: "\e90e";
+}
+.icon-new-menu-user:before {
+    content: "\e90f";
+}
 .icon-new-balance:before {
     content: "\e90a";
 }

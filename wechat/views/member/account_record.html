@@ -1,4 +1,4 @@
-<ion-view hide-tabs="true">
+<ion-view>
     <link href="/wechat/web/css/member.css" rel="stylesheet">
     <ion-header-bar class="com_w_100 bhy">
         <title class="title">消费记录</title>
@@ -9,7 +9,7 @@
             <ion-item class="item-divider">
                 <span class="fl">{{record.date}}</span><span class="fr">消费：{{record.items | amount | currency:'￥'}}</span>
             </ion-item>
-            <ion-item ng-repeat="i in record.items" href="#/main/member/account_record_info?item={{i}}">
+            <ion-item ng-repeat="i in record.items" href="#/member/account_record_info?item={{i}}">
                 <p><span class="fl fwb">{{i.type}}</span><span class="fr fs16">{{i.money / 100 | currency:'￥'}}</span></p>
                 <p><span class="fs12 cor8">{{i.create_time * 1000 | date:"M月d日 HH:mm"}}</span></p>
             </ion-item>

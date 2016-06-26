@@ -1,4 +1,4 @@
-<ion-view hide-tabs="true">
+<ion-view>
     <link href="/wechat/web/css/member.css" rel="stylesheet">
     <link href="/wechat/web/css/plugin/amezeui/amazeui.min.css" rel="stylesheet">
     <ion-header-bar class="com_w_100 bhy">
@@ -9,7 +9,7 @@
             <ion-item class="item-input">
                 <span class="input-label" ng-click="ss()">到账银行卡</span>
                 <a href="javascript:;" ng-click="showSelectCard()" class="bankCard_t" ng-if="formData.bank">{{ formData.bank.name | bank:'name'}}({{ formData.bank.name | bank:'type'}} {{ formData.bank.card_no | bank:'card'}})</a>
-                <a href="#/main/member/account_add_card?tempUrl=/main/member/account_withdraw" class="bankCard_t" ng-if="!formData.bank">现在去绑卡</a>
+                <a href="#/member/account_add_card?tempUrl=/member/account_withdraw" class="bankCard_t" ng-if="!formData.bank">现在去绑卡</a>
             </ion-item>
             <ion-item class="item-input">
                 <span class="input-label">提现金额</span>
@@ -47,7 +47,7 @@
                     <ion-radio ng-repeat="card in cardList" ng-value="card" ng-model="formData.bank" ng-click="selectedCard()">
                         {{ card.name | bank:'name'}}（{{ card.name | bank:'type'}} {{ card.card_no | bank:'card'}}）
                     </ion-radio>
-                    <ion-item ng-click="selectedCard()" href="#/main/member/account_add_card?tempUrl=/main/member/account_withdraw">
+                    <ion-item ng-click="selectedCard()" href="#/member/account_add_card?tempUrl=/member/account_withdraw">
                         使用新卡提现
                     </ion-item>
                 </div>

@@ -1,4 +1,4 @@
-<ion-view hide-tabs="true">
+<ion-view>
     <link href="/wechat/web/css/member.css" rel="stylesheet">
     <ion-header-bar class="com_w_100 bhy">
         <title class="title">关注的人</title>
@@ -13,7 +13,7 @@
                     关注我的人
                 </a>
             </div>
-            <ion-item class="item-avatar" href="#/main/member_userInfo?userId={{f.other}}"
+            <ion-item class="item-avatar" href="#/userInfo?userId={{f.other}}"
                       ng-repeat="f in followList">
                 <img ng-src="{{f.info.head_pic | isNull}}" onerror="this.src='/wechat/web/images/no_img.png'">
                 <h2 class="clearfix">

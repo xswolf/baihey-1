@@ -1,11 +1,11 @@
-<ion-view hide-tabs="true">
+<ion-view>
     <link href="/wechat/web/css/member.css" rel="stylesheet">
     <ion-header-bar class="com_w_100 bhy">
         <title class="title">黑名单</title>
     </ion-header-bar>
     <ion-content class="bhy com_w_100 m_bg">
         <ion-list show-delete="shouldShowDelete">
-            <ion-item class="item-avatar" href="#/main/userInfo?userId={{f.other}}" ng-repeat="f in followList">
+            <ion-item class="item-avatar" href="#/userInfo?userId={{f.other}}" ng-repeat="f in followList">
                 <img ng-src="{{f.info.head_pic | isNull}}" onerror="this.src='/wechat/web/images/no_img.png'">
                 <h2>{{f.info.real_name | sex:f.sex :f.info.age}}
                     <span ng-if="honesty(f.honesty_value)" class="identity id">身份证</span>

@@ -13,20 +13,6 @@ define(['app/module'], function (module) {
         }
     });
 
-    module.directive('hideTabs', function ($rootScope) {
-        return {
-            restrict: 'A',
-            link: function ($scope, element, attributes) {
-                $rootScope.hideTabs = 'tabs-item-hide';
-                $scope.$on('$destroy', function() {
-                    $rootScope.hideTabs = '';
-                });
-
-
-            }
-        };
-    });
-
     module.directive('msdElastic', [
         '$timeout', '$window',
         function ($timeout, $window) {

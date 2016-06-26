@@ -19,9 +19,9 @@
     <script src="http://css3-mediaqueries-js.googlecode.com/svn/trunk/css3-mediaqueries.js"></script><![endif]-->
 </head>
 <script data-main="/wechat/web/js/app" src="/wechat/web/js/plugin/requirejs/require.js"></script>
-<body>
+<body ng-controller="main">
 <script>
-    if (location.hash == '#/main/index') {
+    if (location.hash == '#/index') {
         addElement();
         setTimeout(function () {
             document.getElementById('welcome').className = 'animated fadeOut';

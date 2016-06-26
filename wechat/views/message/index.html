@@ -1,34 +1,34 @@
 <ion-view>
-<div class="com_w_100" ng-controller="message.index">
-    <ion-header>
-        <div class="bar bar-header com_w_100 ">
-           <!-- <div class="pa msg_type_pop" ng-show="popShow">
-                <p>
-                    <a class="button" href="#/main/member/follow?type=follow">我关注的人</a>
-                    <a class="button" href="#/main/member/follow?type=followed">谁关注了我</a>
-                </p>
-            </div>-->
-            <h1 class="title">消息中心</h1>
-            <!--<a href="javascript:;" ng-click="pop_toggle()" class="button button-icon "
-               ng-class="{true:'red-point',false:''}[isFollow]">联系人<i
-                    class="ml5 fs14"
-                    ng-class="{true:'ion-android-arrow-dropup',false:'ion-android-arrow-dropdown'}[popShow]"></i>
-            </a>-->
-        </div>
-    </ion-header>
+    <ion-header-bar class="com_w_100">
+        <!-- <div class="pa msg_type_pop" ng-show="popShow">
+             <p>
+                 <a class="button" href="#/main/member/follow?type=follow">我关注的人</a>
+                 <a class="button" href="#/main/member/follow?type=followed">谁关注了我</a>
+             </p>
+         </div>-->
+        <h1 class="title">消息中心</h1>
+        <!--<a href="javascript:;" ng-click="pop_toggle()" class="button button-icon "
+           ng-class="{true:'red-point',false:''}[isFollow]">联系人<i
+                class="ml5 fs14"
+                ng-class="{true:'ion-android-arrow-dropup',false:'ion-android-arrow-dropdown'}[popShow]"></i>
+        </a>-->
+    </ion-header-bar>
 
     <ion-content class="has-header bhy-has-footer message">
         <ion-list>
             <ion-item collection-repeat="messageInfo in messageList track by messageInfo.id" item="item"
-                      href="#/main/message_chat1?id={{messageInfo.other}}&head_pic={{messageInfo.info.head_pic}}&real_name={{messageInfo.info.real_name}}&sex={{messageInfo.sex}}&age={{messageInfo.info.age}}">
+                      href="#/chat1?id={{messageInfo.other}}&head_pic={{messageInfo.info.head_pic}}&real_name={{messageInfo.info.real_name}}&sex={{messageInfo.sex}}&age={{messageInfo.info.age}}">
                 <div class="row">
                     <div class="msg_u_img mr20 pr fl">
-                        <img class="item_uimg rounded" ng-src="{{messageInfo.info.head_pic}}" width="56" height="56" onerror="this.src='/wechat/web/images/no_img.png'">
-                        <i class="info_nb" ng-if="messageInfo.receive_user_id == userInfo.id && messageInfo.sumSend > 0">{{messageInfo.sumSend}}</i>
+                        <img class="item_uimg rounded" ng-src="{{messageInfo.info.head_pic | isNull}}" width="56" height="56"
+                             onerror="this.src='/wechat/web/images/no_img.png'">
+                        <i class="info_nb"
+                           ng-if="messageInfo.receive_user_id == userInfo.id && messageInfo.sumSend > 0">{{messageInfo.sumSend}}</i>
                     </div>
                     <p style="width: 65%;" class="">
                         <span class="fwb fs14 mr10 lh28" ng-if="messageInfo.info.real_name">{{messageInfo.info.real_name | sex:messageInfo.sex :messageInfo.info.age}}</span>
-                        <span class="fwb fs14 mr10 lh28" ng-if="!messageInfo.info.real_name">会员ID:{{messageInfo.other}}</span>
+                        <span class="fwb fs14 mr10 lh28"
+                              ng-if="!messageInfo.info.real_name">会员ID:{{messageInfo.other}}</span>
                         <span ng-if="honesty(messageInfo.honesty_value)" class="identity id">身份证</span>
                         <span ng-if="messageInfo.phone" class="identity phone">手机</span>
                         <span ng-if="messageInfo.info.level == 1" class="identity vip">VIP</span>
@@ -41,12 +41,31 @@
                     <span class="send_time dbl">{{messageInfo.time | date:'yyyy-MM-dd HH:mm:ss'}}</span>
                 </div>
                 <ion-option-button class="button-assertive" ng-click="removeItem(messageInfo)">
-                删除
+                    删除
                 </ion-option-button>
             </ion-item>
         </ion-list>
     </ion-content>
-
-
-</div>
+    <ion-footer-bar class="bar-stable">
+        <a class="menuBtn" href="/wap/site/main#/index">
+            <i class="icon-new-menu-home"></i>
+            <p>首页</p>
+        </a>
+        <a class="menuBtn cur" href="/wap/site/main#/message">
+            <i class="icon-new-menu-bubble"></i>
+            <p>消息</p>
+        </a>
+        <a class="menuBtn" href="/wap/site/main#/member">
+            <i class="icon-new-menu-user"></i>
+            <p>个人</p>
+        </a>
+        <a class="menuBtn" href="/wap/site/main#/discovery">
+            <i class="icon-new-menu-eye"></i>
+            <p>发现</p>
+        </a>
+        <a class="menuBtn" href="/wap/site/main#/rendezvous">
+            <i class="icon-new-menu-heart"></i>
+            <p>约会</p>
+        </a>
+    </ion-footer-bar>
 </ion-view>
