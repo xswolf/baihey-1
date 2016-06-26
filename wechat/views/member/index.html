@@ -174,7 +174,9 @@
             <p>首页</p>
         </a>
         <a class="menuBtn" href="/wap/site/main#/message">
-            <i class="icon-new-menu-bubble"></i>
+            <i class="icon-new-menu-bubble">
+                <span ng-if="msgNumber" class="msg_number">{{msgNumber}}</span>
+            </i>
             <p>消息</p>
         </a>
         <a class="menuBtn cur" href="/wap/site/main#/member">
