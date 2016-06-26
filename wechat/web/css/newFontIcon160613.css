@@ -1,10 +1,10 @@
 @font-face {
     font-family: 'new';
-    src:    url('../fonts/new.eot?e2we7z');
-    src:    url('../fonts/new.eot?e2we7z#iefix') format('embedded-opentype'),
-    url('../fonts/new.ttf?e2we7z') format('truetype'),
-    url('../fonts/new.woff?e2we7z') format('woff'),
-    url('../fonts/new.svg?e2we7z#icomoon') format('svg');
+    src:    url('../fonts/new.eot?1yuwf0');
+    src:    url('../fonts/new.eot?1yuwf0#iefix') format('embedded-opentype'),
+    url('../fonts/new.ttf?1yuwf0') format('truetype'),
+    url('../fonts/new.woff?1yuwf0') format('woff'),
+    url('../fonts/new.svg?1yuwf0#icomoon') format('svg');
     font-weight: normal;
     font-style: normal;
 }
@@ -24,6 +24,9 @@
     -moz-osx-font-smoothing: grayscale;
 }
 
+.icon-new-menu-user-settings:before {
+    content: "\e910";
+}
 .icon-new-menu-bubble:before {
     content: "\e90b";
 }

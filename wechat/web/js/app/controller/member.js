@@ -1667,7 +1667,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
                     if (res.data) {
                         $scope.formData.follow = false;
                         // 成功，提示
-                        $ionicPopup.alert({title: '取消关注成功'});
+                        ar.saveDataAlert($ionicPopup,'取消关注成功');
                     }
                 });
             }
@@ -1678,7 +1678,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
                     if (res.data) {
                         $scope.formData.follow = true;
                         // 成功，提示
-                        $ionicPopup.alert({title: '加关注成功'});
+                        ar.saveDataAlert($ionicPopup,'加关注成功');
                     }
                 });
             }
@@ -1791,25 +1791,25 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
         // 保存
         $scope.saveData = function () {
             if ($scope.formData.pass == '') {
-                $ionicPopup.alert({title: '请填写旧密码'});
+                ar.saveDataAlert($ionicPopup,'请填写旧密码');
                 return false;
             }
             if ($scope.formData.new_pass1 == '' || $scope.formData.new_pass1.length < 6) {
-                $ionicPopup.alert({title: '密码长度必须大于6个字符'});
+                ar.saveDataAlert($ionicPopup,'密码长度必须大于6个字符');
                 return false;
             }
             if ($scope.formData.new_pass1 != $scope.formData.new_pass1) {
-                $ionicPopup.alert({title: '新密码不一致'});
+                ar.saveDataAlert($ionicPopup,'新密码不一致');
                 return false;
             }
 
             api.save('/wap/user/reset-password', $scope.formData).success(function (res) {
                 if (res.data) {
-                    $ionicPopup.alert({title: '密码修改成功'});
+                    ar.saveDataAlert($ionicPopup,'密码修改成功');
                     $scope.userInfo.reset_pass_time = parseInt(res.data);
                     $scope.getUserPrivacyStorage('#/member/security');
                 } else {
-                    $ionicPopup.alert({title: '密码修改失败'});
+                    ar.saveDataAlert($ionicPopup,'密码修改失败');
                 }
             })
 
@@ -1844,7 +1844,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
         $scope.User.getCode = function () {
 
             if (!ar.validateMobile($scope.User.mobile)) {  // 验证手机格式
-                $ionicPopup.alert({title: '手机号码格式不正确'});
+                ar.saveDataAlert($ionicPopup,'手机号码格式不正确');
                 return false;
             }
 
@@ -3283,6 +3283,11 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
     }]);
 
     module.controller("member.help_protocol", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$location', function (api, $scope, $timeout, $ionicPopup, $location) {
+
+    }]);
+
+    // 用户资料-隐私设置
+    module.controller("member.settings", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$location', function (api, $scope, $timeout, $ionicPopup, $location) {
 
     }]);
 
