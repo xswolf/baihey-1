@@ -1,11 +1,9 @@
 <ion-view hide-tabs="true">
     <link href="/wechat/web/css/chat.css" rel="stylesheet">
-    <ion-header>
-        <div class="bar bar-header bhy com_w_100" style="position: fixed;">
-            <h1 class="title"></h1>
-            <button class="button button-icon" ng-click="addFollow()" ng-if="u_isFollow">关注</button>
-        </div>
-    </ion-header>
+    <ion-header-bar class="bhy com_w_100">
+        <h1 class="title"></h1>
+        <button class="button button-icon" ng-click="addFollow()" ng-if="u_isFollow">关注</button>
+    </ion-header-bar>
     <ion-content class="bhy com_w_100 has-header chat" id="message-detail-content"
                  delegate-handle="messageDetailsScroll">
         <ion-refresher pulling-text="下拉加载更多" refreshing-text="加载成功" on-refresh="doRefresh()"
@@ -14,8 +12,8 @@
             <!-- 固定item -->
             <ion-item class="talk_item_u">
                 <div class="talk_user">
-                    <a href="#/main/userInfo?userId={{receiveId}}&tempUrl=/main/message">
-                        <img ng-src="{{receiveHeadPic}}" alt="" onerror="this.src='/wechat/web/images/no_img.png'">
+                    <a href="#/main/message_userInfo?userId={{receiveId}}">
+                        <img ng-src="{{receiveHeadPic}}" onerror="this.src='/wechat/web/images/no_img.png'">
                     </a>
                 </div>
                 <div class="talk_r">
@@ -54,10 +52,10 @@
                 <!-- 头像 -->
                 <div class="talk_user">
                     <a ng-if="sendId != vo.send_user_id"
-                       href="#/main/userInfo?userId={{receiveId}}">
+                       href="#/main/message_userInfo?userId={{receiveId}}">
                         <img ng-src="{{receiveHeadPic}}" onerror="this.src='/wechat/web/images/no_img.png'">
                     </a>
-                    <img ng-if="sendId == vo.send_user_id" ng-src="{{sendHeadPic}}"
+                    <img ng-if="sendId == vo.send_user_id" ng-src="{{sendHeadPic | isNull}}"
                          onerror="this.src='/wechat/web/images/no_img.png'">
                 </div>
 

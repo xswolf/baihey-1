@@ -1,7 +1,7 @@
 <ion-nav-view animation="slide-left-right-ios7"></ion-nav-view>
 
 <script id="main.html" type="text/ng-template">
-    <ion-tabs ng-class="{'tabs-item-hide': $root.hideTabs}">
+    <ion-tabs class="{{$root.hideTabs}}">
         <ion-tab title="首页" icon="ion-ios-home-outline" href="#/main/index">
             <ion-nav-view name="home-tab"></ion-nav-view>
         </ion-tab>

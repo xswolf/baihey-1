@@ -1,9 +1,9 @@
 /**
  * Created by Administrator on 2016/3/22.
  */
-define(["app/module", 'app/service/serviceApi','jquery'],
+define(["app/module", 'app/service/serviceApi', 'jquery'],
     function (module) {
-        module.run(['$rootScope', '$state', '$timeout', 'app.serviceApi', '$ionicLoading', '$location','$templateCache', function ($rootScope, $state, $timeout, api, $ionicLoading, $location,$templateCache) {
+        module.run(['$rootScope', '$state', '$timeout', 'app.serviceApi', '$ionicLoading', '$location', '$templateCache', function ($rootScope, $state, $timeout, api, $ionicLoading, $location, $templateCache) {
 
             var messageList = function () {
                 api.list('/wap/message/message-list', []).success(function (res) {
@@ -85,17 +85,8 @@ define(["app/module", 'app/service/serviceApi','jquery'],
                             }
                         }
                     })
-                    .state('main.chat', {   // 首页-消息
-                        url: "/chat",
-                        views: {
-                            'home-tab': {
-                                templateUrl: "/wechat/views/message/chat.html",
-                                controller: 'message.chat'
-                            }
-                        }
-                    })
-                    .state('main.information', {   // 首页-个人资料
-                        url: "/information",
+                    .state('main.index_information', {   // 首页-个人资料
+                        url: "/index_information",
                         views: {
                             'home-tab': {
                                 templateUrl: "/wechat/views/member/information.html",
@@ -107,11 +98,12 @@ define(["app/module", 'app/service/serviceApi','jquery'],
                         url: "/member",
                         views: {
                             'member-tab': {
-                                templateUrl: "/wechat/views/member/index.html"
+                                templateUrl: "/wechat/views/member/index.html",
+                                controller: 'member.index'
                             }
                         }
                     })
-                    .state('main.member-children', {   // 我-子页
+                    .state('main.member_children', {   // 我-子页
                         cache: false,
                         url: '/member/:tempName',
                         views: {
@@ -134,9 +126,9 @@ define(["app/module", 'app/service/serviceApi','jquery'],
                             }
                         }
                     })
-                    .state('main.userInfo', {  // 首页-查看用户资料
+                    .state('main.index_userInfo', {  // 首页-查看用户资料
                         cache: false,
-                        url: "/userInfo",
+                        url: "/index_userInfo",
                         views: {
                             'home-tab': {
                                 templateUrl: "/wechat/views/site/user_info.html",
@@ -147,7 +139,7 @@ define(["app/module", 'app/service/serviceApi','jquery'],
                     })
                     .state('main.message_userInfo', {  // 消息-查看用户资料
                         cache: false,
-                        url: "/userInfo",
+                        url: "/message_userInfo",
                         views: {
                             'message-tab': {
                                 templateUrl: "/wechat/views/site/user_info.html",
@@ -158,7 +150,7 @@ define(["app/module", 'app/service/serviceApi','jquery'],
                     })
                     .state('main.member_userInfo', {  // 我-查看用户资料
                         cache: false,
-                        url: "/userInfo",
+                        url: "/member_userInfo",
                         views: {
                             'member-tab': {
                                 templateUrl: "/wechat/views/site/user_info.html",
@@ -169,7 +161,7 @@ define(["app/module", 'app/service/serviceApi','jquery'],
                     })
                     .state('main.discovery_userInfo', {  // 发现-查看用户资料
                         cache: false,
-                        url: "/userInfo",
+                        url: "/discovery_userInfo",
                         views: {
                             'discovery-tab': {
                                 templateUrl: "/wechat/views/site/user_info.html",
@@ -180,7 +172,7 @@ define(["app/module", 'app/service/serviceApi','jquery'],
                     })
                     .state('main.rendezvous_userInfo', {  // 约会-查看用户资料
                         cache: false,
-                        url: "/userInfo",
+                        url: "/rendezvous_userInfo",
                         views: {
                             'rendezvous-tab': {
                                 templateUrl: "/wechat/views/site/user_info.html",
@@ -189,7 +181,7 @@ define(["app/module", 'app/service/serviceApi','jquery'],
                         }
 
                     })
-                    .state('main.message_chat', { // 聊天页面
+                    /*.state('main.message_chat', { // 聊天页面
                         cache: false,
                         url: "/chat",
                         views: {
@@ -232,10 +224,10 @@ define(["app/module", 'app/service/serviceApi','jquery'],
                             ar.setStorage('messageList', messageList);
 
                         }
-                    })
+                    })*/
                     .state('main.message_chat1', { // 聊天页面
                         cache: false,
-                        url: "/chat1",
+                        url: "/message_chat1",
                         views: {
                             'message-tab': {
                                 templateUrl: "/wechat/views/message/chat1.html",
@@ -276,9 +268,54 @@ define(["app/module", 'app/service/serviceApi','jquery'],
                             ar.setStorage('messageList', messageList);
 
                         }
-                    }).state('main.discovery', {       // 发现
+                    })
+                    .state('main.index_chat1', { // 聊天页面
                         cache: false,
-                        url: "/discovery?userId?tempUrl",
+                        url: "/index_chat1",
+                        views: {
+                            'home-tab': {
+                                templateUrl: "/wechat/views/message/chat1.html",
+                                controller: 'message.chat1'
+                            }
+                        },
+
+                        onExit: function ($rootScope) {
+
+                            var messageList = ar.getStorage("messageList");
+                            if (messageList == null) messageList = [];
+                            var flag = true;
+                            var i = 0;
+
+                            if (messageList != undefined && messageList != '') {
+                                for (i in messageList) {
+                                    if (messageList[i].receive_user_id == $rootScope.receiveUserInfo.id || messageList[i].send_user_id == $rootScope.receiveUserInfo.id) {
+                                        if ($rootScope.historyListHide != undefined && $rootScope.historyListHide.length > 0) {
+
+                                            messageList[i].message = $rootScope.historyListHide[$rootScope.historyListHide.length - 1].message
+                                        }
+                                        flag = false;
+                                    }
+                                }
+                            }
+                            if (flag) {
+                                $rootScope.receiveUserInfo.info = JSON.parse($rootScope.receiveUserInfo.info);
+                                $rootScope.receiveUserInfo.auth = JSON.parse($rootScope.receiveUserInfo.auth);
+                                $rootScope.receiveUserInfo.receive_user_id = $rootScope.receiveUserInfo.id;
+                                $rootScope.receiveUserInfo.other = $rootScope.receiveUserInfo.id;
+                                $rootScope.receiveUserInfo.send_user_id = $rootScope.receiveUserInfo.send_user_id;
+                                if ($rootScope.historyListHide != undefined && $rootScope.historyListHide.length > 0) {
+                                    $rootScope.receiveUserInfo.message = $rootScope.historyListHide[$rootScope.historyListHide.length - 1].message
+                                }
+
+                                messageList.push($rootScope.receiveUserInfo);
+                            }
+                            ar.setStorage('messageList', messageList);
+
+                        }
+                    })
+                    .state('main.discovery', {       // 发现
+                        cache: false,
+                        url: "/discovery",
                         views: {
                             'discovery-tab': {
                                 templateUrl: "/wechat/views/discovery/index.html",
@@ -286,9 +323,9 @@ define(["app/module", 'app/service/serviceApi','jquery'],
                             }
                         }
                     })
-                    .state('main.dynmaic', {       // 个人动态
+                    .state('main.member_dynmaic', {       // 个人动态
                         cache: false,
-                        url: "/dynmaic?userId?real_name?sex?age",
+                        url: "/member_dynmaic",
                         views: {
                             'member-tab': {
                                 templateUrl: "/wechat/views/discovery/index.html",
@@ -298,7 +335,7 @@ define(["app/module", 'app/service/serviceApi','jquery'],
                     })
                     .state('main.discovery_single', {       // 发现-个人
                         cache: false,
-                        url: "/discovery_single?id",
+                        url: "/discovery_single",
                         views: {
                             'discovery-tab': {
                                 templateUrl: "/wechat/views/discovery/single.html",
@@ -316,7 +353,7 @@ define(["app/module", 'app/service/serviceApi','jquery'],
                         }
                     })
                     .state('main.rendezvous_add', {     // 约会-发布约会
-                        url: "/rendezvous_add?userId&tempUrl",
+                        url: "/rendezvous_add",
                         views: {
                             'rendezvous-tab': {
                                 templateUrl: "/wechat/views/member/rendezvous_add.html",
@@ -474,7 +511,7 @@ define(["app/module", 'app/service/serviceApi','jquery'],
                             // 将返回数据广播至 子member.js
                             $scope.$broadcast('thumb_path', name, response);
                         } else {
-                            ar.saveDataAlert($ionicPopup,response.info);
+                            ar.saveDataAlert($ionicPopup, response.info);
                         }
                     };
                     uploader.onErrorItem = function (fileItem, response, status, headers) {  // 上传出错
@@ -488,7 +525,7 @@ define(["app/module", 'app/service/serviceApi','jquery'],
                 }
 
                 // 身份证认证判断
-                $scope.honesty = function(val) {
+                $scope.honesty = function (val) {
                     return 1 & val;
                 }
                 //$scope.userInfo = [{}];

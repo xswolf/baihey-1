@@ -13,7 +13,7 @@
                     关注我的人
                 </a>
             </div>
-            <ion-item class="item-avatar" href="#/main/userInfo?userId={{f.other}}"
+            <ion-item class="item-avatar" href="#/main/member_userInfo?userId={{f.other}}"
                       ng-repeat="f in followList">
                 <img ng-src="{{f.info.head_pic | isNull}}" onerror="this.src='/wechat/web/images/no_img.png'">
                 <h2 class="clearfix">
