@@ -37,7 +37,7 @@
         </div>
 
         <ion-list ng-if="userList.length > 0">
-            <ion-item ng-repeat="user in userList" ng-if="user.id != userInfo.id">
+            <ion-item ng-repeat="user in userList" ng-if="user.id != userInfo.id && blackedFun(user.id)">
                 <div class="row">
                     <div class="col col-25"><a class="tdn" href="#/userInfo?userId={{user.user_id}}"><img
                             class="item_uimg rounded"

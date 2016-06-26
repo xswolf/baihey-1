@@ -13,6 +13,24 @@ define(['app/module', 'app/directive/directiveApi'
 
         // 用户列表
         $scope.userList = [];
+        // 被拉黑列表
+        var blackedList = [];
+        api.list('/wap/follow/blacked-list', {}).success(function (res) {
+            if(res.status) {
+                for(var i in res.data) {
+                    blackedList[i] = parseInt(res.data[i].user_id);
+                }
+            }
+        });
+        // 被拉黑判断方法
+        $scope.blackedFun = function(id) {
+            id = parseInt(id);
+            if(blackedList.indexOf(id) != -1) {
+                return false;
+            } else {
+                return true;
+            }
+        }
 
         // 默认还有更多
         $scope.pageLast = true;

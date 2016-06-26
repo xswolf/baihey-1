@@ -28,7 +28,6 @@ class FollowController extends BaseController
         return $this->renderAjax(['status' => 1, 'data' => $data]);
     }
 
-
     /**
      * 黑名单列表
      */
@@ -38,6 +37,22 @@ class FollowController extends BaseController
         $data = UserFollow::getInstance()->getFollowList('black', $user_id, $this->get);
 
         return $this->renderAjax(['status' => 1, 'data' => $data]);
+    }
+
+    /**
+     * 被拉黑名单列表
+     */
+    public function actionBlackedList()
+    {
+        $user_id = Cookie::getInstance()->getCookie('bhy_id') ? Cookie::getInstance()->getCookie('bhy_id') : 0;
+        if(!$user_id) {
+            return $this->renderAjax(['status' => 0, 'data' => [], 'msg' => '用户未登录']);
+        }
+        if($data = UserFollow::getInstance()->getFollowList('blacked', $user_id, $this->get)) {
+            return $this->renderAjax(['status' => 1, 'data' => $data, 'msg' => '获取数据成功']);
+        } else {
+            return $this->renderAjax(['status' => 0, 'data' => $data, 'msg' => '获取数据失败']);
+        }
     }
 
     /**

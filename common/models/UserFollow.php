@@ -40,6 +40,9 @@ class UserFollow extends Base
         } elseif($type == 'black') {// 黑名单
             $condition = ['f.user_id' => $user_id, 'status' => 0];
             $join = 'f.follow_id = i.user_id';
+        } elseif($type == 'blacked') {// 被拉黑名单
+            $condition = ['f.follow_id' => $user_id, 'status' => 0];
+            $join = 'f.user_id = i.user_id';
         }
         $result = (new Query())->select(['f.*', 'u.id other', 'u.sex', 'i.*'])
             ->where($condition)
