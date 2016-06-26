@@ -1,12 +1,22 @@
 <ion-view hide-tabs="true">
     <link href="/wechat/web/css/member.css" rel="stylesheet">
-    <link href="/wechat/web/css/plugin/bootstrap/css/font-awesome.min.css" rel="stylesheet">
-    <link href="/wechat/web/js/plugin/amezeui/css/amazeui.min.css" rel="stylesheet">
-    <ion-header-bar>
+    <ion-header-bar class="bhy com_w_100">
         <title class="title">隐私设置</title>
-        <a class="button button-icon icon icon-new-menu-user-settings" href="/member/"></a>
     </ion-header-bar>
-    <ion-content class="bhy com_w_100 infomation">
-        <ion-list></ion-list>
+    <ion-content class="bhy com_w_100 bg5">
+        <ion-list>
+            <ion-item class="mt10 item-icon-right" href="/pub_user_info??userId={{user.user_id}}">
+                把TA推荐给朋友
+                <i class="icon ion-ios-arrow-right cor4"></i>
+            </ion-item>
+            <ion-item class="item-icon-right" ng-click="report()">
+                举报
+                <i class="icon ion-ios-arrow-right cor4"></i>
+            </ion-item>
+            <ion-toggle ng-model="formData.pullBlack" toggle-class="toggle-positive" ng-click="pullTheBlack()">
+                拉黑
+            </ion-toggle>
+            <button class="button button-light button-block mt10 stable">取消关注</button>
+        </ion-list>
     </ion-content>
 </ion-view>

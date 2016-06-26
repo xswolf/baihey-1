@@ -1667,7 +1667,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
                     if (res.data) {
                         $scope.formData.follow = false;
                         // 成功，提示
-                        ar.saveDataAlert($ionicPopup,'取消关注成功');
+                        ar.saveDataAlert($ionicPopup, '取消关注成功');
                     }
                 });
             }
@@ -1678,7 +1678,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
                     if (res.data) {
                         $scope.formData.follow = true;
                         // 成功，提示
-                        ar.saveDataAlert($ionicPopup,'加关注成功');
+                        ar.saveDataAlert($ionicPopup, '加关注成功');
                     }
                 });
             }
@@ -1791,25 +1791,25 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
         // 保存
         $scope.saveData = function () {
             if ($scope.formData.pass == '') {
-                ar.saveDataAlert($ionicPopup,'请填写旧密码');
+                ar.saveDataAlert($ionicPopup, '请填写旧密码');
                 return false;
             }
             if ($scope.formData.new_pass1 == '' || $scope.formData.new_pass1.length < 6) {
-                ar.saveDataAlert($ionicPopup,'密码长度必须大于6个字符');
+                ar.saveDataAlert($ionicPopup, '密码长度必须大于6个字符');
                 return false;
             }
             if ($scope.formData.new_pass1 != $scope.formData.new_pass1) {
-                ar.saveDataAlert($ionicPopup,'新密码不一致');
+                ar.saveDataAlert($ionicPopup, '新密码不一致');
                 return false;
             }
 
             api.save('/wap/user/reset-password', $scope.formData).success(function (res) {
                 if (res.data) {
-                    ar.saveDataAlert($ionicPopup,'密码修改成功');
+                    ar.saveDataAlert($ionicPopup, '密码修改成功');
                     $scope.userInfo.reset_pass_time = parseInt(res.data);
                     $scope.getUserPrivacyStorage('#/member/security');
                 } else {
-                    ar.saveDataAlert($ionicPopup,'密码修改失败');
+                    ar.saveDataAlert($ionicPopup, '密码修改失败');
                 }
             })
 
@@ -1844,7 +1844,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
         $scope.User.getCode = function () {
 
             if (!ar.validateMobile($scope.User.mobile)) {  // 验证手机格式
-                ar.saveDataAlert($ionicPopup,'手机号码格式不正确');
+                ar.saveDataAlert($ionicPopup, '手机号码格式不正确');
                 return false;
             }
 
@@ -1900,7 +1900,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
     }]);
 
     // 账户安全-微信绑定
-    module.controller("member.security_wechat", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup','$location', function (api, $scope, $timeout, $ionicPopup,$location) {
+    module.controller("member.security_wechat", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$location', function (api, $scope, $timeout, $ionicPopup, $location) {
         $scope.formData = [];
         $scope.formData.wechat = $scope.userInfo.info.wechat;
         $scope.saveData = function () {
@@ -1922,7 +1922,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
     }]);
 
     // 账户安全-QQ绑定
-    module.controller("member.security_qq", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup','$location', function (api, $scope, $timeout, $ionicPopup,$location) {
+    module.controller("member.security_qq", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$location', function (api, $scope, $timeout, $ionicPopup, $location) {
         $scope.formData = [];
         $scope.formData.qq = $scope.userInfo.info.qq;
         $scope.saveData = function () {
@@ -3287,8 +3287,57 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
     }]);
 
     // 用户资料-隐私设置
-    module.controller("member.settings", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$location', function (api, $scope, $timeout, $ionicPopup, $location) {
+    module.controller("member.settings", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$location', '$ionicActionSheet', function (api, $scope, $timeout, $ionicPopup, $location, $ionicActionSheet) {
+        $scope.formData = {};
+        // 举报
+        $scope.report = function () {
+            var hideSheet = $ionicActionSheet.show({
+                buttons: [
+                    {text: '诽谤辱骂'},
+                    {text: '淫秽色情'},
+                    {text: '血腥暴力'},
+                    {text: '垃圾广告'},
+                    {text: '<p class="lh24 mb0">欺骗</p><p class="fs12 lh24 cor4 mb0">（酒托、话费托等骗取行为）</p>'},
+                    {text: '<p class="lh24 mb0">违法行为</p><p class="fs12 lh24 cor4 mb0">（涉毒、暴恐、违禁品等）</p>'},
+                    {text: '冒用他人照片'},
+                    {text: '资料不真实'}
+                ],
+                titleText: '举报',
+                cancelText: '取消',
+                buttonClicked: function (index) {
+                    api.save('url', {id: index + 1}).success(function (res) {
+                        hideSheet();
+                        if (res.status > 1) {
+                            ar.saveDataAlert('举报成功，工作人员会尽快核实情况。');
+                        } else {
+                            ar.saveDataAlert('举报失败，请刷新重试！');
+                        }
+                    })
+                }
+            });
+        }
 
+        // 拉黑
+        $scope.pullTheBlack = function () {
+            if ($scope.formData.pullBlack) {
+                var confirm = ar.saveDataConfirm($ionicPopup, '确定将对方拉黑吗？拉黑后在“个人-隐私设置-黑名单”中解除。');
+                confirm.then(function (r) {
+                    if (r) {  // 确定拉黑
+                        api.save('url', {}).success(function (res) {
+                            if (res.status) {
+                                ar.saveDataAlert($ionicPopup,'已将对方列入黑名单，如需解除请至“个人-隐私设置-黑名单”中解除。');
+                                return true;
+                            } else {
+                                ar.saveDataAlert($ionicPopup,'操作失败，请刷新重试！');
+                                return false;
+                            }
+                        })
+                    } else {
+                        return false;
+                    }
+                })
+            }
+        }
     }]);
 
     return module;
