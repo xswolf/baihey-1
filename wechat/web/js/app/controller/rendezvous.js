@@ -163,9 +163,9 @@ define(['app/module', 'app/directive/directiveApi'
                         if (res.status) {  // 提交数据成功
 
                             $ionicPopup.alert({title: '已向对方发送约会信息，请耐心等待对方回复'});
-                            window.location.hash = '#/main/rendezvous';
+                            window.location.hash = '#/rendezvous';
                             $timeout(function () {
-                                $location.url('#/main/rendezvous');
+                                $location.url('/rendezvous');
                             }, 800);
 
                         } else {

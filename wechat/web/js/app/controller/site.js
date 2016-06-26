@@ -52,7 +52,7 @@ define(['app/module', 'app/directive/directiveApi'
             if($scope.userInfo.phone) {
                 window.location.hash = url;
             } else {
-                window.location.hash = '#/main/member/security_phone';
+                window.location.hash = '#/member/security_phone';
             }
         }
 

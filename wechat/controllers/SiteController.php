@@ -24,9 +24,9 @@ class SiteController extends BaseController
 
     public function actionIndex()
     {
-//       echo "<script>";
-//        echo "window.location.href='/wap/site/main#/main/index'";
-//       echo "</script>";
+       echo "<script>";
+        echo "window.location.href='/wap/site/main#/index'";
+       echo "</script>";
     }
 
     /**

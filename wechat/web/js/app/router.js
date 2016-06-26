@@ -39,7 +39,7 @@ define(["app/module", 'app/service/serviceApi', 'jquery'],
                 }
 
                 // 判断用户是否登陆
-                if ($location.$$url != '/main/index' && $location.$$url != '/welcome') { // 首页和欢迎页不判断
+                if ($location.$$url != '/index') { // 首页和欢迎页不判断
                     api.getLoginStatus().success(function (res) {
                         if (!res.status) {
                             location.href = '/wap/user/login';
@@ -229,7 +229,7 @@ define(["app/module", 'app/service/serviceApi', 'jquery'],
                         templateUrl: "/wechat/views/charge/index.html",
                         controller: 'charge.index'
                     });
-                //$urlRouterProvider.otherwise("/main/index");
+                $urlRouterProvider.otherwise("/index");
             }])
             .controller('main', ['$scope', '$location', 'app.serviceApi', '$ionicLoading', '$ionicPopup', function ($scope, $location, api, $ionicLoading, $ionicPopup) {
                 if (ar.getCookie('bhy_user_id') > 0) {
@@ -272,7 +272,7 @@ define(["app/module", 'app/service/serviceApi', 'jquery'],
                 // 设置用户信息跳转至资料页
                 $scope.setUserStorage = function () {
                     setUserInfoStorage();
-                    window.location.hash = '#/main/member/information';
+                    window.location.hash = '#/member/information';
                 }
 
                 // 设置用户信息不跳转

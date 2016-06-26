@@ -7,7 +7,7 @@ define(['app/module', 'app/directive/directiveApi'
 ], function (module) {
 
     // 注册
-    module.controller("User.register", ['app.serviceApi', '$scope', '$ionicPopup', '$ionicLoading','$interval', function (api, $scope, $ionicPopup, $ionicLoading,$interval) {
+    module.controller("User.register", ['app.serviceApi', '$scope', '$ionicPopup', '$ionicLoading','$interval','$location', function (api, $scope, $ionicPopup, $ionicLoading,$interval,$location) {
 
         $scope.User = {};
 
@@ -74,7 +74,7 @@ define(['app/module', 'app/directive/directiveApi'
                 if (data.status == 1) {
                     // 存储userInfo
                     ar.setStorage('userInfo', data.data);
-                    window.location.href = '/wap/site/main#/main/index';
+                    $location.url('/index')
                 } else if (data.status == 2) {
                     ar.saveDataAlert($ionicPopup, '验证码错误');
                 } else {
@@ -115,7 +115,7 @@ define(['app/module', 'app/directive/directiveApi'
                 if (data.status) {
                     // 存储userInfo
                     ar.setStorage('userInfo', data.data);
-                    window.location.href = '/wap/site/main#/main/index';
+                    $location.url('/index');
                 } else {
                     $ionicPopup.alert({title: '用户名或者密码错误'});
                 }

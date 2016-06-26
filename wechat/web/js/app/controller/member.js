@@ -228,10 +228,10 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
                 api.save('/wap/member/save-data', $scope.formData).success(function (res) {
                     $scope.userInfo.personalized = $scope.formData.personalized;
                     $scope.setUserStorage();
-                    $location.url('/main/member/information');
+                    $location.url('/member/information');
                 })
             } else {
-                $location.url('/main/member/information');
+                $location.url('/member/information');
             }
 
         }
@@ -253,14 +253,14 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
                         api.save('/wap/member/save-data', $scope.formData).success(function (res) {
                             $scope.userInfo.info.real_name = $scope.formData.real_name;
                             $scope.setUserStorage();
-                            $location.url('/main/member/information');
+                            $location.url('/member/information');
                         })
                     } else {
                         return false;
                     }
                 })
             } else {
-                $location.url('/main/member/information');
+                $location.url('/member/information');
             }
         }
     }]);
@@ -306,14 +306,14 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
                             $scope.userInfo.info.zodiac = $scope.zodiac.id;
                             $scope.userInfo.info.constellation = $scope.constellation.id;
                             $scope.setUserStorage();
-                            $location.url('/main/member/information');
+                            $location.url('/member/information');
                         })
                     } else {
                         return false;
                     }
                 });
             } else {
-                $location.url('/main/member/information');
+                $location.url('/member/information');
             }
         }
 
@@ -336,14 +336,14 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
                         api.save('/wap/member/save-data', $scope.formData).success(function (res) {
                             $scope.userInfo.info.height = $scope.formData.height;
                             $scope.setUserStorage();
-                            $location.url('/main/member/information');
+                            $location.url('/member/information');
                         })
                     } else {
                         return false;
                     }
                 })
             } else {
-                $location.url('/main/member/information');
+                $location.url('/member/information');
             }
         }
 
@@ -366,14 +366,14 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
                         api.save('/wap/member/save-data', $scope.formData).success(function (res) {
                             $scope.userInfo.info.is_marriage = $scope.formData.is_marriage;
                             $scope.setUserStorage();
-                            $location.url('/main/member/information');
+                            $location.url('/member/information');
                         })
                     } else {
                         return false;
                     }
                 })
             } else {
-                $location.url('/main/member/information');
+                $location.url('/member/information');
             }
         }
     }]);
@@ -392,7 +392,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
                 // 保存
                 $scope.userInfo.info.education = $scope.formData.education;
                 $scope.setUserStorage();
-                $location.url('/main/member/information');
+                $location.url('/member/information');
             })
         }
     }]);
@@ -442,7 +442,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
                     $scope.userInfo.info.occupation = $scope.useroccBig;
                     $scope.userInfo.info.children_occupation = $scope.useroccSmall;
                     $scope.setUserStorage();
-                    $location.url('/main/member/information');
+                    $location.url('/member/information');
                 })
             }
         }
@@ -530,7 +530,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
                     $scope.userInfo.area = '0';
                 }
                 $scope.setUserStorage();
-                $location.url('/main/member/information');
+                $location.url('/member/information');
             })
         }
 
@@ -547,10 +547,10 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
                     // 保存
                     $scope.userInfo.info.haunt_address = $scope.formData.haunt_address;
                     $scope.setUserStorage();
-                    $location.url('/main/member/information');
+                    $location.url('/member/information');
                 })
             } else {
-                $location.url('/main/member/information');
+                $location.url('/member/information');
             }
         }
 
@@ -567,10 +567,10 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
                     // 保存
                     $scope.userInfo.info.wechat = $scope.formData.wechat;
                     $scope.setUserStorage();
-                    $location.url('/main/member/information');
+                    $location.url('/member/information');
                 })
             } else {
-                $location.url('/main/member/information');
+                $location.url('/member/information');
             }
         }
 
@@ -587,10 +587,10 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
                     // 保存
                     $scope.userInfo.info.qq = $scope.formData.qq;
                     $scope.setUserStorage();
-                    $location.url('/main/member/information');
+                    $location.url('/member/information');
                 })
             } else {
-                $location.url('/main/member/information');
+                $location.url('/member/information');
             }
         }
 
@@ -680,7 +680,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
                 $scope.userInfo.went_travel = formData.went_travel;
                 $scope.setUserStorage();
                 $ionicLoading.hide();
-                $location.url('/main/member/information');
+                $location.url('/member/information');
             });
 
 
@@ -773,7 +773,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
                 $scope.userInfo.want_travel = formData.want_travel;
                 $scope.setUserStorage();
                 $ionicLoading.hide();
-                $location.url('/main/member/information');
+                $location.url('/member/information');
             });
 
         }
@@ -830,7 +830,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
                 $scope.userInfo.love_sport = formData.love_sport;
                 $scope.setUserStorage();
                 $ionicLoading.hide();
-                $location.url('/main/member/information');
+                $location.url('/member/information');
             });
         }
 
@@ -888,7 +888,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
                 $scope.userInfo.want_film = formData.want_film;
                 $scope.setUserStorage();
                 $ionicLoading.hide();
-                $location.url('/main/member/information');
+                $location.url('/member/information');
             });
         }
 
@@ -946,7 +946,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
                 $scope.userInfo.like_food = formData.like_food;
                 $scope.setUserStorage();
                 $ionicLoading.hide();
-                $location.url('/main/member/information');
+                $location.url('/member/information');
             });
         }
 
@@ -965,10 +965,10 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
                 api.save('/wap/member/save-data', $scope.formData).success(function (res) {
                     $scope.userInfo.info.mate = $scope.formData.mate;
                     $scope.setUserStorage();
-                    $location.url('/main/member/information');
+                    $location.url('/member/information');
                 })
             } else {
-                $location.url('/main/member/information');
+                $location.url('/member/information');
             }
         }
     }]);
@@ -986,10 +986,10 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
                 api.save('/wap/member/save-data', $scope.formData).success(function (res) {
                     $scope.userInfo.info.is_child = $scope.formData.is_child;
                     $scope.setUserStorage();
-                    $location.url('/main/member/information');
+                    $location.url('/member/information');
                 })
             } else {
-                $location.url('/main/member/information');
+                $location.url('/member/information');
             }
         }
 
@@ -1011,14 +1011,14 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
                         api.save('/wap/member/save-data', $scope.formData).success(function (res) {
                             $scope.userInfo.info.nation = $scope.formData.nation;
                             $scope.setUserStorage();
-                            $location.url('/main/member/information');
+                            $location.url('/member/information');
                         })
                     } else {
                         return false;
                     }
                 })
             } else {
-                $location.url('/main/member/information');
+                $location.url('/member/information');
             }
         }
     }]);
@@ -1035,10 +1035,10 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
                 api.save('/wap/member/save-data', $scope.formData).success(function (res) {
                     $scope.userInfo.info.work = $scope.formData.work;
                     $scope.setUserStorage();
-                    $location.url('/main/member/information');
+                    $location.url('/member/information');
                 })
             } else {
-                $location.url('/main/member/information');
+                $location.url('/member/information');
             }
         }
     }]);
@@ -1056,10 +1056,10 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
                 api.save('/wap/member/save-data', $scope.formData).success(function (res) {
                     $scope.userInfo.info.year_income = $scope.formData.year_income;
                     $scope.setUserStorage();
-                    $location.url('/main/member/information');
+                    $location.url('/member/information');
                 })
             } else {
-                $location.url('/main/member/information');
+                $location.url('/member/information');
             }
         }
     }]);
@@ -1077,10 +1077,10 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
                 api.save('/wap/member/save-data', $scope.formData).success(function (res) {
                     $scope.userInfo.info.is_purchase = $scope.formData.is_purchase;
                     $scope.setUserStorage();
-                    $location.url('/main/member/information');
+                    $location.url('/member/information');
                 })
             } else {
-                $location.url('/main/member/information');
+                $location.url('/member/information');
             }
         }
     }]);
@@ -1098,10 +1098,10 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
                 api.save('/wap/member/save-data', $scope.formData).success(function (res) {
                     $scope.userInfo.info.is_car = $scope.formData.is_car;
                     $scope.setUserStorage();
-                    $location.url('/main/member/information');
+                    $location.url('/member/information');
                 })
             } else {
-                $location.url('/main/member/information');
+                $location.url('/member/information');
             }
         }
     }]);
@@ -1120,10 +1120,10 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
                     // 保存
                     $scope.userInfo.info.blood = $scope.formData.blood;
                     $scope.setUserStorage();
-                    $location.url('/main/member/information');
+                    $location.url('/member/information');
                 })
             } else {
-                $location.url('/main/member/information');
+                $location.url('/member/information');
             }
         }
     }]);
@@ -1140,10 +1140,10 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
                 api.save('/wap/member/save-data', $scope.formData).success(function (res) {
                     $scope.userInfo.info.school = $scope.formData.school;
                     $scope.setUserStorage();
-                    $location.url('/main/member/information');
+                    $location.url('/member/information');
                 })
             } else {
-                $location.url('/main/member/information');
+                $location.url('/member/information');
             }
         }
     }]);
@@ -1212,10 +1212,10 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
                 api.save('/wap/member/save-data', $scope.formData).success(function (res) {
                     $scope.userInfo.info.zo_age = $scope.formData.zo_age;
                     $scope.setUserStorage();
-                    $location.url('/main/member/information');
+                    $location.url('/member/information');
                 })
             } else {
-                $location.url('/main/member/information');
+                $location.url('/member/information');
             }
 
         }
@@ -1286,10 +1286,10 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
                 api.save('/wap/member/save-data', $scope.formData).success(function (res) {
                     $scope.userInfo.info.zo_height = $scope.formData.zo_height;
                     $scope.setUserStorage();
-                    $location.url('/main/member/information');
+                    $location.url('/member/information');
                 })
             } else {
-                $location.url('/main/member/information');
+                $location.url('/member/information');
             }
         }
     }]);
@@ -1306,7 +1306,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
             api.save('/wap/member/save-data', $scope.formData).success(function (res) {
                 $scope.userInfo.info.zo_education = $scope.formData.zo_education;
                 $scope.setUserStorage();
-                $location.url('/main/member/information');
+                $location.url('/member/information');
             })
         }
     }]);
@@ -1355,7 +1355,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
                 $scope.userInfo.info.zo_marriage = formData.zo_marriage;
                 $scope.setUserStorage();
                 $ionicLoading.hide();
-                $location.url('/main/member/information');
+                $location.url('/member/information');
             })
 
         }
@@ -1374,7 +1374,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
             api.save('/wap/member/save-data', $scope.formData).success(function (res) {
                 $scope.userInfo.info.zo_children = $scope.formData.zo_children;
                 $scope.setUserStorage();
-                $location.url('/main/member/information');
+                $location.url('/member/information');
             })
         }
 
@@ -1393,7 +1393,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
             api.save('/wap/member/save-data', $scope.formData).success(function (res) {
                 $scope.userInfo.info.zo_house = $scope.formData.zo_house;
                 $scope.setUserStorage();
-                $location.url('/main/member/information');
+                $location.url('/member/information');
             })
         }
     }]);
@@ -1411,7 +1411,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
             api.save('/wap/member/save-data', $scope.formData).success(function (res) {
                 $scope.userInfo.info.zo_car = $scope.formData.zo_car;
                 $scope.setUserStorage();
-                $location.url('/main/member/information');
+                $location.url('/member/information');
             })
         }
     }]);
@@ -1462,7 +1462,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
                 $scope.userInfo.info.zo_zodiac = formData.zo_zodiac;
                 $scope.setUserStorage();
                 $ionicLoading.hide();
-                $location.url('/main/member/information');
+                $location.url('/member/information');
             })
         }
 
@@ -1513,7 +1513,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
                 $scope.userInfo.info.zo_constellation = formData.zo_constellation;
                 $scope.setUserStorage();
                 $ionicLoading.hide();
-                $location.url('/main/member/information');
+                $location.url('/member/information');
             })
         }
 
@@ -1648,7 +1648,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
             });
 
             $scope.localChat = function () {
-                window.location.hash = "#/main/chat?id=" + $scope.otherUserInfo.id + "&head_pic=" + $scope.otherUserInfo.info.head_pic + "&real_name=" + $scope.otherUserInfo.info.real_name + "&sex=" + $scope.otherUserInfo.sex + "&age=" + $scope.otherUserInfo.info.age;
+                window.location.hash = "#/chat1?id=" + $scope.otherUserInfo.id + "&head_pic=" + $scope.otherUserInfo.info.head_pic + "&real_name=" + $scope.otherUserInfo.info.real_name + "&sex=" + $scope.otherUserInfo.sex + "&age=" + $scope.otherUserInfo.info.age;
             }
 
             var followData = [];
@@ -1807,7 +1807,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
                 if (res.data) {
                     $ionicPopup.alert({title: '密码修改成功'});
                     $scope.userInfo.reset_pass_time = parseInt(res.data);
-                    $scope.getUserPrivacyStorage('#/main/member/security');
+                    $scope.getUserPrivacyStorage('#/member/security');
                 } else {
                     $ionicPopup.alert({title: '密码修改失败'});
                 }
@@ -1888,7 +1888,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
                             if (res.data) {
                                 $ionicPopup.alert({title: '手机绑定成功'});
                                 $scope.userInfo.phone = $scope.User.mobile;
-                                $scope.getUserPrivacyStorage('#/main/member/security');
+                                $scope.getUserPrivacyStorage('#/member/security');
                             } else {
                                 $ionicPopup.alert({title: '手机绑定失败'});
                             }
@@ -1900,14 +1900,14 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
     }]);
 
     // 账户安全-微信绑定
-    module.controller("member.security_wechat", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', function (api, $scope, $timeout, $ionicPopup) {
+    module.controller("member.security_wechat", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup','$location', function (api, $scope, $timeout, $ionicPopup,$location) {
         $scope.formData = [];
         $scope.formData.wechat = $scope.userInfo.info.wechat;
         $scope.saveData = function () {
             alert($scope.formData.wechat);
-            if ($scope.formData.wechat == '' || typeof($scope.formData.wechat) == 'undefined') {
+            if (!$scope.formData.wechat) {
                 if (confirm('检测到您还未填写微信号，确定放弃吗？')) {
-                    window.location.hash = '#/main/member/security';  //跳转
+                    $location.url('/member/security');  //跳转
                 } else {
                     return false;
                 }
@@ -1915,20 +1915,20 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
                 api.save('/wap/member/save-data', $scope.formData).success(function (res) {
                     // 保存
                     $scope.userInfo.info.wechat = $scope.formData.wechat;
-                    $scope.getUserPrivacyStorage('#/main/member/security');
+                    $scope.getUserPrivacyStorage('#/member/security');
                 })
             }
         }
     }]);
 
     // 账户安全-QQ绑定
-    module.controller("member.security_qq", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', function (api, $scope, $timeout, $ionicPopup) {
+    module.controller("member.security_qq", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup','$location', function (api, $scope, $timeout, $ionicPopup,$location) {
         $scope.formData = [];
         $scope.formData.qq = $scope.userInfo.info.qq;
         $scope.saveData = function () {
             if ($scope.formData.qq == '' || typeof($scope.formData.qq) == 'undefined') {
-                if (confirm('检测到您还未填写微信号，确定放弃吗？')) {
-                    window.location.hash = '#/main/member/security';  //跳转
+                if (confirm('检测到您还未填写QQ号，确定放弃吗？')) {
+                    $location.url('/member/security');  //跳转
                 } else {
                     return false;
                 }
@@ -1936,7 +1936,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
                 api.save('/wap/member/save-data', $scope.formData).success(function (res) {
                     // 保存
                     $scope.userInfo.info.qq = $scope.formData.qq;
-                    $scope.getUserPrivacyStorage('#/main/member/security');
+                    $scope.getUserPrivacyStorage('#/member/security');
                 })
             }
         }
@@ -2020,7 +2020,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
                 var confirm = ar.saveDataConfirm($ionicPopup, '检测到身份证信息未填写，确认放弃吗？');
                 confirm.then(function (res) {
                     if (res) {
-                        $location.url('/main/member/honesty');
+                        $location.url('/member/honesty');
                     } else {
                         return false;
                     }
@@ -2035,7 +2035,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
                         $scope.userInfo.info.real_name = $scope.formData.real_name;
                         $scope.userInfo.info.identity_id = $scope.formData.identity_id;
                         $scope.userInfo.info.identity_address = $scope.formData.identity_address;
-                        $scope.getUserPrivacyStorage('#/main/member/honesty');
+                        $scope.getUserPrivacyStorage('#/member/honesty');
                     });
                 });
             }
@@ -2253,7 +2253,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
                 if (res.status < 1) {
                     $ionicPopup.alert({title: res.msg});
                 } else {
-                    $location.url('/main/charge_index?orderId=' + res.data);
+                    $location.url('/charge_index?orderId=' + res.data);
                 }
             })
         }
@@ -2303,7 +2303,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
                 if (res.status < 1) {
                     $ionicPopup.alert({title: res.msg});
                 } else {
-                    $location.url('/main/charge_index?orderId=' + res.data);
+                    $location.url('/charge_index?orderId=' + res.data);
                 }
             })
         }
@@ -2325,7 +2325,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
                 if (res.status < 1) {
                     $ionicPopup.alert({title: res.msg});
                 } else {
-                    $location.url('/main/charge_index?orderId=' + res.data);
+                    $location.url('/charge_index?orderId=' + res.data);
                 }
             })
         }
@@ -2495,7 +2495,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
                     }).success(function (re) {
                         $ionicLoading.hide();
                         if (re.status > 0) {
-                            $location.url('/main/member/account_withdraw_info?id=' + re.data);
+                            $location.url('/member/account_withdraw_info?id=' + re.data);
                         } else {
                             ar.saveDataAlert($ionicPopup, re.msg);
                         }
@@ -2650,9 +2650,9 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
         // 跳转-返回
         $scope.jump = function () {
             if ($location.$$search.tempUrl) {    // 因为只有2种情况，所以只需要判断是否有值
-                $location.url('/main/rendezvous');
+                $location.url('/rendezvous');
             } else {
-                $location.url('/main/member/rendezvous');
+                $location.url('/member/rendezvous');
             }
         }
 
@@ -2809,7 +2809,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
             api.save('/wap/rendezvous/release', $scope.formData).success(function (res) {
                 if (res.data) {
                     $ionicPopup.alert({title: '发布成功！'});
-                    window.location.hash = '#/main/member/rendezvous_put';
+                    $location.url('/member/rendezvous_put');
                 }
             })
         }
@@ -3028,7 +3028,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
                         hideSheet();
                     }
                     if (index == 1) { // 修改
-                        $location.url('/main/member/rendezvous_add?id=' + $scope.putList[itemIndex].id);
+                        $location.url('/member/rendezvous_add?id=' + $scope.putList[itemIndex].id);
                     }
                 }
             });
@@ -3036,7 +3036,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
 
         // 跳转-参与的人
         $scope.involved = function (id, theme, title) {
-            $location.url('/main/member/rendezvous_involved?id=' + id + '&theme=' + theme + '&title=' + title);
+            $location.url('/member/rendezvous_involved?id=' + id + '&theme=' + theme + '&title=' + title);
         }
 
         $scope.openTxt = false;
