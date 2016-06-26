@@ -104,6 +104,12 @@ class UserFollow extends Base
     public function addFollow($where)
     {
         if($follow = $this->findOne($where)) {
+            // 查看对方是否拉黑
+            if($status = $this->getFollowStatus(['user_id' => $where['follow_id'], 'follow_id' => $where['user_id']])) {
+                if($status['status'] == 0) {
+                    return false;
+                }
+            }
             $follow->status = 1;
             $follow->update_time = YII_BEGIN_TIME;
             return $follow->save(false);
@@ -148,7 +154,14 @@ class UserFollow extends Base
         }
         $follow->update_time = YII_BEGIN_TIME;
         $follow->status = 0;
-        return $follow->save(false);
+        $row = $follow->save(false);
+        // 删除对方关注
+        if($followed = $this->findOne(['user_id' => $where['follow_id'], 'follow_id' => $where['user_id']])) {
+            $followed->update_time = YII_BEGIN_TIME;
+            $followed->status = 3;
+            $followed->save(false);
+        }
+        return $row;
     }
 
     /**

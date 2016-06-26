@@ -3289,6 +3289,21 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
     // 用户资料-隐私设置
     module.controller("member.settings", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$location', '$ionicActionSheet', function (api, $scope, $timeout, $ionicPopup, $location, $ionicActionSheet) {
         $scope.formData = {};
+        var followData = [];
+        followData.user_id = ar.getCookie("bhy_user_id");
+        followData.follow_id = $location.$$search.userId;
+
+        api.list("/wap/follow/get-follow-status", followData).success(function (res) {
+            if (res.status) {
+                if(res.data == 0) {
+                    $scope.formData.pullBlack = true;
+                    $scope.formData.follow = false;
+                } else if(res.data == 1) {
+                    $scope.formData.follow = true;
+                    $scope.formData.pullBlack = false;
+                }
+            }
+        });
         // 举报
         $scope.report = function () {
             var hideSheet = $ionicActionSheet.show({
@@ -3317,14 +3332,26 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
             });
         }
 
+        // 取消关注
+        $scope.delFollow = function () {
+            api.get('/wap/follow/del-follow', followData).success(function (res) {
+                if (res.status) {     // 成功
+                    $scope.formData.follow = false;
+                } else {            // 失败
+                    ar.saveDataAlert($ionicPopup, '取消关注失败');
+                }
+            })
+        }
+
         // 拉黑
         $scope.pullTheBlack = function () {
             if ($scope.formData.pullBlack) {
                 var confirm = ar.saveDataConfirm($ionicPopup, '确定将对方拉黑吗？拉黑后在“个人-隐私设置-黑名单”中解除。');
                 confirm.then(function (r) {
                     if (r) {  // 确定拉黑
-                        api.save('url', {}).success(function (res) {
+                        api.save('/wap/follow/black-follow', followData).success(function (res) {
                             if (res.status) {
+                                $scope.formData.pullBlack = true;
                                 ar.saveDataAlert($ionicPopup,'已将对方列入黑名单，如需解除请至“个人-隐私设置-黑名单”中解除。');
                                 return true;
                             } else {
@@ -3336,6 +3363,9 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
                         return false;
                     }
                 })
+            } else {
+                $scope.delFollow();
+                console.log('取消拉黑');
             }
         }
     }]);
