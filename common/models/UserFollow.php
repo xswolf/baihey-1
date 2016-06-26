@@ -57,7 +57,9 @@ class UserFollow extends Base
 
     /**
      * 获取关注我的总数
-     * @return array|bool
+     * @param $type
+     * @param $user_id
+     * @return int|string
      */
     public function getSumFollow($type, $user_id)
     {
@@ -73,7 +75,7 @@ class UserFollow extends Base
 
     /**
      * 获取关注状态
-     * @param $where
+     * @param $where ['user_id','follow_id']
      * @return array|bool
      */
     public function getFollowStatus($where)
@@ -92,7 +94,7 @@ class UserFollow extends Base
 
     /**
      * 新增关注
-     * @param $where
+     * @param $where ['user_id','follow_id']
      * @return bool
      * @throws \Exception
      */
@@ -116,7 +118,7 @@ class UserFollow extends Base
 
     /**
      * 取消关注
-     * @param $where
+     * @param $where ['user_id','follow_id']
      * @return bool
      * @throws \Exception
      */
@@ -130,20 +132,25 @@ class UserFollow extends Base
 
     /**
      * 拉黑
-     * @param $where
+     * @param $where ['user_id','follow_id']
      * @return bool
      * @throws \Exception
      */
     public function blackFollow($where)
     {
-        $follow = $this->findOne($where);
+        if(!$follow = $this->findOne($where)) {
+            $follow->user_id = $where['user_id'];
+            $follow->follow_id = $where['follow_id'];
+            $follow->create_time = YII_BEGIN_TIME;
+        }
+        $follow->update_time = YII_BEGIN_TIME;
         $follow->status = 0;
         return $follow->save(false);
     }
 
     /**
      * 取消拉黑
-     * @param $where
+     * @param $where ['user_id','follow_id']
      * @return bool
      */
     public function delBlack($where)
