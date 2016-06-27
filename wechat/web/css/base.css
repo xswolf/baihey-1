@@ -84,6 +84,9 @@ p.mb0{ margin-bottom: 0;}
 .ml20{ margin-left: 20px;}
 .ml25{ margin-left: 25px;}
 .ml30{ margin-left: 30px;}
+.ml40{ margin-left: 40px;}
+.ml48{ margin-left: 48px;}
+.ml50{ margin-left: 50px;}
 .bor_0{ border: 0;}
 .bor{border-top:#F0D9E3 1px solid;border-bottom:1px solid #DCDCDC;}
 .bor_btm{border-bottom:1px solid #DCDCDC;}
@@ -143,6 +146,7 @@ p.mb0{ margin-bottom: 0;}
 .cor49{color:#000000;}
 .cor50{color:#cccccc;}
 .cor51{color:#fec52b;}
+.cor52{color:#b6b6b6;}
 
 .fs11{ font-size: 11px;}
 .fs12{ font-size: 12px;}

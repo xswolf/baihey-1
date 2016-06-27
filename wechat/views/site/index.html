@@ -6,18 +6,17 @@
     </ion-header-bar>
     <ion-content class="com_w_100 site" delegate-handle="mainScroll">
         <div class="list">
-            <a class="item item-thumbnail-left" href="#/member/information" ng-if="userInfo.info">
+            <a class="item item-thumbnail-left pr" href="#/member/information" ng-if="userInfo.info">
                 <img ng-src="{{userInfo.info.head_pic | isNull}}" onerror="this.src='/wechat/web/images/u_noimg.jpg'"
                      class="rounded">
                 <span ng-if="headpicStatus == 2" class="under">审核中</span>
                 <h2 ng-if="userInfo.info.real_name">
                     <span class="fl">{{userInfo.info.real_name | sex:userInfo.sex:userInfo.age}}，您好！</span>
-                    <label class="fr fs12 cor20">ID:{{userInfo.id}}</label>
-                </h2>
-                <h2 ng-if="!userInfo.info.real_name">
+                </p>
+                <p ng-if="!userInfo.info.real_name">
                     <span class="fl">会员{{userInfo.id}}，您好！</span>
-                    <label class="fr fs12 cor20">ID:{{userInfo.id}}</label>
-                </h2>
+                </p>
+                <span class="fs12 cor20 user_id">ID:{{userInfo.id}}</span>
                 <p>
                     <span ng-class="{0:'not'}[honesty(userInfo.honesty_value)]" class="identity id">身份证</span>
                     <span ng-class="{true:'not'}[userInfo.phone == null || userInfo.phone == '']"

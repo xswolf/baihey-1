@@ -176,6 +176,11 @@ a.weibo {
 .message .item_uimg {
   vertical-align: middle;
 }
+.site span.user_id {
+  position: absolute;
+  right: 16px;
+  top: 8px;
+}
 @media screen and (max-width: 400px) {
   .site .item_uimg {
     width: 74px;

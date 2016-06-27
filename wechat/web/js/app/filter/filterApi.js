@@ -263,16 +263,34 @@ define(['app/module'], function (module) {
         }
     });
 
-    // 返回择偶年龄
+    // 择偶年龄
     module.filter('zo_age', function () {
-        return function (input, arr) {
-            if (typeof(input) != 'undefined' && input != '') {
-                var info = input.split(',');
+        return function (input) {
+            if (input) {
+                var info = input.split('-');
                 if (info[1] == '0') {
-                    return info[0] + '-' + '不限';
+                    return info[0] + '岁以上';
                 } else {
-                    return input;
+                    return input + '岁';
                 }
+            }else{
+                return '';
+            }
+        }
+    });
+
+    // 择偶身高
+    module.filter('zo_height', function () {
+        return function (input) {
+            if (input) {
+                var info = input.split('-');
+                if (info[1] == '0') {
+                    return info[0] + '厘米以上';
+                } else {
+                    return input + '厘米';
+                }
+            }else{
+                return '';
             }
         }
     });
