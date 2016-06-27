@@ -335,10 +335,10 @@
         </ion-list>
     </ion-content>
     <ion-footer-bar align-title="left" class="bar-light">
-        <div class="buttons bor_r_1c" ng-class="{true:'w100',false:'w50'}[formData.follow]">
+        <div class="buttons bor_r_1c" ng-class="{true:'w100',false:'w50'}[formData.isfollow]">
             <a class="button w100" style="font-size: 16px; color:#e4007f;" href="#/chat1?id={{otherUserInfo.id}}&head_pic={{otherUserInfo.info.head_pic}}&real_name={{otherUserInfo.info.real_name}}&sex={{otherUserInfo.sex}}&age={{otherUserInfo.info.age}}"><i class="ion-chatbox-working cor21 mr5 vam fs22"></i>对话</a>
         </div>
-        <div class="buttons w50"  ng-if="formData.follow != 1">
+        <div class="buttons w50"  ng-if="formData.isfollow != 1">
             <button ng-if="formData.follow != 1" class="button w100"  style="font-size: 16px;" ng-click="addFollow()">
                 <i class="ion-plus-round mr5 vam fs22"></i>关注
             </button>

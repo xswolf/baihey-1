@@ -5,27 +5,18 @@ define(['app/module', 'app/directive/directiveApi'
     , 'app/service/serviceApi', 'app/filter/filterApi', 'config/city', 'config/occupation'
 ], function (module) {
 
-    module.controller("site.index", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$ionicModal', '$ionicActionSheet', '$ionicLoading', '$ionicBackdrop','$ionicScrollDelegate','$location',function (api, $scope, $timeout, $ionicPopup, $ionicModal, $ionicActionSheet, $ionicLoading,$ionicBackdrop,$ionicScrollDelegate,$location) {
-
+    module.controller("site.index", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$ionicModal', '$ionicActionSheet', '$ionicLoading', '$ionicBackdrop','$ionicScrollDelegate','$location','blacked','honestyStatus','headpicStatus',function (api, $scope, $timeout, $ionicPopup, $ionicModal, $ionicActionSheet, $ionicLoading,$ionicBackdrop,$ionicScrollDelegate,$location,blacked,honestyStatus,headpicStatus) {
         // 搜索条件
         $scope.searchForm = [];
         $scope.whereForm = [];
 
         // 用户列表
         $scope.userList = [];
-        // 被拉黑列表
-        var blackedList = [];
-        api.list('/wap/follow/blacked-list', {}).success(function (res) {
-            if(res.status) {
-                for(var i in res.data) {
-                    blackedList[i] = parseInt(res.data[i].user_id);
-                }
-            }
-        });
+
         // 被拉黑判断方法
         $scope.blackedFun = function(id) {
             id = parseInt(id);
-            if(blackedList.indexOf(id) != -1) {
+            if(blacked.data.data.indexOf(id) != -1) {
                 return false;
             } else {
                 return true;
@@ -33,17 +24,13 @@ define(['app/module', 'app/directive/directiveApi'
         }
 
         // 判断身份证是否认证通过
-        api.list('/wap/member/photo-list', {type: 2, pageSize: 2}).success(function (res) {
-            if(res.data.length) {
-                $scope.honestyStatus = res.data[0].is_check;
-            }
-        });
+        if(honestyStatus.data.data.length) {
+            $scope.honestyStatus = honestyStatus.data.data[0].is_check;
+        }
         // 判断头像是否认证通过
-        api.list('/wap/member/user-headpic', {}).success(function (res) {
-            if(res.status) {
-                $scope.headpicStatus = res.data.is_check;
+            if(headpicStatus.data.status) {
+                $scope.headpicStatus = headpicStatus.data.data.is_check;
             }
-        });
         $scope.honesty = function (val) {
             return val & 1;
         }
@@ -131,6 +118,10 @@ define(['app/module', 'app/directive/directiveApi'
         }).then(function (modal) {
             $scope.cityModal = modal;
         });*/
+
+        $scope.indexFilter = function(user){
+            return user.id != $scope.userInfo.id  && blacked.data.data.indexOf(user.id) == -1;
+        }
 
         // 高级搜索模版
         $ionicModal.fromTemplateUrl('MoreSearchModal.html', {

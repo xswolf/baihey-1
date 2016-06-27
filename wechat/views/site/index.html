@@ -12,7 +12,7 @@
                 <span ng-if="headpicStatus == 2" class="under">审核中</span>
                 <h2 ng-if="userInfo.info.real_name">
                     <span class="fl">{{userInfo.info.real_name | sex:userInfo.sex:userInfo.age}}，您好！</span>
-                </p>
+                </h2>
                 <p ng-if="!userInfo.info.real_name">
                     <span class="fl">会员{{userInfo.id}}，您好！</span>
                 </p>
@@ -43,8 +43,7 @@
                 </h2>
             </a>
 
-            <a class="item item-thumbnail-left" href="javascript:;" ng-repeat="user in userList"
-               ng-if="user.id != userInfo.id && blackedFun(user.id)">
+            <a class="item item-thumbnail-left" href="javascript:;" ng-repeat="user in userList | filter:indexFilter">
                 <img class="rounded" ng-click="jump('/userInfo?userId={{user.user_id}}')"
                      ng-src="{{user.info.head_pic | isNull}}"
                      onerror="this.src='/wechat/web/images/no_img.png'">
