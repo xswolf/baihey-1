@@ -35,7 +35,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
     // 资料首页
     module.controller("member.information", ['app.serviceApi', '$scope', '$ionicPopup', 'FileUploader', '$ionicLoading', '$ionicActionSheet', function (api, $scope, $ionicPopup, FileUploader, $ionicLoading, $ionicActionSheet) {
         requirejs(['amezeui', 'amezeui_ie8'], function (amezeui, amezeui_ie8) {
-
+            amezeui.gallery.init();
         });
 
         // 实例化上传图片插件
@@ -158,7 +158,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
     // 个人动态
     module.controller("member.dynamic", ['app.serviceApi', '$scope', '$ionicPopup', '$location', function (api, $scope, $ionicPopup, $location) {
         requirejs(['amezeui', 'amezeui_ie8'], function (amezeui, amezeui_ie8) {
-
+            amezeui.gallery.init();
         });
 
         $scope.formData = [];
@@ -1647,7 +1647,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
                     $scope.otherUserInfo.want_film ? getConfig('want_film', $scope.otherUserInfo.want_film) : true;// 想看的电影
                     $scope.otherUserInfo.like_food ? getConfig('like_food', $scope.otherUserInfo.like_food) : true;// 喜欢的食物
                     $scope.isPermissions = function (event) {
-                        if (!$scope.picAuth) {
+                        if ($scope.picAuth) {
                             event.stopPropagation();
                             ar.saveDataAlert($ionicPopup, '对方已设置不公开相册');
                         }
