@@ -7,6 +7,7 @@ define(['app/module', 'app/directive/directiveApi'
 
 
     module.controller("message.chat1", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$ionicModal', '$ionicActionSheet', '$ionicLoading', '$ionicScrollDelegate', 'FileUploader', '$http', '$location', '$rootScope', '$filter', function (api, $scope, $timeout, $ionicPopup, $ionicModal, $ionicActionSheet, $ionicLoading, $ionicScrollDelegate, FileUploader, $http, $location, $rootScope, $filter) {
+        $scope.historyList = [];
         require(['jquery'], function ($) {
             var $body = $('body');
             document.title = $filter('sex')($scope.real_name, $scope.sex, $scope.age);

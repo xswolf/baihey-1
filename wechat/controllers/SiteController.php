@@ -11,6 +11,16 @@ use wechat\models\User;
 class SiteController extends BaseController
 {
 
+    /**
+     * 错误处理
+     */
+    public function actionError()
+    {
+        if($error=\Yii::$app->errorHandler)
+        {
+            return $this->render([],'error');
+        }
+    }
 
     /**
      * Displays homepage.
