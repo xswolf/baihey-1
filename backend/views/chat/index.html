@@ -98,7 +98,7 @@
                                                         <img class="media-object" alt="" class="pic1" >
                                                     </a>
                                                     <div class="media-body chat-pop">
-                                                        <h4 class="media-heading"><span class="name1"></span> <span class="pull-right"><i class="fa fa-clock-o"></i> <abbr class="timeago"  >{{date('Y-m-d',$vo.create_time)}}</abbr> </span></h4>
+                                                        <h4 class="media-heading"><span class="name1"></span> <span class="pull-right"><i class="fa fa-clock-o"></i> <abbr class="timeago"  >{{date('Y-m-d  H:m:s',$vo.create_time)}}</abbr> </span></h4>
                                                         <p>{{$vo.message}}</p>
 
                                                     </div>
@@ -165,10 +165,10 @@
                 var msg = '';
                 msg += '<li class="animated fadeInLeft media">';
                 msg += '<a class="pull-right" href="#">';
-                msg += '<img class="media-object" alt="Generic placeholder image" src="img/chat/headshot2.jpg">';
+                msg += '<img class="media-object" alt="" src="img/chat/headshot2.jpg">';
                 msg += '</a>';
                 msg += '<div class="pull-right media-body chat-pop mod">';
-                msg += '<h4 class="media-heading">You <span class="pull-left"><abbr id="curr-time" class="timeago" title="' + curr_time + '" >' + curr_time + '</abbr> <i class="fa fa-clock-o"></i></span></h4>';
+                msg += '<h4 class="media-heading">自己 <span class="pull-left">' + curr_time + '</abbr> <i class="fa fa-clock-o"></i></span></h4>';
                 msg += text;
                 msg += '</div>';
                 msg += '</li>';
