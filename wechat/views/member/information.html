@@ -23,7 +23,7 @@
             <input id="pic_fileInput" type="file" nv-file-select="" uploader="uploader"
                    style="visibility: hidden; display: none;" accept="image/*">
 
-            <ion-item class="idv mb10 positive-bg" href="#/member/honesty">
+            <ion-item ng-if="!honestyStatus" class="idv mb10 positive-bg" href="#/member/honesty">
                 <div class="info_c">
                     <p>
                         <i class="icon ion-android-alert fs16 cor0 vam"></i>

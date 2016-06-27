@@ -33,13 +33,13 @@ class UserPhoto extends Base
             $this->thumb_path = $data['thumb_path'];
             $this->create_time = $data['time'];
             $this->update_time = $data['time'];
-            if(isset($data['type'])) {
+            if (isset($data['type'])) {
                 $this->type = $data['type'];
             }
-            /*if(0 == $sum) {
+            if (0 == $sum) {
                 $this->is_head = 1;
                 UserInformation::getInstance()->updateUserInfo($user_id, ['head_pic' => $data['thumb_path']]);
-            }*/
+            }
             $this->insert(false);
             return $this->getDb()->getLastInsertID();
         } else {
@@ -47,9 +47,10 @@ class UserPhoto extends Base
         }
     }
 
-    public function addPhotoComment($data){
+    public function addPhotoComment($data)
+    {
         $this->getDb()->createCommand()
-            ->insert($this->tablePrefix.'user_photo', $data)
+            ->insert($this->tablePrefix . 'user_photo', $data)
             ->execute();
     }
 
@@ -81,14 +82,14 @@ class UserPhoto extends Base
     public function savePhoto($where)
     {
         //var_dump($where);
-        foreach($where as $k => $v) {
+        foreach ($where as $k => $v) {
             $where[$k] = json_decode($v);
             $pic_arr = explode('/', $where[$k]->pic_path);
             $thumb_arr = explode('/', $where[$k]->thumb_path);
-            if($pic_arr[5] != $thumb_arr[5]) {
+            if ($pic_arr[5] != $thumb_arr[5]) {
                 // 删除旧图片
-                $pic_path = __DIR__."/../..".$where[$k]->pic_path;
-                if($pic_arr[3] == 'picture' && is_file($pic_path) && unlink($pic_path)) {
+                $pic_path = __DIR__ . "/../.." . $where[$k]->pic_path;
+                if ($pic_arr[3] == 'picture' && is_file($pic_path) && unlink($pic_path)) {
                     $thumb_path = str_replace('picture', 'thumb', $pic_path);
                     unlink($thumb_path);
                 }
@@ -112,8 +113,8 @@ class UserPhoto extends Base
     {
         $photo = $this->findOne($where);
         // 删除旧图片
-        $thumb_path = __DIR__."/../..".$photo->thumb_path;
-        if(is_file($thumb_path) && unlink($thumb_path)) {
+        $thumb_path = __DIR__ . "/../.." . $photo->thumb_path;
+        if (is_file($thumb_path) && unlink($thumb_path)) {
             $pic_path = str_replace('thumb', 'picture', $thumb_path);
             unlink($pic_path);
         }
@@ -128,13 +129,14 @@ class UserPhoto extends Base
      * @param $where
      * @return int
      */
-    public function setHeadPic($user_id, $where) {
+    public function setHeadPic($user_id, $where)
+    {
         //var_dump($where);exit;
         $this->getDb()->createCommand()
-            ->update($this->tablePrefix.'user_photo' , ['is_head' => 0] , ['user_id' => $user_id, 'is_head' => 1])
+            ->update($this->tablePrefix . 'user_photo', ['is_head' => 0], ['user_id' => $user_id, 'is_head' => 1])
             ->execute();
         $row = $this->getDb()->createCommand()
-            ->update($this->tablePrefix.'user_photo' , ['is_head' => 1] , ['id' => $where['id']])
+            ->update($this->tablePrefix . 'user_photo', ['is_head' => 1], ['id' => $where['id']])
             ->execute();
         return $row ? UserInformation::getInstance()->updateUserInfo($user_id, ['head_pic' => $where['thumb_path']]) : false;
     }
@@ -145,16 +147,17 @@ class UserPhoto extends Base
      * @param int $type 1:照片 2：身份证，3：学历证 ， 4：离婚证 5房产证
      * @return array
      */
-    public function lists($isCheck = 2 , $type = 1){
+    public function lists($isCheck = 2, $type = 1)
+    {
 
-        $handle = (new Query())->from($this->tablePrefix.'user_photo u')
-            ->innerJoin($this->tablePrefix.'user_information i' , 'u.user_id=i.user_id')
-            ->where(['is_check' => $isCheck , 'type'=>$type])
+        $handle = (new Query())->from($this->tablePrefix . 'user_photo u')
+            ->innerJoin($this->tablePrefix . 'user_information i', 'u.user_id=i.user_id')
+            ->where(['is_check' => $isCheck, 'type' => $type])
             ->limit(1000)
             ->orderBy("u.create_time")
-            ->select(['u.id','u.user_id','u.type','u.thumb_path','u.create_time','is_check','is_head',"json_extract(i.info , '$.real_name') as real_name"]);
-        if ($isCheck != ''){
-            $handle->andWhere(['is_check'=>$isCheck]);
+            ->select(['u.id', 'u.user_id', 'u.type', 'u.thumb_path', 'u.create_time', 'is_check', 'is_head', "json_extract(i.info , '$.real_name') as real_name"]);
+        if ($isCheck != '') {
+            $handle->andWhere(['is_check' => $isCheck]);
         }
         return $handle->all();
     }
@@ -166,12 +169,23 @@ class UserPhoto extends Base
      * @return int
      * @throws \yii\db\Exception
      */
-    public function auth($id , $status){
-        $ids = explode("," , $id);
+    public function auth($id, $status)
+    {
+        $ids = explode(",", $id);
 
         $handle = $this->getDb()->createCommand()
-            ->update($this->tablePrefix.'user_photo' , ['is_check'=>$status] , ['id'=>$ids]);
+            ->update($this->tablePrefix . 'user_photo', ['is_check' => $status], ['id' => $ids]);
         $r = $handle->execute();
         return $r;
+    }
+
+    public function userHeadpic($user_id)
+    {
+        $result = (new Query())
+            ->select('*')
+            ->from(static::tableName())
+            ->where(['user_id' => $user_id, 'is_head' => 1])
+            ->one();
+        return $result;
     }
 }

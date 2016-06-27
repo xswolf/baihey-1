@@ -89,6 +89,19 @@ class MemberController extends BaseController
     }
 
     /**
+     * 获取头像
+     */
+    public function actionUserHeadpic()
+    {
+        $user_id = Cookie::getInstance()->getCookie('bhy_id');
+        if ($data = UserPhoto::getInstance()->userHeadpic($user_id)) {
+            $this->renderAjax(['status' => 1, 'data' => $data, 'msg' => '获取数据成功']);
+        } else {
+            $this->renderAjax(['status' => 0, 'data' => $data, 'msg' => '获取数据失败']);
+        }
+    }
+
+    /**
      * 类型为2,3的地方列表
      */
     public function actionWentTravelList()
