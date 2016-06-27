@@ -4,6 +4,7 @@ namespace wechat\controllers;
 use common\models\Area;
 use common\models\Bank;
 use common\models\ConsumptionLog;
+use common\models\Feedback;
 use common\models\User;
 use common\models\UserFollow;
 use common\models\UserInformation;
@@ -450,6 +451,16 @@ class MemberController extends BaseController
         $user_id = Cookie::getInstance()->getCookie('bhy_id')->value;
         $data = \common\models\User::getInstance()->getUserPropertyValue($user_id, ['json_extract (info, \'$.level\') AS level', 'mature_time']);
         $this->renderAjax(['data' => $data]);
+    }
+
+    public function actionAddFeedback()
+    {
+        $user_id = Cookie::getInstance()->getCookie('bhy_id')->value;
+        if ($data = Feedback::getInstance()->addFeedback($user_id, $this->get)) {
+            $this->renderAjax(['status' => 1, 'data' => $data, 'msg' => '举报成功']);
+        } else {
+            $this->renderAjax(['status' => 0, 'data' => $data, 'msg' => '举报失败']);
+        }
     }
 
 

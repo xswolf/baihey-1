@@ -3342,7 +3342,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
                 titleText: '举报',
                 cancelText: '取消',
                 buttonClicked: function (index) {
-                    api.save('url', {id: index + 1}).success(function (res) {
+                    api.save('/wap/member/add-feedback', {content: config_infoData.feedback[index], feedback_id:followData.follow_id}).success(function (res) {
                         hideSheet();
                         if (res.status > 1) {
                             ar.saveDataAlert('举报成功，工作人员会尽快核实情况。');
