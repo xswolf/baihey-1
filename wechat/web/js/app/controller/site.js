@@ -5,7 +5,7 @@ define(['app/module', 'app/directive/directiveApi'
     , 'app/service/serviceApi', 'app/filter/filterApi', 'config/city', 'config/occupation'
 ], function (module) {
 
-    module.controller("site.index", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$ionicModal', '$ionicActionSheet', '$ionicLoading', '$ionicBackdrop','$ionicScrollDelegate', function (api, $scope, $timeout, $ionicPopup, $ionicModal, $ionicActionSheet, $ionicLoading,$ionicBackdrop,$ionicScrollDelegate) {
+    module.controller("site.index", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$ionicModal', '$ionicActionSheet', '$ionicLoading', '$ionicBackdrop','$ionicScrollDelegate','$location',function (api, $scope, $timeout, $ionicPopup, $ionicModal, $ionicActionSheet, $ionicLoading,$ionicBackdrop,$ionicScrollDelegate,$location) {
 
         // 搜索条件
         $scope.searchForm = [];
@@ -226,6 +226,11 @@ define(['app/module', 'app/directive/directiveApi'
         // 是否还有更多
         $scope.moreDataCanBeLoaded = function () {
             return $scope.pageLast;
+        }
+
+
+        $scope.jump = function(url){
+            $location.url(url);
         }
 
        /* // 选择城市

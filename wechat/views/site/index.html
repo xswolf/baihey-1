@@ -4,99 +4,76 @@
                 ng-bind="cityName"></span></button>
         <button ng-click="search()" class="button button-icon">搜索</button>
     </ion-header-bar>
-    <ion-content class="com_w_100 has-header site" delegate-handle="mainScroll">
-        <a href="#/member/information" class="tdn">
-            <div class="row" ng-if="userInfo.info">
-                <div class="col col-25"><img class="item_uimg rounded" ng-src="{{userInfo.info.head_pic | isNull}}"
-                                             onerror="this.src='/wechat/web/images/u_noimg.jpg'"></div>
-                <div class="col col-75">
-                    <div class="row pl0">
-                        <div class="col" ng-if="userInfo.info.real_name">会员{{userInfo.info.real_name}}，您好！</div>
-                        <div class="col" ng-if="!userInfo.info.real_name">会员{{userInfo.id}}，您好！</div>
-                        <label class="label-right fs12 cor20">ID:{{userInfo.id}}</label>
-                    </div>
+    <ion-content class="com_w_100 site" delegate-handle="mainScroll">
+        <div class="list">
+            <a class="item item-thumbnail-left" href="#/member/information" ng-if="userInfo.info">
+                <img ng-src="{{userInfo.info.head_pic | isNull}}" onerror="this.src='/wechat/web/images/u_noimg.jpg'"
+                     class="rounded">
+                <h2 ng-if="userInfo.info.real_name">
+                    <span class="fl">{{userInfo.info.real_name | sex:userInfo.sex:userInfo.age}}，您好！</span>
+                    <label class="fr fs12 cor20">ID:{{userInfo.id}}</label>
+                </h2>
+                <h2 ng-if="!userInfo.info.real_name">
+                    <span class="fl">会员{{userInfo.id}}，您好！</span>
+                    <label class="fr fs12 cor20">ID:{{userInfo.id}}</label>
+                </h2>
+                <p>
+                    <span ng-class="{0:'not'}[honesty(userInfo.honesty_value)]" class="identity id">身份证</span>
+                    <span ng-class="{true:'not'}[userInfo.phone == null || userInfo.phone == '']"
+                          class="identity phone">手机</span>
+                    <span ng-class="{false:'not'}[userInfo.info.level == '1']" class="identity vip">VIP</span>
+                    <span ng-class="{false:'not'}[userInfo.info.level == '2']" class="identity guest">贵宾</span>
+                    <span ng-class="{false:'not'}[userInfo.info.level == '3']" class="identity diamond">钻石</span>
+                </p>
+                <p ng-if="!userInfo.auth.identity_pic1" class="warn w100 mb0 mt5">
+                    <i class="ion-ios-information cor0"></i>
+                    请您上传身份证，完善资料 >>
+                </p>
 
-                    <div class="row pl0" ng-if="!honestyStatus">
-                        <div class="col"><span class="warn"><i class="ion-ios-information cor0 mr5"></i>请您上传身份证，完善资料 >></span></div>
-                    </div>
-                    <div class="row pl0" ng-if="honestyStatus">
-                        <p class="col">
-                            <span ng-if="honesty(userInfo.honesty_value)" class="identity id">身份证</span>
-                            <span ng-if="userInfo.phone" class="identity phone">手机</span>
-                            <span ng-if="userInfo.info.level == 1" class="identity vip">VIP</span>
-                            <span ng-if="userInfo.info.level == 2" class="identity guest">贵宾</span>
-                            <span ng-if="userInfo.info.level == 3" class="identity diamond">钻石</span>
+            </a>
+
+            <a class="item item-thumbnail-left" href="/wap/user/login" ng-if="!userInfo.info">
+                <img src="/wechat/web/images/u_noimg.jpg" class="rounded">
+                <h2 class="mt15">
+                    您好！您还没有登录！
+                </h2>
+            </a>
+
+            <a class="item item-thumbnail-left" href="javascript:;" ng-repeat="user in userList"
+               ng-if="user.id != userInfo.id && blackedFun(user.id)">
+                <img class="rounded" ng-click="jump('/userInfo?userId={{user.user_id}}')"
+                     ng-src="{{user.info.head_pic | isNull}}"
+                     onerror="this.src='/wechat/web/images/no_img.png'">
+                <div ng-click="jump('/chat1?id={{user.id}}&head_pic={{user.info.head_pic}}&real_name={{user.info.real_name}}&sex={{user.sex}}&age={{user.info.age}}')">
+                    <h2>
+                    <span class="fl">
+                        <span ng-if="user.info.real_name">{{user.info.real_name | sex:user.sex :user.info.age}}</span>
+                        <span ng-if="!user.info.real_name">会员ID:{{user.id}}</span>
+                        <span ng-if="user.info.age" class="cor19 fs12">{{user.age}}岁</span>
+                        <span ng-if="user.info.height" class="cor19 fs12">{{user.info.height}}cm</span>
+                        <span ng-if="user.info.is_marriage"
+                              class="cor19 fs12">{{user.info.is_marriage | marriage}}</span>
+                    </span>
+                        <p class="fr local" ng-if="user.info.local">
+                            <i class="ion-android-pin positive"></i>
+                            {{user.info.local}}
                         </p>
-                    </div>
-                </div>
-            </div>
-        </a>
-        <div class="row" ng-if="!userInfo.info">
-            <div class="col col-25"><img class="item_uimg rounded" src="/wechat/web/images/u_noimg.jpg"></div>
-            <div class="col col-75">
+                    </h2>
 
-                <div class="row pl0">
-                    <div class="col">您好！您还没有<a href="/wap/user/login">登录</a>！</div>
+                    <p>
+                        <span ng-if="honesty(user.honesty_value)" class="identity id">身份证</span>
+                        <span ng-if="user.phone" class="identity phone">手机</span>
+                        <span ng-if="user.info.level == 1" class="identity vip">VIP</span>
+                        <span ng-if="user.info.level == 2" class="identity guest">贵宾</span>
+                        <span ng-if="user.info.level == 3" class="identity diamond">钻石</span>
+                    </p>
+                    <p class="cor20 signature">{{user.personalized}}&nbsp;</p>
                 </div>
+            </a>
 
-                <div class="row pl0">
-                    <div class="col"></div>
-                </div>
-            </div>
         </div>
 
-        <ion-list ng-if="userList.length > 0">
-            <ion-item ng-repeat="user in userList" ng-if="user.id != userInfo.id && blackedFun(user.id)">
-                <div class="row">
-                    <div class="col col-25"><a class="tdn" href="#/userInfo?userId={{user.user_id}}"><img
-                            class="item_uimg rounded"
-                            ng-src="{{user.info.head_pic | isNull}}"
-                            onerror="this.src='/wechat/web/images/no_img.png'"></a>
-                    </div>
-                    <a class="tdn w100"
-                       href="#/chat1?id={{user.id}}&head_pic={{user.info.head_pic}}&real_name={{user.info.real_name}}&sex={{user.sex}}&age={{user.info.age}}">
-                        <div class="col">
-                            <div class="row pl0">
-                                <div class="col">
-                                    <span class="fwb fs14" ng-if="user.info.real_name">{{user.info.real_name | sex:user.sex :user.info.age}}</span>
-                                    <span class="fwb fs14" ng-if="!user.info.real_name">会员ID:{{user.id}}</span>
-                                    <span ng-if="user.info.age" class="cor19 fs12">{{user.age}}岁</span> <span
-                                        ng-if="user.info.height"
-                                        class="cor19 fs12">{{user.info.height}}cm</span>
-                                    <span ng-if="user.info.is_marriage" class="cor19 fs12">{{user.info.is_marriage | marriage}}</span>
-                                </div>
-                                <div class="col-20" ng-if="user.info.local"><label
-                                        class="fr fs12"><i
-                                        class="ion-android-pin mr5 positive"></i>{{user.info.local}}</label>
-                                </div>
-                            </div>
-
-                            <div class="row pl0">
-                                <p class="col">
-                                    <span ng-if="honesty(user.honesty_value)" class="identity id">身份证</span>
-                                    <span ng-if="user.phone" class="identity phone">手机</span>
-                                    <span ng-if="user.info.level == 1" class="identity vip">VIP</span>
-                                    <span ng-if="user.info.level == 2" class="identity guest">贵宾</span>
-                                    <span ng-if="user.info.level == 3" class="identity diamond">钻石</span>
-                                </p>
-                            </div>
-
-                            <div class="row pl0">
-                                <div class="col">
-                                    <p class="cor20 signature">{{user.personalized}}</p>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-            </ion-item>
-        </ion-list>
-        <ion-infinite-scroll
-                ng-if="moreDataCanBeLoaded()"
-                on-infinite="loadMore()"
-                distance="1%">
-        </ion-infinite-scroll>
-
+        <ion-infinite-scroll ng-if="moreDataCanBeLoaded()" on-infinite="loadMore()"></ion-infinite-scroll>
 
         <ion-list ng-if="userList.length <= 0">
             <ion-item>
