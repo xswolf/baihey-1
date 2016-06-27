@@ -338,11 +338,11 @@
         <div class="buttons bor_r_1c" ng-class="{true:'w100',false:'w50'}[formData.follow]">
             <a class="button w100" style="font-size: 16px; color:#e4007f;" href="#/chat1?id={{otherUserInfo.id}}&head_pic={{otherUserInfo.info.head_pic}}&real_name={{otherUserInfo.info.real_name}}&sex={{otherUserInfo.sex}}&age={{otherUserInfo.info.age}}"><i class="ion-chatbox-working cor21 mr5 vam fs22"></i>对话</a>
         </div>
-        <div class="buttons w50"  ng-if="!formData.follow">
-            <button ng-if="!formData.follow" class="button w100"  style="font-size: 16px;" ng-click="addFollow()">
+        <div class="buttons w50"  ng-if="formData.follow != 1">
+            <button ng-if="formData.follow != 1" class="button w100"  style="font-size: 16px;" ng-click="addFollow()">
                 <i class="ion-plus-round mr5 vam fs22"></i>关注
             </button>
-            <button ng-if="formData.follow" ng-click="cancelFollow()" class="button w100" style="font-size: 16px;">取消关注</button>
+            <button ng-if="formData.follow == 1" ng-click="cancelFollow()" class="button w100" style="font-size: 16px;">取消关注</button>
         </div>
     </ion-footer-bar>
 
