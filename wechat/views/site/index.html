@@ -26,9 +26,13 @@
                     <span ng-class="{false:'not'}[userInfo.info.level == '2']" class="identity guest">贵宾</span>
                     <span ng-class="{false:'not'}[userInfo.info.level == '3']" class="identity diamond">钻石</span>
                 </p>
-                <p ng-if="!honestyStatus && !honesty(userInfo.honesty_value)" class="warn w100 mb0 mt5">
+                <p ng-if="!honestyStatus" class="warn w100 mb0 mt5">
                     <i class="ion-ios-information cor0"></i>
                     请您上传身份证，完善资料 >>
+                </p>
+                <p ng-if="honestyStatus == 0" class="warn w100 mb0 mt5">
+                    <i class="ion-ios-information cor0"></i>
+                    您的身份证照片未审核通过，请重新上传 >>
                 </p>
 
             </a>
