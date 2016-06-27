@@ -29,6 +29,12 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
                 $scope.honestyStatus = res.data[0].is_check;
             }
         });
+        // 判断头像是否认证通过
+        api.list('/wap/member/user-headpic', {}).success(function (res) {
+            if(res.status) {
+                $scope.headpicStatus = res.data.is_check;
+            }
+        });
         $scope.honesty = function (val) {
             return val & 1;
         }
@@ -83,13 +89,13 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
             };
             uploader.onSuccessItem = function (fileItem, response, status, headers) {  // 上传成功
                 if (response.status > 0) {
-                    /*if ($scope.imgList.length == 0) { // 第一张上传相片默认设为头像
-                     $scope.imgList.push({id: response.id, thumb_path: response.thumb_path, is_head: 1});
-                     $scope.userInfo.info.head_pic = response.thumb_path;
-                     $scope.setUserStorage();
-                     } else {*/
-                    $scope.imgList.push({id: response.id, thumb_path: response.thumb_path, is_head: 0});
-                    //}
+                    if ($scope.imgList.length == 0) { // 第一张上传相片默认设为头像
+                         $scope.imgList.push({id: response.id, thumb_path: response.thumb_path, is_head: 1});
+                         $scope.userInfo.info.head_pic = response.thumb_path;
+                         $scope.setUserStorage();
+                     } else {
+                        $scope.imgList.push({id: response.id, thumb_path: response.thumb_path, is_head: 0});
+                    }
                 } else {
                     ar.saveDataAlert($ionicPopup, '上传图片失败！');
                 }

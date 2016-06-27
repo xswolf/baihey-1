@@ -38,6 +38,12 @@ define(['app/module', 'app/directive/directiveApi'
                 $scope.honestyStatus = res.data[0].is_check;
             }
         });
+        // 判断头像是否认证通过
+        api.list('/wap/member/user-headpic', {}).success(function (res) {
+            if(res.status) {
+                $scope.headpicStatus = res.data.is_check;
+            }
+        });
         $scope.honesty = function (val) {
             return val & 1;
         }

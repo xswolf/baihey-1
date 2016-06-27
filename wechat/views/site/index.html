@@ -9,7 +9,7 @@
             <a class="item item-thumbnail-left" href="#/member/information" ng-if="userInfo.info">
                 <img ng-src="{{userInfo.info.head_pic | isNull}}" onerror="this.src='/wechat/web/images/u_noimg.jpg'"
                      class="rounded">
-                <span class="under">审核中</span>
+                <span ng-if="headpicStatus == 2" class="under">审核中</span>
                 <h2 ng-if="userInfo.info.real_name">
                     <span class="fl">{{userInfo.info.real_name | sex:userInfo.sex:userInfo.age}}，您好！</span>
                     <label class="fr fs12 cor20">ID:{{userInfo.id}}</label>
