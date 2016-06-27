@@ -331,25 +331,21 @@ a.weibo {
   width: 16px;
   z-index: 1;
 }
-.site span.under {
+span.under {
   background: rgba(0, 0, 0, 0.4);
   border-radius: 4px;
-  bottom: 9px;
   color: #fff;
   font-size: 14px;
-  left: 10px;
   position: absolute;
   text-align: center;
+}
+.site span.under {
+  bottom: 9px;
+  left: 10px;
   width: 80px;
 }
 .member span.under {
-  background: rgba(0, 0, 0, 0.4);
-  border-radius: 4px;
   bottom: 17px;
-  color: #fff;
-  font-size: 14px;
   left: 7px;
-  position: absolute;
-  text-align: center;
   width: 76px;
 }
