@@ -5,23 +5,25 @@
         <button ng-click="search()" class="button button-icon">搜索</button>
     </ion-header-bar>
     <ion-content class="com_w_100 has-header site" delegate-handle="mainScroll">
-        <div class="row" ng-if="userInfo.info">
-            <div class="col col-25"><img class="item_uimg rounded" ng-src="{{userInfo.info.head_pic | isNull}}"
-                                         onerror="this.src='/wechat/web/images/u_noimg.jpg'"></div>
-            <div class="col col-75">
-                <div class="row pl0">
-                    <div class="col" ng-if="userInfo.info.real_name">会员{{userInfo.info.real_name}}，您好！</div>
-                    <div class="col" ng-if="!userInfo.info.real_name">会员{{userInfo.id}}，您好！</div>
-                    <label class="label-right fs12 cor20">ID:{{userInfo.id}}</label>
-                </div>
+        <a href="#/member/information" class="tdn">
+            <div class="row" ng-if="userInfo.info">
+                <div class="col col-25"><img class="item_uimg rounded" ng-src="{{userInfo.info.head_pic | isNull}}"
+                                             onerror="this.src='/wechat/web/images/u_noimg.jpg'"></div>
+                <div class="col col-75">
+                    <div class="row pl0">
+                        <div class="col" ng-if="userInfo.info.real_name">会员{{userInfo.info.real_name}}，您好！</div>
+                        <div class="col" ng-if="!userInfo.info.real_name">会员{{userInfo.id}}，您好！</div>
+                        <label class="label-right fs12 cor20">ID:{{userInfo.id}}</label>
+                    </div>
 
-                <div class="row pl0">
-                    <div class="col"><a class="warn" href="#/member/information"
-                                        ng-if="!userInfo.auth.identity_pic1"><i
-                            class="ion-ios-information cor0 mr5"></i>请您上传身份证，完善资料 >></a></div>
+                    <div class="row pl0">
+                        <div class="col"><span class="warn"
+                                               ng-if="!userInfo.auth.identity_pic1"><i
+                                class="ion-ios-information cor0 mr5"></i>请您上传身份证，完善资料 >></span></div>
+                    </div>
                 </div>
             </div>
-        </div>
+        </a>
         <div class="row" ng-if="!userInfo.info">
             <div class="col col-25"><img class="item_uimg rounded" src="/wechat/web/images/u_noimg.jpg"></div>
             <div class="col col-75">
@@ -44,10 +46,9 @@
                             ng-src="{{user.info.head_pic | isNull}}"
                             onerror="this.src='/wechat/web/images/no_img.png'"></a>
                     </div>
-
-                    <div class="col col-75">
-                        <a class="tdn"
-                           href="#/chat1?id={{user.id}}&head_pic={{user.info.head_pic}}&real_name={{user.info.real_name}}&sex={{user.sex}}&age={{user.info.age}}">
+                    <a class="tdn w100"
+                       href="#/chat1?id={{user.id}}&head_pic={{user.info.head_pic}}&real_name={{user.info.real_name}}&sex={{user.sex}}&age={{user.info.age}}">
+                        <div class="col">
                             <div class="row pl0">
                                 <div class="col">
                                     <span class="fwb fs14" ng-if="user.info.real_name">{{user.info.real_name | sex:user.sex :user.info.age}}</span>
@@ -58,7 +59,7 @@
                                     <span ng-if="user.info.is_marriage" class="cor19 fs12">{{user.info.is_marriage | marriage}}</span>
                                 </div>
                                 <div class="col-20" ng-if="user.info.local"><label
-                                        class="label-right fs12"><i
+                                        class="fr fs12"><i
                                         class="ion-android-pin mr5 positive"></i>{{user.info.local}}</label>
                                 </div>
                             </div>
@@ -78,8 +79,8 @@
                                     <p class="cor20 signature">{{user.personalized}}</p>
                                 </div>
                             </div>
-                        </a>
-                    </div>
+                        </div>
+                    </a>
                 </div>
             </ion-item>
         </ion-list>

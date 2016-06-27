@@ -22,6 +22,18 @@
             </div>
             <input id="pic_fileInput" type="file" nv-file-select="" uploader="uploader"
                    style="visibility: hidden; display: none;" accept="image/*">
+
+            <ion-item class="idv mb10 positive-bg" href="#/member/honesty">
+                <div class="info_c">
+                    <p>
+                        <i class="icon ion-android-alert fs16 cor0 vam"></i>
+                        <span class="vam fwb cor0"><span class="fs16">诚信认证：</span>请您上传身份证，完善资料！</span>
+                    </p>
+                </div>
+                <div class="info_r">
+                    <i class=" ion-ios-arrow-right"></i>
+                </div>
+            </ion-item>
             <ion-item class="idt mt10">
                 <p>
                     <span ng-if="honesty(userInfo.honesty_value)" class="identity id">身份证</span>
@@ -62,17 +74,7 @@
                     <i class=" ion-ios-arrow-right"></i>
                 </div>
             </ion-item>
-            <ion-item class="idv mb10" href="#/member/honesty">
-                <div class="info_c">
-                    <p>
-                        <i class="icon ion-android-alert fs16 mr5 assertive vam"></i>
-                        <span class="vam fwb">诚信认证：您还未上传有效身份证明、婚姻证明、学历证明、资产证明~</span>
-                    </p>
-                </div>
-                <div class="info_r">
-                    <i class=" ion-ios-arrow-right"></i>
-                </div>
-            </ion-item>
+
             <ion-item class="item16f">
                 <div class="info_l">
                     <p>性别</p>

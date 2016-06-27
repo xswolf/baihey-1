@@ -283,8 +283,9 @@
   color: #b6b6b6;
 }
 .list .idv a {
-  background-color: #eaeaea !important;
   padding: 8px 16px;
+  background-color: #387ef5 !important;
+  color: white;
 }
 .list .idv .info_c {
   width: 90%;
