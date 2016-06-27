@@ -22,6 +22,14 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
                 location.href = '/wap/user/login';
             });
         }
+
+        // 判断身份证是否认证通过
+        api.list('/wap/member/photo-list', {type: 2, pageSize: 2}).success(function (res) {
+            $scope.honestyStatus = res.data.length > 0 ? true : false;
+        });
+        $scope.honesty = function (val) {
+            return val & 1;
+        }
     }]);
 
     // 资料首页
@@ -1955,7 +1963,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
             });
         }
         $scope.honesty = function (val) {
-            return $scope.userInfo.honesty & val;
+            return $scope.userInfo.honesty_value & val;
         }
     }]);
 

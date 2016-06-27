@@ -32,6 +32,14 @@ define(['app/module', 'app/directive/directiveApi'
             }
         }
 
+        // 判断身份证是否认证通过
+        api.list('/wap/member/photo-list', {type: 2, pageSize: 2}).success(function (res) {
+            $scope.honestyStatus = res.data.length > 0 ? true : false;
+        });
+        $scope.honesty = function (val) {
+            return val & 1;
+        }
+
         // 默认还有更多
         $scope.pageLast = true;
 
