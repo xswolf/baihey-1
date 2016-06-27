@@ -1,16 +1,18 @@
 <ion-view>
-<link href="/wechat/web/css/member.css" rel="stylesheet">
-<link href="/wechat/web/css/plugin/animate/animate.css" rel="stylesheet">
-<ion-content class="member com_w_100">
-    <ion-list>
-            <ion-item class="member_hdr" href="#/member/information" style="padding: 0;">
+    <link href="/wechat/web/css/member.css" rel="stylesheet">
+    <link href="/wechat/web/css/plugin/animate/animate.css" rel="stylesheet">
+    <ion-content class="member com_w_100">
+        <ion-list>
+            <ion-item class="member_hdr" href="#/member/information">
                 <div class="fl u_img">
-                    <img class="rounded" src="{{userInfo.info.head_pic | isNull}}" onerror="this.src='/wechat/web/images/u_noimg.jpg'">
+                    <img class="rounded" src="{{userInfo.info.head_pic | isNull}}"
+                         onerror="this.src='/wechat/web/images/u_noimg.jpg'">
                 </div>
                 <div class="fl u_info ml10">
                     <p>
-                        <strong class="fs14" ng-if="userInfo.info.real_name">{{userInfo.info.real_name}}</strong>
-                        <strong class="fs14" ng-if="!userInfo.info.real_name">ID:{{userInfo.id}}</strong>
+                        <strong class="fs14" ng-if="userInfo.info.real_name">{{userInfo.info.real_name |
+                            sex:userInfo.sex:userInfo.info.age}}</strong>
+                        <strong class="fs14" ng-if="!userInfo.info.real_name">会员{{userInfo.id}}</strong>
                             <span class="ml5 cor22">
                                 <span ng-if="userInfo.info.age">{{userInfo.age}}岁 </span>
                                 {{userInfo.info.is_marriage | marriage}}
@@ -18,149 +20,153 @@
                             </span>
                     </p>
                     <p class="mt5">
-                        <span ng-if="honesty(userInfo.honesty_value)" class="identity id">身份证</span>
-                        <span ng-if="userInfo.phone" class="identity phone">手机</span>
-                        <span ng-if="userInfo.info.level == 1" class="identity vip">VIP</span>
-                        <span ng-if="userInfo.info.level == 2" class="identity guest">贵宾</span>
-                        <span ng-if="userInfo.info.level == 3" class="identity diamond">钻石</span>
+                        <span ng-class="{0:'not'}[honesty(userInfo.honesty_value)]" class="identity id">身份证</span>
+                        <span ng-class="{true:'not'}[userInfo.phone == null || userInfo.phone == '']"
+                              class="identity phone">手机</span>
+                        <span ng-class="{false:'not'}[userInfo.info.level == '1']" class="identity vip">VIP</span>
+                        <span ng-class="{false:'not'}[userInfo.info.level == '2']" class="identity guest">贵宾</span>
+                        <span ng-class="{false:'not'}[userInfo.info.level == '3']" class="identity diamond">钻石</span>
                     </p>
                     <p class="mt5 u_id">
                         ID：{{userInfo.id}}
                     </p>
                 </div>
                 <div class="small_hdr_info fr">
-                    <button class="button cor4 fs20 button-icon ion-ios-arrow-right vam"></button>
+                    <button class="button cor4 button-icon ion-ios-arrow-right vam"></button>
                 </div>
                 <div class="hdr_info fr">
                     <button class="hdr_info_btn button-light rounded mt20">资料<i class="ml5 ion-ios-arrow-right vam"></i>
                     </button>
                 </div>
             </ion-item>
-            <a class="hdr_tips pr clearfix pl16" ng-if="!honestyStatus && !honesty(userInfo.honesty_value)"  href="#/member/honesty_sfz"><p class="tips fl"><i class="fl bhy-icon-tips-02 mr5"></i><span class="fl">您还未上传身份证！</span><i class="fr ion-ios-arrow-right vam fs20"></i></p></a>
-        <ion-item class="personal_info mt10" href="#/dynmaic?userId={{userInfo.id}}&real_name={{userInfo.real_name}}&sex={{userInfo.sex}}$age={{userInfo.info.age}}&tempUrl=member/index">
-            <div class="member_menu_i rounded per">
-                <i class="bhy-icon-member-menu-01"></i>
-            </div>
-            <div class="menu_name">
-                <p>个人动态</p>
-            </div>
-            <div class="menu_arrow">
-                <i class="ion-ios-arrow-right vam"></i>
-            </div>
-        </ion-item>
-        <ion-item class="follow_info" href="#/member/follow">
-            <div class="member_menu_i rounded follow">
-                <i class="bhy-icon-member-menu-02"></i>
-            </div>
-            <div class="menu_name">
-                <p>关注的人</p>
-            </div>
-            <div class="menu_arrow">
-                <i class="ion-ios-arrow-right vam"></i>
-            </div>
-        </ion-item>
-        <ion-item class="engagements_info" href="#/member/rendezvous">
-            <div class="member_menu_i rounded eng">
-                <i class="bhy-icon-member-menu-03"></i>
-            </div>
-            <div class="menu_name">
-                <p>我的约会</p>
-            </div>
-            <div class="menu_arrow">
-                <i class="ion-ios-arrow-right vam"></i>
-            </div>
-        </ion-item>
-        <ion-item class="marker_info" href="#/member/matchmaker">
-            <div class="member_menu_i rounded marker">
-                <i class="bhy-icon-member-menu-04"></i>
-            </div>
-            <div class="menu_name">
-                <p>我的专属红娘</p>
-            </div>
-            <div class="menu_arrow">
-                <i class="ion-ios-arrow-right vam"></i>
-            </div>
-        </ion-item>
-        <ion-item class="privacy_info" href="#/member/privacy">
-            <div class="member_menu_i rounded privacy">
-                <i class="bhy-icon-member-menu-05"></i>
-            </div>
-            <div class="menu_name">
-                <p>隐私设置</p>
-            </div>
-            <div class="menu_arrow">
-                <i class="ion-ios-arrow-right vam"></i>
-            </div>
-        </ion-item>
-        <ion-item class="security_info" href="#/member/security">
-            <div class="member_menu_i rounded security">
-                <i class="bhy-icon-member-menu-06"></i>
-            </div>
-            <div class="menu_name">
-                <p>账户安全</p>
-            </div>
-            <div class="menu_arrow">
-                <i class="ion-ios-arrow-right vam"></i>
-            </div>
-        </ion-item>
-        <ion-item class="honesty_info" href="#/member/honesty">
-            <div class="member_menu_i rounded honesty">
-                <i class="bhy-icon-member-menu-07"></i>
-            </div>
-            <div class="menu_name">
-                <p>诚信认证</p>
-            </div>
-            <div class="menu_arrow">
-                <i class="ion-ios-arrow-right vam"></i>
-            </div>
-        </ion-item>
-        <ion-item class="vip_info" href="#/member/vip">
-            <div class="member_menu_i rounded vip">
-                <i class="bhy-icon-member-menu-08"></i>
-            </div>
-            <div class="menu_name">
-                <p>开通VIP</p>
-            </div>
-            <div class="menu_arrow">
-                <i class="ion-ios-arrow-right vam"></i>
-            </div>
-        </ion-item>
-        <ion-item class="money_info" href="#/member/account">
-            <div class="member_menu_i rounded money">
-                <i class="bhy-icon-member-menu-09"></i>
-            </div>
-            <div class="menu_name">
-                <p>我的账户</p>
-            </div>
-            <div class="menu_arrow">
-                <i class="ion-ios-arrow-right vam"></i>
-            </div>
-        </ion-item>
-        <ion-item class="about_info" href="#/member/about">
-            <div class="member_menu_i rounded about">
-                <i class="bhy-icon-member-menu-10"></i>
-            </div>
-            <div class="menu_name">
-                <p>关于嘉瑞</p>
-            </div>
-            <div class="menu_arrow">
-                <i class="ion-ios-arrow-right vam"></i>
-            </div>
-        </ion-item>
-        <ion-item class="help_info" href="#/member/help">
-            <div class="member_menu_i rounded help">
-                <i class="bhy-icon-member-menu-11"></i>
-            </div>
-            <div class="menu_name">
-                <p>帮助中心</p>
-            </div>
-            <div class="menu_arrow">
-                <i class="ion-ios-arrow-right vam"></i>
-            </div>
-        </ion-item>
-        <button class="button button-light button-block" ng-click="loginOut()">退出登录</button>
-    </ion-list>
-</ion-content>
+            <a class="hdr_tips pr clearfix pl16" ng-if="!honestyStatus && !honesty(userInfo.honesty_value)"
+               href="#/member/honesty"><p class="tips fl"><i class="fl bhy-icon-tips-02 mr5"></i><span class="fl">请您上传身份证</span><i
+                    class="fr ion-ios-arrow-right vam fs20"></i></p></a>
+            <ion-item class="personal_info mt10"
+                      href="#/dynmaic?userId={{userInfo.id}}&real_name={{userInfo.real_name}}&sex={{userInfo.sex}}$age={{userInfo.info.age}}&tempUrl=member/index">
+                <div class="member_menu_i rounded per">
+                    <i class="bhy-icon-member-menu-01"></i>
+                </div>
+                <div class="menu_name">
+                    <p>个人动态</p>
+                </div>
+                <div class="menu_arrow">
+                    <i class="ion-ios-arrow-right vam"></i>
+                </div>
+            </ion-item>
+            <ion-item class="follow_info" href="#/member/follow">
+                <div class="member_menu_i rounded follow">
+                    <i class="bhy-icon-member-menu-02"></i>
+                </div>
+                <div class="menu_name">
+                    <p>关注的人</p>
+                </div>
+                <div class="menu_arrow">
+                    <i class="ion-ios-arrow-right vam"></i>
+                </div>
+            </ion-item>
+            <ion-item class="engagements_info" href="#/member/rendezvous">
+                <div class="member_menu_i rounded eng">
+                    <i class="bhy-icon-member-menu-03"></i>
+                </div>
+                <div class="menu_name">
+                    <p>我的约会</p>
+                </div>
+                <div class="menu_arrow">
+                    <i class="ion-ios-arrow-right vam"></i>
+                </div>
+            </ion-item>
+            <ion-item class="marker_info" href="#/member/matchmaker">
+                <div class="member_menu_i rounded marker">
+                    <i class="bhy-icon-member-menu-04"></i>
+                </div>
+                <div class="menu_name">
+                    <p>我的专属红娘</p>
+                </div>
+                <div class="menu_arrow">
+                    <i class="ion-ios-arrow-right vam"></i>
+                </div>
+            </ion-item>
+            <ion-item class="privacy_info" href="#/member/privacy">
+                <div class="member_menu_i rounded privacy">
+                    <i class="bhy-icon-member-menu-05"></i>
+                </div>
+                <div class="menu_name">
+                    <p>隐私设置</p>
+                </div>
+                <div class="menu_arrow">
+                    <i class="ion-ios-arrow-right vam"></i>
+                </div>
+            </ion-item>
+            <ion-item class="security_info" href="#/member/security">
+                <div class="member_menu_i rounded security">
+                    <i class="bhy-icon-member-menu-06"></i>
+                </div>
+                <div class="menu_name">
+                    <p>账户安全</p>
+                </div>
+                <div class="menu_arrow">
+                    <i class="ion-ios-arrow-right vam"></i>
+                </div>
+            </ion-item>
+            <ion-item class="honesty_info" href="#/member/honesty">
+                <div class="member_menu_i rounded honesty">
+                    <i class="bhy-icon-member-menu-07"></i>
+                </div>
+                <div class="menu_name">
+                    <p>诚信认证</p>
+                </div>
+                <div class="menu_arrow">
+                    <i class="ion-ios-arrow-right vam"></i>
+                </div>
+            </ion-item>
+            <ion-item class="vip_info" href="#/member/vip">
+                <div class="member_menu_i rounded vip">
+                    <i class="bhy-icon-member-menu-08"></i>
+                </div>
+                <div class="menu_name">
+                    <p>开通VIP</p>
+                </div>
+                <div class="menu_arrow">
+                    <i class="ion-ios-arrow-right vam"></i>
+                </div>
+            </ion-item>
+            <ion-item class="money_info" href="#/member/account">
+                <div class="member_menu_i rounded money">
+                    <i class="bhy-icon-member-menu-09"></i>
+                </div>
+                <div class="menu_name">
+                    <p>我的账户</p>
+                </div>
+                <div class="menu_arrow">
+                    <i class="ion-ios-arrow-right vam"></i>
+                </div>
+            </ion-item>
+            <ion-item class="about_info" href="#/member/about">
+                <div class="member_menu_i rounded about">
+                    <i class="bhy-icon-member-menu-10"></i>
+                </div>
+                <div class="menu_name">
+                    <p>关于嘉瑞</p>
+                </div>
+                <div class="menu_arrow">
+                    <i class="ion-ios-arrow-right vam"></i>
+                </div>
+            </ion-item>
+            <ion-item class="help_info" href="#/member/help">
+                <div class="member_menu_i rounded help">
+                    <i class="bhy-icon-member-menu-11"></i>
+                </div>
+                <div class="menu_name">
+                    <p>帮助中心</p>
+                </div>
+                <div class="menu_arrow">
+                    <i class="ion-ios-arrow-right vam"></i>
+                </div>
+            </ion-item>
+            <button class="button button-light button-block" ng-click="loginOut()">退出登录</button>
+        </ion-list>
+    </ion-content>
 
     <ion-footer-bar class="bar-stable">
         <a class="menuBtn" href="/wap/site/main#/index">

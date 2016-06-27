@@ -14,8 +14,12 @@
 .member {
   background-color: #f9f9f9;
 }
-.member_hdr {
+.member .member_hdr {
   position: relative;
+  padding: 0;
+}
+.member .member_hdr .item-content {
+  padding-left: 8px !important;
 }
 .member_hdr .u_img {
   width: 75px;
