@@ -81,6 +81,7 @@ define(['app/module', 'app/directive/directiveApi'
                 }
                 for (var i in res.data){
                     res.data[i].imgList = JSON.parse(res.data[i].pic);
+                    res.data[i].head_pic = res.data[i].head_pic.replace(/\"/g, '');
                     $scope.discoveryList.push(res.data[i]);
                 }
                 $scope.$broadcast('scroll.infiniteScrollComplete');
