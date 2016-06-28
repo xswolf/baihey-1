@@ -2805,7 +2805,8 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
 
         // 保存，发布
         $scope.saveData = function () {
-            $scope.formData.rendezvous_time = ar.currentDate;
+            //$scope.formData.rendezvous_time = ar.currentDate;
+            $scope.formData.rendezvous_time = 1475475000;
             if (!$scope.formData.theme) {
                 ar.saveDataAlert($ionicPopup, '请选择约会主题');
                 return false;
