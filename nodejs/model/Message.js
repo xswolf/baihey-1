@@ -10,6 +10,11 @@ function Message() {
         //var sql = 'insert into bhy_message set send_user_id = ? ,receive_user_id=?, message=?,message_type=?,create_time=?,status=?';
         var conn = mysql.connection();
         conn.query(sql , [msg.send_user_id,msg.receive_user_id,msg.message,this.getMessageType(msg.type),time,msg.status] , function (err ,res) {
+            if(err) {
+                conn.end();
+                console.error(err);
+                return;
+            }
             callback(err, res);
         })
         conn.end();
