@@ -8,52 +8,69 @@ define(['app/module', 'app/directive/directiveApi'
     // 发现
     module.controller("discovery.index", ['app.serviceApi', '$rootScope', '$scope', '$timeout', '$ionicPopup', '$ionicModal', '$ionicActionSheet', '$ionicLoading', '$location', '$filter', function (api, $rootScope, $scope, $timeout, $ionicPopup, $ionicModal, $ionicActionSheet, $ionicLoading, $location, $filter) {
 
-        var userInfo = ar.getStorage('userInfo');
-        console.log($location.$$search);
-        if ($location.$$search.userId) {
-            // 显示个人
-            $scope.title = $location.$$search.real_name ? $filter('sex')($location.$$search.real_name,$location.$$search.sex,$location.$$search.age) + '的个人动态' : $location.$$search.userId + '的个人动态';
-            //$scope.title = JSON.parse(userInfo['info']).real_name + '的个人动态';
-            $rootScope.hideTabs = true;
-        } else {
-            // 显示所有
-            $scope.title = '发现';
-            $rootScope.hideTabs = false;
+        $scope.report = {};
+
+        requirejs(['amezeui', 'amezeui_ie8'], function (amezeui, amezeui_ie8) {
+            amezeui.gallery.init();
+        });
+
+        $scope.jump = function(url){
+            $location.url(url);
         }
 
-        // 返回
-        $scope.jump = function () {
-            $rootScope.hideTabs = false;
-            $location.path($location.$$search.tempUrl.replace(/~2F/g, "/"));
-        }
-
-        $scope.discoveryList = [];
-
-        // 图片放大查看插件
-        requirejs(['photoswipe', 'photoswipe_ui'], function (photoswipe, photoswipe_ui) {
-
-            $scope.showImgList = function (imgList, index) {
-                var pswpElement = document.querySelectorAll('.pswp')[0];
-                var options = {
-                    index: index
-                };
-                options.mainClass = 'pswp--minimal--dark';
-                options.barsSize = {top: 0, bottom: 0};
-                options.captionEl = false;
-                options.fullscreenEl = false;
-                options.shareEl = false;
-                options.bgOpacity = 0.85;
-                options.tapToClose = true;
-                options.tapToToggleControls = false;
-
-                var gallery = new photoswipe(pswpElement, photoswipe_ui, imgList, options);
-                gallery.init();
+        $scope.more = function(isUser){
+            var btnList = [
+                { text:'举报'},
+                { text:'屏蔽'}
+            ];
+            if(isUser){   // 判断该条信息是否所属当前用户
+                btnList = [
+                    { text:'删除'}
+                ];
             }
 
-        })
+            var hideSheet = $ionicActionSheet.show({
+                buttons: btnList,
+                titleText: '更多',
+                cancelText: '取消',
+                cancel: function() {
+                },
+                buttonClicked: function(index,btnObj) {
+                    if(btnObj.text = '屏蔽'){
 
+                    }
+                    if(btnObj.text = '举报'){
+                        $scope.reportOpen();
+                    }
+                    if(btnObj.text = '删除'){
+
+                    }
+                    return true;
+                }
+            });
+        }
+
+        $scope.report = function(){
+            if(!$scope.report.item){
+                ar.saveDataAlert($ionicPopup,'请选择举报内容');
+                return false;
+            }
+            api.save('url',$scope.report).success(function(res){
+                if(res.status == 1){
+                    ar.saveDataAlert($ionicPopup,'您的举报信息我们已受理，我们会尽快核实情况并将处理结果反馈给您，谢谢您对我们的支持！');
+                }
+                if(res.status == -1){
+                    ar.saveDataAlert($ionicPopup,'您已举报过该条动态，情况核实中，请耐心等待处理结果！');
+                }
+                if(res.status == 0){
+                    ar.saveDataAlert($ionicPopup,'举报失败，请刷新重试！');
+                }
+                reportClose();
+            })
+        }
+        $scope.discoveryList = [];
         $scope.user = [];
-
+        $scope.likeAnm = false;
         // 点赞
         $scope.clickLike = function (id) {
             var i = ar.getArrI($scope.discoveryList , 'id' , id);
@@ -67,14 +84,14 @@ define(['app/module', 'app/directive/directiveApi'
             }
 
             $scope.discoveryList[i].like_num =  parseInt($scope.discoveryList[i].like_num) + add;
-            api.save('/wap/member/set-click-like' , {dynamicId:id , user_id: userInfo['id'] , add:add});
+            //api.save('/wap/member/set-click-like' , {dynamicId:id , user_id: userInfo['id'] , add:add});
+
         }
 
         $scope.page = 0;
         $scope.morePage = true;
         // 加载更多
         $scope.loadMore = function () {
-
             api.list('/wap/member/get-dynamic-list' , {user_id:$location.$$search.userId , page:$scope.page}).success(function (res) {
                 if (res.data == ''){
                     $scope.morePage = false;
@@ -92,7 +109,7 @@ define(['app/module', 'app/directive/directiveApi'
         api.list('/wap/member/get-follow').success(function (res) {
             $scope.followList = res.data;
         })
-        // 判断该动态是否可以见 userId发动态用户的ID
+        // 判断该动态是否可见 userId发动态用户的ID
         $scope.display = function (auth , userId) {
             if(auth == 1){ // 全部可见
                 return true;
@@ -115,18 +132,27 @@ define(['app/module', 'app/directive/directiveApi'
             scope: $scope,
             animation: 'slide-in-up'
         }).then(function (modal) {
-            $scope.modal = modal;
+            $scope.releasedModal = modal;
         });
-        $scope.openModal = function () {
-            $scope.modal.show();
+        $scope.releasedOpen = function () {
+            $scope.releasedModal.show();
         };
-        $scope.closeModal = function () {
-            $scope.modal.hide();
+        $scope.releasedClose = function () {
+            $scope.releasedModal.hide();
         };
 
-        $scope.released = function () {
-            $scope.openModal();
-        }
+        $ionicModal.fromTemplateUrl('report.html', {
+            scope: $scope,
+            animation: 'slide-in-up'
+        }).then(function (modal) {
+            $scope.reporrtModal = modal;
+        });
+        $scope.reportOpen = function () {
+            $scope.reporrtModal.show();
+        };
+        $scope.reportClose = function () {
+            $scope.reporrtModal.hide();
+        };
 
     }]);
 

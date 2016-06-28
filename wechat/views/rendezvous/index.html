@@ -61,9 +61,9 @@
                 <p>您不能约自己</p>
             </div>
         </div>
-        <div ng-if="list.length < 1" class="nullBox">
+       <!-- <div ng-if="list.length < 1" class="nullBox">
             <p class="nulltip">没有相关的数据，请放宽筛选条件后再试！</p>
-        </div>
+        </div>-->
 
         <ion-infinite-scroll ng-if="moreDataCanBeLoaded()" on-infinite="loadMoreData()" distance="1%">
         </ion-infinite-scroll>

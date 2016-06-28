@@ -39,6 +39,7 @@ a.menuBtn > i {
 }
 a.menuBtn > p {
   font-size: 12px;
+  margin-bottom: 0;
 }
 a.menuBtn.cur,
 a.menuBtn.cur:hover,
