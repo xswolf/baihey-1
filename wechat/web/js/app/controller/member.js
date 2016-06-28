@@ -3385,6 +3385,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
                             }
                         })
                     } else {
+                        $scope.formData.pullBlack = false;
                         return false;
                     }
                 })
