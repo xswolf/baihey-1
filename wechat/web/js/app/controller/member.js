@@ -2662,7 +2662,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
     module.controller("member.rendezvous_add", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$ionicModal', '$location', function (api, $scope, $timeout, $ionicPopup, $ionicModal, $location) {
 
         $scope.formData = [];
-        if ($location.search().id) {
+        if ($location.$$search.id) {
             api.list('/wap/rendezvous/get-rendezvous-info', {id: $location.search().id}).success(function (res) {
                 $scope.formData = res.data;
                 $scope.formData.theme = parseInt($scope.formData.theme);
@@ -3046,11 +3046,11 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
                 buttonClicked: function (index) {
                     if (index == 0) {  // 关闭约会
                         $scope.putList[itemIndex].status = "3";
-                        upStatus($scope.putList[itemIndex].id, 3);
+                        upStatus($scope.putList[itemIndex].r_id, 3);
                         hideSheet();
                     }
                     if (index == 1) { // 修改
-                        $location.url('/member/rendezvous_add?id=' + $scope.putList[itemIndex].id);
+                        $location.url('/member/rendezvous_add?id=' + $scope.putList[itemIndex].r_id);
                     }
                 }
             });
