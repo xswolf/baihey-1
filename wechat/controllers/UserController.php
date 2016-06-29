@@ -264,7 +264,7 @@ class UserController extends BaseController
         if($user_id = Cookie::getInstance()->getCookie('bhy_id')) {
             $blacked = UserFollow::getInstance()->getFollowList('blacked', $user_id);
             foreach($blacked as $k => $v) {
-                $blackedList[] = (int)$v['user_id'];
+                $blackedList[] = $v['user_id'];
             }
             $honestyStatus = UserPhoto::getInstance()->getPhotoList($user_id, 2, 2);
             $headpicStatus = UserPhoto::getInstance()->userHeadpic($user_id);

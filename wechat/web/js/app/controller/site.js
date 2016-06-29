@@ -5,7 +5,7 @@ define(['app/module', 'app/directive/directiveApi'
     , 'app/service/serviceApi', 'app/filter/filterApi', 'config/city', 'config/occupation'
 ], function (module) {
 
-    module.controller("site.index", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$ionicModal', '$ionicActionSheet', '$ionicLoading', '$ionicBackdrop','$ionicScrollDelegate','$location','indexIsShowData','blacked','honestyStatus','headpicStatus',function (api, $scope, $timeout, $ionicPopup, $ionicModal, $ionicActionSheet, $ionicLoading,$ionicBackdrop,$ionicScrollDelegate,$location,indexIsShowData,blacked,honestyStatus,headpicStatus) {
+    module.controller("site.index", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$ionicModal', '$ionicActionSheet', '$ionicLoading', '$ionicBackdrop','$ionicScrollDelegate','$location','indexIsShowData',function (api, $scope, $timeout, $ionicPopup, $ionicModal, $ionicActionSheet, $ionicLoading,$ionicBackdrop,$ionicScrollDelegate,$location,indexIsShowData) {
         // 搜索条件
         $scope.searchForm = [];
         $scope.whereForm = [];
@@ -111,7 +111,7 @@ console.log(indexIsShowData.data);
 
         // 首页filter显示
         $scope.indexFilter = function(user){
-            return user.id != $scope.userInfo.id && indexIsShowData.data.blacked.indexOf(user.id) != -1;
+            return user.id != $scope.userInfo.id && indexIsShowData.data.blacked.indexOf(user.id) == -1;
         }
 
         // 高级搜索模版

@@ -80,29 +80,7 @@ define(["app/module", 'app/service/serviceApi', 'jquery'],
                                     url: '/wap/user/index-is-show-data',
                                     params: {}
                                 });
-                            },
-                            blacked: function ($http) {
-                                return $http({
-                                    method: 'POST',
-                                    url: '/wap/follow/blacked-list',
-                                    params: {}
-                                });
-                            },
-                            honestyStatus: function ($http) {
-                                return $http({
-                                    method: 'POST',
-                                    url: '/wap/member/photo-list',
-                                    params: {type: 2, pageSize: 2}
-                                });
-                            },
-                            headpicStatus: function ($http) {
-                                return $http({
-                                    method: 'POST',
-                                    url: '/wap/member/user-headpic',
-                                    params: {}
-                                });
-                            },
-
+                            }
                         }
                     })
                     .state('member', {   // 我
@@ -124,7 +102,16 @@ define(["app/module", 'app/service/serviceApi', 'jquery'],
                         cache: false,
                         url: "/message",
                         templateUrl: "/wechat/views/message/index.html",
-                        controller: "message.index"
+                        controller: "message.index",
+                        resolve: {
+                            indexIsShowData: function ($http) {
+                                return $http({
+                                    method: 'POST',
+                                    url: '/wap/user/index-is-show-data',
+                                    params: {}
+                                });
+                            }
+                        }
                     })
                     .state('userInfo', {  // 查看用户资料
                         cache: false,
