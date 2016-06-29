@@ -19,12 +19,12 @@ class UserFollow extends Base
 
     /**
      * 根据类型$type获取关注列表或被关注列表
-     * @param $type follow关注列表，followed被关注列表
+     * @param $type follow关注列表，followed被关注列表，black拉黑列表，blacked被拉黑列表
      * @param $user_id
      * @param $where
      * @return $this|array
      */
-    public function getFollowList($type, $user_id, $where)
+    public function getFollowList($type, $user_id, $where = [])
     {
         $infoTable  = $this->getDb()->tablePrefix . $this->_user_information_table;
         $userTable  = $this->getDb()->tablePrefix . $this->_user_table;

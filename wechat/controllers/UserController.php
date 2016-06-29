@@ -1,6 +1,9 @@
 <?php
 namespace wechat\controllers;
 
+use common\models\Feedback;
+use common\models\UserFollow;
+use common\models\UserPhoto;
 use common\util\AutoAddress;
 use common\util\Cookie;
 use common\util\Curl;
@@ -251,6 +254,22 @@ class UserController extends BaseController
         $user_id = \common\util\Cookie::getInstance()->getCookie('bhy_id');
         $list = User::getInstance()->updateUserData($user_id, $this->get);
         $this->renderAjax(['status=>1', 'data' => $list]);
+    }
+
+    /**
+     * 首页是否显示数据
+     */
+    public function actionIndexIsShowData()
+    {
+        if($user_id = Cookie::getInstance()->getCookie('bhy_id')) {
+            $blacked = UserFollow::getInstance()->getFollowList('blacked', $user_id);
+            $honestyStatus = UserPhoto::getInstance()->getPhotoList($user_id, 2, 2);
+            $headpicStatus = UserPhoto::getInstance()->userHeadpic($user_id);
+            $this->renderAjax(['status=>1', 'blacked' => $blacked, 'honestyStatus' => $honestyStatus, 'headpicStatus' => $headpicStatus]);
+        } else {
+            $this->renderAjax(['status=>1', 'blacked' => [], 'honestyStatus' => [], 'headpicStatus' => []]);
+        }
+
     }
 
 }

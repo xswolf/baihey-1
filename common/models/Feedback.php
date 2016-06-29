@@ -13,6 +13,7 @@ use yii\db\Query;
 
 class Feedback extends Base
 {
+    // 新增举报
     public function addFeedback($user_id, $data)
     {
         $data['user_id'] = $user_id;
