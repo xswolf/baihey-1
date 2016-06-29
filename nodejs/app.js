@@ -16,6 +16,7 @@ Array.prototype.remove = function (val) {
 };
 
 var Message = require('./model/Message');
+var message = new Message();
 
 io.on('connection', function (socket) {
 
@@ -30,13 +31,12 @@ io.on('connection', function (socket) {
         }
 
         io.emit(msg.send_user_id + '-' + msg.receive_user_id, msg); // 广播给自己
-        
-        var message = new Message();
+
         console.log(message)
         //message.add(msg , function (err,res) {
         //    console.log(res.insertId);
         //});
-        console.log('send:' + msg.send_user_id + '   ' + 'recevie: ' + msg.receive_user_id, msg);
+        console.log('send:' + msg.send_user_id + '   ' + 'receive: ' + msg.receive_user_id, msg);
     });
 
     // 告诉服务器你加入了聊天
