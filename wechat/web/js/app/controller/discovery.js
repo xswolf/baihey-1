@@ -14,14 +14,17 @@ define(['app/module', 'app/directive/directiveApi'
             $scope.formData.auth = 1;
             $scope.discoveryList = [];
 
-            $scope.display = [2,4,5];   // TODO 用户已屏蔽的动态id，从localStorage获取
+            //用户已屏蔽的动态id，从localStorage获取
+            $scope.display = ar.getStorage('display') ? ar.getStorage('display') : [];
 
-            // 发现列表过滤条件：黑名单  TODO
+            // 发现列表过滤条件：黑名单
             $scope.indexFilter = function(dis){
-                if(dis.auth = 2){   // 用户设置该条动态为关注的人可见
-                    return dataFilter.black.indexOf(dis.id) == -1 && dataFilter.follow.indexOf(dis.user_id) == -1 && $scope.display;
+                if(dis.auth == '2'){   // 用户设置该条动态为关注的人可见
+                    return dataFilter.data.follow.indexOf(dis.user_id) != -1 && $scope.display.indexOf(dis.id) != -1;
+                } else if(dis.auth == '3') {
+                    return false;
                 }
-                return dataFilter.black.indexOf(dis.id) == -1 && $scope.display;
+                return dataFilter.data.blacked.indexOf(dis.user_id) == -1 && $scope.display.indexOf(dis.id) == -1;
             }
 
             $scope.jump = function (url) {
@@ -47,8 +50,10 @@ define(['app/module', 'app/directive/directiveApi'
                     },
                     buttonClicked: function (index, btnObj) {
                         if (btnObj.text = '屏蔽') {
-                            // 将参数ID存入localStorage：display  TODO
-                            console.log(id);
+                            $scope.display.push(id);
+                            ar.setStorage('display', $scope.display);
+                            $scope.display.splice(index, 1);
+                            // 将参数ID存入localStorage：display
                         }
                         if (btnObj.text = '举报') {
                             $scope.reportOpen();
@@ -68,7 +73,7 @@ define(['app/module', 'app/directive/directiveApi'
                     ar.saveDataAlert($ionicPopup, '请选择举报内容');
                     return false;
                 }
-                api.save('url', $scope.reportData).success(function (res) {   //TODO
+                api.save('/wap/member/add-feedback', $scope.reportData).success(function (res) {   //TODO
                     if (res.status == 1) {
                         ar.saveDataAlert($ionicPopup, '您的举报信息我们已受理，我们会尽快核实情况并将处理结果反馈给您，谢谢您对我们的支持！');
                     }
@@ -103,7 +108,7 @@ define(['app/module', 'app/directive/directiveApi'
             $scope.isMore = true;
             // 加载更多
             $scope.loadMore = function () {
-                api.list('url', {page:$scope.page}).success(function (res) {  // TODO 查询出所有动态，分页
+                api.list('/wap/member/get-dynamic-list' , {user_id:$location.$$search.userId , page:$scope.page}).success(function (res) {  // TODO 查询出所有动态，分页
                     if (!res.data) {
                         $scope.isMore = false;
                     }
@@ -211,7 +216,7 @@ define(['app/module', 'app/directive/directiveApi'
                 var userInfo = ar.getStorage('userInfo');
                 $scope.formData.name = JSON.parse(userInfo.info).real_name;
                 $scope.formData.pic = JSON.stringify($scope.imgList);
-                api.save('url', $scope.formData).success(function (res) { // TODO 保存数据到数据库，关闭modal，展现数据
+                api.save('/wap/member/add-dynamic', $scope.formData).success(function (res) { // TODO 保存数据到数据库，关闭modal，展现数据
                     $scope.releasedClose();    // 关闭modal
                     $scope.discoveryList.push(res.data[i]);
 

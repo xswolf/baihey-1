@@ -74,7 +74,7 @@ define(["app/module", 'app/service/serviceApi', 'jquery'],
                         templateUrl: "/wechat/views/site/index.html",
                         controller: 'site.index',
                         resolve: {
-                            indexIsShowData: function ($http) {
+                            dataFilter: function ($http) {
                                 return $http({
                                     method: 'POST',
                                     url: '/wap/user/index-is-show-data',
@@ -104,7 +104,7 @@ define(["app/module", 'app/service/serviceApi', 'jquery'],
                         templateUrl: "/wechat/views/message/index.html",
                         controller: "message.index",
                         resolve: {
-                            indexIsShowData: function ($http) {
+                            dataFilter: function ($http) {
                                 return $http({
                                     method: 'POST',
                                     url: '/wap/user/index-is-show-data',
@@ -210,8 +210,12 @@ define(["app/module", 'app/service/serviceApi', 'jquery'],
                         templateUrl: "/wechat/views/discovery/index.html",
                         controller: 'discovery.index',
                         resolve: {
-                            dataFilter:function($http){
-                                return {black:[2,5,4],follow:[58,22,1]};
+                            dataFilter: function ($http) {
+                                return $http({
+                                    method: 'POST',
+                                    url: '/wap/user/index-is-show-data',
+                                    params: {}
+                                });
                             }
                         }
                     })

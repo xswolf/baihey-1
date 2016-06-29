@@ -5,7 +5,7 @@ define(['app/module', 'app/directive/directiveApi'
     , 'app/service/serviceApi', 'comm'
 ], function (module) {
 
-    module.controller("message.index", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$ionicModal', '$ionicActionSheet', '$ionicLoading', '$location','$ionicListDelegate','indexIsShowData', function (api, $scope, $timeout, $ionicPopup, $ionicModal, $ionicActionSheet, $ionicLoading, $location,$ionicListDelegate,indexIsShowData) {
+    module.controller("message.index", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$ionicModal', '$ionicActionSheet', '$ionicLoading', '$location','$ionicListDelegate','dataFilter', function (api, $scope, $timeout, $ionicPopup, $ionicModal, $ionicActionSheet, $ionicLoading, $location,$ionicListDelegate,dataFilter) {
 
         $timeout($scope.sumSend);
         // 判断是否登录
@@ -17,7 +17,7 @@ define(['app/module', 'app/directive/directiveApi'
          });*/
         // 聊天首页filter显示
         $scope.messageFilter = function(user){
-            return user.id != $scope.userInfo.id && indexIsShowData.data.blacked.indexOf(user.id) == -1;
+            return user.id != $scope.userInfo.id && dataFilter.data.blacked.indexOf(user.id) == -1;
         }
         $scope.userInfo = {};
         // 获取页面数据
