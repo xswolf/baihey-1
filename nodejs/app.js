@@ -33,9 +33,9 @@ io.on('connection', function (socket) {
         io.emit(msg.send_user_id + '-' + msg.receive_user_id, msg); // 广播给自己
 
         console.log(message)
-        //message.add(msg , function (err,res) {
-        //    console.log(res.insertId);
-        //});
+        message.add(msg , function (err,res) {
+            console.log(res.insertId);
+        });
         console.log('send:' + msg.send_user_id + '   ' + 'receive: ' + msg.receive_user_id, msg);
     });
 
