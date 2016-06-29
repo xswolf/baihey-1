@@ -214,7 +214,12 @@ define(["app/module", 'app/service/serviceApi', 'jquery'],
                         cache: false,
                         url: "/discovery",
                         templateUrl: "/wechat/views/discovery/index.html",
-                        controller: 'discovery.index'
+                        controller: 'discovery.index',
+                        resolve: {
+                            DataFilter:function($http){
+
+                            }
+                        }
                     })
                     .state('member_dynmaic', {       // 个人动态
                         cache: false,

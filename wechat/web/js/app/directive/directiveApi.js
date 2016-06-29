@@ -375,19 +375,14 @@ define(['app/module'], function (module) {
         }
     }]);
 
-    module.directive('clickLike', ['$animate', function($animate) {
+    // 点赞动画
+    module.directive('clickLike', ['$animate','$timeout', function($animate,$timeout) {
         return function(scope, element, attrs) {
             element.on('click', function() {
-                //if(element.hasClass('clicked')) {
-                //    $animate.removeClass(element, 'animated zoomOutUp');
-                //} else {
-                /*var ee = element.children()[1];
-                ee.addClass('zoomOutUp');*/
-                console.dir(element.children()[1]);
-                    //$animate.addClass(element.children()[1], 'zoomOutUp');
-                //}
-
-
+                element.find('i').next().addClass('anm');
+                $timeout(function(){
+                    element.find('i').next().removeClass('anm');
+                },400);
             });
         };
     }]);

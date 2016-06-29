@@ -9,7 +9,7 @@
 
     <ion-content class="com_w_100 bhy discovery bg5">
         <div class="list">
-            <div class="mt10 item item-thumbnail-left" ng-repeat="dis in discoveryList" >
+            <div class="mt10 item item-thumbnail-left" ng-repeat="dis in discoveryList | filter:myfilter" >
                 <img class="cp" ng-src="{{dis.head_pic | isNull}}" ng-click="jump('/userInfo?userId={{dis.user_id}}')" onerror="this.src='/wechat/web/images/no_img.png'">
                 <h2>
                     <span class="fl">{{dis.name | sex:dis.sex:dis:age}}</span>
@@ -27,14 +27,14 @@
                     data-am-widget="gallery" data-am-gallery="{pureview:true}">
                     <li ng-repeat="img in dis.imgList">
                         <div class="am-gallery-item">
-                            <img ng-src="{{img.thumb_path}}" data-rel="{{img.thumb_path | picture}}" alt=".">
+                            <img src="{{img.thumb_path}}" data-rel="{{img.thumb_path | picture}}" alt=".">
                         </div>
                     </li>
                 </ul>
                 <div class="clearfix mt10 pr">
                     <span class="fl cp" ng-class="{true:'cor21',false:'cor53'}[dis.cid > 0]" click-like ng-click="clickLike(dis.id)">
                         <i class="ion-thumbsup fs20 vam"></i>
-                        <span class="vam animated likeNumber dib">{{dis.like_num}}</span>
+                        <span class="vam likeNumber dib">{{dis.like_num}}</span>
                     </span>
                     <span class="fl ml10 cp cor53" ng-click="jump('/discovery_single?id={{dis.id}}')">
                         <i class="ion-chatbubble-working fs20 vam"></i>
@@ -55,36 +55,35 @@
     </ion-content>
 
     <script id="released.html" type="text/ng-template">
-        <ion-modal-view ng-controller="discovery.released">
+        <ion-modal-view>
             <ion-header-bar>
                 <button class="button button-icon" ng-click="releasedClose()">取消</button>
                 <h1 class="title">发布动态</h1>
                 <button class="button button-icon cor21" ng-click="saveData()">发布</button>
             </ion-header-bar>
-            <ion-content class="discovery">
+            <ion-content class="bg5">
                 <ion-list>
-                    <ion-item class="mt10 padding">
-                        <div class="imgItem" ng-repeat="img in imgList">
-                            <img src="{{img.thumb_path}}">
-                            <span class="ion-close-circled del" ng-click="deleteImg($index)"></span>
+                    <ion-item class="mt10">
+                        <div class="gallery_handle clearfix" data-am-widget="gallery" data-am-gallery="{pureview:true}">
+                            <div class="imgItem" ng-repeat="img in imgList">
+                                <img src="{{img.thumb_path}}" data-rel="{{img.thumb_path | picture}}">
+                            </div>
+                            <div class="imgItem add" ng-click="addNewImg()">
+                                <i class="icon ion-plus-round"></i>
+                            </div>
                         </div>
-                        <div class="imgItem addimg" ng-click="addNewImg()">
-                            <img src="/wechat/web/images/uploadImg.jpg">
-                        </div>
-                        <div class="w100 mt10 fl">
-                                <textarea class="dis_taInput" placeholder="想说点什么？"
-                                          ng-model="formData.content"></textarea>
-                        </div>
+                        <textarea class="dis_taInput" placeholder="想说点什么？"
+                                  ng-model="formData.content" maxlength="500"></textarea>
                     </ion-item>
                     <input id="pic_fileInput" type="file" nv-file-select="" uploader="uploader"
                            style="visibility: hidden; display: none;" accept="image/*">
-                    <ion-radio ng-model="formData.auth" value="1" name="authGroup">
+                    <ion-radio ng-model="formData.auth" value="1">
                         完全公开
                     </ion-radio>
-                    <ion-radio ng-model="formData.auth" value="2" name="authGroup">
+                    <ion-radio ng-model="formData.auth" value="2">
                         我关注的人可见
                     </ion-radio>
-                    <ion-radio ng-model="formData.auth" value="3" name="authGroup">
+                    <ion-radio ng-model="formData.auth" value="3">
                         仅自己可见
                     </ion-radio>
                 </ion-list>
