@@ -74,6 +74,13 @@ define(["app/module", 'app/service/serviceApi', 'jquery'],
                         templateUrl: "/wechat/views/site/index.html",
                         controller: 'site.index',
                         resolve: {
+                            indexIsShowData: function ($http) {
+                                return $http({
+                                    method: 'POST',
+                                    url: '/wap/user/index-is-show-data',
+                                    params: {}
+                                });
+                            },
                             blacked: function ($http) {
                                 return $http({
                                     method: 'POST',

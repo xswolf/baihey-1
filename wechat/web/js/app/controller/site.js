@@ -5,32 +5,22 @@ define(['app/module', 'app/directive/directiveApi'
     , 'app/service/serviceApi', 'app/filter/filterApi', 'config/city', 'config/occupation'
 ], function (module) {
 
-    module.controller("site.index", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$ionicModal', '$ionicActionSheet', '$ionicLoading', '$ionicBackdrop','$ionicScrollDelegate','$location','blacked','honestyStatus','headpicStatus',function (api, $scope, $timeout, $ionicPopup, $ionicModal, $ionicActionSheet, $ionicLoading,$ionicBackdrop,$ionicScrollDelegate,$location,blacked,honestyStatus,headpicStatus) {
+    module.controller("site.index", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$ionicModal', '$ionicActionSheet', '$ionicLoading', '$ionicBackdrop','$ionicScrollDelegate','$location','indexIsShowData','blacked','honestyStatus','headpicStatus',function (api, $scope, $timeout, $ionicPopup, $ionicModal, $ionicActionSheet, $ionicLoading,$ionicBackdrop,$ionicScrollDelegate,$location,indexIsShowData,blacked,honestyStatus,headpicStatus) {
         // 搜索条件
         $scope.searchForm = [];
         $scope.whereForm = [];
-
+console.log(indexIsShowData.data);
         // 用户列表
         $scope.userList = [];
 
-        // 被拉黑判断方法
-        $scope.blackedFun = function(id) {
-            id = parseInt(id);
-            if(blacked.data.data.indexOf(id) != -1) {
-                return false;
-            } else {
-                return true;
-            }
-        }
-
         // 判断身份证是否认证通过
-        if(honestyStatus.data.data.length) {
-            $scope.honestyStatus = honestyStatus.data.data[0].is_check;
+        if(indexIsShowData.data.honestyStatus.length) {
+            $scope.honestyStatus = indexIsShowData.data.honestyStatus[0].is_check;
         }
         // 判断头像是否认证通过
-            if(headpicStatus.data.status) {
-                $scope.headpicStatus = headpicStatus.data.data.is_check;
-            }
+        if(indexIsShowData.data.headpicStatus) {
+            $scope.headpicStatus = indexIsShowData.data.headpicStatus.is_check;
+        }
         $scope.honesty = function (val) {
             return val & 1;
         }
@@ -119,8 +109,9 @@ define(['app/module', 'app/directive/directiveApi'
             $scope.cityModal = modal;
         });*/
 
+        // 首页filter显示
         $scope.indexFilter = function(user){
-            return user.id != $scope.userInfo.id  && blacked.data.data.indexOf(user.id) == -1;
+            return user.id != $scope.userInfo.id && indexIsShowData.data.blacked.indexOf(user.id) != -1;
         }
 
         // 高级搜索模版
