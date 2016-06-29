@@ -293,6 +293,7 @@
                         <li class="has-sub-sub"><a data-menu="9" class="has-sub-sub"  href="/admin/member/order"><span class="sub-menu-text">订单列表</span></a></li>
                         <li class="has-sub-sub"><a data-menu="10" class="has-sub-sub"  href="/admin/cash/index?status=2"><span class="sub-menu-text">提现管理</span></a></li>
                         <li class="has-sub-sub"><a data-menu="11" class="has-sub-sub"  href="/admin/chat/index"><span class="sub-menu-text">聊天管理</span></a></li>
+                        <li class="has-sub-sub"><a data-menu="12" class="has-sub-sub"  href="/admin/feedback/index?status=2"><span class="sub-menu-text">举报管理</span></a></li>
                     </ul>
                 </li>
 

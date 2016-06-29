@@ -9,6 +9,8 @@
 namespace common\models;
 
 
+use yii\db\Query;
+
 class Feedback extends Base
 {
     public function addFeedback($user_id, $data)
@@ -19,5 +21,19 @@ class Feedback extends Base
             ->insert(static::tableName(), $data)
             ->execute();
         return $row;
+    }
+
+    public function lists($status){
+        return  (new Query())->from($this->tablePrefix . 'feedback')
+            ->where(['status'=>$status])
+            ->select("*")
+            ->all();
+    }
+
+    public function auth($id , $status){
+
+        return \Yii::$app->db->createCommand()
+            ->update($this->tablePrefix.'feedback',['status'=>$status] , ['id'=>$id])
+            ->execute();
     }
 }
