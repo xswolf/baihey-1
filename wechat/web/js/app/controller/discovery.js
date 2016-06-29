@@ -214,6 +214,8 @@ define(['app/module', 'app/directive/directiveApi'
                 api.save('url', $scope.formData).success(function (res) { // TODO 保存数据到数据库，关闭modal，展现数据
                     $scope.releasedClose();    // 关闭modal
                     $scope.discoveryList.push(res.data[i]);
+
+                    amezeui.gallery.init(); // 初始化相册插件
                 })
             }
         });
