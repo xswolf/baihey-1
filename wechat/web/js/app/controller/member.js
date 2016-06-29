@@ -38,6 +38,10 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
         $scope.honesty = function (val) {
             return val & 1;
         }
+
+        // 查询当前用户是否发过动态。
+        $scope.discoveryNumber = 0;
+
     }]);
 
     // 资料首页
@@ -170,76 +174,97 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
     ]);
 
     // 个人动态
-    module.controller("member.dynamic", ['app.serviceApi', '$scope', '$ionicPopup', '$location', function (api, $scope, $ionicPopup, $location) {
+    module.controller("member.discovery", ['app.serviceApi', '$scope', '$ionicPopup', '$location', '$ionicActionSheet', function (api, $scope, $ionicPopup, $location, $ionicActionSheet) {
         requirejs(['amezeui', 'amezeui_ie8'], function (amezeui, amezeui_ie8) {
             amezeui.gallery.init();
+
+            // 点赞
+            $scope.clickLike = function (id) {
+
+            }
+
+            // 更多功能
+            $scope.more = function (id) {
+                if(id){ //判断该条动态是否被举报
+                    return false;
+                }
+                var hideSheet = $ionicActionSheet.show({
+                    buttons: [
+                        {text: '编辑'},
+                        {text: '删除'},
+                    ],
+                    titleText: '更多',
+                    cancelText: '取消',
+                    cancel: function () {
+                    },
+                    buttonClicked: function (index, btnObj) {
+                        if (index == 0) {   // 编辑
+                            $location.url('/member/discovery_add?id='+id);
+                        }
+                        if (index == 1) {   // 删除
+
+                        }
+                        return true;
+                    }
+                });
+            }
+
         });
 
-        $scope.formData = [];
-        $scope.formData.userId = $location.$$search.userId;
-
-        $scope.dynamic = [];
-
-        // 当前登录用户的所有动态，点击加载，每页十条
-        $scope.dynamic.list = [
-            {
-                id: 1, likeNumber: 68, commentNumber: 482, imgList: [
-                {src: '/wechat/web/images/test/1.jpg', w: 200, h: 200},
-                {src: '/wechat/web/images/test/2.jpg', w: 200, h: 200},
-                {src: '/wechat/web/images/test/3.jpg', w: 200, h: 200}
-            ]
-            },
-            {
-                id: 2, likeNumber: 877, commentNumber: 1882, imgList: [
-                {src: '/wechat/web/images/test/6.jpg', w: 200, h: 200},
-                {src: '/wechat/web/images/test/4.jpg', w: 200, h: 200},
-                {src: '/wechat/web/images/test/1.jpg', w: 200, h: 200}
-            ]
-            },
-            {
-                id: 3, likeNumber: 95, commentNumber: 381, imgList: [
-                {src: '/wechat/web/images/test/2.jpg', w: 200, h: 200},
-                {src: '/wechat/web/images/test/5.jpg', w: 200, h: 200},
-                {src: '/wechat/web/images/test/3.jpg', w: 200, h: 200}
-            ]
-            },
-            {
-                id: 4, likeNumber: 1898, commentNumber: 3487, imgList: [
-                {src: '/wechat/web/images/test/6.jpg', w: 200, h: 200},
-                {src: '/wechat/web/images/test/1.jpg', w: 200, h: 200},
-                {src: '/wechat/web/images/test/4.jpg', w: 200, h: 200}
-            ]
-            },
-            {
-                id: 5, likeNumber: 4577, commentNumber: 8841, imgList: [
-                {src: '/wechat/web/images/test/5.jpg', w: 200, h: 200},
-                {src: '/wechat/web/images/test/6.jpg', w: 200, h: 200},
-                {src: '/wechat/web/images/test/4.jpg', w: 200, h: 200}
-            ]
-            }
-
-        ];
-
-        $scope.dynamic.pageLast = true;  // 是否还有更多数据
-        $scope.dynamic.like = true; // 当前登录用户是否已对该条动态点赞
-
-        $scope.dynamic.clickLike = function () { // 点赞
-            if ($scope.dynamic.like) {  // 如果已点赞，说明是再次点击，点赞数-1，相应样式变化
-                $scope.dynamic.like = !$scope.dynamic.like;
-                // 点赞数-1
-            }
-        };
-
-        $scope.dynamic.loadMore = function () {  // 点击加载
-
-        }
-
-        $scope.jump = function () {
-            $location.url($location.$$search.tempUrl);
-        }
 
     }]);
 
+    // 发布动态
+    module.controller("member.discovery_add", ['app.serviceApi', '$scope', '$ionicPopup', '$location', '$ionicActionSheet', function (api, $scope, $ionicPopup, $location, $ionicActionSheet) {
+        requirejs(['amezeui', 'amezeui_ie8'], function (amezeui, amezeui_ie8) {
+            amezeui.gallery.init();
+            $scope.discovery = {};
+            if($location.$$search.id && $location.$$search.id != '0'){   // 如果有参数id，编辑
+                api.get('url',{id:$location.$$search.id}).success(function(res){
+                    $scope.discovery = res.data;
+                })
+
+            }else{                       // 否则是新增
+
+
+            }
+
+            amezeui.gallery.init();
+            // 点赞
+            $scope.clickLike = function (id) {
+
+            }
+
+            // 更多功能
+            $scope.more = function (id) {
+                if(id){ //判断该条动态是否被举报
+                    return false;
+                }
+                var hideSheet = $ionicActionSheet.show({
+                    buttons: [
+                        {text: '编辑'},
+                        {text: '删除'},
+                    ],
+                    titleText: '更多',
+                    cancelText: '取消',
+                    cancel: function () {
+                    },
+                    buttonClicked: function (index, btnObj) {
+                        if (index == 0) {   // 编辑
+
+                        }
+                        if (index == 1) {   // 删除
+
+                        }
+                        return true;
+                    }
+                });
+            }
+
+        });
+
+
+    }]);
     // 个性签名
     module.controller("member.signature", ['app.serviceApi', '$scope', '$ionicPopup', '$location', function (api, $scope, $ionicPopup, $location) {
 

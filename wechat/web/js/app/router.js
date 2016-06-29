@@ -223,18 +223,12 @@ define(["app/module", 'app/service/serviceApi', 'jquery'],
                         templateUrl: "/wechat/views/discovery/index.html",
                         controller: 'discovery.index',
                         resolve: {
-                            DataFilter:function($http){
-
+                            dataFilter:function($http){
+                                return {black:[2,5,4],follow:[58,22,1]};
                             }
                         }
                     })
-                    .state('member_dynmaic', {       // 个人动态
-                        cache: false,
-                        url: "/member_dynmaic",
-                        templateUrl: "/wechat/views/discovery/index.html",
-                        controller: 'discovery.index'
-                    })
-                    .state('discovery_single', {       // 发现-个人
+                    .state('discovery_single', {       // 发现-评论
                         cache: false,
                         url: "/discovery_single",
                         templateUrl: "/wechat/views/discovery/single.html",

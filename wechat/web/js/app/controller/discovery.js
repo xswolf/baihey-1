@@ -6,23 +6,34 @@ define(['app/module', 'app/directive/directiveApi'
 ], function (module) {
 
     // 发现
-    module.controller("discovery.index", ['app.serviceApi', '$rootScope', '$scope', '$timeout', '$ionicPopup', '$ionicModal', '$ionicActionSheet', '$ionicLoading', '$location', '$filter', 'FileUploader', function (api, $rootScope, $scope, $timeout, $ionicPopup, $ionicModal, $ionicActionSheet, $ionicLoading, $location, $filter, FileUploader) {
+    module.controller("discovery.index", ['app.serviceApi', '$rootScope', '$scope', '$timeout', '$ionicPopup', '$ionicModal', '$ionicActionSheet', '$ionicLoading', '$location', '$filter', 'FileUploader','dataFilter', function (api, $rootScope, $scope, $timeout, $ionicPopup, $ionicModal, $ionicActionSheet, $ionicLoading, $location, $filter, FileUploader,dataFilter) {
         requirejs(['amezeui', 'amezeui_ie8'], function (amezeui, amezeui_ie8) {
             amezeui.gallery.init();
-            $scope.report = {};
+            $scope.reportData = {};
             $scope.formData = {};
             $scope.formData.auth = 1;
             $scope.discoveryList = [];
+
+            $scope.display = [2,4,5];   // TODO 用户已屏蔽的动态id，从localStorage获取
+
+            // 发现列表过滤条件：黑名单  TODO
+            $scope.indexFilter = function(dis){
+                if(dis.auth = 2){   // 用户设置该条动态为关注的人可见
+                    return dataFilter.black.indexOf(dis.id) == -1 && dataFilter.follow.indexOf(dis.user_id) == -1 && $scope.display;
+                }
+                return dataFilter.black.indexOf(dis.id) == -1 && $scope.display;
+            }
+
             $scope.jump = function (url) {
                 $location.url(url);
             }
 
-            $scope.more = function (isUser) {
+            $scope.more = function (isUser,id,index) {
                 var btnList = [
                     {text: '举报'},
                     {text: '屏蔽'}
                 ];
-                if (isUser) {   // 判断该条信息是否所属当前用户
+                if (isUser) {   // 判断该条动态是否所属当前用户
                     btnList = [
                         {text: '删除'}
                     ];
@@ -36,12 +47,15 @@ define(['app/module', 'app/directive/directiveApi'
                     },
                     buttonClicked: function (index, btnObj) {
                         if (btnObj.text = '屏蔽') {
-
+                            // 将参数ID存入localStorage：display  TODO
+                            console.log(id);
                         }
                         if (btnObj.text = '举报') {
                             $scope.reportOpen();
                         }
                         if (btnObj.text = '删除') {
+                            $scope.discoveryList.splice(index, 1);
+                            // 改变状态 api.save    TODO
 
                         }
                         return true;
@@ -50,11 +64,11 @@ define(['app/module', 'app/directive/directiveApi'
             }
 
             $scope.report = function () {
-                if (!$scope.report.item) {
+                if (!$scope.reportData.item) {
                     ar.saveDataAlert($ionicPopup, '请选择举报内容');
                     return false;
                 }
-                api.save('url', $scope.report).success(function (res) {
+                api.save('url', $scope.reportData).success(function (res) {   //TODO
                     if (res.status == 1) {
                         ar.saveDataAlert($ionicPopup, '您的举报信息我们已受理，我们会尽快核实情况并将处理结果反馈给您，谢谢您对我们的支持！');
                     }
@@ -68,10 +82,9 @@ define(['app/module', 'app/directive/directiveApi'
                 })
             }
 
-            $scope.user = [];
             // 点赞
-            $scope.clickLike = function (id) {
-                var i = ar.getArrI($scope.discoveryList, 'id', id);
+            $scope.clickLike = function (dis) {
+                var i = ar.getArrI($scope.discoveryList, 'id', dis.id);
                 var add = 0;
                 if ($scope.discoveryList[i].cid > 0) {
                     add = -1;
@@ -80,22 +93,19 @@ define(['app/module', 'app/directive/directiveApi'
                     add = 1;
                     $scope.discoveryList[i].cid = 1;
                 }
-
                 $scope.discoveryList[i].like_num = parseInt($scope.discoveryList[i].like_num) + add;
-                //api.save('/wap/member/set-click-like' , {dynamicId:id , user_id: userInfo['id'] , add:add});
+
+                api.save('/wap/member/set-click-like' , {dynamicId:dis.id , user_id: dis.user_id , add:add}); // 请测试功能是否正常。 TODO
 
             }
 
             $scope.page = 0;
-            $scope.morePage = true;
+            $scope.isMore = true;
             // 加载更多
             $scope.loadMore = function () {
-                api.list('/wap/member/get-dynamic-list', {
-                    user_id: $location.$$search.userId,
-                    page: $scope.page
-                }).success(function (res) {
-                    if (res.data == '') {
-                        $scope.morePage = false;
+                api.list('url', {page:$scope.page}).success(function (res) {  // TODO 查询出所有动态，分页
+                    if (!res.data) {
+                        $scope.isMore = false;
                     }
                     for (var i in res.data) {
                         res.data[i].imgList = JSON.parse(res.data[i].pic);
@@ -107,13 +117,9 @@ define(['app/module', 'app/directive/directiveApi'
                 $scope.page += 1;
             };
 
-            api.list('/wap/member/get-follow').success(function (res) {
-                $scope.followList = res.data;
-            })
-
             // 是否还有更多
             $scope.moreDataCanBeLoaded = function () {
-                return $scope.morePage;
+                return $scope.isMore;
             };
 
             $ionicModal.fromTemplateUrl('released.html', {
@@ -200,112 +206,80 @@ define(['app/module', 'app/directive/directiveApi'
                 amezeui.gallery.init();
             }
 
-            // 发布
+            // 发布动态
             $scope.saveData = function () {
                 var userInfo = ar.getStorage('userInfo');
                 $scope.formData.name = JSON.parse(userInfo.info).real_name;
                 $scope.formData.pic = JSON.stringify($scope.imgList);
-
-                // 保存数据
-                api.save('/wap/member/add-dynamic', $scope.formData).success(function (res) {
-                    $scope.releasedClose();    // 发布后关闭modal并立即展现
-                    res.data.imgList = JSON.parse(res.data.pic);
-                    $scope.discoveryList.splice(0, 0, res.data);
-                    console.log($scope.discoveryList);
+                api.save('url', $scope.formData).success(function (res) { // TODO 保存数据到数据库，关闭modal，展现数据
+                    $scope.releasedClose();    // 关闭modal
+                    $scope.discoveryList.push(res.data[i]);
                 })
-
-            }
-            var balckList = [1,4,7]
-            $scope.myfilter = function(item){
-                return balckList.indexOf(item.id) == -1 && item.age > 18;
             }
         });
     }]);
 
-    // 发现-个人
+    // 发现-评论
     module.controller("discovery.single", ['app.serviceApi', '$scope', '$location', function (api, $scope, $location) {
-
-        $scope.jump = function () {
-            window.history.go(-1);
-        }
-        var userInfo = ar.getStorage('userInfo');
-        var info = JSON.parse(userInfo.info);
-        $scope.user_id = userInfo.id;
-        api.list('/wap/member/get-dynamic', {id: $location.$$search.id}).success(function (res) {
-            res.data.imgList = JSON.parse(res.data.pic);
-            $scope.dis = res.data;
-            $comment = ar.cleanQuotes(JSON.stringify(res.data.comment));
-            $scope.commentList = JSON.parse($comment);
-            //console.log($scope.dis);
-        })
-
-        // 图片放大查看插件
-        requirejs(['photoswipe', 'photoswipe_ui'], function (photoswipe, photoswipe_ui) {
-
-            $scope.showImgList = function (imgList, index) {
-                var pswpElement = document.querySelectorAll('.pswp')[0];
-                var options = {
-                    index: index
-                };
-                options.mainClass = 'pswp--minimal--dark';
-                options.barsSize = {top: 0, bottom: 0};
-                options.captionEl = false;
-                options.fullscreenEl = false;
-                options.shareEl = false;
-                options.bgOpacity = 0.85;
-                options.tapToClose = true;
-                options.tapToToggleControls = false;
-
-                var gallery = new photoswipe(pswpElement, photoswipe_ui, imgList, options);
-                gallery.init();
-            }
+        requirejs(['amezeui', 'amezeui_ie8'], function (amezeui, amezeui_ie8) {
 
 
-        })
+            var userInfo = ar.getStorage('userInfo');
+            var info = JSON.parse(userInfo.info);
+            $scope.user_id = userInfo.id;
+            api.list('/wap/member/get-dynamic', {id: $location.$$search.id}).success(function (res) {
+                res.data.imgList = JSON.parse(res.data.pic);
+                $scope.dis = res.data;
+                $comment = ar.cleanQuotes(JSON.stringify(res.data.comment));
+                $scope.commentList = JSON.parse($comment);
+                //console.log($scope.dis);
+            })
 
-        // 点赞
-        $scope.clickLike = function (id) {
-            var add = 0;
-            if ($scope.dis.cid > 0) {
-                add = -1;
-                $scope.dis.cid = -1;
-            } else {
-                add = 1;
-                $scope.dis.cid = 1;
-            }
 
-            $scope.dis.like_num = parseInt($scope.dis.like_num) + add;
-            api.save('/wap/member/set-click-like', {dynamicId: id, user_id: userInfo['id'], add: add});
-        }
-        $scope.user = [];
-        $scope.user.private = false;
-        $scope.checkPrivate = function () {
-            $scope.user.private = !$scope.user.private;
-        }
-
-        // 发表评论
-        $scope.sendComment = function () {
-            $scope.formData.private = $scope.user.private;
-            $scope.formData.dynamicId = $location.$$search.id;
-            api.save('/wap/member/add-comment', $scope.formData).success(function (res) {
-                if (res.data.id > 0) {
-                    $scope.commentList.push({
-                        id: res.data.id,
-                        user_id: userInfo.id,
-                        headPic: info.head_pic,
-                        name: info.real_name,
-                        private: $scope.user.private == 'true' ? 1 : 0,
-                        create_time: res.data.create_time,
-                        content: $scope.formData.content
-                    });
-
-                    $scope.dis.comment_num = parseInt($scope.dis.comment_num) + 1;
-                    $scope.formData.content = ''; //重置输入框
+            // 点赞
+            $scope.clickLike = function (id) {
+                var add = 0;
+                if ($scope.dis.cid > 0) {
+                    add = -1;
+                    $scope.dis.cid = -1;
+                } else {
+                    add = 1;
+                    $scope.dis.cid = 1;
                 }
 
-            })
-        }
+                $scope.dis.like_num = parseInt($scope.dis.like_num) + add;
+                api.save('/wap/member/set-click-like', {dynamicId: id, user_id: userInfo['id'], add: add});
+            }
+            $scope.user = [];
+            $scope.user.private = false;
+            $scope.checkPrivate = function () {
+                $scope.user.private = !$scope.user.private;
+            }
 
+            // 发表评论
+            $scope.sendComment = function () {
+                $scope.formData.private = $scope.user.private;
+                $scope.formData.dynamicId = $location.$$search.id;
+                api.save('/wap/member/add-comment', $scope.formData).success(function (res) {
+                    if (res.data.id > 0) {
+                        $scope.commentList.push({
+                            id: res.data.id,
+                            user_id: userInfo.id,
+                            headPic: info.head_pic,
+                            name: info.real_name,
+                            private: $scope.user.private == 'true' ? 1 : 0,
+                            create_time: res.data.create_time,
+                            content: $scope.formData.content
+                        });
+
+                        $scope.dis.comment_num = parseInt($scope.dis.comment_num) + 1;
+                        $scope.formData.content = ''; //重置输入框
+                    }
+
+                })
+            }
+            amezeui.gallery.init();
+        })
     }]);
 
 
