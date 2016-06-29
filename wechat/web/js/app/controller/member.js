@@ -3334,6 +3334,33 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
 
     }]);
 
+    // 举报
+    module.controller("member.report", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$location', function (api, $scope, $timeout, $ionicPopup, $location) {
+
+        $scope.title = $location.$$search.title;  // 标题
+
+        $scope.report = function () {
+            if (!$scope.reportData.item) {
+                ar.saveDataAlert($ionicPopup, '请选择举报内容');
+                return false;
+            }
+            api.save('url', $scope.reportData).success(function (res) {   //TODO 保存数据
+                if (res.status == 1) {
+                    ar.saveDataAlert($ionicPopup, '您的举报信息我们已受理，我们会尽快核实情况并将处理结果反馈给您，谢谢您对我们的支持！');
+                    $location.url($location.$$search.tempUrl);
+                }
+                if (res.status == -1) {
+                    ar.saveDataAlert($ionicPopup, '情况核实中，请勿重复提交！');
+                    $location.url($location.$$search.tempUrl);
+                }
+                if (res.status == 0) {
+                    ar.saveDataAlert($ionicPopup, '举报失败，请刷新重试！');
+                }
+            })
+        }
+
+    }]);
+
     // 用户资料-隐私设置
     module.controller("member.settings", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$location', '$ionicActionSheet', function (api, $scope, $timeout, $ionicPopup, $location, $ionicActionSheet) {
         $scope.formData = {};

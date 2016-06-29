@@ -6,7 +6,7 @@ define(['app/module', 'app/directive/directiveApi'
 ], function (module) {
 
     // 发现
-    module.controller("discovery.index", ['app.serviceApi', '$rootScope', '$scope', '$timeout', '$ionicPopup', '$ionicModal', '$ionicActionSheet', '$ionicLoading', '$location', '$filter', 'FileUploader','dataFilter', function (api, $rootScope, $scope, $timeout, $ionicPopup, $ionicModal, $ionicActionSheet, $ionicLoading, $location, $filter, FileUploader,dataFilter) {
+    module.controller("discovery.index", ['app.serviceApi', '$rootScope', '$scope', '$timeout', '$ionicPopup', '$ionicModal', '$ionicActionSheet', '$ionicLoading', '$location', '$filter', 'FileUploader', 'dataFilter', function (api, $rootScope, $scope, $timeout, $ionicPopup, $ionicModal, $ionicActionSheet, $ionicLoading, $location, $filter, FileUploader, dataFilter) {
         requirejs(['amezeui', 'amezeui_ie8'], function (amezeui, amezeui_ie8) {
             amezeui.gallery.init();
             $scope.reportData = {};
@@ -18,10 +18,10 @@ define(['app/module', 'app/directive/directiveApi'
             $scope.display = ar.getStorage('display') ? ar.getStorage('display') : [];
 
             // 发现列表过滤条件：黑名单
-            $scope.indexFilter = function(dis){
-                if(dis.auth == '2'){   // 用户设置该条动态为关注的人可见
+            $scope.indexFilter = function (dis) {
+                if (dis.auth == '2') {   // 用户设置该条动态为关注的人可见
                     return dataFilter.data.follow.indexOf(dis.user_id) != -1 && $scope.display.indexOf(dis.id) != -1;
-                } else if(dis.auth == '3') {
+                } else if (dis.auth == '3') {
                     return false;
                 }
                 return dataFilter.data.blacked.indexOf(dis.user_id) == -1 && $scope.display.indexOf(dis.id) == -1;
@@ -31,7 +31,7 @@ define(['app/module', 'app/directive/directiveApi'
                 $location.url(url);
             }
 
-            $scope.more = function (isUser,id,index) {
+            $scope.more = function (isUser, id, index) {
                 var btnList = [
                     {text: '举报'},
                     {text: '屏蔽'}
@@ -42,7 +42,7 @@ define(['app/module', 'app/directive/directiveApi'
                     ];
                 }
 
-                var hideSheet = $ionicActionSheet.show({
+                $ionicActionSheet.show({
                     buttons: btnList,
                     titleText: '更多',
                     cancelText: '取消',
@@ -56,7 +56,7 @@ define(['app/module', 'app/directive/directiveApi'
                             // 将参数ID存入localStorage：display
                         }
                         if (btnObj.text = '举报') {
-                            $scope.reportOpen();
+                            $location.url('/member/report?title=动态&tempUrl=' + $location.$$url);
                         }
                         if (btnObj.text = '删除') {
                             $scope.discoveryList.splice(index, 1);
@@ -66,25 +66,6 @@ define(['app/module', 'app/directive/directiveApi'
                         return true;
                     }
                 });
-            }
-
-            $scope.report = function () {
-                if (!$scope.reportData.item) {
-                    ar.saveDataAlert($ionicPopup, '请选择举报内容');
-                    return false;
-                }
-                api.save('/wap/member/add-feedback', $scope.reportData).success(function (res) {   //TODO
-                    if (res.status == 1) {
-                        ar.saveDataAlert($ionicPopup, '您的举报信息我们已受理，我们会尽快核实情况并将处理结果反馈给您，谢谢您对我们的支持！');
-                    }
-                    if (res.status == -1) {
-                        ar.saveDataAlert($ionicPopup, '您已举报过该条动态，情况核实中，请耐心等待处理结果！');
-                    }
-                    if (res.status == 0) {
-                        ar.saveDataAlert($ionicPopup, '举报失败，请刷新重试！');
-                    }
-                    reportClose();
-                })
             }
 
             // 点赞
@@ -100,7 +81,7 @@ define(['app/module', 'app/directive/directiveApi'
                 }
                 $scope.discoveryList[i].like_num = parseInt($scope.discoveryList[i].like_num) + add;
 
-                api.save('/wap/member/set-click-like' , {dynamicId:dis.id , user_id: dis.user_id , add:add}); // 请测试功能是否正常。 TODO
+                api.save('/wap/member/set-click-like', {dynamicId: dis.id, user_id: dis.user_id, add: add}); // 请测试功能是否正常。 TODO
 
             }
 
@@ -108,7 +89,10 @@ define(['app/module', 'app/directive/directiveApi'
             $scope.isMore = true;
             // 加载更多
             $scope.loadMore = function () {
-                api.list('/wap/member/get-dynamic-list' , {user_id:$location.$$search.userId , page:$scope.page}).success(function (res) {  // TODO 查询出所有动态，分页
+                api.list('/wap/member/get-dynamic-list', {
+                    user_id: $location.$$search.userId,
+                    page: $scope.page
+                }).success(function (res) {  // TODO 查询出所有动态，分页
                     if (!res.data) {
                         $scope.isMore = false;
                     }
@@ -138,19 +122,6 @@ define(['app/module', 'app/directive/directiveApi'
             };
             $scope.releasedClose = function () {
                 $scope.releasedModal.hide();
-            };
-
-            $ionicModal.fromTemplateUrl('report.html', {
-                scope: $scope,
-                animation: 'slide-in-up'
-            }).then(function (modal) {
-                $scope.reporrtModal = modal;
-            });
-            $scope.reportOpen = function () {
-                $scope.reporrtModal.show();
-            };
-            $scope.reportClose = function () {
-                $scope.reporrtModal.hide();
             };
 
             // 发布动态
@@ -223,13 +194,27 @@ define(['app/module', 'app/directive/directiveApi'
                     amezeui.gallery.init(); // 初始化相册插件
                 })
             }
+
+            $ionicModal.fromTemplateUrl('report.html', {
+                scope: $scope,
+                animation: 'slide-in-up'
+            }).then(function (modal) {
+                $scope.reporrtModal = modal;
+            });
+            $scope.reportOpen = function () {
+                $scope.reporrtModal.show();
+            };
+            $scope.reportClose = function () {
+                $scope.reporrtModal.hide();
+            };
         });
     }]);
 
     // 发现-评论
-    module.controller("discovery.single", ['app.serviceApi', '$scope', '$location', function (api, $scope, $location) {
+    module.controller("discovery.single", ['app.serviceApi', '$scope', '$location', '$ionicActionSheet', '$ionicModal', '$ionicPopup', function (api, $scope, $location, $ionicActionSheet, $ionicModal, $ionicPopup) {
         requirejs(['amezeui', 'amezeui_ie8'], function (amezeui, amezeui_ie8) {
-
+            amezeui.gallery.init(); // 初始化相册插件
+            $scope.formData = {};
 
             var userInfo = ar.getStorage('userInfo');
             var info = JSON.parse(userInfo.info);
@@ -239,12 +224,10 @@ define(['app/module', 'app/directive/directiveApi'
                 $scope.dis = res.data;
                 $comment = ar.cleanQuotes(JSON.stringify(res.data.comment));
                 $scope.commentList = JSON.parse($comment);
-                //console.log($scope.dis);
             })
 
-
             // 点赞
-            $scope.clickLike = function (id) {
+            $scope.clickLike = function (dis) {
                 var add = 0;
                 if ($scope.dis.cid > 0) {
                     add = -1;
@@ -253,9 +236,8 @@ define(['app/module', 'app/directive/directiveApi'
                     add = 1;
                     $scope.dis.cid = 1;
                 }
-
                 $scope.dis.like_num = parseInt($scope.dis.like_num) + add;
-                api.save('/wap/member/set-click-like', {dynamicId: id, user_id: userInfo['id'], add: add});
+                api.save('/wap/member/set-click-like', {dynamicId: dis.id, user_id: dis.user_id, add: add});
             }
             $scope.user = [];
             $scope.user.private = false;
@@ -285,10 +267,45 @@ define(['app/module', 'app/directive/directiveApi'
 
                 })
             }
-            amezeui.gallery.init();
+
+            $scope.more = function (isUser, id) {
+                var btnList = [
+                    {text: '举报'},
+                    {text: '屏蔽'}
+                ];
+                if (isUser) {   // 判断该条动态是否所属当前用户
+                    btnList = [
+                        {text: '删除'}
+                    ];
+                }
+
+                $ionicActionSheet.show({
+                    buttons: btnList,
+                    titleText: '更多',
+                    cancelText: '取消',
+                    cancel: function () {
+                    },
+                    buttonClicked: function (index, btnObj) {
+                        if (btnObj.text = '屏蔽') {
+                            // 将参数ID存入localStorage：display  TODO
+                            $location.url('/discovery');
+                        }
+                        if (btnObj.text = '举报') {
+                            $location.url('/member/report?title=动态&tempUrl=' + $location.$$url);
+                        }
+                        if (btnObj.text = '删除') {
+                            $scope.discovery = null;
+                            $location.url('/discovery');
+                            // 改变状态 api.save    TODO
+
+                        }
+                        return true;
+                    }
+                });
+            }
+
         })
     }]);
-
 
 
 })

@@ -1,0 +1,17 @@
+<ion-view>
+    <ion-header-bar>
+        <button class="button button-icon" ng-click="reportClose()">关闭</button>
+        <h1 class="title">{{title}}举报</h1>
+    </ion-header-bar>
+    <ion-content class="bg5">
+        <ion-radio ng-model="reportData.item" ng-value="'诽谤辱骂'">诽谤辱骂</ion-radio>
+        <ion-radio ng-model="reportData.item" ng-value="'淫秽色情'">淫秽色情</ion-radio>
+        <ion-radio ng-model="reportData.item" ng-value="'血腥暴力'">血腥暴力</ion-radio>
+        <ion-radio ng-model="reportData.item" ng-value="'垃圾广告'">垃圾广告</ion-radio>
+        <ion-radio ng-model="reportData.item" ng-value="'欺骗（酒托、话费托等骗取行为）'">欺骗（酒托、话费托等骗取行为）</ion-radio>
+        <ion-radio ng-model="reportData.item" ng-value="'违法行为（涉毒、暴恐、违禁品等）'">违法行为（涉毒、暴恐、违禁品等）</ion-radio>
+        <ion-radio ng-model="reportData.item" ng-value="'冒用他人照片'">冒用他人照片</ion-radio>
+        <ion-radio ng-model="reportData.item" ng-value="'资料不真实'">资料不真实</ion-radio>
+        <button class="button button-positive button-block" ng-click="report()" style="margin-top: 30px;">举报</button>
+    </ion-content>
+</ion-view>

@@ -3,134 +3,159 @@
     <link href="/wechat/web/js/plugin/amezeui/css/amazeui.min.css" rel="stylesheet">
     <ion-header-bar class="com_w_100 bhy">
         <title class="title">
-            评论列表
+            评论
         </title>
     </ion-header-bar>
-    <ion-content class="com_w_100 bhy discovery">
-        <ion-list>
-            <ion-item>
-                <div class="dis_u_img">
-                    <img id="myImage" ng-src="{{dis.head_pic | isNull}}">
-                </div>
-                <div class="dis_con clearfix">
-                    <div class="dis_con_name">
-                        <p>
-                            <span class="fl fs16 fwb">{{dis.name}}</span>
-                            <span class="fr fs12 cor5">{{dis.create_time*1000 | date:'yyyy-MM-dd hh:mm:ss'}}</span>
-                        </p>
-                        <p class="mt10">
-                            <span ng-if="honesty(dis.honesty_value)" class="identity id">身份证</span>
-                            <span ng-if="dis.phone" class="identity phone">手机</span>
-                            <span ng-if="dis.info.level == 1" class="identity vip">VIP</span>
-                            <span ng-if="dis.info.level == 2" class="identity guest">贵宾</span>
-                            <span ng-if="dis.info.level == 3" class="identity diamond">钻石</span>
-                        </p>
+    <ion-content class="bhy com_w_100">
+        <div class="item item-thumbnail-left">
+            <img class="cp" ng-src="{{dis.head_pic | isNull}}" ng-click="jump('/userInfo?userId={{dis.user_id}}')"
+                 onerror="this.src='/wechat/web/images/no_img.png'">
+            <h2>
+                <span class="fl">{{dis.name | sex:dis.sex:dis:age}}</span>
+                <span class="fr fs12 cor5">{{dis.create_time*1000 | date:'yyyy-MM-dd HH:mm'}}</span>
+            </h2>
+            <p>
+                <span class="identity id" ng-if="honesty(dis.honesty_value)">身份证</span>
+                <span class="identity phone" ng-if="dis.phone != null">手机</span>
+                <span class="identity vip" ng-if="dis.level == '1'">vip</span>
+                <span class="identity guest" ng-if="dis.level == 2">贵宾</span>
+                <span class="identity diamond" ng-if="dis.level == 3">钻石</span>
+            </p>
+            <p class="wsn">{{dis.content}}</p>
+            <ul class="am-gallery am-avg-sm-3 am-avg-md-3 am-avg-lg-4 am-gallery-default"
+                data-am-widget="gallery" data-am-gallery="{pureview:true}">
+                <li ng-repeat="img in dis.imgList">
+                    <div class="am-gallery-item">
+                        <img src="{{img.thumb_path}}" data-rel="{{img.thumb_path | picture}}" alt=".">
                     </div>
-                    <p class="wsn">{{dis.content}}</p>
-                    <ul class="am-gallery am-avg-sm-3 am-avg-md-3 am-avg-lg-4 am-gallery-default"
-                        data-am-widget="gallery" data-am-gallery="{pureview:true}">
-                        <li ng-repeat="img in dis.imgList">
-                            <div class="am-gallery-item">
-                                <img src="{{img.thumb_path}}" data-rel="{{img.thumb_path | picture}}" alt=".">
-                            </div>
-                        </li>
-                    </ul>
-                    <div class="clearfix mt10 pr">
-                    <span class="fl cp" ng-class="{true:'cor21',false:'cor53'}[dis.cid > 0]" click-like ng-click="clickLike(dis.id)">
-                        <i class="ion-thumbsup fs20 vam"></i>
-                        <span class="vam likeNumber dib">{{dis.like_num}}</span>
-                    </span>
-                    <span class="fl ml10 cp cor53" ng-click="jump('/discovery_single?id={{dis.id}}')">
-                        <i class="ion-chatbubble-working fs20 vam"></i>
-                        <span class="vam">{{dis.comment_num}}</span>
-                    </span>
-                    <span class="fr cp cor53" ng-click="more(1==2)">
-                        <i class="ion-more fs20 vam"></i>
-                    </span>
+                </li>
+            </ul>
+            <div class="clearfix mt10 pr">
+                <span class="fl cp" ng-class="{true:'cor21',false:'cor53'}[dis.cid > 0]" click-like
+                      ng-click="clickLike(dis)">
+                    <i class="ion-thumbsup fs20 vam"></i>
+                    <span class="vam likeNumber dib">{{dis.like_num}}</span>
+                </span>
+                <span class="fl ml10 cp cor53" ng-click="jump('/discovery_single?id={{dis.id}}')">
+                    <i class="ion-chatbubble-working fs20 vam"></i>
+                    <span class="vam">{{dis.comment_num}}</span>
+                </span>
+                <span class="fr cp cor53" ng-click="more(dis.user_id==userInfo.user_id,dis.id)">
+                    <i class="ion-more fs20 vam"></i>
+                </span>
+            </div>
+        </div>
+        <article class="am-comment padding">
+            <a href="userInfo?id=1">
+                <img src="/wechat/web/images/test1.jpg" alt="" class="am-comment-avatar" width="48" height="48"/>
+            </a>
+            <div class="am-comment-main ">
+                <header class="am-comment-hd">
+                    <!--<h3 class="am-comment-title">评论标题</h3>-->
+                    <div class="am-comment-meta">
+                        <a href="userInfo?id=1" class="am-comment-author">张先生</a>
+                        评论于
+                        <time>2014-7-12 15:30</time>
                     </div>
-                </div>
-            </ion-item>
-        </ion-list>
-        <ion-list>
-            <article class="am-comment padding">
-                <a href="#link-to-user-home">
-                    <img src="/wechat/web/images/test1.jpg" alt="" class="am-comment-avatar" width="48" height="48"/>
-                </a>
-                <div class="am-comment-main ">
-                    <header class="am-comment-hd">
-                        <!--<h3 class="am-comment-title">评论标题</h3>-->
-                        <div class="am-comment-meta">
-                            <a href="#link-to-user" class="am-comment-author">张先生</a>
-                            评论于
-                            <time>2014-7-12 15:30</time>
-                        </div>
-                    </header>
+                </header>
 
-                    <div class="am-comment-bd">
-                        可以
-                    </div>
+                <div class="am-comment-bd">
+                    可以
                 </div>
-            </article>
-            <article class="am-comment padding">
-                <a href="#link-to-user-home">
-                    <img src="/wechat/web/images/test1.jpg" alt="" class="am-comment-avatar" width="48" height="48"/>
-                </a>
-                <div class="am-comment-main">
-                    <header class="am-comment-hd">
-                        <!--<h3 class="am-comment-title">评论标题</h3>-->
-                        <div class="am-comment-meta">
-                            <a href="#link-to-user" class="am-comment-author">张先生</a>
-                            评论于
-                            <time>2014-7-12 15:30</time>
-                        </div>
-                    </header>
+            </div>
+        </article>
+        <article class="am-comment padding">
+            <a href="userInfo?id=1">
+                <img src="/wechat/web/images/test1.jpg" alt="" class="am-comment-avatar" width="48" height="48"/>
+            </a>
+            <div class="am-comment-main ">
+                <header class="am-comment-hd">
+                    <!--<h3 class="am-comment-title">评论标题</h3>-->
+                    <div class="am-comment-meta">
+                        <a href="userInfo?id=1" class="am-comment-author">张先生</a>
+                        评论于
+                        <time>2014-7-12 15:30</time>
+                    </div>
+                </header>
 
-                    <div class="am-comment-bd">
-                        我顶！
-                    </div>
+                <div class="am-comment-bd">
+                    可以
                 </div>
-            </article>
-            <article class="am-comment padding">
-                <a href="javascript:;">
-                    <img src="/wechat/web/images/test1.jpg" alt="" class="am-comment-avatar" width="48" height="48"/>
-                </a>
-                <div class="am-comment-main">
-                    <header class="am-comment-hd">
-                        <!--<h3 class="am-comment-title">评论标题</h3>-->
-                        <div class="am-comment-meta">
-                            <a href="#link-to-user" class="am-comment-author">张先生</a>
-                            评论于
-                            <time>2014-7-12 15:30</time>
-                        </div>
-                    </header>
+            </div>
+        </article>
+        <article class="am-comment padding">
+            <a href="userInfo?id=1">
+                <img src="/wechat/web/images/test1.jpg" alt="" class="am-comment-avatar" width="48" height="48"/>
+            </a>
+            <div class="am-comment-main ">
+                <header class="am-comment-hd">
+                    <!--<h3 class="am-comment-title">评论标题</h3>-->
+                    <div class="am-comment-meta">
+                        <a href="userInfo?id=1" class="am-comment-author">张先生</a>
+                        评论于
+                        <time>2014-7-12 15:30</time>
+                    </div>
+                </header>
 
-                    <div class="am-comment-bd">
-                        支持一下！
-                    </div>
+                <div class="am-comment-bd">
+                    可以
                 </div>
-            </article>
-        </ion-list>
+            </div>
+        </article>
+        <article class="am-comment padding">
+            <a href="userInfo?id=1">
+                <img src="/wechat/web/images/test1.jpg" alt="" class="am-comment-avatar" width="48" height="48"/>
+            </a>
+            <div class="am-comment-main ">
+                <header class="am-comment-hd">
+                    <!--<h3 class="am-comment-title">评论标题</h3>-->
+                    <div class="am-comment-meta">
+                        <a href="userInfo?id=1" class="am-comment-author">张先生</a>
+                        评论于
+                        <time>2014-7-12 15:30</time>
+                    </div>
+                </header>
+
+                <div class="am-comment-bd">
+                    可以
+                </div>
+            </div>
+        </article>
+        <article class="am-comment padding">
+            <a href="userInfo?id=1">
+                <img src="/wechat/web/images/test1.jpg" alt="" class="am-comment-avatar" width="48" height="48"/>
+            </a>
+            <div class="am-comment-main ">
+                <header class="am-comment-hd">
+                    <!--<h3 class="am-comment-title">评论标题</h3>-->
+                    <div class="am-comment-meta">
+                        <a href="userInfo?id=1" class="am-comment-author">张先生</a>
+                        评论于
+                        <time>2014-7-12 15:30</time>
+                    </div>
+                </header>
+
+                <div class="am-comment-bd">
+                    可以
+                </div>
+            </div>
+        </article>
+
         <ion-infinite-scroll
                 ng-if="moreDataCanBeLoaded()"
                 on-infinite="loadMore()"
                 distance="1%">
         </ion-infinite-scroll>
     </ion-content>
-    <ion-footer-bar align-title="left" keyboard-attach class="bar-light comment_footer">
-        <div class="buttons">
-            <button class="button button-icon icon ion-happy energized" id="expression"></button>
-        </div>
-        <div class="title"><input type="text" id="comment_textInput" ng-model="formData.content" placeholder="说点什么吧！">
-        </div>
-        <div class="buttons" ng-click="doSomething()">
+    <ion-footer-bar class="bar-light">
+        <div class="text">
+            <input type="text" multiple id="txt_input" ng-model="formData.content" placeholder="说点什么吧！">
             <label class="private" ng-click="checkPrivate()">
                 <i class="cor24"
                    ng-class="{true:'ion-android-checkbox-outline',false:'ion-android-checkbox-outline-blank'}[user.private]"></i>
                 <span class="cor4">私密</span>
             </label>
-            <button class="button button-icon" id="publish" ng-click="sendComment()">发表</button>
         </div>
+        <button type="button" class="button button-balanced ml10 send" ng-disabled="!formData.content" ng-click="sendComment()">发表</button>
     </ion-footer-bar>
-
-
 </ion-view>
