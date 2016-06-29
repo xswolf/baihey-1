@@ -147,6 +147,7 @@ p.mb0{ margin-bottom: 0;}
 .cor50{color:#cccccc;}
 .cor51{color:#fec52b;}
 .cor52{color:#b6b6b6;}
+.cor53{color:#b5b5b5;}
 
 .fs11{ font-size: 11px;}
 .fs12{ font-size: 12px;}
@@ -238,6 +239,8 @@ p.mb0{ margin-bottom: 0;}
 .fwb{ font-weight: bold;}
 .cp{ cursor: pointer;}
 .dib{ display: inline-block;}
+.di{ display: inline;}
+.db{ display: block;}
 .sx{ padding: 3px;}
 .vam{ vertical-align: middle;}
 p.wsn{white-space: normal;}

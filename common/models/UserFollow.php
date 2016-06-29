@@ -148,6 +148,7 @@ class UserFollow extends Base
     public function blackFollow($where)
     {
         if(!$follow = $this->findOne($where)) {
+            $follow = $this;
             $follow->user_id = $where['user_id'];
             $follow->follow_id = $where['follow_id'];
             $follow->create_time = YII_BEGIN_TIME;

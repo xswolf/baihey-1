@@ -34,6 +34,7 @@ class UserRendezvous extends Base
             $row->rendezvous_time   = is_numeric($data['rendezvous_time']) ? $data['rendezvous_time'] : 0;
             $row->fee_des           = $data['fee_des'];
             $row->we_want           = $data['we_want'];
+            $row->status            = 1;
             return $row->save();
         } else {
             $this->user_id       = Cookie::getInstance()->getCookie('bhy_id')->value;

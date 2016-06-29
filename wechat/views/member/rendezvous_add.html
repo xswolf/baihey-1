@@ -36,7 +36,8 @@
             <a class="item item-icon-left item-icon-right" ng-click="openDateModal()">
                 <i class="icon bhy-icon-seout-time cor21"></i>
                 <span class="fl">约会时间</span>
-                <p class="fr cor5 fs14 mw50">{{formData.rendezvous_time * 1000 | date:'yyyy-MM-dd'}}</p>
+                <p class="fr cor5 fs14 mw50" ng-if="formData.rendezvous_time">{{formData.rendezvous_time * 1000 | date:'yyyy-MM-dd'}}</p>
+                <p class="fr cor5 fs14 mw50" ng-if="!formData.rendezvous_time"></p>
                 <i class="icon ion-ios-arrow-right cor34"></i>
             </a>
             <a class="item item-icon-left item-icon-right" ng-click="openMoneyModal()">

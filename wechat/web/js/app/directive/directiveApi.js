@@ -374,6 +374,23 @@ define(['app/module'], function (module) {
             }
         }
     }]);
+
+    module.directive('clickLike', ['$animate', function($animate) {
+        return function(scope, element, attrs) {
+            element.on('click', function() {
+                //if(element.hasClass('clicked')) {
+                //    $animate.removeClass(element, 'animated zoomOutUp');
+                //} else {
+                /*var ee = element.children()[1];
+                ee.addClass('zoomOutUp');*/
+                console.dir(element.children()[1]);
+                    //$animate.addClass(element.children()[1], 'zoomOutUp');
+                //}
+
+
+            });
+        };
+    }]);
 })
 
 
