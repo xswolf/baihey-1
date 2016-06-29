@@ -33,9 +33,9 @@ io.on('connection', function (socket) {
         
         var message = new Message();
         console.log(message)
-        message.add(msg , function (err,res) {
-            console.log(res.insertId);
-        });
+        //message.add(msg , function (err,res) {
+        //    console.log(res.insertId);
+        //});
         console.log('send:' + msg.send_user_id + '   ' + 'recevie: ' + msg.receive_user_id, msg);
     });
 
