@@ -48,7 +48,6 @@ define(["app/module", 'app/service/serviceApi', 'jquery'],
                     var skt = socket.connect("http://120.76.84.162:8088");
 
                     skt.on(userId, function (response) {
-                        console.log(1)
                         messageList();
                         msgNumber(userId);
                     })
@@ -224,6 +223,8 @@ define(["app/module", 'app/service/serviceApi', 'jquery'],
 
                                 messageList.push($rootScope.receiveUserInfo);
                             }
+                            $rootScope.messageList = messageList;
+                            $rootScope.msgNumber = 0;
                             ar.setStorage('messageList', messageList);
 
                         }
