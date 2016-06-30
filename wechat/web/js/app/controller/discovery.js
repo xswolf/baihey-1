@@ -208,6 +208,8 @@ define(['app/module', 'app/directive/directiveApi'
         requirejs(['amezeui', 'amezeui_ie8'], function (amezeui, amezeui_ie8) {
             amezeui.gallery.init(); // 初始化相册插件
             $scope.formData = {};
+            //用户已屏蔽的动态id，从localStorage获取
+            $scope.display = ar.getStorage('display') ? ar.getStorage('display') : [];
 
             var userInfo = ar.getStorage('userInfo');
             var info = JSON.parse(userInfo.info);
@@ -215,8 +217,14 @@ define(['app/module', 'app/directive/directiveApi'
             api.list('/wap/member/get-dynamic', {id: $location.$$search.id}).success(function (res) {
                 res.data.imgList = JSON.parse(res.data.pic);
                 $scope.dis = res.data;
-                $comment = ar.cleanQuotes(JSON.stringify(res.data.comment));
-                $scope.commentList = JSON.parse($comment);
+                for (var i in res.data.comment) {
+                    res.data.comment[i].headPic = res.data.comment[i].headPic.replace(/\"/g, '');
+                    res.data.comment[i].name = res.data.comment[i].name.replace(/\"/g, '');
+                    res.data.comment[i].age = res.data.comment[i].age.replace(/\"/g, '');
+                }
+                //$comment = ar.cleanQuotes(JSON.stringify(res.data.comment));
+                //$scope.commentList = JSON.parse($comment);
+                $scope.commentList = res.data.comment;
             })
 
             // 点赞
@@ -230,7 +238,7 @@ define(['app/module', 'app/directive/directiveApi'
                     $scope.dis.cid = 1;
                 }
                 $scope.dis.like_num = parseInt($scope.dis.like_num) + add;
-                api.save('/wap/member/set-click-like', {dynamicId: dis.id, user_id: dis.user_id, add: add});
+                api.save('/wap/member/set-click-like', {dynamicId: dis.id, add: add});
             }
             $scope.user = [];
             $scope.user.private = false;
@@ -279,19 +287,24 @@ define(['app/module', 'app/directive/directiveApi'
                     cancel: function () {
                     },
                     buttonClicked: function (index, btnObj) {
-                        if (btnObj.text = '屏蔽') {
-                            // 将参数ID存入localStorage：display  TODO
+                        if (btnObj.text == '屏蔽') {
+                            $scope.display.push(id);
+                            ar.setStorage('display', $scope.display);
                             $location.url('/discovery');
+                            // 将参数ID存入localStorage：display
                         }
-                        if (btnObj.text = '举报') {
-                            $location.url('/member/report?title=动态&tempUrl=' + $location.$$url);
+                        if (btnObj.text == '举报') {
+                            $location.url('/member/report?id=' + id + '&type=2&title=动态&tempUrl=' + $location.$$url);
                         }
-                        if (btnObj.text = '删除') {
-                            $scope.discovery = null;
-                            $location.url('/discovery');
-                            // 改变状态 api.save    TODO
+                        if (btnObj.text == '删除') {
+                            $scope.display.push(id);
+                            ar.setStorage('display', $scope.display);
+                            // 改变状态 api.save
+                            api.save('/wap/member/delete-dynamic', {id:id}).success(function (res) {
+                                $location.url('/discovery');
+                            });
+                        }
 
-                        }
                         return true;
                     }
                 });

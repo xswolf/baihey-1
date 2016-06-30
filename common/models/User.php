@@ -392,8 +392,9 @@ class User extends Base
         return (new Query())
             ->from($this->tablePrefix . "user_comment c")
             ->innerJoin($this->tablePrefix . "user_information i", "i.user_id = c.user_id")
+            ->innerJoin($this->tablePrefix . "user u", "u.id = i.user_id")
             ->where(["dynamic_id" => $id])
-            ->select(["c.*", "json_extract(i.info , '$.head_pic') as headPic", "json_extract(i.info , '$.real_name') as name"])
+            ->select(["c.*", "json_extract(i.info , '$.head_pic') as headPic", "json_extract(i.info , '$.age') as age", "u.sex", "json_extract(i.info , '$.real_name') as name"])
             ->all();
     }
 
