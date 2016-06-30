@@ -423,12 +423,97 @@ console.log(dataFilter.data);
     // 查看会员资料-会员动态
     module.controller("site.discovery", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$ionicModal', '$ionicActionSheet', '$ionicLoading', '$ionicBackdrop','$ionicScrollDelegate','$location',function (api, $scope, $timeout, $ionicPopup, $ionicModal, $ionicActionSheet, $ionicLoading,$ionicBackdrop,$ionicScrollDelegate,$location){
 
+        $scope.discoveryList = [];
+        $scope.isMore = true;
+        $scope.pageSize = 5;
+
         // 用户ID
-        $location.$$search.user_id = 1;
+        $scope.user_id = $location.$$search.user_id;
+
+        // 根据用户ID获取用户全部动态
+        api.get('url',{user_id:$scope.user_id}).success(function(res){
+            $scope.discoveryList = res.data;
+            $scope.username = $scope.discoveryList[0].real_name;
+        })
+
+
+
+        // 过滤被举报并且处理成功的数据和当前登录用户屏蔽的数据。
+        $scope.dataFilter = function(){
+
+            return 1;
+        }
+
+        // 点赞
+        $scope.clickLike = function (dis) {
+            var add = 0;
+            if ($scope.dis.cid > 0) {
+                add = -1;
+                $scope.dis.cid = -1;
+            } else {
+                add = 1;
+                $scope.dis.cid = 1;
+            }
+            $scope.dis.like_num = parseInt($scope.dis.like_num) + add;
+            api.save('/wap/member/set-click-like', {dynamicId: dis.id, add: add});
+        }
 
         // 更多功能
-        $scope.more = function(){
+        $scope.more = function (isUser, id) {
+            var btnList = [
+                {text: '举报'},
+                {text: '屏蔽'}
+            ];
+            if (isUser) {   // 判断该条动态是否所属当前用户
+                btnList = [
+                    {text: '删除'}
+                ];
+            }
 
+            $ionicActionSheet.show({
+                buttons: btnList,
+                titleText: '更多',
+                cancelText: '取消',
+                cancel: function () {
+                },
+                buttonClicked: function (index, btnObj) {
+                    if (btnObj.text == '屏蔽') {
+                        $scope.display.push(id);
+                        ar.setStorage('display', $scope.display);
+                        $location.url('/discovery');
+                        // 将参数ID存入localStorage：display
+                    }
+                    if (btnObj.text == '举报') {
+                        $location.url('/member/report?id=' + id + '&type=2&title=动态&tempUrl=' + $location.$$url);
+                    }
+                    if (btnObj.text == '删除') {
+                        $scope.display.push(id);
+                        ar.setStorage('display', $scope.display);
+                        // 改变状态 api.save
+                        api.save('/wap/member/delete-dynamic', {id:id}).success(function (res) {
+                            $location.url('/discovery');
+                        });
+                    }
+
+                    return true;
+                }
+            });
         }
+
+        // 加载更多
+        $scope.loadMore = function(){
+            if($scope.pageSize > $scope.discoveryList.length){
+                $scope.isMore = false;
+            }
+            $scope.pageSize += 5;
+            $scope.$broadcast('scroll.infiniteScrollComplete');
+        }
+
+        // 是否还有更多
+        $scope.moreDataCanBeLoaded = function(){
+            return $scope.isMore;
+        }
+
+
     }]);
 })
