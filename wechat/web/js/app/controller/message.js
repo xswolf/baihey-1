@@ -5,7 +5,7 @@ define(['app/module', 'app/directive/directiveApi'
     , 'app/service/serviceApi', 'comm'
 ], function (module) {
 
-    module.controller("message.index", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$ionicModal', '$ionicActionSheet', '$ionicLoading', '$location','$ionicListDelegate','dataFilter','$interval', function (api, $scope, $timeout, $ionicPopup, $ionicModal, $ionicActionSheet, $ionicLoading, $location,$ionicListDelegate,dataFilter,$interval) {
+    module.controller("message.index", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$ionicModal', '$ionicActionSheet', '$ionicLoading', '$location','$ionicListDelegate','dataFilter','$interval','$rootScope', function (api, $scope, $timeout, $ionicPopup, $ionicModal, $ionicActionSheet, $ionicLoading, $location,$ionicListDelegate,dataFilter,$interval, $rootScope) {
 
         $timeout($scope.sumSend);
         // 判断是否登录
@@ -22,28 +22,10 @@ define(['app/module', 'app/directive/directiveApi'
         $scope.userInfo = {};
         // 获取页面数据
 
-        // 获取localstorage消息记录
-        var messageList = ar.getStorage("messageList");
-        $scope.messageList = new Array();
-        if (messageList != null) {
-            $scope.messageList = messageList;
-        }
 
-        // 从服务器获取未看消息
-        $scope.listMessage = function () {
-            if($scope.messageList.sort().toString() != ar.getStorage("messageList").sort().toString()){
-                $scope.messageList = ar.getStorage("messageList");
-            }
-        }
-
-        // 定时任务10秒取一次最新消息列表
-        $scope.listMessage();
-        var timer = $interval(function(){},5000);
-        timer.then(function(){
-            $scope.listMessage();
-        },function(){
-
-        });
+        $rootScope.$on('messageList' , function () {
+            $scope.messageList = $rootScope.messageList;
+        })
 
         $scope.userInfo.id = ar.getCookie('bhy_user_id');
 
