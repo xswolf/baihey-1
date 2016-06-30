@@ -46,7 +46,7 @@
                 </span>
             </div>
         </div>
-        <article class="am-comment padding" ng-repeat="comment in commentList">
+        <article class="am-comment padding" ng-repeat="comment in commentList | limitTo:pageSize">
             <a href="userInfo?id=1">
                 <img ng-src="{{comment.headPic | isNull}}" onerror="this.src='/wechat/web/images/no_img.png'" alt="" class="am-comment-avatar" width="48" height="48"/>
             </a>
@@ -66,7 +66,6 @@
                 </div>
             </div>
         </article>
-
         <ion-infinite-scroll
                 ng-if="moreDataCanBeLoaded()"
                 on-infinite="loadMore()"

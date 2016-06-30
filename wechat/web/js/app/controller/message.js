@@ -318,6 +318,7 @@ define(['app/module', 'app/directive/directiveApi'
             $scope.send = function () {
                 if ($scope.send_content == '' || $scope.send_content == null) return;
 
+
                 $scope.sendMessage($scope.send_content, $scope.sendId, $scope.receiveId, 'send');
 
             }
@@ -471,9 +472,9 @@ define(['app/module', 'app/directive/directiveApi'
                 })
 
             }
-
-
         }
+
+
 
     }]);
 

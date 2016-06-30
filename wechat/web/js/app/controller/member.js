@@ -2574,6 +2574,7 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
         $scope.hideStatus = function () {
             $scope.modal.hide();
         };
+
         $scope.withdrawInfo = {};
         api.get('/wap/member/get-withdraw-info-by-id', {id: $location.$$search.id}).success(function (res) {
             $scope.withdrawInfo = res.data;

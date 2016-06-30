@@ -217,6 +217,8 @@ define(['app/module', 'app/directive/directiveApi'
         requirejs(['amezeui', 'amezeui_ie8'], function (amezeui, amezeui_ie8) {
             amezeui.gallery.init(); // 初始化相册插件
             $scope.formData = {};
+            $scope.isMore = true;
+            $scope.pageSize = 5;
             $scope.jump = function (id) {
                 if(id == $scope.userInfo.id) {
                     $location.url('/member/information');
@@ -328,6 +330,20 @@ define(['app/module', 'app/directive/directiveApi'
                         return true;
                     }
                 });
+            }
+
+            // 加载更多
+            $scope.loadMore = function(){
+                if($scope.pageSize > $scope.commentList.length){
+                    $scope.isMore = false;
+                }
+                $scope.pageSize += 5;
+                $scope.$broadcast('scroll.infiniteScrollComplete');
+            }
+
+            //是否还有更多
+            $scope.moreDataCanBeLoaded = function(){
+                return $scope.isMore;
             }
 
         })
