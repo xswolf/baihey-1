@@ -26,11 +26,10 @@ io.on('connection', function (socket) {
         if (userList.indexOf(msg.receive_user_id + '-' + msg.send_user_id) > -1) { // 接受者在线 ， 广播给接受者
             msg.status = 1;
             io.emit(msg.receive_user_id + '-' + msg.send_user_id, msg);
-            io.emit(msg.receive_user_id, msg); // 网站外接受
         } else {
             msg.status = 2;
         }
-
+        io.emit(msg.receive_user_id, msg); // 网站外接受
         io.emit(msg.send_user_id + '-' + msg.receive_user_id, msg); // 广播给自己
 
         console.log(message)

@@ -28,15 +28,34 @@ define(["app/module", 'app/service/serviceApi', 'jquery'],
                     ar.setStorage('messageList', $rootScope.messageList)
                 });
             }
-            $rootScope.$on('$stateChangeStart', function (evt, next) {
-                if (next.url == '/message') {
-                    messageList();
-                    $rootScope.handle = setInterval(function () {
+
+            var userId = ar.getCookie('bhy_user_id')
+            if (userId > 0 ) {
+                console.log(1)
+                requirejs(['plugin/socket/socket.io.1.4.0'], function (socket) {
+                    console.log(2)
+
+                    var skt = socket.connect("http://120.76.84.162:8088");
+                    console.log(3)
+
+                    skt.on(userId, function (response) {
+
+                        console.log(4)
                         messageList();
-                    }, 5000);
-                } else {
-                    clearInterval($rootScope.handle)
-                }
+                    })
+
+                })
+            }
+
+            $rootScope.$on('$stateChangeStart', function (evt, next) {
+                //if (next.url == '/message') {
+                //    messageList();
+                //    $rootScope.handle = setInterval(function () {
+                //        messageList();
+                //    }, 5000);
+                //} else {
+                //    clearInterval($rootScope.handle)
+                //}
 
                 // 判断用户是否登陆
                 if ($location.$$url != '/index') { // 首页和欢迎页不判断
