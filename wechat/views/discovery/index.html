@@ -10,10 +10,8 @@
     <ion-content class="com_w_100 bhy discovery bg5">
         <div class="list">
             <div class="mt10 item item-thumbnail-left" ng-repeat="dis in discoveryList | filter:indexFilter" >
-                <img class="cp" ng-if="dis.head_status == 1 && dis.user_id != userInfo.user_id" ng-src="{{dis.head_pic | isNull}}" ng-click="jump('/userInfo?userId={{dis.user_id}}')" onerror="this.src='/wechat/web/images/no_img.png'">
-                <img class="cp" ng-if="dis.head_status == 1 && dis.user_id == userInfo.user_id" ng-src="{{dis.head_pic | isNull}}" ng-click="jump('/member/information')" onerror="this.src='/wechat/web/images/no_img.png'">
-                <img class="cp" ng-if="dis.head_status != 1 && dis.user_id != userInfo.user_id" ng-src="/wechat/web/images/no_img.png" ng-click="jump('/userInfo?userId={{dis.user_id}}')" >
-                <img class="cp" ng-if="dis.head_status != 1 && dis.user_id == userInfo.user_id" ng-src="/wechat/web/images/no_img.png" ng-click="jump('/member/information')" >
+                <img class="cp" ng-if="dis.head_status == 1" ng-src="{{dis.head_pic | isNull}}" ng-click="dis.user_id != userInfo.user_id ? jump('/userInfo?userId={{dis.user_id}}') : jump('/member/information')" onerror="this.src='/wechat/web/images/no_img.png'">
+                <img class="cp" ng-if="dis.head_status != 1" ng-src="/wechat/web/images/no_img.png" ng-click="dis.user_id != userInfo.user_id ? jump('/userInfo?userId={{dis.user_id}}') : jump('/member/information')">
                 <h2>
                     <span class="fl" ng-if="dis.name">{{dis.name | sex:dis.sex:dis:age}}</span>
                     <span class="fl" ng-if="!dis.name">{{dis.user_id}}</span>

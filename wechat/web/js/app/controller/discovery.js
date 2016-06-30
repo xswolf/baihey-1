@@ -217,8 +217,13 @@ define(['app/module', 'app/directive/directiveApi'
         requirejs(['amezeui', 'amezeui_ie8'], function (amezeui, amezeui_ie8) {
             amezeui.gallery.init(); // 初始化相册插件
             $scope.formData = {};
-            $scope.jump = function (url) {
-                $location.url(url);
+            $scope.jump = function (id) {
+                if(id == $scope.userInfo.id) {
+                    $location.url('/member/information');
+                } else {
+                    $location.url('/userInfo?userId=' + id);
+                }
+
             }
             //用户已屏蔽的动态id，从localStorage获取
             $scope.display = ar.getStorage('display') ? ar.getStorage('display') : [];
