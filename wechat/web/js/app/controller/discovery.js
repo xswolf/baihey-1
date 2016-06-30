@@ -217,6 +217,9 @@ define(['app/module', 'app/directive/directiveApi'
         requirejs(['amezeui', 'amezeui_ie8'], function (amezeui, amezeui_ie8) {
             amezeui.gallery.init(); // 初始化相册插件
             $scope.formData = {};
+            $scope.jump = function (url) {
+                $location.url(url);
+            }
             //用户已屏蔽的动态id，从localStorage获取
             $scope.display = ar.getStorage('display') ? ar.getStorage('display') : [];
 
@@ -225,6 +228,9 @@ define(['app/module', 'app/directive/directiveApi'
             $scope.user_id = userInfo.id;
             api.list('/wap/member/get-dynamic', {id: $location.$$search.id}).success(function (res) {
                 res.data.imgList = JSON.parse(res.data.pic);
+                res.data.head_pic = res.data.head_pic.replace(/\"/g, '');
+                res.data.level = res.data.level.replace(/\"/g, '');
+                res.data.age = res.data.age.replace(/\"/g, '');
                 $scope.dis = res.data;
                 for (var i in res.data.comment) {
                     res.data.comment[i].headPic = res.data.comment[i].headPic.replace(/\"/g, '');
