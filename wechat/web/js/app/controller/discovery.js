@@ -103,6 +103,8 @@ define(['app/module', 'app/directive/directiveApi'
                     for (var i in res.data) {
                         res.data[i].imgList = JSON.parse(res.data[i].pic);
                         res.data[i].head_pic = res.data[i].head_pic.replace(/\"/g, '');
+                        res.data[i].level = res.data[i].level.replace(/\"/g, '');
+                        res.data[i].age = res.data[i].age.replace(/\"/g, '');
                         $scope.discoveryList.push(res.data[i]);
                     }
                     $scope.$broadcast('scroll.infiniteScrollComplete');
@@ -195,6 +197,8 @@ define(['app/module', 'app/directive/directiveApi'
                     if(res.status) {
                         res.data.imgList = JSON.parse(res.data.pic);
                         res.data.head_pic = res.data.head_pic.replace(/\"/g, '');
+                        res.data.level = res.data.level.replace(/\"/g, '');
+                        res.data.age = res.data.age.replace(/\"/g, '');
                         $scope.discoveryList.unshift(res.data);
                     }
                     ar.saveDataAlert($ionicPopup, res.msg);
