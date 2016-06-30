@@ -62,8 +62,10 @@ define(['app/module', 'app/directive/directiveApi'
                             $scope.display.push(id);
                             ar.setStorage('display', $scope.display);
                             $scope.discoveryList.splice(index, 1);
-                            // 改变状态 api.save    TODO
+                            // 改变状态 api.save
+                            api.save('/wap/member/delete-dynamic', {id:id}).success(function (res) {
 
+                            });
                         }
                         return true;
                     }

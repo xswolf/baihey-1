@@ -6,6 +6,7 @@ use common\models\Bank;
 use common\models\ConsumptionLog;
 use common\models\Feedback;
 use common\models\User;
+use common\models\UserDynamic;
 use common\models\UserFollow;
 use common\models\UserInformation;
 use common\models\UserPhoto;
@@ -234,6 +235,17 @@ class MemberController extends BaseController
         $data = User::getInstance()->getDynamicById($this->get['id']);
         $data[0]['comment'] = User::getInstance()->getCommentById($this->get['id']);
         $this->renderAjax(['status' => 1, 'data' => $data[0]]);
+    }
+
+    // 删除动态
+    public function actionDeleteDynamic()
+    {
+        $user_id = Cookie::getInstance()->getCookie('bhy_id')->value;
+        if ($data = UserDynamic::getInstance()->editDynamic($user_id, $this->get['id'], ['status' => 0])) {
+            $this->renderAjax(['status' => 1, 'data' => $data, 'msg' => '删除成功']);
+        } else {
+            $this->renderAjax(['status' => 0, 'data' => $data, 'msg' => '删除失败']);
+        }
     }
 
     /**
