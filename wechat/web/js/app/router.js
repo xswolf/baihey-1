@@ -29,9 +29,20 @@ define(["app/module", 'app/service/serviceApi', 'jquery'],
                 });
             }
 
+            var msgNumber = function (userId) {
+                if (userId > 0) {
+                    api.getMessageNumber().success(function (res) {
+                        $rootScope.msgNumber = parseInt(res.data);
+                    });
+                } else {
+                    $rootScope.msgNumber = 0;
+                }
+            }
+
             var userId = ar.getCookie('bhy_user_id')
             if (userId > 0 ) {
                 messageList();
+                msgNumber(userId);
                 requirejs(['plugin/socket/socket.io.1.4.0'], function (socket) {
 
                     var skt = socket.connect("http://120.76.84.162:8088");
@@ -39,6 +50,7 @@ define(["app/module", 'app/service/serviceApi', 'jquery'],
                     skt.on(userId, function (response) {
                         console.log(1)
                         messageList();
+                        msgNumber(userId);
                     })
 
                 })
@@ -265,19 +277,12 @@ define(["app/module", 'app/service/serviceApi', 'jquery'],
                     });
                 $urlRouterProvider.otherwise("/index");
             }])
-            .controller('main', ['$scope', '$location', 'app.serviceApi', '$ionicLoading', '$ionicPopup', function ($scope, $location, api, $ionicLoading, $ionicPopup) {
-                if (ar.getCookie('bhy_user_id') > 0) {
-                    api.getMessageNumber().success(function (res) {
-                        $scope.msgNumber = parseInt(res.data);
-                    });
-                    setInterval(function () {
-                        api.getMessageNumber().success(function (res) {
-                            $scope.msgNumber = parseInt(res.data);
-                        });
-                    }, 10000);
-                } else {
-                    $scope.msgNumber = 0;
-                }
+            .controller('main', ['$scope', '$location', 'app.serviceApi', '$ionicLoading', '$ionicPopup','$rootScope', function ($scope, $location, api, $ionicLoading, $ionicPopup,$rootScope) {
+
+                $rootScope.$on('msgNumber' , function () {
+                    $scope.msgNumber = $rootScope.msgNumber;
+                })
+
                 $scope.upUserStorage = function (name, value, type) {
                     if (type == 'wu') {
                         eval('$scope.userInfo.' + name + ' = ' + value);
