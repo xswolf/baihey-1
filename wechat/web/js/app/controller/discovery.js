@@ -85,7 +85,7 @@ define(['app/module', 'app/directive/directiveApi'
                 }
                 $scope.discoveryList[i].like_num = parseInt($scope.discoveryList[i].like_num) + add;
 
-                api.save('/wap/member/set-click-like', {dynamicId: dis.id, user_id: dis.user_id, add: add}); // 请测试功能是否正常。 TODO
+                api.save('/wap/member/set-click-like', {dynamicId: dis.id, add: add}); // 请测试功能是否正常。
 
             }
 

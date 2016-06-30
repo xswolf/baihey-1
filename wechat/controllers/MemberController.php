@@ -193,11 +193,12 @@ class MemberController extends BaseController
      */
     public function actionSetClickLike()
     {
+        $user_id = Cookie::getInstance()->getCookie('bhy_id')->value;
         if ($this->get['add'] == 1) {
-            $flag = User::getInstance()->setClickLike($this->get['dynamicId'], $this->get['user_id'], $this->get['add']);
+            $flag = User::getInstance()->setClickLike($this->get['dynamicId'], $user_id, $this->get['add']);
 
         } else {
-            $flag = User::getInstance()->cancelClickLike($this->get['dynamicId'], $this->get['user_id'], $this->get['add']);
+            $flag = User::getInstance()->cancelClickLike($this->get['dynamicId'], $user_id, $this->get['add']);
 
         }
         $this->renderAjax(['status' => 1, 'data' => $flag]);
