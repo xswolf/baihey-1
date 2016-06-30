@@ -92,3 +92,10 @@ div.text .private {
 button.send {
   width: 55px !important;
 }
+.discovery .item-thumbnail-left {
+  padding-left: 76px !important;
+}
+.discovery .item-thumbnail-left > img:first-child {
+  max-width: 56px;
+  max-height: 56px;
+}
