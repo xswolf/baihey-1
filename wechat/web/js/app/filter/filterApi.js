@@ -542,4 +542,18 @@ define(['app/module'], function (module) {
         }
     })
 
+    /**
+     * 文字内容超出指定字数时，超出部分用指定字符代替
+     */
+    module.filter('textOverflow', function () {
+        return function (value,number,separator) {
+            if(value){
+                if (value.toString().length > number){
+                    return value.substring(0, Math.floor(number) - 1) + separator;
+                }
+            }
+            return value;
+        }
+    })
+
 })

@@ -9,13 +9,13 @@
         <ion-list>
             <div class="imgList_con">
                 <div class="imgList_handle clearfix" data-am-widget="gallery" data-am-gallery="{pureview: 1}">
-                   <div class="imgItem am-gallery-item pr" ng-repeat="img in imgList" on-hold="moreImg($index)" >
+                    <div class="imgItem am-gallery-item pr" ng-repeat="img in imgList" on-hold="moreImg($index)">
                         <img src="{{img.thumb_path}}" data-rel="{{img.thumb_path | picture}}">
                         <div class="underReview"><span class="">审核中</span></div>
                         <span class="headpic" ng-if="img.is_head == 1">头像</span>
                     </div>
                     <div ng-if="imgList.length<12" class="imgItem addItem" ng-click="addNewImg()">
-                            <i class="am-icon-plus"></i>
+                        <i class="am-icon-plus"></i>
                     </div>
                     <div class="tip fl w100">温馨提示：长按照片可设置头像，您最多可以上传12张照片。</div>
                 </div>
@@ -25,7 +25,7 @@
 
             <ion-item ng-if="!honestyStatus" class="mb10 item-icon-left item-icon-right" href="#/member/honesty">
                 <i class="icon ion-android-alert assertive"></i>
-                <b>诚信认证：</b>请您上传身份证，完善资料！
+                诚信认证：请您上传身份证，完善资料！
                 <i class="icon ion-ios-arrow-right cor52"></i>
             </ion-item>
             <ion-item class="idt">
@@ -41,15 +41,19 @@
                     </span>
                 </p>
             </ion-item>
-            <ion-item class="item-icon-right" href="#/dynmaic?userId={{userInfo.id}}&real_name={{userInfo.info.real_name}}&sex={{userInfo.sex}}&age={{userInfo.info.age}}&tempUrl=/member/information">
-                <p>
+            <ion-item class="item-icon-right" ng-href="{{dynamic.imgList.length > 0 ? '#/member/discovery' : '#/member/discovery_add'}}">
+                   <p>
                     <span class="cor4">个人动态</span>
-                    <div class="ml20" ng-if="dynamicList.length > 0">
-                        <div class="dyn_img_list" ng-repeat="dynamic in dynamicList" ng-if="dynamic.imgList.length != null">
-                            <img class="dyn_img"  ng-src="{{dynamic.imgList[0].thumb_path}}">
-                        </div>
-                    </div>
-                </p>
+                    <span class="ml20 cor4" ng-if="dynamicList.length < 1">发布我的第一条个人动态</span>
+                   </p>
+                    <ul data-am-widget="gallery" class="am-gallery am-avg-sm-2 am-avg-md-3 am-avg-lg-4 am-gallery-default"
+                        ng-if="dynamicList.length > 0">
+                        <li ng-repeat="dynamic in dynamicList" ng-if="dynamic.imgList.length > 0">
+                            <div class="am-gallery-item">
+                                <img ng-src="{{dynamic.imgList[0].thumb_path}}" alt="." >
+                            </div>
+                        </li>
+                    </ul>
                 <i class="icon ion-ios-arrow-right cor52"></i>
             </ion-item>
             <ion-item class="mb10 item-icon-right" href="#/member/signature">
@@ -68,13 +72,13 @@
                 </p>
             </ion-item>-->
             <ion-item class="item-icon-right" href="#/member/real_name">
-                    <p>
-                        <span class="cor4">真实姓名</span>
-                        <span ng-if="!userInfo.info.real_name" class="ml20 mr10 cor21">立即填写</span>
-                        <span ng-if="userInfo.info.real_name" class="ml20 mr10">{{userInfo.info.real_name}}</span>
-                        <span class="fs12 cor">保密，仅自己可见</span>
-                    </p>
-                    <i ng-if="!userInfo.info.real_name" class="icon ion-ios-arrow-right cor52"></i>
+                <p>
+                    <span class="cor4">真实姓名</span>
+                    <span ng-if="!userInfo.info.real_name" class="ml20 mr10 cor21">立即填写</span>
+                    <span ng-if="userInfo.info.real_name" class="ml20 mr10">{{userInfo.info.real_name}}</span>
+                    <span class="fs12 cor">保密，仅自己可见</span>
+                </p>
+                <i ng-if="!userInfo.info.real_name" class="icon ion-ios-arrow-right cor52"></i>
             </ion-item>
             <ion-item class="item-icon-right" ng-href="{{userInfo.age ? '' : '#/member/age'}}">
                 <p>
@@ -82,7 +86,7 @@
                     <span ng-if="!userInfo.age" class="ml48 mr10 cor21">立即填写</span>
                     <span ng-if="userInfo.age" class="ml48 mr10">{{userInfo.age}}岁</span>
                 </p>
-                    <i ng-if="!userInfo.age" class="icon ion-ios-arrow-right cor52"></i>
+                <i ng-if="!userInfo.age" class="icon ion-ios-arrow-right cor52"></i>
             </ion-item>
             <ion-item class="item-icon-right" ng-href="{{userInfo.info.height ? '' : '#/member/height'}}">
                 <p>
@@ -104,7 +108,8 @@
                 <p>
                     <span class="cor4">婚姻状况</span>
                     <span ng-if="!userInfo.info.is_marriage" class="ml20 mr10 cor21">立即填写</span>
-                    <span ng-if="userInfo.info.is_marriage" class="ml20 mr10">{{userInfo.info.is_marriage | marriage}}</span>
+                    <span ng-if="userInfo.info.is_marriage"
+                          class="ml20 mr10">{{userInfo.info.is_marriage | marriage}}</span>
                 </p>
                 <i ng-if="!userInfo.info.is_marriage" class="icon ion-ios-arrow-right cor52"></i>
             </ion-item>
@@ -175,88 +180,57 @@
                     </div>
                 </div>
             </div>
-            <ion-item class="hob_item" href="#/member/been_address">
-                <div class="info_l hob">
-                    <p>我去过的地方({{went_travel_count}})</p>
-                </div>
-                <div class="info_r">
-                    <i class=" ion-ios-arrow-right"></i>
-                </div>
-                <div class="info_c hob">
-                    <div class="hob_addr clearfix">
+            <ion-item class="item-icon-right" href="#/member/been_address">
+                <p><span class="cor4">我去过的地方({{went_travel_count}})</span></p>
+                <div class="hob_addr clearfix">
                         <span class="hob_addr_flag" ng-repeat="addrt in went_travel track by addrt.id">
                             <i class="ion-location hob_addr_icon"></i>
                             <span class="hob_addr_name">{{addrt.name}}</span>
                         </span>
-                    </div>
                 </div>
+                <i class="icon ion-ios-arrow-right cor52"></i>
             </ion-item>
-            <ion-item class="hob_item" href="#/member/want_address">
-                <div class="info_l hob">
-                    <p>想去的地方({{want_travel_count}})</p>
-                </div>
-                <div class="info_r">
-                    <i class=" ion-ios-arrow-right"></i>
-                </div>
-                <div class="info_c hob">
+            <ion-item class="item-icon-right" href="#/member/want_address">
+                    <p><span class="cor4">想去的地方({{want_travel_count}})</span></p>
                     <div class="hob_addr clearfix">
-                        <span class="hob_addr_flag f2" ng-repeat="addrt in want_travel track by addrt.id">
-                            <i class="ion-location hob_addr_icon"></i>
-                            <span class="hob_addr_name">{{addrt.name}}</span>
-                        </span>
+                            <span class="hob_addr_flag f2" ng-repeat="addrt in want_travel track by addrt.id">
+                                <i class="ion-location hob_addr_icon"></i>
+                                <span class="hob_addr_name">{{addrt.name}}</span>
+                            </span>
                     </div>
-                </div>
+                <i class="icon ion-ios-arrow-right cor52"></i>
             </ion-item>
-
-            <ion-item class="hob_item" href="#/member/sports">
-                <div class="info_l hob">
-                    <p>喜欢的运动({{love_sport_count}})</p>
-                </div>
-                <div class="info_r">
-                    <i class=" ion-ios-arrow-right"></i>
-                </div>
-                <div class="info_c hob">
+            <ion-item class="item-icon-right" href="#/member/sports">
+                <p><span class="cor4">喜欢的运动({{love_sport_count}})</span></p>
                     <div class="hob_sport clearfix">
                         <span class="hob_sport_flag" ng-repeat="addrt in love_sport track by addrt.id">
                             <i class="icon-sport-{{addrt.pic_path}} hob_sport_icon"></i>
                             <span class="hob_sport_name">{{addrt.name}}</span>
                         </span>
                     </div>
-                </div>
+                <i class="icon ion-ios-arrow-right cor52"></i>
             </ion-item>
 
-            <ion-item class="hob_item" href="#/member/movie">
-                <div class="info_l hob">
-                    <p>喜欢的影视类型({{want_film_count}})</p>
-                </div>
-                <div class="info_r">
-                    <i class="ion-ios-arrow-right"></i>
-                </div>
-                <div class="info_c hob">
-                    <div class="hob_sport clearfix">
+            <ion-item class="item-icon-right" href="#/member/movie">
+                    <p><span class="cor4">喜欢的影视类型({{want_film_count}})</span></p>
+                <div class="hob_sport clearfix">
                         <span class="hob_tv_flag" ng-repeat="addrt in want_film track by addrt.id">
                             <i class="ion-ios-play mr5"></i>
                             <span class="hob_sport_name">{{addrt.name}}</span>
                         </span>
-                    </div>
                 </div>
+                <i class="icon ion-ios-arrow-right cor52"></i>
             </ion-item>
 
-            <ion-item class="hob_item" href="#/member/delicacy">
-                <div class="info_l hob">
-                    <p>喜欢的美食({{like_food_count}})</p>
-                </div>
-                <div class="info_r">
-                    <i class=" ion-ios-arrow-right"></i>
-                </div>
-                <div class="info_c hob mb10">
+            <ion-item class="item-icon-right" href="#/member/delicacy">
+                    <p><span class="cor4">喜欢的美食({{like_food_count}})</span></p>
                     <div class="hob_food clearfix">
                         <span class="hob_food_flag" ng-repeat="addrt in like_food track by addrt.id">
                             <i class="icon-food hob_food_icon"></i>
                             <span class="hob_food_name">{{addrt.name}}</span>
                         </span>
                     </div>
-                </div>
+                <i class="icon ion-ios-arrow-right cor52"></i>
             </ion-item>
             <ion-item class="item-icon-right" href="#/member/mate">
                 <p>
@@ -298,7 +272,8 @@
                 <p>
                     <span class="cor4">年薪</span>
                     <span ng-if="!userInfo.info.year_income" class="ml48 mr10 cor21">立即填写</span>
-                    <span ng-if="userInfo.info.year_income" class="ml48 mr10">{{userInfo.info.year_income | yearIncome}}</span>
+                    <span ng-if="userInfo.info.year_income"
+                          class="ml48 mr10">{{userInfo.info.year_income | yearIncome}}</span>
                 </p>
                 <i class="icon ion-ios-arrow-right cor52"></i>
             </ion-item>
@@ -306,7 +281,8 @@
                 <p>
                     <span class="cor4">购房情况</span>
                     <span ng-if="!userInfo.info.is_purchase" class="ml20 mr10 cor21">立即填写</span>
-                    <span ng-if="userInfo.info.is_purchase" class="ml20 mr10">{{userInfo.info.is_purchase | purchase}}</span>
+                    <span ng-if="userInfo.info.is_purchase"
+                          class="ml20 mr10">{{userInfo.info.is_purchase | purchase}}</span>
                 </p>
                 <i class="icon ion-ios-arrow-right cor52"></i>
             </ion-item>
@@ -349,7 +325,8 @@
                 <p>
                     <span class="cor4">身高要求</span>
                     <span ng-if="!userInfo.info.zo_height" class="ml20 mr10 cor21">立即填写</span>
-                    <span ng-if="userInfo.info.zo_height" class="ml20 mr10">{{userInfo.info.zo_height | zo_height}}</span>
+                    <span ng-if="userInfo.info.zo_height"
+                          class="ml20 mr10">{{userInfo.info.zo_height | zo_height}}</span>
                 </p>
                 <i class="icon ion-ios-arrow-right cor52"></i>
             </ion-item>
@@ -397,7 +374,8 @@
                 <p>
                     <span class="cor4">属相要求</span>
                     <span ng-if="!userInfo.info.zo_zodiac" class="ml20 mr10 cor21">立即填写</span>
-                    <span ng-if="userInfo.info.zo_zodiac" class="ml20 mr10">{{userInfo.info.zo_zodiac | zo_zodiac}}</span>
+                    <span ng-if="userInfo.info.zo_zodiac"
+                          class="ml20 mr10">{{userInfo.info.zo_zodiac | zo_zodiac}}</span>
                 </p>
             </ion-item>
             <ion-item class="mb30 item-icon-right" href="#/member/zo_constellation">

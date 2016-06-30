@@ -1,141 +1,87 @@
-<ion-view hide-tabs="true">
+<ion-view>
     <link href="/wechat/web/css/discovery.css" rel="stylesheet">
-    <link href="/wechat/web/css/plugin/photoswipe/photoswipe.css" rel="stylesheet">
-    <link href="/wechat/web/css/plugin/photoswipe/default-skin.css" rel="stylesheet">
+    <link href="/wechat/web/js/plugin/amezeui/css/amazeui.min.css" rel="stylesheet">
     <ion-header-bar class="com_w_100 bhy">
         <title class="title">
-            评论列表
+            评论
         </title>
     </ion-header-bar>
-    <ion-content class="com_w_100 bhy has-header discovery">
-        <ion-list>
-            <ion-item class="mt10">
-                <div class="dis_u_img">
-                    <img id="myImage" ng-src="{{dis.head_pic | isNull}}">
-                </div>
-                <div class="dis_con clearfix">
-                    <div class="dis_con_name">
-                        <p>
-                            <span class="fl fs16 fwb">{{dis.name}}</span>
-                            <span class="fr fs12 cor5">{{dis.create_time*1000 | date:'yyyy-MM-dd hh:mm:ss'}}</span>
-                        </p>
-                        <p class="mt10">
-                            <span ng-if="honesty(dis.honesty_value)" class="identity id">身份证</span>
-                            <span ng-if="dis.phone" class="identity phone">手机</span>
-                            <span ng-if="dis.info.level == 1" class="identity vip">VIP</span>
-                            <span ng-if="dis.info.level == 2" class="identity guest">贵宾</span>
-                            <span ng-if="dis.info.level == 3" class="identity diamond">钻石</span>
-                        </p>
+    <ion-content class="bhy com_w_100">
+        <div class="item item-thumbnail-left">
+            <img class="cp" ng-src="{{dis.head_pic | isNull}}" ng-click="jump('/userInfo?userId={{dis.user_id}}')"
+                 onerror="this.src='/wechat/web/images/no_img.png'">
+            <h2>
+                <span class="fl" ng-if="dis.name">{{dis.name | sex:dis.sex:dis:age}}</span>
+                <span class="fl" ng-if="!dis.name">{{dis.user_id}}</span>
+                <span class="fr fs12 cor5">{{dis.create_time*1000 | date:'yyyy-MM-dd HH:mm'}}</span>
+            </h2>
+            <p>
+                <span class="identity id" ng-if="honesty(dis.honesty_value)">身份证</span>
+                <span class="identity phone" ng-if="dis.phone != null">手机</span>
+                <span class="identity vip" ng-if="dis.level == '1'">vip</span>
+                <span class="identity guest" ng-if="dis.level == 2">贵宾</span>
+                <span class="identity diamond" ng-if="dis.level == 3">钻石</span>
+            </p>
+            <p class="wsn">{{dis.content}}</p>
+            <ul class="am-gallery am-avg-sm-3 am-avg-md-3 am-avg-lg-4 am-gallery-default"
+                data-am-widget="gallery" data-am-gallery="{pureview:true}">
+                <li ng-repeat="img in dis.imgList">
+                    <div class="am-gallery-item">
+                        <img ng-src="{{img.thumb_path | isNull}}" onerror="this.src='/wechat/web/images/no_img.png'" data-rel="{{img.thumb_path | picture}}" alt=".">
                     </div>
-                    <div class="dis_con_t">
-                        <p>{{dis.content}}</p>
-                    </div>
-                    <div class="dis_con_p clearfix">
-                        <a class="pic" ng-repeat="img in dis.imgList" ng-click="showImgList(dis.imgList,$index)" >
-                            <img src="{{img.thumb_path}}">
-                        </a>
-                    </div>
-                    <div class="dis_con_b clearfix">
-                         <span class="fr ml15 cp">
-                            <i class="ion-chatbubble-working fs20 vam"></i>
-                             <span class="vam">{{dis.comment_num}}</span>
-                        </span>
-                        <span class="fr cp" ng-class="{true:'cor21',false:''}[dis.cid > 0]" ng-click="clickLike(dis.id)">
-                            <i class="ion-thumbsup fs20 vam"></i>
-                            <span class="vam">{{dis.like_num}}</span>
-                        </span>
-
-                    </div>
-                </div>
-            </ion-item>
-        </ion-list>
-        <ion-list>
-            <ion-item class="item-avatar comment" ng-repeat="comment in commentList" ng-if="comment.private == 0 || (comment.private == 1 && comment.user_id == user_id ) ">
-                <img src="{{comment.headPic}}">
-                <h2><span class="fl">{{comment.name}}</span><span class="fr comment_time">{{comment.create_time*1000 | date:'yyyy-MM-dd hh:mm:ss'}}</span></h2>
-                <p>{{comment.content}}</p>
-            </ion-item>
-        </ion-list>
-    </ion-content>
-    <ion-footer-bar align-title="left" keyboard-attach class="bar-light comment_footer">
-        <div class="buttons">
-            <button class="button button-icon icon ion-happy energized" id="expression"></button>
+                </li>
+            </ul>
+            <div class="clearfix mt10 pr">
+                <span class="fl cp" ng-class="{true:'cor21',false:'cor53'}[dis.cid > 0]" click-like
+                      ng-click="clickLike(dis)">
+                    <i class="ion-thumbsup fs20 vam"></i>
+                    <span class="vam likeNumber dib">{{dis.like_num}}</span>
+                </span>
+                <span class="fl ml10 cp cor53" ng-click="jump('/discovery_single?id={{dis.id}}')">
+                    <i class="ion-chatbubble-working fs20 vam"></i>
+                    <span class="vam">{{dis.comment_num}}</span>
+                </span>
+                <span class="fr cp cor53" ng-click="more(dis.user_id==userInfo.user_id,dis.id)">
+                    <i class="ion-more fs20 vam"></i>
+                </span>
+            </div>
         </div>
-        <div class="title"><input type="text" id="comment_textInput" ng-model="formData.content" placeholder="说点什么吧！"></div>
-        <div class="buttons" ng-click="doSomething()">
+        <article class="am-comment padding" ng-repeat="comment in commentList">
+            <a href="userInfo?id=1">
+                <img ng-src="{{comment.headPic | isNull}}" onerror="this.src='/wechat/web/images/no_img.png'" alt="" class="am-comment-avatar" width="48" height="48"/>
+            </a>
+            <div class="am-comment-main ">
+                <header class="am-comment-hd">
+                    <!--<h3 class="am-comment-title">评论标题</h3>-->
+                    <div class="am-comment-meta">
+                        <a href="userInfo?id={{comment.user_id}}" class="am-comment-author">{{comment.name | sex:comment.sex:comment:age}}</a>
+                        <a href="userInfo?id={{comment.user_id}}" class="am-comment-author">{{comment.user_id}}</a>
+                        评论于
+                        <time>{{comment.create_time * 1000 | date:'yyyy-MM-dd HH:mm'}}</time>
+                    </div>
+                </header>
+
+                <div class="am-comment-bd">
+                    {{comment.content}}
+                </div>
+            </div>
+        </article>
+
+        <ion-infinite-scroll
+                ng-if="moreDataCanBeLoaded()"
+                on-infinite="loadMore()"
+                distance="1%">
+        </ion-infinite-scroll>
+    </ion-content>
+    <ion-footer-bar class="bar-light">
+        <div class="text">
+            <input type="text" multiple id="txt_input" ng-model="formData.content" placeholder="说点什么吧！">
             <label class="private" ng-click="checkPrivate()">
-                <i class="cor24" ng-class="{true:'ion-android-checkbox-outline',false:'ion-android-checkbox-outline-blank'}[user.private]"></i>
+                <i class="cor24"
+                   ng-class="{true:'ion-android-checkbox-outline',false:'ion-android-checkbox-outline-blank'}[user.private]"></i>
                 <span class="cor4">私密</span>
             </label>
-            <button class="button button-icon" id="publish" ng-click="sendComment()">发表</button>
         </div>
+        <button type="button" class="button button-balanced ml10 send" ng-disabled="!formData.content" ng-click="sendComment()">发表</button>
     </ion-footer-bar>
-
-    <!-- Root element of PhotoSwipe. Must have class pswp. -->
-    <div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
-
-        <!-- Background of PhotoSwipe.
-             It's a separate element as animating opacity is faster than rgba(). -->
-        <div class="pswp__bg"></div>
-
-        <!-- Slides wrapper with overflow:hidden. -->
-        <div class="pswp__scroll-wrap">
-
-            <!-- Container that holds slides.
-                PhotoSwipe keeps only 3 of them in the DOM to save memory.
-                Don't modify these 3 pswp__item elements, data is added later on. -->
-            <div class="pswp__container">
-                <div class="pswp__item"></div>
-                <div class="pswp__item"></div>
-                <div class="pswp__item"></div>
-            </div>
-
-            <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
-            <div class="pswp__ui pswp__ui--hidden">
-
-                <div class="pswp__top-bar">
-
-                    <!--  Controls are self-explanatory. Order can be changed. -->
-
-                    <div class="pswp__counter"></div>
-
-                    <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
-
-                    <button class="pswp__button pswp__button--share" title="Share"></button>
-
-                    <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
-
-                    <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
-
-                    <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
-                    <!-- element will get class pswp__preloader--active when preloader is running -->
-                    <div class="pswp__preloader">
-                        <div class="pswp__preloader__icn">
-                            <div class="pswp__preloader__cut">
-                                <div class="pswp__preloader__donut"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
-                    <div class="pswp__share-tooltip"></div>
-                </div>
-
-                <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
-                </button>
-
-                <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
-                </button>
-
-                <div class="pswp__caption">
-                    <div class="pswp__caption__center"></div>
-                </div>
-
-            </div>
-
-        </div>
-
-    </div>
-
 </ion-view>

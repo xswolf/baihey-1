@@ -5,6 +5,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
     <title><?php echo $this->context->title; ?></title>
     <link href="/wechat/web/images/apple-touch-icon.png" rel="shortcut icon">
     <link href="/wechat/web/css/plugin/ionic/ionic.min.css" rel="stylesheet">

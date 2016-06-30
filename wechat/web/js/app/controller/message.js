@@ -5,7 +5,7 @@ define(['app/module', 'app/directive/directiveApi'
     , 'app/service/serviceApi', 'comm'
 ], function (module) {
 
-    module.controller("message.index", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$ionicModal', '$ionicActionSheet', '$ionicLoading', '$location','$ionicListDelegate', function (api, $scope, $timeout, $ionicPopup, $ionicModal, $ionicActionSheet, $ionicLoading, $location,$ionicListDelegate) {
+    module.controller("message.index", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$ionicModal', '$ionicActionSheet', '$ionicLoading', '$location','$ionicListDelegate','dataFilter','$interval', function (api, $scope, $timeout, $ionicPopup, $ionicModal, $ionicActionSheet, $ionicLoading, $location,$ionicListDelegate,dataFilter,$interval) {
 
         $timeout($scope.sumSend);
         // 判断是否登录
@@ -15,7 +15,10 @@ define(['app/module', 'app/directive/directiveApi'
          return false;
          }
          });*/
-
+        // 聊天首页filter显示
+        $scope.messageFilter = function(user){
+            return user.id != $scope.userInfo.id && dataFilter.data.blacked.indexOf(user.id) == -1;
+        }
         $scope.userInfo = {};
         // 获取页面数据
 
@@ -25,17 +28,22 @@ define(['app/module', 'app/directive/directiveApi'
         if (messageList != null) {
             $scope.messageList = messageList;
         }
-        //console.log($scope.messageList)
+
         // 从服务器获取未看消息
         $scope.listMessage = function () {
-            $scope.messageList = ar.getStorage("messageList");
+            if($scope.messageList.sort().toString() != ar.getStorage("messageList").sort().toString()){
+                $scope.messageList = ar.getStorage("messageList");
+            }
         }
 
         // 定时任务10秒取一次最新消息列表
         $scope.listMessage();
-        setInterval(function () {
+        var timer = $interval(function(){},5000);
+        timer.then(function(){
             $scope.listMessage();
-        }, 5000);
+        },function(){
+
+        });
 
         $scope.userInfo.id = ar.getCookie('bhy_user_id');
 

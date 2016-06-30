@@ -263,11 +263,20 @@ class UserController extends BaseController
     {
         if($user_id = Cookie::getInstance()->getCookie('bhy_id')) {
             $blacked = UserFollow::getInstance()->getFollowList('blacked', $user_id);
+            $follow = UserFollow::getInstance()->getFollowList('follow', $user_id);
+            $blackedList = [];
+            $followList = [];
+            foreach($blacked as $k => $v) {
+                $blackedList[] = $v['user_id'];
+            }
+            foreach($follow as $k => $v) {
+                $followList[] = $v['user_id'];
+            }
             $honestyStatus = UserPhoto::getInstance()->getPhotoList($user_id, 2, 2);
             $headpicStatus = UserPhoto::getInstance()->userHeadpic($user_id);
-            $this->renderAjax(['status=>1', 'blacked' => $blacked, 'honestyStatus' => $honestyStatus, 'headpicStatus' => $headpicStatus]);
+            $this->renderAjax(['status=>1', 'blacked' => $blackedList, 'follow' => $followList, 'honestyStatus' => $honestyStatus, 'headpicStatus' => $headpicStatus]);
         } else {
-            $this->renderAjax(['status=>1', 'blacked' => [], 'honestyStatus' => [], 'headpicStatus' => []]);
+            $this->renderAjax(['status=>1', 'blacked' => [], 'follow' => [], 'honestyStatus' => [], 'headpicStatus' => []]);
         }
 
     }

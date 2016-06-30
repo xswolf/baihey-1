@@ -74,29 +74,19 @@ define(["app/module", 'app/service/serviceApi', 'jquery'],
                         templateUrl: "/wechat/views/site/index.html",
                         controller: 'site.index',
                         resolve: {
-                            blacked: function ($http) {
+                            dataFilter: function ($http) {
                                 return $http({
                                     method: 'POST',
-                                    url: '/wap/follow/blacked-list',
+                                    url: '/wap/user/index-is-show-data',
                                     params: {}
                                 });
-                            },
-                            honestyStatus: function ($http) {
-                                return $http({
-                                    method: 'POST',
-                                    url: '/wap/member/photo-list',
-                                    params: {type: 2, pageSize: 2}
-                                });
-                            },
-                            headpicStatus: function ($http) {
-                                return $http({
-                                    method: 'POST',
-                                    url: '/wap/member/user-headpic',
-                                    params: {}
-                                });
-                            },
-
+                            }
                         }
+                    })
+                    .state('index_discovery', {   // 首页
+                        url: "/index_discovery",
+                        templateUrl: "/wechat/views/site/discovery.html",
+                        controller: 'site.discovery',
                     })
                     .state('member', {   // 我
                         url: "/member",
@@ -117,7 +107,16 @@ define(["app/module", 'app/service/serviceApi', 'jquery'],
                         cache: false,
                         url: "/message",
                         templateUrl: "/wechat/views/message/index.html",
-                        controller: "message.index"
+                        controller: "message.index",
+                        resolve: {
+                            dataFilter: function ($http) {
+                                return $http({
+                                    method: 'POST',
+                                    url: '/wap/user/index-is-show-data',
+                                    params: {}
+                                });
+                            }
+                        }
                     })
                     .state('userInfo', {  // 查看用户资料
                         cache: false,
@@ -216,18 +215,16 @@ define(["app/module", 'app/service/serviceApi', 'jquery'],
                         templateUrl: "/wechat/views/discovery/index.html",
                         controller: 'discovery.index',
                         resolve: {
-                            DataFilter:function($http){
-
+                            dataFilter: function ($http) {
+                                return $http({
+                                    method: 'POST',
+                                    url: '/wap/user/index-is-show-data',
+                                    params: {}
+                                });
                             }
                         }
                     })
-                    .state('member_dynmaic', {       // 个人动态
-                        cache: false,
-                        url: "/member_dynmaic",
-                        templateUrl: "/wechat/views/discovery/index.html",
-                        controller: 'discovery.index'
-                    })
-                    .state('discovery_single', {       // 发现-个人
+                    .state('discovery_single', {       // 发现-评论
                         cache: false,
                         url: "/discovery_single",
                         templateUrl: "/wechat/views/discovery/single.html",

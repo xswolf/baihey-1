@@ -44,7 +44,7 @@
                href="#/member/honesty"><p class="tips fl"><i class="fl bhy-icon-tips-02 mr5"></i><span class="fl">请您上传身份证</span><i
                     class="fr ion-ios-arrow-right vam fs20"></i></p></a>
             <ion-item class="personal_info mt10"
-                      href="#/dynmaic?userId={{userInfo.id}}&real_name={{userInfo.real_name}}&sex={{userInfo.sex}}$age={{userInfo.info.age}}&tempUrl=member/index">
+                      ng-href="{{discoveryNumber == 0 ? '#/member/discovery_add' : '#/member/discovery'}}">
                 <div class="member_menu_i rounded per">
                     <i class="bhy-icon-member-menu-01"></i>
                 </div>

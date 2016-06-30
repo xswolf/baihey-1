@@ -103,13 +103,11 @@ class UserFollow extends Base
      */
     public function addFollow($where)
     {
+        // 查看对方是否拉黑
+        if($status = $this->getFollowStatus(['user_id' => $where['follow_id'], 'follow_id' => $where['user_id'], 'status' => 0])) {
+            return false;
+        }
         if($follow = $this->findOne($where)) {
-            // 查看对方是否拉黑
-            if($status = $this->getFollowStatus(['user_id' => $where['follow_id'], 'follow_id' => $where['user_id']])) {
-                if($status['status'] == 0) {
-                    return false;
-                }
-            }
             $follow->status = 1;
             $follow->update_time = YII_BEGIN_TIME;
             return $follow->save(false);

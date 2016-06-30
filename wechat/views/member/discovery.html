@@ -1,0 +1,60 @@
+<ion-view>
+    <link href="/wechat/web/css/discovery.css" rel="stylesheet">
+    <link href="/wechat/web/js/plugin/amezeui/css/amazeui.min.css" rel="stylesheet">
+    <link href="/wechat/web/css/plugin/animate/animate.css" rel="stylesheet">
+    <ion-header-bar class="com_w_100 bhy">
+        <title class="title">个人动态</title>
+        <a class="button button-icon icon ion-plus-circled positive" href="#/member/discovery_add" ></a>
+    </ion-header-bar>
+
+    <ion-content class="com_w_100 bhy discovery bg5">
+        <div class="list">
+            <div class="mt10 item item-thumbnail-left">
+                <img class="cp" ng-src="{{dis.head_pic | isNull}}" ng-click="jump('/userInfo?userId={{dis.user_id}}')" onerror="this.src='/wechat/web/images/no_img.png'">
+                <h2>
+                    <span class="fl">聂先生</span>
+                    <span class="fr fs12 cor5">2016-06-29 10:20:05</span>
+                </h2>
+                <p>
+                    <span class="identity id" ng-if="honesty(dis.honesty_value)">身份证</span>
+                    <span class="identity phone" ng-if="dis.phone != null">手机</span>
+                    <span class="identity vip" ng-if="dis.level == '1'">vip</span>
+                    <span class="identity guest" ng-if="dis.level == 2">贵宾</span>
+                    <span class="identity diamond" ng-if="dis.level == 3">钻石</span>
+                </p>
+                <p class="wsn">{{dis.content | textOverflow:300:'...'}}登封市规划局地覆盖i但如果当然广东人登封市规划局地覆盖i但如果当然广东人登封市规划局地覆盖i但如果当然广东人登封市规划局地覆盖i但如果当然广东人登封市规划局地覆盖i但如果当然广东人</p>
+                <ul class="am-gallery am-avg-sm-3 am-avg-md-3 am-avg-lg-4 am-gallery-default"
+                    data-am-widget="gallery" data-am-gallery="{pureview:true}">
+                    <li ng-repeat="img in dis.imgList">
+                        <div class="am-gallery-item">
+                            <img src="{{img.thumb_path}}" data-rel="{{img.thumb_path | picture}}" alt=".">
+                        </div>
+                    </li>
+                </ul>
+                <div class="clearfix mt10 pr">
+                    <span class="fl cp" ng-class="{true:'cor21',false:'cor53'}[1==1]" click-like ng-click="clickLike(dis.id)">
+                        <i class="ion-thumbsup fs20 vam"></i>
+                        <span class="vam likeNumber dib">10</span>
+                    </span>
+                    <span class="fl ml10 cp cor53" ng-click="jump('/discovery_single?id={{dis.id}}')">
+                        <i class="ion-chatbubble-working fs20 vam"></i>
+                        <span class="vam">2</span>
+                    </span>
+                    <span class="fr cp cor53" ng-click="more(id)">
+                        <i class="ion-more fs20 vam"></i>
+                    </span>
+                </div>
+                <div class="disabled_tip">
+                    <span class="tip">该条动态被举报多次</span>
+                </div>
+            </div>
+        </div>
+
+        <ion-infinite-scroll
+                ng-if="moreDataCanBeLoaded()"
+                on-infinite="loadMore()"
+                distance="1%">
+        </ion-infinite-scroll>
+    </ion-content>
+
+</ion-view>
