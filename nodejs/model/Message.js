@@ -17,8 +17,22 @@ function Message() {
             }
             callback(err, res);
         })
-        //conn.end();
+        conn.end();
     }
+
+    conn.on('error', function(err) {
+        if (!err.fatal) {
+            return;
+        }
+
+        if (err.code !== 'PROTOCOL_CONNECTION_LOST') {
+            throw err;
+        }
+
+        console.log('Re-connecting lost connection: ' + err.stack);
+
+        conn = mysql.connection();
+    });
 
     // 获取消息类型
     this.getMessageType = function(send){
