@@ -11,28 +11,12 @@ function Message() {
 
         conn.query(sql , [msg.send_user_id,msg.receive_user_id,msg.message,this.getMessageType(msg.type),time,msg.status] , function (err ,res) {
             if(err) {
-                conn.end();
                 console.error(err);
                 return;
             }
             callback(err, res);
         })
-        conn.end();
     }
-
-    conn.on('error', function(err) {
-        if (!err.fatal) {
-            return;
-        }
-
-        if (err.code !== 'PROTOCOL_CONNECTION_LOST') {
-            throw err;
-        }
-
-        console.log('Re-connecting lost connection: ' + err.stack);
-
-        conn = mysql.connection();
-    });
 
     // 获取消息类型
     this.getMessageType = function(send){
