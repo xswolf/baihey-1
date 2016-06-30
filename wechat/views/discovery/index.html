@@ -11,7 +11,7 @@
         <div class="list">
             <div class="mt10 item item-thumbnail-left" ng-repeat="dis in discoveryList | filter:indexFilter" >
                 <img class="cp" ng-if="dis.head_status == 1" ng-src="{{dis.head_pic | isNull}}" ng-click="dis.user_id != userInfo.user_id ? jump('/userInfo?userId={{dis.user_id}}') : jump('/member/information')" onerror="this.src='/wechat/web/images/no_img.png'">
-                <img class="cp" ng-if="dis.head_status != 1" ng-src="/wechat/web/images/no_img.png" ng-click="dis.user_id != userInfo.user_id ? jump('/userInfo?userId={{dis.user_id}}') : jump('/member/information')">
+                <img class="cp" ng-if="dis.head_status != 1" src="/wechat/web/images/no_img.png" ng-click="dis.user_id != userInfo.user_id ? jump('/userInfo?userId={{dis.user_id}}') : jump('/member/information')">
                 <h2>
                     <span class="fl" ng-if="dis.name">{{dis.name | sex:dis.sex:dis:age}}</span>
                     <span class="fl" ng-if="!dis.name">{{dis.user_id}}</span>
@@ -33,6 +33,7 @@
                         </div>
                     </li>
                 </ul>
+                <p><span class="am-badge am-badge-danger am-round">该用户被多次举报</span></p>
                 <div class="clearfix mt10 pr">
                     <span class="fl cp" ng-class="{true:'cor21',false:'cor53'}[dis.cid > 0]" click-like ng-click="clickLike(dis)">
                         <i class="ion-thumbsup fs20 vam"></i>
