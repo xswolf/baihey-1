@@ -158,7 +158,6 @@ class MemberController extends BaseController
         isset($this->get['page']) ? $page = $this->get['page'] : $page = 0;
         isset($this->get['user_id']) ? $userId = $this->get['user_id'] : $userId = -1;
 
-        //$list = User::getInstance()->getDynamicList($userId, $page);
         $list = UserDynamic::getInstance()->getDynamicList($userId, $page);
         $this->renderAjax(['status' => 1, 'data' => $list]);
     }
@@ -174,7 +173,7 @@ class MemberController extends BaseController
         // 获取用户相册
         $userPhoto = UserPhoto::getInstance()->getPhotoList($this->get['id']);
         // 获取用户动态
-        $dynamic = User::getInstance()->getDynamicList($this->get['id']);
+        $dynamic = UserDynamic::getInstance()->getDynamicList($this->get['id']);
         // 获取关注状态
         $followStatus = UserFollow::getInstance()->getFollowStatus(['user_id' => $user_id, 'follow_id' => $this->get['id']]);
         $followStatus = $followStatus ? $followStatus['status'] : false;
@@ -226,9 +225,9 @@ class MemberController extends BaseController
     public function actionGetDynamic()
     {
 
-        $data = User::getInstance()->getDynamicById($this->get['id']);
-        $data[0]['comment'] = User::getInstance()->getCommentById($this->get['id']);
-        $this->renderAjax(['status' => 1, 'data' => $data[0]]);
+        $data = UserDynamic::getInstance()->getDynamicById($this->get['id']);
+        $data['comment'] = User::getInstance()->getCommentById($this->get['id']);
+        $this->renderAjax(['status' => 1, 'data' => $data]);
     }
 
     // 删除动态
