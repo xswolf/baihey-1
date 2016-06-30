@@ -3,7 +3,7 @@
     <link href="/wechat/web/js/plugin/amezeui/css/amazeui.min.css" rel="stylesheet">
     <link href="/wechat/web/css/plugin/animate/animate.css" rel="stylesheet">
     <ion-header-bar class="com_w_100 bhy">
-        <title class="title">个人动态</title>
+        <title class="title">聂先生的个人动态</title>
         <a class="button button-icon icon ion-plus-circled positive" href="#/member/discovery_add" ></a>
     </ion-header-bar>
 
@@ -56,5 +56,43 @@
                 distance="1%">
         </ion-infinite-scroll>
     </ion-content>
+
+    <script id="released.html" type="text/ng-template">
+        <ion-modal-view>
+            <ion-header-bar>
+                <button class="button button-icon" ng-click="releasedClose()">取消</button>
+                <h1 class="title">发布动态</h1>
+                <button class="button button-icon cor21" ng-click="saveData()">发布</button>
+            </ion-header-bar>
+            <ion-content class="bg5">
+                <ion-list>
+                    <ion-item class="mt10">
+                        <div class="gallery_handle clearfix" data-am-widget="gallery" data-am-gallery="{pureview:true}">
+                            <div class="imgItem" ng-repeat="img in imgList">
+                                <img src="{{img.thumb_path}}" data-rel="{{img.thumb_path | picture}}">
+                            </div>
+                            <div class="imgItem add" ng-click="addNewImg()">
+                                <i class="icon ion-plus-round"></i>
+                            </div>
+                        </div>
+                        <textarea class="dis_taInput" placeholder="想说点什么？"
+                                  ng-model="formData.content" maxlength="500"></textarea>
+                    </ion-item>
+                    <input id="pic_fileInput" type="file" nv-file-select="" uploader="uploader"
+                           style="visibility: hidden; display: none;" accept="image/*">
+                    <ion-radio ng-model="formData.auth" value="1">
+                        完全公开
+                    </ion-radio>
+                    <ion-radio ng-model="formData.auth" value="2">
+                        我关注的人可见
+                    </ion-radio>
+                    <ion-radio ng-model="formData.auth" value="3">
+                        仅自己可见
+                    </ion-radio>
+                </ion-list>
+            </ion-content>
+        </ion-modal-view>
+    </script>
+
 
 </ion-view>

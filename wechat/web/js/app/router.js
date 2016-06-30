@@ -83,6 +83,11 @@ define(["app/module", 'app/service/serviceApi', 'jquery'],
                             }
                         }
                     })
+                    .state('index_discovery', {   // 首页
+                        url: "/index_discovery",
+                        templateUrl: "/wechat/views/site/discovery.html",
+                        controller: 'site.discovery',
+                    })
                     .state('member', {   // 我
                         url: "/member",
                         templateUrl: "/wechat/views/member/index.html",

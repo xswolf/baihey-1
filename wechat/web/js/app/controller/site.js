@@ -420,5 +420,15 @@ console.log(dataFilter.data);
 
     }]);
 
+    // 查看会员资料-会员动态
+    module.controller("site.discovery", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$ionicModal', '$ionicActionSheet', '$ionicLoading', '$ionicBackdrop','$ionicScrollDelegate','$location',function (api, $scope, $timeout, $ionicPopup, $ionicModal, $ionicActionSheet, $ionicLoading,$ionicBackdrop,$ionicScrollDelegate,$location){
 
+        // 用户ID
+        $location.$$search.user_id = 1;
+
+        // 更多功能
+        $scope.more = function(){
+
+        }
+    }]);
 })
