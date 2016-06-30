@@ -197,18 +197,7 @@ define(['app/module', 'app/directive/directiveApi'
                 })
             }
 
-            $ionicModal.fromTemplateUrl('report.html', {
-                scope: $scope,
-                animation: 'slide-in-up'
-            }).then(function (modal) {
-                $scope.reporrtModal = modal;
-            });
-            $scope.reportOpen = function () {
-                $scope.reporrtModal.show();
-            };
-            $scope.reportClose = function () {
-                $scope.reporrtModal.hide();
-            };
+
         });
     }]);
 
