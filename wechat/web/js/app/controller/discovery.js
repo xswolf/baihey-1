@@ -96,7 +96,7 @@ define(['app/module', 'app/directive/directiveApi'
                 api.list('/wap/member/get-dynamic-list', {
                     user_id: $location.$$search.userId,
                     page: $scope.page
-                }).success(function (res) {  // TODO 查询出所有动态，分页
+                }).success(function (res) {  //  查询出所有动态，分页
                     if (!res.data) {
                         $scope.isMore = false;
                     }
@@ -191,10 +191,15 @@ define(['app/module', 'app/directive/directiveApi'
                 var userInfo = ar.getStorage('userInfo');
                 $scope.formData.name = JSON.parse(userInfo.info).real_name;
                 $scope.formData.pic = JSON.stringify($scope.imgList);
-                api.save('/wap/member/add-dynamic', $scope.formData).success(function (res) { // TODO 保存数据到数据库，关闭modal，展现数据
-                    $scope.releasedClose();    // 关闭modal
-                    $scope.discoveryList.push(res.data[i]);
+                api.save('/wap/member/add-user-dynamic', $scope.formData).success(function (res) { // 保存数据到数据库，关闭modal，展现数据
+                    if(res.status) {
+                        res.data.imgList = JSON.parse(res.data.pic);
+                        res.data.head_pic = res.data.head_pic.replace(/\"/g, '');
+                        $scope.discoveryList.unshift(res.data);
+                    }
+                    ar.saveDataAlert($ionicPopup, res.msg);
 
+                    $scope.releasedClose();    // 关闭modal
                     amezeui.gallery.init(); // 初始化相册插件
                 })
             }

@@ -41,12 +41,12 @@
                     </span>
                 </p>
             </ion-item>
-            <ion-item class="item-icon-right" ng-href="{{dynamic.imgList.length > 0 ? '#/member/discovery' : '#/member/discovery_add'}}">
+            <ion-item class="item-icon-right" ng-href="{{dynamicList.length > 0 ? '#/member/discovery' : '#/member/discovery_add'}}">
                    <p>
                     <span class="cor4">个人动态</span>
                     <span class="ml20 cor4" ng-if="dynamicList.length < 1">发布我的第一条个人动态</span>
                    </p>
-                    <ul data-am-widget="gallery" class="am-gallery am-avg-sm-2 am-avg-md-3 am-avg-lg-4 am-gallery-default"
+                    <ul data-am-widget="gallery" class="am-gallery am-avg-sm-2 am-avg-md-3 am-avg-lg-4 am-gallery-default w80"
                         ng-if="dynamicList.length > 0">
                         <li ng-repeat="dynamic in dynamicList" ng-if="dynamic.imgList.length > 0">
                             <div class="am-gallery-item">

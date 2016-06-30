@@ -9,6 +9,8 @@
 namespace common\models;
 
 
+use yii\db\Query;
+
 class UserDynamic extends Base
 {
 
@@ -22,6 +24,7 @@ class UserDynamic extends Base
         $data['user_id'] = $user_id;
         $data['pic'] = isset($data['pic']) ? $data['pic'] : '';
         $data['content'] = isset($data['content']) ? $data['content'] : '';
+        $data['address'] = isset($data['address']) ? $data['address'] : '';
         $data['create_time'] = time();
         $row = $this->getDb()->createCommand()
             ->insert(static::tableName(), $data)

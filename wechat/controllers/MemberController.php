@@ -44,7 +44,7 @@ class MemberController extends BaseController
      */
     public function actionSaveData()
     {
-        $user_id = \common\util\Cookie::getInstance()->getCookie('bhy_id');
+        $user_id = Cookie::getInstance()->getCookie('bhy_id')->value;
 
         UserInformation::getInstance()->updateUserInfo($user_id, $this->get);
     }
@@ -54,7 +54,7 @@ class MemberController extends BaseController
      */
     public function actionPhotoList()
     {
-        $user_id = isset($this->get['user_id']) ? $this->get['user_id'] : \common\util\Cookie::getInstance()->getCookie('bhy_id');
+        $user_id = isset($this->get['user_id']) ? $this->get['user_id'] : Cookie::getInstance()->getCookie('bhy_id')->value;
         $type = isset($this->get['type']) ? $this->get['type'] : 1;
         $pageSize = isset($this->get['pageSize']) ? $this->get['pageSize'] : 12;
 
@@ -85,7 +85,7 @@ class MemberController extends BaseController
      */
     public function actionSetHead()
     {
-        $user_id = \common\util\Cookie::getInstance()->getCookie('bhy_id');
+        $user_id = Cookie::getInstance()->getCookie('bhy_id')->value;
         $list = UserPhoto::getInstance()->setHeadPic($user_id, $this->get);
         $this->renderAjax(['status' => 1, 'data' => $list]);
     }
@@ -95,7 +95,7 @@ class MemberController extends BaseController
      */
     public function actionUserHeadpic()
     {
-        $user_id = Cookie::getInstance()->getCookie('bhy_id');
+        $user_id = Cookie::getInstance()->getCookie('bhy_id')->value;
         if ($data = UserPhoto::getInstance()->userHeadpic($user_id)) {
             $this->renderAjax(['status' => 1, 'data' => $data, 'msg' => '获取数据成功']);
         } else {
@@ -167,7 +167,7 @@ class MemberController extends BaseController
      */
     public function actionUserInfoPageById()
     {
-        $user_id = Cookie::getInstance()->getCookie('bhy_id');
+        $user_id = Cookie::getInstance()->getCookie('bhy_id')->value;
         // 获取用户信息
         $userInfo = User::getInstance()->getUserById($this->get['id']);
         // 获取用户相册
@@ -210,11 +210,11 @@ class MemberController extends BaseController
     public function actionAddDynamic()
     {
 
-        $user_id = \common\util\Cookie::getInstance()->getCookie('bhy_id')->value;
+        $user_id = Cookie::getInstance()->getCookie('bhy_id')->value;
 
         $data['user_id'] = $user_id;
         $data['auth'] = $this->get['auth'];
-        $data['address'] = $this->get['address'];
+        $data['address'] = isset($this->get['address']) ? $this->get['address'] : '';
         $data['name'] = $this->get['name'];
         $data['pic'] = isset($this->get['pic']) ? $this->get['pic'] : '';
         $data['content'] = isset($this->get['content']) ? $this->get['content'] : '';
@@ -227,6 +227,17 @@ class MemberController extends BaseController
         }
     }
 
+    public function actionAddUserDynamic()
+    {
+        $user_id = Cookie::getInstance()->getCookie('bhy_id')->value;
+        if($did = UserDynamic::getInstance()->addDynamic($user_id, $this->get)) {
+            $data = UserDynamic::getInstance()->getDynamicById($did);
+            $this->renderAjax(['status' => 1, 'data' => $data, 'msg' => '发布成功']);
+        } else {
+            $this->renderAjax(['status' => 0, 'data' => [], 'msg' => '发布失败']);
+        }
+
+    }
     /**
      * 获取单条动态内容
      */
@@ -288,7 +299,7 @@ class MemberController extends BaseController
      */
     public function actionBriberyInfo()
     {
-        $user_id = \common\util\Cookie::getInstance()->getCookie('bhy_id')->value;
+        $user_id = Cookie::getInstance()->getCookie('bhy_id')->value;
         $data = User::getInstance()->briberyInfo($user_id);
         $this->renderAjax(['status' => 1, 'data' => $data]);
     }
@@ -301,7 +312,7 @@ class MemberController extends BaseController
 
         isset($this->get['page']) ? $page = $this->get['page'] : $page = 0;
         $flag = $this->get['flag'] == 'true' ? true : false;
-        $user_id = \common\util\Cookie::getInstance()->getCookie('bhy_id')->value;
+        $user_id = Cookie::getInstance()->getCookie('bhy_id')->value;
         $year = isset($this->get['year']) ? $this->get['year'] : 0;
         $data = User::getInstance()->getBriberyList($user_id, $flag, $page, $year);
         $this->renderAjax(['status' => 1, 'data' => $data]);
@@ -309,7 +320,7 @@ class MemberController extends BaseController
 
     public function actionConsumptionList()
     {
-        $user_id = Cookie::getInstance()->getCookie('bhy_id');
+        $user_id = Cookie::getInstance()->getCookie('bhy_id')->value;
         if ($data = ConsumptionLog::getInstance()->getUserConsumptionLogList($user_id)) {
             $this->renderAjax(['status' => 1, 'data' => $data, 'msg' => '获取数据成功']);
         } else {
@@ -322,7 +333,7 @@ class MemberController extends BaseController
      */
     public function actionCashCardList()
     {
-        $user_id = Cookie::getInstance()->getCookie('bhy_id');
+        $user_id = Cookie::getInstance()->getCookie('bhy_id')->value;
         if ($data = User::getInstance()->getCashCardList($user_id)) {
             $this->renderAjax(['status' => 1, 'data' => $data, 'msg' => '获取数据成功']);
         } else {
@@ -335,7 +346,7 @@ class MemberController extends BaseController
      */
     public function actionDelCard()
     {
-        $user_id = Cookie::getInstance()->getCookie('bhy_id');
+        $user_id = Cookie::getInstance()->getCookie('bhy_id')->value;
         if ($data = User::getInstance()->delCard($user_id, $this->get['id'])) {
             $this->renderAjax(['status' => 1, 'data' => $data, 'msg' => '删除数据成功']);
         } else {
