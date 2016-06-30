@@ -11,7 +11,8 @@
             <img class="cp" ng-src="{{dis.head_pic | isNull}}" ng-click="jump('/userInfo?userId={{dis.user_id}}')"
                  onerror="this.src='/wechat/web/images/no_img.png'">
             <h2>
-                <span class="fl">{{dis.name | sex:dis.sex:dis:age}}</span>
+                <span class="fl" ng-if="dis.name">{{dis.name | sex:dis.sex:dis:age}}</span>
+                <span class="fl" ng-if="!dis.name">{{dis.user_id}}</span>
                 <span class="fr fs12 cor5">{{dis.create_time*1000 | date:'yyyy-MM-dd HH:mm'}}</span>
             </h2>
             <p>
@@ -26,7 +27,7 @@
                 data-am-widget="gallery" data-am-gallery="{pureview:true}">
                 <li ng-repeat="img in dis.imgList">
                     <div class="am-gallery-item">
-                        <img src="{{img.thumb_path}}" data-rel="{{img.thumb_path | picture}}" alt=".">
+                        <img ng-src="{{img.thumb_path | isNull}}" onerror="this.src='/wechat/web/images/no_img.png'" data-rel="{{img.thumb_path | picture}}" alt=".">
                     </div>
                 </li>
             </ul>
@@ -45,98 +46,23 @@
                 </span>
             </div>
         </div>
-        <article class="am-comment padding">
+        <article class="am-comment padding" ng-repeat="comment in commentList">
             <a href="userInfo?id=1">
-                <img src="/wechat/web/images/test1.jpg" alt="" class="am-comment-avatar" width="48" height="48"/>
+                <img ng-src="{{comment.headPic | isNull}}" onerror="this.src='/wechat/web/images/no_img.png'" alt="" class="am-comment-avatar" width="48" height="48"/>
             </a>
             <div class="am-comment-main ">
                 <header class="am-comment-hd">
                     <!--<h3 class="am-comment-title">评论标题</h3>-->
                     <div class="am-comment-meta">
-                        <a href="userInfo?id=1" class="am-comment-author">张先生</a>
+                        <a href="userInfo?id={{comment.user_id}}" class="am-comment-author">{{comment.name | sex:comment.sex:comment:age}}</a>
+                        <a href="userInfo?id={{comment.user_id}}" class="am-comment-author">{{comment.user_id}}</a>
                         评论于
-                        <time>2014-7-12 15:30</time>
+                        <time>{{comment.create_time * 1000 | date:'yyyy-MM-dd HH:mm'}}</time>
                     </div>
                 </header>
 
                 <div class="am-comment-bd">
-                    可以
-                </div>
-            </div>
-        </article>
-        <article class="am-comment padding">
-            <a href="userInfo?id=1">
-                <img src="/wechat/web/images/test1.jpg" alt="" class="am-comment-avatar" width="48" height="48"/>
-            </a>
-            <div class="am-comment-main ">
-                <header class="am-comment-hd">
-                    <!--<h3 class="am-comment-title">评论标题</h3>-->
-                    <div class="am-comment-meta">
-                        <a href="userInfo?id=1" class="am-comment-author">张先生</a>
-                        评论于
-                        <time>2014-7-12 15:30</time>
-                    </div>
-                </header>
-
-                <div class="am-comment-bd">
-                    可以
-                </div>
-            </div>
-        </article>
-        <article class="am-comment padding">
-            <a href="userInfo?id=1">
-                <img src="/wechat/web/images/test1.jpg" alt="" class="am-comment-avatar" width="48" height="48"/>
-            </a>
-            <div class="am-comment-main ">
-                <header class="am-comment-hd">
-                    <!--<h3 class="am-comment-title">评论标题</h3>-->
-                    <div class="am-comment-meta">
-                        <a href="userInfo?id=1" class="am-comment-author">张先生</a>
-                        评论于
-                        <time>2014-7-12 15:30</time>
-                    </div>
-                </header>
-
-                <div class="am-comment-bd">
-                    可以
-                </div>
-            </div>
-        </article>
-        <article class="am-comment padding">
-            <a href="userInfo?id=1">
-                <img src="/wechat/web/images/test1.jpg" alt="" class="am-comment-avatar" width="48" height="48"/>
-            </a>
-            <div class="am-comment-main ">
-                <header class="am-comment-hd">
-                    <!--<h3 class="am-comment-title">评论标题</h3>-->
-                    <div class="am-comment-meta">
-                        <a href="userInfo?id=1" class="am-comment-author">张先生</a>
-                        评论于
-                        <time>2014-7-12 15:30</time>
-                    </div>
-                </header>
-
-                <div class="am-comment-bd">
-                    可以
-                </div>
-            </div>
-        </article>
-        <article class="am-comment padding">
-            <a href="userInfo?id=1">
-                <img src="/wechat/web/images/test1.jpg" alt="" class="am-comment-avatar" width="48" height="48"/>
-            </a>
-            <div class="am-comment-main ">
-                <header class="am-comment-hd">
-                    <!--<h3 class="am-comment-title">评论标题</h3>-->
-                    <div class="am-comment-meta">
-                        <a href="userInfo?id=1" class="am-comment-author">张先生</a>
-                        评论于
-                        <time>2014-7-12 15:30</time>
-                    </div>
-                </header>
-
-                <div class="am-comment-bd">
-                    可以
+                    {{comment.content}}
                 </div>
             </div>
         </article>

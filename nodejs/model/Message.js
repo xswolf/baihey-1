@@ -17,7 +17,7 @@ function Message() {
             }
             callback(err, res);
         })
-        conn.end();
+        //conn.end();
     }
 
     // 获取消息类型
