@@ -29,7 +29,14 @@
             <!-- 身份认证提示 -->
             <div class="r_warning" ng-if="u_auth_validate == false">
                 <p>
-                    <i class="ion-alert-circled assertive fs14 warning_ico"></i>您好，对方身份未在本站验证，需谨慎交流！
+                    <i class="ion-alert-circled assertive fs14 warning_ico"></i>您好，对方身份未在本站验证，请谨慎交流！
+                </p>
+            </div>
+
+            <!-- 举报提示 -->
+            <div class="r_warning" ng-if="u_auth_validate == false">
+                <p>
+                    <i class="ion-alert-circled assertive fs14 warning_ico"></i>您好，对方被举报多次，请谨慎交流！
                 </p>
             </div>
 
@@ -68,12 +75,12 @@
                         </div>
 
                         <!-- 语音 -->
-                        <div class="content normal voice" ng-click="detail_record('{{vo.message}}')"
+                        <!--<div class="content normal voice" ng-click="detail_record('{{vo.message}}')"
                              ng-if="vo.type=='record' || vo.message_type==2">
                             <div class="voice_con">
                                 <i class="bhy-icon-msg-voice voice_icon"></i>
                             </div>
-                        </div>
+                        </div>-->
 
                         <!-- 图片 -->
                         <div class="content normal" ng-click="detail_pic('{{vo.message}}')"
@@ -86,7 +93,7 @@
                         </div>
 
                         <!-- 红包 -->
-                        <div class="content normal bri" ng-click="detail_bri(vo.message)"
+                        <!--<div class="content normal bri" ng-click="detail_bri(vo.message)"
                              ng-if="vo.type=='bribery' || vo.message_type==4">
                             <div class="bri_con clearfix">
                                 <div class="bhy-icon-bribery bri_con_icon"></div>
@@ -95,7 +102,7 @@
                                     <p>领取红包</p>
                                 </div>
                             </div>
-                        </div>
+                        </div>-->
 
                         <!-- 已读 -->
                         <div class="status" ng-if="vo.status==1 && sendId == vo.send_user_id">
@@ -142,10 +149,10 @@
     </ion-footer-bar>
     <div id="multi_con">
         <ul class="clearfix">
-            <li ng-click="briberyModal.show()">
+            <!--<li ng-click="briberyModal.show()">
                 <div class="bri_b"><i class="icon-new-bribery cor6"></i></div>
                 <p class="fs12 mb0 tac cor8">红包</p>
-            </li>
+            </li>-->
             <li ng-click="send_pic()">
                 <div class="img_b"><i class="ion-images cor6"></i></div>
                 <p class="fs12 mb0 tac cor8">图片</p>
@@ -171,8 +178,27 @@
         </div>
     </div>
 
+    <script id="bindPhonePopover.html" type="text/ng-template">
+        <ion-popover-view>
+            <ion-header-bar>
+                <h1 class="title">绑定手机，免费畅聊</h1>
+            </ion-header-bar>
+            <ion-content>
+                <div class="list">
+                    <label class="item item-input">
+                        <input type="number" ng-model="phoneInfo.phone" placeholder="请输入您的手机号码" max="19999999999" min="13000000000">
+                    </label>
+                    <button class="button button-positive button-block" ng-disabled="!phoneInfo.phone || codeTitle != '获取验证码'" ng-click="getCode()">{{codeTitle}}</button>
+                    <label class="item item-input">
+                        <input type="number" ng-model="phoneInfo.code" placeholder="请输入验证码" max="999999" min="100000">
+                    </label>
+                    <button class="button button-balanced button-block mt20" ng-disabled="!phoneInfo.phone || !phoneInfo.code" ng-click="bindPhone()">立即绑定</button>
+                </div>
+            </ion-content>
+        </ion-popover-view>
+    </script>
 
-    <script id="detailBriModal.html" type="text/ng-template">
+   <!-- <script id="detailBriModal.html" type="text/ng-template">
         <ion-modal-view class="detailBg" ng-controller="message.childDetailBriController">
             <div class="bri_big">
             <span class="bri_closeBtn" ng-click="detailBriModal.hide()">
@@ -264,5 +290,8 @@
                 </div>
             </ion-content>
         </ion-modal-view>
-    </script>
+    </script>-->
+
+
+
 </ion-view>

@@ -1725,6 +1725,10 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
 
         // 关注
         $scope.addFollow = function () {
+            if(followData.user_id == followData.follow_id){
+                ar.saveDataAlert($ionicPopup,'您不能关注自己');
+                return;
+            }
             api.save('/wap/follow/add-follow', followData).success(function (res) {
                 if (res.data) {
                     $scope.formData.isfollow = true;
@@ -3386,6 +3390,10 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
         });
         // 举报
         $scope.report = function () {
+            if(followData.user_id == followData.follow_id){
+                ar.saveDataAlert($ionicPopup,'您不能举报自己');
+                return;
+            }
             var hideSheet = $ionicActionSheet.show({
                 buttons: [
                     {text: '诽谤辱骂'},
@@ -3429,6 +3437,11 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
         // 拉黑
         $scope.pullTheBlack = function () {
             if ($scope.formData.pullBlack) {
+                if(followData.user_id == followData.follow_id){
+                    ar.saveDataAlert($ionicPopup,'您不能拉黑自己');
+                    $scope.formData.pullBlack = false;
+                    return;
+                }
                 var confirm = ar.saveDataConfirm($ionicPopup, '确定将对方拉黑吗？拉黑后在“个人-隐私设置-黑名单”中解除。');
                 confirm.then(function (r) {
                     if (r) {  // 确定拉黑

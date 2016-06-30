@@ -16,7 +16,7 @@
 
     <ion-content class="has-header bhy-has-footer message">
         <ion-list>
-            <ion-item ng-repeat="messageInfo in messageList track by messageInfo.username | filter:messageFilter" item="item"
+            <ion-item ng-repeat="messageInfo in messageList track by messageInfo.id"
                       href="#/chat1?id={{messageInfo.other}}&head_pic={{messageInfo.info.head_pic}}&real_name={{messageInfo.info.real_name}}&sex={{messageInfo.sex}}&age={{messageInfo.info.age}}">
                 <div class="row">
                     <div class="msg_u_img mr20 pr fl">
@@ -70,4 +70,5 @@
             <p>约会</p>
         </a>
     </ion-footer-bar>
+
 </ion-view>

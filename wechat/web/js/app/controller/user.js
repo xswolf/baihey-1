@@ -59,8 +59,6 @@ define(['app/module', 'app/directive/directiveApi'
             api.sendCodeMsg($scope.User.mobile).success(function (res) {
                 if (res.status < 1) {
                     ar.saveDataAlert($ionicPopup, res.msg);
-                    $interval.cancel(timer);
-                    return;
                 }
             });
         }
