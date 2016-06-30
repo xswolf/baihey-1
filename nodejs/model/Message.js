@@ -12,6 +12,7 @@ function Message() {
         conn.query(sql , [msg.send_user_id,msg.receive_user_id,msg.message,this.getMessageType(msg.type),time,msg.status] , function (err ,res) {
             if(err) {
                 console.error(err);
+                conn.end();
                 return;
             }
             callback(err, res);
