@@ -17,7 +17,7 @@ class Feedback extends Base
     public function addFeedback($user_id, $data)
     {
         $data['user_id'] = $user_id;
-        $data['creat_time'] = time();
+        $data['create_time'] = time();
         $row = $this->getDb()->createCommand()
             ->insert(static::tableName(), $data)
             ->execute();

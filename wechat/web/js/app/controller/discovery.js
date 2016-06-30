@@ -49,16 +49,18 @@ define(['app/module', 'app/directive/directiveApi'
                     cancel: function () {
                     },
                     buttonClicked: function (index, btnObj) {
-                        if (btnObj.text = '屏蔽') {
+                        if (btnObj.text == '屏蔽') {
                             $scope.display.push(id);
                             ar.setStorage('display', $scope.display);
-                            $scope.display.splice(index, 1);
+                            $scope.discoveryList.splice(index, 1);
                             // 将参数ID存入localStorage：display
                         }
-                        if (btnObj.text = '举报') {
-                            $location.url('/member/report?title=动态&tempUrl=' + $location.$$url);
+                        if (btnObj.text == '举报') {
+                            $location.url('/member/report?id=' + id + '&type=2&title=动态&tempUrl=' + $location.$$url);
                         }
-                        if (btnObj.text = '删除') {
+                        if (btnObj.text == '删除') {
+                            $scope.display.push(id);
+                            ar.setStorage('display', $scope.display);
                             $scope.discoveryList.splice(index, 1);
                             // 改变状态 api.save    TODO
 
