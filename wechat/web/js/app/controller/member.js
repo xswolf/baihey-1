@@ -41,6 +41,11 @@ define(['app/module', 'app/router', 'app/directive/directiveApi'
 
         // 查询当前用户是否发过动态。
         $scope.discoveryNumber = 0;
+        api.list('/wap/member/get-dynamic-list', {user_id: $scope.userInfo.id}).success(function (res) {
+            if (res.status) {
+                $scope.discoveryNumber = res.data.length;
+            }
+        });
 
     }]);
 
