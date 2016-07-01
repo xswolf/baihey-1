@@ -299,16 +299,8 @@ define(['app/module', 'app/directive/directiveApi'
             $scope.reportData = {};
             $scope.formData = {};
             $scope.formData.auth = 1;
-            $scope.discovery = {};
-            if ($location.$$search.id && $location.$$search.id != '0') {   // 如果有参数id，编辑
-                api.get('url', {id: $location.$$search.id}).success(function (res) {
-                    $scope.discovery = res.data;
-                })
-
-            } else {                       // 否则是新增
-
-
-            }
+            $scope.discovery = [];
+            $scope.discovery.imgList = [];
 
             // 发布动态
             $scope.imgList = [];
@@ -373,8 +365,9 @@ define(['app/module', 'app/directive/directiveApi'
                 $scope.formData.pic = JSON.stringify($scope.imgList);
                 api.save('/wap/member/add-user-dynamic', $scope.formData).success(function (res) {
                     ar.saveDataAlert($ionicPopup, res.msg);
-                    $scope.releasedClose();    // 关闭modal
-                    amezeui.gallery.init(); // 初始化相册插件
+                    if(res.status) {
+                        $location.url('/member/discovery');
+                    }
                 })
             }
 

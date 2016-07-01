@@ -3,21 +3,21 @@
     <link href="/wechat/web/js/plugin/amezeui/css/amazeui.min.css" rel="stylesheet">
     <ion-header-bar>
         <h1 class="title">发布动态</h1>
-        <button class="button button-icon cor21" ng-disabled="!discovery.content" ng-click="saveData()">发布</button>
+        <button class="button button-icon cor21" ng-disabled="!formData.content" ng-click="saveData()">发布</button>
     </ion-header-bar>
     <ion-content class="bg5">
         <ion-list>
             <ion-item class="mt10">
                 <div class="gallery_handle clearfix" data-am-widget="gallery" data-am-gallery="{pureview:true}">
-                    <div class="imgItem" ng-repeat="img in discovery.imgList">
+                    <div class="imgItem" ng-repeat="img in imgList">
                         <img src="{{img.thumb_path}}" data-rel="{{img.thumb_path | picture}}">
                     </div>
-                    <div class="imgItem add" ng-click="addNewImg()" ng-if="discovery.imgList < 7">
+                    <div class="imgItem add" ng-click="addNewImg()" ng-if="imgList.length < 7">
                         <i class="icon ion-plus-round"></i>
                     </div>
                 </div>
                         <textarea class="dis_taInput" placeholder="想说点什么？"
-                                  ng-model="discovery.content" maxlength="500"></textarea>
+                                  ng-model="formData.content" maxlength="500"></textarea>
             </ion-item>
             <input id="pic_fileInput" type="file" nv-file-select="" uploader="uploader"
                    style="visibility: hidden; display: none;" accept="image/*">
