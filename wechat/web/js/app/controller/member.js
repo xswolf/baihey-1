@@ -307,9 +307,12 @@ define(['app/module', 'app/directive/directiveApi'
     }]);
 
     // 发布动态
-    module.controller("member.discovery_add", ['app.serviceApi', '$scope', '$ionicPopup', '$location', '$ionicActionSheet', function (api, $scope, $ionicPopup, $location, $ionicActionSheet) {
+    module.controller("member.discovery_add", ['app.serviceApi', '$scope', '$ionicPopup', '$location', '$ionicActionSheet','FileUploader', function (api, $scope, $ionicPopup, $location, $ionicActionSheet,FileUploader) {
         requirejs(['amezeui', 'amezeui_ie8'], function (amezeui, amezeui_ie8) {
             amezeui.gallery.init();
+            $scope.reportData = {};
+            $scope.formData = {};
+            $scope.formData.auth = 1;
             $scope.discovery = {};
             if ($location.$$search.id && $location.$$search.id != '0') {   // 如果有参数id，编辑
                 api.get('url', {id: $location.$$search.id}).success(function (res) {
@@ -321,41 +324,77 @@ define(['app/module', 'app/directive/directiveApi'
 
             }
 
-            amezeui.gallery.init();
-            // 点赞
-            $scope.clickLike = function (id) {
+            // 发布动态
+            $scope.imgList = [];
+            // 实例化上传图片插件
+            var uploader = $scope.uploader = new FileUploader({
+                url: '/wap/file/thumb'
+            });
 
+            $scope.showLoading = function (progress) {
+                $ionicLoading.show({
+                    template: '<p class="tac">上传中...</p><p class="tac">' + progress + '%</p>'
+                });
+            };
+
+            $scope.hideLoading = function () {
+                $ionicLoading.hide();
             }
 
-            // 更多功能
-            $scope.more = function (id) {
-                if (id) { //判断该条动态是否被举报
-                    return false;
-                }
-                var hideSheet = $ionicActionSheet.show({
-                    buttons: [
-                        {text: '编辑'},
-                        {text: '删除'},
-                    ],
-                    titleText: '更多',
-                    cancelText: '取消',
-                    cancel: function () {
-                    },
-                    buttonClicked: function (index, btnObj) {
-                        if (index == 0) {   // 编辑
+            var id = 0;
+            $scope.addNewImg = function () {
+                var e = document.getElementById("pic_fileInput");
+                var ev = document.createEvent("MouseEvents");
+                ev.initEvent("click", true, true);
+                e.dispatchEvent(ev);
 
-                        }
-                        if (index == 1) {   // 删除
-
+                uploader.filters.push({
+                    name: 'file-type-Res',
+                    fn: function (item) {
+                        if (!ar.msg_file_res_img(item)) {   // 验证文件是否是图片格式
+                            ar.saveDataAlert($ionicPopup, '只能上传图片类型的文件！');
+                            return false;
                         }
                         return true;
                     }
                 });
+
+                uploader.onAfterAddingFile = function (fileItem) {  // 选择文件后
+                    fileItem.upload();   // 上传
+                };
+                uploader.onProgressItem = function (fileItem, progress) {   //进度条
+                    $scope.showLoading(progress);    // 显示loading
+                };
+                uploader.onSuccessItem = function (fileItem, response, status, headers) {  // 上传成功
+                    if (response.status > 0) {
+                        $scope.imgList.push({id: id + 1, thumb_path: response.thumb_path});
+                    } else {
+                        ar.saveDataAlert($ionicPopup, '上传图片失败！');
+                    }
+                };
+                uploader.onErrorItem = function (fileItem, response, status, headers) {  // 上传出错
+                    ar.saveDataAlert($ionicPopup, '上传图片出错！');
+                    $scope.hideLoading();  // 隐藏loading
+                };
+                uploader.onCompleteItem = function (fileItem, response, status, headers) {  // 上传结束
+                    $scope.hideLoading();  // 隐藏loading
+                };
+                amezeui.gallery.init();
+            }
+
+            // 发布动态
+            $scope.saveData = function () {
+                var userInfo = ar.getStorage('userInfo');
+                $scope.formData.name = JSON.parse(userInfo.info).real_name;
+                $scope.formData.pic = JSON.stringify($scope.imgList);
+                api.save('/wap/member/add-user-dynamic', $scope.formData).success(function (res) {
+                    ar.saveDataAlert($ionicPopup, res.msg);
+                    $scope.releasedClose();    // 关闭modal
+                    amezeui.gallery.init(); // 初始化相册插件
+                })
             }
 
         });
-
-
     }]);
     // 个性签名
     module.controller("member.signature", ['app.serviceApi', '$scope', '$ionicPopup', '$location', function (api, $scope, $ionicPopup, $location) {
