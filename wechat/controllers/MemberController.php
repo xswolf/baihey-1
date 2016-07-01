@@ -156,10 +156,10 @@ class MemberController extends BaseController
     public function actionGetDynamicList()
     {
         isset($this->get['page']) ? $page = $this->get['page'] : $page = 0;
-        isset($this->get['user_id']) ? $userId = $this->get['user_id'] : $userId = -1;
         isset($this->get['limit']) ? $limit = $this->get['limit'] : $limit = 5;
+        isset($this->get['user_id']) ? $userId = $this->get['user_id'] : $userId = -1;
 
-        $list = UserDynamic::getInstance()->getDynamicList($userId, $page ,$limit);
+        $list = UserDynamic::getInstance()->getDynamicList($userId, $page, $limit);
         $this->renderAjax(['status' => 1, 'data' => $list]);
     }
 

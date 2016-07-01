@@ -285,7 +285,7 @@ define(['app/module', 'app/directive/directiveApi'
                             user_id: userInfo.id,
                             headPic: info.head_pic,
                             name: info.real_name,
-                            private: $scope.user.private == 'true' ? 1 : 0,
+                            private: $scope.formData.private == 'true' ? 1 : 0,
                             create_time: res.data.create_time,
                             content: $scope.formData.content
                         });

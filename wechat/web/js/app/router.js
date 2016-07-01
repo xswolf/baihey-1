@@ -319,9 +319,9 @@ define(["app/module", 'app/service/serviceApi', 'jquery'],
                 }
 
                 // 拉黑等信息
-                $scope.tuthDataFilter = [];
+                $scope.authDataFilter = [];
                 api.list('/wap/user/index-is-show-data', []).success(function (res) {
-                    $scope.tuthDataFilter = res.data;
+                    $scope.authDataFilter = res.data;
                 });
 
                 // 设置用户信息跳转至资料页
