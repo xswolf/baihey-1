@@ -216,6 +216,7 @@ define(["app/module", 'app/service/serviceApi', 'jquery'],
 
                                             messageList[i].message = $rootScope.historyListHide[$rootScope.historyListHide.length - 1].message
                                         }
+                                        $rootScope.msgNumber = $rootScope.msgNumber - messageList[i].sumSend;
                                         flag = false;
                                     }
                                 }
@@ -233,7 +234,7 @@ define(["app/module", 'app/service/serviceApi', 'jquery'],
                                 messageList.push($rootScope.receiveUserInfo);
                             }
                             $rootScope.messageList = messageList;
-                            $rootScope.msgNumber = 0;
+
                             ar.setStorage('messageList', messageList);
 
                         }
