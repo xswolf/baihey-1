@@ -10,7 +10,7 @@
     <ion-content class="com_w_100 bhy discovery bg5">
         <div class="list">
             <div class="mt10 item item-thumbnail-left" ng-repeat="dis in discoveryList | filter:indexFilter | limitTo:pageSize">
-                <img class="cp" ng-src="{{dis.head_pic | isNull}}" ng-click="jump('/userInfo?userId={{dis.user_id}}')" onerror="this.src='/wechat/web/images/no_img.png'">
+                <img class="cp" ng-src="{{dis.head_pic | isNull}}" onerror="this.src='/wechat/web/images/no_img.png'">
                 <h2>
                     <span class="fl" ng-if="dis.name">{{dis.name | sex:dis.sex:dis:age}}</span>
                     <span class="fl" ng-if="!dis.name">会员{{dis.user_id}}</span>
@@ -28,7 +28,7 @@
                     data-am-widget="gallery" data-am-gallery="{ pureview: true }">
                     <li ng-repeat="img in dis.imgList">
                         <div class="am-gallery-item">
-                            <img src="{{img.thumb_path}}" data-rel="{{img.thumb_path | picture}}" alt=".">
+                            <img src="http://192.168.0.108{{img.thumb_path}}" data-rel="{{img.thumb_path | picture}}">
                         </div>
                     </li>
                 </ul>

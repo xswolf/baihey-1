@@ -181,12 +181,10 @@ define(['app/module', 'app/directive/directiveApi'
     // 个人动态
     module.controller("member.discovery", ['app.serviceApi', '$scope', '$ionicPopup', '$location', '$ionicModal', '$ionicActionSheet', function (api, $scope, $ionicPopup, $location, $ionicModal, $ionicActionSheet) {
         requirejs(['amezeui', 'amezeui_ie8'], function (amezeui, amezeui_ie8) {
-            amezeui.gallery.init();
             $scope.reportData = {};
             $scope.formData = {};
             $scope.formData.auth = 1;
             $scope.discoveryList = [];
-
 
             api.list('/wap/member/get-dynamic-list', {
                 user_id: $scope.userInfo.id,
@@ -204,6 +202,7 @@ define(['app/module', 'app/directive/directiveApi'
                 $scope.discoveryList = res.data;
             });
 
+            amezeui.gallery.init();
             //用户已屏蔽的动态id，从localStorage获取
             $scope.display = ar.getStorage('display') ? ar.getStorage('display') : [];
             // 发现列表过滤条件：黑名单
@@ -216,7 +215,6 @@ define(['app/module', 'app/directive/directiveApi'
             }
 
             $scope.more = function (isUser, id, index) {
-
                 $ionicActionSheet.show({
                     buttons: [
                         {text: '删除'}
@@ -263,25 +261,13 @@ define(['app/module', 'app/directive/directiveApi'
                 if ($scope.pageSize > $scope.discoveryList.length) {
                     $scope.isMore = false;
                 }
+                amezeui.gallery.init();
                 $scope.$broadcast('scroll.infiniteScrollComplete');
             }
 
             // 是否还有更多
             $scope.moreDataCanBeLoaded = function () {
                 return $scope.isMore;
-            };
-
-            $ionicModal.fromTemplateUrl('released.html', {
-                scope: $scope,
-                animation: 'slide-in-up'
-            }).then(function (modal) {
-                $scope.releasedModal = modal;
-            });
-            $scope.releasedOpen = function () {
-                $scope.releasedModal.show();
-            };
-            $scope.releasedClose = function () {
-                $scope.releasedModal.hide();
             };
 
         });
@@ -299,8 +285,6 @@ define(['app/module', 'app/directive/directiveApi'
             $scope.reportData = {};
             $scope.formData = {};
             $scope.formData.auth = 1;
-            $scope.discovery = [];
-            $scope.discovery.imgList = [];
 
             // 发布动态
             $scope.imgList = [];
