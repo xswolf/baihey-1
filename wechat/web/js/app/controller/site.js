@@ -472,7 +472,7 @@ console.log(dataFilter.data);
         }
 
         // 更多功能
-        $scope.more = function (isUser, id) {
+        $scope.more = function (isUser, id, index) {
             var btnList = [
                 {text: '举报'},
                 {text: '屏蔽'}
@@ -489,7 +489,7 @@ console.log(dataFilter.data);
                 cancelText: '取消',
                 cancel: function () {
                 },
-                buttonClicked: function (index, btnObj) {
+                buttonClicked: function (i, btnObj) {
                     if (btnObj.text == '屏蔽') {
                         $scope.display.push(id);
                         ar.setStorage('display', $scope.display);

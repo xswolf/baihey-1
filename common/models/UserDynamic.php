@@ -86,7 +86,7 @@ class UserDynamic extends Base
     {
         $data['user_id'] = $user_id;
         $row = $this->getDb()->createCommand()
-            ->update(static::tableName(),['id' => $id, 'user_id' => $user_id], $data)
+            ->update(static::tableName(), $data, ['id' => $id, 'user_id' => $user_id])
             ->execute();
 
         return $row;

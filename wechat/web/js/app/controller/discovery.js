@@ -51,7 +51,7 @@ define(['app/module', 'app/directive/directiveApi'
                     cancelText: '取消',
                     cancel: function () {
                     },
-                    buttonClicked: function (index, btnObj) {
+                    buttonClicked: function (i, btnObj) {
                         if (btnObj.text == '屏蔽') {
                             $scope.display.push(id);
                             ar.setStorage('display', $scope.display);
