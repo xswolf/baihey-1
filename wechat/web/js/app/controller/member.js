@@ -307,7 +307,10 @@ define(['app/module', 'app/directive/directiveApi'
     }]);
 
     // 发布动态
-    module.controller("member.discovery_add", ['app.serviceApi', '$scope', '$ionicPopup', '$location', '$ionicActionSheet','FileUploader', function (api, $scope, $ionicPopup, $location, $ionicActionSheet,FileUploader) {
+    module.controller("member.discovery_add", ['app.serviceApi', '$scope', '$ionicPopup', '$location', '$ionicActionSheet','FileUploader','$ionicLoading', function (api, $scope, $ionicPopup, $location, $ionicActionSheet,FileUploader,$ionicLoading) {
+        var uploader = $scope.uploader = new FileUploader({
+            url: '/wap/file/thumb'
+        });
         requirejs(['amezeui', 'amezeui_ie8'], function (amezeui, amezeui_ie8) {
             amezeui.gallery.init();
             $scope.reportData = {};
@@ -327,9 +330,7 @@ define(['app/module', 'app/directive/directiveApi'
             // 发布动态
             $scope.imgList = [];
             // 实例化上传图片插件
-            var uploader = $scope.uploader = new FileUploader({
-                url: '/wap/file/thumb'
-            });
+
 
             $scope.showLoading = function (progress) {
                 $ionicLoading.show({
