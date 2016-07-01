@@ -224,6 +224,7 @@ define(['app/module', 'app/directive/directiveApi'
             $scope.isMore = true;
             $scope.pageSize = 5;
             $scope.commentList = [];
+            $scope.isShowCommentList = true;
             $scope.jump = function (id) {
                 if(id == $scope.userInfo.id) {
                     $location.url('/member/information');

@@ -429,7 +429,7 @@ console.log(dataFilter.data);
         $scope.user_id = $location.$$search.userId;
 
         // 根据用户ID获取用户全部动态
-        api.get('/wap/member/get-dynamic-list',{user_id:$scope.user_id, limit:1000}).success(function(res){
+        api.get('/wap/member/get-dynamic-list',{user_id:$scope.user_id, limit:10000}).success(function(res){
             $scope.discoveryList = res.data;
             $scope.user.username = res.data[0].name;
             $scope.user.age = res.data[0].age.replace(/\"/g, '');
@@ -443,17 +443,17 @@ console.log(dataFilter.data);
         //用户已屏蔽的动态id，从localStorage获取
         $scope.display = ar.getStorage('display') ? ar.getStorage('display') : [];
 
-        // 发现列表过滤条件：黑名单
+        // 动态列表过滤条件：关注、举报、屏蔽
         $scope.indexFilter = function (dis) {
             if(dis.fid > 0) {
                 return false;// 动态被举报
             }
             if (dis.auth == '2') {   // 用户设置该条动态为关注的人可见
-                return dataFilter.data.follow.indexOf(dis.user_id) != -1 && $scope.display.indexOf(dis.id) != -1;
+                return dataFilter.data.follow.indexOf(dis.user_id) != -1 && $scope.display.indexOf(dis.id) == -1;
             } else if (dis.auth == '3') {
                 return false;
             }
-            return dataFilter.data.blacked.indexOf(dis.user_id) == -1 && $scope.display.indexOf(dis.id) == -1;
+            return $scope.display.indexOf(dis.id) == -1;
         }
 
         // 点赞
