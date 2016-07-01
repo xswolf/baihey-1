@@ -216,39 +216,22 @@ define(['app/module', 'app/directive/directiveApi'
             }
 
             $scope.more = function (isUser, id, index) {
-                var btnList = [
-                    {text: '举报'},
-                    {text: '屏蔽'}
-                ];
-                if (isUser) {   // 判断该条动态是否所属当前用户
-                    btnList = [
-                        {text: '删除'}
-                    ];
-                }
 
                 $ionicActionSheet.show({
-                    buttons: btnList,
+                    buttons: [
+                        {text: '删除'}
+                    ],
                     titleText: '更多',
                     cancelText: '取消',
                     cancel: function () {
                     },
                     buttonClicked: function (i, btnObj) {
-                        if (btnObj.text == '屏蔽') {
+                        if (i == 0) {
                             $scope.display.push(id);
                             ar.setStorage('display', $scope.display);
-                            $scope.discoveryList.splice(index, 1);
-                            // 将参数ID存入localStorage：display
-                        }
-                        if (btnObj.text == '举报') {
-                            $location.url('/member/report?id=' + id + '&type=2&title=动态&tempUrl=' + $location.$$url);
-                        }
-                        if (btnObj.text == '删除') {
-                            $scope.display.push(id);
-                            ar.setStorage('display', $scope.display);
-                            $scope.discoveryList.splice(index, 1);
                             // 改变状态 api.save
                             api.save('/wap/member/delete-dynamic', {id: id}).success(function (res) {
-
+                                $scope.discoveryList.splice(index, 1);
                             });
                         }
                         return true;
@@ -307,7 +290,7 @@ define(['app/module', 'app/directive/directiveApi'
     }]);
 
     // 发布动态
-    module.controller("member.discovery_add", ['app.serviceApi', '$scope', '$ionicPopup', '$location', '$ionicActionSheet','FileUploader','$ionicLoading', function (api, $scope, $ionicPopup, $location, $ionicActionSheet,FileUploader,$ionicLoading) {
+    module.controller("member.discovery_add", ['app.serviceApi', '$scope', '$ionicPopup', '$location', '$ionicActionSheet', 'FileUploader', '$ionicLoading', function (api, $scope, $ionicPopup, $location, $ionicActionSheet, FileUploader, $ionicLoading) {
         var uploader = $scope.uploader = new FileUploader({
             url: '/wap/file/thumb'
         });

@@ -44,7 +44,7 @@
                href="#/member/honesty"><p class="tips fl"><i class="fl bhy-icon-tips-02 mr5"></i><span class="fl">请您上传身份证</span><i
                     class="fr ion-ios-arrow-right vam fs20"></i></p></a>
             <ion-item class="personal_info mt10"
-                      ng-href="{{discoveryNumber == 0 ? '#/member/discovery_add' : '#/member/discovery'}}">
+                      ng-href="{{discoveryNumber < 1 ? '#/member/discovery_add' : '#/member/discovery'}}">
                 <div class="member_menu_i rounded per">
                     <i class="bhy-icon-member-menu-01"></i>
                 </div>
@@ -52,6 +52,7 @@
                     <p>个人动态</p>
                 </div>
                 <div class="menu_arrow">
+                    <span ng-if="discoveryNumber < 1" class="cor4 fs14 mr10">发布第一条个人动态</span>
                     <i class="ion-ios-arrow-right vam"></i>
                 </div>
             </ion-item>
