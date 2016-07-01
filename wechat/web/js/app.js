@@ -13,7 +13,8 @@ require.config({
         angular_sanitize: 'plugin/angular/angular-sanitize.min',
         angular_ui_router: 'plugin/angular/angular-ui-router.min',
         angular_upload: 'plugin/angular/angular-file-upload.min',
-        ionic:'plugin/ionic/ionic.min',
+        //ionic:'plugin/ionic/ionic.min',
+        ionic:'plugin/ionic/ionic.bundle.min',
         ionic_angular:'plugin/ionic/ionic-angular.min',
         bootstrap:'plugin/bootstrap/bootstrap.min',
         amezeui: 'plugin/amezeui/js/amazeui.min',
@@ -38,10 +39,8 @@ require.config({
     }
 });
 
-require(['angular','ionic'] , function (angular) {
-    require(['angular_animate','ionic_angular','angular_sanitize','angular_ui_router','comm','info_data',"app/controller/listController",'angular_upload','mobiscroll'],function(){
-        'use strict';
-        angular.bootstrap(document,['webApp']);
-    });
+require(['ionic','comm','info_data',"app/controller/listController",'angular_upload','mobiscroll'],function(){
+    'use strict';
+    angular.bootstrap(document,['webApp']);
 });
 
