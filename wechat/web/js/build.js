@@ -39,7 +39,7 @@
                 'ionic',
                 'jquery',
                 'angular_animate',
-                'angular_sanitize',
+                //'angular_sanitize',
                 'angular_ui_router',
                 'angular_upload',
                 'ionic_angular',
