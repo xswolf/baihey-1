@@ -428,9 +428,15 @@ define(['app/module', 'app/directive/directiveApi'
 
             // 根据用户ID获取用户全部动态
             api.get('/wap/member/get-dynamic-list', {user_id: $scope.user_id, limit: 10000}).success(function (res) {
+                for (var i in res.data) {
+                    res.data[i].imgList = JSON.parse(res.data[i].pic);
+                    res.data[i].head_pic = res.data[i].head_pic.replace(/\"/g, '');
+                    res.data[i].level = res.data[i].level.replace(/\"/g, '');
+                    res.data[i].age = res.data[i].age.replace(/\"/g, '');
+                }
                 $scope.discoveryList = res.data;
                 $scope.user.username = res.data[0].name;
-                $scope.user.age = res.data[0].age.replace(/\"/g, '');
+                $scope.user.age = res.data[0].age;
                 $scope.user.sex = res.data[0].sex;
             })
 
