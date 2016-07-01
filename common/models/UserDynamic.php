@@ -48,16 +48,17 @@ class UserDynamic extends Base
             ->from($this->tablePrefix . "user_dynamic d")
             ->innerJoin($this->tablePrefix . 'user_information i', 'd.user_id=i.user_id')
             ->innerJoin($this->tablePrefix . 'user u', 'd.user_id=u.id')
+            ->leftJoin($this->tablePrefix . 'feedback f', 'f.feedback_id = d.id AND f.type = 2 AND f.status = 1')
             ->leftJoin($this->tablePrefix . 'user_click c', 'c.dynamic_id = d.id AND c.user_id =' . $loginUserId)
             ->leftJoin($this->tablePrefix . 'user_photo p', 'p.user_id = d.user_id AND p.is_head = 1 AND p.user_id =' . $loginUserId)
             ->limit($limit)
             ->offset($offset)
-            ->select(["d.*", "u.phone", "i.honesty_value", "json_extract(i.info , '$.level') AS level", "json_extract(i.info , '$.head_pic') AS head_pic", "json_extract(i.info , '$.age') AS age",'u.sex', 'p.thumb_path AS thumb_path', 'p.is_check AS head_status', "c.id as cid"])
+            ->select(["d.*", "u.phone", "i.honesty_value", "json_extract(i.info , '$.level') AS level", "json_extract(i.info , '$.head_pic') AS head_pic", "json_extract(i.info , '$.age') AS age",'u.sex', 'p.thumb_path AS thumb_path', 'p.is_check AS head_status', "c.id as cid", "f.id as fid"])
             ->orderBy("d.create_time desc");
         if ($uid > 0) {
-            return $obj->where(['u.id' => $uid, 'status' => 1])->all();
+            return $obj->where(['u.id' => $uid, 'd.status' => 1])->all();
         } else {
-            return $obj->where(['status' => 1])->all();
+            return $obj->where(['d.status' => 1])->all();
         }
     }
 

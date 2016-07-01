@@ -19,6 +19,9 @@ define(['app/module', 'app/directive/directiveApi'
 
             // 发现列表过滤条件：黑名单
             $scope.indexFilter = function (dis) {
+                if(dis.fid > 0) {
+                    return false;// 动态被举报
+                }
                 if (dis.auth == '2') {   // 用户设置该条动态为关注的人可见
                     return dataFilter.data.follow.indexOf(dis.user_id) != -1 && $scope.display.indexOf(dis.id) != -1;
                 } else if (dis.auth == '3') {
