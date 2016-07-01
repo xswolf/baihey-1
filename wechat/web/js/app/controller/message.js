@@ -16,6 +16,10 @@ define(['app/module', 'app/directive/directiveApi'
          }
          });*/
 
+        // 发现列表过滤条件：黑名单
+        $scope.indexFilter = function (user_id) {
+            return dataFilter.data.blacked.indexOf(user_id) == -1
+        }
 
         $scope.userInfo = {};
         // 获取页面数据
