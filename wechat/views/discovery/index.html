@@ -13,8 +13,8 @@
                 <img class="cp" ng-if="dis.head_status == 1" ng-src="{{dis.head_pic | isNull}}" ng-click="dis.user_id != userInfo.user_id ? jump('/userInfo?userId={{dis.user_id}}') : jump('/member/information')" onerror="this.src='/wechat/web/images/no_img.png'">
                 <img class="cp" ng-if="dis.head_status != 1" src="/wechat/web/images/no_img.png" ng-click="dis.user_id != userInfo.user_id ? jump('/userInfo?userId={{dis.user_id}}') : jump('/member/information')">
                 <h2>
-                    <span class="fl" ng-if="dis.name">{{dis.name | sex:dis.sex:dis:age}}</span>
-                    <span class="fl" ng-if="!dis.name">{{dis.user_id}}</span>
+                    <span class="fl" ng-if="dis.name">{{dis.name | sex:dis.sex:dis.age}}</span>
+                    <span class="fl" ng-if="!dis.name">会员{{dis.user_id}}</span>
                     <span class="fr fs12 cor5">{{dis.create_time*1000 | date:'yyyy-MM-dd HH:mm'}}</span>
                 </h2>
                 <p>
