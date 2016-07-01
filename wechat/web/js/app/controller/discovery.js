@@ -100,7 +100,7 @@ define(['app/module', 'app/directive/directiveApi'
                     user_id: $location.$$search.userId,
                     page: $scope.page
                 }).success(function (res) {  //  查询出所有动态，分页
-                    if (!res.data) {
+                    if (res.data.length < 1) {
                         $scope.isMore = false;
                     }
                     for (var i in res.data) {
@@ -220,6 +220,7 @@ define(['app/module', 'app/directive/directiveApi'
         requirejs(['amezeui', 'amezeui_ie8'], function (amezeui, amezeui_ie8) {
             amezeui.gallery.init(); // 初始化相册插件
             $scope.formData = {};
+            $scope.formData.private = false; // 私密评论默认未选中
             $scope.isMore = true;
             $scope.pageSize = 5;
             $scope.commentList = [];
@@ -266,15 +267,16 @@ define(['app/module', 'app/directive/directiveApi'
                 $scope.dis.like_num = parseInt($scope.dis.like_num) + add;
                 api.save('/wap/member/set-click-like', {dynamicId: dis.id, add: add});
             }
-            $scope.user = [];
-            $scope.user.private = false;
+
             $scope.checkPrivate = function () {
-                $scope.user.private = !$scope.user.private;
+                $scope.formData.private = !$scope.formData.private;
+                if($scope.formData.private){
+                    ar.saveDataAlert($ionicPopup,'私密评论将只有您和该条动态发布者可见此条评论。');
+                }
             }
 
             // 发表评论
             $scope.sendComment = function () {
-                $scope.formData.private = $scope.user.private;
                 $scope.formData.dynamicId = $location.$$search.id;
                 api.save('/wap/member/add-comment', $scope.formData).success(function (res) {
                     if (res.data.id > 0) {
@@ -330,7 +332,6 @@ define(['app/module', 'app/directive/directiveApi'
                                 $location.url('/discovery');
                             });
                         }
-
                         return true;
                     }
                 });

@@ -308,39 +308,52 @@ define(['app/module', 'app/directive/directiveApi'
             $scope.codeTitle = '获取验证码';
             // 获取验证码
             $scope.getCode = function(){
-                var timeTitle = 60;
-                var timer = $interval(function () {
-                    $scope.codeTitle = '重新获取(' + timeTitle + ')';
-                }, 1000, 60);
-                timer.then(function () {
-                    $scope.codeTitle = '获取验证码';
-                    $interval.cancel(timer);
-                }, function () {},
-                function () {
-                    timeTitle -= 1;
-                });
-                // 发送验证码
-                api.sendCodeMsg($scope.phoneInfo.phone).success(function (res) {
-                    if (res.status < 1) {
-                        ar.saveDataAlert($ionicPopup, res.msg);
+                api.getMobileIsExist($scope.phoneInfo.phone).success(function (data) {
+                    if (!data.status) {
+                        ar.saveDataAlert($ionicPopup, data.msg);
+                    }else {
+                        var timeTitle = 60;
+                        var timer = $interval(function () {
+                            $scope.codeTitle = '重新获取(' + timeTitle + ')';
+                        }, 1000, 60);
+                        timer.then(function () {
+                                $scope.codeTitle = '获取验证码';
+                                $interval.cancel(timer);
+                            }, function () {},
+                            function () {
+                                timeTitle -= 1;
+                            });
+                        // 发送验证码
+                        api.sendCodeMsg($scope.phoneInfo.phone).success(function (res) {
+                            if (res.status < 1) {
+                                ar.saveDataAlert($ionicPopup, res.msg);
+                            }
+                        });
                     }
                 });
             }
             // 绑定手机号
             $scope.bindPhone = function(){
-                // 比对验证码
-                api.get('/wap/user/validate-code',$scope.phoneInfo.code).success(function(res){
-                    if(res.status){  // 验证码正确
-                        // 存入数据库  // TODO
-                        api.save('url',$scope.phoneInfo).success(function(res){
-                            if(res.status > 0){
-                                ar.saveDataAlert($ionicPopup,'绑定手机成功！');
+                api.getMobileIsExist($scope.phoneInfo.phone).success(function (data) {
+                    if (!data.status) {
+                        ar.saveDataAlert($ionicPopup, data.msg);
+                    }else {
+                        // 比对验证码
+                        api.validateCode($scope.phoneInfo.code).success(function(res){
+                            if(res.status){  // 验证码正确
+                                api.save('/wap/user/update-user-data',{phone:$scope.phoneInfo.phone}).success(function(res){
+                                    if (res.data) {
+                                        ar.saveDataAlert($ionicPopup, '绑定手机成功');
+                                        $scope.userInfo.phone = $scope.phoneInfo.phone;
+                                        $scope.getUserPrivacyStorage();
+                                    } else {
+                                        ar.saveDataAlert($ionicPopup, '绑定手机失败');
+                                    }
+                                });
                             }else{
-                                ar.saveDataAlert($ionicPopup,'绑定手机失败！');
+                                ar.saveDataAlert($ionicPopup,'验证码错误');
                             }
-                        });
-                    }else{
-                        ar.saveDataAlert($ionicPopup,'验证码错误');
+                        })
                     }
                 })
             }

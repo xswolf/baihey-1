@@ -129,15 +129,6 @@ define(["app/module", 'app/service/serviceApi', 'jquery'],
                         },
                         controllerProvider: function ($stateParams) {
                             return 'member.' + $stateParams.tempName;
-                        },
-                        resolve: {
-                            dataFilter: function ($http) {
-                                return $http({
-                                    method: 'POST',
-                                    url: '/wap/user/index-is-show-data',
-                                    params: {}
-                                });
-                            }
                         }
                     })
                     .state('message', {  // 消息首页

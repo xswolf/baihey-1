@@ -54,11 +54,10 @@
                 <header class="am-comment-hd">
                     <!--<h3 class="am-comment-title">评论标题</h3>-->
                     <div class="am-comment-meta">
-                        <a  ng-click="jump({{comment.user_id}})" class="am-comment-author">{{comment.name | sex:comment.sex:comment:age}}</a>
-                        <a  ng-click="jump({{comment.user_id}})" class="am-comment-author">{{comment.user_id}}</a>
+                        <a ng-click="jump({{comment.user_id}})" class="am-comment-author">{{comment.name | sex:comment.sex:comment:age}}</a>
                         评论于
                         <time>{{comment.create_time * 1000 | date:'yyyy-MM-dd HH:mm'}}</time>
-                        <span class="am-badge am-badge-danger am-round" ng-show="comment.fid > 0">该用户被多次举报</span>
+                        <span class="am-badge am-badge-danger am-round">该用户被多次举报</span>
                     </div>
                 </header>
 
@@ -78,7 +77,7 @@
             <input type="text" multiple id="txt_input" ng-model="formData.content" placeholder="说点什么吧！">
             <label class="private" ng-click="checkPrivate()">
                 <i class="cor24"
-                   ng-class="{true:'ion-android-checkbox-outline',false:'ion-android-checkbox-outline-blank'}[user.private]"></i>
+                   ng-class="{true:'ion-android-checkbox-outline',false:'ion-android-checkbox-outline-blank'}[formData.private]"></i>
                 <span class="cor4">私密</span>
             </label>
         </div>
