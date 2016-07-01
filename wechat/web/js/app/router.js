@@ -106,6 +106,15 @@ define(["app/module", 'app/service/serviceApi', 'jquery'],
                         url: "/index_discovery",
                         templateUrl: "/wechat/views/site/discovery.html",
                         controller: 'site.discovery',
+                        resolve: {
+                            dataFilter: function ($http) {
+                                return $http({
+                                    method: 'POST',
+                                    url: '/wap/user/index-is-show-data',
+                                    params: {}
+                                });
+                            }
+                        }
                     })
                     .state('member', {   // 我
                         url: "/member",
@@ -120,6 +129,15 @@ define(["app/module", 'app/service/serviceApi', 'jquery'],
                         },
                         controllerProvider: function ($stateParams) {
                             return 'member.' + $stateParams.tempName;
+                        },
+                        resolve: {
+                            dataFilter: function ($http) {
+                                return $http({
+                                    method: 'POST',
+                                    url: '/wap/user/index-is-show-data',
+                                    params: {}
+                                });
+                            }
                         }
                     })
                     .state('message', {  // 消息首页
@@ -308,6 +326,12 @@ define(["app/module", 'app/service/serviceApi', 'jquery'],
                     ar.setStorage('userInfo', $scope.userInfo);
                     getUserStorage();
                 }
+
+                // 拉黑等信息
+                $scope.tuthDataFilter = [];
+                api.list('/wap/user/index-is-show-data', []).success(function (res) {
+                    $scope.tuthDataFilter = res.data;
+                });
 
                 // 设置用户信息跳转至资料页
                 $scope.setUserStorage = function () {

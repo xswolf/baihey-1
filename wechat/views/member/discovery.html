@@ -9,11 +9,12 @@
 
     <ion-content class="com_w_100 bhy discovery bg5">
         <div class="list">
-            <div class="mt10 item item-thumbnail-left">
+            <div class="mt10 item item-thumbnail-left" ng-repeat="dis in discoveryList | filter:indexFilter">
                 <img class="cp" ng-src="{{dis.head_pic | isNull}}" ng-click="jump('/userInfo?userId={{dis.user_id}}')" onerror="this.src='/wechat/web/images/no_img.png'">
                 <h2>
-                    <span class="fl">聂先生</span>
-                    <span class="fr fs12 cor5">2016-06-29 10:20:05</span>
+                    <span class="fl" ng-if="dis.name">{{dis.name | sex:dis.sex:dis:age}}</span>
+                    <span class="fl" ng-if="!dis.name">{{dis.user_id}}</span>
+                    <span class="fr fs12 cor5">{{dis.create_time*1000 | date:'yyyy-MM-dd HH:mm'}}</span>
                 </h2>
                 <p>
                     <span class="identity id" ng-if="honesty(dis.honesty_value)">身份证</span>
@@ -22,7 +23,7 @@
                     <span class="identity guest" ng-if="dis.level == 2">贵宾</span>
                     <span class="identity diamond" ng-if="dis.level == 3">钻石</span>
                 </p>
-                <p class="wsn">{{dis.content | textOverflow:300:'...'}}登封市规划局地覆盖i但如果当然广东人登封市规划局地覆盖i但如果当然广东人登封市规划局地覆盖i但如果当然广东人登封市规划局地覆盖i但如果当然广东人登封市规划局地覆盖i但如果当然广东人</p>
+                <p class="wsn">{{dis.content | textOverflow:300:'...'}}</p>
                 <ul class="am-gallery am-avg-sm-3 am-avg-md-3 am-avg-lg-4 am-gallery-default"
                     data-am-widget="gallery" data-am-gallery="{pureview:true}">
                     <li ng-repeat="img in dis.imgList">
@@ -32,19 +33,19 @@
                     </li>
                 </ul>
                 <div class="clearfix mt10 pr">
-                    <span class="fl cp" ng-class="{true:'cor21',false:'cor53'}[1==1]" click-like ng-click="clickLike(dis.id)">
+                    <span class="fl cp" ng-class="{true:'cor21',false:'cor53'}[dis.cid > 0]" click-like ng-click="clickLike(dis)">
                         <i class="ion-thumbsup fs20 vam"></i>
-                        <span class="vam likeNumber dib">10</span>
+                        <span class="vam likeNumber dib">{{dis.like_num}}</span>
                     </span>
                     <span class="fl ml10 cp cor53" ng-click="jump('/discovery_single?id={{dis.id}}')">
                         <i class="ion-chatbubble-working fs20 vam"></i>
-                        <span class="vam">2</span>
+                        <span class="vam">{{dis.comment_num}}</span>
                     </span>
-                    <span class="fr cp cor53" ng-click="more(id)">
+                    <span class="fr cp cor53" ng-click="more(dis.user_id==userInfo.user_id,dis.id,$index)">
                         <i class="ion-more fs20 vam"></i>
                     </span>
                 </div>
-                <div class="disabled_tip">
+                <div class="disabled_tip" ng-if="dis.fid > 0">
                     <span class="tip">该条动态被举报多次</span>
                 </div>
             </div>

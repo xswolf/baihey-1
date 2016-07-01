@@ -179,40 +179,127 @@ define(['app/module', 'app/directive/directiveApi'
     ]);
 
     // 个人动态
-    module.controller("member.discovery", ['app.serviceApi', '$scope', '$ionicPopup', '$location', '$ionicActionSheet', function (api, $scope, $ionicPopup, $location, $ionicActionSheet) {
+    module.controller("member.discovery", ['app.serviceApi', '$scope', '$ionicPopup', '$location', '$ionicModal', '$ionicActionSheet', 'dataFilter', function (api, $scope, $ionicPopup, $location, $ionicModal, $ionicActionSheet, dataFilter) {
         requirejs(['amezeui', 'amezeui_ie8'], function (amezeui, amezeui_ie8) {
             amezeui.gallery.init();
+            $scope.reportData = {};
+            $scope.formData = {};
+            $scope.formData.auth = 1;
+            $scope.discoveryList = [];
 
-            // 点赞
-            $scope.clickLike = function (id) {
-
-            }
-
-            // 更多功能
-            $scope.more = function (id) {
-                if(id){ //判断该条动态是否被举报
+            //用户已屏蔽的动态id，从localStorage获取
+            $scope.display = ar.getStorage('display') ? ar.getStorage('display') : [];
+            // 发现列表过滤条件：黑名单
+            $scope.indexFilter = function (dis) {
+                if (dis.auth == '2') {   // 用户设置该条动态为关注的人可见
+                    return dataFilter.data.follow.indexOf(dis.user_id) != -1 && $scope.display.indexOf(dis.id) != -1;
+                } else if (dis.auth == '3') {
                     return false;
                 }
-                var hideSheet = $ionicActionSheet.show({
-                    buttons: [
-                        {text: '编辑'},
-                        {text: '删除'},
-                    ],
+                return dataFilter.data.blacked.indexOf(dis.user_id) == -1 && $scope.display.indexOf(dis.id) == -1;
+            }
+
+            $scope.jump = function (url) {
+                $location.url(url);
+            }
+
+            $scope.more = function (isUser, id, index) {
+                var btnList = [
+                    {text: '举报'},
+                    {text: '屏蔽'}
+                ];
+                if (isUser) {   // 判断该条动态是否所属当前用户
+                    btnList = [
+                        {text: '删除'}
+                    ];
+                }
+
+                $ionicActionSheet.show({
+                    buttons: btnList,
                     titleText: '更多',
                     cancelText: '取消',
                     cancel: function () {
                     },
                     buttonClicked: function (index, btnObj) {
-                        if (index == 0) {   // 编辑
-                            $location.url('/member/discovery_add?id='+id);
+                        if (btnObj.text == '屏蔽') {
+                            $scope.display.push(id);
+                            ar.setStorage('display', $scope.display);
+                            $scope.discoveryList.splice(index, 1);
+                            // 将参数ID存入localStorage：display
                         }
-                        if (index == 1) {   // 删除
+                        if (btnObj.text == '举报') {
+                            $location.url('/member/report?id=' + id + '&type=2&title=动态&tempUrl=' + $location.$$url);
+                        }
+                        if (btnObj.text == '删除') {
+                            $scope.display.push(id);
+                            ar.setStorage('display', $scope.display);
+                            $scope.discoveryList.splice(index, 1);
+                            // 改变状态 api.save
+                            api.save('/wap/member/delete-dynamic', {id:id}).success(function (res) {
 
+                            });
                         }
                         return true;
                     }
                 });
             }
+            // 点赞
+            $scope.clickLike = function (dis) {
+                var i = ar.getArrI($scope.discoveryList, 'id', dis.id);
+                var add = 0;
+                if ($scope.discoveryList[i].cid > 0) {
+                    add = -1;
+                    $scope.discoveryList[i].cid = -1;
+                } else {
+                    add = 1;
+                    $scope.discoveryList[i].cid = 1;
+                }
+                $scope.discoveryList[i].like_num = parseInt($scope.discoveryList[i].like_num) + add;
+
+                api.save('/wap/member/set-click-like', {dynamicId: dis.id, add: add}); // 请测试功能是否正常。
+
+            }
+
+            $scope.page = 0;
+            $scope.isMore = true;
+            // 加载更多
+            $scope.loadMore = function () {
+                api.list('/wap/member/get-dynamic-list', {
+                    user_id:$scope.userInfo.id,
+                    page: $scope.page
+                }).success(function (res) {  //  查询出所有动态，分页
+                    if (!res.data) {
+                        $scope.isMore = false;
+                    }
+                    for (var i in res.data) {
+                        res.data[i].imgList = JSON.parse(res.data[i].pic);
+                        res.data[i].head_pic = res.data[i].head_pic.replace(/\"/g, '');
+                        res.data[i].level = res.data[i].level.replace(/\"/g, '');
+                        res.data[i].age = res.data[i].age.replace(/\"/g, '');
+                        $scope.discoveryList.push(res.data[i]);
+                    }
+                    $scope.$broadcast('scroll.infiniteScrollComplete');
+                })
+                $scope.page += 1;
+            };
+
+            // 是否还有更多
+            $scope.moreDataCanBeLoaded = function () {
+                return $scope.isMore;
+            };
+
+            $ionicModal.fromTemplateUrl('released.html', {
+                scope: $scope,
+                animation: 'slide-in-up'
+            }).then(function (modal) {
+                $scope.releasedModal = modal;
+            });
+            $scope.releasedOpen = function () {
+                $scope.releasedModal.show();
+            };
+            $scope.releasedClose = function () {
+                $scope.releasedModal.hide();
+            };
 
         });
 
