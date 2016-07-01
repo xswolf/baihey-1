@@ -7,7 +7,9 @@
         jquery: 'plugin/jquery/jquery',
         angular: 'plugin/angular/angular.min',
         "angular-route": "plugin/angular/angular-route",
-        bootstrap:'plugin/bootstrap/bootstrap.min'
+        bootstrap:'plugin/bootstrap/bootstrap.min',
+        ionic:'plugin/ionic/ionic.min',
+        "ionic-angular":"plugin/angular/ionic-angular",
     },
     shim: {
         angular:{
@@ -21,6 +23,6 @@
             exports:"jquery"
         }
     },
-    name: "app.js",
+    name: "app/controller/listController.js",
     out: "build.js"
 })

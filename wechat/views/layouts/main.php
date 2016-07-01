@@ -19,7 +19,10 @@
     <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <script src="http://css3-mediaqueries-js.googlecode.com/svn/trunk/css3-mediaqueries.js"></script><![endif]-->
 </head>
+<script src="/wechat/web/js/plugin/angular/angular.min.js"></script>
+<script src="/wechat/web/js/plugin/ionic/ionic.min.js"></script>
 <script data-main="/wechat/web/js/app" src="/wechat/web/js/plugin/requirejs/require.js"></script>
+<!--<script data-main="/wechat/web/js/build" src="/wechat/web/js/plugin/requirejs/require.js"></script>-->
 <body ng-controller="main">
 <script>
     if (location.hash == '#/index') {

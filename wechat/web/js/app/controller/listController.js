@@ -3,6 +3,7 @@
  */
 
 define([
+    'app/router',
     'app/controller/user',
     'app/controller/site',
     'app/controller/message',

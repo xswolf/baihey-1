@@ -2,7 +2,7 @@
  * Created by Administrator on 2016/3/22.
  */
 
-define(['app/module', 'app/router', 'app/directive/directiveApi'
+define(['app/module', 'app/directive/directiveApi'
     , 'app/service/serviceApi', 'config/area'
 ], function (module) {
 
