@@ -2,13 +2,13 @@
     <link href="/wechat/web/css/member.css" rel="stylesheet">
     <ion-header-bar class="com_w_100 bhy">
         <title class="title">验证原手机</title>
-        <button class="button button-icon cor21" ng-disabled="!formData.phone || !formData.code" ng-click="saveData()">保存</button>
+        <button class="button button-icon cor21" ng-disabled="!formData.phone || !formData.code" ng-click="next()">下一步</button>
     </ion-header-bar>
     <ion-content class="bhy com_w_100 m_bg security">
         <ion-list>
             <ion-item class="item item-input">
-                <span class="input-label" style="width: 20%">手机号</span>
-                <input type="number" ng-model="formData.phone" max="19999999999" min="13000000000" placeholder="请输入手机号码">
+                <span class="input-label" style="width: 20%">旧手机号码</span>
+                <input type="number" ng-model="formData.phone" max="19999999999" min="13000000000" placeholder="请输入旧手机号码">
             </ion-item>
             <ion-item class="item item-input">
                 <span class="input-label" style="width: 20%">验证码</span>

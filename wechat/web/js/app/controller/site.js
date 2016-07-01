@@ -416,8 +416,6 @@ console.log(dataFilter.data);
             }
         }
 
-
-
     }]);
 
     // 查看会员资料-会员动态
@@ -435,8 +433,6 @@ console.log(dataFilter.data);
             $scope.discoveryList = res.data;
             $scope.username = $scope.discoveryList[0].real_name;
         })
-
-
 
         // 过滤被举报并且处理成功的数据和当前登录用户屏蔽的数据。
         $scope.dataFilter = function(){

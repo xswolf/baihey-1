@@ -288,7 +288,6 @@ define(["app/module", 'app/service/serviceApi', 'jquery'],
                 $urlRouterProvider.otherwise("/index");
             }])
             .controller('main', ['$scope', '$location', 'app.serviceApi', '$ionicLoading', '$ionicPopup','$rootScope', function ($scope, $location, api, $ionicLoading, $ionicPopup,$rootScope) {
-
                 $rootScope.$on('msgNumber' , function () {
                     $scope.msgNumber = $rootScope.msgNumber;
                 })

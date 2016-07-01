@@ -17,7 +17,7 @@
                     <i class="ion-ios-arrow-right vam"></i>
                 </div>
             </ion-item>
-            <ion-item class="item" ng-if="!userInfo.phone" ng-href="{{userInfo.phone ? '#/member/edit_phone' : '#/member/security_phone'}}">
+            <ion-item class="item" ng-href="{{userInfo.phone ? '#/member/edit_phone' : '#/member/security_phone'}}">
                 <div class="security_menu_i rounded phone">
                     <i class="ion-android-phone-portrait"></i>
                 </div>
@@ -25,19 +25,8 @@
                     <p>手机绑定</p>
                 </div>
                 <div class="menu_arrow">
-                    <span class="cor5 fs14 mr15 vam" ng-show="!userInfo.phone">未绑定</span>
-                    <i class="ion-ios-arrow-right vam"></i>
-                </div>
-            </ion-item>
-            <ion-item class="item"  ng-if="userInfo.phone" href="#/member/edit_phone">
-                <div class="security_menu_i rounded phone">
-                    <i class="ion-android-phone-portrait"></i>
-                </div>
-                <div class="menu_name">
-                    <p>手机绑定</p>
-                </div>
-                <div class="menu_arrow">
-                    <span class="cor5 fs14 mr15 vam" ng-show="userInfo.phone">已绑定 {{userInfo.phone | cut: true:3:'********'}}</span>
+                    <span class="cor5 fs14 mr15 vam" ng-if="!userInfo.phone">立即绑定</span>
+                    <span class="cor5 fs14 mr15 vam" ng-if="userInfo.phone">已绑定 {{userInfo.phone | cut: true:3:'********'}}，点击更换绑定</span>
                     <i class="ion-ios-arrow-right vam"></i>
                 </div>
             </ion-item>
@@ -50,7 +39,7 @@
                 </div>
                 <div class="menu_arrow">
                     <span class="cor5 fs14 mr15 vam" ng-if="userInfo.info.wechat">已绑定 {{userInfo.info.wechat}}</span>
-                    <span class="cor5 fs14 mr15 vam" ng-if="!userInfo.info.wechat">未绑定</span>
+                    <span class="cor5 fs14 mr15 vam" ng-if="!userInfo.info.wechat">立即绑定</span>
                     <i class="ion-ios-arrow-right vam"></i>
                 </div>
             </ion-item>
@@ -63,7 +52,7 @@
                 </div>
                 <div class="menu_arrow">
                     <span class="cor5 fs14 mr15 vam" ng-if="userInfo.info.wechat">已绑定 {{userInfo.info.qq}}</span>
-                    <span class="cor5 fs14 mr15 vam" ng-if="!userInfo.info.wechat">未绑定</span>
+                    <span class="cor5 fs14 mr15 vam" ng-if="!userInfo.info.wechat">立即绑定</span>
                     <i class="ion-ios-arrow-right vam"></i>
                 </div>
             </ion-item>

@@ -179,7 +179,7 @@ define(['app/module', 'app/directive/directiveApi'
     ]);
 
     // 个人动态
-    module.controller("member.discovery", ['app.serviceApi', '$scope', '$ionicPopup', '$location', '$ionicModal', '$ionicActionSheet',  function (api, $scope, $ionicPopup, $location, $ionicModal, $ionicActionSheet) {
+    module.controller("member.discovery", ['app.serviceApi', '$scope', '$ionicPopup', '$location', '$ionicModal', '$ionicActionSheet', function (api, $scope, $ionicPopup, $location, $ionicModal, $ionicActionSheet) {
         requirejs(['amezeui', 'amezeui_ie8'], function (amezeui, amezeui_ie8) {
             amezeui.gallery.init();
             $scope.reportData = {};
@@ -187,16 +187,28 @@ define(['app/module', 'app/directive/directiveApi'
             $scope.formData.auth = 1;
             $scope.discoveryList = [];
 
+
+            api.list('/wap/member/get-dynamic-list', {
+                user_id: $scope.userInfo.id,
+                limit: 10000
+            }).success(function (res) {  // 查询出所有动态
+                if (res.data.length < 1) {
+                    $scope.isMore = false;
+                }
+                for (var i in res.data) {
+                    res.data[i].imgList = JSON.parse(res.data[i].pic);
+                    res.data[i].head_pic = res.data[i].head_pic.replace(/\"/g, '');
+                    res.data[i].level = res.data[i].level.replace(/\"/g, '');
+                    res.data[i].age = res.data[i].age.replace(/\"/g, '');
+                }
+                $scope.discoveryList = res.data;
+            });
+
             //用户已屏蔽的动态id，从localStorage获取
             $scope.display = ar.getStorage('display') ? ar.getStorage('display') : [];
             // 发现列表过滤条件：黑名单
             $scope.indexFilter = function (dis) {
-                if (dis.auth == '2') {   // 用户设置该条动态为关注的人可见
-                    return dataFilter.data.follow.indexOf(dis.user_id) != -1 && $scope.display.indexOf(dis.id) != -1;
-                } else if (dis.auth == '3') {
-                    return false;
-                }
-                return dataFilter.data.blacked.indexOf(dis.user_id) == -1 && $scope.display.indexOf(dis.id) == -1;
+                return $scope.display.indexOf(dis.id) == -1;
             }
 
             $scope.jump = function (url) {
@@ -235,7 +247,7 @@ define(['app/module', 'app/directive/directiveApi'
                             ar.setStorage('display', $scope.display);
                             $scope.discoveryList.splice(index, 1);
                             // 改变状态 api.save
-                            api.save('/wap/member/delete-dynamic', {id:id}).success(function (res) {
+                            api.save('/wap/member/delete-dynamic', {id: id}).success(function (res) {
 
                             });
                         }
@@ -260,28 +272,16 @@ define(['app/module', 'app/directive/directiveApi'
 
             }
 
-            $scope.page = 0;
+            $scope.pageSize = 5;
             $scope.isMore = true;
             // 加载更多
             $scope.loadMore = function () {
-                api.list('/wap/member/get-dynamic-list', {
-                    user_id:$scope.userInfo.id,
-                    page: $scope.page
-                }).success(function (res) {  //  查询出所有动态，分页
-                    if (!res.data) {
-                        $scope.isMore = false;
-                    }
-                    for (var i in res.data) {
-                        res.data[i].imgList = JSON.parse(res.data[i].pic);
-                        res.data[i].head_pic = res.data[i].head_pic.replace(/\"/g, '');
-                        res.data[i].level = res.data[i].level.replace(/\"/g, '');
-                        res.data[i].age = res.data[i].age.replace(/\"/g, '');
-                        $scope.discoveryList.push(res.data[i]);
-                    }
-                    $scope.$broadcast('scroll.infiniteScrollComplete');
-                })
-                $scope.page += 1;
-            };
+                $scope.pageSize += 5;
+                if ($scope.pageSize > $scope.discoveryList.length) {
+                    $scope.isMore = false;
+                }
+                $scope.$broadcast('scroll.infiniteScrollComplete');
+            }
 
             // 是否还有更多
             $scope.moreDataCanBeLoaded = function () {
@@ -311,12 +311,12 @@ define(['app/module', 'app/directive/directiveApi'
         requirejs(['amezeui', 'amezeui_ie8'], function (amezeui, amezeui_ie8) {
             amezeui.gallery.init();
             $scope.discovery = {};
-            if($location.$$search.id && $location.$$search.id != '0'){   // 如果有参数id，编辑
-                api.get('url',{id:$location.$$search.id}).success(function(res){
+            if ($location.$$search.id && $location.$$search.id != '0') {   // 如果有参数id，编辑
+                api.get('url', {id: $location.$$search.id}).success(function (res) {
                     $scope.discovery = res.data;
                 })
 
-            }else{                       // 否则是新增
+            } else {                       // 否则是新增
 
 
             }
@@ -329,7 +329,7 @@ define(['app/module', 'app/directive/directiveApi'
 
             // 更多功能
             $scope.more = function (id) {
-                if(id){ //判断该条动态是否被举报
+                if (id) { //判断该条动态是否被举报
                     return false;
                 }
                 var hideSheet = $ionicActionSheet.show({
@@ -1817,8 +1817,8 @@ define(['app/module', 'app/directive/directiveApi'
 
         // 关注
         $scope.addFollow = function () {
-            if(followData.user_id == followData.follow_id){
-                ar.saveDataAlert($ionicPopup,'您不能关注自己');
+            if (followData.user_id == followData.follow_id) {
+                ar.saveDataAlert($ionicPopup, '您不能关注自己');
                 return;
             }
             api.save('/wap/follow/add-follow', followData).success(function (res) {
@@ -1921,7 +1921,7 @@ define(['app/module', 'app/directive/directiveApi'
     }]);
 
     // 账户安全
-    module.controller("member.security", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup','$location', function (api, $scope, $timeout, $ionicPopup,$location) {
+    module.controller("member.security", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$location', function (api, $scope, $timeout, $ionicPopup, $location) {
 
         $scope.formData = [];
 
@@ -1961,11 +1961,11 @@ define(['app/module', 'app/directive/directiveApi'
     }]);
 
     // 账户安全-手机绑定
-    module.controller("member.security_phone", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup','$interval', function (api, $scope, $timeout, $ionicPopup,$interval) {
+    module.controller("member.security_phone", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$interval', function (api, $scope, $timeout, $ionicPopup, $interval) {
 
         $scope.formData = {};
         $scope.codeTitle = '获取验证码';
-        $scope.formData.phone =parseInt($scope.userInfo.phone);
+        $scope.formData.phone = parseInt($scope.userInfo.phone);
         // 获取验证码
         $scope.getCode = function () {
             api.getMobileIsExist($scope.formData.phone).success(function (data) {
@@ -1979,7 +1979,8 @@ define(['app/module', 'app/directive/directiveApi'
                     timer.then(function () {
                             $scope.codeTitle = '获取验证码';
                             $interval.cancel(timer);
-                        }, function () {},
+                        }, function () {
+                        },
                         function () {
                             timeTitle -= 1;
                         });
@@ -2003,7 +2004,7 @@ define(['app/module', 'app/directive/directiveApi'
                             ar.saveDataAlert($ionicPopup, '验证码错误');
                             return false;
                         } else {
-                            api.save('/wap/user/update-user-data',{phone:$scope.formData.phone}).success(function (res) {
+                            api.save('/wap/user/update-user-data', {phone: $scope.formData.phone}).success(function (res) {
                                 if (res.data) {
                                     ar.saveDataAlert($ionicPopup, '手机绑定成功');
                                     $scope.userInfo.phone = $scope.formData.phone;
@@ -2022,70 +2023,56 @@ define(['app/module', 'app/directive/directiveApi'
     }]);
 
     // 账户安全-更换手机-验证原手机
-    module.controller("member.edit_phone", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup','$interval', function (api, $scope, $timeout, $ionicPopup,$interval) {
+    module.controller("member.edit_phone", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$interval', '$location', function (api, $scope, $timeout, $ionicPopup, $interval, $location) {
         $scope.formData = {};
         $scope.codeTitle = '获取验证码'
-        $scope.formData.phone =parseInt($scope.userInfo.phone);
         // 获取验证码
         $scope.getCode = function () {
-            api.getMobileIsExist($scope.formData.phone).success(function (data) {
+            if ($scope.formData.phone != parseInt($scope.userInfo.phone)) {
+                ar.saveDataAlert($ionicPopup, '旧手机号码错误！')
+                return false;
+            }
+            var timeTitle = 60;
+            var timer = $interval(function () {
+                $scope.codeTitle = '重新获取(' + timeTitle + ')';
+            }, 1000, 60);
+            timer.then(function () {
+                    $scope.codeTitle = '获取验证码';
+                    $interval.cancel(timer);
+                }, function () {
+                },
+                function () {
+                    timeTitle -= 1;
+                });
+            api.sendCodeMsg($scope.userInfo.phone).success(function (data) {     // 发送验证码
                 if (!data.status) {
-                    ar.saveDataAlert($ionicPopup, data.msg);
-                } else {
-                    var timeTitle = 60;
-                    var timer = $interval(function () {
-                        $scope.codeTitle = '重新获取(' + timeTitle + ')';
-                    }, 1000, 60);
-                    timer.then(function () {
-                            $scope.codeTitle = '获取验证码';
-                            $interval.cancel(timer);
-                        }, function () {},
-                        function () {
-                            timeTitle -= 1;
-                        });
-                    api.sendCodeMsg($scope.formData.phone).success(function (data) {     // 发送验证码
-                        if (!data.status) {
-                            ar.saveDataAlert($ionicPopup, '短信发送失败，请稍后重试。');
-                        }
-                    });
-                }
-            })
-        }
-
-        // 保存
-        $scope.saveData = function () {
-            api.getMobileIsExist($scope.formData.phone).success(function (data) {
-                if (!data.status) {
-                    ar.saveDataAlert($ionicPopup, data.msg);
-                } else {
-                    api.validateCode($scope.formData.code).success(function (res) {
-                        if (!res.status) {
-                            ar.saveDataAlert($ionicPopup, '验证码错误');
-                            return false;
-                        } else {
-                            api.save('/wap/user/update-user-data',{phone:$scope.formData.phone}).success(function (res) {
-                                if (res.data) {
-                                    ar.saveDataAlert($ionicPopup, '手机绑定成功');
-                                    $scope.userInfo.phone = $scope.formData.phone;
-                                    $scope.getUserPrivacyStorage('#/member/security');
-                                } else {
-                                    ar.saveDataAlert($ionicPopup, '手机绑定失败');
-                                }
-                            })
-                        }
-                    })
+                    ar.saveDataAlert($ionicPopup, '短信发送失败，请稍后重试。');
                 }
             });
+        }
 
+        // 下一步
+        $scope.next = function () {
+            if ($scope.formData.phone != parseInt($scope.userInfo.phone)) {
+                ar.saveDataAlert($ionicPopup, '旧手机号码错误！')
+                return false;
+            }
+            api.validateCode($scope.formData.code).success(function (res) {
+                if (!res.status) {
+                    ar.saveDataAlert($ionicPopup, '验证码错误');
+                    return false;
+                } else {
+                    $location.url('/member/edit_phone_new');
+                }
+            })
         }
 
     }]);
 
     // 账户安全-更换手机-绑定新手机
-    module.controller("member.edit_phone_new", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup','$interval', function (api, $scope, $timeout, $ionicPopup,$interval) {
+    module.controller("member.edit_phone_new", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$interval', '$location', function (api, $scope, $timeout, $ionicPopup, $interval, $location) {
         $scope.formData = {};
         $scope.codeTitle = '获取验证码'
-        $scope.formData.phone =parseInt($scope.userInfo.phone);
         // 获取验证码
         $scope.getCode = function () {
             api.getMobileIsExist($scope.formData.phone).success(function (data) {
@@ -2099,7 +2086,8 @@ define(['app/module', 'app/directive/directiveApi'
                     timer.then(function () {
                             $scope.codeTitle = '获取验证码';
                             $interval.cancel(timer);
-                        }, function () {},
+                        }, function () {
+                        },
                         function () {
                             timeTitle -= 1;
                         });
@@ -2123,13 +2111,13 @@ define(['app/module', 'app/directive/directiveApi'
                             ar.saveDataAlert($ionicPopup, '验证码错误');
                             return false;
                         } else {
-                            api.save('/wap/user/update-user-data',{phone:$scope.formData.phone}).success(function (res) {
+                            api.save('/wap/user/update-user-data', {phone: $scope.formData.phone}).success(function (res) {
                                 if (res.data) {
-                                    ar.saveDataAlert($ionicPopup, '手机绑定成功');
+                                    ar.saveDataAlert($ionicPopup, '绑定成功');
                                     $scope.userInfo.phone = $scope.formData.phone;
                                     $scope.getUserPrivacyStorage('#/member/security');
                                 } else {
-                                    ar.saveDataAlert($ionicPopup, '手机绑定失败');
+                                    ar.saveDataAlert($ionicPopup, '绑定失败');
                                 }
                             })
                         }
@@ -2141,7 +2129,7 @@ define(['app/module', 'app/directive/directiveApi'
 
     }]);
 
-    // 账户安全-微信绑定
+// 账户安全-微信绑定
     module.controller("member.security_wechat", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$location', function (api, $scope, $timeout, $ionicPopup, $location) {
         $scope.formData = [];
         $scope.formData.wechat = $scope.userInfo.info.wechat;
@@ -2163,7 +2151,7 @@ define(['app/module', 'app/directive/directiveApi'
         }
     }]);
 
-    // 账户安全-QQ绑定
+// 账户安全-QQ绑定
     module.controller("member.security_qq", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$location', function (api, $scope, $timeout, $ionicPopup, $location) {
         $scope.formData = [];
         $scope.formData.qq = $scope.userInfo.info.qq;
@@ -2184,7 +2172,7 @@ define(['app/module', 'app/directive/directiveApi'
         }
     }]);
 
-    // 诚信认证
+// 诚信认证
     module.controller("member.honesty", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', function (api, $scope, $timeout, $ionicPopup) {
         if (ar.getCookie('bhy_user_id')) {
             api.list("/wap/user/get-user-info", []).success(function (res) {
@@ -2201,7 +2189,7 @@ define(['app/module', 'app/directive/directiveApi'
         }
     }]);
 
-    // 诚信认证-身份认证
+// 诚信认证-身份认证
     module.controller("member.honesty_sfz", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', 'FileUploader', '$location', function (api, $scope, $timeout, $ionicPopup, FileUploader, $location) {
         api.list('/wap/member/photo-list', {type: 2, pageSize: 2}).success(function (res) {
             $scope.authList = res.data;
@@ -2284,7 +2272,7 @@ define(['app/module', 'app/directive/directiveApi'
         }
     }]);
 
-    // 诚信认证-婚姻认证
+// 诚信认证-婚姻认证
     module.controller("member.honesty_marr", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', 'FileUploader', function (api, $scope, $timeout, $ionicPopup, FileUploader) {
         api.list('/wap/member/photo-list', {type: 4, pageSize: 1}).success(function (res) {
             $scope.authList = res.data;
@@ -2332,7 +2320,7 @@ define(['app/module', 'app/directive/directiveApi'
         });
     }]);
 
-    // 诚信认证-学历认证
+// 诚信认证-学历认证
     module.controller("member.honesty_edu", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', 'FileUploader', function (api, $scope, $timeout, $ionicPopup, FileUploader) {
         api.list('/wap/member/photo-list', {type: 3, pageSize: 1}).success(function (res) {
             $scope.authList = res.data;
@@ -2379,7 +2367,7 @@ define(['app/module', 'app/directive/directiveApi'
         });
     }]);
 
-    // 诚信认证-房产认证
+// 诚信认证-房产认证
     module.controller("member.honesty_housing", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', 'FileUploader', function (api, $scope, $timeout, $ionicPopup, FileUploader) {
         api.list('/wap/member/photo-list', {type: 5, pageSize: 1}).success(function (res) {
             $scope.authList = res.data;
@@ -2426,7 +2414,7 @@ define(['app/module', 'app/directive/directiveApi'
         });
     }]);
 
-    // 开通VIP
+// 开通VIP
     module.controller("member.vip", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$interval', '$location', function (api, $scope, $timeout, $ionicPopup, $interval, $location) {
         $scope.formData = [];
 
@@ -2503,7 +2491,7 @@ define(['app/module', 'app/directive/directiveApi'
     }]);
 
 
-    // 我的账户
+// 我的账户
     module.controller("member.account", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', function (api, $scope, $timeout, $ionicPopup) {
 
         $scope.find = true;
@@ -2528,7 +2516,7 @@ define(['app/module', 'app/directive/directiveApi'
 
     }]);
 
-    // 充值余额
+// 充值余额
     module.controller("member.balance", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$location', function (api, $scope, $timeout, $ionicPopup, $location) {
         $scope.formData = {};
         $scope.formData.customize = 10;
@@ -2572,7 +2560,7 @@ define(['app/module', 'app/directive/directiveApi'
             })
         }
     }]);
-    // 我的账户-消费记录
+// 我的账户-消费记录
     module.controller("member.account_record", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$location', function (api, $scope, $timeout, $ionicPopup, $location) {
 
         $scope.recordList = [];
@@ -2601,12 +2589,12 @@ define(['app/module', 'app/directive/directiveApi'
 
     }]);
 
-    // 我的账户-消费记录详情
+// 我的账户-消费记录详情
     module.controller("member.account_record_info", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$location', function (api, $scope, $timeout, $ionicPopup, $location) {
         $scope.item = angular.fromJson($location.$$search.item);
     }]);
 
-    // 我的账户-嘉瑞红包
+// 我的账户-嘉瑞红包
     module.controller("member.account_bribery", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$location', '$filter', function (api, $scope, $timeout, $ionicPopup, $location, $filter) {
         $scope.tab = 1;  // 1:收到的红包，2：发出的红包
 
@@ -2665,7 +2653,7 @@ define(['app/module', 'app/directive/directiveApi'
 
     }]);
 
-    // 我的账户-提现
+// 我的账户-提现
     module.controller("member.account_withdraw", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$ionicModal', '$interval', '$ionicLoading', '$location', function (api, $scope, $timeout, $ionicPopup, $ionicModal, $interval, $ionicLoading, $location) {
 
         $scope.formData = [];
@@ -2752,7 +2740,7 @@ define(['app/module', 'app/directive/directiveApi'
 
     }]);
 
-    // 我的账户-提现-提现状态提示
+// 我的账户-提现-提现状态提示
     module.controller("member.account_withdraw_info", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$ionicModal', '$interval', '$ionicLoading', '$location', function (api, $scope, $timeout, $ionicPopup, $ionicModal, $interval, $ionicLoading, $location) {
 
         $ionicModal.fromTemplateUrl('statusModal.html', {
@@ -2777,7 +2765,7 @@ define(['app/module', 'app/directive/directiveApi'
 
     }]);
 
-    // 我的账户-我的银行卡
+// 我的账户-我的银行卡
     module.controller("member.account_mycard", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', function (api, $scope, $timeout, $ionicPopup) {
         api.list('/wap/member/cash-card-list').success(function (res) {
             $scope.cardList = res.data;
@@ -2808,7 +2796,7 @@ define(['app/module', 'app/directive/directiveApi'
 
     }]);
 
-    // 我的账户-银行卡详情
+// 我的账户-银行卡详情
     module.controller("member.account_mycard_info", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$location', function (api, $scope, $timeout, $ionicPopup, $location) {
         $scope.cardId = $location.$$search.id;  // 银行卡ID
         api.list('/wap/member/cash-card-by-id', {id: $scope.cardId}).success(function (res) {
@@ -2818,7 +2806,7 @@ define(['app/module', 'app/directive/directiveApi'
     }]);
 
 
-    //  我的银行卡-添加
+//  我的银行卡-添加
     module.controller("member.account_add_card", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$location', function (api, $scope, $timeout, $ionicPopup, $location) {
         $scope.formData = [];
         $scope.formData.user_name = $scope.userInfo.info.real_name;
@@ -2874,12 +2862,12 @@ define(['app/module', 'app/directive/directiveApi'
         }
     }]);
 
-    // 我的约会
+// 我的约会
     module.controller("member.rendezvous", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', function (api, $scope, $timeout, $ionicPopup) {
 
     }]);
 
-    // 我的约会-发布约会
+// 我的约会-发布约会
     module.controller("member.rendezvous_add", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$ionicModal', '$location', function (api, $scope, $timeout, $ionicPopup, $ionicModal, $location) {
 
         $scope.formData = [];
@@ -3060,7 +3048,7 @@ define(['app/module', 'app/directive/directiveApi'
 
     }]);
 
-    // 我的约会-发布约会-约会主题
+// 我的约会-发布约会-约会主题
     module.controller("member.rendezvous_theme", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', function (api, $scope, $timeout, $ionicPopup) {
 
         $scope.selTheme = function () {
@@ -3070,7 +3058,7 @@ define(['app/module', 'app/directive/directiveApi'
 
     }]);
 
-    // 我的约会-发布约会-约会标题
+// 我的约会-发布约会-约会标题
     module.controller("member.rendezvous_themeTitle", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', function (api, $scope, $timeout, $ionicPopup) {
 
         $scope.save = function () {
@@ -3080,7 +3068,7 @@ define(['app/module', 'app/directive/directiveApi'
 
     }]);
 
-    // 我的约会-发布约会-性别限制
+// 我的约会-发布约会-性别限制
     module.controller("member.rendezvous_sex", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', function (api, $scope, $timeout, $ionicPopup) {
         $scope.selSex = function () {
             $scope.closeSexModal();
@@ -3088,7 +3076,7 @@ define(['app/module', 'app/directive/directiveApi'
         }
     }]);
 
-    // 我的约会-发布约会-我的出发地
+// 我的约会-发布约会-我的出发地
     module.controller("member.rendezvous_from", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', function (api, $scope, $timeout, $ionicPopup) {
         $scope.saveFrom = function () {
             $scope.closeFromModal();
@@ -3096,7 +3084,7 @@ define(['app/module', 'app/directive/directiveApi'
         }
     }]);
 
-    // 我的约会-发布约会-目的地
+// 我的约会-发布约会-目的地
     module.controller("member.rendezvous_destination", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', function (api, $scope, $timeout, $ionicPopup) {
         $scope.saveDestination = function () {
             $scope.closeDestinationModal();
@@ -3104,7 +3092,7 @@ define(['app/module', 'app/directive/directiveApi'
         }
     }]);
 
-    // 我的约会-发布约会-出发时间
+// 我的约会-发布约会-出发时间
     module.controller("member.rendezvous_date", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', function (api, $scope, $timeout, $ionicPopup) {
         $scope.saveDate = function () {
             $scope.closeDateModal();
@@ -3112,7 +3100,7 @@ define(['app/module', 'app/directive/directiveApi'
         }
     }]);
 
-    // 我的约会-发布约会-费用说明
+// 我的约会-发布约会-费用说明
     module.controller("member.rendezvous_money", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', function (api, $scope, $timeout, $ionicPopup) {
         $scope.selMoney = function () {
             $scope.closeMoneyModal();
@@ -3120,7 +3108,7 @@ define(['app/module', 'app/directive/directiveApi'
         }
     }]);
 
-    // 我的约会-发布约会-对约伴的要求
+// 我的约会-发布约会-对约伴的要求
     module.controller("member.rendezvous_requirement", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', function (api, $scope, $timeout, $ionicPopup) {
 
         $scope.userSex = 0;  // 用户性别 默认女0
@@ -3160,7 +3148,7 @@ define(['app/module', 'app/directive/directiveApi'
     }]);
 
 
-    // 我的约会-我发布的约会
+// 我的约会-我发布的约会
     module.controller("member.rendezvous_put", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$ionicActionSheet', '$location', '$ionicScrollDelegate', function (api, $scope, $timeout, $ionicPopup, $ionicActionSheet, $location, $ionicScrollDelegate) {
 
         $scope.formData = [];
@@ -3293,7 +3281,7 @@ define(['app/module', 'app/directive/directiveApi'
 
     }]);
 
-    // 我的约会-我参与的约会
+// 我的约会-我参与的约会
     module.controller("member.rendezvous_part", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', function (api, $scope, $timeout, $ionicPopup) {
 
         $scope.formData = [];
@@ -3366,7 +3354,7 @@ define(['app/module', 'app/directive/directiveApi'
 
     }]);
 
-    // 我的约会-参与的人
+// 我的约会-参与的人
     module.controller("member.rendezvous_involved", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$location', function (api, $scope, $timeout, $ionicPopup, $location) {
 
         $scope.partList = [];
@@ -3437,7 +3425,7 @@ define(['app/module', 'app/directive/directiveApi'
 
     }]);
 
-    // 我的专属红娘
+// 我的专属红娘
     module.controller("member.matchmaker", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$location', '$filter', function (api, $scope, $timeout, $ionicPopup, $location, $filter) {
 
         $scope.userName = $filter('sex')($scope.userInfo.info.real_name, $scope.userInfo.sex, $scope.userInfo.info.age);
@@ -3483,7 +3471,7 @@ define(['app/module', 'app/directive/directiveApi'
 
     }]);
 
-    // 专属红娘资料
+// 专属红娘资料
     module.controller("member.matchmaker_info", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$location', function (api, $scope, $timeout, $ionicPopup, $location) {
 
         $scope.matchmakerList = [];
@@ -3503,17 +3491,17 @@ define(['app/module', 'app/directive/directiveApi'
 
     }]);
 
-    // 红娘服务的四大优势
+// 红娘服务的四大优势
     module.controller("member.matchmaker_service", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$location', function (api, $scope, $timeout, $ionicPopup, $location) {
 
     }]);
 
-    // 关于嘉瑞
+// 关于嘉瑞
     module.controller("member.about", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$location', function (api, $scope, $timeout, $ionicPopup, $location) {
 
     }]);
 
-    // 帮助中心
+// 帮助中心
     module.controller("member.help", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$location', function (api, $scope, $timeout, $ionicPopup, $location) {
 
     }]);
@@ -3530,7 +3518,7 @@ define(['app/module', 'app/directive/directiveApi'
 
     }]);
 
-    // 举报
+// 举报
     module.controller("member.report", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$location', function (api, $scope, $timeout, $ionicPopup, $location) {
 
         $scope.title = $location.$$search.title;  // 标题
@@ -3561,7 +3549,7 @@ define(['app/module', 'app/directive/directiveApi'
 
     }]);
 
-    // 用户资料-隐私设置
+// 用户资料-隐私设置
     module.controller("member.settings", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$location', '$ionicActionSheet', function (api, $scope, $timeout, $ionicPopup, $location, $ionicActionSheet) {
         $scope.formData = {};
         var followData = [];
@@ -3581,8 +3569,8 @@ define(['app/module', 'app/directive/directiveApi'
         });
         // 举报
         $scope.report = function () {
-            if(followData.user_id == followData.follow_id){
-                ar.saveDataAlert($ionicPopup,'您不能举报自己');
+            if (followData.user_id == followData.follow_id) {
+                ar.saveDataAlert($ionicPopup, '您不能举报自己');
                 return;
             }
             var hideSheet = $ionicActionSheet.show({
@@ -3628,8 +3616,8 @@ define(['app/module', 'app/directive/directiveApi'
         // 拉黑
         $scope.pullTheBlack = function () {
             if ($scope.formData.pullBlack) {
-                if(followData.user_id == followData.follow_id){
-                    ar.saveDataAlert($ionicPopup,'您不能拉黑自己');
+                if (followData.user_id == followData.follow_id) {
+                    ar.saveDataAlert($ionicPopup, '您不能拉黑自己');
                     $scope.formData.pullBlack = false;
                     return;
                 }

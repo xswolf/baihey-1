@@ -9,11 +9,11 @@
 
     <ion-content class="com_w_100 bhy discovery bg5">
         <div class="list">
-            <div class="mt10 item item-thumbnail-left" ng-repeat="dis in discoveryList | filter:indexFilter">
+            <div class="mt10 item item-thumbnail-left" ng-repeat="dis in discoveryList | filter:indexFilter | limitTo:pageSize">
                 <img class="cp" ng-src="{{dis.head_pic | isNull}}" ng-click="jump('/userInfo?userId={{dis.user_id}}')" onerror="this.src='/wechat/web/images/no_img.png'">
                 <h2>
                     <span class="fl" ng-if="dis.name">{{dis.name | sex:dis.sex:dis:age}}</span>
-                    <span class="fl" ng-if="!dis.name">{{dis.user_id}}</span>
+                    <span class="fl" ng-if="!dis.name">会员{{dis.user_id}}</span>
                     <span class="fr fs12 cor5">{{dis.create_time*1000 | date:'yyyy-MM-dd HH:mm'}}</span>
                 </h2>
                 <p>
@@ -44,9 +44,6 @@
                     <span class="fr cp cor53" ng-click="more(dis.user_id==userInfo.user_id,dis.id,$index)">
                         <i class="ion-more fs20 vam"></i>
                     </span>
-                </div>
-                <div class="disabled_tip" ng-if="dis.fid > 0">
-                    <span class="tip">该条动态被举报多次</span>
                 </div>
             </div>
         </div>
