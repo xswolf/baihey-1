@@ -419,38 +419,55 @@ console.log(dataFilter.data);
     }]);
 
     // 查看会员资料-会员动态
-    module.controller("site.discovery", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$ionicModal', '$ionicActionSheet', '$ionicLoading', '$ionicBackdrop','$ionicScrollDelegate','$location',function (api, $scope, $timeout, $ionicPopup, $ionicModal, $ionicActionSheet, $ionicLoading,$ionicBackdrop,$ionicScrollDelegate,$location){
+    module.controller("site.discovery", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$ionicModal', '$ionicActionSheet', '$ionicLoading', '$ionicBackdrop','$ionicScrollDelegate','$location','dataFilter',function (api, $scope, $timeout, $ionicPopup, $ionicModal, $ionicActionSheet, $ionicLoading,$ionicBackdrop,$ionicScrollDelegate,$location,dataFilter){
 
         $scope.discoveryList = [];
+        $scope.user = [];
         $scope.isMore = true;
         $scope.pageSize = 5;
-
         // 用户ID
-        $scope.user_id = $location.$$search.user_id;
+        $scope.user_id = $location.$$search.userId;
 
         // 根据用户ID获取用户全部动态
-        api.get('url',{user_id:$scope.user_id}).success(function(res){
+        api.get('/wap/member/get-dynamic-list',{user_id:$scope.user_id, limit:1000}).success(function(res){
             $scope.discoveryList = res.data;
-            $scope.username = $scope.discoveryList[0].real_name;
+            $scope.user.username = res.data[0].name;
+            $scope.user.age = res.data[0].age.replace(/\"/g, '');
+            $scope.user.sex = res.data[0].sex;
         })
 
-        // 过滤被举报并且处理成功的数据和当前登录用户屏蔽的数据。
-        $scope.dataFilter = function(){
+        $scope.jump = function (url) {
+            $location.url(url);
+        }
 
-            return 1;
+        //用户已屏蔽的动态id，从localStorage获取
+        $scope.display = ar.getStorage('display') ? ar.getStorage('display') : [];
+
+        // 发现列表过滤条件：黑名单
+        $scope.indexFilter = function (dis) {
+            if(dis.fid > 0) {
+                return false;// 动态被举报
+            }
+            if (dis.auth == '2') {   // 用户设置该条动态为关注的人可见
+                return dataFilter.data.follow.indexOf(dis.user_id) != -1 && $scope.display.indexOf(dis.id) != -1;
+            } else if (dis.auth == '3') {
+                return false;
+            }
+            return dataFilter.data.blacked.indexOf(dis.user_id) == -1 && $scope.display.indexOf(dis.id) == -1;
         }
 
         // 点赞
         $scope.clickLike = function (dis) {
+            var i = ar.getArrI($scope.discoveryList, 'id', dis.id);
             var add = 0;
-            if ($scope.dis.cid > 0) {
+            if ($scope.discoveryList[i].cid > 0) {
                 add = -1;
-                $scope.dis.cid = -1;
+                $scope.discoveryList[i].cid = -1;
             } else {
                 add = 1;
-                $scope.dis.cid = 1;
+                $scope.discoveryList[i].cid = 1;
             }
-            $scope.dis.like_num = parseInt($scope.dis.like_num) + add;
+            $scope.discoveryList[i].like_num = parseInt($scope.discoveryList[i].like_num) + add;
             api.save('/wap/member/set-click-like', {dynamicId: dis.id, add: add});
         }
 
@@ -476,7 +493,6 @@ console.log(dataFilter.data);
                     if (btnObj.text == '屏蔽') {
                         $scope.display.push(id);
                         ar.setStorage('display', $scope.display);
-                        $location.url('/discovery');
                         // 将参数ID存入localStorage：display
                     }
                     if (btnObj.text == '举报') {

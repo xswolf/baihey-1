@@ -3,17 +3,18 @@
     <link href="/wechat/web/js/plugin/amezeui/css/amazeui.min.css" rel="stylesheet">
     <link href="/wechat/web/css/plugin/animate/animate.css" rel="stylesheet">
     <ion-header-bar class="com_w_100 bhy">
-        <title class="title">{{username}}的个人动态</title>
+        <title class="title">{{user.username | sex:user.sex:user.age}}的个人动态</title>
     </ion-header-bar>
 
     <ion-content class="com_w_100 bhy discovery bg5">
         <div class="list">
-            <div class="mt10 item item-thumbnail-left" ng-repeat="dis in discoveryList | filter:dataFilter:limitTo:pageSize">
-                <img class="cp" ng-src="{{dis.head_pic | isNull}}" ng-click="jump('/userInfo?userId={{dis.user_id}}')"
-                     onerror="this.src='/wechat/web/images/no_img.png'">
+            <div class="mt10 item item-thumbnail-left" ng-repeat="dis in discoveryList | filter:indexFilter:limitTo:pageSize">
+                <img class="cp" ng-if="dis.head_status == 1" ng-src="{{dis.head_pic | isNull}}" ng-click="jump('/userInfo?userId={{dis.user_id}}')" onerror="this.src='/wechat/web/images/no_img.png'">
+                <img class="cp" ng-if="dis.head_status != 1" src="/wechat/web/images/no_img.png" ng-click="jump('/userInfo?userId={{dis.user_id}}')">
                 <h2>
-                    <span class="fl">聂先生</span>
-                    <span class="fr fs12 cor5">2016-06-29 10:20:05</span>
+                    <span class="fl" ng-if="dis.name">{{dis.name | sex:dis.sex:dis.age}}</span>
+                    <span class="fl" ng-if="!dis.name">{{dis.user_id}}</span>
+                    <span class="fr fs12 cor5">{{dis.create_time*1000 | date:'yyyy-MM-dd HH:mm'}}</span>
                 </h2>
                 <p>
                     <span class="identity id" ng-if="honesty(dis.honesty_value)">身份证</span>
@@ -32,16 +33,16 @@
                     </li>
                 </ul>
                 <div class="clearfix mt10 pr">
-                    <span class="fl cp" ng-class="{true:'cor21',false:'cor53'}[1==1]" click-like
-                          ng-click="clickLike(dis.id)">
+                    <span class="fl cp" ng-class="{true:'cor21',false:'cor53'}[dis.cid > 0]" click-like
+                          ng-click="clickLike(dis)">
                         <i class="ion-thumbsup fs20 vam"></i>
-                        <span class="vam likeNumber dib">10</span>
+                        <span class="vam likeNumber dib">{{dis.like_num}}</span>
                     </span>
                     <span class="fl ml10 cp cor53" ng-click="jump('/discovery_single?id={{dis.id}}')">
                         <i class="ion-chatbubble-working fs20 vam"></i>
-                        <span class="vam">2</span>
+                        <span class="vam">{{dis.comment_num}}</span>
                     </span>
-                    <span class="fr cp cor53" ng-click="more(id)">
+                    <span class="fr cp cor53" ng-click="more(dis.user_id==userInfo.user_id,dis.id,$index)">
                         <i class="ion-more fs20 vam"></i>
                     </span>
                 </div>
