@@ -26,7 +26,7 @@
                 </p>
                 <p class="wsn">{{dis.content}}</p>
                 <ul class="am-gallery am-avg-sm-3 am-avg-md-3 am-avg-lg-4 am-gallery-default"
-                    data-am-widget="gallery" data-am-gallery="{pureview:true}">
+                    data-am-widget="gallery" data-am-gallery="{ pureview: true }">
                     <li ng-repeat="img in dis.imgList">
                         <div class="am-gallery-item">
                             <img src="{{img.thumb_path}}" data-rel="{{img.thumb_path | picture}}" alt=".">
@@ -90,11 +90,11 @@
             <ion-content class="bg5">
                 <ion-list>
                     <ion-item class="mt10">
-                        <div class="gallery_handle clearfix" data-am-widget="gallery" data-am-gallery="{pureview:true}">
+                        <div class="gallery_handle clearfix" data-am-widget="gallery" data-am-gallery="{ pureview: true }">
                             <div class="imgItem" ng-repeat="img in imgList">
                                 <img src="{{img.thumb_path}}" data-rel="{{img.thumb_path | picture}}">
                             </div>
-                            <div class="imgItem add" ng-click="addNewImg()" ng-if="imgList < 7">
+                            <div class="imgItem add" ng-click="addNewImg()" ng-if="imgList.length < 7">
                                 <i class="icon ion-plus-round"></i>
                             </div>
                         </div>

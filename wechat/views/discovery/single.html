@@ -24,7 +24,7 @@
             </p>
             <p class="wsn">{{dis.content}}</p>
             <ul class="am-gallery am-avg-sm-3 am-avg-md-3 am-avg-lg-4 am-gallery-default"
-                data-am-widget="gallery" data-am-gallery="{pureview:true}">
+                data-am-widget="gallery" data-am-gallery="{ pureview: true }">
                 <li ng-repeat="img in dis.imgList">
                     <div class="am-gallery-item">
                         <img ng-src="{{img.thumb_path | isNull}}" onerror="this.src='/wechat/web/images/no_img.png'" data-rel="{{img.thumb_path | picture}}" alt=".">

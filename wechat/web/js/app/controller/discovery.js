@@ -8,6 +8,7 @@ define(['app/module', 'app/directive/directiveApi'
     // 发现
     module.controller("discovery.index", ['app.serviceApi', '$rootScope', '$scope', '$timeout', '$ionicPopup', '$ionicModal', '$ionicActionSheet', '$ionicLoading', '$location', '$filter', 'FileUploader', 'dataFilter', function (api, $rootScope, $scope, $timeout, $ionicPopup, $ionicModal, $ionicActionSheet, $ionicLoading, $location, $filter, FileUploader, dataFilter) {
         requirejs(['amezeui', 'amezeui_ie8'], function (amezeui, amezeui_ie8) {
+
             amezeui.gallery.init();
             $scope.reportData = {};
             $scope.formData = {};
@@ -19,7 +20,7 @@ define(['app/module', 'app/directive/directiveApi'
 
             // 发现列表过滤条件：黑名单
             $scope.indexFilter = function (dis) {
-                if(dis.fid > 0) {
+                if (dis.fid > 0) {
                     return false;// 动态被举报
                 }
                 if (dis.auth == '2') {   // 用户设置该条动态为关注的人可见
@@ -66,7 +67,7 @@ define(['app/module', 'app/directive/directiveApi'
                             ar.setStorage('display', $scope.display);
                             $scope.discoveryList.splice(index, 1);
                             // 改变状态 api.save
-                            api.save('/wap/member/delete-dynamic', {id:id}).success(function (res) {
+                            api.save('/wap/member/delete-dynamic', {id: id}).success(function (res) {
 
                             });
                         }
@@ -113,6 +114,7 @@ define(['app/module', 'app/directive/directiveApi'
                     $scope.$broadcast('scroll.infiniteScrollComplete');
                 })
                 $scope.page += 1;
+                amezeui.gallery.init();
             };
 
             // 是否还有更多
@@ -197,7 +199,7 @@ define(['app/module', 'app/directive/directiveApi'
                 $scope.formData.name = JSON.parse(userInfo.info).real_name;
                 $scope.formData.pic = JSON.stringify($scope.imgList);
                 api.save('/wap/member/add-user-dynamic', $scope.formData).success(function (res) { // 保存数据到数据库，关闭modal，展现数据
-                    if(res.status) {
+                    if (res.status) {
                         res.data.imgList = JSON.parse(res.data.pic);
                         res.data.head_pic = res.data.head_pic.replace(/\"/g, '');
                         res.data.level = res.data.level.replace(/\"/g, '');
@@ -226,7 +228,7 @@ define(['app/module', 'app/directive/directiveApi'
             $scope.commentList = [];
             $scope.isShowCommentList = true;
             $scope.jump = function (id) {
-                if(id == $scope.userInfo.id) {
+                if (id == $scope.userInfo.id) {
                     $location.url('/member/information');
                 } else {
                     $location.url('/userInfo?userId=' + id);
@@ -271,8 +273,8 @@ define(['app/module', 'app/directive/directiveApi'
 
             $scope.checkPrivate = function () {
                 $scope.formData.private = !$scope.formData.private;
-                if($scope.formData.private){
-                    ar.saveDataAlert($ionicPopup,'私密评论将只有您和该条动态发布者可见此条评论。');
+                if ($scope.formData.private) {
+                    ar.saveDataAlert($ionicPopup, '私密评论将只有您和该条动态发布者可见此条评论。');
                 }
             }
 
@@ -329,7 +331,7 @@ define(['app/module', 'app/directive/directiveApi'
                             $scope.display.push(id);
                             ar.setStorage('display', $scope.display);
                             // 改变状态 api.save
-                            api.save('/wap/member/delete-dynamic', {id:id}).success(function (res) {
+                            api.save('/wap/member/delete-dynamic', {id: id}).success(function (res) {
                                 $location.url('/discovery');
                             });
                         }
@@ -339,8 +341,8 @@ define(['app/module', 'app/directive/directiveApi'
             }
 
             // 加载更多
-            $scope.loadMore = function(){
-                if($scope.pageSize > $scope.commentList.length){
+            $scope.loadMore = function () {
+                if ($scope.pageSize > $scope.commentList.length) {
                     $scope.isMore = false;
                 }
                 $scope.pageSize += 5;
@@ -348,7 +350,7 @@ define(['app/module', 'app/directive/directiveApi'
             }
 
             //是否还有更多
-            $scope.moreDataCanBeLoaded = function(){
+            $scope.moreDataCanBeLoaded = function () {
                 return $scope.isMore;
             }
 
