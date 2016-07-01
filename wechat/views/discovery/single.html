@@ -47,18 +47,18 @@
             </div>
         </div>
         <article class="am-comment padding" ng-repeat="comment in commentList | limitTo:pageSize">
-            <a href="userInfo?id=1">
+            <a ng-click="jump({{comment.user_id}})">
                 <img ng-src="{{comment.headPic | isNull}}" onerror="this.src='/wechat/web/images/no_img.png'" alt="" class="am-comment-avatar" width="48" height="48"/>
             </a>
             <div class="am-comment-main ">
                 <header class="am-comment-hd">
                     <!--<h3 class="am-comment-title">评论标题</h3>-->
                     <div class="am-comment-meta">
-                        <a href="userInfo?id={{comment.user_id}}" class="am-comment-author">{{comment.name | sex:comment.sex:comment:age}}</a>
-                        <a href="userInfo?id={{comment.user_id}}" class="am-comment-author">{{comment.user_id}}</a>
+                        <a  ng-click="jump({{comment.user_id}})" class="am-comment-author">{{comment.name | sex:comment.sex:comment:age}}</a>
+                        <a  ng-click="jump({{comment.user_id}})" class="am-comment-author">{{comment.user_id}}</a>
                         评论于
                         <time>{{comment.create_time * 1000 | date:'yyyy-MM-dd HH:mm'}}</time>
-                        <span class="am-badge am-badge-danger am-round">该用户被多次举报</span>
+                        <span class="am-badge am-badge-danger am-round" ng-show="comment.fid > 0">该用户被多次举报</span>
                     </div>
                 </header>
 
