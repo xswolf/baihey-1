@@ -214,7 +214,7 @@ define(['app/module', 'app/directive/directiveApi'
                 $location.url(url);
             }
 
-            $scope.more = function (isUser, id, index) {
+            $scope.more = function (id, index) {
                 $ionicActionSheet.show({
                     buttons: [
                         {text: '删除'}

@@ -7,16 +7,6 @@ define(['app/module', 'app/directive/directiveApi'
 
     module.controller("message.chat1", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$ionicModal', '$ionicActionSheet', '$ionicLoading', '$ionicScrollDelegate', 'FileUploader', '$http', '$location', '$rootScope', '$filter','$ionicPopover','$interval', function (api, $scope, $timeout, $ionicPopup, $ionicModal, $ionicActionSheet, $ionicLoading, $ionicScrollDelegate, FileUploader, $http, $location, $rootScope, $filter,$ionicPopover,$interval) {
         $scope.historyList = [];
-        require(['jquery'], function ($) {
-            var $body = $('body');
-            document.title = $filter('sex')($scope.real_name, $scope.sex, $scope.age);
-            var $iframe = $("<iframe style='display:none;' src='/favicon.ico'></iframe>");
-            $iframe.on('load', function () {
-                setTimeout(function () {
-                    $iframe.off('load').remove();
-                }, 0);
-            }).appendTo($body);
-        });
 
         // 设置消息状态为已看
         $scope.setMessageStatus = function (list) {
@@ -216,7 +206,7 @@ define(['app/module', 'app/directive/directiveApi'
         $scope.uploader = new FileUploader({url: '/wap/file/thumb'});
 
         // socket聊天
-        requirejs(['chat/wechatInterface', 'plugin/socket/socket.io.1.4.0', 'jquery'], function (wx, socket, $) {
+        requirejs(['chat/wechatInterface', 'plugin/socket/socket.io.1.4.0'], function (wx, socket) {
 
             // 配置微信
             //api.wxConfig().success(function (data) {
@@ -230,14 +220,6 @@ define(['app/module', 'app/directive/directiveApi'
             socket.emit('tell name', {send_user_id: $scope.sendId, receive_user_id: $scope.receiveId, status: 1});
             // 监听离开聊天页面，断掉socket
             $scope.$on('$destroy', function () {
-                var $body = $('body');
-                document.title = '嘉瑞百合缘';
-                var $iframe = $("<iframe style='display:none;' src='/favicon.ico'></iframe>");
-                $iframe.on('load', function () {
-                    setTimeout(function () {
-                        $iframe.off('load').remove();
-                    }, 0);
-                }).appendTo($body);
                 socket.emit('tell name', {send_user_id: $scope.sendId, receive_user_id: $scope.receiveId, status: 0});
                 socket.disconnect();
             });

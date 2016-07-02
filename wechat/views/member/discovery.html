@@ -25,10 +25,10 @@
                 </p>
                 <p class="wsn">{{dis.content | textOverflow:300:'...'}}</p>
                 <ul class="am-gallery am-avg-sm-3 am-avg-md-3 am-avg-lg-4 am-gallery-default"
-                    data-am-widget="gallery" data-am-gallery="{ pureview: true }">
+                    data-am-widget="gallery" data-am-gallery="{pureview:true}">
                     <li ng-repeat="img in dis.imgList">
                         <div class="am-gallery-item">
-                            <img src="http://192.168.0.108{{img.thumb_path}}" data-rel="{{img.thumb_path | picture}}">
+                            <img src="{{img.thumb_path}}" data-rel="{{img.thumb_path | picture}}">
                         </div>
                     </li>
                 </ul>
@@ -41,7 +41,7 @@
                         <i class="ion-chatbubble-working fs20 vam"></i>
                         <span class="vam">{{dis.comment_num}}</span>
                     </span>
-                    <span class="fr cp cor53" ng-click="more(dis.user_id==userInfo.user_id,dis.id,$index)">
+                    <span class="fr cp cor53" ng-click="more(dis.id,$index)">
                         <i class="ion-more fs20 vam"></i>
                     </span>
                 </div>

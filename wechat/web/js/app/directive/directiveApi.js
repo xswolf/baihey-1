@@ -376,14 +376,37 @@ define(['app/module'], function (module) {
     }]);
 
     // 点赞动画
-    module.directive('clickLike', ['$animate','$timeout', function($animate,$timeout) {
-        return function(scope, element, attrs) {
-            element.on('click', function() {
+    module.directive('clickLike', ['$animate', '$timeout', function ($animate, $timeout) {
+        return function (scope, element, attrs) {
+            element.on('click', function () {
                 element.find('i').next().addClass('anm');
-                $timeout(function(){
+                $timeout(function () {
                     element.find('i').next().removeClass('anm');
-                },400);
+                }, 400);
             });
+        };
+    }]);
+
+    // 动态改变微信浏览器网页title - 聊天页
+    module.directive('changeTitle', ['$timeout', function ($timeout) {
+        return function (scope, element, attrs) {
+            changeTitle(attrs.changeTitle);
+            scope.$on('$ionicView.beforeLeave', function () {
+                changeTitle('嘉瑞百合缘');
+            })
+
+            function changeTitle(title) {
+                var body = document.body;
+                document.title = title;
+                var iframe = angular.element("<iframe style='display:none;' src='/favicon.ico'></iframe>");
+                iframe.on('load', function () {
+                    $timeout(function () {
+                        iframe.off('load').remove();
+                    }, 0);
+                });
+                angular.element(body).append(iframe);
+            }
+
         };
     }]);
 })

@@ -1,7 +1,7 @@
 <ion-view hide-tabs="true">
     <link href="/wechat/web/css/chat.css" rel="stylesheet">
     <ion-header-bar class="bhy com_w_100">
-        <h1 class="title"></h1>
+        <h1 class="title" change-title="{{real_name | sex:sex:age}}"></h1>
         <button class="button button-icon" ng-click="addFollow()" ng-if="u_isFollow">关注</button>
     </ion-header-bar>
     <ion-content class="bhy com_w_100 has-header chat" id="message-detail-content"

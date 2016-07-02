@@ -1,7 +1,7 @@
 /**
  * Created by Administrator on 2016/3/22.
  */
-define(["app/module", 'app/service/serviceApi', 'jquery'],
+define(["app/module", 'app/service/serviceApi'],
     function (module) {
         module.run(['$rootScope', '$state', '$timeout', 'app.serviceApi', '$ionicLoading', '$location', '$templateCache', function ($rootScope, $state, $timeout, api, $ionicLoading, $location, $templateCache) {
 
