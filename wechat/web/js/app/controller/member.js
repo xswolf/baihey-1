@@ -1699,7 +1699,7 @@ define(['app/module', 'app/directive/directiveApi'
     }]);
 
     // 查看用户资料
-    module.controller("member.user_info", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$ionicModal', '$ionicActionSheet', '$ionicLoading', '$location', function (api, $scope, $timeout, $ionicPopup, $ionicModal, $ionicActionSheet, $ionicLoading, $location) {
+    module.controller("member.user_info", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$ionicModal', '$ionicActionSheet', '$ionicLoading', '$location', 'dataFilter', function (api, $scope, $timeout, $ionicPopup, $ionicModal, $ionicActionSheet, $ionicLoading, $location, dataFilter) {
 
         requirejs(['amezeui', 'amezeui_ie8'], function (amezeui, amezeui_ie8) {
             amezeui.gallery.init();
@@ -1819,6 +1819,10 @@ define(['app/module', 'app/directive/directiveApi'
         $scope.addFollow = function () {
             if (followData.user_id == followData.follow_id) {
                 ar.saveDataAlert($ionicPopup, '您不能关注自己');
+                return;
+            }
+            if(dataFilter.data.blacked.indexOf($scope.followData.follow_id) != -1) {
+                ar.saveDataAlert($ionicPopup, '对方设置，关注失败');
                 return;
             }
             api.save('/wap/follow/add-follow', followData).success(function (res) {

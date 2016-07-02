@@ -5,7 +5,7 @@ define(['app/module', 'app/directive/directiveApi'
     , 'app/service/serviceApi', 'comm'
 ], function (module) {
 
-    module.controller("message.chat1", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$ionicModal', '$ionicActionSheet', '$ionicLoading', '$ionicScrollDelegate', 'FileUploader', '$http', '$location', '$rootScope', '$filter','$ionicPopover','$interval', function (api, $scope, $timeout, $ionicPopup, $ionicModal, $ionicActionSheet, $ionicLoading, $ionicScrollDelegate, FileUploader, $http, $location, $rootScope, $filter,$ionicPopover,$interval) {
+    module.controller("message.chat1", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$ionicModal', '$ionicActionSheet', '$ionicLoading', '$ionicScrollDelegate', 'FileUploader', '$http', '$location', '$rootScope', '$filter','$ionicPopover','$interval','dataFilter', function (api, $scope, $timeout, $ionicPopup, $ionicModal, $ionicActionSheet, $ionicLoading, $ionicScrollDelegate, FileUploader, $http, $location, $rootScope, $filter,$ionicPopover,$interval,dataFilter) {
         $scope.historyList = [];
 
         // 设置消息状态为已看
@@ -72,6 +72,14 @@ define(['app/module', 'app/directive/directiveApi'
 
         // 加关注
         $scope.addFollow = function () {
+            if ($scope.followData.user_id == $scope.followData.follow_id) {
+                ar.saveDataAlert($ionicPopup, '您不能关注自己');
+                return;
+            }
+            if(dataFilter.data.blacked.indexOf($scope.followData.follow_id) != -1) {
+                ar.saveDataAlert($ionicPopup, '对方设置，关注失败');
+                return;
+            }
             api.save('/wap/follow/add-follow', $scope.followData).success(function (res) {
                 if (res.data) {
                     $scope.u_isFollow = false;

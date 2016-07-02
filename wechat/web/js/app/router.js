@@ -150,7 +150,16 @@ define(["app/module", 'app/service/serviceApi'],
                         cache: false,
                         url: "/userInfo",
                         templateUrl: "/wechat/views/site/user_info.html",
-                        controller: "member.user_info"
+                        controller: "member.user_info",
+                        resolve: {
+                            dataFilter: function ($http) {
+                                return $http({
+                                    method: 'POST',
+                                    url: '/wap/user/index-is-show-data',
+                                    params: {}
+                                });
+                            }
+                        }
 
                     })
                     /*.state('main.message_chat', { // 聊天页面
@@ -202,6 +211,15 @@ define(["app/module", 'app/service/serviceApi'],
                         url: "/chat1",
                         templateUrl: "/wechat/views/message/chat1.html",
                         controller: 'message.chat1',
+                        resolve: {
+                            dataFilter: function ($http) {
+                                return $http({
+                                    method: 'POST',
+                                    url: '/wap/user/index-is-show-data',
+                                    params: {}
+                                });
+                            }
+                        },
                         onExit: function ($rootScope) {
 
                             var messageList = ar.getStorage("messageList");
