@@ -11,24 +11,18 @@
             <div class="item item-divider">
                 请您上传学位证、毕业证照片
             </div>
-            <div class="item item-text-wrap">
-                <ul class="am-avg-sm-2 am-thumbnails tac">
-                    <li>
-                        <button type="button" class="am-btn am-btn-primary am-btn-sm am-radius"
-                                ng-click="addNewImg('honesty1')">点击上传
-                        </button>
-                        <div class="pr" ng-if="authList[0].thumb_path">
-                            <img ng-click="showImg(0)" style="margin-bottom: 0;"
-                                 class="am-thumbnail mt10"
-                                 src="{{authList[0].thumb_path}}" alt="学历证明"/>
-                            <div class="underReview" ng-if="authList[0].is_check == 2"><span>审核中</span></div>
-                            <div class="underReview" ng-if="authList[0].is_check == 0"><span>审核不通过</span></div>
-                        </div>
-
-                    </li>
-                </ul>
+            <div class="item item-text-wrap zj_wrap tac">
+                <button type="button" class="button button-calm mb10"
+                        ng-click="addNewImg('honesty1')">点击上传
+                </button>
+                <br />
+                <div class="zj_w pr dib" ng-if="authList[0].thumb_path">
+                    <img ng-click="showImg(0)" src="{{authList[0].thumb_path}}" alt="学历证明"/>
+                    <div class="underReview" ng-if="authList[0].is_check == 2"><span>审核中</span></div>
+                    <div class="underReview" ng-if="authList[0].is_check == 0"><span>审核未通过</span></div>
+                </div>
                 <input id="honesty1" type="file" nv-file-select uploader="uploader"
-                       style="visibility: hidden; display: none;" accept="image/*" >
+                       style="visibility: hidden; display: none;" accept="image/*">
             </div>
         </div>
 

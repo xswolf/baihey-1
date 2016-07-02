@@ -185,13 +185,14 @@ define(['app/module', 'app/directive/directiveApi'
             $scope.formData = {};
             $scope.formData.auth = 1;
             $scope.discoveryList = [];
+            $scope.pageSize  = 5;
 
             api.list('/wap/member/get-dynamic-list', {
                 user_id: $scope.userInfo.id,
                 limit: 10000
             }).success(function (res) {  // 查询出所有动态
                 if (res.data.length < 1) {
-                    $scope.isMore = false;
+                    return false;
                 }
                 for (var i in res.data) {
                     res.data[i].imgList = JSON.parse(res.data[i].pic);
@@ -257,12 +258,12 @@ define(['app/module', 'app/directive/directiveApi'
             $scope.isMore = true;
             // 加载更多
             $scope.loadMore = function () {
-                $scope.pageSize += 5;
                 if ($scope.pageSize > $scope.discoveryList.length) {
                     $scope.isMore = false;
                 }
                 amezeui.gallery.init();
                 $scope.$broadcast('scroll.infiniteScrollComplete');
+                $scope.pageSize += 5;
             }
 
             // 是否还有更多
@@ -277,7 +278,7 @@ define(['app/module', 'app/directive/directiveApi'
 
     // 发布动态
     module.controller("member.discovery_add", ['app.serviceApi', '$scope', '$ionicPopup', '$location', '$ionicActionSheet', 'FileUploader', '$ionicLoading', function (api, $scope, $ionicPopup, $location, $ionicActionSheet, FileUploader, $ionicLoading) {
-        var uploader = $scope.uploader = new FileUploader({
+        var uploader = $scope.uploader = new FileUploader({  // 实例化上传图片插件
             url: '/wap/file/thumb'
         });
         requirejs(['amezeui', 'amezeui_ie8'], function (amezeui, amezeui_ie8) {
@@ -286,10 +287,7 @@ define(['app/module', 'app/directive/directiveApi'
             $scope.formData = {};
             $scope.formData.auth = 1;
 
-            // 发布动态
             $scope.imgList = [];
-            // 实例化上传图片插件
-
 
             $scope.showLoading = function (progress) {
                 $ionicLoading.show({
@@ -349,7 +347,7 @@ define(['app/module', 'app/directive/directiveApi'
                 $scope.formData.pic = JSON.stringify($scope.imgList);
                 api.save('/wap/member/add-user-dynamic', $scope.formData).success(function (res) {
                     ar.saveDataAlert($ionicPopup, res.msg);
-                    if(res.status) {
+                    if (res.status) {
                         $location.url('/member/discovery');
                     }
                 })
@@ -1821,7 +1819,7 @@ define(['app/module', 'app/directive/directiveApi'
                 ar.saveDataAlert($ionicPopup, '您不能关注自己');
                 return;
             }
-            if(dataFilter.data.blacked.indexOf($scope.followData.follow_id) != -1) {
+            if (dataFilter.data.blacked.indexOf($scope.followData.follow_id) != -1) {
                 ar.saveDataAlert($ionicPopup, '对方设置，关注失败');
                 return;
             }
@@ -2193,8 +2191,14 @@ define(['app/module', 'app/directive/directiveApi'
         }
     }]);
 
-// 诚信认证-身份认证
+    // 诚信认证-身份认证
     module.controller("member.honesty_sfz", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', 'FileUploader', '$location', function (api, $scope, $timeout, $ionicPopup, FileUploader, $location) {
+        // 实例化上传图片插件
+        var uploader = $scope.uploader = new FileUploader({
+            url: '/wap/file/thumb'
+            //url: '/wap/file/thumb-photo?type=2'
+        });
+
         api.list('/wap/member/photo-list', {type: 2, pageSize: 2}).success(function (res) {
             $scope.authList = res.data;
         });
@@ -2225,12 +2229,6 @@ define(['app/module', 'app/directive/directiveApi'
                 gallery.init();
             }
         });
-        // 实例化上传图片插件
-        var uploader = $scope.uploader = new FileUploader({
-            url: '/wap/file/thumb'
-            //url: '/wap/file/thumb-photo?type=2'
-        });
-
         $scope.formData = [];
         $scope.formData.real_name = $scope.userInfo.info.real_name;
         $scope.formData.identity_id = $scope.userInfo.info.identity_id;
@@ -2248,8 +2246,21 @@ define(['app/module', 'app/directive/directiveApi'
             }
         });
 
+        $scope.showImg = function (event, item) {
+            if (item == 1) {
+                if (!$scope.authList[0]) {
+                    event.stopPropagation();
+                    return false;
+                }
+            } else {
+                if (!$scope.authList[1]) {
+                    event.stopPropagation();
+                    return false;
+                }
+            }
+        }
+
         $scope.saveData = function () {
-            console.log($scope.authList);
             if ($scope.formData.real_name == '' || $scope.formData.identity_id == '' || $scope.formData.identity_address == '') {
                 var confirm = ar.saveDataConfirm($ionicPopup, '检测到身份证信息未填写，确认放弃吗？');
                 confirm.then(function (res) {

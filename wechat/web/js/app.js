@@ -5,7 +5,7 @@ require.config({
     urlArgs: "bust=v3"+Math.random(), // 清除缓存
     baseUrl: '/wechat/web/js/',
     paths: {
-        //jquery: 'plugin/jquery/jquery',
+        jquery: 'plugin/jquery/jquery',
         //jquery_1_8_3: 'plugin/jquery/jquery_1.8.3.min',
         //ionic: '//cdn.bootcss.com/ionic/1.2.4/js/ionic.bundle.min',
         angular: 'plugin/angular/angular.min',

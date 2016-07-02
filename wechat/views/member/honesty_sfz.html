@@ -1,6 +1,5 @@
 <ion-view>
     <link href="/wechat/web/css/member.css" rel="stylesheet">
-    <link href="/wechat/web/js/plugin/amezeui/css/amazeui.min.css" rel="stylesheet">
     <link href="/wechat/web/css/plugin/photoswipe/photoswipe.css" rel="stylesheet">
     <link href="/wechat/web/css/plugin/photoswipe/default-skin.css" rel="stylesheet">
 
@@ -11,37 +10,78 @@
     <ion-content class="bhy com_w_100 honesty">
         <div class="card">
             <div class="item item-divider">
-                请您上传身份证照片（正反两面）
+                上传身份证照片
             </div>
-            <div class="item item-text-wrap">
-
-                <ul class="am-avg-sm-2 am-thumbnails tac">
+            <div class="item item-text-wrap sfz_wrap">
+                <ul class="clearfix mb10">
+                    <li><h2>身份证正面</h2></li>
+                    <li><h2>身份证反面</h2></li>
+                </ul>
+                <ul class="clearfix mb10">
                     <li>
-                        <button type="button" class="am-btn am-btn-primary am-btn-sm am-radius"
-                                ng-click="addNewImg('honesty1')">点击上传
-                        </button>
-                        <div class="pr" ng-if="authList[0].thumb_path">
-                            <img ng-click="showImg(0)" style="margin-bottom: 0;"
-                                 class="am-thumbnail mt10"
-                                 src="{{authList[0].thumb_path}}" alt="正面"/>
-                            <div class="underReview" ng-if="authList[0].is_check == 2"><span>审核中</span></div>
-                            <div class="underReview" ng-if="authList[0].is_check == 0"><span>审核不通过</span></div>
-                        </div>
-
+                        <img class="face" ng-click="showImg(0)" ng-src="{{authList[0].thumb_path ? authList[0].thumb_path : '/wechat/web/images/member/card-face.png'}}">
+                        <div class="underReview" ng-if="authList[0].is_check == 2"><span>审核中</span></div>
+                        <div class="underReview" ng-if="authList[0].is_check == 0"><span>审核未通过</span></div>
                     </li>
                     <li>
-                        <button type="button" class="am-btn am-btn-secondary am-btn-sm am-radius"
-                                ng-click="addNewImg('honesty2')">点击上传
-                        </button>
-                        <div class="pr" ng-if="authList[1].thumb_path">
-                            <img ng-click="showImg(1)" style="margin-bottom: 0;"
-                                 class="am-thumbnail mt10"
-                                 src="{{authList[1].thumb_path}}" alt="反面"/>
-                            <div class="underReview" ng-if="authList[1].is_check == 2"><span>审核中</span></div>
-                            <div class="underReview" ng-if="authList[1].is_check == 0"><span>审核不通过</span></div>
-                        </div>
+                        <img class="back" ng-click="showImg(1)" ng-src="{{authList[1].thumb_path ? authList[1].thumb_path : '/wechat/web/images/member/card-back.png'}}">
+                        <div class="underReview" ng-if="authList[1].is_check == 2"><span>审核中</span></div>
+                        <div class="underReview" ng-if="authList[1].is_check == 0"><span>审核未通过</span></div>
                     </li>
                 </ul>
+                <ul class="clearfix mb10">
+                    <li>
+                        <button type="button" ng-click="addNewImg('honesty1')"
+                                class="button button-calm">点击上传
+                        </button>
+                    </li>
+                    <li>
+                        <button type="button" ng-click="addNewImg('honesty2')"
+                                class="button button-calm">点击上传
+                        </button>
+                    </li>
+                </ul>
+                <!--<ul class="aam-gallery am-avg-sm-2 am-gallery-default">
+                    <li>
+                        <div class="am-gallery-item">
+                            <img src="/wechat/web/images/member/card-face.png" width="161">
+                        </div>
+
+                    </li>
+                    <li>
+                        <div class="am-gallery-item">
+                            <img src="/wechat/web/images/member/card-back.png" width="161">
+                        </div>
+
+                    </li>
+                </ul>-->
+                <!--<li>
+
+                    <button type="button" class="am-btn am-btn-primary am-btn-sm am-radius"
+                            ng-click="addNewImg('honesty1')">点击上传
+                    </button>
+                    <div class="pr" ng-if="authList[0].thumb_path">
+                        <img ng-click="showImg(0)" style="margin-bottom: 0;"
+                             class="am-thumbnail mt10"
+                             src="{{authList[0].thumb_path}}" alt="正面"/>
+                        <div class="underReview" ng-if="authList[0].is_check == 2"><span>审核中</span></div>
+                        <div class="underReview" ng-if="authList[0].is_check == 0"><span>审核不通过</span></div>
+                    </div>
+
+                </li>
+                <li>
+                    <button type="button" class="am-btn am-btn-secondary am-btn-sm am-radius"
+                            ng-click="addNewImg('honesty2')">点击上传
+                    </button>
+                    <div class="pr" ng-if="authList[1].thumb_path">
+                        <img ng-click="showImg(1)" style="margin-bottom: 0;"
+                             class="am-thumbnail mt10"
+                             src="{{authList[1].thumb_path}}" alt="反面"/>
+                        <div class="underReview" ng-if="authList[1].is_check == 2"><span>审核中</span></div>
+                        <div class="underReview" ng-if="authList[1].is_check == 0"><span>审核不通过</span></div>
+                    </div>
+                </li>-->
+
                 <input id="honesty1" type="file" nv-file-select uploader="uploader"
                        style="visibility: hidden; display: none;" accept="image/*">
                 <input id="honesty2" type="file" nv-file-select uploader="uploader"
@@ -51,7 +91,7 @@
 
         <div class="card">
             <div class="item item-divider">
-                请您填写身份证信息
+                身份证信息
             </div>
             <div class="item item-text-wrap ">
                 <label class="item item-input">
@@ -136,5 +176,4 @@
         </div>
 
     </div>
-
 </ion-view>

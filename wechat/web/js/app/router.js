@@ -1,10 +1,9 @@
 /**
  * Created by Administrator on 2016/3/22.
  */
-define(["app/module", 'app/service/serviceApi'],
+define(["app/module", 'app/service/serviceApi','jquery'],
     function (module) {
         module.run(['$rootScope', '$state', '$timeout', 'app.serviceApi', '$ionicLoading', '$location', '$templateCache', function ($rootScope, $state, $timeout, api, $ionicLoading, $location, $templateCache) {
-
             var messageList = function () {
                 api.list('/wap/message/message-list', []).success(function (res) {
                     $rootScope.messageList = ar.getStorage('messageList') ? ar.getStorage('messageList') : [];
