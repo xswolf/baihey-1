@@ -282,7 +282,7 @@ define(['app/module', 'app/directive/directiveApi'
 
             // 绑定手机弹窗
             $ionicPopover.fromTemplateUrl('bindPhonePopover.html', {
-                scope: $scope,
+                scope: $scope
             }).then(function(popover) {
                 $scope.popover = popover;
             });
