@@ -1,7 +1,6 @@
 <ion-view>
     <link href="/wechat/web/css/discovery.css" rel="stylesheet">
     <link href="/wechat/web/js/plugin/amezeui/css/amazeui.min.css" rel="stylesheet">
-    <link href="/wechat/web/css/plugin/animate/animate.css" rel="stylesheet">
     <ion-header-bar class="com_w_100 bhy">
         <title class="title">发现</title>
         <button class="button button-icon icon ion-plus-circled positive" ng-click="releasedOpen()"></button>
@@ -25,7 +24,7 @@
                     <span class="identity diamond" ng-if="dis.level == 3">钻石</span>
                 </p>
                 <p class="wsn">{{dis.content}}</p>
-                <ul class="am-gallery am-avg-sm-3 am-avg-md-3 am-avg-lg-4 am-gallery-default"
+                <ul class="am-gallery am-avg-sm-2 am-avg-md-3 am-avg-lg-4 am-gallery-default"
                     data-am-widget="gallery" data-am-gallery="{ pureview: true }">
                     <li ng-repeat="img in dis.imgList">
                         <div class="am-gallery-item">

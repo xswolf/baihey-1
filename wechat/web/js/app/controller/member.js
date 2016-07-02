@@ -181,7 +181,6 @@ define(['app/module', 'app/directive/directiveApi'
     // 个人动态
     module.controller("member.discovery", ['app.serviceApi', '$scope', '$ionicPopup', '$location', '$ionicModal', '$ionicActionSheet', function (api, $scope, $ionicPopup, $location, $ionicModal, $ionicActionSheet) {
         requirejs(['amezeui', 'amezeui_ie8'], function (amezeui, amezeui_ie8) {
-            $scope.reportData = {};
             $scope.formData = {};
             $scope.formData.auth = 1;
             $scope.discoveryList = [];
@@ -201,9 +200,9 @@ define(['app/module', 'app/directive/directiveApi'
                     res.data[i].age = res.data[i].age.replace(/\"/g, '');
                 }
                 $scope.discoveryList = res.data;
+                amezeui.gallery.init();
             });
 
-            amezeui.gallery.init();
             //用户已屏蔽的动态id，从localStorage获取
             $scope.display = ar.getStorage('display') ? ar.getStorage('display') : [];
             // 发现列表过滤条件：黑名单
@@ -261,9 +260,9 @@ define(['app/module', 'app/directive/directiveApi'
                 if ($scope.pageSize > $scope.discoveryList.length) {
                     $scope.isMore = false;
                 }
-                amezeui.gallery.init();
                 $scope.$broadcast('scroll.infiniteScrollComplete');
                 $scope.pageSize += 5;
+                amezeui.gallery.init();
             }
 
             // 是否还有更多
