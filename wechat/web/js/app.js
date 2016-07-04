@@ -2,7 +2,7 @@
  * Created by Administrator on 2016/3/29.
  */
 require.config({
-    //urlArgs: "bust=v3"+Math.random(), // 清除缓存
+    urlArgs: "bust=v3"+Math.random(), // 清除缓存
     baseUrl: '/wechat/web/js/',
     paths: {
         jquery: 'plugin/jquery/jquery',
@@ -28,25 +28,19 @@ require.config({
         ng_cordova:'plugin/cordova/ng-cordova.min',
         cordova:'plugin/cordova/cordova'
     },
-    shim:{
-        angular:{
-            exports:"angular"
-        },
-        ionic:{
-            exports:"ionic",
-            deps:[
 
-            ]
-        }
-    }
+    //shim: {
+    //    ionic:['ionic'],
+    //    angular_upload: {
+    //        deps:['ionic'],
+    //        exports:'angular_upload'
+    //    },
+    //    mobiscroll: {
+    //        deps:['ionic'],
+    //        exports:'mobiscroll'
+    //    }
+    //},
 });
-
-//require(['angular','ionic'] , function (angular) {
-//    require(['angular_animate','ionic_angular','angular_sanitize','angular_ui_router','comm','info_data',"app/controller/listController",'angular_upload','mobiscroll'],function(){
-//        'use strict';
-//        angular.bootstrap(document,['webApp']);
-//    });
-//});
 
 require(['ionic'] , function () {
     require(['comm','info_data',"app/controller/listController",'mobiscroll','angular_upload'],function(){
