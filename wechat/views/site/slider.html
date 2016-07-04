@@ -1,0 +1,14 @@
+<ion-modal-view class="imageView">
+    <ion-content class="has-no-header" scroll="false">
+        <ion-slide-box does-continue="false" active-slide="selectedSlide" show-pager="true"
+                       class="listContainer" on-slide-changed="slideChanged($index)">
+            <ion-slide ng-repeat="single in slides track by $index" ng-click="closeModal()">
+                <ion-scroll direction="xy" locking="false" zooming="true" min-zoom="1"
+                            scrollbar-x="false" scrollbar-y="false"
+                            delegate-handle="slide-{{$index}}" overflow-scroll="false">
+                    <div class="item item-image gallery-slide-view" style="border: 0"><img img-load class="zoomIn animated" src="{{single.thumb_path | picture}}"></div>
+                </ion-scroll>
+            </ion-slide>
+        </ion-slide-box>
+    </ion-content>
+</ion-modal-view>

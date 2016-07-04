@@ -87,7 +87,12 @@ class MemberController extends BaseController
     {
         $user_id = Cookie::getInstance()->getCookie('bhy_id')->value;
         $list = UserPhoto::getInstance()->setHeadPic($user_id, $this->get);
-        $this->renderAjax(['status' => 1, 'data' => $list]);
+        if($list){
+            $this->renderAjax(['status' => 1, 'data' => $list]);
+        }else{
+            $this->renderAjax(['status' => 0, 'msg' => '设置头像失败']);
+        }
+
     }
 
     /**

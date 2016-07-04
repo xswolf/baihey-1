@@ -68,7 +68,6 @@ define(['app/module', 'app/directive/directiveApi'
 
         $scope.formData = [];
         $scope.imgList = [];
-        var head_id = 0;
         api.list('/wap/member/photo-list', []).success(function (res) {
             $scope.imgList = res.data;
         });
@@ -98,10 +97,13 @@ define(['app/module', 'app/directive/directiveApi'
             };
             uploader.onSuccessItem = function (fileItem, response, status, headers) {  // 上传成功
                 if (response.status > 0) {
-                    if ($scope.imgList.length == 0) { // 第一张上传相片默认设为头像
-                        $scope.imgList.push({id: response.id, thumb_path: response.thumb_path, is_head: 1});
-                        $scope.userInfo.info.head_pic = response.thumb_path;
-                        $scope.setUserStorage();
+                    if ($scope.imgList.length < 1) { // 第一张上传相片默认设为头像
+                        api.save('/wap/member/set-head', {id: id, thumb_path: img}).success(function (res) {
+
+                            $scope.imgList.push({id: response.id, thumb_path: response.thumb_path, is_head: 1});
+                            $scope.userInfo.info.head_pic = response.thumb_path;
+                            $scope.setUserStorage();
+                        })
                     } else {
                         $scope.imgList.push({id: response.id, thumb_path: response.thumb_path, is_head: 0});
                     }
@@ -121,6 +123,7 @@ define(['app/module', 'app/directive/directiveApi'
 
         // 点击img，功能
         $scope.moreImg = function (index) {
+            console.log($scope.imgList);
             var id = $scope.imgList[index].id;
             var img = $scope.imgList[index].thumb_path;
             var hideSheet = $ionicActionSheet.show({
@@ -150,11 +153,14 @@ define(['app/module', 'app/directive/directiveApi'
                     }
                     // 设置头像
                     api.save('/wap/member/set-head', {id: id, thumb_path: img}).success(function (res) {
-                        $scope.imgList[head_id].is_head = 0;
-                        $scope.imgList[index].is_head = 1;
-                        head_id = index;
-                        $scope.userInfo.info.head_pic = img;
-                        $scope.setUserStorage();
+                        if(res.status < 1){
+                            ar.saveDataAlert($ionicPopup,res.msg);
+                        }else{
+                            $scope.imgList[head_id].is_head = 0;
+                            $scope.imgList[index].is_head = 1;
+                            $scope.userInfo.info.head_pic = img;
+                            $scope.setUserStorage();
+                        }
                         hideSheet();
                     });
                     return true;

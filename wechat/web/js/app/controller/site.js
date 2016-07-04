@@ -9,7 +9,6 @@ define(['app/module', 'app/directive/directiveApi'
         // 搜索条件
         $scope.searchForm = [];
         $scope.whereForm = [];
-        console.log(dataFilter.data);
         // 用户列表
         $scope.userList = [];
 

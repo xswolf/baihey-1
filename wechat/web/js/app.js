@@ -22,12 +22,8 @@ require.config({
         mobiscroll: 'plugin/mobiscroll/mobiscroll.custom-3.0.0-beta.min',
         photoswipe:'plugin/photoswipe/photoswipe.min',
         photoswipe_ui:'plugin/photoswipe/photoswipe-ui-default.min',
-        klass:'plugin/photoswipe/klass.min',
         info_data: 'config/infoData',
-        ionic_gallery:'plugin/ionic/ion-gallery.min',
-        ng_cordova:'plugin/cordova/ng-cordova.min',
-        cordova:'plugin/cordova/cordova'
-    },
+    }
 
     //shim: {
     //    ionic:['ionic'],

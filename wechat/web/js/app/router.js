@@ -81,7 +81,7 @@ define(["app/module", 'app/service/serviceApi','jquery'],
                 .$on('$stateChangeSuccess',
                     function (event, toState, toParams, fromState, fromParams) {
                         $ionicLoading.hide();
-                        $templateCache.removeAll();  // 清除模版缓存
+                        //$templateCache.removeAll();  // 清除模版缓存
                     });
         }]);
         return module.config(["$stateProvider", "$urlRouterProvider", "$ionicConfigProvider", "$controllerProvider", function ($stateProvider, $urlRouterProvider, $ionicConfigProvider, $controllerProvider) {
@@ -101,7 +101,7 @@ define(["app/module", 'app/service/serviceApi','jquery'],
                             }
                         }
                     })
-                    .state('index_discovery', {   // 首页
+                    .state('index_discovery', {   // 查看他人动态
                         url: "/index_discovery",
                         templateUrl: "/wechat/views/site/discovery.html",
                         controller: 'site.discovery',
@@ -303,7 +303,7 @@ define(["app/module", 'app/service/serviceApi','jquery'],
                         templateUrl: "/wechat/views/charge/index.html",
                         controller: 'charge.index'
                     });
-                $urlRouterProvider.otherwise("/index");
+                //$urlRouterProvider.otherwise("/index");
             }])
             .controller('main', ['$scope', '$location', 'app.serviceApi', '$ionicLoading', '$ionicPopup','$rootScope', function ($scope, $location, api, $ionicLoading, $ionicPopup,$rootScope) {
                 $rootScope.$on('msgNumber' , function () {

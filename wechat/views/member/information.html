@@ -9,15 +9,14 @@
         <ion-list>
             <div class="imgList_con">
                 <div class="imgList_handle clearfix" data-am-widget="gallery" data-am-gallery="{pureview: 1}">
-                    <div class="imgItem am-gallery-item pr" ng-repeat="img in imgList" on-hold="moreImg($index)">
+                    <div class="imgItem am-gallery-item pr" ng-repeat="img in imgList | orderBy:['-is_head']" on-hold="moreImg($index)">
                         <img src="{{img.thumb_path}}" data-rel="{{img.thumb_path | picture}}">
                         <div class="underReview"><span class="">审核中</span></div>
-                        <span class="headpic" ng-if="img.is_head == 1">头像</span>
                     </div>
                     <div ng-if="imgList.length<12" class="imgItem addItem" ng-click="addNewImg()">
                         <i class="am-icon-plus"></i>
                     </div>
-                    <div class="tip fl w100">温馨提示：长按照片可设置头像，您最多可以上传12张照片。</div>
+                    <div class="tip fl w100">温馨提示：相册第一张为头像，长按照片可设置头像，您最多可以上传12张照片。</div>
                 </div>
             </div>
             <input id="pic_fileInput" type="file" nv-file-select="" uploader="uploader"

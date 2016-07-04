@@ -409,6 +409,59 @@ define(['app/module'], function (module) {
 
         };
     }]);
+
+    module.directive('imgModal', ['$ionicModal', '$ionicSlideBoxDelegate', '$ionicLoading', function ($ionicModal, $ionicSlideBoxDelegate, $ionicScrollDelegate, $ionicLoading) {
+        return {
+            restrict: 'A',
+            link: function (scope, element, attrs) {
+                var _modal;
+                $ionicModal.fromTemplateUrl('/wechat/views/site/slider.html', {
+                    scope: scope,
+                    animation: 'none'
+                }).then(function (modal) {
+                    _modal = modal;
+                });
+
+                scope.openModal = function () {
+                    _modal.show();
+                };
+
+                scope.closeModal = function () {
+                    _modal.hide();
+                };
+
+                scope.$on('$destroy', function () {
+                    try {
+                        _modal.remove();
+                    } catch (err) {
+                        console.log(err.message);
+                    }
+                });
+
+                element.on('click', function () {
+                    scope.slides = [];
+                    scope.selectedSlide = attrs.imgIndex;
+                    scope.slides = angular.fromJson(attrs.imgModal);
+                    scope.openModal();
+                })
+            }
+        }
+
+
+    }]);
+
+    module.directive('imgLoad', function () {
+        return function (scope, element, attrs) {
+            var loadHtml = '<ion-spinner icon="spiral"></ion-spinner>';
+            //angular.element('body').append(loadHtml);
+            element.on('load',function(){
+                console.log('加载中');
+            })
+            element.off('load',function(){
+                console.log('加载完毕');
+            })
+        };
+    });
 })
 
 
