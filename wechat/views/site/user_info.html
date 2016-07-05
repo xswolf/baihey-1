@@ -8,7 +8,7 @@
         <ion-list>
             <div class="imgList_con">
                 <div class="imgList_handle clearfix">
-                    <div class="imgItem am-gallery-item" ng-click="isPermissions($event)" img-modal="{{imgList}}" img-index="{{$index}}" ng-repeat="img in imgList">
+                    <div class="imgItem am-gallery-item" img-modal="{{imgList}}" img-index="{{$index}}" stop="{{picAuth}}" ng-repeat="img in imgList">
                         <img src="{{img.thumb_path}}" >
                     </div>
                 </div>

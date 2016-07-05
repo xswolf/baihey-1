@@ -410,13 +410,11 @@ define(['app/module'], function (module) {
         };
     }]);
 
-    module.directive('imgModal', ['$ionicModal', '$ionicSlideBoxDelegate', '$ionicLoading', function ($ionicModal, $ionicSlideBoxDelegate, $ionicScrollDelegate, $ionicLoading) {
+    module.directive('imgModal', ['$ionicModal', '$ionicPopup', function ($ionicModal, $ionicPopup) {
         return {
             restrict: 'A',
             link: function (scope, element, attrs) {
-                if(attrs.stop){
-                    return false;
-                }
+
                 var _modal;
                 $ionicModal.fromTemplateUrl('/wechat/views/site/slider.html', {
                     scope: scope,
@@ -441,6 +439,10 @@ define(['app/module'], function (module) {
                     }
                 });
                 element.on('click', function () {
+                    if(attrs.stop == false){
+                        ar.saveDataAlert($ionicPopup,'对方已设置不公开相册');
+                        return false;
+                    }
                     scope.slides = [];
                     scope.selectedSlide = attrs.imgIndex;
                     scope.slides = angular.fromJson(attrs.imgModal);

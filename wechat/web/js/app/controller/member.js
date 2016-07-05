@@ -95,8 +95,10 @@ define(['app/module', 'app/directive/directiveApi'
             uploader.onSuccessItem = function (fileItem, response, status, headers) {  // 上传成功
                 if (response.status > 0) {
                     if ($scope.imgList.length < 1) { // 第一张上传相片默认设为头像
-                        api.save('/wap/member/set-head', {id: id, thumb_path: img}).success(function (res) {
-
+                        api.save('/wap/member/set-head', {
+                            id: response.id,
+                            thumb_path: response.thumb_path
+                        }).success(function (res) {
                             $scope.imgList.push({id: response.id, thumb_path: response.thumb_path, is_head: 1});
                             $scope.userInfo.info.head_pic = response.thumb_path;
                             $scope.setUserStorage();
@@ -120,7 +122,6 @@ define(['app/module', 'app/directive/directiveApi'
 
         // 点击img，功能
         $scope.moreImg = function (index) {
-            console.log($scope.imgList);
             var id = $scope.imgList[index].id;
             var img = $scope.imgList[index].thumb_path;
             var hideSheet = $ionicActionSheet.show({
@@ -131,29 +132,30 @@ define(['app/module', 'app/directive/directiveApi'
                 titleText: '操作照片',
                 cancelText: '取消',
                 destructiveButtonClicked: function () {  // 点击删除
-                    if (confirm("确认删除该照片？")) {
-                        // 删除操作
-                        api.save('/wap/member/del-photo', {'id': id}).success(function (res) {
-                            $scope.imgList.splice(index, 1);
-                            hideSheet();
-                        });
+                    var cpmform = ar.saveDataConfirm($ionicPopup, "是否确认删除该照片？")
+                    cpmform.then(function (res) {
+                        if (res) {
+                            // 删除操作
+                            api.save('/wap/member/del-photo', {'id': id}).success(function (res) {
+                                $scope.imgList.splice(index, 1);
+                                hideSheet();
+                            });
 
-                    } else {
-                        return false;
-                    }
+                        } else {
+                            hideSheet();
+                        }
+                    })
+
                 },
                 buttonClicked: function (i) {
-                    if ($scope.imgList[index].is_check != 1) {
-                        ar.saveDataAlert($ionicPopup, '图片未审核');
-                        hideSheet();
-                        return false;
-                    }
                     // 设置头像
                     api.save('/wap/member/set-head', {id: id, thumb_path: img}).success(function (res) {
-                        if(res.status < 1){
-                            ar.saveDataAlert($ionicPopup,res.msg);
-                        }else{
-                            $scope.imgList[head_id].is_head = 0;
+                        if (res.status < 1) {
+                            ar.saveDataAlert($ionicPopup, res.msg);
+                        } else {
+                            for (var i in $scope.imgList) {
+                                $scope.imgList[i].is_head = 0;
+                            }
                             $scope.imgList[index].is_head = 1;
                             $scope.userInfo.info.head_pic = img;
                             $scope.setUserStorage();
@@ -183,93 +185,92 @@ define(['app/module', 'app/directive/directiveApi'
 
     // 个人动态
     module.controller("member.discovery", ['app.serviceApi', '$scope', '$ionicPopup', '$location', '$ionicModal', '$ionicActionSheet', function (api, $scope, $ionicPopup, $location, $ionicModal, $ionicActionSheet) {
-            $scope.formData = {};
-            $scope.formData.auth = 1;
-            $scope.discoveryList = [];
-            $scope.pageSize  = 5;
+        $scope.formData = {};
+        $scope.formData.auth = 1;
+        $scope.discoveryList = [];
+        $scope.pageSize = 5;
 
-            api.list('/wap/member/get-dynamic-list', {
-                user_id: $scope.userInfo.id,
-                limit: 10000
-            }).success(function (res) {  // 查询出所有动态
-                if (res.data.length < 1) {
-                    return false;
-                }
-                for (var i in res.data) {
-                    res.data[i].imgList = JSON.parse(res.data[i].pic);
-                    res.data[i].head_pic = res.data[i].head_pic.replace(/\"/g, '');
-                    res.data[i].level = res.data[i].level.replace(/\"/g, '');
-                    res.data[i].age = res.data[i].age.replace(/\"/g, '');
-                }
-                $scope.discoveryList = res.data;
-            });
-
-            //用户已屏蔽的动态id，从localStorage获取
-            $scope.display = ar.getStorage('display') ? ar.getStorage('display') : [];
-            // 发现列表过滤条件：黑名单
-            $scope.indexFilter = function (dis) {
-                return $scope.display.indexOf(dis.id) == -1;
+        api.list('/wap/member/get-dynamic-list', {
+            user_id: $scope.userInfo.id,
+            limit: 10000
+        }).success(function (res) {  // 查询出所有动态
+            if (res.data.length < 1) {
+                return false;
             }
-
-            $scope.jump = function (url) {
-                $location.url(url);
+            for (var i in res.data) {
+                res.data[i].imgList = JSON.parse(res.data[i].pic);
+                res.data[i].head_pic = res.data[i].head_pic.replace(/\"/g, '');
+                res.data[i].level = res.data[i].level.replace(/\"/g, '');
+                res.data[i].age = res.data[i].age.replace(/\"/g, '');
             }
+            $scope.discoveryList = res.data;
+        });
 
-            $scope.more = function (id, index) {
-                $ionicActionSheet.show({
-                    buttons: [
-                        {text: '删除'}
-                    ],
-                    titleText: '更多',
-                    cancelText: '取消',
-                    cancel: function () {
-                    },
-                    buttonClicked: function (i, btnObj) {
-                        if (i == 0) {
-                            $scope.display.push(id);
-                            ar.setStorage('display', $scope.display);
-                            // 改变状态 api.save
-                            api.save('/wap/member/delete-dynamic', {id: id}).success(function (res) {
-                                $scope.discoveryList.splice(index, 1);
-                            });
-                        }
-                        return true;
+        //用户已屏蔽的动态id，从localStorage获取
+        $scope.display = ar.getStorage('display') ? ar.getStorage('display') : [];
+        // 发现列表过滤条件：黑名单
+        $scope.indexFilter = function (dis) {
+            return $scope.display.indexOf(dis.id) == -1;
+        }
+
+        $scope.jump = function (url) {
+            $location.url(url);
+        }
+
+        $scope.more = function (id, index) {
+            $ionicActionSheet.show({
+                buttons: [
+                    {text: '删除'}
+                ],
+                titleText: '更多',
+                cancelText: '取消',
+                cancel: function () {
+                },
+                buttonClicked: function (i, btnObj) {
+                    if (i == 0) {
+                        $scope.display.push(id);
+                        ar.setStorage('display', $scope.display);
+                        // 改变状态 api.save
+                        api.save('/wap/member/delete-dynamic', {id: id}).success(function (res) {
+                            $scope.discoveryList.splice(index, 1);
+                        });
                     }
-                });
-            }
-            // 点赞
-            $scope.clickLike = function (dis) {
-                var i = ar.getArrI($scope.discoveryList, 'id', dis.id);
-                var add = 0;
-                if ($scope.discoveryList[i].cid > 0) {
-                    add = -1;
-                    $scope.discoveryList[i].cid = -1;
-                } else {
-                    add = 1;
-                    $scope.discoveryList[i].cid = 1;
+                    return true;
                 }
-                $scope.discoveryList[i].like_num = parseInt($scope.discoveryList[i].like_num) + add;
-
-                api.save('/wap/member/set-click-like', {dynamicId: dis.id, add: add}); // 请测试功能是否正常。
-
+            });
+        }
+        // 点赞
+        $scope.clickLike = function (dis) {
+            var i = ar.getArrI($scope.discoveryList, 'id', dis.id);
+            var add = 0;
+            if ($scope.discoveryList[i].cid > 0) {
+                add = -1;
+                $scope.discoveryList[i].cid = -1;
+            } else {
+                add = 1;
+                $scope.discoveryList[i].cid = 1;
             }
+            $scope.discoveryList[i].like_num = parseInt($scope.discoveryList[i].like_num) + add;
 
-            $scope.pageSize = 5;
-            $scope.isMore = true;
-            // 加载更多
-            $scope.loadMore = function () {
-                if ($scope.pageSize > $scope.discoveryList.length) {
-                    $scope.isMore = false;
-                }
-                $scope.$broadcast('scroll.infiniteScrollComplete');
-                $scope.pageSize += 5;
+            api.save('/wap/member/set-click-like', {dynamicId: dis.id, add: add}); // 请测试功能是否正常。
+
+        }
+
+        $scope.pageSize = 5;
+        $scope.isMore = true;
+        // 加载更多
+        $scope.loadMore = function () {
+            if ($scope.pageSize > $scope.discoveryList.length) {
+                $scope.isMore = false;
             }
+            $scope.$broadcast('scroll.infiniteScrollComplete');
+            $scope.pageSize += 5;
+        }
 
-            // 是否还有更多
-            $scope.moreDataCanBeLoaded = function () {
-                return $scope.isMore;
-            };
-
+        // 是否还有更多
+        $scope.moreDataCanBeLoaded = function () {
+            return $scope.isMore;
+        };
 
 
     }]);
@@ -279,74 +280,74 @@ define(['app/module', 'app/directive/directiveApi'
         var uploader = $scope.uploader = new FileUploader({  // 实例化上传图片插件
             url: '/wap/file/thumb'
         });
-            $scope.reportData = {};
-            $scope.formData = {};
-            $scope.formData.auth = 1;
+        $scope.reportData = {};
+        $scope.formData = {};
+        $scope.formData.auth = 1;
 
-            $scope.imgList = [];
+        $scope.imgList = [];
 
-            $scope.showLoading = function (progress) {
-                $ionicLoading.show({
-                    template: '<p class="tac">上传中...</p><p class="tac">' + progress + '%</p>'
-                });
+        $scope.showLoading = function (progress) {
+            $ionicLoading.show({
+                template: '<p class="tac">上传中...</p><p class="tac">' + progress + '%</p>'
+            });
+        };
+
+        $scope.hideLoading = function () {
+            $ionicLoading.hide();
+        }
+
+        var id = 0;
+        $scope.addNewImg = function () {
+            var e = document.getElementById("pic_fileInput");
+            var ev = document.createEvent("MouseEvents");
+            ev.initEvent("click", true, true);
+            e.dispatchEvent(ev);
+
+            uploader.filters.push({
+                name: 'file-type-Res',
+                fn: function (item) {
+                    if (!ar.msg_file_res_img(item)) {   // 验证文件是否是图片格式
+                        ar.saveDataAlert($ionicPopup, '只能上传图片类型的文件！');
+                        return false;
+                    }
+                    return true;
+                }
+            });
+
+            uploader.onAfterAddingFile = function (fileItem) {  // 选择文件后
+                fileItem.upload();   // 上传
             };
+            uploader.onProgressItem = function (fileItem, progress) {   //进度条
+                $scope.showLoading(progress);    // 显示loading
+            };
+            uploader.onSuccessItem = function (fileItem, response, status, headers) {  // 上传成功
+                if (response.status > 0) {
+                    $scope.imgList.push({id: id + 1, thumb_path: response.thumb_path});
+                } else {
+                    ar.saveDataAlert($ionicPopup, '上传图片失败！');
+                }
+            };
+            uploader.onErrorItem = function (fileItem, response, status, headers) {  // 上传出错
+                ar.saveDataAlert($ionicPopup, '上传图片出错！');
+                $scope.hideLoading();  // 隐藏loading
+            };
+            uploader.onCompleteItem = function (fileItem, response, status, headers) {  // 上传结束
+                $scope.hideLoading();  // 隐藏loading
+            };
+        }
 
-            $scope.hideLoading = function () {
-                $ionicLoading.hide();
-            }
-
-            var id = 0;
-            $scope.addNewImg = function () {
-                var e = document.getElementById("pic_fileInput");
-                var ev = document.createEvent("MouseEvents");
-                ev.initEvent("click", true, true);
-                e.dispatchEvent(ev);
-
-                uploader.filters.push({
-                    name: 'file-type-Res',
-                    fn: function (item) {
-                        if (!ar.msg_file_res_img(item)) {   // 验证文件是否是图片格式
-                            ar.saveDataAlert($ionicPopup, '只能上传图片类型的文件！');
-                            return false;
-                        }
-                        return true;
-                    }
-                });
-
-                uploader.onAfterAddingFile = function (fileItem) {  // 选择文件后
-                    fileItem.upload();   // 上传
-                };
-                uploader.onProgressItem = function (fileItem, progress) {   //进度条
-                    $scope.showLoading(progress);    // 显示loading
-                };
-                uploader.onSuccessItem = function (fileItem, response, status, headers) {  // 上传成功
-                    if (response.status > 0) {
-                        $scope.imgList.push({id: id + 1, thumb_path: response.thumb_path});
-                    } else {
-                        ar.saveDataAlert($ionicPopup, '上传图片失败！');
-                    }
-                };
-                uploader.onErrorItem = function (fileItem, response, status, headers) {  // 上传出错
-                    ar.saveDataAlert($ionicPopup, '上传图片出错！');
-                    $scope.hideLoading();  // 隐藏loading
-                };
-                uploader.onCompleteItem = function (fileItem, response, status, headers) {  // 上传结束
-                    $scope.hideLoading();  // 隐藏loading
-                };
-            }
-
-            // 发布动态
-            $scope.saveData = function () {
-                var userInfo = ar.getStorage('userInfo');
-                $scope.formData.name = JSON.parse(userInfo.info).real_name;
-                $scope.formData.pic = JSON.stringify($scope.imgList);
-                api.save('/wap/member/add-user-dynamic', $scope.formData).success(function (res) {
-                    ar.saveDataAlert($ionicPopup, res.msg);
-                    if (res.status) {
-                        $location.url('/member/discovery');
-                    }
-                })
-            }
+        // 发布动态
+        $scope.saveData = function () {
+            var userInfo = ar.getStorage('userInfo');
+            $scope.formData.name = JSON.parse(userInfo.info).real_name;
+            $scope.formData.pic = JSON.stringify($scope.imgList);
+            api.save('/wap/member/add-user-dynamic', $scope.formData).success(function (res) {
+                ar.saveDataAlert($ionicPopup, res.msg);
+                if (res.status) {
+                    $location.url('/member/discovery');
+                }
+            })
+        }
 
     }]);
     // 个性签名
@@ -1770,14 +1771,10 @@ define(['app/module', 'app/directive/directiveApi'
                 $scope.otherUserInfo.love_sport ? getConfig('love_sport', $scope.otherUserInfo.love_sport) : true;// 喜欢的运动
                 $scope.otherUserInfo.want_film ? getConfig('want_film', $scope.otherUserInfo.want_film) : true;// 想看的电影
                 $scope.otherUserInfo.like_food ? getConfig('like_food', $scope.otherUserInfo.like_food) : true;// 喜欢的食物
-                $scope.isPermissions = function (event) {
-                    if ($scope.picAuth) {
-                        event.stopPropagation();
-                        ar.saveDataAlert($ionicPopup, '对方已设置不公开相册');
-                    }
-                }
             }
+
         });
+
 
         $scope.localChat = function () {
             window.location.hash = "#/chat1?id=" + $scope.otherUserInfo.id + "&head_pic=" + $scope.otherUserInfo.info.head_pic + "&real_name=" + $scope.otherUserInfo.info.real_name + "&sex=" + $scope.otherUserInfo.sex + "&age=" + $scope.otherUserInfo.info.age;
