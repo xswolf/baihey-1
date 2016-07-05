@@ -31,7 +31,7 @@
             setTimeout(function () {
                 document.getElementById('welcome').className = 'animated fadeOut hide';
             }, 1100)
-        }, 3000);
+        }, 6000);
     }
     function addElement() {
         var div = document.createElement("div");
