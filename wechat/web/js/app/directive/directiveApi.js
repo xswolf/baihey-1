@@ -450,17 +450,19 @@ define(['app/module'], function (module) {
 
     }]);
 
-    module.directive('imgLoad', function () {
+    module.directive('imgLazy', function () {
         return function (scope, element, attrs) {
-            var loadHtml = '<ion-spinner icon="spiral"></ion-spinner>';
-            //angular.element('body').append(loadHtml);
-            element.on('load',function(){
-                console.log('加载中');
-            })
-            element.off('load',function(){
-                console.log('加载完毕');
-            })
-        };
+            var img = new Image();
+            img.src = attrs.imgLazy;
+            if (img.complete) {
+                element.attr('src', attrs.imgLazy);
+            } else {
+                img.onload = function () {
+                    element.attr('src', attrs.imgLazy);
+                    img.onload = null;
+                }
+            }
+        }
     });
 })
 

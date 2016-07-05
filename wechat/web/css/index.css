@@ -368,8 +368,8 @@ span.under {
   background-color: black;
 }
 .imageView .gallery-slide-view {
-  width: 98%;
-  background-color: transparent;
+  /* width: 98%;
+  background-color: transparent*/
 }
 .imageView .image-subtitle {
   color: white;

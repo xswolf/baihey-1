@@ -30,8 +30,8 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div ng-repeat="img in dis.imgList | limitTo:-(dis.imgList.length-3)" class="col col-33">
-                        <img class="w100" ng-src="{{img.thumb_path}}" ng-click="openSlider(photo)" >
+                    <div ng-repeat="img in dis.imgList | limitTo:3:3" class="col col-33">
+                        <img class="w100" ng-src="{{img.thumb_path}}" img-modal="{{dis.imgList}}" img-index="{{3+$index}}" >
                     </div>
                 </div>
                 <div class="clearfix mt10 pr">
