@@ -50,7 +50,7 @@ define(['app/module', 'app/directive/directiveApi'
         };
 
         window.addEventListener("native.keyboardshow", function (e) {
-            viewScroll.scrollBottom();
+            viewScroll.scrollBottom(true);
         });
 
         // 显示时间函数
@@ -449,7 +449,7 @@ define(['app/module', 'app/directive/directiveApi'
 
                     default :
                         setMessage(response);
-                        viewScroll.scrollBottom();  // 滚动至底部
+                        viewScroll.scrollBottom(true);  // 滚动至底部
                         $scope.$apply();
                         break;
                 }

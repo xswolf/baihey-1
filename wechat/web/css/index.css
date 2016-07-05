@@ -429,3 +429,6 @@ span.under {
   -ms-flex-align: center;
   align-items: center;
 }
+.slider-pager .slider-pager-page {
+  color: white;
+}
