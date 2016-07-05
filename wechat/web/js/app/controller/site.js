@@ -416,8 +416,6 @@ define(['app/module', 'app/directive/directiveApi'
 
     // 查看会员资料-会员动态
     module.controller("site.discovery", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$ionicModal', '$ionicActionSheet', '$ionicLoading', '$ionicBackdrop', '$ionicScrollDelegate', '$location', 'dataFilter', function (api, $scope, $timeout, $ionicPopup, $ionicModal, $ionicActionSheet, $ionicLoading, $ionicBackdrop, $ionicScrollDelegate, $location, dataFilter) {
-        requirejs(['amezeui', 'amezeui_ie8'], function (amezeui, amezeui_ie8) {
-            amezeui.gallery.init();
             $scope.discoveryList = [];
             $scope.user = [];
             $scope.isMore = true;
@@ -521,7 +519,6 @@ define(['app/module', 'app/directive/directiveApi'
                     $scope.isMore = false;
                 }
                 $scope.pageSize += 5;
-                amezeui.gallery.init();
                 $scope.$broadcast('scroll.infiniteScrollComplete');
             }
 
@@ -531,6 +528,5 @@ define(['app/module', 'app/directive/directiveApi'
             }
 
 
-        });
     }]);
 })

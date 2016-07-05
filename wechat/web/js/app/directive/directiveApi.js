@@ -414,6 +414,9 @@ define(['app/module'], function (module) {
         return {
             restrict: 'A',
             link: function (scope, element, attrs) {
+                if(attrs.stop){
+                    return false;
+                }
                 var _modal;
                 $ionicModal.fromTemplateUrl('/wechat/views/site/slider.html', {
                     scope: scope,
@@ -437,7 +440,6 @@ define(['app/module'], function (module) {
                         console.log(err.message);
                     }
                 });
-
                 element.on('click', function () {
                     scope.slides = [];
                     scope.selectedSlide = attrs.imgIndex;

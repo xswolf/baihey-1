@@ -1,7 +1,6 @@
 <ion-view>
     <link href="/wechat/web/css/member.css" rel="stylesheet">
     <link href="/wechat/web/css/fontIcon.css" rel="stylesheet">
-    <link href="/wechat/web/js/plugin/amezeui/css/amazeui.min.css" rel="stylesheet">
     <ion-header-bar>
         <title class="title">我的资料</title>
     </ion-header-bar>
@@ -9,11 +8,11 @@
         <ion-list>
             <div class="imgList_con">
                 <div class="imgList_handle clearfix" data-am-widget="gallery" data-am-gallery="{pureview: 1}">
-                    <div class="imgItem am-gallery-item pr" ng-repeat="img in imgList | orderBy:['-is_head']" on-hold="moreImg($index)">
-                        <img src="{{img.thumb_path}}" data-rel="{{img.thumb_path | picture}}">
+                    <div class="imgItem am-gallery-item pr" ng-repeat="img in imgList | orderBy:['-is_head']" img-modal="{{imgList}}" img-index="{{$index}}" on-hold="moreImg($index)">
+                        <img ng-src="{{img.thumb_path}}">
                         <div class="underReview"><span class="">审核中</span></div>
                     </div>
-                    <div ng-if="imgList.length<12" class="imgItem addItem" ng-click="addNewImg()">
+                    <div ng-if="imgList.length < 12" class="imgItem addItem" ng-click="addNewImg()">
                         <i class="am-icon-plus"></i>
                     </div>
                     <div class="tip fl w100">温馨提示：相册第一张为头像，长按照片可设置头像，您最多可以上传12张照片。</div>
@@ -24,7 +23,7 @@
 
             <ion-item ng-if="!honestyStatus" class="mb10 item-icon-left item-icon-right" href="#/member/honesty">
                 <i class="icon ion-android-alert assertive"></i>
-                诚信认证：请您上传身份证，完善资料！
+                实名制婚恋，上传身份证，完善资料！
                 <i class="icon ion-ios-arrow-right cor52"></i>
             </ion-item>
             <ion-item class="idt">
@@ -45,10 +44,9 @@
                     <span class="cor4">个人动态</span>
                     <span class="ml20 cor4" ng-if="dynamicList.length < 1">发布我的第一条个人动态</span>
                    </p>
-                    <ul data-am-widget="gallery" class="am-gallery am-avg-sm-2 am-avg-md-3 am-avg-lg-4 am-gallery-default w80"
-                        ng-if="dynamicList.length > 0">
-                        <li ng-repeat="dynamic in dynamicList" ng-if="dynamic.imgList.length > 0">
-                            <div class="am-gallery-item">
+                    <ul class="dynamicImg clearfix mt10" ng-if="dynamicList.length > 0">
+                        <li ng-repeat="dynamic in dynamicList | limitTo:3" ng-if="dynamic.imgList.length > 0">
+                            <div class="dynamicImg-item">
                                 <img ng-src="{{dynamic.imgList[0].thumb_path}}" alt="." >
                             </div>
                         </li>
@@ -99,7 +97,7 @@
                 <p>
                     <span class="cor4">学历</span>
                     <span ng-if="!userInfo.info.education" class="ml48 mr10 cor21">立即填写</span>
-                    <span ng-if="userInfo.info.education" class="ml48 mr10">{{userInfo.info.education}}</span>
+                    <span ng-if="userInfo.info.education" class="ml48 mr10">{{userInfo.info.education | education}}</span>
                 </p>
                 <i class="icon ion-ios-arrow-right cor52"></i>
             </ion-item>

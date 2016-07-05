@@ -8,9 +8,9 @@
     <ion-content class="bg5">
         <ion-list>
             <ion-item class="mt10">
-                <div class="gallery_handle clearfix" data-am-widget="gallery" data-am-gallery="{ pureview: true }">
+                <div class="gallery_handle clearfix">
                     <div class="imgItem" ng-repeat="img in imgList">
-                        <img src="{{img.thumb_path}}" data-rel="{{img.thumb_path | picture}}">
+                        <img src="{{img.thumb_path}}" img-modal="{{imgList}}" img-index="{{$index}}">
                     </div>
                     <div class="imgItem add" ng-click="addNewImg()" ng-if="imgList.length < 6">
                         <i class="icon ion-plus-round"></i>

@@ -1,7 +1,5 @@
 <ion-view hide-tabs="true">
     <link href="/wechat/web/css/member.css" rel="stylesheet">
-    <link href="/wechat/web/css/plugin/bootstrap/css/font-awesome.min.css" rel="stylesheet">
-    <link href="/wechat/web/js/plugin/amezeui/css/amazeui.min.css" rel="stylesheet">
     <ion-header-bar>
         <title class="title">{{otherUserInfo.info.real_name | sex:otherUserInfo.sex :otherUserInfo.info.age}}</title>
         <a class="button button-icon icon icon-new-menu-user-settings" href="#/member/settings?userId={{formData.userId}}"></a>
@@ -9,9 +7,9 @@
     <ion-content class="bhy com_w_100 infomation has-footer">
         <ion-list>
             <div class="imgList_con">
-                <div class="imgList_handle clearfix" data-am-widget="gallery" data-am-gallery="{pureview: 'auto'}">
-                    <div class="imgItem am-gallery-item" ng-click="isPermissions($event)" ng-repeat="img in imgList">
-                        <img src="{{img.thumb_path}}" data-rel="{{img.thumb_path | picture}}">
+                <div class="imgList_handle clearfix">
+                    <div class="imgItem am-gallery-item" ng-click="isPermissions($event)" img-modal="{{imgList}}" img-index="{{$index}}" ng-repeat="img in imgList">
+                        <img src="{{img.thumb_path}}" >
                     </div>
                 </div>
             </div>

@@ -22,20 +22,10 @@ require.config({
         mobiscroll: 'plugin/mobiscroll/mobiscroll.custom-3.0.0-beta.min',
         photoswipe:'plugin/photoswipe/photoswipe.min',
         photoswipe_ui:'plugin/photoswipe/photoswipe-ui-default.min',
-        info_data: 'config/infoData',
+        info_data: 'config/infoData'
     }
 
-    //shim: {
-    //    ionic:['ionic'],
-    //    angular_upload: {
-    //        deps:['ionic'],
-    //        exports:'angular_upload'
-    //    },
-    //    mobiscroll: {
-    //        deps:['ionic'],
-    //        exports:'mobiscroll'
-    //    }
-    //},
+
 });
 
 require(['ionic'] , function () {

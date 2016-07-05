@@ -51,9 +51,6 @@ define(['app/module', 'app/directive/directiveApi'
 
     // 资料首页
     module.controller("member.information", ['app.serviceApi', '$scope', '$ionicPopup', 'FileUploader', '$ionicLoading', '$ionicActionSheet', function (api, $scope, $ionicPopup, FileUploader, $ionicLoading, $ionicActionSheet) {
-        requirejs(['amezeui', 'amezeui_ie8'], function (amezeui, amezeui_ie8) {
-            amezeui.gallery.init();
-        });
 
         // 判断身份证是否认证通过
         api.list('/wap/member/photo-list', {type: 2, pageSize: 2}).success(function (res) {
@@ -186,7 +183,6 @@ define(['app/module', 'app/directive/directiveApi'
 
     // 个人动态
     module.controller("member.discovery", ['app.serviceApi', '$scope', '$ionicPopup', '$location', '$ionicModal', '$ionicActionSheet', function (api, $scope, $ionicPopup, $location, $ionicModal, $ionicActionSheet) {
-        requirejs(['amezeui', 'amezeui_ie8'], function (amezeui, amezeui_ie8) {
             $scope.formData = {};
             $scope.formData.auth = 1;
             $scope.discoveryList = [];
@@ -206,7 +202,6 @@ define(['app/module', 'app/directive/directiveApi'
                     res.data[i].age = res.data[i].age.replace(/\"/g, '');
                 }
                 $scope.discoveryList = res.data;
-                amezeui.gallery.init();
             });
 
             //用户已屏蔽的动态id，从localStorage获取
@@ -268,7 +263,6 @@ define(['app/module', 'app/directive/directiveApi'
                 }
                 $scope.$broadcast('scroll.infiniteScrollComplete');
                 $scope.pageSize += 5;
-                amezeui.gallery.init();
             }
 
             // 是否还有更多
@@ -276,7 +270,6 @@ define(['app/module', 'app/directive/directiveApi'
                 return $scope.isMore;
             };
 
-        });
 
 
     }]);
@@ -286,8 +279,6 @@ define(['app/module', 'app/directive/directiveApi'
         var uploader = $scope.uploader = new FileUploader({  // 实例化上传图片插件
             url: '/wap/file/thumb'
         });
-        requirejs(['amezeui', 'amezeui_ie8'], function (amezeui, amezeui_ie8) {
-            amezeui.gallery.init();
             $scope.reportData = {};
             $scope.formData = {};
             $scope.formData.auth = 1;
@@ -342,7 +333,6 @@ define(['app/module', 'app/directive/directiveApi'
                 uploader.onCompleteItem = function (fileItem, response, status, headers) {  // 上传结束
                     $scope.hideLoading();  // 隐藏loading
                 };
-                amezeui.gallery.init();
             }
 
             // 发布动态
@@ -358,7 +348,6 @@ define(['app/module', 'app/directive/directiveApi'
                 })
             }
 
-        });
     }]);
     // 个性签名
     module.controller("member.signature", ['app.serviceApi', '$scope', '$ionicPopup', '$location', function (api, $scope, $ionicPopup, $location) {
@@ -1704,9 +1693,6 @@ define(['app/module', 'app/directive/directiveApi'
     // 查看用户资料
     module.controller("member.user_info", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$ionicModal', '$ionicActionSheet', '$ionicLoading', '$location', 'dataFilter', function (api, $scope, $timeout, $ionicPopup, $ionicModal, $ionicActionSheet, $ionicLoading, $location, dataFilter) {
 
-        requirejs(['amezeui', 'amezeui_ie8'], function (amezeui, amezeui_ie8) {
-            amezeui.gallery.init();
-        });
         $scope.formData = [];
         var userInfo = ar.getStorage('userInfo');
         if (userInfo != null) {
@@ -2340,7 +2326,7 @@ define(['app/module', 'app/directive/directiveApi'
         });
     }]);
 
-// 诚信认证-学历认证
+    // 诚信认证-学历认证
     module.controller("member.honesty_edu", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', 'FileUploader', function (api, $scope, $timeout, $ionicPopup, FileUploader) {
         api.list('/wap/member/photo-list', {type: 3, pageSize: 1}).success(function (res) {
             $scope.authList = res.data;
