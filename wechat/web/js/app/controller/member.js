@@ -67,6 +67,7 @@ define(['app/module', 'app/directive/directiveApi'
         $scope.imgList = [];
         api.list('/wap/member/photo-list', []).success(function (res) {
             $scope.imgList = res.data;
+            ar.initPhotoSwipeFromDOM('.bhy-gallery');
         });
 
         $scope.addNewImg = function () {
@@ -1753,6 +1754,7 @@ define(['app/module', 'app/directive/directiveApi'
                 $scope.otherUserInfo.auth = JSON.parse($scope.otherUserInfo.auth);
                 // 用户相册
                 $scope.imgList = res.userPhoto.length > 0 ? res.userPhoto : [];
+                ar.initPhotoSwipeFromDOM('.bhy-gallery');
                 // 用户动态
                 if (res.dynamic) {
                     for (var i in res.dynamic) {
@@ -2191,32 +2193,8 @@ define(['app/module', 'app/directive/directiveApi'
             $scope.authList = res.data;
         });
         $scope.imgList = [];
-        requirejs(['photoswipe', 'photoswipe_ui'], function (photoswipe, photoswipe_ui) {
-            $scope.showImg = function (index) {
-                var imgAttr = [];
-                for (var i in $scope.authList) {
-                    imgAttr[i] = $scope.authList[i].thumb_path.split('.')[0].split('_');
-                    $scope.imgList[i] = {
-                        src: $scope.authList[i].thumb_path.replace('thumb', 'picture'),
-                        w: imgAttr[i][1],
-                        h: imgAttr[i][2]
-                    };
-                }
-                var pswpElement = document.querySelectorAll('.pswp')[0];
-                var options = {index: index};
-                options.mainClass = 'pswp--minimal--dark';
-                options.barsSize = {top: 0, bottom: 0};
-                options.captionEl = false;
-                options.fullscreenEl = false;
-                options.shareEl = false;
-                options.history = false;
-                options.bgOpacity = 0.85;
-                options.tapToClose = true;
-                options.tapToToggleControls = false;
-                var gallery = new photoswipe(pswpElement, photoswipe_ui, $scope.imgList, options);
-                gallery.init();
-            }
-        });
+        ar.initPhotoSwipeFromDOM('.bhy-gallery');
+
         $scope.formData = [];
         $scope.formData.real_name = $scope.userInfo.info.real_name;
         $scope.formData.identity_id = $scope.userInfo.info.identity_id;
@@ -2281,34 +2259,7 @@ define(['app/module', 'app/directive/directiveApi'
             $scope.authList = res.data;
         });
         $scope.imgList = [];
-        requirejs(['photoswipe', 'photoswipe_ui'], function (photoswipe, photoswipe_ui) {
-            $scope.showImg = function (index) {
-                var imgAttr = [];
-                for (var i in $scope.authList) {
-                    imgAttr[i] = $scope.authList[i].thumb_path.split('.')[0].split('_');
-                    $scope.imgList[i] = {
-                        src: $scope.authList[i].thumb_path.replace('thumb', 'picture'),
-                        w: imgAttr[i][1],
-                        h: imgAttr[i][2]
-                    };
-                }
-                var pswpElement = document.querySelectorAll('.pswp')[0];
-                var options = {index: index};
-                options.mainClass = 'pswp--minimal--dark';
-                options.barsSize = {top: 0, bottom: 0};
-                options.captionEl = false;
-                options.fullscreenEl = false;
-                options.shareEl = false;
-                options.history = false;
-                options.bgOpacity = 0.85;
-                options.tapToClose = true;
-                options.tapToToggleControls = false;
-                var gallery = new photoswipe(pswpElement, photoswipe_ui, $scope.imgList, options);
-                gallery.init();
-            }
-        });
-
-
+        ar.initPhotoSwipeFromDOM('.bhy-gallery');
         // 实例化上传图片插件
         var uploader = $scope.uploader = new FileUploader({
             url: '/wap/file/auth-pictures?type=4'
@@ -2329,32 +2280,7 @@ define(['app/module', 'app/directive/directiveApi'
             $scope.authList = res.data;
         });
         $scope.imgList = [];
-        requirejs(['photoswipe', 'photoswipe_ui'], function (photoswipe, photoswipe_ui) {
-            $scope.showImg = function (index) {
-                var imgAttr = [];
-                for (var i in $scope.authList) {
-                    imgAttr[i] = $scope.authList[i].thumb_path.split('.')[0].split('_');
-                    $scope.imgList[i] = {
-                        src: $scope.authList[i].thumb_path.replace('thumb', 'picture'),
-                        w: imgAttr[i][1],
-                        h: imgAttr[i][2]
-                    };
-                }
-                var pswpElement = document.querySelectorAll('.pswp')[0];
-                var options = {index: index};
-                options.mainClass = 'pswp--minimal--dark';
-                options.barsSize = {top: 0, bottom: 0};
-                options.captionEl = false;
-                options.fullscreenEl = false;
-                options.shareEl = false;
-                options.history = false;
-                options.bgOpacity = 0.85;
-                options.tapToClose = true;
-                options.tapToToggleControls = false;
-                var gallery = new photoswipe(pswpElement, photoswipe_ui, $scope.imgList, options);
-                gallery.init();
-            }
-        });
+        ar.initPhotoSwipeFromDOM('.bhy-gallery');
 
         // 实例化上传图片插件
         var uploader = $scope.uploader = new FileUploader({
@@ -2370,38 +2296,13 @@ define(['app/module', 'app/directive/directiveApi'
         });
     }]);
 
-// 诚信认证-房产认证
+    // 诚信认证-房产认证
     module.controller("member.honesty_housing", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', 'FileUploader', function (api, $scope, $timeout, $ionicPopup, FileUploader) {
         api.list('/wap/member/photo-list', {type: 5, pageSize: 1}).success(function (res) {
             $scope.authList = res.data;
         });
         $scope.imgList = [];
-        requirejs(['photoswipe', 'photoswipe_ui'], function (photoswipe, photoswipe_ui) {
-            $scope.showImg = function (index) {
-                var imgAttr = [];
-                for (var i in $scope.authList) {
-                    imgAttr[i] = $scope.authList[i].thumb_path.split('.')[0].split('_');
-                    $scope.imgList[i] = {
-                        src: $scope.authList[i].thumb_path.replace('thumb', 'picture'),
-                        w: imgAttr[i][1],
-                        h: imgAttr[i][2]
-                    };
-                }
-                var pswpElement = document.querySelectorAll('.pswp')[0];
-                var options = {index: index};
-                options.mainClass = 'pswp--minimal--dark';
-                options.barsSize = {top: 0, bottom: 0};
-                options.captionEl = false;
-                options.fullscreenEl = false;
-                options.shareEl = false;
-                options.history = false;
-                options.bgOpacity = 0.85;
-                options.tapToClose = true;
-                options.tapToToggleControls = false;
-                var gallery = new photoswipe(pswpElement, photoswipe_ui, $scope.imgList, options);
-                gallery.init();
-            }
-        });
+        ar.initPhotoSwipeFromDOM('.bhy-gallery');
 
         // 实例化上传图片插件
         var uploader = $scope.uploader = new FileUploader({

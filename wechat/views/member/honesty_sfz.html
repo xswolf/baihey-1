@@ -17,14 +17,18 @@
                     <li><h2>身份证正面</h2></li>
                     <li><h2>身份证反面</h2></li>
                 </ul>
-                <ul class="clearfix mb10">
+                <ul class="clearfix mb10 bhy-gallery">
                     <li>
-                        <img class="face" ng-click="showImg(0)" ng-src="{{authList[0].thumb_path ? authList[0].thumb_path : '/wechat/web/images/member/card-face.png'}}">
+                        <a ng-href="{{authList[0].thumb_path ? authList[0].thumb_path : 'javascript:;' | picture}}" data-size="{{authList[0].thumb_path.split('.')[0].split('_')[1] + 'x' + authList[0].thumb_path.split('.')[0].split('_')[2]}}">
+                            <img class="face" ng-src="{{authList[0].thumb_path ? authList[0].thumb_path : '/wechat/web/images/member/card-face.png'}}">
+                        </a>
                         <div class="underReview" ng-if="authList[0].is_check == 2"><span>审核中</span></div>
                         <div class="underReview" ng-if="authList[0].is_check == 0"><span>审核未通过</span></div>
                     </li>
                     <li>
-                        <img class="back" ng-click="showImg(1)" ng-src="{{authList[1].thumb_path ? authList[1].thumb_path : '/wechat/web/images/member/card-back.png'}}">
+                        <a ng-href="{{authList[1].thumb_path ? authList[1].thumb_path : 'javascript:;' | picture}}" data-size="{{authList[1].thumb_path.split('.')[0].split('_')[1] + 'x' + authList[1].thumb_path.split('.')[0].split('_')[2]}}">
+                            <img class="back" ng-src="{{authList[1].thumb_path ? authList[1].thumb_path : '/wechat/web/images/member/card-back.png'}}">
+                        </a>
                         <div class="underReview" ng-if="authList[1].is_check == 2"><span>审核中</span></div>
                         <div class="underReview" ng-if="authList[1].is_check == 0"><span>审核未通过</span></div>
                     </li>
@@ -41,46 +45,6 @@
                         </button>
                     </li>
                 </ul>
-                <!--<ul class="aam-gallery am-avg-sm-2 am-gallery-default">
-                    <li>
-                        <div class="am-gallery-item">
-                            <img src="/wechat/web/images/member/card-face.png" width="161">
-                        </div>
-
-                    </li>
-                    <li>
-                        <div class="am-gallery-item">
-                            <img src="/wechat/web/images/member/card-back.png" width="161">
-                        </div>
-
-                    </li>
-                </ul>-->
-                <!--<li>
-
-                    <button type="button" class="am-btn am-btn-primary am-btn-sm am-radius"
-                            ng-click="addNewImg('honesty1')">点击上传
-                    </button>
-                    <div class="pr" ng-if="authList[0].thumb_path">
-                        <img ng-click="showImg(0)" style="margin-bottom: 0;"
-                             class="am-thumbnail mt10"
-                             src="{{authList[0].thumb_path}}" alt="正面"/>
-                        <div class="underReview" ng-if="authList[0].is_check == 2"><span>审核中</span></div>
-                        <div class="underReview" ng-if="authList[0].is_check == 0"><span>审核不通过</span></div>
-                    </div>
-
-                </li>
-                <li>
-                    <button type="button" class="am-btn am-btn-secondary am-btn-sm am-radius"
-                            ng-click="addNewImg('honesty2')">点击上传
-                    </button>
-                    <div class="pr" ng-if="authList[1].thumb_path">
-                        <img ng-click="showImg(1)" style="margin-bottom: 0;"
-                             class="am-thumbnail mt10"
-                             src="{{authList[1].thumb_path}}" alt="反面"/>
-                        <div class="underReview" ng-if="authList[1].is_check == 2"><span>审核中</span></div>
-                        <div class="underReview" ng-if="authList[1].is_check == 0"><span>审核不通过</span></div>
-                    </div>
-                </li>-->
 
                 <input id="honesty1" type="file" nv-file-select uploader="uploader"
                        style="visibility: hidden; display: none;" accept="image/*">
@@ -110,31 +74,20 @@
         </div>
     </ion-content>
 
-    <!-- Root element of PhotoSwipe. Must have class pswp. -->
-    <div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
-
-        <!-- Background of PhotoSwipe.
-             It's a separate element as animating opacity is faster than rgba(). -->
+    <div id="gallery" class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="pswp__bg"></div>
 
-        <!-- Slides wrapper with overflow:hidden. -->
         <div class="pswp__scroll-wrap">
 
-            <!-- Container that holds slides.
-                PhotoSwipe keeps only 3 of them in the DOM to save memory.
-                Don't modify these 3 pswp__item elements, data is added later on. -->
             <div class="pswp__container">
                 <div class="pswp__item"></div>
                 <div class="pswp__item"></div>
                 <div class="pswp__item"></div>
             </div>
 
-            <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
             <div class="pswp__ui pswp__ui--hidden">
 
                 <div class="pswp__top-bar">
-
-                    <!--  Controls are self-explanatory. Order can be changed. -->
 
                     <div class="pswp__counter"></div>
 
@@ -146,8 +99,6 @@
 
                     <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
 
-                    <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
-                    <!-- element will get class pswp__preloader--active when preloader is running -->
                     <div class="pswp__preloader">
                         <div class="pswp__preloader__icn">
                             <div class="pswp__preloader__cut">
@@ -157,23 +108,28 @@
                     </div>
                 </div>
 
+
+                <!-- <div class="pswp__loading-indicator"><div class="pswp__loading-indicator__line"></div></div> -->
+
                 <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
-                    <div class="pswp__share-tooltip"></div>
+                    <div class="pswp__share-tooltip">
+                        <!-- <a href="#" class="pswp__share--facebook"></a>
+                        <a href="#" class="pswp__share--twitter"></a>
+                        <a href="#" class="pswp__share--pinterest"></a>
+                        <a href="#" download class="pswp__share--download"></a> -->
+                    </div>
                 </div>
 
-                <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
-                </button>
-
-                <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
-                </button>
-
+                <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)"></button>
+                <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)"></button>
                 <div class="pswp__caption">
-                    <div class="pswp__caption__center"></div>
+                    <div class="pswp__caption__center">
+                    </div>
                 </div>
-
             </div>
 
         </div>
+
 
     </div>
 </ion-view>

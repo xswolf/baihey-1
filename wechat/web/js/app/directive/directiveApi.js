@@ -418,7 +418,7 @@ define(['app/module'], function (module) {
                 var _modal;
                 $ionicModal.fromTemplateUrl('/wechat/views/site/slider.html', {
                     scope: scope,
-                    animation: 'none'
+                    animation: 'zoomIn animated'
                 }).then(function (modal) {
                     _modal = modal;
                 });

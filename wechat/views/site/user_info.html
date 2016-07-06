@@ -1,5 +1,7 @@
 <ion-view hide-tabs="true">
     <link href="/wechat/web/css/member.css" rel="stylesheet">
+    <link href="/wechat/web/css/plugin/photoswipe/photoswipe.css" rel="stylesheet">
+    <link href="/wechat/web/css/plugin/photoswipe/default-skin.css" rel="stylesheet">
     <ion-header-bar>
         <title class="title">{{otherUserInfo.info.real_name | sex:otherUserInfo.sex :otherUserInfo.info.age}}</title>
         <a class="button button-icon icon icon-new-menu-user-settings" href="#/member/settings?userId={{formData.userId}}"></a>
@@ -7,10 +9,10 @@
     <ion-content class="bhy com_w_100 infomation has-footer">
         <ion-list>
             <div class="imgList_con">
-                <div class="imgList_handle clearfix">
-                    <div class="imgItem am-gallery-item" img-modal="{{imgList}}" img-index="{{$index}}" stop="{{picAuth}}" ng-repeat="img in imgList">
-                        <img src="{{img.thumb_path}}" >
-                    </div>
+                <div class="imgList_handle clearfix bhy-gallery">
+                    <a class="imgItem pr" ng-repeat="img in imgList" ng-href="{{img.thumb_path | picture}}" data-size="{{img.thumb_path.split('.')[0].split('_')[1] + 'x' + img.thumb_path.split('.')[0].split('_')[2]}}">
+                        <img src="{{img.thumb_path}}">
+                    </a>
                 </div>
             </div>
             <ion-item class="idt mt10" ng-if="honesty(otherUserInfo.honesty_value) || otherUserInfo.phone != '' || otherUserInfo.info.level || otherUserInfo.info.zodiac || otherUserInfo.info.constellation">
@@ -255,4 +257,63 @@
             <button ng-if="formData.follow == 1" ng-click="cancelFollow()" class="button w100" style="font-size: 16px;">取消关注</button>
         </div>
     </ion-footer-bar>
+
+    <div id="gallery" class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="pswp__bg"></div>
+
+        <div class="pswp__scroll-wrap">
+
+            <div class="pswp__container">
+                <div class="pswp__item"></div>
+                <div class="pswp__item"></div>
+                <div class="pswp__item"></div>
+            </div>
+
+            <div class="pswp__ui pswp__ui--hidden">
+
+                <div class="pswp__top-bar">
+
+                    <div class="pswp__counter"></div>
+
+                    <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                    <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                    <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                    <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                    <div class="pswp__preloader">
+                        <div class="pswp__preloader__icn">
+                            <div class="pswp__preloader__cut">
+                                <div class="pswp__preloader__donut"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <!-- <div class="pswp__loading-indicator"><div class="pswp__loading-indicator__line"></div></div> -->
+
+                <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                    <div class="pswp__share-tooltip">
+                        <!-- <a href="#" class="pswp__share--facebook"></a>
+                        <a href="#" class="pswp__share--twitter"></a>
+                        <a href="#" class="pswp__share--pinterest"></a>
+                        <a href="#" download class="pswp__share--download"></a> -->
+                    </div>
+                </div>
+
+                <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)"></button>
+                <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)"></button>
+                <div class="pswp__caption">
+                    <div class="pswp__caption__center">
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+
+    </div>
 </ion-view>
