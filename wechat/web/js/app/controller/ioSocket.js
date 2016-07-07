@@ -36,7 +36,7 @@ define(['app/module', 'app/directive/directiveApi'
 
         $scope.doRefresh = function () {
             if (list != null) {
-                var num = 5;
+                var num = 20;
                 var length = list.length;
                 $scope.messageNum += num;
                 var start = length - $scope.messageNum <= 0 ? 0 : length - $scope.messageNum;
