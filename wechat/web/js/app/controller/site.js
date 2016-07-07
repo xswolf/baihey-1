@@ -435,6 +435,7 @@ define(['app/module', 'app/directive/directiveApi'
                 $scope.user.username = res.data[0].name;
                 $scope.user.age = res.data[0].age;
                 $scope.user.sex = res.data[0].sex;
+                ar.initPhotoSwipeFromDOM('.bhy-gallery');
             })
 
             $scope.jump = function (url) {
@@ -520,6 +521,7 @@ define(['app/module', 'app/directive/directiveApi'
                 }
                 $scope.pageSize += 5;
                 $scope.$broadcast('scroll.infiniteScrollComplete');
+                ar.initPhotoSwipeFromDOM('.bhy-gallery');
             }
 
             // 是否还有更多

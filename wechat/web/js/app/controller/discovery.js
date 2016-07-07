@@ -109,6 +109,7 @@ define(['app/module', 'app/directive/directiveApi'
                     res.data[i].age = res.data[i].age.replace(/\"/g, '');
                     $scope.discoveryList.push(res.data[i]);
                 }
+                ar.initPhotoSwipeFromDOM('.bhy-gallery');
                 $scope.$broadcast('scroll.infiniteScrollComplete');
             })
             $scope.page += 1;
@@ -118,95 +119,6 @@ define(['app/module', 'app/directive/directiveApi'
         $scope.moreDataCanBeLoaded = function () {
             return $scope.isMore;
         };
-
-        $ionicModal.fromTemplateUrl('released.html', {
-            scope: $scope,
-            animation: 'slide-in-up'
-        }).then(function (modal) {
-            $scope.releasedModal = modal;
-        });
-        $scope.releasedOpen = function () {
-            $scope.releasedModal.show();
-        };
-        $scope.releasedClose = function () {
-            $scope.releasedModal.hide();
-        };
-
-        // 发布动态
-        $scope.imgList = [];
-        // 实例化上传图片插件
-        var uploader = $scope.uploader = new FileUploader({
-            url: '/wap/file/thumb'
-        });
-
-        $scope.showLoading = function (progress) {
-            $ionicLoading.show({
-                template: '<p class="tac">上传中...</p><p class="tac">' + progress + '%</p>'
-            });
-        };
-
-        $scope.hideLoading = function () {
-            $ionicLoading.hide();
-        }
-
-        var id = 0;
-        $scope.addNewImg = function () {
-            var e = document.getElementById("pic_fileInput");
-            var ev = document.createEvent("MouseEvents");
-            ev.initEvent("click", true, true);
-            e.dispatchEvent(ev);
-
-            uploader.filters.push({
-                name: 'file-type-Res',
-                fn: function (item) {
-                    if (!ar.msg_file_res_img(item)) {   // 验证文件是否是图片格式
-                        ar.saveDataAlert($ionicPopup, '只能上传图片类型的文件！');
-                        return false;
-                    }
-                    return true;
-                }
-            });
-
-            uploader.onAfterAddingFile = function (fileItem) {  // 选择文件后
-                fileItem.upload();   // 上传
-            };
-            uploader.onProgressItem = function (fileItem, progress) {   //进度条
-                $scope.showLoading(progress);    // 显示loading
-            };
-            uploader.onSuccessItem = function (fileItem, response, status, headers) {  // 上传成功
-                if (response.status > 0) {
-                    $scope.imgList.push({id: id + 1, thumb_path: response.thumb_path});
-                } else {
-                    ar.saveDataAlert($ionicPopup, '上传图片失败！');
-                }
-            };
-            uploader.onErrorItem = function (fileItem, response, status, headers) {  // 上传出错
-                ar.saveDataAlert($ionicPopup, '上传图片出错！');
-                $scope.hideLoading();  // 隐藏loading
-            };
-            uploader.onCompleteItem = function (fileItem, response, status, headers) {  // 上传结束
-                $scope.hideLoading();  // 隐藏loading
-            };
-        }
-
-        // 发布动态
-        $scope.saveData = function () {
-            var userInfo = ar.getStorage('userInfo');
-            $scope.formData.name = JSON.parse(userInfo.info).real_name;
-            $scope.formData.pic = JSON.stringify($scope.imgList);
-            api.save('/wap/member/add-user-dynamic', $scope.formData).success(function (res) { // 保存数据到数据库，关闭modal，展现数据
-                if (res.status) {
-                    res.data.imgList = JSON.parse(res.data.pic);
-                    res.data.head_pic = res.data.head_pic.replace(/\"/g, '');
-                    res.data.level = res.data.level.replace(/\"/g, '');
-                    res.data.age = res.data.age.replace(/\"/g, '');
-                    $scope.discoveryList.unshift(res.data);
-                }
-                ar.saveDataAlert($ionicPopup, res.msg);
-
-                $scope.releasedClose();    // 关闭modal
-            })
-        }
 
     }]);
 
@@ -246,6 +158,7 @@ define(['app/module', 'app/directive/directiveApi'
             //$comment = ar.cleanQuotes(JSON.stringify(res.data.comment));
             //$scope.commentList = JSON.parse($comment);
             $scope.commentList = res.data.comment;
+            ar.initPhotoSwipeFromDOM('.bhy-gallery');
         })
 
         // 点赞

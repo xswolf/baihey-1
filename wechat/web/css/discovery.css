@@ -101,3 +101,13 @@ button.send {
   max-width: 56px;
   max-height: 56px;
 }
+.dis_gallery {
+  width: 100%;
+}
+.dis_gallery > a {
+  display: block;
+  max-width: 31%;
+  float: left;
+  margin-right: 5px;
+  margin-bottom: 5px;
+}

@@ -1,6 +1,7 @@
 <ion-view>
     <link href="/wechat/web/css/discovery.css" rel="stylesheet">
-    <link href="/wechat/web/js/plugin/amezeui/css/amazeui.min.css" rel="stylesheet">
+    <link href="/wechat/web/css/plugin/photoswipe/photoswipe.css" rel="stylesheet">
+    <link href="/wechat/web/css/plugin/photoswipe/default-skin.css" rel="stylesheet">
     <ion-header-bar>
         <h1 class="title">发布动态</h1>
         <button class="button button-icon cor21" ng-disabled="!formData.content" ng-click="saveData()">发布</button>
@@ -9,8 +10,10 @@
         <ion-list>
             <ion-item class="mt10">
                 <div class="gallery_handle clearfix">
-                    <div class="imgItem" ng-repeat="img in imgList">
-                        <img src="{{img.thumb_path}}" img-modal="{{imgList}}" img-index="{{$index}}">
+                    <div class="bhy-gallery">
+                        <a class="imgItem" ng-repeat="img in imgList" ng-href="{{img.thumb_path | picture}}" data-size="{{img.thumb_path.split('.')[0].split('_')[1] + 'x' + img.thumb_path.split('.')[0].split('_')[2]}}">
+                            <img src="{{img.thumb_path}}">
+                        </a>
                     </div>
                     <div class="imgItem add" ng-click="addNewImg()" ng-if="imgList.length < 6">
                         <i class="icon ion-plus-round"></i>
@@ -32,8 +35,5 @@
             </ion-radio>
         </ion-list>
     </ion-content>
-
-
-
 
 </ion-view>

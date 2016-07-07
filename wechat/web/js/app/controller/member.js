@@ -205,6 +205,7 @@ define(['app/module', 'app/directive/directiveApi'
                 res.data[i].age = res.data[i].age.replace(/\"/g, '');
             }
             $scope.discoveryList = res.data;
+            ar.initPhotoSwipeFromDOM('.bhy-gallery');
         });
 
         //用户已屏蔽的动态id，从localStorage获取
@@ -327,6 +328,7 @@ define(['app/module', 'app/directive/directiveApi'
                 } else {
                     ar.saveDataAlert($ionicPopup, '上传图片失败！');
                 }
+                ar.initPhotoSwipeFromDOM('.bhy-gallery');
             };
             uploader.onErrorItem = function (fileItem, response, status, headers) {  // 上传出错
                 ar.saveDataAlert($ionicPopup, '上传图片出错！');
@@ -345,7 +347,7 @@ define(['app/module', 'app/directive/directiveApi'
             api.save('/wap/member/add-user-dynamic', $scope.formData).success(function (res) {
                 ar.saveDataAlert($ionicPopup, res.msg);
                 if (res.status) {
-                    $location.url('/member/discovery');
+                    $location.url($location.$$search.tempUrl);
                 }
             })
         }
