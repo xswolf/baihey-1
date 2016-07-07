@@ -338,6 +338,7 @@ define(['app/module', 'app/directive/directiveApi'
                                     } else {
                                         ar.saveDataAlert($ionicPopup, '绑定手机失败');
                                     }
+                                    $scope.closePopover();
                                 });
                             }else{
                                 ar.saveDataAlert($ionicPopup,'验证码错误');

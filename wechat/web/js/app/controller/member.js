@@ -1784,7 +1784,7 @@ define(['app/module', 'app/directive/directiveApi'
             window.location.hash = "#/chat1?id=" + $scope.otherUserInfo.id + "&head_pic=" + $scope.otherUserInfo.info.head_pic + "&real_name=" + $scope.otherUserInfo.info.real_name + "&sex=" + $scope.otherUserInfo.sex + "&age=" + $scope.otherUserInfo.info.age;
         }
 
-        var followData = [];
+        var followData = {};
         followData.user_id = ar.getCookie("bhy_user_id");
         followData.follow_id = $scope.formData.userId;
         // 未关注
@@ -1811,15 +1811,15 @@ define(['app/module', 'app/directive/directiveApi'
                 ar.saveDataAlert($ionicPopup, '您不能关注自己');
                 return;
             }
-            if (dataFilter.data.blacked.indexOf($scope.followData.follow_id) != -1) {
-                ar.saveDataAlert($ionicPopup, '对方设置，关注失败');
+            if (dataFilter.data.blacked.indexOf(followData.follow_id) != -1) {
+                ar.saveDataAlert($ionicPopup, '您已被对方设置黑名单，关注失败');
                 return;
             }
             api.save('/wap/follow/add-follow', followData).success(function (res) {
                 if (res.data) {
                     $scope.formData.isfollow = true;
                     // 成功，提示
-                    ar.saveDataAlert($ionicPopup, '加关注成功');
+                    ar.saveDataAlert($ionicPopup, '关注成功');
                 }
             });
         }

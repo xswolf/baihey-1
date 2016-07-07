@@ -16,14 +16,14 @@
                 </div>
             </div>
             <ion-item class="idt mt10" ng-if="honesty(otherUserInfo.honesty_value) || otherUserInfo.phone != '' || otherUserInfo.info.level || otherUserInfo.info.zodiac || otherUserInfo.info.constellation">
-                <p>{{otherUserInfo.info.age | timeToAge}} {{otherUserInfo.info.height | height}} {{otherUserInfo.info.is_marriage | marriage}}</p>
+                <p><span class="cor4 mr15">ID:{{otherUserInfo.user_id}}</span>{{otherUserInfo.info.age | timeToAge}} {{otherUserInfo.info.height | height}} {{otherUserInfo.info.is_marriage | marriage}}</p>
                 <p class="mt0">
                     <span ng-if="honesty(otherUserInfo.honesty_value)" class="identity id">身份证</span>
                     <span ng-if="otherUserInfo.phone" class="identity phone">手机</span>
                     <span ng-if="otherUserInfo.info.level == 1" class="identity vip">VIP</span>
                     <span ng-if="otherUserInfo.info.level == 2" class="identity guest">贵宾</span>
                     <span ng-if="otherUserInfo.info.level == 3" class="identity diamond">钻石</span>
-                    <span ng-if="otherUserInfo.info.zodiac" class="ml10">{{otherUserInfo.info.zodiac | zodiac}} {{otherUserInfo.info.constellation | constellation}}</span>
+                    <span ng-if="otherUserInfo.info.zodiac" class="ml10">{{otherUserInfo.info.zodiac | zodiac}}&nbsp;&nbsp; {{otherUserInfo.info.constellation | constellation}}</span>
                 </p>
             </ion-item>
             <ion-item class="item-icon-right" ng-if="dynamicList.length > 0" href="#/index_discovery?userId={{otherUserInfo.id}}">

@@ -1,4 +1,4 @@
-<ion-view>
+<ion-view ng-init="delTitle='删除';">
     <ion-header-bar class="com_w_100">
         <!-- <div class="pa msg_type_pop" ng-show="popShow">
              <p>
@@ -7,6 +7,7 @@
              </p>
          </div>-->
         <h1 class="title">消息中心</h1>
+        <button class="button button-icon" ng-click="shouldShowDelete = !shouldShowDelete; shouldShowReorder = !shouldShowReorder; shouldShowDelete ? delTitle='完成' : delTitle='删除';" ng-bind="delTitle"></button>
         <!--<a href="javascript:;" ng-click="pop_toggle()" class="button button-icon "
            ng-class="{true:'red-point',false:''}[isFollow]">联系人<i
                 class="ml5 fs14"
@@ -15,9 +16,10 @@
     </ion-header-bar>
 
     <ion-content class="has-header bhy-has-footer message">
-        <ion-list>
-            <ion-item ng-if="indexFilter(messageInfo.other)" ng-repeat="messageInfo in messageList track by messageInfo.id"
-                      href="#/chat1?id={{messageInfo.other}}&head_pic={{messageInfo.info.head_pic}}&real_name={{messageInfo.info.real_name}}&sex={{messageInfo.sex}}&age={{messageInfo.info.age}}">
+        <ion-list show-delete="shouldShowDelete">
+            <!--  href="#/chat1?id={{messageInfo.other}}&head_pic={{messageInfo.info.head_pic}}&real_name={{messageInfo.info.real_name}}&sex={{messageInfo.sex}}&age={{messageInfo.info.age}}" -->
+            <ion-item ng-if="indexFilter(messageInfo.other)" ng-repeat="messageInfo in messageList track by messageInfo.id" href="#/chat1?id={{messageInfo.other}}&head_pic={{messageInfo.info.head_pic}}&real_name={{messageInfo.info.real_name}}&sex={{messageInfo.sex}}&age={{messageInfo.info.age}}">
+                <ion-delete-button class="ion-minus-circled" ng-click="removeItem(messageInfo)"></ion-delete-button>
                 <div class="row">
                     <div class="msg_u_img mr20 pr fl">
                         <img class="item_uimg rounded" ng-src="{{messageInfo.info.head_pic | isNull}}" width="56" height="56"
@@ -40,9 +42,7 @@
                     </p>
                     <span class="send_time dbl">{{messageInfo.time | date:'yyyy-MM-dd HH:mm:ss'}}</span>
                 </div>
-                <ion-option-button class="button-assertive" ng-click="removeItem(messageInfo)">
-                    删除
-                </ion-option-button>
+
             </ion-item>
         </ion-list>
     </ion-content>

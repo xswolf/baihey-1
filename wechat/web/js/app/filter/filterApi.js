@@ -210,13 +210,15 @@ define(['app/module'], function (module) {
     // 返回生肖属相
     module.filter('zodiac', function () {
         return function (input, arr) {
-            if (typeof(input) != 'undefined' && input != '') {
+            if (input) {
                 var infoData = config_infoData.zodiac;
                 for (var i in infoData) {
                     if (infoData[i].id == parseInt(input)) {
-                        return infoData[i].name;
+                        return '属' + infoData[i].name;
                     }
                 }
+            } else {
+                return '';
             }
         }
     });
@@ -273,7 +275,7 @@ define(['app/module'], function (module) {
                 } else {
                     return input + '岁';
                 }
-            }else{
+            } else {
                 return '';
             }
         }
@@ -289,7 +291,7 @@ define(['app/module'], function (module) {
                 } else {
                     return input + '厘米';
                 }
-            }else{
+            } else {
                 return '';
             }
         }
@@ -447,7 +449,7 @@ define(['app/module'], function (module) {
 
     module.filter('picture', function () {
         return function (path) {
-            if(path){
+            if (path) {
                 return path.replace('thumb', 'picture');
             }
             return ' ';
@@ -500,8 +502,8 @@ define(['app/module'], function (module) {
     module.filter('amount', function () {
         return function (arr) {
             var sum = 0;
-            if(arr){
-                for(var i in arr){
+            if (arr) {
+                for (var i in arr) {
                     sum += parseInt(arr[i].money);
                 }
                 return sum / 100;
@@ -512,22 +514,22 @@ define(['app/module'], function (module) {
 
     module.filter('isNull', function () {
         return function (value) {
-           if(value){
-               return value;
-           }else{
-               return ' ';
-           }
+            if (value) {
+                return value;
+            } else {
+                return ' ';
+            }
         }
     })
 
     module.filter('recordName', function () {
-        return function (value,type) {
-            if(type == '提现'){
+        return function (value, type) {
+            if (type == '提现') {
                 var cardName = value.split('-');
                 //console.log(cardName);
-                return cardName[0] + '(' + cardName[1] + ' ' + cardName[2].substr(cardName[2].length-4) + ')';
+                return cardName[0] + '(' + cardName[1] + ' ' + cardName[2].substr(cardName[2].length - 4) + ')';
             }
-            if(type == '嘉瑞红包'){
+            if (type == '嘉瑞红包') {
                 return ar.cleanQuotes(value);
             }
             return value;
@@ -535,11 +537,11 @@ define(['app/module'], function (module) {
     })
 
     module.filter('recordStatus', function () {
-        return function (value,type) {
-            if(type == '提现'){
-                 return '已打款';
+        return function (value, type) {
+            if (type == '提现') {
+                return '已打款';
             }
-            if(type == '嘉瑞红包'){
+            if (type == '嘉瑞红包') {
                 return '对方已领取';
             }
             return value;
@@ -550,9 +552,9 @@ define(['app/module'], function (module) {
      * 文字内容超出指定字数时，超出部分用指定字符代替
      */
     module.filter('textOverflow', function () {
-        return function (value,number,separator) {
-            if(value){
-                if (value.toString().length > number){
+        return function (value, number, separator) {
+            if (value) {
+                if (value.toString().length > number) {
                     return value.substring(0, Math.floor(number) - 1) + separator;
                 }
             }

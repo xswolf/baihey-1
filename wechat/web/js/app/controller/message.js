@@ -31,7 +31,7 @@ define(['app/module', 'app/directive/directiveApi'
 
         $scope.userInfo.id = ar.getCookie('bhy_user_id');
 
-        // 是否有谁关注了我，有则显示小红点
+       /* // 是否有谁关注了我，有则显示小红点
         $scope.isFollow = true;
         api.getSumFollow().success(function (res) {
             if (res.status) {
@@ -41,13 +41,13 @@ define(['app/module', 'app/directive/directiveApi'
                 }
                 ar.setStorage('NewSumFollow', res.data.sumFollow);
             }
-        });
+        });*/
 
-        // 联系人pop窗口
+       /* // 联系人pop窗口
         $scope.popShow = false;
         $scope.pop_toggle = function () {
             $scope.popShow = !$scope.popShow;
-        }
+        }*/
 
         // 删除操作
         $scope.removeItem = function (item) {
@@ -63,7 +63,7 @@ define(['app/module', 'app/directive/directiveApi'
             ar.setStorage('messageList', $scope.messageList);
             api.setMsgDisplay(item.other).success(function (res) {
             });
-            $ionicListDelegate.closeOptionButtons();
+            //$ionicListDelegate.closeOptionButtons();
             return true;
         }
 
