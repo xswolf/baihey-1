@@ -1746,7 +1746,7 @@ define(['app/module', 'app/directive/directiveApi'
         $scope.otherUserInfo = [];
         $scope.imgList = [];
         $scope.dynamicList = [];
-        $scope.formData.isfollow = false;
+        $scope.formData.isfollow = '2';
 
         api.list("/wap/member/user-info-page-by-id", {'id': $scope.formData.userId}).success(function (res) {
             if (res.status) {
@@ -1764,7 +1764,7 @@ define(['app/module', 'app/directive/directiveApi'
                         $scope.dynamicList.push(res.dynamic[i]);
                     }
                 }
-                $scope.formData.follow = res.followStatus;// 关注状态
+                $scope.formData.isfollow = res.followStatus;// 关注状态
                 $scope.formData.followed = res.followedStatus;// 被关注状态
                 $scope.qqAuth = is_privacy($scope.otherUserInfo.privacy_qq);// qq权限
                 $scope.perAuth = is_privacy($scope.otherUserInfo.privacy_per);// 个人动态权限
@@ -1795,15 +1795,15 @@ define(['app/module', 'app/directive/directiveApi'
          }
          });*/
         // 取消关注
-        $scope.cancelFollow = function () {
-            api.save('/wap/follow/del-follow', followData).success(function (res) {
-                if (res.data) {
-                    $scope.formData.isfollow = false;
-                    // 成功，提示
-                    ar.saveDataAlert($ionicPopup, '取消关注成功');
-                }
-            });
-        }
+        //$scope.cancelFollow = function () {
+        //    api.save('/wap/follow/del-follow', followData).success(function (res) {
+        //        if (res.data) {
+        //            $scope.formData.isfollow = '2';
+        //            // 成功，提示
+        //            ar.saveDataAlert($ionicPopup, '取消关注成功');
+        //        }
+        //    });
+        //}
 
         // 关注
         $scope.addFollow = function () {
@@ -1817,7 +1817,7 @@ define(['app/module', 'app/directive/directiveApi'
             }
             api.save('/wap/follow/add-follow', followData).success(function (res) {
                 if (res.data) {
-                    $scope.formData.isfollow = true;
+                    $scope.formData.isfollow = '1';
                     // 成功，提示
                     ar.saveDataAlert($ionicPopup, '关注成功');
                 }
