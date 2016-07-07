@@ -1,6 +1,8 @@
 <ion-view>
     <link href="/wechat/web/css/discovery.css" rel="stylesheet">
     <link href="/wechat/web/js/plugin/amezeui/css/amazeui.min.css" rel="stylesheet">
+    <link href="/wechat/web/css/plugin/photoswipe/photoswipe.css" rel="stylesheet">
+    <link href="/wechat/web/css/plugin/photoswipe/default-skin.css" rel="stylesheet">
     <ion-header-bar class="com_w_100 bhy">
         <title class="title">
             评论
@@ -23,15 +25,10 @@
                 <span class="identity diamond" ng-if="dis.level == 3">钻石</span>
             </p>
             <p class="wsn">{{dis.content}}</p>
-            <div class="row">
-                <div ng-repeat="img in dis.imgList | limitTo:3" class="col col-33">
-                    <img class="w100" ng-src="{{img.thumb_path}}" img-modal="{{dis.imgList}}" img-index="{{$index}}">
-                </div>
-            </div>
-            <div class="row">
-                <div ng-repeat="img in dis.imgList | limitTo:3:3" class="col col-33">
-                    <img class="w100" ng-src="{{img.thumb_path}}" img-modal="{{dis.imgList}}" img-index="{{3+$index}}" >
-                </div>
+            <div class="dis_gallery bhy-gallery clearfix">
+                <a ng-repeat="img in dis.imgList | limitTo:6" ng-href="{{img.thumb_path | picture}}" data-size="{{img.thumb_path.split('.')[0].split('_')[1] + 'x' + img.thumb_path.split('.')[0].split('_')[2]}}">
+                    <img class="w100" ng-src="{{img.thumb_path}}">
+                </a>
             </div>
             <div class="clearfix mt10 pr">
                 <span class="fl cp" ng-class="{true:'cor21',false:'cor53'}[dis.cid > 0]" click-like
