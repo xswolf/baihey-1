@@ -1817,6 +1817,8 @@ define(['app/module', 'app/directive/directiveApi'
             }
             api.save('/wap/follow/add-follow', followData).success(function (res) {
                 if (res.data) {
+                    document.getElementsByClassName('transition')[0].style.transition= 'all 0.5s';
+                    document.getElementsByClassName('transition')[1].style.transition= 'all 0.5s';
                     $scope.formData.isfollow = '1';
                     // 成功，提示
                     ar.saveDataAlert($ionicPopup, '关注成功');
