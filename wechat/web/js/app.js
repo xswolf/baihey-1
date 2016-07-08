@@ -5,7 +5,6 @@ require.config({
     urlArgs: "bust=v3" + Math.random(), // 清除缓存
     baseUrl: '/wechat/web/js/',
     paths: {
-        domReady: 'plugin/requirejs/domReady',
         jquery: 'plugin/jquery/jquery',
         //jquery_1_8_3: 'plugin/jquery/jquery_1.8.3.min',
         ionic: ['//cdn.bootcss.com/ionic/1.2.4/js/ionic.bundle.min', 'plugin/ionic/ionic.bundle'],
@@ -28,12 +27,20 @@ require.config({
 
 });
 
-require(['domReady!'], function (doc) {
-    require(['ionic'], function () {
-        require(['comm', 'info_data', "app/controller/listController", 'mobiscroll', 'angular_upload'], function () {
-            'use strict';
-            angular.bootstrap(document, ['webApp']);
-        });
+require(['ionic'], function () {
+    ionic.Platform.ready(function(){
+        if (location.hash == '#/index') {
+            addElement();
+        }
+        function addElement() {
+            var div = document.createElement("div");
+            div.setAttribute("id", "welcome");
+            document.body.appendChild(div);
+        }
     })
-});
+    require(['comm', 'info_data', "app/controller/listController", 'mobiscroll', 'angular_upload'], function () {
+        'use strict';
+        angular.bootstrap(document, ['webApp']);
+    });
+})
 

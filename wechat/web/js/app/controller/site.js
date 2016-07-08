@@ -412,6 +412,11 @@ define(['app/module', 'app/directive/directiveApi'
             }
         }
 
+        document.getElementById('welcome').className = 'animated fadeOut';
+        setTimeout(function () {
+            document.body.removeChild(document.getElementById('welcome'));
+        }, 1100)
+
     }]);
 
     // 查看会员资料-会员动态

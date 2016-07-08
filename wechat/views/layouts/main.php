@@ -25,22 +25,6 @@
 <script data-main="/wechat/web/js/app" src="/wechat/web/js/plugin/requirejs/require.js"></script>
 <!--<script data-main="/wechat/web/js/build" src="/wechat/web/js/plugin/requirejs/require.js"></script>-->
 <body ng-controller="main">
-<script>
-    if (location.hash == '#/index') {
-        addElement();
-        setTimeout(function () {
-            document.getElementById('welcome').className = 'animated fadeOut';
-            setTimeout(function () {
-                document.getElementById('welcome').className = 'animated fadeOut hide';
-            }, 1100)
-        }, 6000);
-    }
-    function addElement() {
-        var div = document.createElement("div");
-        div.setAttribute("id", "welcome");
-        document.body.appendChild(div);
-    }
-</script>
 <?= $content ?>
 <!--[if lt IE 9]>
 <script src="/wechat/web/js/plugin/h5/html5.js"></script>
