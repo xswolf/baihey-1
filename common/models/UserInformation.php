@@ -44,8 +44,8 @@ class UserInformation extends Base
                     break;
 
                 case 'identity':// 身份证认证
-                    $arr = explode('_', $data['identity']);
-                    $sql = "UPDATE {$_user_information_table} SET info = JSON_REPLACE(info,'$.".'real_name'."','".$arr[0]."'), info = JSON_REPLACE(info,'$.".'identity_id'."','".$arr[1]."'), info = JSON_REPLACE(info,'$.".'identity_address'."','".$arr[2]."') WHERE user_id={$user_id}";
+                    $arr = $data['identity'];
+                    $sql = "UPDATE {$_user_information_table} SET info = JSON_REPLACE(info,'$.".'real_name'."','".$arr."') WHERE user_id={$user_id}";
                     break;
 
                 case 'occupation':// 职业

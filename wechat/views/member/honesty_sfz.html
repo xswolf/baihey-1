@@ -3,12 +3,12 @@
 
     <ion-header-bar class="com_w_100 bhy">
         <title class="title">身份认证</title>
-        <button class="button button-icon cor21" ng-click="saveData()">保存</button>
+        <button class="button button-icon cor21"  ng-click="saveData()">保存</button>
     </ion-header-bar>
     <ion-content class="bhy com_w_100 honesty">
         <div class="card">
             <div class="item item-divider">
-                上传身份证照片
+                上传身份证照片（<span class="cor4 fs18">保密</span>）
             </div>
             <div class="item item-text-wrap sfz_wrap">
                 <ul class="clearfix mb10">
@@ -17,18 +17,16 @@
                 </ul>
                 <ul class="clearfix mb10 bhy-gallery">
                     <li>
-                        <a ng-href="{{authList[0].thumb_path ? authList[0].thumb_path : 'javascript:;' | picture}}" data-size="{{authList[0].thumb_path.split('.')[0].split('_')[1] + 'x' + authList[0].thumb_path.split('.')[0].split('_')[2]}}">
-                            <img class="face" ng-src="{{authList[0].thumb_path ? authList[0].thumb_path : '/wechat/web/images/member/card-face.png'}}">
+                        <img ng-if="!authList[0].thumb_path" class="face" src="/wechat/web/images/member/card-face.png">
+                        <a ng-if="authList[0].thumb_path" href="{{authList[0].thumb_path | picture}}" data-size="{{authList[0].thumb_path.split('.')[0].split('_')[1] + 'x' + authList[0].thumb_path.split('.')[0].split('_')[2]}}">
+                            <img class="face" src="{{authList[0].thumb_path}}">
                         </a>
-                        <div class="underReview" ng-if="authList[0].is_check == 2"><span>审核中</span></div>
-                        <div class="underReview" ng-if="authList[0].is_check == 0"><span>审核未通过</span></div>
                     </li>
                     <li>
-                        <a ng-href="{{authList[1].thumb_path ? authList[1].thumb_path : 'javascript:;' | picture}}" data-size="{{authList[1].thumb_path.split('.')[0].split('_')[1] + 'x' + authList[1].thumb_path.split('.')[0].split('_')[2]}}">
-                            <img class="back" ng-src="{{authList[1].thumb_path ? authList[1].thumb_path : '/wechat/web/images/member/card-back.png'}}">
+                        <img ng-if="!authList[1].thumb_path" class="back" src="/wechat/web/images/member/card-back.png">
+                        <a ng-if="authList[1].thumb_path" ng-href="{{authList[1].thumb_path | picture}}" data-size="{{authList[1].thumb_path.split('.')[0].split('_')[1] + 'x' + authList[1].thumb_path.split('.')[0].split('_')[2]}}">
+                            <img class="back" src="{{authList[1].thumb_path}}">
                         </a>
-                        <div class="underReview" ng-if="authList[1].is_check == 2"><span>审核中</span></div>
-                        <div class="underReview" ng-if="authList[1].is_check == 0"><span>审核未通过</span></div>
                     </li>
                 </ul>
                 <ul class="clearfix mb10">
@@ -55,21 +53,16 @@
             <div class="item item-divider">
                 身份证信息
             </div>
-            <div class="item item-text-wrap ">
+            <div class="item item-text-wrap">
                 <label class="item item-input">
                     <span class="input-label">真实姓名</span>
-                    <input type="text" ng-model="formData.real_name" placeholder="保密，不会向第三方公开">
-                </label>
-                <label class="item item-input">
-                    <span class="input-label">身份证号码</span>
-                    <input type="text" ng-model="formData.identity_id" placeholder="保密，不会向第三方公开">
-                </label>
-                <label class="item item-input">
-                    <span class="input-label">身份证地址</span>
-                    <input type="text" ng-model="formData.identity_address" placeholder="保密，不会向第三方公开">
+                    <input type="text" ng-model="formData.real_name" placeholder="保密，仅自己可见">
                 </label>
             </div>
         </div>
+        <ion-item class="cor13">
+            婚姻是严肃的；坦诚、真实的自己 ＝ 幸福的婚姻
+        </ion-item>
     </ion-content>
 
 </ion-view>

@@ -63,12 +63,19 @@ class UserPhoto extends Base
      */
     public function getPhotoList($user_id, $type = 1, $pageSize = 12)
     {
-        $result = (new Query())->select(['*'])
-            ->where(['user_id' => $user_id, 'type' => $type])
-            ->from(static::tableName())
-            ->orderBy('is_head desc, update_time asc')
-            ->limit($pageSize);
-
+        if ($type == 23) {
+            $result = (new Query())->select(['*'])
+                ->where(['and', 'user_id' => $user_id, ['in', 'type', [2, 3]]])
+                ->from(static::tableName())
+                ->orderBy('is_head desc, update_time asc')
+                ->limit($pageSize);
+        } else {
+            $result = (new Query())->select(['*'])
+                ->where(['user_id' => $user_id, 'type' => $type])
+                ->from(static::tableName())
+                ->orderBy('is_head desc, update_time asc')
+                ->limit($pageSize);
+        }
         $result = $result->all();
         return $result;
     }
@@ -79,29 +86,20 @@ class UserPhoto extends Base
      * @return bool
      * @throws \yii\db\Exception
      */
-    public function savePhoto($where)
+    public function savePhoto($where, $user_id)
     {
-        //var_dump($where);
         foreach ($where as $k => $v) {
             $where[$k] = json_decode($v);
-            $pic_arr = explode('/', $where[$k]->pic_path);
-            $thumb_arr = explode('/', $where[$k]->thumb_path);
-            if ($pic_arr[5] != $thumb_arr[5]) {
-                // 删除旧图片
-                $pic_path = __DIR__ . "/../.." . $where[$k]->pic_path;
-                if ($pic_arr[3] == 'picture' && is_file($pic_path) && unlink($pic_path)) {
-                    $thumb_path = str_replace('picture', 'thumb', $pic_path);
-                    unlink($thumb_path);
-                }
-                $where[$k]->pic_path = str_replace('thumb', 'picture', $where[$k]->thumb_path);
-                // 更新数据
-                $row = $this->getDb()->createCommand()
-                    ->update(static::tableName(), ['pic_path' => $where[$k]->pic_path, 'thumb_path' => $where[$k]->thumb_path, 'update_time' => time()], ['id' => $where[$k]->id])
-                    ->execute();
-            }
+            // 删除原有身份证
+            $del = $this->getDb()->createCommand()
+                ->delete(static::tableName(), ['user_id' => $user_id, 'type'=>$where[$k]->type])
+                ->execute();
+            // 新增
+            $ist = $this->getDb()->createCommand()
+                ->insert(static::tableName(), ['user_id' => $user_id,'pic_path' => $where[$k]->pic_path,'thumb_path'=>$where[$k]->thumb_path,'create_time'=>time(),'update_time'=>time(),'type'=>$where[$k]->type])
+                ->execute();
         }
-
-        return true;
+        return $ist;
     }
 
     /**

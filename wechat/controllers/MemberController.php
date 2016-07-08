@@ -76,7 +76,8 @@ class MemberController extends BaseController
      */
     public function actionSavePhoto()
     {
-        $list = UserPhoto::getInstance()->savePhoto($this->get);
+        $user_id = Cookie::getInstance()->getCookie('bhy_id')->value;
+        $list = UserPhoto::getInstance()->savePhoto($this->get,$user_id);
         $this->renderAjax(['status' => 1, 'data' => $list]);
     }
 
