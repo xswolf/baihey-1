@@ -6,10 +6,6 @@ define(['app/module', 'app/directive/directiveApi'
 ], function (module) {
 
     module.controller("site.index", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$ionicModal', '$ionicActionSheet', '$ionicLoading', '$ionicBackdrop', '$ionicScrollDelegate', '$location', 'dataFilter', function (api, $scope, $timeout, $ionicPopup, $ionicModal, $ionicActionSheet, $ionicLoading, $ionicBackdrop, $ionicScrollDelegate, $location, dataFilter) {
-        /*if (!$scope.userInfo) {
-            top.location.href = '/wap/user/login';
-        }*/
-
         // 搜索条件
         $scope.searchForm = [];
         $scope.whereForm = [];
@@ -112,6 +108,8 @@ define(['app/module', 'app/directive/directiveApi'
          $scope.cityModal = modal;
          });*/
 
+        $scope.loading = false;
+
         // 首页filter显示
 
         $scope.indexFilter = function (user) {
@@ -205,7 +203,7 @@ define(['app/module', 'app/directive/directiveApi'
 
         // 加载更多
         $scope.loadMore = function () {
-
+            $scope.loading = true;
             api.list('/wap/site/user-list', $scope.searchForm).success(function (res) {
                 if (res.data.length < 6) {
                     $scope.pageLast = false;
@@ -215,6 +213,7 @@ define(['app/module', 'app/directive/directiveApi'
                     res.data[i].auth = JSON.parse(res.data[i].auth);
                 }
                 $scope.userList = $scope.userList.concat(res.data);
+                $scope.loading = false;
                 $scope.$broadcast('scroll.infiniteScrollComplete');
                 $scope.searchForm.pageNum += 1;
             });

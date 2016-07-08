@@ -72,7 +72,8 @@ define(['app/module', 'app/directive/directiveApi'
                 if (data.status == 1) {
                     // 存储userInfo
                     ar.setStorage('userInfo', data.data);
-                    $location.url('/index')
+                    //$location.url('/index')
+                    top.location.href = '/wap/site/main#/index';
                 } else if (data.status == 2) {
                     ar.saveDataAlert($ionicPopup, '验证码错误');
                 } else {
@@ -92,28 +93,17 @@ define(['app/module', 'app/directive/directiveApi'
 
         $scope.User = {};
 
-        //如果文档高度大于屏幕高度，使用文档高度。 否则使用屏幕高度
-        if (document.body.scrollHeight > document.documentElement.clientHeight) {
-            $scope.User.winHeight = {
-                'height': document.body.scrollHeight + 'px'
-            }
-        } else {
+        $scope.login = function () {
 
-            $scope.User.winHeight = {
-                'height': document.documentElement.clientHeight + 'px'
-            }
-        }
-
-        $scope.User.login = function () {
-
-            if (!$scope.User.validateFrom()) return;
+            if (!$scope.validateFrom()) return;
 
             api.save('/wap/user/login', $scope.User).success(function (data) {
 
                 if (data.status) {
                     // 存储userInfo
                     ar.setStorage('userInfo', data.data);
-                    $location.url('/index');
+                    top.location.href = '/wap/site/main#/index';
+                    //$location.url('/index');
                 } else {
                     ar.saveDataAlert($ionicPopup, '用户名或者密码错误');
                 }
@@ -124,7 +114,7 @@ define(['app/module', 'app/directive/directiveApi'
 
         }
 
-        $scope.User.validateFrom = function () {
+        $scope.validateFrom = function () {
 
             if (!$scope.User.username) {
                 ar.saveDataAlert($ionicPopup, '请输入您的手机号码或ID');
