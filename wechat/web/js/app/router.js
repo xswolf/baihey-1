@@ -303,7 +303,7 @@ define(["app/module", 'app/service/serviceApi','jquery'],
                         templateUrl: "/wechat/views/charge/index.html",
                         controller: 'charge.index'
                     });
-                $urlRouterProvider.otherwise("/index");
+                //$urlRouterProvider.otherwise("/index");
             }])
             .controller('main', ['$scope', '$location', 'app.serviceApi', '$ionicLoading', '$ionicPopup','$rootScope', function ($scope, $location, api, $ionicLoading, $ionicPopup,$rootScope) {
                 $rootScope.$on('msgNumber' , function () {

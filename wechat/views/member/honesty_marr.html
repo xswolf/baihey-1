@@ -12,11 +12,14 @@
                 <button type="button" class="button button-calm mb10"
                         ng-click="addNewImg('honesty1')">点击上传
                 </button>
-                <br />
-                <div class="zj_w pr dib bhy-gallery" ng-if="authList[0].thumb_path">
-                    <a ng-href="{{authList[0].thumb_path | picture}}" data-size="{{authList[0].thumb_path.split('.')[0].split('_')[1] + 'x' + authList[0].thumb_path.split('.')[0].split('_')[2]}}">
-                        <img ng-src="{{authList[0].thumb_path}}">
-                    </a>
+                <br/>
+                <div class="zj_w pr dib" ng-if="authList[0].thumb_path">
+                    <div class="bhy-gallery">
+                        <a ng-href="{{authList[0].thumb_path | picture}}"
+                           data-size="{{authList[0].thumb_path.split('.')[0].split('_')[1] + 'x' + authList[0].thumb_path.split('.')[0].split('_')[2]}}">
+                            <img ng-src="{{authList[0].thumb_path}}">
+                        </a>
+                    </div>
                     <div class="underReview" ng-if="authList[0].is_check == 2"><span>审核中</span></div>
                     <div class="underReview" ng-if="authList[0].is_check == 0"><span>审核未通过</span></div>
                 </div>

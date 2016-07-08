@@ -29,6 +29,7 @@ class SiteController extends BaseController
      */
     public function actionMain()
     {
+        phpinfo();
         return $this->render();
     }
 
