@@ -387,6 +387,16 @@ define(['app/module', 'app/directive/directiveApi'
                         return true;
                     }
                 });
+                $scope.uploader.filters.push({
+                    name: 'file-size-Res',
+                    fn: function (item) {
+                        if(item.size > 8388608){
+                            ar.saveDataAlert($ionicPopup,'请选择小于8MB的图片！')
+                            return false;
+                        }
+                        return true;
+                    }
+                });
 
                 var time = ar.timeStamp();
                 $scope.picLength = $scope.uploader.queue.length;

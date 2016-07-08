@@ -416,6 +416,17 @@ define(["app/module", 'app/service/serviceApi','jquery'],
                         }
                     });
 
+                    uploader.filters.push({
+                        name: 'file-size-Res',
+                        fn: function (item) {
+                            if(item.size > 8388608){
+                                ar.saveDataAlert($ionicPopup,'请选择小于8MB的图片！')
+                                return false;
+                            }
+                            return true;
+                        }
+                    });
+
                     uploader.onAfterAddingFile = function (fileItem) {  // 选择文件后
                         fileItem.upload();   // 上传
                     };

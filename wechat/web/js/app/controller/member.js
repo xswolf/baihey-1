@@ -86,6 +86,16 @@ define(['app/module', 'app/directive/directiveApi'
                     return true;
                 }
             });
+            uploader.filters.push({
+                name: 'file-size-Res',
+                fn: function (item) {
+                    if(item.size > 8388608){
+                        ar.saveDataAlert($ionicPopup,'请选择小于8MB的图片！')
+                        return false;
+                    }
+                    return true;
+                }
+            });
 
             uploader.onAfterAddingFile = function (fileItem) {  // 选择文件后
                 fileItem.upload();   // 上传
@@ -310,6 +320,16 @@ define(['app/module', 'app/directive/directiveApi'
                 fn: function (item) {
                     if (!ar.msg_file_res_img(item)) {   // 验证文件是否是图片格式
                         ar.saveDataAlert($ionicPopup, '只能上传图片类型的文件！');
+                        return false;
+                    }
+                    return true;
+                }
+            });
+            uploader.filters.push({
+                name: 'file-size-Res',
+                fn: function (item) {
+                    if(item.size > 8388608){
+                        ar.saveDataAlert($ionicPopup,'请选择小于8MB的图片！')
                         return false;
                     }
                     return true;
