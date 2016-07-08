@@ -306,6 +306,7 @@ define(["app/module", 'app/service/serviceApi','jquery'],
                 //$urlRouterProvider.otherwise("/index");
             }])
             .controller('main', ['$scope', '$location', 'app.serviceApi', '$ionicLoading', '$ionicPopup','$rootScope', function ($scope, $location, api, $ionicLoading, $ionicPopup,$rootScope) {
+
                 $rootScope.$on('msgNumber' , function () {
                     $scope.msgNumber = $rootScope.msgNumber;
                 })
@@ -320,6 +321,7 @@ define(["app/module", 'app/service/serviceApi','jquery'],
 
                 // 以下为用户信息处理
                 $scope.userInfo = [];
+
                 var getUserStorage = function () {
                     if ($scope.userInfo != null) {
                         $scope.userInfo.info = JSON.parse($scope.userInfo.info);

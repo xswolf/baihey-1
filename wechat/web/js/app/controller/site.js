@@ -6,6 +6,10 @@ define(['app/module', 'app/directive/directiveApi'
 ], function (module) {
 
     module.controller("site.index", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$ionicModal', '$ionicActionSheet', '$ionicLoading', '$ionicBackdrop', '$ionicScrollDelegate', '$location', 'dataFilter', function (api, $scope, $timeout, $ionicPopup, $ionicModal, $ionicActionSheet, $ionicLoading, $ionicBackdrop, $ionicScrollDelegate, $location, dataFilter) {
+        /*if (!$scope.userInfo) {
+            top.location.href = '/wap/user/login';
+        }*/
+
         // 搜索条件
         $scope.searchForm = [];
         $scope.whereForm = [];
@@ -109,8 +113,12 @@ define(['app/module', 'app/directive/directiveApi'
          });*/
 
         // 首页filter显示
+
         $scope.indexFilter = function (user) {
-            return user.id != $scope.userInfo.id && dataFilter.data.blacked.indexOf(user.id) == -1;
+            if($scope.userInfo){
+                return user.id != $scope.userInfo.id && dataFilter.data.blacked.indexOf(user.id) == -1;
+            }
+            return 1;
         }
 
         // 高级搜索模版
@@ -421,118 +429,118 @@ define(['app/module', 'app/directive/directiveApi'
 
     // 查看会员资料-会员动态
     module.controller("site.discovery", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$ionicModal', '$ionicActionSheet', '$ionicLoading', '$ionicBackdrop', '$ionicScrollDelegate', '$location', 'dataFilter', function (api, $scope, $timeout, $ionicPopup, $ionicModal, $ionicActionSheet, $ionicLoading, $ionicBackdrop, $ionicScrollDelegate, $location, dataFilter) {
-            $scope.discoveryList = [];
-            $scope.user = [];
-            $scope.isMore = true;
-            $scope.pageSize = 5;
-            // 用户ID
-            $scope.user_id = $location.$$search.userId;
+        $scope.discoveryList = [];
+        $scope.user = [];
+        $scope.isMore = true;
+        $scope.pageSize = 5;
+        // 用户ID
+        $scope.user_id = $location.$$search.userId;
 
-            // 根据用户ID获取用户全部动态
-            api.get('/wap/member/get-dynamic-list', {user_id: $scope.user_id, limit: 10000}).success(function (res) {
-                for (var i in res.data) {
-                    res.data[i].imgList = JSON.parse(res.data[i].pic);
-                    res.data[i].head_pic = res.data[i].head_pic.replace(/\"/g, '');
-                    res.data[i].level = res.data[i].level.replace(/\"/g, '');
-                    res.data[i].age = res.data[i].age.replace(/\"/g, '');
-                }
-                $scope.discoveryList = res.data;
-                $scope.user.username = res.data[0].name;
-                $scope.user.age = res.data[0].age;
-                $scope.user.sex = res.data[0].sex;
-                ar.initPhotoSwipeFromDOM('.bhy-gallery');
-            })
-
-            $scope.jump = function (url) {
-                $location.url(url);
+        // 根据用户ID获取用户全部动态
+        api.get('/wap/member/get-dynamic-list', {user_id: $scope.user_id, limit: 10000}).success(function (res) {
+            for (var i in res.data) {
+                res.data[i].imgList = JSON.parse(res.data[i].pic);
+                res.data[i].head_pic = res.data[i].head_pic.replace(/\"/g, '');
+                res.data[i].level = res.data[i].level.replace(/\"/g, '');
+                res.data[i].age = res.data[i].age.replace(/\"/g, '');
             }
+            $scope.discoveryList = res.data;
+            $scope.user.username = res.data[0].name;
+            $scope.user.age = res.data[0].age;
+            $scope.user.sex = res.data[0].sex;
+            ar.initPhotoSwipeFromDOM('.bhy-gallery');
+        })
 
-            //用户已屏蔽的动态id，从localStorage获取
-            $scope.display = ar.getStorage('display') ? ar.getStorage('display') : [];
+        $scope.jump = function (url) {
+            $location.url(url);
+        }
 
-            // 动态列表过滤条件：关注、举报、屏蔽
-            $scope.indexFilter = function (dis) {
-                if (dis.fid > 0) {
-                    return false;// 动态被举报
-                }
-                if (dis.auth == '2') {   // 用户设置该条动态为关注的人可见
-                    return dataFilter.data.follow.indexOf(dis.user_id) != -1 && $scope.display.indexOf(dis.id) == -1;
-                } else if (dis.auth == '3') {
-                    return false;
-                }
-                return $scope.display.indexOf(dis.id) == -1;
+        //用户已屏蔽的动态id，从localStorage获取
+        $scope.display = ar.getStorage('display') ? ar.getStorage('display') : [];
+
+        // 动态列表过滤条件：关注、举报、屏蔽
+        $scope.indexFilter = function (dis) {
+            if (dis.fid > 0) {
+                return false;// 动态被举报
             }
-
-            // 点赞
-            $scope.clickLike = function (dis) {
-                var i = ar.getArrI($scope.discoveryList, 'id', dis.id);
-                var add = 0;
-                if ($scope.discoveryList[i].cid > 0) {
-                    add = -1;
-                    $scope.discoveryList[i].cid = -1;
-                } else {
-                    add = 1;
-                    $scope.discoveryList[i].cid = 1;
-                }
-                $scope.discoveryList[i].like_num = parseInt($scope.discoveryList[i].like_num) + add;
-                api.save('/wap/member/set-click-like', {dynamicId: dis.id, add: add});
+            if (dis.auth == '2') {   // 用户设置该条动态为关注的人可见
+                return dataFilter.data.follow.indexOf(dis.user_id) != -1 && $scope.display.indexOf(dis.id) == -1;
+            } else if (dis.auth == '3') {
+                return false;
             }
+            return $scope.display.indexOf(dis.id) == -1;
+        }
 
-            // 更多功能
-            $scope.more = function (isUser, id, index) {
-                var btnList = [
-                    {text: '举报'},
-                    {text: '屏蔽'}
+        // 点赞
+        $scope.clickLike = function (dis) {
+            var i = ar.getArrI($scope.discoveryList, 'id', dis.id);
+            var add = 0;
+            if ($scope.discoveryList[i].cid > 0) {
+                add = -1;
+                $scope.discoveryList[i].cid = -1;
+            } else {
+                add = 1;
+                $scope.discoveryList[i].cid = 1;
+            }
+            $scope.discoveryList[i].like_num = parseInt($scope.discoveryList[i].like_num) + add;
+            api.save('/wap/member/set-click-like', {dynamicId: dis.id, add: add});
+        }
+
+        // 更多功能
+        $scope.more = function (isUser, id, index) {
+            var btnList = [
+                {text: '举报'},
+                {text: '屏蔽'}
+            ];
+            if (isUser) {   // 判断该条动态是否所属当前用户
+                btnList = [
+                    {text: '删除'}
                 ];
-                if (isUser) {   // 判断该条动态是否所属当前用户
-                    btnList = [
-                        {text: '删除'}
-                    ];
-                }
+            }
 
-                $ionicActionSheet.show({
-                    buttons: btnList,
-                    titleText: '更多',
-                    cancelText: '取消',
-                    cancel: function () {
-                    },
-                    buttonClicked: function (i, btnObj) {
-                        if (btnObj.text == '屏蔽') {
-                            $scope.display.push(id);
-                            ar.setStorage('display', $scope.display);
-                            // 将参数ID存入localStorage：display
-                        }
-                        if (btnObj.text == '举报') {
-                            $location.url('/member/report?id=' + id + '&type=2&title=动态&tempUrl=' + $location.$$url);
-                        }
-                        if (btnObj.text == '删除') {
-                            $scope.display.push(id);
-                            ar.setStorage('display', $scope.display);
-                            // 改变状态 api.save
-                            api.save('/wap/member/delete-dynamic', {id: id}).success(function (res) {
-                                $location.url('/discovery');
-                            });
-                        }
-
-                        return true;
+            $ionicActionSheet.show({
+                buttons: btnList,
+                titleText: '更多',
+                cancelText: '取消',
+                cancel: function () {
+                },
+                buttonClicked: function (i, btnObj) {
+                    if (btnObj.text == '屏蔽') {
+                        $scope.display.push(id);
+                        ar.setStorage('display', $scope.display);
+                        // 将参数ID存入localStorage：display
                     }
-                });
-            }
+                    if (btnObj.text == '举报') {
+                        $location.url('/member/report?id=' + id + '&type=2&title=动态&tempUrl=' + $location.$$url);
+                    }
+                    if (btnObj.text == '删除') {
+                        $scope.display.push(id);
+                        ar.setStorage('display', $scope.display);
+                        // 改变状态 api.save
+                        api.save('/wap/member/delete-dynamic', {id: id}).success(function (res) {
+                            $location.url('/discovery');
+                        });
+                    }
 
-            // 加载更多
-            $scope.loadMore = function () {
-                if ($scope.pageSize > $scope.discoveryList.length) {
-                    $scope.isMore = false;
+                    return true;
                 }
-                $scope.pageSize += 5;
-                $scope.$broadcast('scroll.infiniteScrollComplete');
-                ar.initPhotoSwipeFromDOM('.bhy-gallery');
-            }
+            });
+        }
 
-            // 是否还有更多
-            $scope.moreDataCanBeLoaded = function () {
-                return $scope.isMore;
+        // 加载更多
+        $scope.loadMore = function () {
+            if ($scope.pageSize > $scope.discoveryList.length) {
+                $scope.isMore = false;
             }
+            $scope.pageSize += 5;
+            $scope.$broadcast('scroll.infiniteScrollComplete');
+            ar.initPhotoSwipeFromDOM('.bhy-gallery');
+        }
+
+        // 是否还有更多
+        $scope.moreDataCanBeLoaded = function () {
+            return $scope.isMore;
+        }
 
 
     }]);
