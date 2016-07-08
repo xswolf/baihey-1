@@ -111,7 +111,6 @@ define(['app/module', 'app/directive/directiveApi'
         $scope.loading = false;
 
         // 首页filter显示
-
         $scope.indexFilter = function (user) {
             if($scope.userInfo){
                 return user.id != $scope.userInfo.id && dataFilter.data.blacked.indexOf(user.id) == -1;

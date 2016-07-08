@@ -409,65 +409,6 @@ define(['app/module'], function (module) {
 
         };
     }]);
-
-    module.directive('imgModal', ['$ionicModal', '$ionicPopup', function ($ionicModal, $ionicPopup) {
-        return {
-            restrict: 'A',
-            link: function (scope, element, attrs) {
-
-                var _modal;
-                $ionicModal.fromTemplateUrl('/wechat/views/site/slider.html', {
-                    scope: scope,
-                    animation: 'zoomIn animated'
-                }).then(function (modal) {
-                    _modal = modal;
-                });
-
-                scope.openModal = function () {
-                    _modal.show();
-                };
-
-                scope.closeModal = function () {
-                    _modal.hide();
-                };
-
-                scope.$on('$destroy', function () {
-                    try {
-                        _modal.remove();
-                    } catch (err) {
-                        console.log(err.message);
-                    }
-                });
-                element.on('click', function () {
-                    if(attrs.stop == false){
-                        ar.saveDataAlert($ionicPopup,'对方已设置不公开相册');
-                        return false;
-                    }
-                    scope.slides = [];
-                    scope.selectedSlide = attrs.imgIndex;
-                    scope.slides = angular.fromJson(attrs.imgModal);
-                    scope.openModal();
-                })
-            }
-        }
-
-
-    }]);
-
-    module.directive('imgLazy', function () {
-        return function (scope, element, attrs) {
-            var img = new Image();
-            img.src = attrs.imgLazy;
-            if (img.complete) {
-                element.attr('src', attrs.imgLazy);
-            } else {
-                img.onload = function () {
-                    element.attr('src', attrs.imgLazy);
-                    img.onload = null;
-                }
-            }
-        }
-    });
 })
 
 

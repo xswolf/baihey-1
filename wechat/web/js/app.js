@@ -5,7 +5,6 @@ require.config({
     urlArgs: "bust=v3" + Math.random(), // 清除缓存
     baseUrl: '/wechat/web/js/',
     paths: {
-        jquery: 'plugin/jquery/jquery',
         //jquery_1_8_3: 'plugin/jquery/jquery_1.8.3.min',
         ionic: ['//cdn.bootcss.com/ionic/1.2.4/js/ionic.bundle.min', 'plugin/ionic/ionic.bundle'],
         angular: 'plugin/angular/angular.min',
@@ -16,8 +15,6 @@ require.config({
         //ionic:'plugin/ionic/ionic.min',
         ionic_angular: 'plugin/ionic/ionic-angular.min',
         bootstrap: 'plugin/bootstrap/bootstrap.min',
-        amezeui: 'plugin/amezeui/js/amazeui.min',
-        amezeui_ie8: 'plugin/amezeui/js/amazeui.ie8polyfill.min',
         comm: 'comm',
         mobiscroll: 'plugin/mobiscroll/mobiscroll.custom-3.0.0-beta.min',
         photoswipe: 'plugin/photoswipe/photoswipe.min',
@@ -35,7 +32,7 @@ require(['ionic'], function () {
         function addElement() {
             var div = document.createElement("div");
             div.setAttribute("id", "welcome");
-            div.innerHTML= '<div class="loading"><img src="/wechat/web/images/loading_5.gif" /><span>加载中，请稍候</span></div>';
+            div.innerHTML= '<div class="loading"><img src="/wechat/web/images/domLoading.gif" /><p>加载中，请稍候</p></div>';
             document.body.appendChild(div);
         }
     })

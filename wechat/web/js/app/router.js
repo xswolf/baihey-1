@@ -1,7 +1,7 @@
 /**
  * Created by Administrator on 2016/3/22.
  */
-define(["app/module", 'app/service/serviceApi','jquery'],
+define(["app/module", 'app/service/serviceApi'],
     function (module) {
         module.run(['$rootScope', '$state', '$timeout', 'app.serviceApi', '$ionicLoading', '$location', '$templateCache', function ($rootScope, $state, $timeout, api, $ionicLoading, $location, $templateCache) {
             var messageList = function () {
@@ -337,11 +337,16 @@ define(["app/module", 'app/service/serviceApi','jquery'],
                     getUserStorage();
                 }
 
-                // 拉黑等信息
-                $scope.authDataFilter = [];
-                api.list('/wap/user/index-is-show-data', []).success(function (res) {
-                    $scope.authDataFilter = res.data;
-                });
+                /*// 拉黑等信息
+                $scope.authDataFilter = authData() ? authData() : [];
+                function authData(){
+                    var data = [];
+                    api.list('/wap/user/index-is-show-data', []).success(function (res) {
+                        data = res.data;
+                    });
+                    return data;
+                }*/
+
 
                 // 设置用户信息跳转至资料页
                 $scope.setUserStorage = function () {
