@@ -35,10 +35,10 @@ require(['ionic'], function () {
             div.innerHTML= '<div class="loading"><img src="/wechat/web/images/domLoading.gif" /><p>加载中，请稍候</p></div>';
             document.body.appendChild(div);
         }
+        require(['comm', 'info_data', "app/controller/listController", 'mobiscroll', 'angular_upload'], function () {
+            'use strict';
+            angular.bootstrap(document, ['webApp']);
+        });
     })
-    require(['comm', 'info_data', "app/controller/listController", 'mobiscroll', 'angular_upload'], function () {
-        'use strict';
-        angular.bootstrap(document, ['webApp']);
-    });
 })
 
