@@ -1,6 +1,16 @@
 /**
  * Created by Administrator on 2016/3/29.
  */
+if (location.hash == '#/index') {
+    addElement();
+}
+function addElement() {
+    var div = document.createElement("div");
+    div.setAttribute("id", "welcome");
+    div.innerHTML= '<div class="loading"><img src="/wechat/web/images/domLoading.gif" /><p>加载中，请稍候</p></div>';
+    document.body.appendChild(div);
+}
+
 require.config({
     urlArgs: "bust=v3" + Math.random(), // 清除缓存
     baseUrl: '/wechat/web/js/',
@@ -25,22 +35,9 @@ require.config({
 });
 
 requirejs(['ionic'], function () {
-    ionic.DomUtil.ready(function(){
-        if (location.hash == '#/index') {
-            addElement();
-        }
-        function addElement() {
-            var div = document.createElement("div");
-            div.setAttribute("id", "welcome");
-            div.innerHTML= '<div class="loading"><img src="/wechat/web/images/domLoading.gif" /><p>加载中，请稍候</p></div>';
-            document.body.appendChild(div);
-        }
-        requirejs(['comm', 'info_data', "app/controller/listController", 'mobiscroll', 'angular_upload'], function () {
-            'use strict';
-            angular.bootstrap(document, ['webApp']);
-        });
-    })
-
-
+    requirejs(['comm', 'info_data', "app/controller/listController", 'mobiscroll', 'angular_upload'], function () {
+        'use strict';
+        angular.bootstrap(document, ['webApp']);
+    });
 })
 
