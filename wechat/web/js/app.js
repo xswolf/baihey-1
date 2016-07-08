@@ -35,6 +35,7 @@ require(['ionic'], function () {
         function addElement() {
             var div = document.createElement("div");
             div.setAttribute("id", "welcome");
+            div.innerHTML= '<div class="loading"><img src="/wechat/web/images/loading_5.gif" /><span>加载中，请稍候</span></div>';
             document.body.appendChild(div);
         }
     })

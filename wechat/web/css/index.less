@@ -28,7 +28,25 @@
   z-index: 99;
 }
 
-a.menuBtn{
+#welcome .loading {
+  position: absolute;
+  bottom: 30px;
+  text-align: center;
+  width: 100%;
+}
+
+#welcome .loading img {
+  margin-right: 5px;
+  vertical-align: middle;
+}
+
+#welcome .loading span {
+  vertical-align: middle;
+  font-size: 16px;
+  color: #fff;
+}
+
+a.menuBtn {
   color: #444;
   float: left;
   font-size: 10.5pt;
@@ -39,18 +57,22 @@ a.menuBtn{
   width: 25%;
   text-decoration: none;
 }
-a.menuBtn > i{
+
+a.menuBtn > i {
   font-size: 20px;
 }
-a.menuBtn > p{
+
+a.menuBtn > p {
   font-size: 12px;
   margin-bottom: 0;
 }
-a.menuBtn.cur,a.menuBtn.cur:hover,a.menuBtn.cur:active{
+
+a.menuBtn.cur, a.menuBtn.cur:hover, a.menuBtn.cur:active {
   color: #e4007f;
   text-decoration: none;
 }
-a.menuBtn .msg_number{
+
+a.menuBtn .msg_number {
   background-color: red;
   border-radius: 99px;
   color: white;
@@ -202,12 +224,14 @@ a.weibo {
 .site .item_uimg, .message .item_uimg {
   vertical-align: middle;
 }
-.site span.user_id{
+
+.site span.user_id {
   position: absolute;
   right: 16px;
   top: 8px;
   font-size: 12px;
 }
+
 @media screen and (max-width: 400px) {
   .site .item_uimg {
     width: 74px;
@@ -221,12 +245,11 @@ a.weibo {
   }
 }
 
-
 .site p.signature {
   font-size: 12px;
 }
 
-.site .warn{
+.site .warn {
   color: white;
   height: 28px;
   line-height: 28px;
@@ -248,7 +271,8 @@ a.weibo {
   color: #fff;
   margin-right: 2px;
 }
-.identity.not{
+
+.identity.not {
   background-color: #f8f8f8 !important;
   color: #bbb !important;
 }
@@ -272,11 +296,13 @@ a.weibo {
 .identity.diamond {
   background-color: #fb79a1;
 }
-.site p.local{
+
+.site p.local {
   max-width: 25%;
   font-size: 12px;
   line-height: 18px;
 }
+
 /* 高级搜索 */
 .moreSearch_form_box {
   width: 100%;
@@ -384,7 +410,8 @@ a.weibo {
   width: 16px;
   z-index: 1;
 }
-span.under{
+
+span.under {
   background: rgba(0, 0, 0, 0.4);
   border-radius: 4px;
   color: #fff;
@@ -392,12 +419,14 @@ span.under{
   position: absolute;
   text-align: center;
 }
-.site span.under{
+
+.site span.under {
   bottom: 9px;
   left: 10px;
   width: 80px;
 }
-.member span.under{
+
+.member span.under {
   bottom: 17px;
   left: 7px;
   width: 76px;
@@ -417,7 +446,7 @@ span.under{
 }
 
 .imageView .gallery-slide-view {
- /* width: 98%; */
+  /* width: 98%; */
   background-color: transparent
 }
 
@@ -484,7 +513,8 @@ span.under{
   -ms-flex-align: center;
   align-items: center
 }
-.slider-pager .slider-pager-page{
+
+.slider-pager .slider-pager-page {
   color: white;
 }
 
@@ -492,6 +522,7 @@ span.under{
   transform: scale(0.9);
   opacity: 0;
 }
+
 .scale-in.ng-enter,
 .scale-in > .ng-enter {
   transition: all cubic-bezier(.1, .7, .1, 1) 400ms;

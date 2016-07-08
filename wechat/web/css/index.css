@@ -24,6 +24,21 @@
   width: 100%;
   z-index: 99;
 }
+#welcome .loading {
+  position: absolute;
+  bottom: 30px;
+  text-align: center;
+  width: 100%;
+}
+#welcome .loading img {
+  margin-right: 5px;
+  vertical-align: middle;
+}
+#welcome .loading span {
+  vertical-align: middle;
+  font-size: 16px;
+  color: #fff;
+}
 a.menuBtn {
   color: #444;
   float: left;
