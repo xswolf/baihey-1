@@ -38,7 +38,7 @@
                         <span ng-if="messageInfo.info.level == 3" class="identity diamond">钻石</span>
                         <span class="dbl fs12 lh28 msg_text">
                             <span class="mr20" ng-if="messageInfo.info.age">[{{messageInfo.info.age | timeToAge}} {{messageInfo.info.is_marriage | marriage}}]</span>
-                            <span class="mr20" ng-if="!messageInfo.info.age">[{{messageInfo.info.age}} {{messageInfo.info.is_marriage | marriage}}]</span>{{messageInfo.message}}</span>
+                            <span class="mr20" ng-if="!messageInfo.info.age">[{{messageInfo.info.age}} {{messageInfo.info.is_marriage | marriage}}]</span>{{messageInfo.message | messageFilter}}</span>
                     </p>
                     <span class="send_time dbl">{{messageInfo.time | date:'yyyy-MM-dd HH:mm:ss'}}</span>
                 </div>

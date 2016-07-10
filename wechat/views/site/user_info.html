@@ -29,15 +29,14 @@
             <ion-item class="item-icon-right" ng-if="dynamicList.length > 0" href="#/index_discovery?userId={{otherUserInfo.id}}">
                 <p>
                     <span class="cor4">个人动态</span>
-                    <ul data-am-widget="gallery" class="am-gallery am-avg-sm-2 am-avg-md-3 am-avg-lg-4 am-gallery-default w80"
-                        ng-if="dynamicList.length > 0">
-                        <li ng-repeat="dynamic in dynamicList" ng-if="dynamic.imgList.length > 0">
-                            <div class="am-gallery-item">
-                                <img ng-src="{{dynamic.imgList[0].thumb_path}}" alt="." >
-                            </div>
-                        </li>
-                    </ul>
                 </p>
+                <ul class="dynamicImg clearfix mt10" ng-if="dynamicList.length > 0">
+                    <li ng-repeat="dynamic in dynamicList | limitTo:3" ng-if="dynamic.imgList.length > 0">
+                        <div class="dynamicImg-item">
+                            <img ng-src="{{dynamic.imgList[0].thumb_path}}" alt="." >
+                        </div>
+                    </li>
+                </ul>
                 <i class="icon ion-ios-arrow-right cor52"></i>
             </ion-item>
             <ion-item ng-if="otherUserInfo.personalized">
@@ -247,10 +246,10 @@
         </ion-list>
     </ion-content>
     <ion-footer-bar align-title="left" class="bar-light">
-        <div class="buttons bor_r_1c transition" ng-class="{'2':'w50','1':'w100',false:'w50'}[formData.isfollow]">
+        <div class="buttons bor_r_1c transition" ng-class="{'2':'w50','1':'w100',false:'w50',0:'w50'}[formData.isfollow]">
             <a class="button w100" style="font-size: 16px; color:#e4007f;" href="#/chat1?id={{otherUserInfo.id}}&head_pic={{otherUserInfo.info.head_pic}}&real_name={{otherUserInfo.info.real_name}}&sex={{otherUserInfo.sex}}&age={{otherUserInfo.info.age}}"><i class="ion-chatbox-working cor21 mr5 vam fs22"></i>对话</a>
         </div>
-        <div class="buttons w50" ng-if="formData.isfollow == '2' || !formData.isfollow">
+        <div class="buttons w50" ng-if="formData.isfollow == '2' || !formData.isfollow || formData.isfollow == '0'">
             <button class="button w100 transition"  style="font-size: 16px;" ng-click="addFollow()">
                 <i class="ion-plus-round mr5 vam fs22"></i>关注
             </button>

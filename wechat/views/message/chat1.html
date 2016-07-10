@@ -85,8 +85,10 @@
                         <!-- 图片 -->
                         <div class="content normal" ng-click="detail_pic('{{vo.message}}')"
                              ng-if="vo.type=='pic' || vo.message_type==3">
-                            <span class="pic">
-                                <img ng-if="vo.message != 'view'" ng-src="{{vo.message}}">
+                            <span class="pic bhy-gallery">
+                                <a ng-href="{{vo.message | picture}}" data-size="{{vo.message.split('.')[0].split('_')[1] + 'x' + vo.message.split('.')[0].split('_')[2]}}">
+                                    <img ng-if="vo.message != 'view'" ng-src="{{vo.message}}">
+                                </a>
                                 <div ng-if="vo.message == 'view'" ng-show="uploader.isHTML5"
                                      ng-thumb="{ file: uploader.queue, height: 100 }"></div>
                             </span>
@@ -165,7 +167,7 @@
         </ul>-->
     </div>
     <input type="file" id="pic_fileInput" class="pic_fileInput" nv-file-select="" uploader="uploader" accept="image/*"/>
-    <div class="pic_zoom_layer chat_mask" ng-if="showPic" ng-cloak>
+   <!-- <div class="pic_zoom_layer chat_mask" ng-if="showPic">
         <div class="pic_zoom pa">
             <div class="pic_z_c pr">
                 <div class="pic_z_c_s">
@@ -176,7 +178,7 @@
             </span>
             </div>
         </div>
-    </div>
+    </div>-->
 
     <script id="bindPhonePopover.html" type="text/ng-template">
         <ion-popover-view>

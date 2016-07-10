@@ -7,7 +7,6 @@ define(['app/module', 'app/directive/directiveApi'
 
     module.controller("message.chat1", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$ionicModal', '$ionicActionSheet', '$ionicLoading', '$ionicScrollDelegate', 'FileUploader', '$http', '$location', '$rootScope', '$filter','$ionicPopover','$interval','dataFilter', function (api, $scope, $timeout, $ionicPopup, $ionicModal, $ionicActionSheet, $ionicLoading, $ionicScrollDelegate, FileUploader, $http, $location, $rootScope, $filter,$ionicPopover,$interval,dataFilter) {
         $scope.historyList = [];
-
         // 设置消息状态为已看
         $scope.setMessageStatus = function (list) {
             for (var i in list) {
@@ -101,14 +100,14 @@ define(['app/module', 'app/directive/directiveApi'
         });*/
 
         // 查看图片
-        $scope.showPic = false;
-        $scope.detail_pic = function (id) {
-            $scope.showPicAdd = id;
+        /*$scope.showPic = false;
+        $scope.detail_pic = function (img) {
+            $scope.showPicAdd = img;
             $scope.showPic = true;
         }
         $scope.hidePicBox = function () {
             $scope.showPic = false;
-        }
+        }*/
 
         /*// 领取红包
         $ionicModal.fromTemplateUrl('detailBriModal.html', {
@@ -205,6 +204,7 @@ define(['app/module', 'app/directive/directiveApi'
                 }
             }
             ar.setStorage('messageList', messageList);
+            ar.initPhotoSwipeFromDOM('.bhy-gallery');   // 查看大图插件
             $scope.doRefresh();
         }).error(function () {
             console.log('页面message.js出现错误，代码：/wap/chat/message-history');
@@ -409,6 +409,7 @@ define(['app/module', 'app/directive/directiveApi'
                 $scope.uploader.onCompleteItem = function (fileItem, response, status, headers) {  // 上传结束
                     $scope.hideMultiOnKeyboard();
                     $scope.sendMessage(response.thumb_path, $scope.sendId, $scope.receiveId, 'pic', time);  // 真实发送
+                    ar.initPhotoSwipeFromDOM('.bhy-gallery');
                 };
 
             }

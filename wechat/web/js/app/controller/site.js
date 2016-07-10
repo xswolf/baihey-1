@@ -112,7 +112,7 @@ define(['app/module', 'app/directive/directiveApi'
 
         // 首页filter显示
         $scope.indexFilter = function (user) {
-            if($scope.userInfo){
+            if ($scope.userInfo) {
                 return user.id != $scope.userInfo.id && dataFilter.data.blacked.indexOf(user.id) == -1;
             }
             return 1;
@@ -418,11 +418,12 @@ define(['app/module', 'app/directive/directiveApi'
             }
         }
 
-        document.getElementById('welcome').className = 'animated fadeOut';
-        setTimeout(function () {
-            document.body.removeChild(document.getElementById('welcome'));
-        }, 1100)
-
+        if (document.getElementById('welcome')) {
+            document.getElementById('welcome').className = 'animated fadeOut';
+            setTimeout(function () {
+                document.body.removeChild(document.getElementById('welcome'));
+            }, 1100)
+        }
     }]);
 
     // 查看会员资料-会员动态

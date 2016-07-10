@@ -562,4 +562,18 @@ define(['app/module'], function (module) {
         }
     })
 
+    /**
+     * 文字内容超出指定字数时，超出部分用指定字符代替
+     */
+    module.filter('messageFilter', function () {
+        return function (value) {
+            if (value) {
+                if (value.indexOf('/images/upload') != -1) {
+                    return '[图片]';
+                }
+            }
+            return value;
+        }
+    })
+
 })
