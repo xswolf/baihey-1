@@ -293,8 +293,8 @@ define(['app/module', 'app/directive/directiveApi'
             }
         }
         $scope.settingsAge = {
-            display: 'bottom',
             theme: 'mobiscroll',
+            display: 'bottom',
             lang: 'zh',
             rows: 5,
             wheels: [
@@ -310,7 +310,6 @@ define(['app/module', 'app/directive/directiveApi'
             ],
             showLabel: true,
             minWidth: 130,
-            cssClass: 'md-pricerange',
             validate: function (event, inst) {
                 var i,
                     values = event.values,
@@ -365,7 +364,6 @@ define(['app/module', 'app/directive/directiveApi'
             ],
             showLabel: true,
             minWidth: 130,
-            cssClass: 'md-pricerange',
             validate: function (event, inst) {
                 var i,
                     values = event.values,
