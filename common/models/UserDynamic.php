@@ -53,7 +53,7 @@ class UserDynamic extends Base
             ->leftJoin($this->tablePrefix . 'user_photo p', 'p.user_id = d.user_id AND p.is_head = 1 AND p.user_id =' . $loginUserId)
             ->limit($limit)
             ->offset($offset)
-            ->select(["d.*", "u.phone", "i.honesty_value", "json_extract(i.info , '$.level') AS level", "json_extract(i.info , '$.head_pic') AS head_pic", "json_extract(i.info , '$.age') AS age",'u.sex', 'p.thumb_path AS thumb_path', 'p.is_check AS head_status', "c.id as cid", "f.id as fid"])
+            ->select(["d.*", "u.phone", "i.honesty_value", "json_extract(i.info , '$.level') AS level", "json_extract(i.info , '$.head_pic') AS head_pic", "json_extract(i.info , '$.real_name') AS real_name", "json_extract(i.info , '$.age') AS age",'u.sex', 'p.thumb_path AS thumb_path', 'p.is_check AS head_status', "c.id as cid", "f.id as fid"])
             ->orderBy("f.id desc ,d.create_time desc");
         if ($uid > 0) {
             return $obj->where(['u.id' => $uid, 'd.status' => 1])->all();
@@ -77,7 +77,7 @@ class UserDynamic extends Base
             ->leftJoin($this->tablePrefix . 'user_click c', 'c.dynamic_id = d.id AND c.user_id=' . $loginUserId)
             ->leftJoin($this->tablePrefix . 'user_photo p', 'p.user_id = d.user_id AND p.is_head = 1 AND p.user_id =' . $loginUserId)
             ->where(['d.id' => $id])
-            ->select(["d.*", "u.phone", "i.honesty_value", "json_extract(i.info , '$.level') AS level", "json_extract(i.info , '$.head_pic') AS head_pic", "json_extract(i.info , '$.age') AS age",'u.sex', 'p.thumb_path AS thumb_path', 'p.is_check AS head_status', "c.id as cid"])
+            ->select(["d.*", "u.phone", "i.honesty_value", "json_extract(i.info , '$.level') AS level", "json_extract(i.info , '$.head_pic') AS head_pic", "json_extract(i.info , '$.real_name') AS real_name", "json_extract(i.info , '$.age') AS age",'u.sex', 'p.thumb_path AS thumb_path', 'p.is_check AS head_status', "c.id as cid"])
             ->orderBy("d.create_time desc")
             ->one();
     }

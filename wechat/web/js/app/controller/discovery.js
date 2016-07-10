@@ -104,6 +104,7 @@ define(['app/module', 'app/directive/directiveApi'
                 }
                 for (var i in res.data) {
                     res.data[i].imgList = JSON.parse(res.data[i].pic);
+                    res.data[i].real_name = res.data[i].real_name.replace(/\"/g, '');
                     res.data[i].head_pic = res.data[i].head_pic.replace(/\"/g, '');
                     res.data[i].level = res.data[i].level.replace(/\"/g, '');
                     res.data[i].age = res.data[i].age.replace(/\"/g, '');
@@ -146,6 +147,7 @@ define(['app/module', 'app/directive/directiveApi'
         $scope.user_id = userInfo.id;
         api.list('/wap/member/get-dynamic', {id: $location.$$search.id}).success(function (res) {
             res.data.imgList = JSON.parse(res.data.pic);
+            res.data.real_name = res.data.real_name.replace(/\"/g, '');
             res.data.head_pic = res.data.head_pic.replace(/\"/g, '');
             res.data.level = res.data.level.replace(/\"/g, '');
             res.data.age = res.data.age.replace(/\"/g, '');

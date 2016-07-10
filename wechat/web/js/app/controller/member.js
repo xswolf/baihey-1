@@ -210,6 +210,7 @@ define(['app/module', 'app/directive/directiveApi'
             }
             for (var i in res.data) {
                 res.data[i].imgList = JSON.parse(res.data[i].pic);
+                res.data[i].real_name = res.data[i].real_name.replace(/\"/g, '');
                 res.data[i].head_pic = res.data[i].head_pic.replace(/\"/g, '');
                 res.data[i].level = res.data[i].level.replace(/\"/g, '');
                 res.data[i].age = res.data[i].age.replace(/\"/g, '');
