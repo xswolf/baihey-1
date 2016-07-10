@@ -7,44 +7,48 @@
     <ion-content class="bhy com_w_100 m_bg honesty">
         <ion-list>
             <p class="p_0_10 cor5">注：您所传证件照片我们会为您保密，不会向任何第三方公开(包括征婚会员)，请您放心上传。</p>
-            <ion-item class="item item-icon-left" href="#/member/honesty_sfz">
+            <ion-item class="item item-icon-left" ng-href="{{honesty(1) || sfzLength > 0 ? '' : '#/member/honesty_sfz'}}">
                 <i class="icon bhy-icon-idt cor3"></i>
                 <div class="menu_name">
                     <p>身份认证</p>
                 </div>
                 <div class="menu_arrow">
-                    <span class="cor8 mr15 fs12" ng-if="honesty(1)">已认证</span>
-                    <span class="cor15 mr15 fs12" ng-if="!honesty(1)">此项必须认证</span>
+                    <span class="cor8 mr15 fs12" ng-if="honesty(1) && sfzLength > 0">已认证</span>
+                    <span class="cor8 mr15 fs12" ng-if="!honesty(1) && sfzLength > 0">审核中</span>
+                    <span class="cor15 mr15 fs12" ng-if="!honesty(1) && sfzLength == 0">此项必须认证</span>
                     <i class="ion-ios-arrow-right vam" ng-if="!identityAuth"></i>
                 </div>
             </ion-item>
-            <ion-item class="item item-icon-left" href="#/member/honesty_marr">
+            <ion-item class="item item-icon-left" ng-href="{{honesty(2) || marrLength > 0 ? '' : '#/member/honesty_marr'}}">
                 <i class="icon bhy-icon-marr cor32"></i>
                 <div class="menu_name">
                     <p>婚姻认证</p>
                 </div>
                 <div class="menu_arrow">
-                    <span class="cor8 mr15 fs12" ng-if="honesty(2)">已认证</span>
+                    <span class="cor8 mr15 fs12" ng-if="honesty(2) && marrLength > 0">已认证</span>
+                    <span class="cor8 mr15 fs12" ng-if="!honesty(2) && marrLength > 0">审核中</span>
                     <i class="ion-ios-arrow-right vam"></i>
                 </div>
             </ion-item>
-            <ion-item class="item item-icon-left" href="#/member/honesty_edu">
+            <ion-item class="item item-icon-left" ng-href="{{honesty(4) || eduLength > 0 ? '' : '#/member/honesty_edu'}}">
                 <i class="icon bhy-icon-edu cor9"></i>
                 <div class="menu_name">
                     <p>学历认证</p>
                 </div>
                 <div class="menu_arrow">
-                    <span class="cor8 mr15 fs12" ng-if="honesty(4)">已认证</span>
+                    <span class="cor8 mr15 fs12" ng-if="honesty(4) && eduLength > 0">已认证</span>
+                    <span class="cor8 mr15 fs12" ng-if="!honesty(4) && eduLength > 0">审核中</span>
                     <i class="ion-ios-arrow-right vam"></i>
                 </div>
             </ion-item>
-            <ion-item class="item item-icon-left" href="#/member/honesty_housing">
+            <ion-item class="item item-icon-left" ng-href="{{honesty(8) || housingLength > 0 ? '' : '#/member/honesty_housing'}}">
                 <i class="icon icon-home cor15"></i>
                 <div class="menu_name">
                     <p>房产认证</p>
                 </div>
                 <div class="menu_arrow">
-                    <span class="cor8 mr15 fs12" ng-if="honesty(8)">已认证</span>
+                    <span class="cor8 mr15 fs12" ng-if="honesty(8) && housingLength > 0">已认证</span>
+                    <span class="cor8 mr15 fs12" ng-if="!honesty(8) && housingLength > 0">审核中</span>
                     <i class="ion-ios-arrow-right vam"></i>
                 </div>
             </ion-item>

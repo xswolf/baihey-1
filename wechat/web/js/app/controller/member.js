@@ -2200,6 +2200,14 @@ define(['app/module', 'app/directive/directiveApi'
                 }
             });
         }
+
+        api.list("/wap/member/honesty-photo", []).success(function (res) {
+            $scope.sfzLength = res.sfz.length;
+            $scope.marrLength = res.marr.length;
+            $scope.eduLength = res.edu.length;
+            $scope.housingLength = res.housing.length;
+        });
+
         $scope.honesty = function (val) {
             return $scope.userInfo.honesty_value & val;
         }

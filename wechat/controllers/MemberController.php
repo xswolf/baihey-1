@@ -475,6 +475,18 @@ class MemberController extends BaseController
         }
     }
 
+    // 获取当前用户认证信息
+    public function actionHonestyPhoto()
+    {
+        $user_id = Cookie::getInstance()->getCookie('bhy_id')->value;
+        $sfz = UserPhoto::getInstance()->getPhotoList($user_id, 23, 2);
+        $marr = UserPhoto::getInstance()->getPhotoList($user_id, 5, 1);
+        $edu = UserPhoto::getInstance()->getPhotoList($user_id, 4, 1);
+        $housing = UserPhoto::getInstance()->getPhotoList($user_id, 6, 1);
+
+        $this->renderAjax(['status' => 1, 'sfz' => $sfz, 'marr' => $marr, 'edu' => $edu, 'housing' => $housing, 'msg' => '获取成功']);
+    }
+
 
     /**
      * 退出登录
