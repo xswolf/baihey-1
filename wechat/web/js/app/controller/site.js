@@ -7,11 +7,18 @@ define(['app/module', 'app/directive/directiveApi'
 
     module.controller("site.index", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$ionicModal', '$ionicActionSheet', '$ionicLoading', '$ionicBackdrop', '$ionicScrollDelegate', '$location', 'dataFilter', function (api, $scope, $timeout, $ionicPopup, $ionicModal, $ionicActionSheet, $ionicLoading, $ionicBackdrop, $ionicScrollDelegate, $location, dataFilter) {
         // 搜索条件
-        $scope.searchForm = [];
-        $scope.whereForm = [];
+        $scope.searchForm = {};
+        $scope.userId = ar.getCookie("bhy_user_id") ? ar.getCookie("bhy_user_id") : 0;
+        var searchInfo = ar.getStorage('searchInfo') ? ar.getStorage('searchInfo') : {};
+        var searchInfoId = ar.getStorage('searchInfoId') ? ar.getStorage('searchInfoId') : 0;
+
+        $scope.whereForm = {};
         // 用户列表
         $scope.userList = [];
-
+        if($scope.userId == searchInfoId){
+            $scope.searchForm = searchInfo;
+            $scope.whereForm = searchInfo;
+        }
         // 判断身份证是否认证通过
         if (dataFilter.data.honestyStatus.length) {
             $scope.honestyStatus = dataFilter.data.honestyStatus[0].is_check;
@@ -110,7 +117,7 @@ define(['app/module', 'app/directive/directiveApi'
 
         $scope.dataLoading = false;
 
-        // 首页filter显示
+        // 首页搜索过滤条件（拉黑）
         $scope.indexFilter = function (user) {
             if ($scope.userInfo) {
                 return user.id != $scope.userInfo.id && dataFilter.data.blacked.indexOf(user.id) == -1;
@@ -125,7 +132,7 @@ define(['app/module', 'app/directive/directiveApi'
         }).then(function (modal) {
             $scope.moreSearchModal = modal;
         });
-
+        $scope.searchForm.sex = 1;
         // 条件初始化
         var init = function () {
             $scope.searchForm = [];
@@ -138,65 +145,67 @@ define(['app/module', 'app/directive/directiveApi'
             $scope.moreSearchModal.hide();
             $scope.searchForm = $scope.whereForm;
             $scope.searchForm.pageNum = 1;
-            //userListPromise();
+            ar.setStorage('searchInfo',$scope.searchForm);
+            ar.setStorage('searchInfoId',$scope.userId);
             $scope.loadMore();
         }
-
-        $scope.buttonsItemIndex = '';
 
         //点击搜索
         $scope.search = function () {
 
             $scope.buttonsItem = [
-                {text: '全部'},
-                {text: '只看男'},
                 {text: '只看女'},
-                {text: '高级搜索'},
+                {text: '只看男'},
+                {text: '<b>高级搜索</b>'},
             ];
-
-            if ($scope.buttonsItemIndex != '') {
-                $scope.buttonsItem[$scope.buttonsItemIndex].text = '<b>' + $scope.buttonsItem[$scope.buttonsItemIndex].text + '</b>'
-            } else {
-                $scope.buttonsItem[0].text = '<b>全部</b>';
-            }
 
             var hideSheet = $ionicActionSheet.show({
                 buttons: $scope.buttonsItem,
                 titleText: '搜索',
                 cancelText: '取消',
                 buttonClicked: function (index) {
-                    console.log($scope.whereForm);
                     $scope.pageLast = true;
-                    $scope.buttonsItemIndex = index;
-                    if (index == 0) {   // 全部
-                        $scope.userList = [];
-                        init();
-                        $scope.searchForm.sex = 'all';
-                        $ionicScrollDelegate.$getByHandle('mainScroll').scrollBottom();
-                        hideSheet();
-                    }
-
                     if (index == 1) {   //只看男
                         $scope.userList = [];
                         init();
                         $scope.searchForm.sex = 1;
-                        $ionicScrollDelegate.$getByHandle('mainScroll').scrollBottom();
-                        hideSheet();
+                        $ionicScrollDelegate.$getByHandle('mainScroll').scrollTop(true);
+                        ar.setStorage('searchInfo',{sex:1});
+                        ar.setStorage('searchInfoId',$scope.userId);
+                        $scope.loadMore();
                     }
-
-                    if (index == 2) {   //只看女
+                    if (index == 0) {   //只看女
                         $scope.userList = [];
                         init();
                         $scope.searchForm.sex = 0;
-                        $ionicScrollDelegate.$getByHandle('mainScroll').scrollBottom();
-                        hideSheet();
+                        $ionicScrollDelegate.$getByHandle('mainScroll').scrollTop(true);
+                        ar.setStorage('searchInfo',{sex:0});
+                        ar.setStorage('searchInfoId',$scope.userId);
+                        $scope.loadMore();
                     }
-
-                    if (index == 3) {   //高级搜索
+                    if (index == 2) {   //高级搜索
                         $scope.moreSearchModal.show();
-                        hideSheet();
                     }
+                    hideSheet();
                 }
+            });
+        }
+
+        $scope.doRefresh = function(){
+            var refreshForm = $scope.searchForm;
+            refreshForm.pageSize = $scope.userList.length;
+            refreshForm.pageNum = 1;
+            $scope.dataLoading = true;
+            api.list('/wap/site/user-list', refreshForm).success(function (res) {
+                for (var i in res.data) {
+                    res.data[i].info = JSON.parse(res.data[i].info);
+                    res.data[i].auth = JSON.parse(res.data[i].auth);
+                }
+                $scope.userList = res.data;
+                $scope.dataLoading = false;
+                $scope.searchForm.pageNum += 1;
+            }).finally(function(){
+                $scope.$broadcast('scroll.refreshComplete');
             });
         }
 
@@ -213,8 +222,9 @@ define(['app/module', 'app/directive/directiveApi'
                 }
                 $scope.userList = $scope.userList.concat(res.data);
                 $scope.dataLoading = false;
-                $scope.$broadcast('scroll.infiniteScrollComplete');
                 $scope.searchForm.pageNum += 1;
+            }).finally(function(){
+                $scope.$broadcast('scroll.infiniteScrollComplete');
             });
         }
 
@@ -283,9 +293,9 @@ define(['app/module', 'app/directive/directiveApi'
             }
         }
         $scope.settingsAge = {
+            display: 'bottom',
             theme: 'mobiscroll',
             lang: 'zh',
-            display: 'bottom',
             rows: 5,
             wheels: [
                 [{
@@ -409,7 +419,7 @@ define(['app/module', 'app/directive/directiveApi'
         $scope.moreText = '展开';
         $scope.more = false;
         $scope.moreToggle = function () {
-            $ionicScrollDelegate.$getByHandle('mainScroll').resize();   // 重新计算滚动视图高度
+            $ionicScrollDelegate.$getByHandle('searchScroll').resize();   // 重新计算滚动视图高度
             $scope.more = !$scope.more;
             if ($scope.more) {
                 $scope.moreText = '收起';
@@ -417,6 +427,7 @@ define(['app/module', 'app/directive/directiveApi'
                 $scope.moreText = '展开';
             }
         }
+        $scope.whereForm.sex = $scope.searchForm.sex;
 
         if (document.getElementById('welcome')) {
             document.getElementById('welcome').className = 'animated fadeOut';
