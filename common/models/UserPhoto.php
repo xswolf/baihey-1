@@ -65,7 +65,7 @@ class UserPhoto extends Base
     {
         if ($type == 23) {
             $result = (new Query())->select(['*'])
-                ->where(['and', 'user_id' => $user_id, ['in', 'type', [2, 3]]])
+                ->where(['and', 'user_id='.$user_id, ['in', 'type', [2, 3]]])
                 ->from(static::tableName())
                 ->orderBy('is_head desc, update_time asc')
                 ->limit($pageSize);
@@ -89,15 +89,15 @@ class UserPhoto extends Base
     public function savePhoto($where, $user_id)
     {
         foreach ($where as $k => $v) {
-            $where[$k] = json_decode($v);
             // 删除原有身份证
             $del = $this->getDb()->createCommand()
-                ->delete(static::tableName(), ['user_id' => $user_id, 'type'=>$where[$k]->type])
+                ->delete(static::tableName(), ['user_id' => $user_id, 'type' => $v['type']])
                 ->execute();
             // 新增
             $ist = $this->getDb()->createCommand()
-                ->insert(static::tableName(), ['user_id' => $user_id,'pic_path' => $where[$k]->pic_path,'thumb_path'=>$where[$k]->thumb_path,'create_time'=>time(),'update_time'=>time(),'type'=>$where[$k]->type])
+                ->insert(static::tableName(), ['user_id' => $user_id, 'pic_path' => $v['pic_path'], 'thumb_path' => $v['thumb_path'], 'create_time' => time(), 'update_time' => time(), 'type' => $v['type']])
                 ->execute();
+
         }
         return $ist;
     }

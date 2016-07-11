@@ -72,12 +72,24 @@ class MemberController extends BaseController
     }
 
     /**
-     * 保存图片(目前用于诚信认证)
+     * 保存图片(目前用于身份认证)
      */
     public function actionSavePhoto()
     {
         $user_id = Cookie::getInstance()->getCookie('bhy_id')->value;
-        $list = UserPhoto::getInstance()->savePhoto($this->get,$user_id);
+        foreach($this->get as $k => $v) {
+            $arr = json_decode($v);
+            $data[$k]['type'] = $arr->type;
+            $data[$k]['pic_path'] = str_replace('thumb', 'picture', $arr->thumb_path);
+            $data[$k]['thumb_path'] = $arr->thumb_path;
+            // 删除原有图片
+            $pic_path = __DIR__ . "/../.." . $arr->pic_path;
+            if (is_file($pic_path) && unlink($pic_path)) {
+                $thumb_path = str_replace('picture', 'thumb', $pic_path);
+                unlink($thumb_path);
+            }
+        }
+        $list = UserPhoto::getInstance()->savePhoto($data, $user_id);
         $this->renderAjax(['status' => 1, 'data' => $list]);
     }
 
