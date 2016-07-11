@@ -71,15 +71,15 @@ class FileController extends BaseController {
         if(1 == $data['status']) {
             //删除旧图片
             if($photo = UserPhoto::getInstance()->getPhotoList($user_id, $this->get['type'])) {
-                $thumb_path = __DIR__ . "/../.." . $photo[0]->thumb_path;
+                $thumb_path = __DIR__ . "/../.." . $photo[0]['thumb_path'];
                 if (is_file($thumb_path) && unlink($thumb_path)) {
                     $pic_path = str_replace('thumb', 'picture', $thumb_path);
                     unlink($pic_path);
                 }
-                $photo[0]->thumb_path = $data['thumb_path'];
-                $photo[0]->pic_path = $data['pic_path'];
-                $photo[0]->update_time = $data['time'];
-                if (!UserPhoto::getInstance()->savePhoto($photo)) {
+                $photo[0]['thumb_path'] = $data['thumb_path'];
+                $photo[0]['pic_path'] = $data['pic_path'];
+                $photo[0]['update_time'] = $data['time'];
+                if (!UserPhoto::getInstance()->savePhoto($photo, $user_id)) {
                     $data = ['status' => -1, 'info' => '保存失败!~'];
                 }
             } else {

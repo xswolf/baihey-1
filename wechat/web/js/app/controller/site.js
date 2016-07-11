@@ -9,16 +9,11 @@ define(['app/module', 'app/directive/directiveApi'
         // 搜索条件
         $scope.searchForm = {};
         $scope.userId = ar.getCookie("bhy_user_id") ? ar.getCookie("bhy_user_id") : 0;
-        var searchInfo = ar.getStorage('searchInfo') ? ar.getStorage('searchInfo') : {};
-        var searchInfoId = ar.getStorage('searchInfoId') ? ar.getStorage('searchInfoId') : 0;
 
         $scope.whereForm = {};
         // 用户列表
         $scope.userList = [];
-        if($scope.userId == searchInfoId){
-            $scope.searchForm = searchInfo;
-            $scope.whereForm = searchInfo;
-        }
+
         // 判断身份证是否认证通过
         if (dataFilter.data.honestyStatus.length) {
             $scope.honestyStatus = dataFilter.data.honestyStatus[0].is_check;
@@ -31,38 +26,10 @@ define(['app/module', 'app/directive/directiveApi'
             return val & 1;
         }
 
+        getSearchCondition($scope.userId);
+
         // 默认还有更多
         $scope.pageLast = true;
-
-        // 查询地区  // TODO 此功能暂时屏蔽
-        /*function getLocation(){
-         // 默认重庆
-         var lng = 106.51228345689027;
-         var lat = 29.54206567258729;
-
-         if (window.navigator.geolocation) {
-         var options = {
-         enableHighAccuracy: true,
-         };
-         window.navigator.geolocation.getCurrentPosition(handleSuccess, handleError, options);
-         } else {
-         alert("浏览器不支持html5来获取地理位置信息");
-         }
-
-         function handleSuccess(position) {
-         // 获取到当前位置经纬度  本例中是chrome浏览器取到的是google地图中的经纬度
-         lng = position.coords.longitude;
-         lat = position.coords.latitude;
-         }
-
-         function handleError() {
-
-         }
-
-         api.get('/wap/user/get-location', {lng: lng, lat: lat}).success(function (res) {
-         });
-         }*/
-        //getLocation();
 
         // 判断手机是否认证
         $scope.checkPhone = function (url) {
@@ -72,48 +39,6 @@ define(['app/module', 'app/directive/directiveApi'
                 window.location.hash = '#/member/security_phone';
             }
         }
-
-        // 根据登录状态，登录用户性别默认查询条件：性别
-        if (ar.getCookie('bhy_u_sex') && (ar.getCookie('bhy_u_sex') == 0)) {
-            $scope.searchForm.sex = 1;
-        } else {
-            $scope.searchForm.sex = 0;
-        }
-
-        // 获取用户地理位置。 如果未获取到，则默认重庆
-        //if (ar.getCookie('bhy_u_city') && ar.getCookie('bhy_u_cityId')) {   // TODO 此功能暂时屏蔽
-        //    $scope.cityName = eval(ar.getCookie('bhy_u_city'));
-        //    $scope.cityId = ar.getCookie('bhy_u_cityId');
-        //    $scope.searchForm.city = ar.getCookie('bhy_u_cityId');
-        //} else {
-        $scope.cityName = '重庆';
-        $scope.cityId = 2;
-        $scope.searchForm.city = 2
-        //}
-
-
-        // 默认查询条件：年龄范围，页码，每页数量
-        $scope.searchForm.age = '18-28';
-        $scope.searchForm.pageNum = 1;
-        $scope.searchForm.pageSize = 6;
-
-        // 监听地区变化 // TODO 此功能暂时屏蔽
-        /*$scope.$on('cityName', function (event, data) {
-         $scope.cityName = data.name;
-         $scope.cityId = data.id;
-         $scope.searchForm.city = data.id;
-         $scope.searchForm.cityName = data.name;
-         $scope.searchForm.pageNum = 0;
-         });*/
-
-
-        /*// 选择城市模版 // TODO 此功能暂时屏蔽
-         $ionicModal.fromTemplateUrl('selCityModal.html', {
-         scope: $scope,
-         animation: 'slide-in-up'
-         }).then(function (modal) {
-         $scope.cityModal = modal;
-         });*/
 
         $scope.dataLoading = false;
 
@@ -132,10 +57,10 @@ define(['app/module', 'app/directive/directiveApi'
         }).then(function (modal) {
             $scope.moreSearchModal = modal;
         });
-        $scope.searchForm.sex = 1;
+
         // 条件初始化
         var init = function () {
-            $scope.searchForm = [];
+            $scope.searchForm = {};
             $scope.searchForm.age = 0; // 初始化年龄
             $scope.searchForm.pageNum = 1; // 初始化页码
         }
@@ -145,8 +70,7 @@ define(['app/module', 'app/directive/directiveApi'
             $scope.moreSearchModal.hide();
             $scope.searchForm = $scope.whereForm;
             $scope.searchForm.pageNum = 1;
-            ar.setStorage('searchInfo',$scope.searchForm);
-            ar.setStorage('searchInfoId',$scope.userId);
+            setSearchCondition($scope.searchForm,$scope.userId);
             $scope.loadMore();
         }
 
@@ -170,18 +94,16 @@ define(['app/module', 'app/directive/directiveApi'
                         init();
                         $scope.searchForm.sex = 1;
                         $ionicScrollDelegate.$getByHandle('mainScroll').scrollTop(true);
-                        ar.setStorage('searchInfo',{sex:1});
-                        ar.setStorage('searchInfoId',$scope.userId);
                         $scope.loadMore();
+                        setSearchCondition($scope.searchForm,$scope.userId);
                     }
                     if (index == 0) {   //只看女
                         $scope.userList = [];
                         init();
                         $scope.searchForm.sex = 0;
                         $ionicScrollDelegate.$getByHandle('mainScroll').scrollTop(true);
-                        ar.setStorage('searchInfo',{sex:0});
-                        ar.setStorage('searchInfoId',$scope.userId);
                         $scope.loadMore();
+                        setSearchCondition($scope.searchForm,$scope.userId);
                     }
                     if (index == 2) {   //高级搜索
                         $scope.moreSearchModal.show();
@@ -233,54 +155,9 @@ define(['app/module', 'app/directive/directiveApi'
             return $scope.pageLast;
         }
 
-
         $scope.jump = function (url) {
             $location.url(url);
         }
-
-        /* // 选择城市
-         $scope.bodyHeight = document.body.scrollHeight;
-         if ($scope.bodyHeight == 0) $scope.bodyHeight = window.screen.height;
-         $scope.scrollStyle = {
-         'height': ($scope.bodyHeight - 44) + 'px',
-         'float': 'left',
-         'width': '50%'
-         }*/
-
-        // modal内左上角地理位置名称
-        /*$scope.modalCityName = $scope.cityName;
-
-         $scope.pvId = 1;
-         $scope.cityId = 2;
-
-         $scope.selected_pv = function (pv_id) {
-         $scope.pvId = pv_id;
-         }
-
-         $scope.selected_city = function (city_id) {
-         $scope.cityId = city_id;
-         $scope.citySave();
-         }
-
-         // 保存已选择城市
-         $scope.citySave = function () {
-         $scope.searchForm.pageNum = 1;
-         for (var i = 0; i < $scope.cityList.length; i++) {
-         if ($scope.cityList[i].id == $scope.cityId) {
-         $scope.modalCityName = $scope.cityList[i].name;
-         $scope.cityName = $scope.cityList[i].name;
-         $scope.searchForm.city = $scope.cityId;
-         $scope.searchForm.cityName = $scope.cityList[i].name;
-         userListPromise();
-         $scope.pageLast = true;
-         break;
-         }
-         }
-         $scope.cityModal.hide();
-         }
-
-         $scope.provinceList = provines;
-         $scope.cityList = citys;*/
 
         /* 高级搜索 */
 
@@ -392,8 +269,6 @@ define(['app/module', 'app/directive/directiveApi'
             }
         };
 
-
-        //$scope.searchForm = {};
         $scope.salary = config_infoData.salary;
         $scope.house = config_infoData.house;
         $scope.marriage = config_infoData.marriage;
@@ -405,17 +280,18 @@ define(['app/module', 'app/directive/directiveApi'
         $scope.constellation = config_infoData.constellation;
         $scope.nation = config_infoData.nation;
 
-        //$scope.searchForm.sex = 'all';
         // 职业赋值
         $scope.occupations = occupation;
 
+        // 性别切换
         $scope.sexChange = function (value) {
-            //$scope.searchForm.sex = value;
             $scope.whereForm.sex = value;
         }
 
         $scope.moreText = '展开';
         $scope.more = false;
+
+        // 展开/收起更多条件
         $scope.moreToggle = function () {
             $ionicScrollDelegate.$getByHandle('searchScroll').resize();   // 重新计算滚动视图高度
             $scope.more = !$scope.more;
@@ -425,14 +301,51 @@ define(['app/module', 'app/directive/directiveApi'
                 $scope.moreText = '展开';
             }
         }
-        $scope.whereForm.sex = $scope.searchForm.sex;
 
+        // remove欢迎图片
         if (document.getElementById('welcome')) {
             document.getElementById('welcome').className = 'animated fadeOut';
             setTimeout(function () {
                 document.body.removeChild(document.getElementById('welcome'));
             }, 1100)
         }
+
+        /**
+         * 缓存搜索条件
+         * @param currentSearchCondition 当前搜索条件
+         * @param userId 当前用户ID
+         */
+        function setSearchCondition(currentSearchCondition,userId){
+            ar.setStorage('searchCondition',currentSearchCondition);
+            ar.setStorage('searchConditionByUserId',userId);
+        }
+
+        /**
+         * 读取搜索条件缓存
+         * @returns {*}
+         */
+        function getSearchCondition(userId){
+            if(userId == ar.getStorage('searchConditionByUserId') && ar.getStorage('searchCondition')){
+                $scope.searchForm = ar.getStorage('searchCondition');
+                $scope.whereForm  = ar.getStorage('searchCondition');
+            }else{
+                // 根据登录状态，登录用户性别默认查询条件：性别
+                if (ar.getStorage('bhy_u_sex') && (ar.getStorage('bhy_u_sex') == 0)) {
+                    $scope.searchForm.sex = 1;
+                } else {
+                    $scope.searchForm.sex = 0;
+                }
+                $scope.cityName = '重庆';
+                $scope.cityId = 2;
+                $scope.searchForm.city = 2
+
+                // 默认查询条件：年龄范围，页码，每页数量
+                $scope.searchForm.age = '18-28';
+                $scope.searchForm.pageNum = 1;
+                $scope.searchForm.pageSize = 6;
+            }
+        }
+
     }]);
 
     // 查看会员资料-会员动态
