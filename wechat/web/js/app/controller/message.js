@@ -53,12 +53,12 @@ define(['app/module', 'app/directive/directiveApi'
         $scope.removeItem = function (item) {
             var message = ar.getStorage('messageList');
             for (var i in message) {
-                if (message[i].user_id == item.id) {
+                if (message[i].other == item.send_user_id) {
                     message.splice(i, 1);
                     break;
                 }
             }
-            localStorage.removeItem("chat_messageHistory" + item.id);
+            localStorage.removeItem("chat_messageHistory" + item.send_user_id);
             $scope.messageList = message;
             ar.setStorage('messageList', $scope.messageList);
             api.setMsgDisplay(item.other).success(function (res) {

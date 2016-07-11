@@ -78,13 +78,14 @@ class MessageController extends BaseController
      */
     public function actionDel()
     {
+
         if (isset($this->get)) {
             $user_id = \common\util\Cookie::getInstance()->getCookie('bhy_id');
             $list    = UserMessage::getInstance()->messageDel($this->get, $user_id);
         } else {
             $list = 0;
         }
-        $this->renderAjax(['status=>1', 'data' => $list]);
+        $this->renderAjax(['status'=>1, 'data' => $list]);
     }
 
     /**
