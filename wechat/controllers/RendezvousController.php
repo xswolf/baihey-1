@@ -35,7 +35,7 @@ class RendezvousController extends BaseController
      * 约会列表
      */
     public function actionList(){
-        $user_id = Cookie::getInstance()->getCookie('bhy_id');
+        $user_id = Cookie::getInstance()->getCookie('bhy_id')->value;
         $list = UserRendezvous::getInstance()->lists($user_id, $this->get);
         $this->renderAjax(['status'=>1 , 'data'=>$list]);
     }
@@ -97,7 +97,7 @@ class RendezvousController extends BaseController
      * 申请约会
      */
     public function actionAddApply() {
-        $user_id = Cookie::getInstance()->getCookie('bhy_id');
+        $user_id = Cookie::getInstance()->getCookie('bhy_id')->value;
         $list = UserRendezvous::getInstance()->addApply($user_id, $this->get);
         $this->renderAjax(['status'=>1 , 'data'=>$list]);
     }

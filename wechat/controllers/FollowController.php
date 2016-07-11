@@ -20,7 +20,7 @@ class FollowController extends BaseController
      */
     public function actionFollowList()
     {
-        $user_id = Cookie::getInstance()->getCookie('bhy_id');
+        $user_id = Cookie::getInstance()->getCookie('bhy_id')->value;
         $type = $this->get['type'];
         if (empty($type)) {
             $type = 'follow';
@@ -34,7 +34,7 @@ class FollowController extends BaseController
      */
     public function actionBlackList()
     {
-        $user_id = Cookie::getInstance()->getCookie('bhy_id');
+        $user_id = Cookie::getInstance()->getCookie('bhy_id')->value;
         $data = UserFollow::getInstance()->getFollowList('black', $user_id, $this->get);
 
         return $this->renderAjax(['status' => 1, 'data' => $data]);
@@ -61,7 +61,7 @@ class FollowController extends BaseController
      */
     public function actionGetSumFollow()
     {
-        $user_id = Cookie::getInstance()->getCookie('bhy_id');
+        $user_id = Cookie::getInstance()->getCookie('bhy_id')->value;
         $data = UserFollow::getInstance()->getSumFollow('followed', $user_id);
 
         return $this->renderAjax(['status' => 1, 'data' => $data]);
@@ -72,7 +72,7 @@ class FollowController extends BaseController
      */
     public function actionGetSumBlack()
     {
-        $user_id = Cookie::getInstance()->getCookie('bhy_id');
+        $user_id = Cookie::getInstance()->getCookie('bhy_id')->value;
         $data = UserFollow::getInstance()->getSumFollow('black', $user_id);
 
         return $this->renderAjax(['status' => 1, 'data' => $data]);
