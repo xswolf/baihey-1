@@ -645,19 +645,19 @@ input[type="number"]{-moz-appearance:textfield;}
 }
 
 
-.item{
+/*.item{
     -webkit-transition: all linear 0.2s;
     -o-transition: all linear 0.2s;
     transition: all linear 0.2s;
 }
-/*动画开始前*/
+!*动画开始前*!
 .item.ng-enter{
     opacity:0;
 }
-/*动画过程*/
+!*动画过程*!
 .item-ng-enter-active{
     opacity:1;
-}
+}*/
 
 .label{
     border-radius: 3px;
