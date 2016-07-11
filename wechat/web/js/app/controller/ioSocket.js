@@ -196,14 +196,7 @@ define(['app/module', 'app/directive/directiveApi'
             }
             $rootScope.historyListHide = list = list != null ? list.concat(data) : data;
             ar.setStorage('chat_messageHistory' + $scope.receiveId, list);
-            var messageList = ar.getStorage('messageList');
-            for (var i in messageList) { // 设置消息列表已看状态
-                if (messageList[i].send_user_id == $scope.receiveId) {
-                    messageList[i].sumSend = 0;
-                    messageList[i].status = 1;
-                }
-            }
-            ar.setStorage('messageList', messageList);
+
             ar.initPhotoSwipeFromDOM('.bhy-gallery');   // 查看大图插件
             $scope.doRefresh();
         }).error(function () {
