@@ -137,7 +137,7 @@ class BaseController extends Controller {
         $log['user_id']     = $user['id'];
         $log['type']        = 1;
         $log['create_time'] = time();
-        User::getInstance()->userLog($log);
+        \common\models\User::getInstance()->userLog($log);
 
         return $user;
     }

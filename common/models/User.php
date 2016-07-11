@@ -669,4 +669,14 @@ class User extends Base
         }
         return $row;
     }
+
+
+    public function forgotPassword($data)
+    {
+        $_user_table = $this->tablePrefix.'user';
+        $row = $this->getDb()->createCommand()
+            ->update($_user_table, ['password' => md5(md5($data['password']))], ['phone' => $data['phone']])
+            ->execute();
+        return $row;
+    }
 }

@@ -247,6 +247,18 @@ class UserController extends BaseController
     }
 
     /**
+     * 找回密码
+     */
+    public function actionForgotPassword()
+    {
+        if($list = \common\models\User::getInstance()->forgotPassword($this->get)) {
+            $this->renderAjax(['status=>1', 'data' => $list, 'msg' => '修改成功']);
+        } else {
+            $this->renderAjax(['status=>0', 'data' => [], 'msg' => '修改失败']);
+        }
+    }
+
+    /**
      * 更新用户数据
      */
     public function actionUpdateUserData()

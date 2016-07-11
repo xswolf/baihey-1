@@ -219,7 +219,10 @@ define(['app/module', 'app/directive/directiveApi'
                 return false;
             }
 
-            api.save('url', $scope.User).success(function (data) {
+            var formData = [];
+            formData.passwrod = $scope.User.passwrod;
+            formData.phone = $scope.mobile;
+            api.save('/wap/user/forgot-password', formData).success(function (data) {
                 if (data.status) {
                     //提交成功
                     window.location.href = '/wap/user/login'
