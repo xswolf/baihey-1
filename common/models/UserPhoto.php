@@ -191,7 +191,7 @@ class UserPhoto extends Base
         $result = (new Query())
             ->select('*')
             ->from(static::tableName())
-            ->where(['user_id' => $user_id, 'is_head' => 1])
+            ->where(['user_id' => $user_id, 'is_head' => 1, 'type' => 1])
             ->one();
         return $result;
     }
