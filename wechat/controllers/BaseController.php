@@ -133,6 +133,11 @@ class BaseController extends Controller {
             $data['id'] = $userInfo['id'];
             $user       = $data;
         }
+        // 写入登录日志
+        $log['user_id']     = $user['id'];
+        $log['type']        = 1;
+        $log['create_time'] = time();
+        User::getInstance()->userLog($log);
 
         return $user;
     }

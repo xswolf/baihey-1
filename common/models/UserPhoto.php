@@ -82,7 +82,7 @@ class UserPhoto extends Base
 
     /**
      * 保存图片(目前用于诚信认证)
-     * @param $where [{},{}]数组 对象
+     * @param $where|array二维数组
      * @return bool
      * @throws \yii\db\Exception
      */
