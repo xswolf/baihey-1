@@ -94,8 +94,17 @@ class UserPhoto extends Base
                 ->delete(static::tableName(), ['user_id' => $user_id, 'type' => $v['type']])
                 ->execute();
             // 新增
+            $data = [
+                'user_id'       => $user_id,
+                'pic_path'      => $v['pic_path'],
+                'thumb_path'    => $v['thumb_path'],
+                'create_time'   => time(),
+                'update_time'   => time(),
+                'is_head'       => 0,
+                'type'          => $v['type']
+            ];
             $ist = $this->getDb()->createCommand()
-                ->insert(static::tableName(), ['user_id' => $user_id, 'pic_path' => $v['pic_path'], 'thumb_path' => $v['thumb_path'], 'create_time' => time(), 'update_time' => time(), 'type' => $v['type']])
+                ->insert(static::tableName(), $data)
                 ->execute();
 
         }
@@ -182,7 +191,7 @@ class UserPhoto extends Base
         $result = (new Query())
             ->select('*')
             ->from(static::tableName())
-            ->where(['user_id' => $user_id, 'is_head' => 1])
+            ->where(['user_id' => $user_id, 'is_head' => 1, 'type' => 1])
             ->one();
         return $result;
     }
