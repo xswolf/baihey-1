@@ -71,7 +71,7 @@ $(function(){
             ext_params.columns = [
                 {"data" : "phone"},
                 {"data" : "info.head_pic","fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
-                    $(nTd).html("<img class='user_img' src='"+oData.info.head_pic+"'>");
+                    $(nTd).html("<a href='/admin/member/info'><img class='user_img' src='"+oData.info.head_pic+"'></a>");
                 }},
                 {"data" : "id"},
                 {"data" : "info.real_name"},
