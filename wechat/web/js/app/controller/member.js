@@ -1678,20 +1678,25 @@ define(['app/module', 'app/directive/directiveApi'
 
     // 关注的人
     module.controller("member.follow", ['app.serviceApi', '$scope', '$ionicPopup', '$ionicLoading', '$location', '$ionicActionSheet', function (api, $scope, $ionicPopup, $ionicLoading, $location, $ionicActionSheet) {
-        $scope.followType = typeof $location.$$search.type == 'undefined' ? 'follow' : $location.$$search.type;
+        $scope.followType = 'follow';
         $scope.followList = [];
-        loadData();
-        function loadData() {
-            api.list('/wap/follow/follow-list', {type: $scope.followType}).success(function (res) {
-                console.log(res.data);
-                $scope.followList = res.data;
-                for (var i in $scope.followList) {
-                    $scope.followList[i].info = JSON.parse($scope.followList[i].info);
-                    $scope.followList[i].auth = JSON.parse($scope.followList[i].auth);
-                }
-            });
-        }
+        $scope.followedList = [];
 
+        api.list('/wap/follow/follow-list', {type: 'follow'}).success(function (res) {
+            for (var i in res.data) {
+                res.data[i].info = JSON.parse(res.data[i].info);
+                res.data[i].auth = JSON.parse(res.data[i].auth);
+            }
+            $scope.followList = res.data;
+        });
+
+        api.list('/wap/follow/follow-list', {type: 'followed'}).success(function (res) {
+            for (var i in res.data) {
+                res.data[i].info = JSON.parse(res.data[i].info);
+                res.data[i].auth = JSON.parse(res.data[i].auth);
+            }
+            $scope.followedList = res.data;
+        });
 
         // 取消关注
         $scope.delFollow = function (item, $index) {
@@ -1710,7 +1715,6 @@ define(['app/module', 'app/directive/directiveApi'
         // 切换，我关注的人，关注我的人
         $scope.switching = function (value) {
             $scope.followType = value;
-            loadData();
         };
 
     }]);
@@ -2168,7 +2172,7 @@ define(['app/module', 'app/directive/directiveApi'
         }
     }]);
 
-// 账户安全-QQ绑定
+    // 账户安全-QQ绑定
     module.controller("member.security_qq", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$location', function (api, $scope, $timeout, $ionicPopup, $location) {
         $scope.formData = [];
         $scope.formData.qq = $scope.userInfo.info.qq;
@@ -2342,7 +2346,7 @@ define(['app/module', 'app/directive/directiveApi'
         });
     }]);
 
-// 开通VIP
+    // 开通VIP
     module.controller("member.vip", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$interval', '$location', function (api, $scope, $timeout, $ionicPopup, $interval, $location) {
         $scope.formData = [];
 

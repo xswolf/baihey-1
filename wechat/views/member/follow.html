@@ -1,37 +1,52 @@
-<ion-view>
+<ion-view ng-init="delTitle='删除';">
     <link href="/wechat/web/css/member.css" rel="stylesheet">
     <ion-header-bar class="com_w_100 bhy">
         <title class="title">关注的人</title>
+        <button class="button button-icon" ng-show="followType == 'follow'" ng-click="shouldShowDelete = !shouldShowDelete; shouldShowDelete ? delTitle='完成' : delTitle='删除';" ng-bind="delTitle"></button>
     </ion-header-bar>
     <ion-content class="bhy com_w_100 follow">
-        <ion-list>
-            <div class="item tabs">
-                <a class="tab-item" ng-class="{'follow':'cur'}[followType]" ng-click="switching('follow')">
-                    我关注的人
-                </a>
-                <a class="tab-item" ng-class="{'followed':'cur'}[followType]" ng-click="switching('followed')">
-                    关注我的人
-                </a>
-            </div>
+        <div class="item tabs">
+            <a class="tab-item" ng-class="{'follow':'cur'}[followType]" ng-click="switching('follow')">
+                我关注的人
+            </a>
+            <a class="tab-item" ng-class="{'followed':'cur'}[followType]" ng-click="switching('followed')">
+                关注我的人
+            </a>
+        </div>
+        <ion-list ng-if="followType == 'follow'" show-delete="shouldShowDelete">
             <ion-item class="item-avatar" href="#/userInfo?userId={{f.other}}"
                       ng-repeat="f in followList">
+                <ion-delete-button class="ion-minus-circled" ng-click="delFollow(f,$index)"></ion-delete-button>
                 <img ng-src="{{f.info.head_pic | isNull}}" onerror="this.src='/wechat/web/images/no_img.png'">
                 <h2 class="clearfix">
-                    <span class="fl">{{f.info.real_name | sex:f.sex :f.info.age}}</span>
+                    <span ng-if="f.info.real_name" class="fl">{{f.info.real_name | sex:f.sex :f.info.age}}</span>
+                    <span ng-if="!f.info.real_name" class="fl">会员{{f.other}}</span>
                 </h2>
                 <p>{{f.info.age | timeToAge}} {{f.info.height}} {{f.info.is_marriage | marriage}}
                     {{f.info.is_purchase | purchase}} {{f.info.is_car | car}}</p>
-                <ion-option-button ng-if="followType=='follow'" class="button-info"
-                                   ng-click="delFollow(f,$index)">
-                    取消关注
-                </ion-option-button>
             </ion-item>
+            <div class="nullData has-header tac" ng-if="followList.length < 1">
+                <img src="/wechat/web/images/nullData.png" width="70" class="vam">
+                <p class="mt10 cor8">您还没关注其他人哦！</p>
+            </div>
         </ion-list>
 
-        <div class="nullData has-header tac" ng-if="followList.length == 0">
-            <img src="/wechat/web/images/nullData.png" width="70" class="vam">
-            <p class="mt10 cor8" ng-if="followType=='follow'">您好，您还没关注其他人哦！</p>
-            <p class="mt10 cor8" ng-if="followType=='followed'">您好，目前还没有人关注您哦！</p>
-        </div>
+        <ion-list ng-if="followType == 'followed'">
+            <ion-item class="item-avatar" href="#/userInfo?userId={{f.other}}"
+                      ng-repeat="f in followedList">
+                <img ng-src="{{f.info.head_pic | isNull}}" onerror="this.src='/wechat/web/images/no_img.png'">
+                <h2 class="clearfix">
+                    <span ng-if="f.info.real_name" class="fl">{{f.info.real_name | sex:f.sex :f.info.age}}</span>
+                    <span ng-if="!f.info.real_name" class="fl">会员{{f.other}}</span>
+                </h2>
+                <p>{{f.info.age | timeToAge}} {{f.info.height}} {{f.info.is_marriage | marriage}}
+                    {{f.info.is_purchase | purchase}} {{f.info.is_car | car}}</p>
+            </ion-item>
+            <div class="nullData has-header tac" ng-if="followedList.length < 1">
+                <img src="/wechat/web/images/nullData.png" width="70" class="vam">
+                <p class="mt10 cor8">目前还没有人关注您哦！</p>
+            </div>
+        </ion-list>
+
     </ion-content>
 </ion-view>
