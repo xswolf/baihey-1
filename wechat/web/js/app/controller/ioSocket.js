@@ -287,7 +287,7 @@ define(['app/module', 'app/directive/directiveApi'
                 $scope.popover = popover;
             });
             $scope.openPopover = function() {
-                $scope.popover.show($('body'));
+                $scope.popover.show(document.body);
             };
             $scope.closePopover = function() {
                 $scope.popover.hide();
