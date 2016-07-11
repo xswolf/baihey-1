@@ -807,3 +807,17 @@
   max-width: 80px;
   max-height: 80px;
 }
+.card_hosing {
+  background: url("/wechat/web/images/member/card_housing.jpg") no-repeat center;
+}
+.card_edu {
+  background: url("/wechat/web/images/member/card_edu.jpg") no-repeat center;
+}
+.card_mar {
+  background: url("/wechat/web/images/member/card_mar.jpg") no-repeat center;
+}
+.card_hosing,
+.card_edu,
+.card_mar {
+  border: 1px solid #ddd;
+}

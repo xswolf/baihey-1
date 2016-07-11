@@ -11,6 +11,10 @@ define(['app/module', 'app/directive/directiveApi'
         $scope.userId = ar.getCookie("bhy_user_id") ? ar.getCookie("bhy_user_id") : 0;
 
         $scope.whereForm = {};
+        // 默认查询条件：年龄范围，页码，每页数量
+        $scope.searchForm.age = '18-28';
+        $scope.searchForm.pageNum = 1;
+        $scope.searchForm.pageSize = 6;
         // 用户列表
         $scope.userList = [];
 
@@ -209,6 +213,7 @@ define(['app/module', 'app/directive/directiveApi'
             },
             parseValue: function (valueText) {
                 if (valueText) {
+                    console.log(valueText);
                     return valueText.replace(/\s/gi, '').split('-');
                 }
                 return [18, 22];
@@ -339,10 +344,6 @@ define(['app/module', 'app/directive/directiveApi'
                 $scope.cityId = 2;
                 $scope.searchForm.city = 2
 
-                // 默认查询条件：年龄范围，页码，每页数量
-                $scope.searchForm.age = '18-28';
-                $scope.searchForm.pageNum = 1;
-                $scope.searchForm.pageSize = 6;
             }
         }
 

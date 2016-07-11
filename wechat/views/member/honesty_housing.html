@@ -9,10 +9,7 @@
                 请您上传房产证照片
             </div>
             <div class="item item-text-wrap zj_wrap tac">
-                <button type="button" class="button button-calm mb10"
-                        ng-click="addNewImg('honesty1')">点击上传
-                </button>
-                <br/>
+                <div class="zj_w pr dib card_hosing" ng-if="!authList[0].thumb_path"></div>
                 <div class="zj_w pr dib" ng-if="authList[0].thumb_path">
                     <div class="bhy-gallery">
                         <a ng-href="{{authList[0].thumb_path | picture}}"
@@ -20,9 +17,11 @@
                             <img ng-src="{{authList[0].thumb_path}}">
                         </a>
                     </div>
-                    <div class="underReview" ng-if="authList[0].is_check == 2"><span>审核中</span></div>
-                    <div class="underReview" ng-if="authList[0].is_check == 0"><span>审核未通过</span></div>
                 </div>
+                <br/>
+                <button type="button" class="button button-calm mb10"
+                        ng-click="addNewImg('honesty1')">点击上传
+                </button>
                 <input id="honesty1" type="file" nv-file-select uploader="uploader"
                        style="visibility: hidden; display: none;" accept="image/*">
             </div>
