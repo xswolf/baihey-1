@@ -65,7 +65,7 @@ class FileController extends BaseController {
      */
     public function actionAuthPictures()
     {
-        $user_id = Cookie::getInstance()->getCookie('bhy_id');
+        $user_id = Cookie::getInstance()->getCookie('bhy_id')->value;
         $data = $this->thumb();
         // 保存数据
         if(1 == $data['status']) {

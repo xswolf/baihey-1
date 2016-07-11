@@ -29,7 +29,7 @@ class MessageController extends BaseController
      */
     public function actionIndex()
     {
-        $user_id = \common\util\Cookie::getInstance()->getCookie('bhy_id');
+        $user_id = \common\util\Cookie::getInstance()->getCookie('bhy_id')->value;
         UserMessage::getInstance()->messageList($this->get, $user_id);
         return $this->render();
     }
@@ -47,7 +47,7 @@ class MessageController extends BaseController
      */
     public function actionMessageHistory()
     {
-        $sendId = \common\util\Cookie::getInstance()->getCookie('bhy_id');
+        $sendId = \common\util\Cookie::getInstance()->getCookie('bhy_id')->value;
         $list   = Message::getInstance()->getMessageHistory($sendId, \Yii::$app->request->get('id'));
         $this->renderAjax($list);
     }
@@ -57,7 +57,7 @@ class MessageController extends BaseController
      */
     public function actionMessageList()
     {
-        $sendId = \common\util\Cookie::getInstance()->getCookie('bhy_id');
+        $sendId = \common\util\Cookie::getInstance()->getCookie('bhy_id')->value;
         $list   = UserMessage::getInstance()->messageList($this->get, $sendId);
         $this->renderAjax(['status=>1', 'data' => $list]);
     }
@@ -67,7 +67,7 @@ class MessageController extends BaseController
      */
     public function actionGetMessageSum()
     {
-        $user_id = \common\util\Cookie::getInstance()->getCookie('bhy_id');
+        $user_id = \common\util\Cookie::getInstance()->getCookie('bhy_id')->value;
         $list    = UserMessage::getInstance()->messageSum($user_id);
         //echo $list['sumSend'];
         $this->renderAjax(['status=>1', 'data' => $list['sumSend']]);
@@ -80,7 +80,7 @@ class MessageController extends BaseController
     {
 
         if (isset($this->get)) {
-            $user_id = \common\util\Cookie::getInstance()->getCookie('bhy_id');
+            $user_id = \common\util\Cookie::getInstance()->getCookie('bhy_id')->value;
             $list    = UserMessage::getInstance()->messageDel($this->get, $user_id);
         } else {
             $list = 0;

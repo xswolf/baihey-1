@@ -241,7 +241,7 @@ class UserController extends BaseController
      */
     public function actionResetPassword()
     {
-        $user_id = \common\util\Cookie::getInstance()->getCookie('bhy_id');
+        $user_id = \common\util\Cookie::getInstance()->getCookie('bhy_id')->value;
         $list = User::getInstance()->resetPassword($user_id, $this->get);
         $this->renderAjax(['status=>1', 'data' => $list]);
     }
@@ -251,7 +251,7 @@ class UserController extends BaseController
      */
     public function actionUpdateUserData()
     {
-        $user_id = \common\util\Cookie::getInstance()->getCookie('bhy_id');
+        $user_id = \common\util\Cookie::getInstance()->getCookie('bhy_id')->value;
         $list = User::getInstance()->updateUserData($user_id, $this->get);
         $this->renderAjax(['status=>1', 'data' => $list]);
     }
