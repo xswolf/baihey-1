@@ -29,6 +29,8 @@ define(['app/module', 'app/directive/directiveApi'
             $scope.messageList = $rootScope.messageList;
         })
 
+        console.log($scope.messageList)
+
         $scope.userInfo.id = ar.getCookie('bhy_user_id');
 
        /* // 是否有谁关注了我，有则显示小红点
@@ -53,6 +55,7 @@ define(['app/module', 'app/directive/directiveApi'
         $scope.removeItem = function (item) {
             var message = ar.getStorage('messageList');
             for (var i in message) {
+                console.log(message[i].other + '--' + item.send_user_id)
                 if (message[i].other == item.send_user_id) {
                     message.splice(i, 1);
                     break;

@@ -11,6 +11,7 @@ define(["app/module", 'app/service/serviceApi'],
                     for (var i in list) {
                         list[i].info = JSON.parse(list[i].info);
                         list[i].auth = JSON.parse(list[i].auth);
+                        list[i].order_time = ar.timeStamp();  // 消息时间
                         var flag = true;
                         for (var j in $rootScope.messageList) {  // 相同消息合并
                             if ($rootScope.messageList[j].send_user_id == list[i].send_user_id) {
@@ -230,19 +231,25 @@ define(["app/module", 'app/service/serviceApi'],
                                 for (i in messageList) {
                                     if (messageList[i].receive_user_id == $rootScope.receiveUserInfo.id || messageList[i].send_user_id == $rootScope.receiveUserInfo.id) {
                                         if ($rootScope.historyListHide != undefined && $rootScope.historyListHide.length > 0) {
-
+                                            messageList[i].order_time = ar.timeStamp();
                                             messageList[i].message = $rootScope.historyListHide[$rootScope.historyListHide.length - 1].message
                                         }
                                         $rootScope.msgNumber = $rootScope.msgNumber - messageList[i].sumSend;
+                                        messageList[i].sumSend = 0;
+                                        messageList[i].status = 1;
+
                                         flag = false;
                                     }
                                 }
                             }
+
+
                             if (flag && $rootScope.historyListHide.length > 0) { // 有聊天信息，且没有加入storage
                                 $rootScope.receiveUserInfo.info = JSON.parse($rootScope.receiveUserInfo.info);
                                 $rootScope.receiveUserInfo.auth = JSON.parse($rootScope.receiveUserInfo.auth);
                                 $rootScope.receiveUserInfo.receive_user_id = $rootScope.receiveUserInfo.id;
                                 $rootScope.receiveUserInfo.other = $rootScope.receiveUserInfo.id;
+                                $rootScope.receiveUserInfo.order_time = ar.timeStamp();
                                 if ($rootScope.historyListHide != undefined && $rootScope.historyListHide.length > 0) {
                                     $rootScope.receiveUserInfo.message = $rootScope.historyListHide[$rootScope.historyListHide.length - 1].message
                                 }
