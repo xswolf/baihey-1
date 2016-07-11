@@ -16,7 +16,7 @@
                     <span class="cor8 mr15 fs12" ng-if="honesty(1) && sfzLength > 0">已认证</span>
                     <span class="cor8 mr15 fs12" ng-if="!honesty(1) && sfzLength > 0">审核中</span>
                     <span class="cor15 mr15 fs12" ng-if="!honesty(1) && sfzLength == 0">此项必须认证</span>
-                    <i class="ion-ios-arrow-right vam" ng-if="!identityAuth"></i>
+                    <i class="ion-ios-arrow-right vam" ng-if="!honesty(1) && sfzLength == 0"></i>
                 </div>
             </ion-item>
             <ion-item class="item item-icon-left" ng-href="{{honesty(2) || marrLength > 0 ? '' : '#/member/honesty_marr'}}">
@@ -27,7 +27,7 @@
                 <div class="menu_arrow">
                     <span class="cor8 mr15 fs12" ng-if="honesty(2) && marrLength > 0">已认证</span>
                     <span class="cor8 mr15 fs12" ng-if="!honesty(2) && marrLength > 0">审核中</span>
-                    <i class="ion-ios-arrow-right vam" ng-if="!honesty(2) || marrLength < 1"></i>
+                    <i class="ion-ios-arrow-right vam" ng-if="!honesty(2) && marrLength == 0"></i>
                 </div>
             </ion-item>
             <ion-item class="item item-icon-left" ng-href="{{honesty(4) || eduLength > 0 ? '' : '#/member/honesty_edu'}}">
@@ -38,7 +38,7 @@
                 <div class="menu_arrow">
                     <span class="cor8 mr15 fs12" ng-if="honesty(4) && eduLength > 0">已认证</span>
                     <span class="cor8 mr15 fs12" ng-if="!honesty(4) && eduLength > 0">审核中</span>
-                    <i class="ion-ios-arrow-right vam"></i>
+                    <i class="ion-ios-arrow-right vam" ng-if="!honesty(4) && eduLength == 0"></i>
                 </div>
             </ion-item>
             <ion-item class="item item-icon-left" ng-href="{{honesty(8) || housingLength > 0 ? '' : '#/member/honesty_housing'}}">
@@ -49,7 +49,7 @@
                 <div class="menu_arrow">
                     <span class="cor8 mr15 fs12" ng-if="honesty(8) && housingLength > 0">已认证</span>
                     <span class="cor8 mr15 fs12" ng-if="!honesty(8) && housingLength > 0">审核中</span>
-                    <i class="ion-ios-arrow-right vam"></i>
+                    <i class="ion-ios-arrow-right vam" ng-if="!honesty(8) && housingLength == 0"></i>
                 </div>
             </ion-item>
         </ion-list>
