@@ -29,7 +29,7 @@ class SiteController extends BaseController
      */
     public function actionMain()
     {
-        $user = $this->weChatMember();
+        /*$user = $this->weChatMember();
         $url = 'http://wechat.baihey.com/wap';
         header("Cache-Control: no-cache");
         header("Pragma: no-cache");
@@ -39,7 +39,7 @@ class SiteController extends BaseController
             Cookie::getInstance()->setCookie('bhy_u_name', $user['username']);
             Cookie::getInstance()->setCookie('bhy_id', $user['id']);
             setcookie('bhy_user_id', $user['id'], YII_BEGIN_TIME + 3600 * 24 * 30, '/wap');
-        }
+        }*/
         return $this->render();
     }
 
