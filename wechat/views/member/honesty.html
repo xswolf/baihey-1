@@ -27,7 +27,7 @@
                 <div class="menu_arrow">
                     <span class="cor8 mr15 fs12" ng-if="honesty(2) && marrLength > 0">已认证</span>
                     <span class="cor8 mr15 fs12" ng-if="!honesty(2) && marrLength > 0">审核中</span>
-                    <i class="ion-ios-arrow-right vam"></i>
+                    <i class="ion-ios-arrow-right vam" ng-if="!honesty(2) || marrLength < 1"></i>
                 </div>
             </ion-item>
             <ion-item class="item item-icon-left" ng-href="{{honesty(4) || eduLength > 0 ? '' : '#/member/honesty_edu'}}">
