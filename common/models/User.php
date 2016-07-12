@@ -670,7 +670,12 @@ class User extends Base
         return $row;
     }
 
-
+    /**
+     * 找回密码
+     * @param $data
+     * @return int
+     * @throws \yii\db\Exception
+     */
     public function forgotPassword($data)
     {
         $_user_table = $this->tablePrefix.'user';
