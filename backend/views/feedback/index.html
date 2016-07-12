@@ -54,9 +54,16 @@
                     </td>
                     <td>{{date('Y-m-d H:i:s' ,  $vo.create_time)}}</td>
                     <td>
-                        <div class="make-switch switch-small" data-on-label="属实" {{if $vo.status == 2}} data-off-label="待审核"{{else}}data-off-label="不属实" {{/if}}data-on="success" data-off="danger">
-                            <input type="checkbox" data-id="{{$vo.id}}" class="mySwitch" {{if ($vo.status == 1)}} checked {{/if}}>
-                        </div>
+                        <!--<div class="make-switch switch-small" data-on-label="属实" {{if $vo.status == 2}} data-off-label="待审核"{{else}}data-off-label="不属实" {{/if}}data-on="success" data-off="danger">-->
+                            <!--<input type="checkbox" data-id="{{$vo.id}}" class="mySwitch" {{if ($vo.status == 1)}} checked {{/if}}>-->
+                        <!--</div>-->
+
+                        <select class="form-control mySwitch" data-id="{{$vo.id}}">
+                            <option value="2">待审核</option>
+                            <option value="1">审核属实</option>
+                            <option value="3">审核不属实</option>
+                        </select>
+
                     </td>
                 </tr>
                 {{/foreach}}
@@ -68,7 +75,8 @@
 <script>
     jQuery(document).ready(function () {
         $('.mySwitch').on('change', function () {
-            var status = $(this).is(':checked') == true ? 1 : 3;
+//            var status = $(this).is(':checked') == true ? 1 : 3;
+            var status = $(this).val();
             var id = $(this).data('id');
             $.ajax({
                 url: "/admin/feedback/auth", data: {id: id , status:status}, success: function (res) {

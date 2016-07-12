@@ -64,9 +64,14 @@
                         <td><img width="100" height="100" src="{{$vo.thumb_path}}"></img></td>
                         <td>{{date('Y-m-d H:i:s',$vo.create_time)}}</td>
                         <td>
-                            <div class="make-switch switch-small" data-on-label="已审核" data-off-label="未审核" data-on="success" data-off="danger">
-                                <input type="checkbox" data-id="{{$vo.id}}" class="mySwitch" {{if ($vo.is_check == 1)}} checked {{/if}}>
-                            </div>
+                            <!--<div class="make-switch switch-small" data-on-label="已审核" data-off-label="未审核" data-on="success" data-off="danger">-->
+                                <!--<input type="checkbox" data-id="{{$vo.id}}" class="mySwitch" {{if ($vo.is_check == 1)}} checked {{/if}}>-->
+                                <select class="form-control mySwitch" data-id="{{$vo.id}}">
+                                    <option value="2">未审核</option>
+                                    <option value="1">审核通过</option>
+                                    <option value="0">审核未通过</option>
+                                </select>
+                            <!--</div>-->
                         </td>
                     </tr>
                 {{/foreach}}
@@ -78,7 +83,8 @@
 <script>
     jQuery(document).ready(function () {
         $('.mySwitch').on('change', function () {
-            var status = $(this).is(':checked') == true ? 1 : 0;
+//            var status = $(this).is(':checked') == true ? 1 : 0;
+            var status = $(this).val();
             var id = $(this).data('id');
             $.ajax({
                 url: "/admin/member/auth-photo", data: {id: id , status:status}, success: function (res) {
