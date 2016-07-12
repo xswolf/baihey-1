@@ -220,7 +220,7 @@ define(['app/module', 'app/directive/directiveApi'
             }
 
             var formData = [];
-            formData.passwrod = $scope.User.passwrod;
+            formData.password = $scope.User.password;
             formData.phone = $scope.mobile;
             api.save('/wap/user/forgot-password', formData).success(function (data) {
                 if (data.status) {
