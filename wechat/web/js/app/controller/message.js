@@ -55,7 +55,7 @@ define(['app/module', 'app/directive/directiveApi'
         $scope.removeItem = function (item) {
             var message = ar.getStorage('messageList');
             for (var i in message) {
-                console.log(message[i].other + '--' + item.send_user_id)
+                console.log(message[i].other , item)
                 if (message[i].other == item.send_user_id) {
                     message.splice(i, 1);
                     break;
