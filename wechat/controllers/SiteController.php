@@ -55,7 +55,7 @@ class SiteController extends BaseController
      */
     public function actionUserList(){
         $list = User::getInstance()->userList($this->get);
-        $this->renderAjax(['status=>1' , 'data'=>$list] );
+        $this->renderAjax(['status' => 1, 'data'=>$list] );
     }
 
 

@@ -20,6 +20,6 @@ class MatchmakerController extends BaseController
     public function actionUserMatchmakerList()
     {
         $list = AuthUser::getInstance()->getUserMatchmaker($this->get);
-        $this->renderAjax(['status=>1', 'data' => $list]);
+        $this->renderAjax(['status' => 1, 'data' => $list]);
     }
 }

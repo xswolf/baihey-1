@@ -680,7 +680,7 @@ class User extends Base
     {
         $_user_table = $this->tablePrefix.'user';
         $row = $this->getDb()->createCommand()
-            ->update($_user_table, ['password' => md5(md5($data['password']))], ['phone' => $data['phone']])
+            ->update($_user_table, ['password' => md5(md5($data['password'])), 'reset_pass_time' => time()], ['phone' => $data['phone']])
             ->execute();
         return $row;
     }
