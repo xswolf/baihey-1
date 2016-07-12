@@ -32,16 +32,16 @@ class UserFollow extends Base
         $pageNum    = isset($where['pageNum']) ? $where['pageNum'] : 1;
         $offset     = ($pageNum - 1) * $pageSize;
         if($type == 'follow') {// 关注
-            $condition = ['f.user_id' => $user_id, 'status' => 1];
+            $condition = ['f.user_id' => $user_id, 'f.status' => 1];
             $join = 'f.follow_id = i.user_id';
         } elseif($type == 'followed') {// 被关注
-            $condition = ['follow_id' => $user_id, 'status' => 1];
+            $condition = ['follow_id' => $user_id, 'f.status' => 1];
             $join = 'f.user_id = i.user_id';
         } elseif($type == 'black') {// 黑名单
-            $condition = ['f.user_id' => $user_id, 'status' => 0];
+            $condition = ['f.user_id' => $user_id, 'f.status' => 0];
             $join = 'f.follow_id = i.user_id';
         } elseif($type == 'blacked') {// 被拉黑名单
-            $condition = ['f.follow_id' => $user_id, 'status' => 0];
+            $condition = ['f.follow_id' => $user_id, 'f.status' => 0];
             $join = 'f.user_id = i.user_id';
         }
         $result = (new Query())->select(['f.*', 'u.id other', 'u.sex', 'i.*'])

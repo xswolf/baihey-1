@@ -243,7 +243,7 @@ class UserController extends BaseController
     {
         $user_id = \common\util\Cookie::getInstance()->getCookie('bhy_id')->value;
         $list = User::getInstance()->resetPassword($user_id, $this->get);
-        $this->renderAjax(['status=>1', 'data' => $list]);
+        $this->renderAjax(['status' => 1, 'data' => $list]);
     }
 
     /**
@@ -265,7 +265,7 @@ class UserController extends BaseController
     {
         $user_id = \common\util\Cookie::getInstance()->getCookie('bhy_id')->value;
         $list = User::getInstance()->updateUserData($user_id, $this->get);
-        $this->renderAjax(['status=>1', 'data' => $list]);
+        $this->renderAjax(['status' => 1, 'data' => $list]);
     }
 
     /**
@@ -286,9 +286,9 @@ class UserController extends BaseController
             }
             $honestyStatus = UserPhoto::getInstance()->getPhotoList($user_id, 2, 2);
             $headpicStatus = UserPhoto::getInstance()->userHeadpic($user_id);
-            $this->renderAjax(['status=>1', 'blacked' => $blackedList, 'follow' => $followList, 'honestyStatus' => $honestyStatus, 'headpicStatus' => $headpicStatus]);
+            $this->renderAjax(['status' => 1, 'blacked' => $blackedList, 'follow' => $followList, 'honestyStatus' => $honestyStatus, 'headpicStatus' => $headpicStatus]);
         } else {
-            $this->renderAjax(['status=>1', 'blacked' => [], 'follow' => [], 'honestyStatus' => [], 'headpicStatus' => []]);
+            $this->renderAjax(['status' => 1, 'blacked' => [], 'follow' => [], 'honestyStatus' => [], 'headpicStatus' => []]);
         }
 
     }

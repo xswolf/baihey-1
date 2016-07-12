@@ -185,7 +185,7 @@ class MemberController extends BaseController
         $data['id'] = \Yii::$app->request->get('id');
         $data['thumb_path'] = \Yii::$app->request->get('thumb_path');
         $list = UserPhoto::getInstance()->setHeadPic($userId, $data);
-        $this->renderAjax(['status=>1', 'data' => $list]);
+        $this->renderAjax(['status' => 1, 'data' => $list]);
     }
 
     /**
