@@ -133,6 +133,8 @@ class BaseController extends Controller {
             $data['id'] = $userInfo['id'];
             $user       = $data;
         }
+        // 修改最后一次登录时间
+        \common\models\User::getInstance()->updateAll(['last_login_time' => time()], ['id' => $user['id']]);
         // 写入登录日志
         $log['user_id']     = $user['id'];
         $log['type']        = 1;
