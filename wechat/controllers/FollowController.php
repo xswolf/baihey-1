@@ -52,7 +52,7 @@ class FollowController extends BaseController
         if ($data = UserFollow::getInstance()->getFollowList('blacked', $user_id, $this->get)) {
             return $this->renderAjax(['status' => 1, 'data' => $data, 'msg' => '获取数据成功']);
         } else {
-            return $this->renderAjax(['status' => 0, 'data' => $data, 'msg' => '获取数据失败']);
+            return $this->renderAjax(['status' => 0, 'data' => [], 'msg' => '获取数据失败']);
         }
     }
 

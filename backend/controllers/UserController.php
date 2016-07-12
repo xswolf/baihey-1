@@ -98,4 +98,18 @@ class UserController extends BaseController
             $this->__error('删除失败');
         }
     }
+
+    /**
+     * 修改用户状态(后台使用)
+     */
+    public function actionEditUserStatus()
+    {
+        $user_id = $this->get['user_id'];
+        unset($this->get['user_id']);
+        if($data = \common\models\User::getInstance()->editUserTableInfo($user_id, $this->get)) {
+            return $this->renderAjax(['status' => 1, 'data' => $data, 'msg' => '修改成功']);
+        } else {
+            return $this->renderAjax(['status' => 0, 'data' => [], 'msg' => '修改失败']);
+        }
+    }
 }

@@ -117,7 +117,7 @@ class MemberController extends BaseController
         if ($data = UserPhoto::getInstance()->userHeadpic($user_id)) {
             $this->renderAjax(['status' => 1, 'data' => $data, 'msg' => '获取数据成功']);
         } else {
-            $this->renderAjax(['status' => 0, 'data' => $data, 'msg' => '获取数据失败']);
+            $this->renderAjax(['status' => 0, 'data' => [], 'msg' => '获取数据失败']);
         }
     }
 
@@ -256,7 +256,7 @@ class MemberController extends BaseController
         if ($data = UserDynamic::getInstance()->editDynamic($user_id, $this->get['id'], ['status' => 0])) {
             $this->renderAjax(['status' => 1, 'data' => $data, 'msg' => '删除成功']);
         } else {
-            $this->renderAjax(['status' => 0, 'data' => $data, 'msg' => '删除失败']);
+            $this->renderAjax(['status' => 0, 'data' => [], 'msg' => '删除失败']);
         }
     }
 
@@ -324,7 +324,7 @@ class MemberController extends BaseController
         if ($data = ConsumptionLog::getInstance()->getUserConsumptionLogList($user_id)) {
             $this->renderAjax(['status' => 1, 'data' => $data, 'msg' => '获取数据成功']);
         } else {
-            $this->renderAjax(['status' => 0, 'data' => $data, 'msg' => '获取数据失败']);
+            $this->renderAjax(['status' => 0, 'data' => [], 'msg' => '获取数据失败']);
         }
     }
 
@@ -337,7 +337,7 @@ class MemberController extends BaseController
         if ($data = User::getInstance()->getCashCardList($user_id)) {
             $this->renderAjax(['status' => 1, 'data' => $data, 'msg' => '获取数据成功']);
         } else {
-            $this->renderAjax(['status' => 0, 'data' => $data, 'msg' => '获取数据失败']);
+            $this->renderAjax(['status' => 0, 'data' => [], 'msg' => '获取数据失败']);
         }
     }
 
@@ -350,7 +350,7 @@ class MemberController extends BaseController
         if ($data = User::getInstance()->delCard($user_id, $this->get['id'])) {
             $this->renderAjax(['status' => 1, 'data' => $data, 'msg' => '删除数据成功']);
         } else {
-            $this->renderAjax(['status' => 0, 'data' => $data, 'msg' => '删除数据失败']);
+            $this->renderAjax(['status' => 0, 'data' => [], 'msg' => '删除数据失败']);
         }
     }
 
@@ -366,7 +366,7 @@ class MemberController extends BaseController
             }
             $this->renderAjax(['status' => 1, 'data' => $data, 'msg' => '添加银行卡成功']);
         } else {
-            $this->renderAjax(['status' => 0, 'data' => $data, 'msg' => '添加银行卡失败，可能是您已添加过该银行卡。']);
+            $this->renderAjax(['status' => 0, 'data' => [], 'msg' => '添加银行卡失败，可能是您已添加过该银行卡。']);
         }
     }
 
@@ -379,7 +379,7 @@ class MemberController extends BaseController
         if ($data = User::getInstance()->getCashCardById($user_id, $this->get['id'])) {
             $this->renderAjax(['status' => 1, 'data' => $data, 'msg' => '获取数据成功']);
         } else {
-            $this->renderAjax(['status' => 0, 'data' => $data, 'msg' => '获取数据失败']);
+            $this->renderAjax(['status' => 0, 'data' => [], 'msg' => '获取数据失败']);
         }
     }
 
@@ -391,7 +391,7 @@ class MemberController extends BaseController
         if ($data = Bank::getInstance()->bankList()) {
             $this->renderAjax(['status' => 1, 'data' => $data, 'msg' => '删除数据成功']);
         } else {
-            $this->renderAjax(['status' => 0, 'data' => $data, 'msg' => '删除数据失败']);
+            $this->renderAjax(['status' => 0, 'data' => [], 'msg' => '删除数据失败']);
         }
     }
 
@@ -483,7 +483,7 @@ class MemberController extends BaseController
         if ($data = Feedback::getInstance()->addFeedback($user_id, $this->get)) {
             $this->renderAjax(['status' => 1, 'data' => $data, 'msg' => '举报成功']);
         } else {
-            $this->renderAjax(['status' => 0, 'data' => $data, 'msg' => '举报失败']);
+            $this->renderAjax(['status' => 0, 'data' => [], 'msg' => '举报失败']);
         }
     }
 

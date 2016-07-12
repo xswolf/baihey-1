@@ -19,9 +19,17 @@ class BaseController extends Controller
     public $enableCsrfValidation = false;
 
     protected $assign = [];
-
+    protected $get;
+    protected $post;
+    public $title;
     protected $user;
 
+    public function init() {
+        $this->get   = \Yii::$app->request->get();
+        $this->post  = \Yii::$app->request->post();
+        $this->title = '嘉瑞百合缘';
+        parent::init();
+    }
     public function auth($userId, $name)
     {
 

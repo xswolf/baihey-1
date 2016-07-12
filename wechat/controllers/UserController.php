@@ -251,7 +251,10 @@ class UserController extends BaseController
      */
     public function actionForgotPassword()
     {
-        if($list = \common\models\User::getInstance()->forgotPassword($this->get)) {
+        $user = \common\models\User::getInstance()->getUserByPhone($this->get['phone']);
+        $data['password'] = md5(md5($this->get['password']));
+        $data['reset_pass_time'] = time();
+        if($list = \common\models\User::getInstance()->editUserTableInfo($user['id'], $data)) {
             $this->renderAjax(['status' => 1, 'data' => $list, 'msg' => '修改成功']);
         } else {
             $this->renderAjax(['status' => 0, 'data' => [], 'msg' => '修改失败']);

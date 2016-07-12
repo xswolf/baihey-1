@@ -259,11 +259,6 @@ class User extends Base
         \Yii::$app->db->createCommand()->update($this->tablePrefix . "user", $user, ['id' => $data['user_id']])->execute();
     }
 
-    public function getUserByPhone($tel)
-    {
-
-    }
-
     /**
      * 设置点赞
      * @param $dynamicId
@@ -671,16 +666,27 @@ class User extends Base
     }
 
     /**
-     * 找回密码
+     * 通过手机号返回用户信息
+     * @param $phone
+     * @return array|bool
+     */
+    public function getUserByPhone($phone)
+    {
+        return (new Query())->from($this->tablePrefix.'user')->select('*')->where(['phone' => $phone])->one();
+    }
+
+    /**
+     * 修改user表用户信息
+     * @param $user_id
      * @param $data
      * @return int
      * @throws \yii\db\Exception
      */
-    public function forgotPassword($data)
+    public function editUserTableInfo($user_id, $data)
     {
         $_user_table = $this->tablePrefix.'user';
         $row = $this->getDb()->createCommand()
-            ->update($_user_table, ['password' => md5(md5($data['password'])), 'reset_pass_time' => time()], ['phone' => $data['phone']])
+            ->update($_user_table, $data, ['id' => $user_id])
             ->execute();
         return $row;
     }

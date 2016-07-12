@@ -149,7 +149,7 @@ class MemberController extends BaseController
 
     public function actionCharge(){
         if(\Yii::$app->request->post()){
-           $orderId = ChargeOrder::getInstance()->createOrder(\Yii::$app->request->post()); // 创建订单
+           $orderId = ChargeOrder::getInstance()->createOrder(\Yii::$app->request->post('user_id'), \Yii::$app->request->post()); // 创建订单
            $result = ChargeOrder::getInstance()->setOrderStatus($orderId);
            $this->renderAjax(['status'=>$result]);exit();
         }
