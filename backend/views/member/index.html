@@ -59,12 +59,8 @@
         <div class="ibox-title"><h5>会员列表</h5>
             <div class="ibox-tools rboor">
                 <a href="/admin/member/save" class="btn btn-green btn-xs p310"><i class="fa fa-plus"></i> 添加</a>
-                <a href="projects.html" class="btn btn-green btn-xs p310"><i class="fa fa-edit"></i> 编辑</a>
                 <a href="projects.html" class="btn btn-green btn-xs p310"><i class="fa fa-trash-o"></i> 删除</a>
-                <a href="projects.html" class="btn btn-green btn-xs p310"><i class="fa fa-check-square-o"></i> 批量审核</a>
-                <button id="tb-refresh" href="projects.html" class="btn btn-green btn-xs p310"><i
-                        class="fa fa-refresh"></i> 刷新
-                </button>
+                <button id="tb-refresh" class="btn btn-green btn-xs p310"><i class="fa fa-refresh"></i> 刷新</button>
             </div>
         </div>
 
@@ -72,30 +68,27 @@
 
             <div class="form-horizontal clearfix">
                 <form action="/admin/member/index" method="get">
-                    <div class="col-lg-8 col-sm-8">
-
+                    <div class="col-sm-12">
                         <div class="box-body big">
                             <div class="row">
-                                <div class="col-xs-2">
-                                    <input type="text" name="ages" class="form-control" value="{{\Yii::$app->request->get('ages')}}" placeholder="开始年龄">
-                                </div>
-                                <div class="col-xs-2">
-                                    <input type="text" name="agee" class="form-control" value="{{\Yii::$app->request->get('agee')}}" placeholder="结束年龄">
-                                </div>
-                                <div class="col-xs-2">
-                                    <select name="sex" class="form-control">
-                                        <option value="">不限</option>
-                                        <option {{if (\Yii::$app->request->get('sex') == 1)}} selected {{/if}} value="1">男</option>
-                                        <option {{if (\Yii::$app->request->get('sex') == 0)}} selected {{/if}} value="0">女</option>
+                                <div class="col-sm-2">
+                                    <select class="form-control">
+                                        <option value="">会员状态</option>
+                                        <option value="1">已审核</option>
+                                        <option value="2">未审核</option>
+                                        <option value="3">黑名单</option>
+                                        <option value="4">已删除</option>
                                     </select>
+                                </div>
+                                <div class="col-sm-3">
+                                    <input type="text" name="agee" class="form-control" value="" placeholder="会员ID、手机号、姓名">
+                                </div>
+                                <div class="form-group">
+                                    <button type="submit" class="btn btn-primary">搜索</button>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-lg-4 col-sm-4">
-                        <div class="form-group">
-                            <button type="submit" class="btn btn-sm btn-green"> 搜索</button> </span>
-                        </div>
+
                     </div>
                 </form>
             </div>
@@ -133,7 +126,6 @@
     <div class="box border blue" id="upload" style="display: none; width:800px; height: 400px;">
         <div class="box-title">
             <h4><i class="fa fa-picture-o"></i>上传照片 <span class="userName"></span></h4>
-
         </div>
         <div class="box-body">
             <form action="/wap/file/thumb"
@@ -155,7 +147,6 @@
                     <div class="dz-error-message"><span data-dz-errormessage=""></span></div>
                     <a href="javascript:undefined;" class="dz-remove setHead">设为头像</a>
                 </div>
-
             </form>
         </div>
 

@@ -381,6 +381,7 @@
 <script type="text/javascript" src="/backend/web/CloudAdmin/js/jQuery-Cookie/jquery.cookie.min.js"></script>
 <script type="text/javascript" src="/backend/web/CloudAdmin/js/file_input/fileinput.min.js"></script>
 <script type="text/javascript" src="/backend/web/CloudAdmin/js/bootstrap-alert/alert.js"></script>
+<script type="text/javascript" src="/backend/web/CloudAdmin/js/bootbox/bootbox.min.js"></script>
 
 <!-- FORM -->
 <script type="text/javascript" src="/backend/web/CloudAdmin/js/select2/select2.min.js"></script>

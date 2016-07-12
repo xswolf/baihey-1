@@ -2,7 +2,18 @@ html,
 body {
     height: 100%;
 }
-
+.fl{
+    float: left;
+}
+.fr{
+    float: right;
+}
+.fs14{
+    font-size: 14px;
+}
+.fwb{
+    font-weight: bold;
+}
 .wrap {
     min-height: 100%;
     height: auto;
@@ -320,13 +331,17 @@ table .user_img{
 .col8{ color: #777;}
 .col9{ color: #888;}
 .col10{ color: #999;}
+.m10{ margin: 10px 0;}
+.mt10{ margin-top: 10px;}
+.mt20{ margin-top: 20px;}
+.mt30{ margin-top: 30px;}
+.mb10{ margin-bottom: 10px;}
 
-.layer_form{
+#layer_sendMsg,#layer_review{
+    width: 100%;
     display: none;
-    width: 350px;
-    margin: 5%;
 }
-
-.layer_form form{
-
+#layer_sendMsg textarea{
+    resize: none;
+    width: 100%;
 }

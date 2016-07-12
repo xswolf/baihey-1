@@ -11,7 +11,7 @@
                 <div class="tabbable header-tabs user-profile">
                     <ul class="nav nav-tabs">
                         <li><a href="#pro_identity" data-toggle="tab"><i class="fa fa-credit-card"></i> <span
-                                class="hidden-inline-mobile"> 证件</span></a></li>
+                                class="hidden-inline-mobile"> 审核证件</span></a></li>
                         <li><a href="#pro_msg" data-toggle="tab"><i class="fa fa-comments-o"></i> <span
                                 class="hidden-inline-mobile"> 消息记录</span></a></li>
                         <li><a href="#pro_peidui" data-toggle="tab"><i class="fa fa-heart-o"></i> <span
@@ -73,8 +73,12 @@
                                         </li>
                                         <div class="list-group-item profile-details">
                                             <h4>李倩</h4>
-                                            <p><i class="fa fa-circle text-green"></i>
-                                                已审核</p>
+                                            <p>
+                                                <span class="text-muted">ID: 15011</span>
+                                                &nbsp;&nbsp;&nbsp;
+                                                <i class="fa fa-circle text-green"></i>
+                                                已审核
+                                            </p>
                                             <p>
                                                 <span class="label label-info">29岁</span>
                                                 <span class="label label-info">未婚</span>
@@ -85,21 +89,23 @@
                                                 <span class="label label-danger">普通会员</span>
                                             </p>
                                         </div>
-                                        <a id="verify" href="javascript:;" class="list-group-item">
-                                            <i class="fa fa-check-square fa-fw"></i>
-                                            分配</a>
-                                        <a href="javascript:;" class="list-group-item">
-                                            <!--<span class="badge badge-red">1529.00元</span>-->
+                                        <a href="/admin/member/charge?id=1" class="list-group-item">
                                             <i class="fa fa-rmb fa-fw"></i>
                                             充值
                                         </a>
-                                        <a href="#box-config" data-toggle="modal" class="list-group-item"><i
-                                                class="fa fa-edit fa-fw"></i>
+                                        <a href="/admin/member/save?id=1" data-toggle="modal" class="list-group-item">
+                                            <i class="fa fa-edit fa-fw"></i>
                                             修改资料</a>
-                                        <a href="javascript:;" class="list-group-item"><i
-                                                class="fa fa-comment-o fa-fw"></i> 发送短信</a>
-                                        <a href="javascript:;" id="resetPass" class="list-group-item"><i
+                                        <a id="sendMsg" href="javascript:;" class="list-group-item"><i
+                                                class="fa fa-comment-o fa-fw"></i> 发站内信</a>
+                                        <a id="resetPass" href="javascript:;" class="list-group-item"><i
                                                 class="fa fa-unlock-alt fa-fw"></i> 重置密码</a>
+                                        <a id="closeUserInfo" href="javascript:;" class="list-group-item">
+                                            <i class="fa fa-power-off fa-fw"></i>
+                                            关闭资料</a>
+                                        <a id="addBlacklist" href="javascript:;" class="list-group-item">
+                                            <i class="fa fa-minus-circle fa-fw"></i>
+                                            列入黑名单</a>
                                     </div>
                                 </div>
                                 <!-- /PROFILE PIC -->
@@ -112,58 +118,87 @@
                                                 <div class="box-title">
                                                     <h4><i class="fa fa-bars"></i>详细资料</h4>
                                                 </div>
-                                                <div class="box-body big">
+                                                <div class="box-body">
                                                     <div class="row">
-                                                        <div class="col-md-12">
-                                                            <table class="table">
-                                                                <thead>
-                                                                <th><span class="text-muted">地区：</span><span
-                                                                        class="text-warning">重庆重庆市渝中区</span></th>
-                                                                <th><span class="text-muted">民族：</span><span
-                                                                        class="text-warning">汉族</span></th>
-                                                                <th><span class="text-muted">子女：</span><span
-                                                                        class="text-warning">无小孩</span></th>
-                                                                <th><span class="text-muted">手机号码：</span><span
-                                                                        class="text-warning">1338149844</span></th>
-                                                                </thead>
-                                                                <thead>
-                                                                <th><span class="text-muted">职业：</span><span
-                                                                        class="text-warning">销售 销售主管</span></th>
-                                                                <th><span class="text-muted">体重：</span><span
-                                                                        class="text-warning">58kg</span></th>
-                                                                <th><span class="text-muted">购车：</span><span
-                                                                        class="text-warning">已购车</span></th>
-                                                                <th><span class="text-muted">毕业院校：</span><span
-                                                                        class="text-warning">未知</span></th>
-
-                                                                </thead>
-                                                                <thead>
-                                                                <th><span class="text-muted">属相：</span><span
-                                                                        class="text-warning">猴</span></th>
-                                                                <th><span class="text-muted">星座：</span><span
-                                                                        class="text-warning">金牛座</span></th>
-                                                                <th><span class="text-muted">购房：</span><span
-                                                                        class="text-warning">已购房</span></th>
-                                                                <th><span class="text-muted">身份证地址：</span><span
-                                                                        class="text-warning">重庆市渝中区大坪</span></th>
-                                                                </thead>
-                                                                <thead>
-                                                                <th><span class="text-muted">Q Q：</span><span
-                                                                        class="text-warning">1338149844</span></th>
-                                                                <th><span class="text-muted">微信：</span><span
-                                                                        class="text-warning">fds1582</span></th>
-                                                                <th><span class="text-muted">年收入：</span><span
-                                                                        class="text-warning">10-15万</span></th>
-                                                                <th><span class="text-muted">身份证号码：</span><span
-                                                                        class="text-warning">5161654984321</span></th>
-                                                                </thead>
-                                                                <thead>
-                                                                <th colspan="4">
-                                                                    <span class="text-muted">个性签名：</span><span
-                                                                        class="text-warning">山东分公司的根深蒂固圣斗士防守对方斯蒂芬额问题儿童额</span>
-                                                                </th>
-                                                                </thead>
-                                                            </table>
+                                                        <div class="col-md-12 fs14">
+                                                            <div class="row m10">
+                                                                <div class="col-sm-3">
+                                                                    <span class="text-muted fwb">地区：</span>
+                                                                    <span class="text-warning">重庆市-重庆市-渝中区</span>
+                                                                </div>
+                                                                <div class="col-sm-3">
+                                                                    <span class="text-muted fwb">民族：</span>
+                                                                    <span class="text-warning">汉族</span>
+                                                                </div>
+                                                                <div class="col-sm-3">
+                                                                    <span class="text-muted fwb">子女：</span>
+                                                                    <span class="text-warning">无小孩</span>
+                                                                </div>
+                                                                <div class="col-sm-3">
+                                                                    <span class="text-muted fwb">手机号码：</span>
+                                                                    <span class="text-warning">1338149855</span>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row m10">
+                                                                <div class="col-sm-3">
+                                                                    <span class="text-muted fwb">职业：</span>
+                                                                    <span class="text-warning">销售 销售主管</span>
+                                                                </div>
+                                                                <div class="col-sm-3">
+                                                                    <span class="text-muted fwb">购车：</span>
+                                                                    <span class="text-warning">已购车</span>
+                                                                </div>
+                                                                <div class="col-sm-3">
+                                                                    <span class="text-muted fwb">购房：</span>
+                                                                    <span class="text-warning">已购房</span>
+                                                                </div>
+                                                                <div class="col-sm-3">
+                                                                    <span class="text-muted fwb">毕业院校：</span>
+                                                                    <span class="text-warning"></span>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row m10">
+                                                                <div class="col-sm-3">
+                                                                    <span class="text-muted fwb">年薪：</span>
+                                                                    <span class="text-warning">3-5万</span>
+                                                                </div>
+                                                                <div class="col-sm-3">
+                                                                    <span class="text-muted fwb">属相：</span>
+                                                                    <span class="text-warning">猴</span>
+                                                                </div>
+                                                                <div class="col-sm-3">
+                                                                    <span class="text-muted fwb">星座：</span>
+                                                                    <span class="text-warning">天秤座</span>
+                                                                </div>
+                                                                <div class="col-sm-3">
+                                                                    <span class="text-muted fwb">期待的TA：</span>
+                                                                    <span class="text-warning">我希望找一位成熟的男士</span>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row m10">
+                                                                <div class="col-sm-3">
+                                                                    <span class="text-muted fwb">血型：</span>
+                                                                    <span class="text-warning">3-5万</span>
+                                                                </div>
+                                                                <div class="col-sm-3">
+                                                                    <span class="text-muted fwb"> Q Q：</span>
+                                                                    <span class="text-warning">猴</span>
+                                                                </div>
+                                                                <div class="col-sm-3">
+                                                                    <span class="text-muted fwb">微信：</span>
+                                                                    <span class="text-warning">天秤座</span>
+                                                                </div>
+                                                                <div class="col-sm-3">
+                                                                    <span class="text-muted fwb">工作单位</span>
+                                                                    <span class="text-warning"></span>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row m10">
+                                                                <div class="col-sm-12">
+                                                                    <span class="text-muted fwb">个人签名：</span>
+                                                                    <span class="text-warning">富国汇即发try还认得他蝴蝶飞过海豆腐干</span>
+                                                                </div>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -182,54 +217,123 @@
                                                 <div class="box-title">
                                                     <h4><i class="fa fa-bars"></i>择偶标准</h4>
                                                 </div>
-                                                <div class="box-body big">
+                                                <div class="box-body">
                                                     <div class="row">
-                                                        <div class="col-md-12">
-                                                            <table class="table">
-                                                                <thead>
-                                                                <th><span class="text-muted">年龄范围：</span><span
-                                                                        class="text-pink">18-29</span></th>
-                                                                <th><span class="text-muted">身高要求：</span><span
-                                                                        class="text-pink">165-175</span></th>
-                                                                <th><span class="text-muted">学历要求：</span><span
-                                                                        class="text-pink">本科及以上</span></th>
-                                                                <th><span class="text-muted">收入要求：</span><span
-                                                                        class="text-pink">10-15万</span></th>
-                                                                </thead>
-                                                                <thead>
-                                                                <th><span class="text-muted">体重要求：</span><span
-                                                                        class="text-pink">偏瘦</span></th>
-                                                                <th><span class="text-muted">购车要求：</span><span
-                                                                        class="text-pink">已购车</span></th>
-                                                                <th><span class="text-muted">购房要求：</span><span
-                                                                        class="text-pink">已购房</span></th>
-                                                                <th><span class="text-muted">子女要求：</span><span
-                                                                        class="text-pink">无小孩</span></th>
+                                                        <div class="col-md-12 fs14">
+                                                            <div class="row m10">
+                                                                <div class="col-sm-3">
+                                                                    <span class="text-muted fwb">年龄要求：</span>
+                                                                    <span class="text-pink">18-29</span>
+                                                                </div>
+                                                                <div class="col-sm-3">
+                                                                    <span class="text-muted fwb">身高要求：</span>
+                                                                    <span class="text-pink">165-175</span>
+                                                                </div>
+                                                                <div class="col-sm-3">
+                                                                    <span class="text-muted fwb">学历要求：</span>
+                                                                    <span class="text-pink">本科及以上</span>
+                                                                </div>
+                                                                <div class="col-sm-3">
+                                                                    <span class="text-muted fwb">年薪要求：</span>
+                                                                    <span class="text-pink">10-15万</span>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row m10">
+                                                                <div class="col-sm-3">
+                                                                    <span class="text-muted fwb">购车要求：</span>
+                                                                    <span class="text-pink">不限</span>
+                                                                </div>
+                                                                <div class="col-sm-3">
+                                                                    <span class="text-muted fwb">购房要求：</span>
+                                                                    <span class="text-pink">已购房</span>
+                                                                </div>
+                                                                <div class="col-sm-3">
+                                                                    <span class="text-muted fwb">子女要求：</span>
+                                                                    <span class="text-pink">无小孩</span>
+                                                                </div>
+                                                                <div class="col-sm-3">
+                                                                    <span class="text-muted fwb">婚姻要求：</span>
+                                                                    <span class="text-pink">未婚</span>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row m10">
+                                                                <div class="col-sm-3">
+                                                                    <span class="text-muted fwb">职业要求：</span>
+                                                                    <span class="text-pink">不限</span>
+                                                                </div>
+                                                                <div class="col-sm-3">
+                                                                    <span class="text-muted fwb">星座要求：</span>
+                                                                    <span class="text-pink">不限</span>
+                                                                </div>
+                                                                <div class="col-sm-3">
+                                                                    <span class="text-muted fwb">属相要求：</span>
+                                                                    <span class="text-pink">鼠、龙</span>
+                                                                </div>
+                                                                <div class="col-sm-3">
+                                                                    <span class="text-muted fwb">地区要求：</span>
+                                                                    <span class="text-pink">本地、外省</span>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row m10">
+                                                                <div class="col-sm-12">
+                                                                    <span class="text-muted fwb">其他要求：</span>
+                                                                    <span class="text-pink">人品要好、、、</span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- /ROW 1 -->
+                                    <div class="divide-10"></div>
+                                </div>
 
-                                                                </thead>
-                                                                <thead>
-                                                                <th><span class="text-muted">才貌要求：</span><span
-                                                                        class="text-pink">出众</span></th>
-                                                                <th><span class="text-muted">职业要求：</span><span
-                                                                        class="text-pink">公务员</span></th>
-                                                                <th><span class="text-muted">婚姻要求：</span><span
-                                                                        class="text-pink">未婚</span></th>
-                                                                <th><span class="text-muted">属相要求：</span><span
-                                                                        class="text-pink">狗、猪、鸡</span></th>
-                                                                </thead>
-                                                                <thead>
-                                                                <th><span class="text-muted">星座要求：</span><span
-                                                                        class="text-pink">天秤座、白羊座</span></th>
-                                                                <th><span class="text-muted">地区要求：</span><span
-                                                                        class="text-pink">重庆、四川、湖南</span></th>
-                                                                </thead>
-                                                                <thead>
-                                                                <th colspan="4">
-                                                                    <span class="text-muted">其他要求：<span
-                                                                            class="text-pink">人品要好。</span>
-                                                                </th>
-                                                                </thead>
-                                                            </table>
+                                <div class="col-md-9">
+                                    <!-- ROW 1 -->
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="box border red">
+                                                <div class="box-title">
+                                                    <h4><i class="fa fa-bars"></i>服务信息</h4>
+                                                </div>
+                                                <div class="box-body">
+                                                    <div class="row">
+                                                        <div class="col-md-12 fs14">
+                                                            <div class="row m10">
+                                                                <div class="col-sm-3">
+                                                                    <span class="text-muted fwb">会员等级：</span>
+                                                                    <span class="text-danger">普通</span>
+                                                                </div>
+                                                                <div class="col-sm-3">
+                                                                    <span class="text-muted fwb">账户余额：</span>
+                                                                    <span class="text-danger">0.00元</span>
+                                                                </div>
+                                                                <div class="col-sm-3">
+                                                                    <span class="text-muted fwb">已缴会费：</span>
+                                                                    <span class="text-danger">0.00元</span>
+                                                                </div>
+                                                                <div class="col-sm-3">
+                                                                    <span class="text-muted fwb">服务到期时间：</span>
+                                                                    <span class="text-danger"></span>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row m10">
+                                                                <div class="col-sm-3">
+                                                                    <span class="text-muted fwb">红娘顾问：</span>
+                                                                    <span class="text-danger">袁军</span>
+                                                                </div>
+                                                                <div class="col-sm-3">
+                                                                    <span class="text-muted fwb">服务红娘：</span>
+                                                                    <span class="text-danger">唐明曙</span>
+                                                                </div>
+                                                                <div class="col-sm-3">
+                                                                    <span class="text-muted fwb">服务：</span>
+                                                                    <span class="text-danger">是</span>
+                                                                </div>
+                                                            </div>
+
                                                         </div>
                                                     </div>
                                                 </div>
@@ -246,44 +350,32 @@
                                         <div class="col-md-12">
                                             <div class="box border">
                                                 <div class="box-title">
-                                                    <h4><i class="fa fa-bars"></i>其他资料</h4>
+                                                    <h4><i class="fa fa-bars"></i>登录信息</h4>
                                                 </div>
-                                                <div class="box-body big">
+                                                <div class="box-body">
                                                     <div class="row">
-                                                        <div class="col-md-12">
-                                                            <table class="table">
-                                                                <thead>
-                                                                <th><span class="text-muted">注册时间：</span><span
-                                                                        class="text-dark">2016-03-01 12:03:24</span>
-                                                                </th>
-                                                                <th><span class="text-muted">登录次数：</span><span
-                                                                        class="text-dark">24</span></th>
-                                                                <th><span class="text-muted">最后一次登录：</span><span
-                                                                        class="text-dark">2016-06-01 18:11:28</span>
-                                                                </th>
-                                                                <th><span class="text-muted">账户余额：</span><span
-                                                                        class="text-dark">581元</span></th>
-                                                                </thead>
-                                                                <thead>
-                                                                <th><span class="text-muted">会员等级：</span><span
-                                                                        class="text-dark">VIP</span></th>
-                                                                <th><span class="text-muted">到期时间：</span><span
-                                                                        class="text-dark">2017-06-01 18:11:28</span>
-                                                                </th>
-                                                                <th><span class="text-muted">红娘顾问：</span><span
-                                                                        class="text-dark">袁军</span></th>
-                                                                <th><span class="text-muted">服务红娘：</span><span
-                                                                        class="text-dark">唐明曙</span></th>
+                                                        <div class="col-md-12 fs14">
+                                                            <div class="row m10">
+                                                                <div class="col-sm-6">
+                                                                    <span class="text-muted fwb">注册时间：</span>
+                                                                    <span class="text-dark">2016-03-01 12:03:24</span>
+                                                                </div>
+                                                                <div class="col-sm-6">
+                                                                    <span class="text-muted fwb">登录次数：</span>
+                                                                    <span class="text-dark">58</span>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row m10">
+                                                                <div class="col-sm-6">
+                                                                    <span class="text-muted fwb">最后一次登录时间：</span>
+                                                                    <span class="text-dark">2016-03-01 12:03:24</span>
+                                                                </div>
+                                                                <div class="col-sm-6">
+                                                                    <span class="text-muted fwb">最后一次登录IP：</span>
+                                                                    <span class="text-dark">125.55.63.3</span>
+                                                                </div>
+                                                            </div>
 
-                                                                </thead>
-                                                                <thead>
-                                                                <th><span class="text-muted">服务：</span><span
-                                                                        class="text-dark">是</span></th>
-                                                                <th><span class="text-muted">签单：</span><span
-                                                                        class="text-dark">是</span></th>
-                                                                </thead>
-
-                                                            </table>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -293,6 +385,7 @@
                                     <!-- /ROW 1 -->
                                     <div class="divide-10"></div>
                                 </div>
+
 
                             </div>
                         </div>
@@ -427,12 +520,22 @@
                                             </div>
                                             <div id="collapseOne" class="panel-collapse collapse in">
                                                 <div class="panel-body">
-                                                    <ul class="list-unstyled list-inline">
-                                                        <li><img src="/backend/web/images/idCard1.jpg" width="200" height="200"></li>
-                                                        <li><img src="/backend/web/images/idCard2.jpg" width="200" height="200"></li>
+                                                    <div class="alert alert-info idCardInfo hide">
+                                                        请您确认以下信息，该会员身份证照片是否审核通过？&nbsp;&nbsp;&nbsp;&nbsp;
+                                                        <button class="btn btn-success" onclick="reviewYes(1)"><i class="fa fa-check"></i> 通过</button>
+                                                        <button class="btn btn-danger" onclick="reviewNo(1)"><i class="fa fa-times"></i> 不通过</button>
+                                                    </div>
+                                                    <div class="alert alert-success idCardSuccess">
+                                                        该会员身份证已审核通过！
+                                                    </div>
+                                                    <ul id="layer-photos-demo" class="list-unstyled list-inline">
+                                                        <img layer-src="/backend/web/images/idCard1.jpg"
+                                                             src="/backend/web/images/idCard1.jpg" width="200"
+                                                             height="200">
+                                                        <img layer-src="/backend/web/images/idCard2.jpg"
+                                                             src="/backend/web/images/idCard2.jpg" width="200"
+                                                             height="200">
                                                     </ul>
-
-
                                                 </div>
                                             </div>
                                         </div>
@@ -445,6 +548,14 @@
                                             </div>
                                             <div id="collapseTwo" class="panel-collapse collapse">
                                                 <div class="panel-body">
+                                                    <div class="alert alert-info marrInfo hide">
+                                                        请您确认以下信息，该会员婚姻证明照片是否审核通过？&nbsp;&nbsp;&nbsp;&nbsp;
+                                                        <button class="btn btn-success" onclick="reviewYes(2)"><i class="fa fa-check"></i> 通过</button>
+                                                        <button class="btn btn-danger" onclick="reviewNo(2)"><i class="fa fa-times"></i> 不通过</button>
+                                                    </div>
+                                                    <div class="alert alert-success marrSuccess hide">
+                                                        该会员婚姻证明已审核通过！
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -457,7 +568,14 @@
                                             </div>
                                             <div id="collapseThree" class="panel-collapse collapse">
                                                 <div class="panel-body">
-
+                                                    <div class="alert alert-info eduInfo hide">
+                                                        请您确认以下信息，该会员学历证明照片是否审核通过？&nbsp;&nbsp;&nbsp;&nbsp;
+                                                        <button class="btn btn-success" onclick="reviewYes(3)"><i class="fa fa-check"></i> 通过</button>
+                                                        <button class="btn btn-danger" onclick="reviewNo(3)"><i class="fa fa-times"></i> 不通过</button>
+                                                    </div>
+                                                    <div class="alert alert-success eduSuccess hide">
+                                                        该会员学历证明已审核通过！
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -470,7 +588,14 @@
                                             </div>
                                             <div id="collapseFour" class="panel-collapse collapse">
                                                 <div class="panel-body">
-
+                                                    <div class="alert alert-info houseInfo hide">
+                                                        请您确认以下信息，该会员房产证明照片是否审核通过？&nbsp;&nbsp;&nbsp;&nbsp;
+                                                        <button class="btn btn-success" onclick="reviewYes(4)"><i class="fa fa-check"></i> 通过</button>
+                                                        <button class="btn btn-danger" onclick="reviewNo(4)"><i class="fa fa-times"></i> 不通过</button>
+                                                    </div>
+                                                    <div class="alert alert-success houseSuccess hide">
+                                                        该会员房产证明已审核通过！
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -484,76 +609,190 @@
         </div>
     </div>
 </div>
-<div id="layer_verify" class="layer_form">
-    <form class="form-horizontal" role="form">
-        <div class="form-group">
-            <label class="control-label">红娘顾问</label>
-            <select class="form-control input-sm">
+<div id="layer_sendMsg">
+    <div class="col-sm-12">
+        <div class="col-sm-6 center m10">发送者：<span class="text-primary">系统管理员</span></div>
+        <div class="col-sm-6 center m10">接收者：<span class="text-danger">李倩</span></div>
+        <div class="col-sm-12">
+            <textarea class="form-control" rows="4"></textarea>
+        </div>
+        <div class="col-sm-12 center">
+            <button class="btn btn-yellow m10">发送</button>
+        </div>
+    </div>
+</div>
+<div id="layer_review">
+    <div class="col-sm-12">
+        <div class="form-group m10">
+            <label for="input1">销售红娘</label>
+            <input id="input1" class="form-control" type="text" disabled="disabled" value="袁军">
+        </div>
+        <div class="form-group m10">
+            <label for="input2">服务红娘</label>
+            <select id="input2" class="form-control">
                 <option value="">请选择</option>
-                <option value="1">袁军</option>
-                <option value="2">郭禹杉</option>
-                <option value="3">刘志敏</option>
+                <option value="">唐明曙</option>
+                <option value="">方莉</option>
             </select>
         </div>
-        <div class="form-group">
-            <label class="control-label">服务红娘</label>
-            <select class="form-control input-sm">
-                <option value="">请选择</option>
-                <option value="1">方莉</option>
-                <option value="2">唐明曙</option>
-            </select>
-        </div>
-        <div class="form-group">
-            <label class="control-label">签单</label>
-            <select class="form-control input-sm">
-                <option value="0">否</option>
+        <div class="form-group m10">
+            <label for="input3">服务</label>
+            <select id="input3" class="form-control">
+                <option value="2">否</option>
                 <option value="1">是</option>
             </select>
         </div>
-        <div class="form-group">
-            <label class="control-label">服务</label>
-            <select class="form-control input-sm">
-                <option value="0">否</option>
-                <option value="1">是</option>
-            </select>
+        <div class="form-group mt20">
+            <p class="btn-toolbar center">
+                <button class="btn btn-success" onclick="reviewIsOk()">确认无误，审核通过</button>
+                <button class="btn btn-light-grey" onclick="cancelReview()">取消</button>
+            </p>
         </div>
-        <div class="form-group center btn-toolbar">
-            <button type="button" class="btn btn-primary">审核通过</button>
-            <button type="button" class="btn btn-light-grey verify_cancel">取消</button>
-        </div>
-    </form>
+    </div>
 </div>
 <!-- COLORBOX -->
 <script>
-    $('#verify').click(function () {   // 审核
-        layer.open({
-            type: 1,
-            area: '410px',
-            title: '审核', //不显示标题
-            content: $('#layer_verify'), //捕获的元素
-            success: function (layero, index) {
-                layero.find('.verify_cancel').click(function () {
-                    layer.close(index);
-                })
-            },
-            cancel: function (index) {
-                layer.close(index);
-            }
+    // 审核通过
+    function reviewYes(type){
+        if(type == 1){  // 身份证
+            layer.open({
+                type: 1,
+                skin: 'layui-layer-demo', //样式类名
+                closeBtn: 0, //不显示关闭按钮
+                shift: 2,
+                title: '审核',
+                area: ['500px', '350px'],
+                shadeClose: false, //开启遮罩关闭
+                content: $('#layer_review')
+            });
+        }
+        if(type == 2){  // 婚姻证明
+
+        }
+        if(type == 3){  // 学历证明
+
+        }
+        if(type == 4){  // 房产证明
+
+        }
+    }
+
+    // 审核不通过
+    function reviewNo(type){
+        if(type == 1){   // 身份证
+
+        }
+        if(type == 2){   // 婚姻证
+
+        }
+        if(type == 3){   // 学历证
+
+        }
+        if(type == 4){   // 房产证
+
+        }
+    }
+
+    // 身份证审核通过
+    function reviewIsOk(){
+
+    }
+
+    // 身份证审核取消
+    function cancelReview(){
+        layer.closeAll('page');
+    }
+
+    $(function () {
+        layer.ready(function () {
+            layer.photos({
+                photos: '#layer-photos-demo'
+            });
         });
-    })
 
-    $('#resetPass').click(function(){    // 重置密码
-        layer.confirm('是否重置该用户登录密码？', {
-            btn: ['是','取消'] //按钮
-        }, function(){
-            layer.msg('重置成功', {icon: 1});
-        }, function(){
+        $("#sendMsg").click(function () {
+            layer.open({
+                type: 1,
+                skin: 'layui-layer-demo', //样式类名
+                closeBtn: 0, //不显示关闭按钮
+                shift: 2,
+                title: '发站内信',
+                area: ['500px', '250px'],
+                shadeClose: true, //开启遮罩关闭
+                content: $('#layer_sendMsg')
+            });
+        })
 
+
+        $("#closeUserInfo").click(function () {
+            bootbox.dialog({
+                message: "关闭资料后，该会员将不会在前台展示，确定吗？",
+                title: "提示",
+                buttons: {
+                    success: {
+                        label: "确定",
+                        className: "btn-danger",
+                        callback: function () {
+                            // 关闭资料
+
+                        }
+                    },
+                    danger: {
+                        label: "取消",
+                        className: "btn-default",
+                        callback: function () {
+
+                        }
+                    }
+                }
+            });
         });
+
+        $("#addBlacklist").click(function () {
+            bootbox.dialog({
+                message: "确定将该会员列入黑名单吗？",
+                title: "提示",
+                buttons: {
+                    success: {
+                        label: "确定",
+                        className: "btn-danger",
+                        callback: function () {
+                            // 列入黑名单
+
+                        }
+                    },
+                    danger: {
+                        label: "取消",
+                        className: "btn-default",
+                        callback: function () {
+                        }
+                    }
+                }
+            });
+        });
+
+        $('#resetPass').click(function () {    // 重置密码
+            bootbox.dialog({
+                message: "确定重置该会员密码为手机号后六位吗？",
+                title: "提示",
+                buttons: {
+                    success: {
+                        label: "确定",
+                        className: "btn-danger",
+                        callback: function () {
+                            // 重置密码
+                        }
+                    },
+                    danger: {
+                        label: "取消",
+                        className: "btn-default",
+                        callback: function () {
+                        }
+                    }
+                }
+            });
+        })
     })
-
-
-
 </script>
 <script type="text/javascript" src="/backend/web/CloudAdmin/js/colorbox/jquery.colorbox.min.js"></script>
 <script>
