@@ -27,6 +27,16 @@ class BaseController extends Controller {
         $this->get   = \Yii::$app->request->get();
         $this->post  = \Yii::$app->request->post();
         $this->title = '嘉瑞百合缘';
+        if($user_id = Cookie::getInstance()->getCookie('bhy_id')) {
+            $user = User::getInstance()->findOne(['id' => $user_id]);
+            if($user['status'] > 2) {
+                Cookie::getInstance()->delCookie('bhy_u_name');
+                Cookie::getInstance()->delCookie('bhy_id');
+                setcookie('bhy_user_id', '', time() - 3600 * 24 * 30, '/wap');
+                setcookie('bhy_u_sex', '', time() - 3600 * 24 * 30, '/wap');
+            }
+        }
+
         parent::init();
     }
 
@@ -129,17 +139,8 @@ class BaseController extends Controller {
         $user = User::getInstance()->findOne( [ 'wx_id' => $data['wx_id'] ] );
         if ( ! $user ) { // 用户不存在，写入数据
             $userInfo = \common\models\User::getInstance()->addUser($data);
-            //User::getInstance()->addUser( $data );
-            $data['id'] = $userInfo['id'];
-            $user       = $data;
+            $user     = User::getInstance()->findOne( [ 'id' => $userInfo['id'] ] );
         }
-        // 修改最后一次登录时间
-        \common\models\User::getInstance()->updateAll(['last_login_time' => time()], ['id' => $user['id']]);
-        // 写入登录日志
-        $log['user_id']     = $user['id'];
-        $log['type']        = 1;
-        $log['create_time'] = time();
-        \common\models\User::getInstance()->userLog($log);
 
         return $user;
     }

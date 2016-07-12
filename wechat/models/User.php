@@ -32,10 +32,10 @@ class User extends \common\models\User
     {
         $condition = [
             'username' => $userName,
-            'password' => md5(md5($password))
+            'password' => md5(md5($password)),
         ];
         $user = $this->findOne($condition) ? $this->findOne($condition) : $this->findOne(['id' => $userName, 'password' => md5(md5($password))]);
-        if ($user) {
+        if ($user->status < 3) {
             $time = YII_BEGIN_TIME;
             $user->last_login_time = $time;
             $user->save(false);
@@ -54,6 +54,11 @@ class User extends \common\models\User
             setcookie('bhy_u_sex', $user['sex'], $time + 3600 * 24 * 30, '/wap');
 
             return $data;
+        } else {
+            Cookie::getInstance()->delCookie('bhy_u_name');
+            Cookie::getInstance()->delCookie('bhy_id');
+            setcookie('bhy_user_id', '', time() - 3600 * 24 * 30, '/wap');
+            setcookie('bhy_u_sex', '', time() - 3600 * 24 * 30, '/wap');
         }
 
         return false;

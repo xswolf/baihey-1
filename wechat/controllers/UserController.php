@@ -109,11 +109,25 @@ class UserController extends BaseController
         header("Cache-Control: no-cache");
         header("Pragma: no-cache");
         header("Location:$url");
-        if (!isset($_COOKIE["bhy_u_name"]) && isset($user) && isset($user['username'])) {
+        if (!isset($_COOKIE["bhy_u_name"]) && isset($user) && $user['status'] < 3) {
 
+            // 修改最后一次登录时间
+            \common\models\User::getInstance()->updateAll(['last_login_time' => time()], ['id' => $user['id']]);
+            // 写入登录日志
+            $log['user_id']     = $user['id'];
+            $log['type']        = 1;
+            $log['create_time'] = time();
+            \common\models\User::getInstance()->userLog($log);
+            // 设置cookie
             Cookie::getInstance()->setCookie('bhy_u_name', $user['username']);
             Cookie::getInstance()->setCookie('bhy_id', $user['id']);
-            setcookie('bhy_user_id', $user['id'], YII_BEGIN_TIME + 3600 * 24 * 30, '/wap');
+            setcookie('bhy_user_id', $user['id'], time() + 3600 * 24 * 30, '/wap');
+            setcookie('bhy_u_sex', $user['sex'], time() + 3600 * 24 * 30, '/wap');
+        } else {
+            Cookie::getInstance()->delCookie('bhy_u_name');
+            Cookie::getInstance()->delCookie('bhy_id');
+            setcookie('bhy_user_id', '', time() - 3600 * 24 * 30, '/wap');
+            setcookie('bhy_u_sex', '', time() - 3600 * 24 * 30, '/wap');
         }
 //        echo "<script>location.href='".$url."'</script>";
         return $this->render();
