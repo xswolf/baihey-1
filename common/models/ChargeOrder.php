@@ -60,7 +60,7 @@ class ChargeOrder extends Base
         $order['user_id'] = $user_id;
         $order['order_id'] = ChargeOrder::getInstance()->createOrderId();
         $order['native_money'] = $goods['native_price'];
-        if ($data['goodsId'] == 8 || $data['goodsId'] == 9) {
+        if (isset($data['money'])) {
             $order['money'] = $data['money'] * 100;
         } else {
             $order['money'] = $goods['price'];
@@ -82,8 +82,10 @@ class ChargeOrder extends Base
     }
 
     /**
+     * 微信支付
      * @param $orderId
-     * 发起微信支付
+     * @return array
+     * @throws \WxPayException
      */
     public function weiXinPay($orderId){
         //①、获取用户openid

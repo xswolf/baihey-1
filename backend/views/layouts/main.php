@@ -405,7 +405,6 @@
 
     jQuery(document).ready(function() {
         App.init(); //Initialise plugins and elements
-
     });
 
 </script>

@@ -111,7 +111,7 @@ class ChargeController extends BaseController
             "out_trade_no" => $orderInfo['order_id'],
             "subject" => '嘉瑞百合缘-【' . $goods['name'] . '】',
             "total_fee" => $orderInfo['money'] / 100,
-            "show_url" => $goods['id'] == '9' ? 'http://wechat.baihey.com/wap/site/main#/main/member/balance' : 'http://wechat.baihey.com/wap/site/main#/main/member/vip',
+            "show_url" => $goods['id'] == '8' ? 'http://wechat.baihey.com/wap/site/main#/main/member/balance' : 'http://wechat.baihey.com/wap/site/main#/main/member/vip',
             "body" => '',
             //其他业务参数根据在线开发文档，添加参数.文档地址:https://doc.open.alipay.com/doc2/detail.htm?spm=a219a.7629140.0.0.2Z6TSk&treeId=60&articleId=103693&docType=1
 

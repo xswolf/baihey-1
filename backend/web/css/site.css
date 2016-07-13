@@ -336,8 +336,9 @@ table .user_img{
 .mt20{ margin-top: 20px;}
 .mt30{ margin-top: 30px;}
 .mb10{ margin-bottom: 10px;}
+.vam{ vertical-align: middle;}
 
-#layer_sendMsg,#layer_review{
+#layer_sendMsg,#layer_review,#layer_charge{
     width: 100%;
     display: none;
 }

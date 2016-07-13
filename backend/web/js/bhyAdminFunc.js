@@ -2,30 +2,47 @@
  * Created by NSK. on 2016/7/13/0013.
  */
 var bhyFunc = {
-    ajaxRequest:function(url,param,success,type){
+    user_id: $('#user_id').val() ? $('#user_id').val() : 0,
+    ajaxRequest: function (url, param, success, type) {
         var _type = type ? type : 'POST';
         $.ajax({
             type: _type,
-            url:url,
-            data:param,
-            dataType:"json",
-            success:success,
-            beforeSend:function(){
+            url: url,
+            data: param,
+            dataType: "json",
+            success: success,
+            beforeSend: function () {
                 App.blockUI($('body'));
             },
-            complete:function(){
+            complete: function () {
                 App.unblockUI($('body'));
             },
-            error:function(XMLHttpRequest, textStatus, errorThrown){
-                alert('请求失败,错误原因：'+XMLHttpRequest.responseText);
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                alert('请求失败,错误原因：' + XMLHttpRequest.responseText);
+                layer.closeAll();
             }
         })
     },
-    sendMsg:function(){  // 发站内信
-
+    sendMsg: function () {  // 发站内信
+        var content = $('#msg_content');
+        if (!$.trim(content.val())) {
+            layer.tips('请填写信息内容', content);
+            return false;
+        }
+        this.ajaxRequest('url', {
+            user_id: this.user_id,
+            content: content.val()
+        }, function (res) {
+            if (res.status == 1) {
+                layer.msg('发送成功！');
+            } else {
+                layer.msg('发送失败，请重试！');
+            }
+            this.layerClickedCancelButton('page');
+        })
     },
-    reviewYes:function(type){
-        if(type == 1){  // 身份证
+    reviewYes: function (type) {
+        if (type == 1) {  // 身份证
             layer.open({
                 type: 1,
                 skin: 'layui-layer-demo', //样式类名
@@ -37,139 +54,218 @@ var bhyFunc = {
                 content: $('#layer_review')
             });
         }
-        if(type == 2){  // 婚姻证明
-            bhyFunc.ajaxRequest('url',{user_id:1,type:2},function(res){
-                if(res.status == 1){
+        if (type == 2) {  // 婚姻证明
+            this.ajaxRequest('url', {user_id: this.user_id, type: type}, function (res) {
+                if (res.status == 1) {
                     $('.marrInfo').hide();
                     $('.marrSuccess').show()
-                }else{
-                    alert('审核出错，请刷新重试！');
+                } else {
+                    layer.msg('审核出错，请刷新重试！');
                 }
             })
         }
-        if(type == 3){  // 学历证明
-            bhyFunc.ajaxRequest('url',{user_id:1,type:3},function(res){
-                if(res.status == 1){
+        if (type == 3) {  // 学历证明
+            this.ajaxRequest('url', {user_id: this.user_id, type: type}, function (res) {
+                if (res.status == 1) {
                     $('.eduInfo').hide();
                     $('.eduSuccess').show()
-                }else{
-                    alert('审核出错，请刷新重试！');
+                } else {
+                    layer.msg('审核出错，请刷新重试！');
                 }
             })
         }
-        if(type == 4){  // 房产证明
-            bhyFunc.ajaxRequest('url',{user_id:1,type:4},function(res){
-                if(res.status == 1){
+        if (type == 4) {  // 房产证明
+            this.ajaxRequest('url', {user_id: this.user_id, type: type}, function (res) {
+                if (res.status == 1) {
                     $('.houseInfo').hide();
                     $('.houseSuccess').show()
-                }else{
-                    alert('审核出错，请刷新重试！');
+                } else {
+                    layer.msg('审核出错，请刷新重试！');
                 }
             })
         }
     },
-    reviewNo:function(type){
-        if(type == 1){   // 审核身份证不通过
+    reviewNo: function (type) {
+        if (type == 1) {   // 审核身份证不通过
             var cause = '';
             layer.prompt({
                 formType: 2,
                 value: '图片模糊不清',
                 title: '请填写审核不通过原因'
-            }, function(value, index, elem){
+            }, function (value, index, elem) {
                 cause = value ? value : '图片模糊不清';
-                bhyFunc.ajaxRequest('url',{user_id:1,type:1,cause:cause},function(res){
-                    if(res.status == 1){
+                this.ajaxRequest('url', {user_id: this.user_id, type: type, cause: cause}, function (res) {
+                    if (res.status == 1) {
                         $('.idCardInfo').hide();
                         $('.idCardSuccess').hide();
-                    }else{
-                        alert('审核出错，请刷新重试！');
+                    } else {
+                        layer.msg('审核出错，请刷新重试！');
                     }
                     layer.close(index);
                 })
             });
         }
-        if(type == 2){   // 婚姻证
+        if (type == 2) {   // 婚姻证
             var cause = '';
             layer.prompt({
                 formType: 2,
                 value: '图片模糊不清',
                 title: '请填写审核不通过原因'
-            }, function(value, index, elem){
+            }, function (value, index, elem) {
                 cause = value ? value : '图片模糊不清';
-                bhyFunc.ajaxRequest('url',{user_id:1,type:2,cause:cause},function(res){
-                    if(res.status == 1){
+                this.ajaxRequest('url', {user_id: this.user_id, type: type, cause: cause}, function (res) {
+                    if (res.status == 1) {
                         $('.marrInfo').hide();
                         $('.marrSuccess').hide();
-                    }else{
-                        alert('审核出错，请刷新重试！');
+                    } else {
+                        layer.msg('审核出错，请刷新重试！');
                     }
                     layer.close(index);
                 })
             });
         }
-        if(type == 3){   // 学历证
+        if (type == 3) {   // 学历证
             var cause = '';
             layer.prompt({
                 formType: 2,
                 value: '图片模糊不清',
                 title: '请填写审核不通过原因'
-            }, function(value, index, elem){
+            }, function (value, index, elem) {
                 cause = value ? value : '图片模糊不清';
-                bhyFunc.ajaxRequest('url',{user_id:1,type:3,cause:cause},function(res){
-                    if(res.status == 1){
+                this.ajaxRequest('url', {user_id: this.user_id, type: type, cause: cause}, function (res) {
+                    if (res.status == 1) {
                         $('.eduInfo').hide();
                         $('.eduSuccess').hide();
-                    }else{
-                        alert('审核出错，请刷新重试！');
+                    } else {
+                        layer.msg('审核出错，请刷新重试！');
                     }
                     layer.close(index);
                 })
             });
         }
-        if(type == 4){   // 房产证
+        if (type == 4) {   // 房产证
             var cause = '';
             layer.prompt({
                 formType: 2,
                 value: '图片模糊不清',
                 title: '请填写审核不通过原因'
-            }, function(value, index, elem){
+            }, function (value, index, elem) {
                 cause = value ? value : '图片模糊不清';
-                bhyFunc.ajaxRequest('url',{user_id:1,type:4,cause:cause},function(res){
-                    if(res.status == 1){
+                this.ajaxRequest('url', {user_id: this.user_id, type: type, cause: cause}, function (res) {
+                    if (res.status == 1) {
                         $('.houseInfo').hide();
                         $('.houseSuccess').hide();
-                    }else{
-                        alert('审核出错，请刷新重试！');
+                    } else {
+                        layer.msg('审核出错，请刷新重试！');
                     }
                     layer.close(index);
                 })
             });
         }
     },
-    reviewIsOk:function(){  // 身份证审核通过
+    reviewIsOk: function () {  // 身份证审核通过
         var matchmaking = $('#matchmaking');
-        if(!matchmaking.val()){
+        if (!matchmaking.val()) {
             layer.tips('请选择服务红娘', matchmaking);
             return false;
         }
-        bhyFunc.ajaxRequest('url',{user_id:1,matchmaking:matchmaking.val(),service_status:$('#service_status').val(),is_sign:$('#is_sign').val()},function(res){
-            if(res.status == 1){
+        this.ajaxRequest('url', {
+            user_id: this.user_id,
+            matchmaking: matchmaking.val(),
+            service_status: $('#service_status').val(),
+            is_sign: $('#is_sign').val()
+        }, function (res) {
+            if (res.status == 1) {
                 $('.idCardInfo').hide();
                 $('.idCardSuccess').show();
-                setTimeout(function(){
-                    layer.confirm('需要现在为该会员充值/开通服务吗？', {icon: 3, title:'提示'}, function(index){
+                setTimeout(function () {
+                    layer.confirm('是否现在为该会员充值/开通服务吗？', {icon: 3, title: '提示'}, function (index) {
                         alert('需要');
                         layer.close(index);
                     });
-                },1000)
-            }else{
-                alert('审核出错，请刷新重试！');
+                }, 1000)
+            } else {
+                layer.msg('审核出错，请刷新重试！');
             }
-            bhyFunc.layerClickedCancelButton('page');
+            this.layerClickedCancelButton('page');
         })
     },
+    resetPass: function () {  // 重置密码
+        layer.confirm('确定重置该用户密码吗？', {icon: 3, title:'提示'}, function(index){
+            bhyFunc.ajaxRequest('url',{user_id:bhyFunc.user_id},function(res){
+                if(res.status == 1){
+                    layer.msg('重置密码成功！');
+                }else{
+                    layer.msg('重置失败，请刷新重试！')
+                }
+                layer.close(index);
+            })
+        });
+    },
+    closeUserInfo:function(a){   // 关闭用户资料
+        var isShow = $(a).data('isshow');
+        var status = $('#status').data('status');
+        if(status != 1){
+            layer.alert('操作失败！该会员不是已审核状态。');
+            return false;
+        }
+        if(isShow){
+            layer.confirm('关闭资料后，该用户无法在前台展示，您确定吗？', {icon: 3, title:'提示'}, function(index){
+                bhyFunc.ajaxRequest('url',{user_id:bhyFunc.user_id,is_show:!isShow},function(res){
+                    if(res.status == 1){
+                        layer.msg('关闭资料成功！');
+                        $('#closeUserInfoBtnTitle').text('开放资料');
+                        $('#status_icon').removeClass('text-green').addClass('text-warning');
+                        $('#status').text('关闭资料');
+                    }else{
+                        layer.msg('关闭资料失败，请刷新重试！')
+                    }
+                    layer.close(index);
+                })
+            });
+        }else {
+            this.ajaxRequest('url',{user_id:this.user_id,is_show:!isShow},function(res){
+                if(res.status == 1){
+                    layer.msg('开放资料成功！');
+                    $('#closeUserInfoBtnTitle').text('关闭资料');
+                    $('#status_icon').removeClass('text-green').addClass('text-warning');
+                    $('#status').text('已审核');
+                }else{
+                    layer.msg('开放资料失败，请刷新重试！')
+                }
+            })
+        }
 
-    layerClickedCancelButton:function(type){  // 关闭相应类型的layer弹出窗口
+    },
+    addBlacklist:function(){
+        var t = $('#userBlackList').text();
+        if(t == '列入黑名单'){
+            layer.confirm('列入黑名单后，该用户无法登录，您确定吗？', {icon: 3, title:'提示'}, function(index){
+                bhyFunc.ajaxRequest('url',{user_id:bhyFunc.user_id,black:true},function(res){
+                    if(res.status == 1){
+                        layer.msg('列入黑名单成功！');
+                        $('#userBlackList').text('解除黑名单');
+                    }else{
+                        layer.msg('列入黑名单失败!');
+                    }
+                })
+                layer.close(index);
+            });
+        }else {
+            this.ajaxRequest('url',{user_id:this.user_id,black:false},function(res){
+                if(res.status == 1){
+                    layer.msg('解除黑名单成功！');
+                    $('#userBlackList').text('列入黑名单');
+                }else{
+                    layer.msg('解除黑名单失败!');
+                }
+            })
+        }
+    },
+    charge:function(){
+
+    },
+    layerClickedCancelButton: function (type) {  // 关闭相应类型的layer弹出窗口
         layer.closeAll(type);
     },
 

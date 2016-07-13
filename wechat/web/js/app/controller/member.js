@@ -2459,7 +2459,7 @@ define(['app/module', 'app/directive/directiveApi'
 
     }]);
 
-// 充值余额
+    // 充值余额
     module.controller("member.balance", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$location', function (api, $scope, $timeout, $ionicPopup, $location) {
         $scope.formData = {};
         $scope.formData.customize = 10;
@@ -2470,7 +2470,7 @@ define(['app/module', 'app/directive/directiveApi'
             }
             // 生成订单并跳转支付
             api.save('/wap/charge/produce-order', {
-                goodsId: 9,
+                goodsId: 8,
                 money: $scope.formData.money
             }).success(function (res) {
                 if (res.status < 1) {

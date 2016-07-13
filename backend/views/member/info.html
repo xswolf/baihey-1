@@ -1,6 +1,7 @@
 <!-- COLORBOX -->
 <link rel="stylesheet" type="text/css" href="/backend/web/CloudAdmin/js/colorbox/colorbox.min.css"/>
 <div class="row">
+    <input id="user_id" type="hidden" value="223">
     <div class="col-md-12">
         <!-- BOX -->
         <div class="box border">
@@ -79,8 +80,9 @@
                                             <p>
                                                 <span class="text-muted">ID: 15011</span>
                                                 &nbsp;&nbsp;&nbsp;
-                                                <i class="fa fa-circle text-green"></i>
-                                                已审核
+                                                <i id="status_icon" class="fa fa-circle text-green"></i>
+                                                <!-- TODO 用户状态值要放在 data-status属性里面-->
+                                                <span id="status" data-status="1">已审核</span>
                                             </p>
                                             <p>
                                                 <span class="label label-info">29岁</span>
@@ -92,23 +94,25 @@
                                                 <span class="label label-danger">普通会员</span>
                                             </p>
                                         </div>
-                                        <a href="/admin/member/charge?id=1" class="list-group-item">
+                                        <a id="charge" href="javascript:;" class="list-group-item">
                                             <i class="fa fa-rmb fa-fw"></i>
-                                            充值
+                                            充值/开通
                                         </a>
                                         <a href="/admin/member/save?id=1" data-toggle="modal" class="list-group-item">
                                             <i class="fa fa-edit fa-fw"></i>
                                             修改资料</a>
                                         <a id="sendMsg" href="javascript:;" class="list-group-item"><i
                                                 class="fa fa-comment-o fa-fw"></i> 发站内信</a>
-                                        <a id="resetPass" href="javascript:;" class="list-group-item"><i
+                                        <a onclick="bhyFunc.resetPass()" href="javascript:;" class="list-group-item"><i
                                                 class="fa fa-unlock-alt fa-fw"></i> 重置密码</a>
-                                        <a id="closeUserInfo" href="javascript:;" class="list-group-item">
+                                        <!-- TODO data-isshow这个属性必须要有值，true或者false, 代表该用户资料是否在前台展示。 对应按钮文字也要判断是开放资料还是关闭资料 -->
+                                        <a onclick="bhyFunc.closeUserInfo(this)" data-isshow="true" href="javascript:;" class="list-group-item">
                                             <i class="fa fa-power-off fa-fw"></i>
-                                            关闭资料</a>
-                                        <a id="addBlacklist" href="javascript:;" class="list-group-item">
+                                            <span id="closeUserInfoBtnTitle">关闭资料</span></a>
+                                        <a onclick="bhyFunc.addBlacklist()" id="addBlacklist" href="javascript:;" class="list-group-item">
                                             <i class="fa fa-minus-circle fa-fw"></i>
-                                            列入黑名单</a>
+                                            <!-- TODO 根据用户是否黑名单显示按钮文字，列入黑名单、解除黑名单-->
+                                            <span id="userBlackList">列入黑名单</span></a>
                                     </div>
                                 </div>
 
@@ -309,7 +313,7 @@
                                                                     <span class="text-danger">0.00元</span>
                                                                 </div>
                                                                 <div class="col-sm-3">
-                                                                    <span class="text-muted fwb">已缴会费：</span>
+                                                                    <span class="text-muted fwb">缴费金额：</span>
                                                                     <span class="text-danger">0.00元</span>
                                                                 </div>
                                                                 <div class="col-sm-3">
@@ -658,7 +662,7 @@
         <div class="col-sm-6 center m10">发送者：<span class="text-primary">系统管理员</span></div>
         <div class="col-sm-6 center m10">接收者：<span class="text-danger">李倩</span></div>
         <div class="col-sm-12">
-            <textarea class="form-control" rows="4"></textarea>
+            <textarea id="msg_content" class="form-control" rows="4"></textarea>
         </div>
         <div class="col-sm-12 center">
             <button class="btn btn-yellow m10" onclick="bhyFunc.sendMsg()">发送</button>
@@ -701,10 +705,42 @@
         </div>
     </div>
 </div>
-<!-- COLORBOX -->
+
+<div id="layer_charge">
+    <div class="col-sm-12">
+        <div class="form-group m10">
+            <label for="charge_user_id">充值用户</label>
+            <input id="charge_user_id" class="form-control" type="text" disabled="disabled" value="张三(15030)">
+        </div>
+        <div class="form-group m10">
+            <label for="charge_goods">充值产品</label>
+            <select id="charge_goods" class="form-control">
+                <option value="">请选择</option>
+                <option value="1">VIP会员(1个月)</option>
+                <option value="2">VIP会员(3个月)</option>
+                <option value="3">VIP会员(6个月)</option>
+                <option value="4">VIP会员(12个月)</option>
+                <option value="6">贵宾会员(24个月)</option>
+                <option value="7">钻石会员(24个月)</option>
+                <option value="8">嘉瑞账户充值</option>
+            </select>
+        </div>
+        <div class="form-group m10 center">
+            <label for="option1">是否打折</label>
+            <div class="make-switch radio1 radio-no-uncheck-square-o discount" data-on="warning">
+                <input id="option1" type="radio" name="radio1" value="option1">
+            </div>
+        </div>
+
+        <div class="form-group mt20">
+            <p class="btn-toolbar center">
+                <button class="btn btn-danger" onclick="bhyFunc.reviewIsOk()">确认无误，立即充值</button>
+                <button class="btn btn-light-grey" onclick="bhyFunc.layerClickedCancelButton('page')">取消</button>
+            </p>
+        </div>
+    </div>
+</div>
 <script>
-
-
     $(function () {
         layer.ready(function () {
             layer.photos({
@@ -726,73 +762,16 @@
             });
         })
 
-
-        $("#closeUserInfo").click(function () {
-            bootbox.dialog({
-                message: "关闭资料后，该会员将不会在前台展示，确定吗？",
-                title: "提示",
-                buttons: {
-                    success: {
-                        label: "确定",
-                        className: "btn-danger",
-                        callback: function () {
-                            // 关闭资料
-
-                        }
-                    },
-                    danger: {
-                        label: "取消",
-                        className: "btn-default",
-                        callback: function () {
-
-                        }
-                    }
-                }
-            });
-        });
-
-        $("#addBlacklist").click(function () {
-            bootbox.dialog({
-                message: "确定将该会员列入黑名单吗？",
-                title: "提示",
-                buttons: {
-                    success: {
-                        label: "确定",
-                        className: "btn-danger",
-                        callback: function () {
-                            // 列入黑名单
-
-                        }
-                    },
-                    danger: {
-                        label: "取消",
-                        className: "btn-default",
-                        callback: function () {
-                        }
-                    }
-                }
-            });
-        });
-
-        $('#resetPass').click(function () {    // 重置密码
-            bootbox.dialog({
-                message: "确定重置该会员密码为手机号后六位吗？",
-                title: "提示",
-                buttons: {
-                    success: {
-                        label: "确定",
-                        className: "btn-danger",
-                        callback: function () {
-                            // 重置密码
-                        }
-                    },
-                    danger: {
-                        label: "取消",
-                        className: "btn-default",
-                        callback: function () {
-                        }
-                    }
-                }
+        $('#charge').click(function(){
+            layer.open({
+                type: 1,
+                skin: 'layui-layer-demo', //样式类名
+                closeBtn: 1, //不显示关闭按钮
+                shift: 2,
+                title: '充值/开通',
+                area: ['500px', '450px'],
+                shadeClose: true, //开启遮罩关闭
+                content: $('#layer_charge')
             });
         })
     })
