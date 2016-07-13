@@ -383,7 +383,8 @@ define(["app/module", 'app/service/serviceApi'],
                 } else {
                     ar.saveDataAlert($ionicPopup, '您的登录已经被限制！');
                     ar.setStorage('userInfo', null);
-                    location.href = '/wap/user/login';
+                    $location.url('/index');
+                    //location.href = '/wap/user/login';
                 }
 
                 // 用于想去的地方，去过的地方等
