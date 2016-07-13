@@ -362,6 +362,13 @@ define(['app/module', 'app/directive/directiveApi'
 
         // 发布动态
         $scope.saveData = function () {
+            if(!ar.trim($scope.formData.content)) {
+                ar.saveDataAlert($ionicPopup, '说点什么吧！可不要为难小的哦！');
+                return false;
+            }
+            $ionicLoading.show({
+                template: '发布中...'
+            });
             var userInfo = ar.getStorage('userInfo');
             $scope.formData.name = JSON.parse(userInfo.info).real_name;
             $scope.formData.pic = JSON.stringify($scope.imgList);
@@ -369,7 +376,11 @@ define(['app/module', 'app/directive/directiveApi'
                 ar.saveDataAlert($ionicPopup, res.msg);
                 if (res.status) {
                     $location.url($location.$$search.tempUrl);
+                } else {
+                    window.location.reload();
                 }
+            }).finally(function() {
+                $ionicLoading.hide();
             })
         }
 

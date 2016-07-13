@@ -23,7 +23,9 @@ class UserDynamic extends Base
     {
         $data['user_id'] = $user_id;
         $data['pic'] = isset($data['pic']) ? $data['pic'] : '';
-        $data['content'] = isset($data['content']) ? $data['content'] : '';
+        if(!isset($data['content'])) {
+            return false;
+        }
         $data['address'] = isset($data['address']) ? $data['address'] : '';
         $data['create_time'] = time();
         $row = $this->getDb()->createCommand()
