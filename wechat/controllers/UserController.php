@@ -74,11 +74,29 @@ class UserController extends BaseController
         //判断是否点击提交
         if (\Yii::$app->request->get('username') && \Yii::$app->request->get('password')) {
 
-            if ($data = User::getInstance()->login($this->get['username'], $this->get['password'])) {
+            if ($user = User::getInstance()->login($this->get['username'], $this->get['password'])) {
+                $time = time();
+                if ($user->status < 3) {
+                    $data = \common\models\User::getInstance()->getUserById($user->id);
+                    // 用户登录日志
+                    \common\models\User::getInstance()->loginLog($user->id);
+                    // 设置cookie
+                    Cookie::getInstance()->setCookie('bhy_u_name', $user['username']);
+                    Cookie::getInstance()->setCookie('bhy_id', $user['id']);
+                    // 浏览器使用的cookie
+                    setcookie('bhy_user_id', $user['id'], $time + 3600 * 24 * 30, '/wap');
+                    setcookie('bhy_u_sex', $user['sex'], $time + 3600 * 24 * 30, '/wap');
 
-                return $this->renderAjax(['status' => 1, 'msg' => '登录成功', 'data' => $data]);
+                    return $this->renderAjax(['status' => 1, 'msg' => '登录成功', 'data' => $data]);
+                } else {
+                    Cookie::getInstance()->delCookie('bhy_u_name');
+                    Cookie::getInstance()->delCookie('bhy_id');
+                    setcookie('bhy_user_id', '', $time - 3600 * 24 * 30, '/wap');
+                    setcookie('bhy_u_sex', '', $time - 3600 * 24 * 30, '/wap');
+                    return $this->renderAjax(['status' => 0, 'msg' => '您的账号异常，已经被限制登录！', 'data' => []]);
+                }
             } else {
-                return $this->renderAjax(['status' => 0, 'msg' => '登录失败', 'data' => $data]);
+                return $this->renderAjax(['status' => 0, 'msg' => '账号或密码错误', 'data' => []]);
             }
         }
 
@@ -111,13 +129,8 @@ class UserController extends BaseController
         header("Location:$url");
         if (!isset($_COOKIE["bhy_u_name"]) && isset($user) && $user['status'] < 3) {
 
-            // 修改最后一次登录时间
-            \common\models\User::getInstance()->updateAll(['last_login_time' => time()], ['id' => $user['id']]);
-            // 写入登录日志
-            $log['user_id']     = $user['id'];
-            $log['type']        = 1;
-            $log['create_time'] = time();
-            \common\models\User::getInstance()->userLog($log);
+            // 登录日志
+            \common\models\User::getInstance()->loginLog($user['id']);
             // 设置cookie
             Cookie::getInstance()->setCookie('bhy_u_name', $user['username']);
             Cookie::getInstance()->setCookie('bhy_id', $user['id']);

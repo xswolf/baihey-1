@@ -35,33 +35,8 @@ class User extends \common\models\User
             'password' => md5(md5($password)),
         ];
         $user = $this->findOne($condition) ? $this->findOne($condition) : $this->findOne(['id' => $userName, 'password' => md5(md5($password))]);
-        if ($user->status < 3) {
-            $time = YII_BEGIN_TIME;
-            $user->last_login_time = $time;
-            $user->save(false);
-            $data = \common\models\User::getInstance()->getUserById($user->id);
-            // 写入用户日志表
-            $log['user_id'] = $user->id;
-            $log['type'] = 1;
-            $log['time'] = $time;
-            $this->userLog($log);
 
-            // 设置cookie
-            Cookie::getInstance()->setCookie('bhy_u_name', $user['username']);
-            Cookie::getInstance()->setCookie('bhy_id', $user['id']);
-            // 浏览器使用的cookie
-            setcookie('bhy_user_id', $user['id'], $time + 3600 * 24 * 30, '/wap');
-            setcookie('bhy_u_sex', $user['sex'], $time + 3600 * 24 * 30, '/wap');
-
-            return $data;
-        } else {
-            Cookie::getInstance()->delCookie('bhy_u_name');
-            Cookie::getInstance()->delCookie('bhy_id');
-            setcookie('bhy_user_id', '', time() - 3600 * 24 * 30, '/wap');
-            setcookie('bhy_u_sex', '', time() - 3600 * 24 * 30, '/wap');
-        }
-
-        return false;
+        return $user;
     }
 
     /**

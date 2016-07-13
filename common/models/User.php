@@ -218,6 +218,21 @@ class User extends Base
     }
 
     /**
+     * 登录日志
+     * @param $user_id
+     */
+    public function loginLog($user_id)
+    {
+        $time = time();
+        $this->getDb()->createCommand()
+            ->update($this->tablePrefix.'user', ['id' => $user_id], ['last_login_time' =>$time]);
+        $log['user_id'] = $user_id;
+        $log['type'] = 1;
+        $log['create_time'] = $time;
+        $this->userLog($log);
+    }
+
+    /**
      * 用户操作日志
      */
     public function userLog($log)

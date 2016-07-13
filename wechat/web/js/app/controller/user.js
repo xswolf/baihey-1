@@ -105,7 +105,7 @@ define(['app/module', 'app/directive/directiveApi'
                     top.location.href = '/wap/site/main#/index';
                     //$location.url('/index');
                 } else {
-                    ar.saveDataAlert($ionicPopup, '用户名或者密码错误');
+                    ar.saveDataAlert($ionicPopup, data.msg);
                 }
 
             }).error(function () {
