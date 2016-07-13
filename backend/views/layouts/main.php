@@ -396,6 +396,7 @@
 <!-- CUSTOM SCRIPT -->
 <script src="/backend/web/js/dataTableQuery.js"></script>
 <script src="/backend/web/js/app.js"></script>
+<script src="/backend/web/js/bhyAdminFunc.js"></script>
 <!-- TIMEAGO -->
 <script type="text/javascript" src="/backend/web/CloudAdmin/js/timeago/jquery.timeago.min.js"></script>
 

@@ -16,14 +16,17 @@
                                 class="hidden-inline-mobile"> 消息记录</span></a></li>
                         <li><a href="#pro_peidui" data-toggle="tab"><i class="fa fa-heart-o"></i> <span
                                 class="hidden-inline-mobile"> 配对记录</span></a></li>
+                        <li><a href="#pro_discovery" data-toggle="tab"><i class="fa fa-eye"></i>
+                            <span class="hidden-inline-mobile">个人动态</span></a></li>
                         <li class="active"><a href="#pro_overview" data-toggle="tab"><i class="fa fa-dot-circle-o"></i>
                             <span class="hidden-inline-mobile">详细资料</span></a></li>
                     </ul>
                     <div class="tab-content">
-                        <!-- OVERVIEW -->
+
+                        <!-- 详细资料 -->
                         <div class="tab-pane fade in active" id="pro_overview">
                             <div class="row">
-                                <!-- PROFILE PIC -->
+
                                 <div class="col-md-3">
                                     <div class="list-group">
                                         <li class="list-group-item zero-padding">
@@ -108,8 +111,7 @@
                                             列入黑名单</a>
                                     </div>
                                 </div>
-                                <!-- /PROFILE PIC -->
-                                <!-- PROFILE DETAILS -->
+
                                 <div class="col-md-9">
                                     <!-- ROW 1 -->
                                     <div class="row">
@@ -208,7 +210,7 @@
                                     <!-- /ROW 1 -->
                                     <div class="divide-10"></div>
                                 </div>
-                                <!-- /PROFILE DETAILS -->
+
                                 <div class="col-md-9">
                                     <!-- ROW 1 -->
                                     <div class="row">
@@ -268,10 +270,6 @@
                                                                 <div class="col-sm-3">
                                                                     <span class="text-muted fwb">属相要求：</span>
                                                                     <span class="text-pink">鼠、龙</span>
-                                                                </div>
-                                                                <div class="col-sm-3">
-                                                                    <span class="text-muted fwb">地区要求：</span>
-                                                                    <span class="text-pink">本地、外省</span>
                                                                 </div>
                                                             </div>
                                                             <div class="row m10">
@@ -344,9 +342,6 @@
                                     <div class="divide-10"></div>
                                 </div>
 
-                                <div class="col-md-3">
-                                    <div class="divide-10"></div>
-                                </div>
                                 <div class="col-md-9">
                                     <!-- ROW 1 -->
                                     <div class="row">
@@ -389,55 +384,92 @@
                                     <div class="divide-10"></div>
                                 </div>
 
-
                             </div>
                         </div>
-                        <!-- /OVERVIEW -->
+                        <!-- /详细资料 -->
+
+                        <!-- 个人动态 -->
+                        <div class="tab-pane fade in" id="pro_discovery">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <table class="table table-hover">
+                                        <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>发布者</th>
+                                            <th>内容</th>
+                                            <th>图片</th>
+                                            <th>点赞数</th>
+                                            <th>评论数</th>
+                                            <th>发布时间</th>
+                                            <th>操作</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr>
+                                            <td>1</td>
+                                            <td>李倩(15301)</td>
+                                            <td>看过后就能看见的那个好看</td>
+                                            <td><a>查看图片</a></td>
+                                            <td>58</td>
+                                            <td>3</td>
+                                            <td>2016-05-31 13:55:14</td>
+                                            <td><a>删除</a></td>
+                                        </tr>
+                                        <tr>
+                                            <td>2</td>
+                                            <td>李倩(15301)</td>
+                                            <td>符合法规和地方干活干活</td>
+                                            <td></td>
+                                            <td>114</td>
+                                            <td>21</td>
+                                            <td>2016-07-10 18:00:55</td>
+                                            <td><a>删除</a></td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /个人动态 -->
 
                         <!-- 配对记录 -->
                         <div class="tab-pane fade" id="pro_peidui">
                             <div class="row">
                                 <div class="col-md-12">
-                                    <div class="box border primary">
-                                        <div class="box-title">
-                                            <h4><i class="fa fa-heart-o"></i>配对记录</h4>
-                                        </div>
-                                        <div class="box-body">
-                                            <table class="table table-hover">
-                                                <thead>
-                                                <tr>
-                                                    <th>ID</th>
-                                                    <th>操作人</th>
-                                                    <th>时间</th>
-                                                    <th>对象</th>
-                                                    <th>内容</th>
-                                                    <th>状态</th>
-                                                    <th>操作</th>
-                                                </tr>
-                                                </thead>
-                                                <tbody>
-                                                <tr>
-                                                    <td>1</td>
-                                                    <td>唐明曙</td>
-                                                    <td>2016-05-31 18:11:10</td>
-                                                    <td><a>胡素娥(5615001)</a>-><a>刘天贵(275001)</a></td>
-                                                    <td>2015.6.26互留电话 自己约见</td>
-                                                    <td>成功</td>
-                                                    <td><a>删除</a></td>
-                                                </tr>
-                                                <tr>
-                                                    <td>2</td>
-                                                    <td>唐明曙</td>
-                                                    <td>2016-05-31 18:11:10</td>
-                                                    <td><a>胡素娥(5615001)</a>-><a>刘天贵(275001)</a></td>
-                                                    <td>2015.6.26互留电话 自己约见</td>
-                                                    <td>成功</td>
-                                                    <td><a>删除</a></td>
-                                                </tr>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
+                                    <table class="table table-hover">
+                                        <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>操作人</th>
+                                            <th>时间</th>
+                                            <th>对象</th>
+                                            <th>内容</th>
+                                            <th>状态</th>
+                                            <th>操作</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr>
+                                            <td>1</td>
+                                            <td>唐明曙</td>
+                                            <td>2016-05-31 18:11:10</td>
+                                            <td><a>胡素娥(5615001)</a>-><a>刘天贵(275001)</a></td>
+                                            <td>2015.6.26互留电话 自己约见</td>
+                                            <td>成功</td>
+                                            <td><a>删除</a></td>
+                                        </tr>
+                                        <tr>
+                                            <td>2</td>
+                                            <td>唐明曙</td>
+                                            <td>2016-05-31 18:11:10</td>
+                                            <td><a>胡素娥(5615001)</a>-><a>刘天贵(275001)</a></td>
+                                            <td>2015.6.26互留电话 自己约见</td>
+                                            <td>成功</td>
+                                            <td><a>删除</a></td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
                         </div>
@@ -449,59 +481,52 @@
                             <div class="row">
                                 <!-- NAV -->
                                 <div class="col-md-12">
-                                    <div class="box border primary">
-                                        <div class="box-title">
-                                            <h4><i class="fa fa-heart-o"></i>消息记录</h4>
-                                        </div>
-                                        <div class="box-body">
-                                            <table class="table table-hover">
-                                                <thead>
-                                                <tr>
-                                                    <th>ID</th>
-                                                    <th>类型</th>
-                                                    <th>作者</th>
-                                                    <th>对象</th>
-                                                    <th>时间</th>
-                                                    <th>内容</th>
-                                                    <th>状态</th>
-                                                    <th>操作</th>
-                                                </tr>
-                                                </thead>
-                                                <tbody>
-                                                <tr>
-                                                    <td>1</td>
-                                                    <td>系统信息</td>
-                                                    <td>管理员</td>
-                                                    <td><a>张三(16581001)</a></td>
-                                                    <td>2016-05-31 13:55:14</td>
-                                                    <td>您的资料已审核通过！</td>
-                                                    <td>成功</td>
-                                                    <td><a>删除</a></td>
-                                                </tr>
-                                                <tr>
-                                                    <td>2</td>
-                                                    <td>打招呼</td>
-                                                    <td><a>潇潇(8438019)</a></td>
-                                                    <td><a>赵静(1513001)</a></td>
-                                                    <td>2016-05-31 18:11:10</td>
-                                                    <td>看到你的照片，让人觉得很是倾慕，可以认识一下么？</td>
-                                                    <td>成功</td>
-                                                    <td><a>删除</a></td>
-                                                </tr>
-                                                <tr>
-                                                    <td>3</td>
-                                                    <td>信息</td>
-                                                    <td><a>潇潇(8438019)</a></td>
-                                                    <td><a>徐姝(878001)</a></td>
-                                                    <td>2016-05-31 18:11:10</td>
-                                                    <td>你好</td>
-                                                    <td>成功</td>
-                                                    <td><a>删除</a></td>
-                                                </tr>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
+                                    <table class="table table-hover">
+                                        <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>类型</th>
+                                            <th>作者</th>
+                                            <th>对象</th>
+                                            <th>时间</th>
+                                            <th>内容</th>
+                                            <th>状态</th>
+                                            <th>操作</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr>
+                                            <td>1</td>
+                                            <td>系统信息</td>
+                                            <td>管理员</td>
+                                            <td><a>张三(16581001)</a></td>
+                                            <td>2016-05-31 13:55:14</td>
+                                            <td>您的资料已审核通过！</td>
+                                            <td>成功</td>
+                                            <td><a>删除</a></td>
+                                        </tr>
+                                        <tr>
+                                            <td>2</td>
+                                            <td>打招呼</td>
+                                            <td><a>潇潇(8438019)</a></td>
+                                            <td><a>赵静(1513001)</a></td>
+                                            <td>2016-05-31 18:11:10</td>
+                                            <td>看到你的照片，让人觉得很是倾慕，可以认识一下么？</td>
+                                            <td>成功</td>
+                                            <td><a>删除</a></td>
+                                        </tr>
+                                        <tr>
+                                            <td>3</td>
+                                            <td>信息</td>
+                                            <td><a>潇潇(8438019)</a></td>
+                                            <td><a>徐姝(878001)</a></td>
+                                            <td>2016-05-31 18:11:10</td>
+                                            <td>你好</td>
+                                            <td>成功</td>
+                                            <td><a>删除</a></td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
                         </div>
@@ -523,10 +548,14 @@
                                             </div>
                                             <div id="collapseOne" class="panel-collapse collapse in">
                                                 <div class="panel-body">
-                                                    <div class="alert alert-info idCardInfo hide">
+                                                    <div class="alert alert-info idCardInfo">
                                                         请您确认以下信息，该会员身份证照片是否审核通过？&nbsp;&nbsp;&nbsp;&nbsp;
-                                                        <button class="btn btn-success" onclick="reviewYes(1)"><i class="fa fa-check"></i> 通过</button>
-                                                        <button class="btn btn-danger" onclick="reviewNo(1)"><i class="fa fa-times"></i> 不通过</button>
+                                                        <button class="btn btn-success" onclick="bhyFunc.reviewYes(1)">
+                                                            <i class="fa fa-check"></i> 通过
+                                                        </button>
+                                                        <button class="btn btn-danger" onclick="bhyFunc.reviewNo(1)"><i
+                                                                class="fa fa-times"></i> 不通过
+                                                        </button>
                                                     </div>
                                                     <div class="alert alert-success idCardSuccess">
                                                         该会员身份证已审核通过！
@@ -553,8 +582,12 @@
                                                 <div class="panel-body">
                                                     <div class="alert alert-info marrInfo hide">
                                                         请您确认以下信息，该会员婚姻证明照片是否审核通过？&nbsp;&nbsp;&nbsp;&nbsp;
-                                                        <button class="btn btn-success" onclick="reviewYes(2)"><i class="fa fa-check"></i> 通过</button>
-                                                        <button class="btn btn-danger" onclick="reviewNo(2)"><i class="fa fa-times"></i> 不通过</button>
+                                                        <button class="btn btn-success" onclick="bhyFunc.reviewYes(2)">
+                                                            <i class="fa fa-check"></i> 通过
+                                                        </button>
+                                                        <button class="btn btn-danger" onclick="bhyFunc.reviewNo(2)"><i
+                                                                class="fa fa-times"></i> 不通过
+                                                        </button>
                                                     </div>
                                                     <div class="alert alert-success marrSuccess hide">
                                                         该会员婚姻证明已审核通过！
@@ -573,8 +606,12 @@
                                                 <div class="panel-body">
                                                     <div class="alert alert-info eduInfo hide">
                                                         请您确认以下信息，该会员学历证明照片是否审核通过？&nbsp;&nbsp;&nbsp;&nbsp;
-                                                        <button class="btn btn-success" onclick="reviewYes(3)"><i class="fa fa-check"></i> 通过</button>
-                                                        <button class="btn btn-danger" onclick="reviewNo(3)"><i class="fa fa-times"></i> 不通过</button>
+                                                        <button class="btn btn-success" onclick="bhyFunc.reviewYes(3)">
+                                                            <i class="fa fa-check"></i> 通过
+                                                        </button>
+                                                        <button class="btn btn-danger" onclick="bhyFunc.reviewNo(3)"><i
+                                                                class="fa fa-times"></i> 不通过
+                                                        </button>
                                                     </div>
                                                     <div class="alert alert-success eduSuccess hide">
                                                         该会员学历证明已审核通过！
@@ -593,8 +630,12 @@
                                                 <div class="panel-body">
                                                     <div class="alert alert-info houseInfo hide">
                                                         请您确认以下信息，该会员房产证明照片是否审核通过？&nbsp;&nbsp;&nbsp;&nbsp;
-                                                        <button class="btn btn-success" onclick="reviewYes(4)"><i class="fa fa-check"></i> 通过</button>
-                                                        <button class="btn btn-danger" onclick="reviewNo(4)"><i class="fa fa-times"></i> 不通过</button>
+                                                        <button class="btn btn-success" onclick="bhyFunc.reviewYes(4)">
+                                                            <i class="fa fa-check"></i> 通过
+                                                        </button>
+                                                        <button class="btn btn-danger" onclick="bhyFunc.reviewNo(4)"><i
+                                                                class="fa fa-times"></i> 不通过
+                                                        </button>
                                                     </div>
                                                     <div class="alert alert-success houseSuccess hide">
                                                         该会员房产证明已审核通过！
@@ -620,91 +661,49 @@
             <textarea class="form-control" rows="4"></textarea>
         </div>
         <div class="col-sm-12 center">
-            <button class="btn btn-yellow m10">发送</button>
+            <button class="btn btn-yellow m10" onclick="bhyFunc.sendMsg()">发送</button>
         </div>
     </div>
 </div>
 <div id="layer_review">
     <div class="col-sm-12">
         <div class="form-group m10">
-            <label for="input1">销售红娘</label>
-            <input id="input1" class="form-control" type="text" disabled="disabled" value="袁军">
+            <label for="matchmaker">销售红娘</label>
+            <input id="matchmaker" class="form-control" type="text" disabled="disabled" value="袁军">
         </div>
         <div class="form-group m10">
-            <label for="input2">服务红娘</label>
-            <select id="input2" class="form-control">
+            <label for="matchmaking">服务红娘</label>
+            <select id="matchmaking" class="form-control">
                 <option value="">请选择</option>
-                <option value="">唐明曙</option>
-                <option value="">方莉</option>
+                <option value="1">唐明曙</option>
+                <option value="2">方莉</option>
             </select>
         </div>
         <div class="form-group m10">
-            <label for="input3">服务</label>
-            <select id="input3" class="form-control">
-                <option value="2">否</option>
+            <label for="service_status">服务</label>
+            <select id="service_status" class="form-control">
+                <option value="0">否</option>
+                <option value="1">是</option>
+            </select>
+        </div>
+        <div class="form-group m10">
+            <label for="is_sign">签单</label>
+            <select id="is_sign" class="form-control">
+                <option value="0">否</option>
                 <option value="1">是</option>
             </select>
         </div>
         <div class="form-group mt20">
             <p class="btn-toolbar center">
-                <button class="btn btn-success" onclick="reviewIsOk()">确认无误，审核通过</button>
-                <button class="btn btn-light-grey" onclick="cancelReview()">取消</button>
+                <button class="btn btn-success" onclick="bhyFunc.reviewIsOk()">确认无误，审核通过</button>
+                <button class="btn btn-light-grey" onclick="bhyFunc.layerClickedCancelButton('page')">取消</button>
             </p>
         </div>
     </div>
 </div>
 <!-- COLORBOX -->
 <script>
-    // 审核通过
-    function reviewYes(type){
-        if(type == 1){  // 身份证
-            layer.open({
-                type: 1,
-                skin: 'layui-layer-demo', //样式类名
-                closeBtn: 0, //不显示关闭按钮
-                shift: 2,
-                title: '审核',
-                area: ['500px', '350px'],
-                shadeClose: false, //开启遮罩关闭
-                content: $('#layer_review')
-            });
-        }
-        if(type == 2){  // 婚姻证明
 
-        }
-        if(type == 3){  // 学历证明
-
-        }
-        if(type == 4){  // 房产证明
-
-        }
-    }
-
-    // 审核不通过
-    function reviewNo(type){
-        if(type == 1){   // 身份证
-
-        }
-        if(type == 2){   // 婚姻证
-
-        }
-        if(type == 3){   // 学历证
-
-        }
-        if(type == 4){   // 房产证
-
-        }
-    }
-
-    // 身份证审核通过
-    function reviewIsOk(){
-
-    }
-
-    // 身份证审核取消
-    function cancelReview(){
-        layer.closeAll('page');
-    }
 
     $(function () {
         layer.ready(function () {
@@ -713,6 +712,7 @@
             });
         });
 
+        // 发站内信
         $("#sendMsg").click(function () {
             layer.open({
                 type: 1,

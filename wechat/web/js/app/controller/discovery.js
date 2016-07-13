@@ -124,7 +124,7 @@ define(['app/module', 'app/directive/directiveApi'
     }]);
 
     // 发现-评论
-    module.controller("discovery.single", ['app.serviceApi', '$scope', '$location', '$ionicActionSheet', '$ionicModal', '$ionicPopup','$ionicScrollDelegate', function (api, $scope, $location, $ionicActionSheet, $ionicModal, $ionicPopup,$ionicScrollDelegate) {
+    module.controller("discovery.single", ['app.serviceApi', '$scope', '$location', '$ionicActionSheet', '$ionicModal', '$ionicPopup', '$ionicScrollDelegate', function (api, $scope, $location, $ionicActionSheet, $ionicModal, $ionicPopup, $ionicScrollDelegate) {
         $scope.formData = {};
         $scope.formData.private = false; // 私密评论默认未选中
         $scope.isMore = true;
