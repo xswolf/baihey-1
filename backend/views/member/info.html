@@ -414,11 +414,11 @@
                                             <td>1</td>
                                             <td>李倩(15301)</td>
                                             <td>看过后就能看见的那个好看</td>
-                                            <td><a>查看图片</a></td>
+                                            <td><a href="javascript:;" onclick="bhyFunc.getJsonShowImg('discovery')">查看图片</a></td>
                                             <td>58</td>
                                             <td>3</td>
                                             <td>2016-05-31 13:55:14</td>
-                                            <td><a>删除</a></td>
+                                            <td><a href="javascript:;" onclick="bhyFunc.deleteItemByList(1,this)">删除</a></td>
                                         </tr>
                                         <tr>
                                             <td>2</td>
@@ -428,7 +428,7 @@
                                             <td>114</td>
                                             <td>21</td>
                                             <td>2016-07-10 18:00:55</td>
-                                            <td><a>删除</a></td>
+                                            <td><a href="javascript:;" onclick="bhyFunc.deleteItemByList(2,this)">删除</a></td>
                                         </tr>
                                         </tbody>
                                     </table>
@@ -458,19 +458,19 @@
                                             <td>1</td>
                                             <td>唐明曙</td>
                                             <td>2016-05-31 18:11:10</td>
-                                            <td><a>胡素娥(5615001)</a>-><a>刘天贵(275001)</a></td>
+                                            <td><a href="/admin/member/info?id=5615001">胡素娥(5615001)</a>-><a href="/admin/member/info?id=5615001">刘天贵(275001)</a></td>
                                             <td>2015.6.26互留电话 自己约见</td>
                                             <td>成功</td>
-                                            <td><a>删除</a></td>
+                                            <td><a href="javascript:;" onclick="bhyFunc.deleteItemByList(1,this)">删除</a></td>
                                         </tr>
                                         <tr>
                                             <td>2</td>
                                             <td>唐明曙</td>
                                             <td>2016-05-31 18:11:10</td>
-                                            <td><a>胡素娥(5615001)</a>-><a>刘天贵(275001)</a></td>
+                                            <td><a href="/admin/member/info?id=5615001">胡素娥(5615001)</a>-><a href="/admin/member/info?id=5615001">刘天贵(275001)</a></td>
                                             <td>2015.6.26互留电话 自己约见</td>
                                             <td>成功</td>
-                                            <td><a>删除</a></td>
+                                            <td><a href="javascript:;" onclick="bhyFunc.deleteItemByList(2,this)">删除</a></td>
                                         </tr>
                                         </tbody>
                                     </table>
@@ -503,31 +503,31 @@
                                             <td>1</td>
                                             <td>系统信息</td>
                                             <td>管理员</td>
-                                            <td><a>张三(16581001)</a></td>
+                                            <td><a href="/admin/member/info?id=5615001">张三(16581001)</a></td>
                                             <td>2016-05-31 13:55:14</td>
                                             <td>您的资料已审核通过！</td>
                                             <td>成功</td>
-                                            <td><a>删除</a></td>
+                                            <td><a href="javascript:;" onclick="bhyFunc.deleteItemByList(2,this)">删除</a></td>
                                         </tr>
                                         <tr>
                                             <td>2</td>
                                             <td>打招呼</td>
-                                            <td><a>潇潇(8438019)</a></td>
-                                            <td><a>赵静(1513001)</a></td>
+                                            <td><a href="/admin/member/info?id=5615001">潇潇(8438019)</a></td>
+                                            <td><a href="/admin/member/info?id=5615001">赵静(1513001)</a></td>
                                             <td>2016-05-31 18:11:10</td>
                                             <td>看到你的照片，让人觉得很是倾慕，可以认识一下么？</td>
                                             <td>成功</td>
-                                            <td><a>删除</a></td>
+                                            <td><a href="javascript:;" onclick="bhyFunc.deleteItemByList(2,this)">删除</a></td>
                                         </tr>
                                         <tr>
                                             <td>3</td>
                                             <td>信息</td>
-                                            <td><a>潇潇(8438019)</a></td>
-                                            <td><a>徐姝(878001)</a></td>
+                                            <td><a href="/admin/member/info?id=5615001">潇潇(8438019)</a></td>
+                                            <td><a href="/admin/member/info?id=5615001">徐姝(878001)</a></td>
                                             <td>2016-05-31 18:11:10</td>
                                             <td>你好</td>
                                             <td>成功</td>
-                                            <td><a>删除</a></td>
+                                            <td><a href="javascript:;" onclick="bhyFunc.deleteItemByList(2,this)">删除</a></td>
                                         </tr>
                                         </tbody>
                                     </table>
@@ -735,10 +735,14 @@
             <label>折后金额</label>
             <input id="charge_money" class="form-control" type="number" min="0.01" max="20000">
         </div>
+        <div class="form-group m10 money">
+            <label>充值金额</label>
+            <input id="money" class="form-control" type="number" min="0.01" max="20000">
+        </div>
 
         <div class="form-group mt20">
             <p class="btn-toolbar center">
-                <button class="btn btn-danger" onclick="bhyFunc.charge()">提交订单</button>
+                <button class="btn btn-danger" onclick="bhyFunc.charge()">确认无误，立即充值</button>
                 <button class="btn btn-light-grey" onclick="bhyFunc.layerClickedCancelButton('page')">取消</button>
             </p>
         </div>
@@ -767,13 +771,14 @@
         })
 
         $('#charge').click(function(){
+            $('#charge_goods').trigger('change');
             layer.open({
                 type: 1,
                 skin: 'layui-layer-demo', //样式类名
                 closeBtn: 1, //不显示关闭按钮
                 shift: 2,
                 title: '充值/开通',
-                area: ['500px', '450px'],
+                area: ['500px', '380px'],
                 shadeClose: true, //开启遮罩关闭
                 content: $('#layer_charge')
             });

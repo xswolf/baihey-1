@@ -191,132 +191,193 @@ var bhyFunc = {
         })
     },
     resetPass: function () {  // 重置密码
-        layer.confirm('确定重置该用户密码吗？', {icon: 3, title:'提示'}, function(index){
-            bhyFunc.ajaxRequest('url',{user_id:bhyFunc.user_id},function(res){
-                if(res.status == 1){
+        layer.confirm('确定重置该用户密码吗？', {icon: 3, title: '提示'}, function (index) {
+            bhyFunc.ajaxRequest('url', {user_id: bhyFunc.user_id}, function (res) {
+                if (res.status == 1) {
                     layer.msg('重置密码成功！');
-                }else{
+                } else {
                     layer.msg('重置失败，请刷新重试！')
                 }
                 layer.close(index);
             })
         });
     },
-    closeUserInfo:function(a){   // 关闭用户资料
+    closeUserInfo: function (a) {   // 关闭用户资料
         var isShow = $(a).data('isshow');
         var status = $('#status').data('status');
-        if(status != 1){
+        if (status != 1) {
             layer.alert('操作失败！该会员不是已审核状态。');
             return false;
         }
-        if(isShow){
-            layer.confirm('关闭资料后，该用户无法在前台展示，您确定吗？', {icon: 3, title:'提示'}, function(index){
-                bhyFunc.ajaxRequest('url',{user_id:bhyFunc.user_id,is_show:!isShow},function(res){
-                    if(res.status == 1){
+        if (isShow) {
+            layer.confirm('关闭资料后，该用户无法在前台展示，您确定吗？', {icon: 3, title: '提示'}, function (index) {
+                bhyFunc.ajaxRequest('url', {user_id: bhyFunc.user_id, is_show: !isShow}, function (res) {
+                    if (res.status == 1) {
                         layer.msg('关闭资料成功！');
                         $('#closeUserInfoBtnTitle').text('开放资料');
                         $('#status_icon').removeClass('text-green').addClass('text-warning');
                         $('#status').text('关闭资料');
-                    }else{
+                    } else {
                         layer.msg('关闭资料失败，请刷新重试！')
                     }
                     layer.close(index);
                 })
             });
-        }else {
-            this.ajaxRequest('url',{user_id:this.user_id,is_show:!isShow},function(res){
-                if(res.status == 1){
+        } else {
+            this.ajaxRequest('url', {user_id: this.user_id, is_show: !isShow}, function (res) {
+                if (res.status == 1) {
                     layer.msg('开放资料成功！');
                     $('#closeUserInfoBtnTitle').text('关闭资料');
                     $('#status_icon').removeClass('text-green').addClass('text-warning');
                     $('#status').text('已审核');
-                }else{
+                } else {
                     layer.msg('开放资料失败，请刷新重试！')
                 }
             })
         }
 
     },
-    addBlacklist:function(){
+    addBlacklist: function () {
         var t = $('#userBlackList').text();
-        if(t == '列入黑名单'){
-            layer.confirm('列入黑名单后，该用户无法登录，您确定吗？', {icon: 3, title:'提示'}, function(index){
-                bhyFunc.ajaxRequest('url',{user_id:bhyFunc.user_id,black:true},function(res){
-                    if(res.status == 1){
+        if (t == '列入黑名单') {
+            layer.confirm('列入黑名单后，该用户无法登录，您确定吗？', {icon: 3, title: '提示'}, function (index) {
+                bhyFunc.ajaxRequest('url', {user_id: bhyFunc.user_id, black: true}, function (res) {
+                    if (res.status == 1) {
                         layer.msg('列入黑名单成功！');
                         $('#userBlackList').text('解除黑名单');
-                    }else{
+                    } else {
                         layer.msg('列入黑名单失败!');
                     }
                 })
                 layer.close(index);
             });
-        }else {
-            this.ajaxRequest('url',{user_id:this.user_id,black:false},function(res){
-                if(res.status == 1){
+        } else {
+            this.ajaxRequest('url', {user_id: this.user_id, black: false}, function (res) {
+                if (res.status == 1) {
                     layer.msg('解除黑名单成功！');
                     $('#userBlackList').text('列入黑名单');
-                }else{
+                } else {
                     layer.msg('解除黑名单失败!');
                 }
             })
         }
     },
-    selectedGoods:function(select){
-        if(select.value && select.value != 8){   // 开通服务
+    selectedGoods: function (select) {
+        if (select.value && select.value != 8) {   // 开通服务
             $('.discount').show();
-            if($('#discount').prop('checked')){
+            $('.money').hide();
+            if ($('#discount').prop('checked')) {
                 $('.charge_money').show();
             }
-        }else{
+        } else {
             $('.discount').hide();
             $('.charge_money').hide();
+            $('.money').hide();
+        }
+        if (select.value == 8) {
+            $('.money').show();
         }
     },
-    checkedDiscount:function(checkbox){
-        if(checkbox.checked){
+    checkedDiscount: function (checkbox) {
+        if (checkbox.checked) {
             $('.charge_money').show();
-        }else{
+        } else {
             $('.charge_money').hide();
         }
     },
-    charge:function(){
-        this.layerClickedCancelButton('page');
-        layer.open({
-            type: 1,
-            skin: 'layui-layer-demo',
-            closeBtn: 1,
-            shift: 2,
-            title: '订单信息',
-            area: ['500px', '300px'],
-            shadeClose: false,
-            content: '<div class="col-sm-12"><h5>请您确认以下订单信息</h5></div><div class="col-sm-12"><dl class="dl-horizontal fs14"><dt>订单号：</dt><dd>1651614984</dd><dt>充值用户：</dt><dd>张三</dd><dt>充值产品：</dt><dd>VIP会员（一个月）</dd><dt>金额：</dt><dd>86.00元</dd><dt>创建时间：</dt><dd>2016-07-14 11:01:25</dd><dt>充值方式：</dt><dd>线下</dd></dl></div><div class="col-sm-12"><p class="btn-toolbar center"><button class="btn btn-danger">确认无误，立即充值</button><button class="btn btn-light-grey">返回修改</button></p></div>'
-        });
-        return;
+    charge: function () {
         var charge_goods = $('#charge_goods');
-        var discount     = $('#discount');
+        var discount = $('#discount');
         var charge_money = $('#charge_money');
-        if(!charge_goods.val()){
-            layer.tips('请选择充值产品',charge_goods);
+        if (!charge_goods.val()) {
+            layer.tips('请选择充值产品', charge_goods);
             return false;
         }
-        if(charge_goods.val() && charge_goods.val() != 8){    // 开通服务
-            if(discount.prop('checked')){   // 打折
-                if(!charge_money.val()){
+        if (charge_goods.val() && charge_goods.val() != 8) {    // 开通服务
+            if (discount.prop('checked')) {   // 打折
+                if (!charge_money.val()) {
                     layer.tips('折后金额不合法，金额最少0.01元，最多20000元。')
                     return false;
                 }
-                // 创建订单
-                this.ajaxRequest('url',{goods_id:charge_goods.val(),money:charge_money.val()},function(res){
-                    if(res.status == 1){
-
+                // 自定义金额充值
+                this.ajaxRequest('/admin/member/charge', {
+                    goods_id: charge_goods.val(),
+                    money: charge_money.val()
+                }, function (res) {
+                    if (res.status) {
+                        layer.msg('充值成功！');
+                        top.location.reload();
+                    } else {
+                        layer.msg('充值失败！');
+                    }
+                })
+            } else {
+                this.ajaxRequest('/admin/member/charge', {goods_id: charge_goods.val()}, function (res) {
+                    if (res.status) {
+                        layer.msg('充值成功！');
+                        top.location.reload();
+                    } else {
+                        layer.msg('充值失败！');
                     }
                 })
             }
-
-        }else{
-
+        } else {  // 嘉瑞账户充值
+            if (!$('#money').val()) {
+                layer.tips('充值金额不合法', $('#money'));
+                return false;
+            }
+            this.ajaxRequest('/admin/member/charge', {
+                goods_id: charge_goods.val(),
+                money: $('#money').val()
+            }, function (res) {
+                if (res.status) {
+                    layer.msg('充值成功！');
+                    top.location.reload();
+                } else {
+                    layer.msg('充值失败！');
+                }
+            })
         }
+    },
+    getJsonShowImg: function (type) {
+        if (type = 'discovery') {
+            //$.getJSON('url',{user_id,this.user_id}, function(res){
+            //    layer.photos({
+            //        photos: res
+            //    });
+            //});
+
+            // 数据格式
+            var imgList = {
+                "title": "李倩的动态", //相册标题
+                "id": 1, //相册id
+                "start": 0, //初始显示的图片序号，默认0
+                "data": [   //相册包含的图片，数组格式
+                    {
+                        "alt": ".",
+                        "pid": 1, //图片id
+                        "src": "/wechat/web/images/test.jpg", //原图地址
+                        "thumb": "/wechat/web/images/test.jpg" //缩略图地址
+                    }
+                ]
+            }
+            layer.photos({
+                photos: imgList
+            });
+        }
+    },
+    deleteItemByList:function(itemId,td){
+        layer.confirm('确定要删除该条记录？', {icon: 3, title: '提示'}, function (index) {
+            bhyFunc.ajaxRequest('url',{id:itemId},function(res){
+                layer.close(index);
+                if(res.status == 1){
+                    layer.msg('删除成功！');
+                    $(td).parent().parent('tr').remove();
+                }else {
+                    layer.msg('删除失败！');
+                }
+            })
+        })
     },
     layerClickedCancelButton: function (type) {  // 关闭相应类型的layer弹出窗口
         layer.closeAll(type);

@@ -346,7 +346,7 @@ table .user_img{
     resize: none;
     width: 100%;
 }
-.discount,.charge_money{
+.discount,.charge_money,.money{
     display: none;
 }
 
