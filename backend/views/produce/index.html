@@ -1,0 +1,98 @@
+
+<div class="wrapper wrapper-content animated fadeInUp">
+    <div class="ibox">
+        <div class="ibox-title"><h5>产品管理</h5>
+            <div class="ibox-tools rboor">
+                <button id="multiple-select" class="btn btn-green btn-xs p310"><i class="fa fa-check-square-o"></i> 批量禁用</button>
+            </div>
+        </div>
+
+        <div class="ibox-content">
+
+            <div class="form-horizontal clearfix">
+                <div class="col-lg-12 col-sm-12">
+                    <div class="form-group">
+                        <div class="col-lg-12 col-sm-12 input-group date">
+                            <!--<a href="/admin/feedback/index?status=2" class="btn {{if (\Yii::$app->request->get('status') == 2)}} btn-success {{else}} btn-grey {{/if}}">待审核</a>-->
+                            <!--<a href="/admin/feedback/index?status=1" class="btn {{if (\Yii::$app->request->get('status') == 1)}} btn-success {{else}} btn-grey {{/if}}">审核属实</a>-->
+                            <!--<a href="/admin/feedback/index?status=3" class="btn {{if (\Yii::$app->request->get('status') == 3)}} btn-success {{else}} btn-grey {{/if}}">审核不属实</a>-->
+                            <!--<button class="btn" id="select-all">反选</button>-->
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <table id="demo1" class="table display  dataTable j-datatables"
+
+                   cellspacing="0" width="100%">
+                <thead>
+                <tr>
+                    <th class="tn">ID</th>
+                    <th>产品名称</th>
+                    <th>产品状态</th>
+                    <th>产品类型</th>
+                    <th>原价(元)</th>
+                    <th>现价(元)</th>
+                    <th>图片</th>
+                    <th>描述</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                {{foreach from=$list item=vo}}
+                <tr data-id="{{$vo.id}}">
+                    <td>{{$vo.id}}</td>
+                    <td>{{$vo.name}}</td>
+                    <td>
+                        {{if $vo.status == 1}}
+                            正常
+                        {{else}}
+                            禁用
+                        {{/if}}
+                    </td>
+                    <td>
+                        {{if $vo.type == 1}}
+                        线上
+                        {{else}}
+                        线下
+                        {{/if}}
+                    </td>
+                    <td>{{$vo.price/100}}</td>
+                    <td>{{$vo.native_price/100}}</td>
+                    <td><img src="{{$vo.img}}"></td>
+                    <td>{{$vo.content}}</td>
+                    <td>
+                        <p class="btn-toolbar"><a class="btn btn-info btn-sm tip" title="管理" href="/admin/member/info?"><i class="fa fa-cog"></i> </a></p>
+                    </td>
+                </tr>
+                {{/foreach}}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<script>
+    jQuery(document).ready(function () {
+//        $('.mySwitch').on('change', function () {
+//            var status = $(this).val();
+//            var id = $(this).data('id');
+//            $.ajax({
+//                url: "/admin/feedback/auth", data: {id: id , status:status}, success: function (res) {
+//
+//                }
+//            });
+//        });
+
+        // 全选
+        $("#select-all").click(function () {
+            $(".j-datatables tbody tr").toggleClass('selected');
+        })
+
+        $('.j-datatables tbody').on( 'click', 'tr', function () {
+            $(this).toggleClass('selected');
+        } );
+
+    })
+</script>

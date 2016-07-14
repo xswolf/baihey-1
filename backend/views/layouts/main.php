@@ -294,6 +294,7 @@
                         <li class="has-sub-sub"><a data-menu="10" class="has-sub-sub"  href="/admin/cash/index?status=2"><span class="sub-menu-text">提现管理</span></a></li>
                         <li class="has-sub-sub"><a data-menu="11" class="has-sub-sub"  href="/admin/chat/index"><span class="sub-menu-text">聊天管理</span></a></li>
                         <li class="has-sub-sub"><a data-menu="12" class="has-sub-sub"  href="/admin/feedback/index?status=2"><span class="sub-menu-text">举报管理</span></a></li>
+                        <li class="has-sub-sub"><a data-menu="13" class="has-sub-sub"  href="/admin/produce/index"><span class="sub-menu-text">产品管理</span></a></li>
                     </ul>
                 </li>
 
