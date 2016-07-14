@@ -270,6 +270,7 @@ var bhyFunc = {
             }
         }else{
             $('.discount').hide();
+            $('.charge_money').hide();
         }
     },
     checkedDiscount:function(checkbox){
@@ -280,6 +281,18 @@ var bhyFunc = {
         }
     },
     charge:function(){
+        this.layerClickedCancelButton('page');
+        layer.open({
+            type: 1,
+            skin: 'layui-layer-demo',
+            closeBtn: 1,
+            shift: 2,
+            title: '订单信息',
+            area: ['500px', '450px'],
+            shadeClose: false,
+            content: '<div class="col-sm-12"><h5>请您确认以下订单信息</h5></div><div class="col-sm-12"><dl class="dl-horizontal fs14"><dt>订单号：</dt><dd>1651614984</dd><dt>充值用户：</dt><dd>张三</dd><dt>充值产品：</dt><dd>VIP会员（一个月）</dd><dt>金额：</dt><dd>86.00元</dd><dt>创建时间：</dt><dd>2016-07-14 11:01:25</dd></dl></div>'
+        });
+        return;
         var charge_goods = $('#charge_goods');
         var discount     = $('#discount');
         var charge_money = $('#charge_money');
@@ -293,8 +306,10 @@ var bhyFunc = {
                     layer.tips('折后金额不合法，金额最少0.01元，最多20000元。')
                     return false;
                 }
+                // 创建订单
                 this.ajaxRequest('url',{goods_id:charge_goods.val(),money:charge_money.val()},function(res){
                     if(res.status == 1){
+
                     }
                 })
             }
