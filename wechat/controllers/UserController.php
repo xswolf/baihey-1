@@ -127,7 +127,7 @@ class UserController extends BaseController
         header("Cache-Control: no-cache");
         header("Pragma: no-cache");
         header("Location:$url");
-        //if (!isset($_COOKIE["bhy_u_name"]) && isset($user) && $user['status'] < 3) {
+        if (!isset($_COOKIE["bhy_u_name"]) && isset($user) && $user['status'] < 3) {
 
             // 登录日志
             \common\models\User::getInstance()->loginLog($user['id']);
@@ -136,12 +136,12 @@ class UserController extends BaseController
             Cookie::getInstance()->setCookie('bhy_id', $user['id']);
             setcookie('bhy_user_id', $user['id'], time() + 3600 * 24 * 30, '/wap');
             setcookie('bhy_u_sex', $user['sex'], time() + 3600 * 24 * 30, '/wap');
-        /*} else {
+        } else {
             Cookie::getInstance()->delCookie('bhy_u_name');
             Cookie::getInstance()->delCookie('bhy_id');
             setcookie('bhy_user_id', '', time() - 3600 * 24 * 30, '/wap');
             setcookie('bhy_u_sex', '', time() - 3600 * 24 * 30, '/wap');
-        }*/
+        }
 //        echo "<script>location.href='".$url."'</script>";
         return $this->render();
     }
