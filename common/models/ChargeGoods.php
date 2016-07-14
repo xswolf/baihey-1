@@ -38,4 +38,34 @@ class ChargeGoods extends Base
                             ->one();
     }
 
+    /**
+     * 新增goods
+     * @param $data
+     * @return int
+     * @throws \yii\db\Exception
+     */
+    public function addGoods($data)
+    {
+        $row = $this->getDb()->createCommand()
+            ->insert($this->tablePrefix.'charge_goods', $data)
+            ->execute();
+
+        return $row;
+    }
+
+    /**
+     * 修改goods
+     * @param $id
+     * @param $data
+     * @return int
+     * @throws \yii\db\Exception
+     */
+    public function editGoods($id, $data)
+    {
+        $row = $this->getDb()->createCommand()
+            ->update($this->tablePrefix.'charge_goods', $data, ['id' => $id])
+            ->execute();
+
+        return $row;
+    }
 }
