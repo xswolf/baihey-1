@@ -136,13 +136,13 @@ class UserController extends BaseController
             Cookie::getInstance()->setCookie('bhy_id', $user['id']);
             setcookie('bhy_user_id', $user['id'], time() + 3600 * 24 * 30, '/wap');
             setcookie('bhy_u_sex', $user['sex'], time() + 3600 * 24 * 30, '/wap');
-            var_dump(111);exit;
+            //var_dump(111);exit;
         } else {
             Cookie::getInstance()->delCookie('bhy_u_name');
             Cookie::getInstance()->delCookie('bhy_id');
             setcookie('bhy_user_id', '', time() - 3600 * 24 * 30, '/wap');
             setcookie('bhy_u_sex', '', time() - 3600 * 24 * 30, '/wap');
-            var_dump(2222222);exit;
+            //var_dump(2222222);exit;
         }
 //        echo "<script>location.href='".$url."'</script>";
         return $this->render();
