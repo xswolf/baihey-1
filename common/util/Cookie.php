@@ -55,4 +55,25 @@ class Cookie {
         }
         return false;
     }
+
+    /**
+     * 设置登录cookie
+     * @param $user
+     */
+    public function setLoginCookie($user) {
+        $this->setCookie('bhy_u_name', $user['username']);
+        $this->setCookie('bhy_id', $user['id']);
+        setcookie('bhy_user_id', $user['id'], time() + 3600 * 24 * 30, '/wap');
+        setcookie('bhy_u_sex', $user['sex'], time() + 3600 * 24 * 30, '/wap');
+    }
+
+    /**
+     * 删除登录cookie
+     */
+    public function delLoginCookie() {
+        $this->delCookie('bhy_u_name');
+        $this->delCookie('bhy_id');
+        setcookie('bhy_user_id', '', time() - 3600 * 24 * 30, '/wap');
+        setcookie('bhy_u_sex', '', time() - 3600 * 24 * 30, '/wap');
+    }
 }

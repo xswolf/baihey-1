@@ -29,17 +29,16 @@ class SiteController extends BaseController
      */
     public function actionMain()
     {
-        /*$user = $this->weChatMember();
-        $url = 'http://wechat.baihey.com/wap';
-        header("Cache-Control: no-cache");
-        header("Pragma: no-cache");
-        header("Location:$url");
-        if (!isset($_COOKIE["bhy_u_name"]) && isset($user) && isset($user['username'])) {
-
-            Cookie::getInstance()->setCookie('bhy_u_name', $user['username']);
-            Cookie::getInstance()->setCookie('bhy_id', $user['id']);
-            setcookie('bhy_user_id', $user['id'], YII_BEGIN_TIME + 3600 * 24 * 30, '/wap');
-        }*/
+        $user = $this->weChatMember();
+        if (!isset($_COOKIE["bhy_u_name"]) && $user && $user['status'] < 3) {
+            // 登录日志
+            \common\models\User::getInstance()->loginLog($user['id']);
+            // 设置登录cookie
+            Cookie::getInstance()->setLoginCookie($user);
+        } elseif(isset($_COOKIE["bhy_u_name"]) && $user && $user['status'] > 2) {
+            // 删除登录cookie
+            Cookie::getInstance()->delLoginCookie();
+        }
         return $this->render();
     }
 

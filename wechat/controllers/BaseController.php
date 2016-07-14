@@ -30,10 +30,7 @@ class BaseController extends Controller {
         if($user_id = Cookie::getInstance()->getCookie('bhy_id')) {
             $user = User::getInstance()->findOne(['id' => $user_id]);
             if($user['status'] > 2) {
-                Cookie::getInstance()->delCookie('bhy_u_name');
-                Cookie::getInstance()->delCookie('bhy_id');
-                setcookie('bhy_user_id', '', time() - 3600 * 24 * 30, '/wap');
-                setcookie('bhy_u_sex', '', time() - 3600 * 24 * 30, '/wap');
+                Cookie::getInstance()->delLoginCookie();
             }
         }
 
