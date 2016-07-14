@@ -368,8 +368,8 @@ define(["app/module", 'app/service/serviceApi'],
                         window.location.hash = url;
                     }
                 }
-
-                if(ar.getCookie('bhy_user_id')) {
+                ar.saveDataAlert($ionicPopup, ar.getCookie('bhy_user_id'));
+                //if(ar.getCookie('bhy_user_id')) {
                     $scope.userInfo = ar.getStorage('userInfo');
                     if ($scope.userInfo != 'undefined' && $scope.userInfo) {
                         getUserStorage();
@@ -380,12 +380,12 @@ define(["app/module", 'app/service/serviceApi'],
                             getUserStorage();
                         });
                     }
-                } else {
+                /*} else {
                     ar.saveDataAlert($ionicPopup, '您的账号异常，已经被限制登录');
                     ar.setStorage('userInfo', null);
                     $location.url('/index');
                     //location.href = '/wap/user/login';
-                }
+                }*/
 
                 // 用于想去的地方，去过的地方等
                 $scope.getTravel = function (name, serId) {
