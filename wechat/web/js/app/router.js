@@ -383,6 +383,7 @@ define(["app/module", 'app/service/serviceApi'],
                 } else {
                     if(!ar.getCookie('wx_login')) {
                         ar.saveDataAlert($ionicPopup, '您的账号异常，已经被限制登录！');
+                        ar.delCookie('wx_login');
                     }
                     ar.setStorage('userInfo', null);
                     $location.url('/index');
