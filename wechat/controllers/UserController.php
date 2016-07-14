@@ -75,24 +75,16 @@ class UserController extends BaseController
         if (\Yii::$app->request->get('username') && \Yii::$app->request->get('password')) {
 
             if ($user = User::getInstance()->login($this->get['username'], $this->get['password'])) {
-                $time = time();
-                if ($user->status < 3) {
-                    $data = \common\models\User::getInstance()->getUserById($user->id);
+                if ($user['status'] < 3) {
+                    $data = \common\models\User::getInstance()->getUserById($user['id']);
                     // 用户登录日志
-                    \common\models\User::getInstance()->loginLog($user->id);
-                    // 设置cookie
-                    Cookie::getInstance()->setCookie('bhy_u_name', $user['username']);
-                    Cookie::getInstance()->setCookie('bhy_id', $user['id']);
-                    // 浏览器使用的cookie
-                    setcookie('bhy_user_id', $user['id'], $time + 3600 * 24 * 30, '/wap');
-                    setcookie('bhy_u_sex', $user['sex'], $time + 3600 * 24 * 30, '/wap');
-
+                    \common\models\User::getInstance()->loginLog($user['id']);
+                    // 设置登录cookie
+                    Cookie::getInstance()->setLoginCookie($user);
                     return $this->renderAjax(['status' => 1, 'msg' => '登录成功', 'data' => $data]);
                 } else {
-                    Cookie::getInstance()->delCookie('bhy_u_name');
-                    Cookie::getInstance()->delCookie('bhy_id');
-                    setcookie('bhy_user_id', '', $time - 3600 * 24 * 30, '/wap');
-                    setcookie('bhy_u_sex', '', $time - 3600 * 24 * 30, '/wap');
+                    // 删除登录cookie
+                    Cookie::getInstance()->delLoginCookie();
                     return $this->renderAjax(['status' => 0, 'msg' => '您的账号异常，已经被限制登录！', 'data' => []]);
                 }
             } else {
@@ -123,24 +115,19 @@ class UserController extends BaseController
     public function actionWelcome()
     {
         $user = $this->weChatMember();
-        $url = 'http://wechat.baihey.com/wap';
+        /*$url = 'http://wechat.baihey.com/wap';
         header("Cache-Control: no-cache");
         header("Pragma: no-cache");
-        header("Location:$url");
+        header("Location:$url");*/
         if (!isset($_COOKIE["bhy_u_name"]) && isset($user) && $user['status'] < 3) {
 
             // 登录日志
             \common\models\User::getInstance()->loginLog($user['id']);
-            // 设置cookie
-            Cookie::getInstance()->setCookie('bhy_u_name', $user['username']);
-            Cookie::getInstance()->setCookie('bhy_id', $user['id']);
-            setcookie('bhy_user_id', $user['id'], time() + 3600 * 24 * 30, '/wap');
-            setcookie('bhy_u_sex', $user['sex'], time() + 3600 * 24 * 30, '/wap');
-        } else {
-            Cookie::getInstance()->delCookie('bhy_u_name');
-            Cookie::getInstance()->delCookie('bhy_id');
-            setcookie('bhy_user_id', '', time() - 3600 * 24 * 30, '/wap');
-            setcookie('bhy_u_sex', '', time() - 3600 * 24 * 30, '/wap');
+            // 设置登录cookie
+            Cookie::getInstance()->setLoginCookie($user);
+        } elseif(isset($_COOKIE["bhy_u_name"]) && $user && $user['status'] > 2) {
+            // 删除登录cookie
+            Cookie::getInstance()->delLoginCookie();
         }
 //        echo "<script>location.href='".$url."'</script>";
         return $this->render();

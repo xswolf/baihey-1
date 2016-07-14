@@ -310,7 +310,7 @@ define(["app/module", 'app/service/serviceApi'],
                         templateUrl: "/wechat/views/charge/index.html",
                         controller: 'charge.index'
                     });
-                //$urlRouterProvider.otherwise("/index");
+                $urlRouterProvider.otherwise("/index");
             }])
             .controller('main', ['$scope', '$location', 'app.serviceApi', '$ionicLoading', '$ionicPopup','$rootScope', function ($scope, $location, api, $ionicLoading, $ionicPopup,$rootScope) {
 
@@ -381,7 +381,7 @@ define(["app/module", 'app/service/serviceApi'],
                         });
                     }
                 } else {
-                    ar.saveDataAlert($ionicPopup, '您的账号异常，已经被限制登录！');
+                    //ar.saveDataAlert($ionicPopup, '您的账号异常，已经被限制登录！');
                     ar.setStorage('userInfo', null);
                     $location.url('/index');
                     //location.href = '/wap/user/login';
