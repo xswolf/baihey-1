@@ -714,7 +714,7 @@
         </div>
         <div class="form-group m10">
             <label for="charge_goods">充值产品</label>
-            <select id="charge_goods" class="form-control">
+            <select id="charge_goods" class="form-control" onchange="bhyFunc.selectedGoods(this)">
                 <option value="">请选择</option>
                 <option value="1">VIP会员(1个月)</option>
                 <option value="2">VIP会员(3个月)</option>
@@ -725,16 +725,20 @@
                 <option value="8">嘉瑞账户充值</option>
             </select>
         </div>
-        <div class="form-group m10 center">
-            <label for="option1">是否打折</label>
-            <div class="make-switch radio1 radio-no-uncheck-square-o discount" data-on="warning">
-                <input id="option1" type="radio" name="radio1" value="option1">
+        <div class="form-group m10 center discount">
+            <label>是否打折</label>
+            <div class="make-switch switch-small" data-on="info" data-off="success" data-on-label="<i class='fa fa-check icon-white'></i>" data-off-label="<i class='fa fa-times'></i>">
+                <input id="discount" type="checkbox" onchange="bhyFunc.checkedDiscount(this)">
             </div>
+        </div>
+        <div class="form-group m10 charge_money">
+            <label>折后金额</label>
+            <input id="charge_money" class="form-control" type="number" min="0.01" max="20000">
         </div>
 
         <div class="form-group mt20">
             <p class="btn-toolbar center">
-                <button class="btn btn-danger" onclick="bhyFunc.reviewIsOk()">确认无误，立即充值</button>
+                <button class="btn btn-danger" onclick="bhyFunc.charge()">确认无误，立即充值</button>
                 <button class="btn btn-light-grey" onclick="bhyFunc.layerClickedCancelButton('page')">取消</button>
             </p>
         </div>
