@@ -17,7 +17,7 @@ class ChargeGoods extends Base
      * @param $where
      * @return array
      */
-    public function getAllList($where)
+    public function getAllList($where = [])
     {
         return (new Query())->from($this->tablePrefix.'charge_goods')
                      ->select('*')
