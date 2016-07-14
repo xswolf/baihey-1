@@ -288,9 +288,9 @@ var bhyFunc = {
             closeBtn: 1,
             shift: 2,
             title: '订单信息',
-            area: ['500px', '450px'],
+            area: ['500px', '300px'],
             shadeClose: false,
-            content: '<div class="col-sm-12"><h5>请您确认以下订单信息</h5></div><div class="col-sm-12"><dl class="dl-horizontal fs14"><dt>订单号：</dt><dd>1651614984</dd><dt>充值用户：</dt><dd>张三</dd><dt>充值产品：</dt><dd>VIP会员（一个月）</dd><dt>金额：</dt><dd>86.00元</dd><dt>创建时间：</dt><dd>2016-07-14 11:01:25</dd></dl></div>'
+            content: '<div class="col-sm-12"><h5>请您确认以下订单信息</h5></div><div class="col-sm-12"><dl class="dl-horizontal fs14"><dt>订单号：</dt><dd>1651614984</dd><dt>充值用户：</dt><dd>张三</dd><dt>充值产品：</dt><dd>VIP会员（一个月）</dd><dt>金额：</dt><dd>86.00元</dd><dt>创建时间：</dt><dd>2016-07-14 11:01:25</dd><dt>充值方式：</dt><dd>线下</dd></dl></div><div class="col-sm-12"><p class="btn-toolbar center"><button class="btn btn-danger">确认无误，立即充值</button><button class="btn btn-light-grey">返回修改</button></p></div>'
         });
         return;
         var charge_goods = $('#charge_goods');
