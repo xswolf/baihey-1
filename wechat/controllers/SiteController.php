@@ -47,7 +47,7 @@ class SiteController extends BaseController
         if($user['status'] > 2) {
             Cookie::getInstance()->delLoginCookie();
             if($user['wx_id']) {
-                setcookie('wx_login', 'out', time() + 60, '/wap');
+                setcookie('wx_login', 'out', time() + 3600 * 24 * 30, '/wap');
             }
         }
         return $this->render();
