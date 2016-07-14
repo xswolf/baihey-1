@@ -29,15 +29,26 @@ class SiteController extends BaseController
      */
     public function actionMain()
     {
-        $user = $this->weChatMember();
-        if (!isset($_COOKIE["bhy_u_name"]) && $user && $user['status'] < 3) {
-            // 登录日志
-            \common\models\User::getInstance()->loginLog($user['id']);
-            // 设置登录cookie
-            Cookie::getInstance()->setLoginCookie($user);
-        } elseif(isset($_COOKIE["bhy_u_name"]) && $user && $user['status'] > 2) {
-            // 删除登录cookie
+        if($user_id = Cookie::getInstance()->getCookie('bhy_id')) {
+            $user = User::getInstance()->findOne(['id' => $user_id]);
+        } else {
+            $user = $this->weChatMember();
+            /*if (!isset($_COOKIE["bhy_u_name"]) && $user && $user['status'] < 3) {
+                // 登录日志
+                \common\models\User::getInstance()->loginLog($user['id']);
+                // 设置登录cookie
+                Cookie::getInstance()->setLoginCookie($user);
+            } elseif (isset($_COOKIE["bhy_u_name"]) && $user && $user['status'] > 2) {
+                // 删除登录cookie
+                Cookie::getInstance()->delLoginCookie();
+            }*/
+        }
+
+        if($user['status'] > 2) {
             Cookie::getInstance()->delLoginCookie();
+            if($user['wx_id']) {
+                setcookie('wx_login', false, time() + 3600 * 24 * 30, '/wap');
+            }
         }
         return $this->render();
     }

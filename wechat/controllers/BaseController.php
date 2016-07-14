@@ -27,12 +27,6 @@ class BaseController extends Controller {
         $this->get   = \Yii::$app->request->get();
         $this->post  = \Yii::$app->request->post();
         $this->title = '嘉瑞百合缘';
-        if($user_id = Cookie::getInstance()->getCookie('bhy_id')) {
-            $user = User::getInstance()->findOne(['id' => $user_id]);
-            if($user['status'] > 2) {
-                Cookie::getInstance()->delLoginCookie();
-            }
-        }
 
         parent::init();
     }
@@ -122,6 +116,8 @@ class BaseController extends Controller {
         $code = \Yii::$app->request->get( 'code' );
         if ( $code == null ) {
             return false;
+        } else {
+            setcookie('wx_login', true, time() + 3600 * 24 * 30, '/wap');
         }
         $memberInfo = \Yii::$app->wechat->getMemberByCode( $code ); // 从微信获取用户
         //        $memberInfo['openid'] = 'oEQpts_MMapxllPTfwRw0VfGeLSg'; // 测试
@@ -138,6 +134,11 @@ class BaseController extends Controller {
             $userInfo = \common\models\User::getInstance()->addUser($data);
             $user     = User::getInstance()->findOne( [ 'id' => $userInfo['id'] ] );
         }
+
+        // 登录日志
+        \common\models\User::getInstance()->loginLog($user['id']);
+        // 设置登录cookie
+        Cookie::getInstance()->setLoginCookie($user);
 
         return $user;
     }

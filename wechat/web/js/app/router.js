@@ -381,7 +381,9 @@ define(["app/module", 'app/service/serviceApi'],
                         });
                     }
                 } else {
-                    //ar.saveDataAlert($ionicPopup, '您的账号异常，已经被限制登录！');
+                    if(!ar.getCookie('wx_login')) {
+                        ar.saveDataAlert($ionicPopup, '您的账号异常，已经被限制登录！');
+                    }
                     ar.setStorage('userInfo', null);
                     $location.url('/index');
                     //location.href = '/wap/user/login';
