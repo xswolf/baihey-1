@@ -70,7 +70,7 @@ class ServerController extends BaseController {
         $result = \Yii::$app->wechat->createMenu([
             [
                 'type' => 'view',
-                'name' => '嘉瑞登录',
+                'name' => '进入嘉瑞',
                 'url' => $url
             ]
                 ]
