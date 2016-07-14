@@ -127,7 +127,6 @@ class UserController extends BaseController
         header("Cache-Control: no-cache");
         header("Pragma: no-cache");
         header("Location:$url");
-        echo 11111111111;exit;
         if (!isset($_COOKIE["bhy_u_name"]) && isset($user) && $user['status'] < 3) {
 
             // 登录日志
