@@ -27,6 +27,15 @@ class BaseController extends Controller {
         $this->get   = \Yii::$app->request->get();
         $this->post  = \Yii::$app->request->post();
         $this->title = '嘉瑞百合缘';
+        if($user_id = Cookie::getInstance()->getCookie('bhy_id')) {
+            $user = User::getInstance()->findOne(['id' => $user_id]);
+            if($user['status'] > 2) {
+                Cookie::getInstance()->delLoginCookie();
+                if($user['wx_id']) {
+                    setcookie('wx_login', 'out', time() + 60, '/wap');
+                }
+            }
+        }
 
         parent::init();
     }
