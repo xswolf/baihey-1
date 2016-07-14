@@ -93,7 +93,7 @@ class UserController extends BaseController
                     Cookie::getInstance()->delCookie('bhy_id');
                     setcookie('bhy_user_id', '', $time - 3600 * 24 * 30, '/wap');
                     setcookie('bhy_u_sex', '', $time - 3600 * 24 * 30, '/wap');
-                    return $this->renderAjax(['status' => 0, 'msg' => '您的账号异常，已经被限制登录', 'data' => []]);
+                    return $this->renderAjax(['status' => 0, 'msg' => '您的账号异常，已经被限制登录！', 'data' => []]);
                 }
             } else {
                 return $this->renderAjax(['status' => 0, 'msg' => '账号或密码错误', 'data' => []]);
