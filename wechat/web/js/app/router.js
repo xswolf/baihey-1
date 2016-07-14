@@ -368,7 +368,7 @@ define(["app/module", 'app/service/serviceApi'],
                         window.location.hash = url;
                     }
                 }
-                ar.saveDataAlert($ionicPopup, ar.getCookie('bhy_user_id'));
+
                 //if(ar.getCookie('bhy_user_id')) {
                     $scope.userInfo = ar.getStorage('userInfo');
                     if ($scope.userInfo != 'undefined' && $scope.userInfo) {
