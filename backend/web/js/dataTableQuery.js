@@ -69,7 +69,6 @@ $(function(){
 
             };
             ext_params.columns = [
-                {"data" : "phone"},
                 {"data" : "info.head_pic","fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
                     $(nTd).html("<a href='/admin/member/info'><img class='user_img' src='"+oData.info.head_pic+"'></a>");
                 }},
@@ -100,6 +99,15 @@ $(function(){
                 {"data" : "service_status"},
                 {"data" : "is_auth"},
                 {"data" : "is_sign"},
+                {"data" : "is_show",fnCreatedCell:function (nTd, sData, oData, iRow, iCol) {
+                    var isShow = '';
+                    if (oData.info.education == 1){
+                        isShow = '开放';
+                    } else{
+                        isShow = '<span style="color: red;">关闭</span>';
+                    }
+                    $(nTd).html(isShow);
+                }},
                 {"data" : "area",fnCreatedCell:function (nTd, sData, oData, iRow, iCol) {
                     for (var i in area){
                         if (area[i].id == oData.area){

@@ -72,12 +72,19 @@
                         <div class="box-body big">
                             <div class="row">
                                 <div class="col-sm-2">
-                                    <select class="form-control">
+                                    <select name="status" class="form-control">
                                         <option value="">会员状态</option>
                                         <option value="1">已审核</option>
                                         <option value="2">未审核</option>
                                         <option value="3">黑名单</option>
                                         <option value="4">已删除</option>
+                                    </select>
+                                </div>
+                                <div class="col-sm-2">
+                                    <select name="is_show" class="form-control">
+                                        <option value="">资料状态</option>
+                                        <option value="1">开放</option>
+                                        <option value="2">关闭</option>
                                     </select>
                                 </div>
                                 <div class="col-sm-3">
@@ -99,7 +106,6 @@
                    cellspacing="0" width="100%">
                 <thead>
                 <tr>
-                    <th class="tn">电话</th>
                     <th>头像</th>
                     <th>ID</th>
                     <th>姓名</th>
@@ -112,6 +118,7 @@
                     <th>服务</th>
                     <th>状态</th>
                     <th>签单</th>
+                    <th>资料</th>
                     <th>地址</th>
                     <th>证件</th>
                     <th>操作</th>
