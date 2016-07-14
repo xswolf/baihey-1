@@ -117,7 +117,7 @@ class BaseController extends Controller {
         if ( $code == null ) {
             return false;
         } else {
-            setcookie('wx_login', true, time() + 3600 * 24 * 30, '/wap');
+            setcookie('wx_login', 'login', time() + 3600 * 24 * 30, '/wap');
         }
         $memberInfo = \Yii::$app->wechat->getMemberByCode( $code ); // 从微信获取用户
         //        $memberInfo['openid'] = 'oEQpts_MMapxllPTfwRw0VfGeLSg'; // 测试
