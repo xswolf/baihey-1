@@ -388,7 +388,6 @@
 <script type="text/javascript" src="/backend/web/CloudAdmin/js/select2/select2.min.js"></script>
 <script src="/backend/web/CloudAdmin/js/uniform/jquery.uniform.min.js"></script>
 
-<script type="text/javascript" src="/backend/web/CloudAdmin/js/dropzone/dropzone.min.js"></script>
 
 <!-- layer -->
 <script src="/backend/web/CloudAdmin/layer/layer.js"></script>

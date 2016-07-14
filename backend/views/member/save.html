@@ -1,4 +1,4 @@
-<link rel="stylesheet" type="text/css" href="/backend/web/CloudAdmin/js/dropzone/dropzone.min.css"/>
+<link href="/backend/web/CloudAdmin/js/jQuery-uploadify/uploadify.css" rel="stylesheet">
 <div class="row">
     <div class="col-md-12">
         <div class="box border green">
@@ -462,13 +462,9 @@
                                 <h4><i class="fa fa-picture-o"></i>上传照片</h4>
                             </div>
                             <div class="box-body">
-                                <form action="/wap/file/thumb"
-                                      class="dropzone"
-                                      id="my-awesome-dropzone">
-                                    <div class="fallback">
-                                        <input name="file" type="file" multiple=""/>
-                                    </div>
-                                </form>
+
+                                <input type="file" name="file_upload" id="file_upload" />
+
                             </div>
                         </div>
                     </div>
@@ -480,13 +476,7 @@
                                 <h4><i class="fa fa-picture-o"></i>上传身份证</h4>
                             </div>
                             <div class="box-body">
-                                <form action="/wap/file/thumb"
-                                      class="dropzone"
-                                      id="my-awesome-dropzone1">
-                                    <div class="fallback">
-                                        <input name="file" type="file" multiple=""/>
-                                    </div>
-                                </form>
+
                             </div>
                         </div>
                     </div>
@@ -502,31 +492,30 @@
 <script src="/wechat/web/js/config/infoData.js"></script>
 <script src="/wechat/web/js/config/area.js"></script>
 <script src="/wechat/web/js/config/city.js"></script>
-
+<script src="/backend/web/CloudAdmin/js/jQuery-uploadify/jquery.uploadify.min.js"></script>
 <script>
     jQuery(document).ready(function () {
 
         SelectInit();
+//     /wap/file/thumb
+        $('#file_upload').uploadify({
+            'buttonText'      : '选择照片',
+            'fileSizeLimit'   : '8MB',
+            'fileTypeDesc'    : '图片文件',
+            'fileTypeExts'    : '*.gif; *.jpg; *.png; *.bmp',
+            'swf'             : '/backend/web/CloudAdmin/js/jQuery-uploadify/uploadify.swf',
+            'uploader'        : '/admin/file/upload-img',
+            'formData'        : {'user_id' : 1 , 'timestamp':new Date().getTime()},
+            'debug'           : true,
+            'onUploadError'   : function(file, errorCode, errorMsg, errorString) {
+                alert('文件名： ' + file.name + '， 错误原因: ' + errorString);
+            },
+            'onUploadSuccess' : function(file, data, response) {
+                alert('The file ' + file.name + ' was successfully uploaded with a response of ' + response + ':' + data);
+            }
 
-        try {
-            $(".dropzone").dropzone({
-                paramName: "file", // The name that will be used to transfer the file
-                maxFilesize: 0.5, // MB
-                addRemoveLinks: true,
-                dictResponseError: '同时上传文件时出错！',
-                //change the previewTemplate to use Bootstrap progress bars
-                previewTemplate: "<div class=\"dz-preview dz-file-preview\">\n  <div class=\"dz-details\">\n    <div class=\"dz-filename\"><span data-dz-name></span></div>\n    <div class=\"dz-size\" data-dz-size></div>\n    <img data-dz-thumbnail />\n  </div>\n  <div class=\"progress progress-sm progress-striped active\"><div class=\"progress-bar progress-bar-success\" data-dz-uploadprogress></div></div>\n  <div class=\"dz-success-mark\"><span></span></div>\n  <div class=\"dz-error-mark\"><span></span></div>\n  <div class=\"dz-error-message\"><span data-dz-errormessage></span></div>\n</div>",
-                init: function () {
-                    this.on('success' , function (f,res){
-                        var hidden="<input type='hidden' name='thumb_path[]' value='" + JSON.parse(res).thumb_path + "'/>";
-                        $("#img_hidden").append(hidden);
-                    });
-                }
-            });
-        } catch (e) {
-            alert('您的浏览器版本过旧，不支持上传图片！');
-        }
-
+            // Put your options here
+        });
 
         $(".uniform").uniform();
 
