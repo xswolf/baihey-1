@@ -262,8 +262,46 @@ var bhyFunc = {
             })
         }
     },
+    selectedGoods:function(select){
+        if(select.value && select.value != 8){   // 开通服务
+            $('.discount').show();
+            if($('#discount').prop('checked')){
+                $('.charge_money').show();
+            }
+        }else{
+            $('.discount').hide();
+        }
+    },
+    checkedDiscount:function(checkbox){
+        if(checkbox.checked){
+            $('.charge_money').show();
+        }else{
+            $('.charge_money').hide();
+        }
+    },
     charge:function(){
+        var charge_goods = $('#charge_goods');
+        var discount     = $('#discount');
+        var charge_money = $('#charge_money');
+        if(!charge_goods.val()){
+            layer.tips('请选择充值产品',charge_goods);
+            return false;
+        }
+        if(charge_goods.val() && charge_goods.val() != 8){    // 开通服务
+            if(discount.prop('checked')){   // 打折
+                if(!charge_money.val()){
+                    layer.tips('折后金额不合法，金额最少0.01元，最多20000元。')
+                    return false;
+                }
+                this.ajaxRequest('url',{goods_id:charge_goods.val(),money:charge_money.val()},function(res){
+                    if(res.status == 1){
+                    }
+                })
+            }
 
+        }else{
+
+        }
     },
     layerClickedCancelButton: function (type) {  // 关闭相应类型的layer弹出窗口
         layer.closeAll(type);
