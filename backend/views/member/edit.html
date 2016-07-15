@@ -322,15 +322,15 @@
                                             </div>
                                         </div>
                                         <!--<div class="form-group">-->
-                                            <!--<label class="col-md-3 control-label">体重要求</label>-->
-                                            <!--<div class="input-group col-md-6">-->
-                                                <!--<select class="form-control" name="zo[zo_weight]">-->
-                                                    <!--<option value="">不限</option>-->
-                                                    <!--<option value="1">偏胖</option>-->
-                                                    <!--<option value="2">标准</option>-->
-                                                    <!--<option value="3">偏瘦</option>-->
-                                                <!--</select>-->
-                                            <!--</div>-->
+                                        <!--<label class="col-md-3 control-label">体重要求</label>-->
+                                        <!--<div class="input-group col-md-6">-->
+                                        <!--<select class="form-control" name="zo[zo_weight]">-->
+                                        <!--<option value="">不限</option>-->
+                                        <!--<option value="1">偏胖</option>-->
+                                        <!--<option value="2">标准</option>-->
+                                        <!--<option value="3">偏瘦</option>-->
+                                        <!--</select>-->
+                                        <!--</div>-->
                                         <!--</div>-->
                                         <div class="form-group">
                                             <label class="col-md-3 control-label">购车要求</label>
@@ -359,14 +359,14 @@
                                             </div>
                                         </div>
                                         <!--<div class="form-group">-->
-                                            <!--<label class="col-md-3 control-label">才貌要求</label>-->
-                                            <!--<div class="input-group col-md-6">-->
-                                                <!--<select class="form-control" name="zo[zo_endowed]">-->
-                                                    <!--<option value="">不限</option>-->
-                                                    <!--<option value="1">出众</option>-->
-                                                    <!--<option value="2">一般</option>-->
-                                                <!--</select>-->
-                                            <!--</div>-->
+                                        <!--<label class="col-md-3 control-label">才貌要求</label>-->
+                                        <!--<div class="input-group col-md-6">-->
+                                        <!--<select class="form-control" name="zo[zo_endowed]">-->
+                                        <!--<option value="">不限</option>-->
+                                        <!--<option value="1">出众</option>-->
+                                        <!--<option value="2">一般</option>-->
+                                        <!--</select>-->
+                                        <!--</div>-->
                                         <!--</div>-->
                                         <div class="form-group">
                                             <label class="col-md-3 control-label">职业要求</label>
@@ -492,9 +492,9 @@
                                             <div class="input-group col-md-6">
                                                 <div id="layer-photos-demo" class="layer-photos-demo">
                                                     {{foreach from=$list item=vo}}
-                                                        {{if ($vo.type == 2)}}
-                                                            <img layer-src="{{$vo.thumb_path}}" src="{{getPathByThumb($vo.thumb_path)}}" alt="">
-                                                        {{/if}}
+                                                    {{if ($vo.type == 2)}}
+                                                    <img layer-src="{{$vo.thumb_path}}" src="{{getPathByThumb($vo.thumb_path)}}" alt="">
+                                                    {{/if}}
                                                     {{/foreach}}
 
                                                 </div>
@@ -579,9 +579,9 @@
             addressLink($(this), $("#dq-City"), citys, true);
         });
 
-        var province_value = {{$user.province}};
-        var city_value = {{$user.city}};
-        var area_value = {{$user.area}};
+        var province_value = '{{$user.province}}';
+        var city_value = '{{$user.city}}';
+        var area_value = '{{$user.area}}';
         if (province_value>0) {
             $("#dq-Province").val(province_value);
             addressLink($("#dq-Province"), $("#dq-City"), citys, true);
@@ -647,16 +647,16 @@
             $("#height2").append(heightLink(140, '不限'));
             $(".education").append(createSelect("config_infoData.education"))
 
-            $("#nation").val({{$user.info->nation}});
-            $("#education_1").val({{$user.info->education}});
-            $("#is_marriage").val({{$user.info->is_marriage}});
-            $("#height").val({{$user.info->height}});
-            $("#is_child").val({{$user.info->is_child}});
+            $("#nation").val('{{$user.info->nation}}');
+            $("#education_1").val('{{$user.info->education}}');
+            $("#is_marriage").val('{{$user.info->is_marriage}}');
+            $("#height").val('{{$user.info->height}}');
+            $("#is_child").val('{{$user.info->is_child}}');
             $("#year_income").val('{{$user.info->year_income}}');
-            $("#is_car").val({{$user.info->is_car}});
-            $("#is_purchase").val({{$user.info->is_purchase}});
+            $("#is_car").val('{{$user.info->is_car}}');
+            $("#is_purchase").val('{{$user.info->is_purchase}}');
             $("#zodiac").val('{{$user.info->zodiac}}');
-            $("#constellation").val({{$user.info->constellation}});
+            $("#constellation").val("{{$user.info->constellation}}");
 
             /******************择偶标准*********************/
             var zo_age = '{{$user.info->zo_age}}';
@@ -673,11 +673,11 @@
                 $("#height2").val(height_arr[1]);
             }
 
-            $("#zo_education").val({{$user.info->zo_education}});
-            $("#zo_income").val({{if isset($user.info->zo_income)}} {{$user.info->zo_income}} {{/if}});
-            $("#zo_car").val({{$user.info->zo_car}});
-            $("#zo_house").val({{$user.info->zo_house}});
-            $("#zo_children").val({{if isset($user.info->zo_children)}}{{$user.info->zo_children}}{{/if}});
+            $("#zo_education").val("{{$user.info->zo_education}}");
+            $("#zo_income").val("{{if isset($user.info->zo_income)}} {{$user.info->zo_income}} {{/if}}");
+            $("#zo_car").val("{{$user.info->zo_car}}");
+            $("#zo_house").val("{{$user.info->zo_house}}");
+            $("#zo_children").val("{{if isset($user.info->zo_children)}}{{$user.info->zo_children}}{{/if}}");
 
             $(".mult_select").each(function () {
                 var zo = {};
@@ -686,7 +686,6 @@
                 zo.zo_zodiac = '{{if isset($user.info->zo_zodiac)}}{{$user.info->zo_zodiac}}{{/if}}';
                 zo.zo_constellation = '{{if isset($user.info->zo_constellation)}}{{$user.info->zo_constellation}}{{/if}}';
                 zo.zo_address = '{{if isset($user.info->zo_address)}}{{$user.info->zo_address}}{{/if}}';
-
                 zo.want_travel = '{{if isset($user.want_travel)}}{{$user.want_travel}}{{/if}}';
                 zo.went_travel = '{{if isset($user.went_travel)}}{{$user.went_travel}}{{/if}}';
                 zo.like_food = '{{if isset($user.like_food)}}{{$user.like_food}}{{/if}}';
@@ -712,7 +711,7 @@
         if (occupation > 0){
             $("#occupation_1").val(occupation)
             occupationLink($("#occupation_1"), $("#occupation_2"));
-            $("#occupation_2").val({{$user.info->children_occupation}})
+            $("#occupation_2").val("{{$user.info->children_occupation}}")
 
         }
         // 职业联动函数
@@ -943,11 +942,11 @@
 
 
 
-                layer.ready(function(){ //为了layer.ext.js加载完毕再执行
-                    layer.photos({
-                        photos: '#layer-photos-demo'
-                    });
-                });
+        layer.ready(function(){ //为了layer.ext.js加载完毕再执行
+            layer.photos({
+                photos: '#layer-photos-demo'
+            });
+        });
 
 
 

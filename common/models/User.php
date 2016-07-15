@@ -4,6 +4,7 @@ namespace common\models;
 use common\util\Cookie;
 use Yii;
 use yii\db\Query;
+use yii\helpers\ArrayHelper;
 
 class User extends Base
 {
@@ -464,7 +465,7 @@ class User extends Base
      */
     public function changeMatureTime($user_id, $goods_id, $level = 1)
     {
-        $goods    = ChargeGoods::getInstance()->findOne($goods_id);
+        $goods    = ArrayHelper::toArray(ChargeGoods::getInstance()->findOne($goods_id));
         $userInfo = $this->getUserById($user_id);
         //  金额是否大于余额
         if ($goods['price'] > $userInfo['balance']) {

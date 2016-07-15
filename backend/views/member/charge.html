@@ -16,9 +16,9 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-3 control-label">充值商品：</label>
+                        <label class="col-sm-3 control-label">充值产品：</label>
                         <div class="col-sm-9 input-group">
-                            <select class="form-control" id="chargeGoods">
+                            <select class="form-control" id="charge_goods" onchange="bhyFunc.selectedGoods(this)">
                                 <option value="">请选择</option>
                                 {{foreach from=$goods item=good}}
                                 <option value="{{$good.id}}">{{$good.name}}{{getTitleByOrderListValue($good.value)}}</option>
@@ -26,14 +26,28 @@
                             </select>
                         </div>
                     </div>
+                    <div class="form-group discount">
+                        <label class="col-sm-3 control-label">是否打折：</label>
+                        <div class="col-sm-9 input-group">
+                            <div class="make-switch switch-small" data-on="info" data-off="success" data-on-label="<i class='fa fa-check icon-white'></i>" data-off-label="<i class='fa fa-times'></i>">
+                                <input id="discount" type="checkbox" onchange="bhyFunc.checkedDiscount(this)">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group charge_money">
+                        <label class="col-sm-3 control-label">折后金额：</label>
+                        <div class="col-sm-9 input-group">
+                            <input id="charge_money" type="number" class="form-control" placeholder="请输入折后金额，单位：元。">
+                        </div>
+                    </div>
                     <div class="form-group money" style="display: none;">
                         <label class="col-sm-3 control-label">充值金额：</label>
                         <div class="col-sm-9 input-group">
-                            <input id="price" type="number" class="form-control" placeholder="请输入充值金额，单位：元。">
+                            <input id="money" type="number" class="form-control" placeholder="请输入充值金额，单位：元。">
                         </div>
                     </div>
                     <div class="form-group center">
-                        <button class="btn btn-primary" type="button" id="chargeSubmit">确认充值</button>
+                        <button class="btn btn-primary" id="chargeSubmit" type="button">确认充值</button>
                     </div>
                 </form>
             </div>
@@ -107,60 +121,7 @@
             userIdInput.focus();
             return false;
         }
-        if($('#chargeGoods').val() == ""){
-            layer.tips('请选择充值商品', '#chargeGoods', {
-                tips: [1, '#3595CC'],
-                time: 3000
-            });
-            return false;
-        }
-        if($('#chargeGoods').val() == 8){
-            if($('#price').val() == ""){
-                layer.tips('请输入充值金额', '#price', {
-                    tips: [1, '#3595CC'],
-                    time: 3000
-                });
-                return false;
-            }
-            var reg = /^\d+\.?\d{0,2}$/;
-            if(!reg.test($('#price').val()) || $('#price').val() > 50000){
-                layer.tips('充值金额不合法，一次性最多充值50000元！', '#price', {
-                    tips: [1, '#3595CC'],
-                    time: 4000
-                });
-                return false;
-            }
-        }
-
-        var conf = layer.confirm('请核对充值账户：<b class="text-danger">'+$('#userInfo').text()+'</b>', {
-            btn: ['已核对，确定充值','取消'] //按钮
-        }, function(){
-            var index;
-            $.ajax({
-                type: "POST",
-                url: "/admin/member/charge",
-                data: {goodsId: $('#chargeGoods').val(),chargeTypeId:3, user_id: _userId,authorId:1,money: $.trim($('#price').val())},
-                dataType: "json",
-                beforeSend:function(){
-                    index = layer.msg('充值中，请稍候...', {icon: 16});
-                },
-                success: function(res){
-                    layer.close(index);
-                    if(res.status){
-                        layer.alert('充值成功！', {
-                            icon: 1
-                        })
-                        window.location.href = '/admin/member/order';
-                    }
-                },
-                error:function(){
-                    layer.close(index);
-                    layer.msg('网络繁忙，请稍候再进行充值！');
-                }
-            })
-        }, function(){
-           layer.close(conf);
-        });
+        bhyFunc.charge(_userId);
 
     })
 

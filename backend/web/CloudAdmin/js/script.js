@@ -1259,6 +1259,7 @@ var App = function () {
      /*-----------------------------------------------------------------------------------*/
     var handleDataTables = function () {
         $('#demo1').DataTable({
+            "ordering": false,
             "pagingType": "full_numbers",
             "sLoadingRecords": "正在加载数据...",
             "sZeroRecords": "暂无数据",

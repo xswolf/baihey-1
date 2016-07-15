@@ -285,7 +285,10 @@ var bhyFunc = {
             $('.charge_money').hide();
         }
     },
-    charge: function () {
+    charge: function (userId) {
+        if(!userId){
+            userId = this.user_id;
+        }
         var charge_goods = $('#charge_goods');
         var discount = $('#discount');
         var charge_money = $('#charge_money');
@@ -301,8 +304,10 @@ var bhyFunc = {
                 }
                 // 自定义金额充值
                 this.ajaxRequest('/admin/member/charge', {
-                    goods_id: charge_goods.val(),
-                    money: charge_money.val()
+                    user_id:userId,
+                    goodsId: charge_goods.val(),
+                    money: charge_money.val(),
+                    chargeTypeId:3
                 }, function (res) {
                     if (res.status) {
                         layer.msg('充值成功！');
@@ -312,7 +317,7 @@ var bhyFunc = {
                     }
                 })
             } else {
-                this.ajaxRequest('/admin/member/charge', {goods_id: charge_goods.val()}, function (res) {
+                this.ajaxRequest('/admin/member/charge', {user_id:userId,goodsId: charge_goods.val(),chargeTypeId:3}, function (res) {
                     if (res.status) {
                         layer.msg('充值成功！');
                         top.location.reload();
@@ -327,8 +332,10 @@ var bhyFunc = {
                 return false;
             }
             this.ajaxRequest('/admin/member/charge', {
-                goods_id: charge_goods.val(),
-                money: $('#money').val()
+                user_id:userId,
+                goodsId: charge_goods.val(),
+                money: $('#money').val(),
+                chargeTypeId:3
             }, function (res) {
                 if (res.status) {
                     layer.msg('充值成功！');
