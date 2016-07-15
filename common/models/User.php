@@ -24,7 +24,8 @@ class User extends Base
                 $handle->andWhere($v);
             }
         }
-        return $handle->all();
+        $list = $handle->all();
+        return $list;
     }
 
     public function count($andWhere = [])

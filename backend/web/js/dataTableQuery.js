@@ -101,7 +101,7 @@ $(function(){
                 {"data" : "is_sign"},
                 {"data" : "is_show",fnCreatedCell:function (nTd, sData, oData, iRow, iCol) {
                     var isShow = '';
-                    if (oData.info.education == 1){
+                    if (oData.is_show == 1){
                         isShow = '开放';
                     } else{
                         isShow = '<span style="color: red;">关闭</span>';
