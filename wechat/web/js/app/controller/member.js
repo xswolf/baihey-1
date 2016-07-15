@@ -375,7 +375,11 @@ define(['app/module', 'app/directive/directiveApi'
             api.save('/wap/member/add-user-dynamic', $scope.formData).success(function (res) {
                 ar.saveDataAlert($ionicPopup, res.msg);
                 if (res.status) {
-                    $location.url($location.$$search.tempUrl);
+                    if($location.$$search.tempUrl != '') {
+                        $location.url($location.$$search.tempUrl);
+                    } else {
+                        $location.url('/discovery');
+                    }
                 } else {
                     window.location.reload();
                 }
