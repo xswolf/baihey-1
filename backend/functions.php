@@ -108,7 +108,36 @@ function yearIncome($id){
         4=>'16-25万',
         5=>'100万'
     ];
-    return $arr[$id];
+    return isset($arr[$id]) ? $arr[$id] : '';
+}
+
+function blood($id){
+    $arr = [
+        1=>'A型',
+            2=>'B型',
+            3=>'AB型',
+            4=>'O型',
+            5=>'RH型'
+    ];
+    return isset($arr[$id]) ? $arr[$id] : '';
+}
+
+function constellation($id){
+    $arr = [
+        1=>'水瓶座',
+        2=>'双鱼座',
+        3=>'白羊座',
+        4=>'金牛座',
+        5=>'双子座',
+        6=>'巨蟹座',
+        7=>'狮子座',
+        8=>'处女座',
+        9=>'天秤座',
+        10=>'天蝎座',
+        11=>'射手座',
+        12=>'摩羯座'
+    ];
+    return isset($arr[$id]) ? $arr[$id] : '';
 }
 
 function zodiac($id){
@@ -126,7 +155,7 @@ function zodiac($id){
         11=>'狗',
         12=>'猪'
     ];
-    return $arr[$id];
+    return isset($arr[$id]) ? $arr[$id] : '';
 }
 
 function getBuy($id){
@@ -134,7 +163,7 @@ function getBuy($id){
         '1'=>'已购',
         '2'=>'未购',
     ];
-    return $arr[$id];
+    return isset($arr[$id]) ? $arr[$id] : '';
 }
 
 function getNation($id){
@@ -151,7 +180,7 @@ function getNation($id){
         10=>'苗族',
         11=>'其他',
     ];
-    return $arr[$id];
+    return isset($arr[$id]) ? $arr[$id] : '';
 }
 
 function getChild($id){
@@ -160,7 +189,7 @@ function getChild($id){
         2=>'有小孩归自己',
         3=>'有小孩归对方',
     ];
-    return $arr[$id];
+    return isset($arr[$id]) ? $arr[$id] : '';
 }
 
 function getOccupation($id , $oid){

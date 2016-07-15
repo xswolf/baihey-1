@@ -193,35 +193,35 @@
                                                                 </div>
                                                                 <div class="col-sm-3">
                                                                     <span class="text-muted fwb">星座：</span>
-                                                                    <span class="text-warning">天秤座</span>
+                                                                    <span class="text-warning">{{constellation($user.info->constellation)}}</span>
                                                                 </div>
                                                                 <div class="col-sm-3">
                                                                     <span class="text-muted fwb">期待的TA：</span>
-                                                                    <span class="text-warning">我希望找一位成熟的男士</span>
+                                                                    <span class="text-warning">{{$user.info->mate}}</span>
                                                                 </div>
                                                             </div>
                                                             <div class="row m10">
                                                                 <div class="col-sm-3">
                                                                     <span class="text-muted fwb">血型：</span>
-                                                                    <span class="text-warning">3-5万</span>
+                                                                    <span class="text-warning">{{blood($user.info->blood)}}</span>
                                                                 </div>
                                                                 <div class="col-sm-3">
                                                                     <span class="text-muted fwb"> Q Q：</span>
-                                                                    <span class="text-warning">猴</span>
+                                                                    <span class="text-warning">{{$user.info->qq}}</span>
                                                                 </div>
                                                                 <div class="col-sm-3">
                                                                     <span class="text-muted fwb">微信：</span>
-                                                                    <span class="text-warning">天秤座</span>
+                                                                    <span class="text-warning">{{$user.info->wechat}}</span>
                                                                 </div>
                                                                 <div class="col-sm-3">
                                                                     <span class="text-muted fwb">工作单位</span>
-                                                                    <span class="text-warning"></span>
+                                                                    <span class="text-warning">{{$user.info->work}}</span>
                                                                 </div>
                                                             </div>
                                                             <div class="row m10">
                                                                 <div class="col-sm-12">
                                                                     <span class="text-muted fwb">个人签名：</span>
-                                                                    <span class="text-warning">富国汇即发try还认得他蝴蝶飞过海豆腐干</span>
+                                                                    <span class="text-warning">{{$user.personalized}}</span>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -248,25 +248,25 @@
                                                             <div class="row m10">
                                                                 <div class="col-sm-3">
                                                                     <span class="text-muted fwb">年龄要求：</span>
-                                                                    <span class="text-pink">18-29</span>
+                                                                    <span class="text-pink">{{$user.info->zo_age}}</span>
                                                                 </div>
                                                                 <div class="col-sm-3">
                                                                     <span class="text-muted fwb">身高要求：</span>
-                                                                    <span class="text-pink">165-175</span>
+                                                                    <span class="text-pink">{{$user.info->zo_height}}</span>
                                                                 </div>
                                                                 <div class="col-sm-3">
                                                                     <span class="text-muted fwb">学历要求：</span>
-                                                                    <span class="text-pink">本科及以上</span>
+                                                                    <span class="text-pink">{{getEducation($user.info->zo_education)}}以上</span>
                                                                 </div>
                                                                 <div class="col-sm-3">
                                                                     <span class="text-muted fwb">年薪要求：</span>
-                                                                    <span class="text-pink">10-15万</span>
+                                                                    <span class="text-pink">{{yearIncome($user.info->zo_income)}}</span>
                                                                 </div>
                                                             </div>
                                                             <div class="row m10">
                                                                 <div class="col-sm-3">
                                                                     <span class="text-muted fwb">购车要求：</span>
-                                                                    <span class="text-pink">不限</span>
+                                                                    <span class="text-pink">{{getBuy($user.info->zo_car)}}</span>
                                                                 </div>
                                                                 <div class="col-sm-3">
                                                                     <span class="text-muted fwb">购房要求：</span>
