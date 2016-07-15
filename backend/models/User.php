@@ -75,7 +75,7 @@ class User extends Model
     public function getFindUser($where=[])
     {
         $row = (new Query)
-            ->select(['id', 'name', 'password', 'status', 'created_at', 'updated_at'])
+            ->select('*')
             ->from($this->userTable)
             ->where($where)
             ->one($this->db);
@@ -124,6 +124,9 @@ class User extends Model
     public function addUser($data) {
         $auth = \Yii::$app->authManager;
         $time = time();
+        if(isset($data['file_upload'])) {
+            unset($data['file_upload']);
+        }
         $data['created_at'] = $time;
         $data['updated_at'] = $time;
         $data['password'] = md5(md5($data['password']));
@@ -154,6 +157,9 @@ class User extends Model
     public function editUser($data) {
         $auth = \Yii::$app->authManager;
         $time = time();
+        if(isset($data['file_upload'])) {
+            unset($data['file_upload']);
+        }
         $data['updated_at'] = $time;
         if($data['password']) {
             $data['password'] = md5(md5($data['password']));

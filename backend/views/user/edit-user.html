@@ -1,3 +1,4 @@
+<link href="/backend/web/CloudAdmin/js/jQuery-uploadify/uploadify.css" rel="stylesheet">
 <div class="box border green">
     <div class="box-title">
         <h4><i class="fa fa-bars"></i>Form states</h4>
@@ -32,6 +33,56 @@
                 </div>
             </div>
             <div class="form-group">
+                <label class="col-sm-2 control-label">手机号</label>
+                <div class="col-sm-10">
+                    <input class="form-control" name="phone" type="text" placeholder="请输入手机号" value="{{$user.phone}}" required>
+                </div>
+            </div>
+            <!--<div class="form-group">
+                <label class="col-sm-2 control-label">座机</label>
+                <div class="col-sm-10">
+                    <input class="form-control" name="landline" type="text" placeholder="请输入座机" value="{{$user.landline}}" required>
+                </div>
+            </div>-->
+            <div class="form-group">
+                <label class="col-sm-2 control-label">QQ</label>
+                <div class="col-sm-10">
+                    <input class="form-control" name="qq" type="text" placeholder="请输入QQ" value="{{$user.qq}}">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">微信</label>
+                <div class="col-sm-10">
+                    <input class="form-control" name="wechat" type="text" placeholder="请输入微信" value="{{$user.wechat}}">
+                </div>
+            </div>
+            <!--<div class="form-group">
+                <label class="col-sm-2 control-label">邮箱</label>
+                <div class="col-sm-10">
+                    <input class="form-control" name="email" type="text" placeholder="请输入邮箱" value="{{$user.email}}" required>
+                </div>
+            </div>-->
+            <div class="form-group">
+                <label class="col-sm-2 control-label">简介</label>
+                <div class="col-sm-10">
+                    <input class="form-control" name="introduction" type="text" placeholder="请输入简介" value="{{$user.introduction}}">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">头像</label>
+                <div class="col-md-10">
+                    <div class="box border blue">
+                        <div class="box-title">
+                            <h4><i class="fa fa-picture-o"></i>上传照片</h4>
+                        </div>
+                        <div class="box-body">
+                            <input type="file" name="file_upload" id="file_upload" />
+                            <input name="photo" id="photo" type="hidden" value="{{$user.photo}}">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
                 <label class="col-sm-2 control-label">状态</label>
                 <div class="col-sm-10">
                     <label class="radio-inline"><input type="radio" {{if $user.status eq 1}}checked="checked"{{/if}} value="1" name="status" class="uniform"> 正常 </label>
@@ -58,7 +109,30 @@
             </div>
 
         </form>
-
-
     </div>
 </div>
+<script src="/backend/web/CloudAdmin/js/jQuery-uploadify/jquery.uploadify.min.js"></script>
+<script>
+    jQuery(document).ready(function () {
+
+//     /wap/file/thumb
+        $('#file_upload').uploadify({
+            'buttonText'      : '选择照片',
+            'fileSizeLimit'   : '8MB',
+            'fileTypeDesc'    : '图片文件',
+            'fileTypeExts'    : '*.gif; *.jpg; *.png; *.bmp',
+            'swf'             : '/backend/web/CloudAdmin/js/jQuery-uploadify/uploadify.swf',
+            'uploader'        : '/admin/file/upload-img',
+            'formData'        : {'user_id' : 1 , 'timestamp':new Date().getTime()},
+            'debug'           : true,
+            'onUploadError'   : function(file, errorCode, errorMsg, errorString) {
+                alert('文件名： ' + file.name + '， 错误原因: ' + errorString);
+            },
+            'onUploadSuccess' : function(file, data, response) {
+                $('#photo').val(data);
+                alert('The file ' + file.name + ' was successfully uploaded with a response of ' + response + ':' + data);
+            }
+            // Put your options here
+        });
+    });
+</script>
