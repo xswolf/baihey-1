@@ -547,26 +547,6 @@
 
         SelectInit();
 
-        try {
-            $(".dropzone").dropzone({
-                paramName: "file", // The name that will be used to transfer the file
-                maxFilesize: 0.5, // MB
-                addRemoveLinks: true,
-                dictResponseError: '同时上传文件时出错！',
-                //change the previewTemplate to use Bootstrap progress bars
-                previewTemplate: "<div class=\"dz-preview dz-file-preview\">\n  <div class=\"dz-details\">\n    <div class=\"dz-filename\"><span data-dz-name></span></div>\n    <div class=\"dz-size\" data-dz-size></div>\n    <img data-dz-thumbnail />\n  </div>\n  <div class=\"progress progress-sm progress-striped active\"><div class=\"progress-bar progress-bar-success\" data-dz-uploadprogress></div></div>\n  <div class=\"dz-success-mark\"><span></span></div>\n  <div class=\"dz-error-mark\"><span></span></div>\n  <div class=\"dz-error-message\"><span data-dz-errormessage></span></div>\n</div>",
-                init: function () {
-                    this.on('success' , function (f,res){
-                        var hidden="<input type='hidden' name='thumb_path[]' value='" + JSON.parse(res).thumb_path + "'/>";
-                        $("#img_hidden").append(hidden);
-                    });
-                }
-            });
-        } catch (e) {
-            alert('您的浏览器版本过旧，不支持上传图片！');
-        }
-
-
         $(".uniform").uniform();
 
         $(".mult_select").select2({
