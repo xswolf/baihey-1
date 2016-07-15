@@ -109,9 +109,20 @@ function getPathByThumb($thumb){
 
 // 获取省市区
 function getSSQ($s , $shi , $q){
-    $list = \common\models\Area::getInstance()->getTravelListById($s.','.$shi.','.$q);
-
-    return $list[0]['name'].'-'.$list[1]['name'].'-'.$list[2]['name'];
+    $list1 = \common\models\Area::getInstance()->getTravelListById($s);
+    $list2 = \common\models\Area::getInstance()->getTravelListById($shi);
+    $list3 = \common\models\Area::getInstance()->getTravelListById($q);
+    $str = '';
+    if (is_array($list1) && count($list1) > 0) {
+        $str =  $list1[0]['name'] ;
+        if (is_array($list2) && count($list2) > 0) {
+            $str .= '-' . $list2[0]['name'];
+            if (is_array($list3) && count($list3) > 0) {
+                $str .= '-' . $list3[0]['name'] ;
+            }
+        }
+    }
+    return$str;
 }
 
 function yearIncome($id){

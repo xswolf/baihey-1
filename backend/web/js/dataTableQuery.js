@@ -118,6 +118,19 @@ $(function(){
                     }
                 }},
                 {"data" : "auth.identity_check"},
+                {"data" : "status" , fnCreatedCell:function (nTd, sData, oData, iRow, iCol) {
+                    var html = '';
+                    if (oData.status == 1){
+                        html ='未分配红娘';
+                    }else if (oData.status == 2){
+                        html ='已分配红娘';
+                    }else if (oData.status == 3){
+                        html ='黑名单';
+                    }else if (oData.status == 4){
+                        html ='删除';
+                    }
+                    $(nTd).html(html)
+                }},
                 {"data" : "id","fnCreatedCell":function (nTd, sData, oData, iRow, iCol) {
                     var html = '<p class="btn-toolbar"><a class="btn btn-info btn-sm tip" title="管理" href="/admin/member/info?id=' +oData.id+ '"><i class="fa fa-cog"></i> </a></p>';
                     $(nTd).html(html);

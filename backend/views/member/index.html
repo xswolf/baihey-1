@@ -84,7 +84,7 @@
                                     <select name="is_show" class="form-control">
                                         <option value="">资料状态</option>
                                         <option  {{if \Yii::$app->request->get('is_show') == 1}} selected {{/if}}value="1">开放</option>
-                                        <option  {{if \Yii::$app->request->get('is_show') == 0}} selected {{/if}}value="0">关闭</option>
+                                        <option  {{if \Yii::$app->request->get('is_show') == '0'}} selected {{/if}}value="0">关闭</option>
                                     </select>
                                 </div>
                                 <div class="col-sm-3">
@@ -116,11 +116,12 @@
                     <th>学历</th>
                     <th>等级</th>
                     <th>服务</th>
-                    <th>状态</th>
+                    <th>认证</th>
                     <th>签单</th>
                     <th>资料</th>
                     <th>地址</th>
                     <th>证件</th>
+                    <th>状态</th>
                     <th>操作</th>
                 </tr>
                 </thead>
@@ -208,7 +209,7 @@
                 }
 
             })
-            $('form').submit();
+            window.location.reload();
         })
     });
 </script>
