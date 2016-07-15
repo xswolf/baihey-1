@@ -51,6 +51,7 @@ $(function(){
         if ($this.data('is-ajax') == 1){
             var ajaxUrl = $this.data('ajax-url')
             ext_params.bServerSide = true;
+            ext_params.stateSave = false;
             ext_params.sAjaxSource = ajaxUrl;
             ext_params.fnServerData =function(sSource, aoData, fnCallback) {
                 var params = getUrlParamToArr();
@@ -70,7 +71,7 @@ $(function(){
             };
             ext_params.columns = [
                 {"data" : "info.head_pic","fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
-                    $(nTd).html("<a href='/admin/member/info'><img class='user_img' src='"+oData.info.head_pic+"'></a>");
+                    $(nTd).html("<a href='/admin/member/info?id="+oData.id+"'><img class='user_img' src='"+oData.info.head_pic+"'></a>");
                 }},
                 {"data" : "id"},
                 {"data" : "info.real_name"},

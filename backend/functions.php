@@ -34,6 +34,20 @@ function getMarriage($marriage){
     }
 }
 
+//function manyMarriage($ids){
+//    $arr = [
+//        1=> '未婚',
+//        2=> '离异',
+//        3=> '丧偶',
+//    ];
+//    $idArr = explode("," , $ids);
+//    $str = "";
+//    foreach ($idArr as $k=>$v){
+//        $str .= $arr[$v]. " ";
+//    }
+//    return $str;
+//}
+
 function getEducation($e){
     switch ($e){
         case 1 :
@@ -122,6 +136,16 @@ function blood($id){
     return isset($arr[$id]) ? $arr[$id] : '';
 }
 
+//
+function manySelect($ids , $func='getMarriage'){
+    $idArr = explode("," , $ids);
+    $str = "";
+    foreach ($idArr as $k=>$v){
+        $str .= $func($v). " ";
+    }
+    return $str;
+}
+
 function constellation($id){
     $arr = [
         1=>'水瓶座',
@@ -192,7 +216,7 @@ function getChild($id){
     return isset($arr[$id]) ? $arr[$id] : '';
 }
 
-function getOccupation($id , $oid){
+function getOccupation($id , $oid = ''){
     $occupation = '[
         {
             "id": 1,
@@ -585,4 +609,5 @@ function getOccupation($id , $oid){
             return $zy;
         }
     }
+    return $zy;
 }

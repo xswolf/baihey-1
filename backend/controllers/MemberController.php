@@ -13,6 +13,7 @@ use common\models\Area;
 use common\models\ChargeGoods;
 use common\models\ChargeOrder;
 use common\models\User;
+use backend\models\User as UserModel;
 use common\models\UserPhoto;
 use wechat\models\Config;
 
@@ -150,7 +151,19 @@ class MemberController extends BaseController
         $user   = User::getInstance()->getUserById($userId);
         $user['info'] = json_decode($user['info']);
         $user['auth'] = json_decode($user['auth']);
+        // 获取登陆次数
+        $loginTime = User::getInstance()->getLoginTimes($userId);
+        $moneyAll = User::getInstance()->getPayAll($userId);
+        // 获取红娘名称
+        $userModel = new UserModel();
+        $matchmaker = $userModel->getFindUser(['id' => $user['matchmaker']]);
+        $matchmaking = $userModel->getFindUser(['id' => $user['matchmaking']]);
+
         $this->assign('user' , $user);
+        $this->assign('loginTime' , $loginTime);
+        $this->assign('moneyAll' , $moneyAll);
+        $this->assign('matchmaker' , $matchmaker['name']);
+        $this->assign('matchmaking' , $matchmaking['name']);
         $this->assign('photoList' , UserPhoto::getInstance()->getPhotoList(\Yii::$app->request->get('id')));
 //        var_dump($user);exit;
         return $this->render();
@@ -238,6 +251,11 @@ class MemberController extends BaseController
 
     public function actionChat(){
         return $this->render();
+    }
+
+    public function actionDel(){
+        $id = \Yii::$app->request->post('id');
+        User::getInstance()->delUser($id);
     }
 
 }

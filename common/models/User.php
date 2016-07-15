@@ -258,11 +258,6 @@ class User extends Base
         return $this->findOne(['phone' => $phone]);
     }
 
-    public function delUser($id)
-    {
-
-    }
-
     public function editUser($data)
     {
         $user       = $data['user'];
@@ -706,5 +701,33 @@ class User extends Base
             ->update($_user_table, $data, ['id' => $user_id])
             ->execute();
         return $row;
+    }
+
+    /**
+     * 获取用户登陆次数
+     * @param $userId
+     * @return int|string
+     */
+    public function getLoginTimes($userId){
+       return (new Query())->from($this->tablePrefix.'user_log')->where(['user_id'=>$userId])->count();
+    }
+
+    /**
+     * 获取用户缴费总额
+     * @param $userId
+     * @return mixed
+     */
+    public function getPayAll($userId){
+        return (new Query())->from($this->tablePrefix.'charge_order')->where(['user_id'=>$userId])->sum("money");
+    }
+
+    /**
+     * 删除用户
+     * @param $id
+     */
+    public function delUser($id){
+        \Yii::$app->db->createCommand()
+            ->update($this->tablePrefix.'user' , ['status'=>4] , ['id'=>$id])
+            ->execute();
     }
 }
