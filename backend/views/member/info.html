@@ -42,7 +42,7 @@
                                                 </ol>
 
                                                 <!-- Wrapper for slides -->
-                                                <div class="carousel-inner">
+                                                <div class="carousel-inner photo">
                                                     <div class="item active">
                                                         <a class="colorbox-button"
                                                            href="/backend/web/CloudAdmin/img/profile/avatar.jpg">
@@ -830,5 +830,24 @@
         // Resize Colorbox when resizing window or changing mobile device orientation
         jQuery(window).resize(resizeColorBox);
         window.addEventListener("orientationchange", resizeColorBox, false);
+
+        $.ajax({
+            url: "/admin/member/get-pic", data: {id: '{{$user.user_id}}' }, success: function (res) {
+                var html = '';
+
+                res = JSON.parse(res);
+                var active = '';
+                for (var i in res.data){
+                    if (i == 0) active = 'active';
+                    html +=    '<div class="item ' + active + '">'
+                         +      '<a class="colorbox-button" href="' +  res.data[i].thumb_path  + '"> '
+                         +      '<img alt="" src="' + res.data[i].thumb_path +  '">'
+                         +      '</a> '
+                         +    '</div> ';
+                }
+                console.log(html)
+                $(".photo").html(html);
+            }
+        });
     });
 </script>
