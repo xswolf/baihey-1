@@ -59,28 +59,21 @@ class FileController extends Controller
      */
     public function actionUploadImg()
     {
+
+        $targetFolder = '/images';
         if (!empty($_FILES)) {
-            $file = new File();
-            $res = $file->upload(__DIR__ . "/../../images/");// 原图上传
-            $data = (1 == $res['status']) ? $file->thumbPhoto($res) : $res;// 原图压缩
+            $tempFile = $_FILES['Filedata']['tmp_name'];
+            $targetPath = $_SERVER['DOCUMENT_ROOT'] . $targetFolder;
+            $targetFile = rtrim($targetPath, '/') . '/' . $_FILES['Filedata']['name'];
+            // Validate the file type
+            $fileTypes = array('jpg', 'jpeg', 'gif', 'png', 'bmp'); // File extensions
+            $fileParts = pathinfo($_FILES['Filedata']['name']);
 
-            echo '1';
+            if (in_array($fileParts['extension'], $fileTypes)) {
+                move_uploaded_file($tempFile, $targetFile);
+            } else {
+                echo 'Invalid file type.';
+            }
         }
-
-//        $targetFolder = '/images';
-//        if (!empty($_FILES)) {
-//            $tempFile = $_FILES['Filedata']['tmp_name'];
-//            $targetPath = $_SERVER['DOCUMENT_ROOT'] . $targetFolder;
-//            $targetFile = rtrim($targetPath, '/') . '/' . $_FILES['Filedata']['name'];
-//            // Validate the file type
-//            $fileTypes = array('jpg', 'jpeg', 'gif', 'png', 'bmp'); // File extensions
-//            $fileParts = pathinfo($_FILES['Filedata']['name']);
-//
-//            if (in_array($fileParts['extension'], $fileTypes)) {
-//                move_uploaded_file($tempFile, $targetFile);
-//            } else {
-//                echo 'Invalid file type.';
-//            }
-//        }
     }
 }
