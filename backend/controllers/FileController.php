@@ -60,17 +60,14 @@ class FileController extends Controller
     public function actionUploadImg()
     {
 
-        $targetFolder = '/images';
         if (!empty($_FILES)) {
             $tempFile = $_FILES['Filedata']['tmp_name'];
-            $targetPath = $_SERVER['DOCUMENT_ROOT'] . $targetFolder;
-            $targetFile = rtrim($targetPath, '/') . '/' . $_FILES['Filedata']['name'];
-            // Validate the file type
             $fileTypes = array('jpg', 'jpeg', 'gif', 'png', 'bmp'); // File extensions
             $fileParts = pathinfo($_FILES['Filedata']['name']);
 
             if (in_array($fileParts['extension'], $fileTypes)) {
-                move_uploaded_file($tempFile, $targetFile);
+                $file = new File();
+                $file->backThumbImage($tempFile, $fileParts['extension']);
             } else {
                 echo 'Invalid file type.';
             }
