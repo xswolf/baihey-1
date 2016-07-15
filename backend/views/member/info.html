@@ -6,7 +6,7 @@
         <!-- BOX -->
         <div class="box border">
             <div class="box-title">
-                <h4><i class="fa fa-user"></i><span class="hidden-inline-mobile">李倩 的资料</span></h4>
+                <h4><i class="fa fa-user"></i><span class="hidden-inline-mobile">{{$user['info']->real_name}} 的资料</span></h4>
             </div>
             <div class="box-body">
                 <div class="tabbable header-tabs user-profile">
@@ -76,22 +76,41 @@
                                             </div>
                                         </li>
                                         <div class="list-group-item profile-details">
-                                            <h4>李倩</h4>
+                                            <h4>{{$user['info']->real_name}}</h4>
                                             <p>
-                                                <span class="text-muted">ID: 15011</span>
+                                                <span class="text-muted">ID: {{$user.id}}</span>
                                                 &nbsp;&nbsp;&nbsp;
                                                 <i id="status_icon" class="fa fa-circle text-green"></i>
                                                 <!-- TODO 用户状态值要放在 data-status属性里面-->
-                                                <span id="status" data-status="1">已审核</span>
+                                                <span id="status" data-status="1">
+                                                    {{if $user.status == 2}}
+                                                        已审核
+                                                    {{elseif $user.status == 1}}
+                                                        未审核
+                                                    {{elseif $user.status == 3}}
+                                                        黑名单
+                                                    {{elseif $user.status == 4}}
+                                                        删除
+                                                    {{/if}}
+                                                </span>
                                             </p>
                                             <p>
-                                                <span class="label label-info">29岁</span>
-                                                <span class="label label-info">未婚</span>
-                                                <span class="label label-info">本科</span>
-                                                <span class="label label-info">165cm</span>
+                                                <span class="label label-info">{{$user.age}}</span>
+                                                <span class="label label-info">
+
+                                                    {{getMarriage($user.info->is_marriage)}}
+
+                                                </span>
+                                                <span class="label label-info">
+                                                    {{getEducation($user.info->education)}}
+                                                </span>
+                                                <span class="label label-info">{{$user.info->height}}cm</span>
                                             </p>
                                             <p>
-                                                <span class="label label-danger">普通会员</span>
+                                                <span class="label label-danger">
+                                                    {{getLevel($user.info->level)}}
+
+                                                </span>
                                             </p>
                                         </div>
                                         <a id="charge" href="javascript:;" class="list-group-item">
@@ -130,47 +149,47 @@
                                                             <div class="row m10">
                                                                 <div class="col-sm-3">
                                                                     <span class="text-muted fwb">地区：</span>
-                                                                    <span class="text-warning">重庆市-重庆市-渝中区</span>
+                                                                    <span class="text-warning">{{getSSQ($user.province,$user.city,$user.area)}}</span>
                                                                 </div>
                                                                 <div class="col-sm-3">
                                                                     <span class="text-muted fwb">民族：</span>
-                                                                    <span class="text-warning">汉族</span>
+                                                                    <span class="text-warning">{{getNation($user.info->nation)}}</span>
                                                                 </div>
                                                                 <div class="col-sm-3">
                                                                     <span class="text-muted fwb">子女：</span>
-                                                                    <span class="text-warning">无小孩</span>
+                                                                    <span class="text-warning">{{getChild($user.info->is_child)}}</span>
                                                                 </div>
                                                                 <div class="col-sm-3">
                                                                     <span class="text-muted fwb">手机号码：</span>
-                                                                    <span class="text-warning">1338149855</span>
+                                                                    <span class="text-warning">{{$user.phone}}</span>
                                                                 </div>
                                                             </div>
                                                             <div class="row m10">
                                                                 <div class="col-sm-3">
                                                                     <span class="text-muted fwb">职业：</span>
-                                                                    <span class="text-warning">销售 销售主管</span>
+                                                                    <span class="text-warning">{{getOccupation($user.info->occupation , $user.info->children_occupation)}}</span>
                                                                 </div>
                                                                 <div class="col-sm-3">
                                                                     <span class="text-muted fwb">购车：</span>
-                                                                    <span class="text-warning">已购车</span>
+                                                                    <span class="text-warning">{{getBuy($user.info->is_car)}}</span>
                                                                 </div>
                                                                 <div class="col-sm-3">
                                                                     <span class="text-muted fwb">购房：</span>
-                                                                    <span class="text-warning">已购房</span>
+                                                                    <span class="text-warning">{{getBuy($user.info->is_purchase)}}</span>
                                                                 </div>
                                                                 <div class="col-sm-3">
                                                                     <span class="text-muted fwb">毕业院校：</span>
-                                                                    <span class="text-warning"></span>
+                                                                    <span class="text-warning">{{$user.info->school}}</span>
                                                                 </div>
                                                             </div>
                                                             <div class="row m10">
                                                                 <div class="col-sm-3">
                                                                     <span class="text-muted fwb">年薪：</span>
-                                                                    <span class="text-warning">3-5万</span>
+                                                                    <span class="text-warning">{{yearIncome($user.info->year_income)}}万</span>
                                                                 </div>
                                                                 <div class="col-sm-3">
                                                                     <span class="text-muted fwb">属相：</span>
-                                                                    <span class="text-warning">猴</span>
+                                                                    <span class="text-warning">{{zodiac($user.info->zodiac)}}</span>
                                                                 </div>
                                                                 <div class="col-sm-3">
                                                                     <span class="text-muted fwb">星座：</span>
@@ -412,7 +431,7 @@
                                         <tbody>
                                         <tr>
                                             <td>1</td>
-                                            <td>李倩(15301)</td>
+                                            <td>{{$user['info']->real_name}}(15301)</td>
                                             <td>看过后就能看见的那个好看</td>
                                             <td><a href="javascript:;" onclick="bhyFunc.getJsonShowImg('discovery')">查看图片</a></td>
                                             <td>58</td>
@@ -422,7 +441,7 @@
                                         </tr>
                                         <tr>
                                             <td>2</td>
-                                            <td>李倩(15301)</td>
+                                            <td>{{$user['info']->real_name}}(15301)</td>
                                             <td>符合法规和地方干活干活</td>
                                             <td></td>
                                             <td>114</td>

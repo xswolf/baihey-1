@@ -146,6 +146,12 @@ class MemberController extends BaseController
 
     public function actionInfo()
     {
+        $userId = \Yii::$app->request->get('id');
+        $user   = User::getInstance()->getUserById($userId);
+        $user['info'] = json_decode($user['info']);
+        $user['auth'] = json_decode($user['auth']);
+        $this->assign('user' , $user);
+//        var_dump($user);exit;
         return $this->render();
     }
 
