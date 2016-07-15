@@ -32,14 +32,24 @@ class MemberController extends BaseController
         $limit = $request->get('iDisplayLength');
 
         $andWhere = [];
-        if ($request->get('ages') >= 18){
-            $andWhere[] = [">=" ,"age", $request->get('ages')];
+        $id_phone_name = $request->get('id_phone_name');
+        if ($request->get('id_phone_name') != ''){
+            if (is_numeric($id_phone_name)){
+                if (strlen($id_phone_name.'') == 11){
+                    $andWhere[] = ["=" ,"phone", $id_phone_name];
+                }else{
+                    $andWhere[] = ["=" ,"id", $id_phone_name];
+                }
+            }else{
+                $andWhere[] = ["like" ,"json_extract(info,'$.real_name')", $id_phone_name];
+            }
+
         }
-        if ($request->get('agee') >=18){
-            $andWhere[] = ["<=" ,"age", $request->get('agee')];
+        if ($request->get('is_show') != ''){
+            $andWhere[] = ["=" ,"is_show", $request->get('is_show')];
         }
-        if ($request->get('sex') >=0 ){
-            $andWhere[] = ["=","sex",$request->get('sex')];
+        if ($request->get('status') != ''){
+            $andWhere[] = ["=","status",$request->get('status')];
         }
 
 
