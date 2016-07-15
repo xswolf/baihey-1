@@ -151,6 +151,7 @@ class MemberController extends BaseController
         $user['info'] = json_decode($user['info']);
         $user['auth'] = json_decode($user['auth']);
         $this->assign('user' , $user);
+        $this->assign('photoList' , UserPhoto::getInstance()->getPhotoList(\Yii::$app->request->get('id')));
 //        var_dump($user);exit;
         return $this->render();
     }

@@ -35,33 +35,29 @@
                                             <div id="carousel-example-generic" class="carousel slide">
                                                 <!-- Indicators -->
                                                 <ol class="carousel-indicators">
-                                                    <li data-target="#carousel-example-generic" data-slide-to="0"
-                                                        class="active"></li>
-                                                    <li data-target="#carousel-example-generic" data-slide-to="1"></li>
-                                                    <li data-target="#carousel-example-generic" data-slide-to="2"></li>
+                                                    <!--<li data-target="#carousel-example-generic" data-slide-to="0"-->
+                                                        <!--class="active"></li>-->
+                                                    <!--<li data-target="#carousel-example-generic" data-slide-to="1"></li>-->
+                                                    <!--<li data-target="#carousel-example-generic" data-slide-to="2"></li>-->
+                                                    {{foreach from=$photoList key=k item=vo }}
+                                                        <li data-target="#carousel-example-generic" class="{{if $k == 0}}active{{/if}}" data-slide-to="{{$k}}"></li>
+                                                    {{/foreach}}
                                                 </ol>
 
                                                 <!-- Wrapper for slides -->
                                                 <div class="carousel-inner photo">
-                                                    <div class="item active">
-                                                        <a class="colorbox-button"
-                                                           href="/backend/web/CloudAdmin/img/profile/avatar.jpg">
-                                                            <img alt=""
-                                                                 src="/backend/web/CloudAdmin/img/profile/avatar.jpg">
-                                                        </a>
-                                                    </div>
-                                                    <div class="item">
-                                                        <a class="colorbox-button"
-                                                           href="/wechat/web/images/test/s1.jpg">
-                                                            <img src="/wechat/web/images/test/s1.jpg" alt="">
-                                                        </a>
-                                                    </div>
-                                                    <div class="item">
-                                                        <a class="colorbox-button"
-                                                           href="/wechat/web/images/test/s2.jpg">
-                                                            <img src="/wechat/web/images/test/s2.jpg" alt="">
-                                                        </a>
-                                                    </div>
+
+                                                    {{foreach from=$photoList key=k item=vo }}
+
+                                                        <div class="item {{if $k == 0}}active{{/if}}">
+                                                            <a class="colorbox-button"
+                                                               href="{{$vo.thumb_path}}">
+                                                                <img alt=""
+                                                                     src="{{$vo.thumb_path}}">
+                                                            </a>
+                                                        </div>
+                                                    {{/foreach}}
+
                                                 </div>
 
                                                 <!-- Controls -->
@@ -831,23 +827,22 @@
         jQuery(window).resize(resizeColorBox);
         window.addEventListener("orientationchange", resizeColorBox, false);
 
-        $.ajax({
-            url: "/admin/member/get-pic", data: {id: '{{$user.user_id}}' }, success: function (res) {
-                var html = '';
-
-                res = JSON.parse(res);
-                var active = '';
-                for (var i in res.data){
-                    if (i == 0) active = 'active';
-                    html +=    '<div class="item ' + active + '">'
-                         +      '<a class="colorbox-button" href="' +  res.data[i].thumb_path  + '"> '
-                         +      '<img alt="" src="' + res.data[i].thumb_path +  '">'
-                         +      '</a> '
-                         +    '</div> ';
-                }
-                console.log(html)
-                $(".photo").html(html);
-            }
-        });
+//        $.ajax({
+//            url: "/admin/member/get-pic", data: {id: '{{$user.user_id}}' }, success: function (res) {
+//                var html = '';
+//
+//                res = JSON.parse(res);
+//                var active = '';
+//                for (var i in res.data){
+//                    if (i == 0) active = 'active';
+//                    html +=    '<div class="item ' + active + '">'
+//                         +      '<a class="colorbox-button" href="' +  res.data[i].thumb_path  + '"> '
+//                         +      '<img alt="" src="' + res.data[i].thumb_path +  '">'
+//                         +      '</a> '
+//                         +    '</div> ';
+//                }
+//                $(".photo").html(html);
+//            }
+//        });
     });
 </script>
