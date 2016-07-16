@@ -455,102 +455,106 @@
                             </div>
                         </div>
                     </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="box border blue">
+                                <div class="box-title">
+                                    <h4><i class="fa fa-picture-o"></i>上传照片</h4>
+                                </div>
+                                <div class="box-body">
+                                    <input id="photosList" type="hidden" name="photosList">
+                                    <input type="file" id="file_upload_photo"/>
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <div id="photos" class="photos">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="box border blue">
+                                <div class="box-title">
+                                    <h4><i class="fa fa-picture-o"></i>上传证件照</h4>
+                                </div>
+                                <div class="box-body">
+                                    <input id="cardFace_List" type="hidden" name="cardFace_List">
+                                    <input id="cardBack_List" type="hidden" name="cardBack_List">
+                                    <input id="eduList" type="hidden" name="eduList">
+                                    <input id="houseList" type="hidden" name="houseList">
+                                    <input id="marrList" type="hidden" name="marrList">
+                                    <div class="tabbable header-tabs">
+                                        <ul class="nav nav-tabs">
+                                            <li><a href="#box_tab4" data-toggle="tab"><i
+                                                    class="fa fa-circle-o"></i> <span
+                                                    class="hidden-inline-mobile">房产证</span></a></li>
+                                            <li><a href="#box_tab3" data-toggle="tab"><i
+                                                    class="fa fa-circle-o"></i> <span
+                                                    class="hidden-inline-mobile">学历证</span></a></li>
+                                            <li><a href="#box_tab2" data-toggle="tab"><i
+                                                    class="fa fa-circle-o"></i> <span
+                                                    class="hidden-inline-mobile">离婚证</span></a></li>
+                                            <li class="active"><a href="#box_tab1" data-toggle="tab"><i
+                                                    class="fa fa-circle-o"></i> <span
+                                                    class="hidden-inline-mobile">身份证</span></a></li>
+                                        </ul>
+                                        <div class="tab-content">
+
+                                            <div class="tab-pane fade in active card" id="box_tab1">
+                                                <div class="dib mr20">
+                                                    <p class="center">正面</p>
+                                                    <img class="card_face"
+                                                         src="/wechat/web/images/member/card-face.png">
+                                                    <p class="mt10"><input type="file" id="file_upload_cardFace"/></p>
+                                                </div>
+                                                <div class="dib center">
+                                                    <p class="center">反面</p>
+                                                    <img class="card_back"
+                                                         src="/wechat/web/images/member/card-back.png">
+                                                    <p class="mt10"><input type="file" id="file_upload_cardBack"/></p>
+                                                </div>
+
+                                            </div>
+                                            <div class="tab-pane fade" id="box_tab2">
+                                                <input type="file" id="file_upload_cardMarr"/>
+                                                <div class="row">
+                                                    <div class="col-sm-12 marr">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="tab-pane fade" id="box_tab3">
+                                                <input type="file" id="file_upload_cardEdu"/>
+                                                <div class="row">
+                                                    <div class="col-sm-12 edu">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="tab-pane fade" id="box_tab4">
+                                                <input type="file" id="file_upload_cardHouse"/>
+                                                <div class="row">
+                                                    <div class="col-sm-12 housing">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group center">
+                        <button class="btn btn-lg btn-primary" type="submit">提交</button>
+                    </div>
                 </form>
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="box border blue">
-                            <div class="box-title">
-                                <h4><i class="fa fa-picture-o"></i>上传照片</h4>
-                            </div>
-                            <div class="box-body">
-                                <input id="photosList" type="hidden" name="photosList">
-                                <input type="file" id="file_upload_photo"/>
-                                <div class="row">
-                                    <div class="col-sm-12">
-                                        <div id="photos" class="photos">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="box border blue">
-                            <div class="box-title">
-                                <h4><i class="fa fa-picture-o"></i>上传证件照</h4>
-                            </div>
-                            <div class="box-body">
-                                <input id="cardFace_List" type="hidden" name="cardFace_List">
-                                <input id="cardBack_List" type="hidden" name="cardBack_List">
-                                <input id="eduList" type="hidden" name="eduList">
-                                <input id="houseList" type="hidden" name="houseList">
-                                <input id="marrList" type="hidden" name="marrList">
-                                <div class="tabbable header-tabs">
-                                    <ul class="nav nav-tabs">
-                                        <li><a href="#box_tab4" data-toggle="tab"><i class="fa fa-circle-o"></i> <span
-                                                class="hidden-inline-mobile">房产证</span></a></li>
-                                        <li><a href="#box_tab3" data-toggle="tab"><i class="fa fa-circle-o"></i> <span
-                                                class="hidden-inline-mobile">学历证</span></a></li>
-                                        <li><a href="#box_tab2" data-toggle="tab"><i class="fa fa-circle-o"></i> <span
-                                                class="hidden-inline-mobile">离婚证</span></a></li>
-                                        <li class="active"><a href="#box_tab1" data-toggle="tab"><i
-                                                class="fa fa-circle-o"></i> <span
-                                                class="hidden-inline-mobile">身份证</span></a></li>
-                                    </ul>
-                                    <div class="tab-content">
-
-                                        <div class="tab-pane fade in active card" id="box_tab1">
-                                            <div class="dib mr20">
-                                                <p class="center">正面</p>
-                                                <img class="card_face" src="/wechat/web/images/member/card-face.png">
-                                                <p class="mt10"><input type="file" id="file_upload_cardFace"/></p>
-                                            </div>
-                                            <div class="dib center">
-                                                <p class="center">反面</p>
-                                                <img class="card_back" src="/wechat/web/images/member/card-back.png">
-                                                <p class="mt10"><input type="file" id="file_upload_cardBack"/></p>
-                                            </div>
-
-                                        </div>
-                                        <div class="tab-pane fade" id="box_tab2">
-                                            <input type="file" id="file_upload_cardMarr"/>
-                                            <div class="row">
-                                                <div class="col-sm-12 marr">
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="tab-pane fade" id="box_tab3">
-                                            <input type="file" id="file_upload_cardEdu"/>
-                                            <div class="row">
-                                                <div class="col-sm-12 edu">
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="tab-pane fade" id="box_tab4">
-                                            <input type="file" id="file_upload_cardHouse"/>
-                                            <div class="row">
-                                                <div class="col-sm-12 housing">
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group center">
-                    <button class="btn btn-lg btn-primary" onclick="javascript:form1.submit()" type="button">提交</button>
-                </div>
             </div>
-
-
         </div>
     </div>
 </div>
 </div>
+
 <script src="/wechat/web/js/config/infoData.js"></script>
 <script src="/wechat/web/js/config/area.js"></script>
 <script src="/wechat/web/js/config/city.js"></script>
@@ -562,45 +566,45 @@
     var eduArr = [];
     var houseArr = [];
     // 删除照片
-    function delImg(a,type) {
+    function delImg(a, type) {
 
-        if(type == 1){  //删除照片
-           var src = $(a).prev().find('img').attr('src');
-            if(photoArr.indexOf(src) == -1){
+        if (type == 1) {  //删除照片
+            var src = $(a).prev().find('img').attr('src');
+            if (photoArr.indexOf(src) == -1) {
                 layer.msg('删除失败，该照片不存在！');
                 return false;
-            }else{
-                photoArr.splice($.inArray(src,photoArr),1);
+            } else {
+                photoArr.splice($.inArray(src, photoArr), 1);
                 $('#photosList').val(photoArr);
             }
         }
-        if(type == 4){  //删除离婚证
+        if (type == 4) {  //删除离婚证
             var src = $(a).prev().find('img').attr('src');
-            if(marrArr.indexOf(src) == -1){
+            if (marrArr.indexOf(src) == -1) {
                 layer.msg('删除失败，该照片不存在！');
                 return false;
-            }else{
-                marrArr.splice($.inArray(src,marrArr),1);
+            } else {
+                marrArr.splice($.inArray(src, marrArr), 1);
                 $('#marrList').val(marrArr);
             }
         }
-        if(type == 5){  //删除学历证
+        if (type == 5) {  //删除学历证
             var src = $(a).prev().find('img').attr('src');
-            if(eduArr.indexOf(src) == -1){
+            if (eduArr.indexOf(src) == -1) {
                 layer.msg('删除失败，该照片不存在！');
                 return false;
-            }else{
-                eduArr.splice($.inArray(src,eduArr),1);
+            } else {
+                eduArr.splice($.inArray(src, eduArr), 1);
                 $('#eduList').val(eduArr);
             }
         }
-        if(type == 6){  //删除房产证
+        if (type == 6) {  //删除房产证
             var src = $(a).prev().find('img').attr('src');
-            if(houseArr.indexOf(src) == -1){
+            if (houseArr.indexOf(src) == -1) {
                 layer.msg('删除失败，该照片不存在！');
                 return false;
-            }else{
-                houseArr.splice($.inArray(src,houseArr),1);
+            } else {
+                houseArr.splice($.inArray(src, houseArr), 1);
                 $('#houseList').val(houseArr);
             }
         }
@@ -732,8 +736,8 @@
         });
 
         $("#photos,.card,.marr,.edu,.house").on("focusin", function () {
-            for(var i=0;i<5;i++){
-                $("a[rel=group"+i+"]").fancybox({
+            for (var i = 0; i < 5; i++) {
+                $("a[rel=group" + i + "]").fancybox({
                     'transitionIn': 'elastic',
                     'transitionOut': 'elastic'
                 });
