@@ -99,7 +99,7 @@ class MemberController extends BaseController
             unset($data['eduList']);
             unset($data['houseList']);
             unset($data['marrList']);
-            //var_dump($data);exit;
+            var_dump($data);exit;
             $user = \common\models\User::getInstance()->addUser($data);
             // 添加图片
             User::getInstance()->insertUserPhoto($user['id'], $photo);

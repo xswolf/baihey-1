@@ -87,6 +87,10 @@ class User extends Base
             isset($data['city']) ? $infoData['city'] = $data['city'] : true;
             isset($data['area']) ? $infoData['area'] = $data['area'] : true;
             isset($data['personalized']) ? $infoData['personalized'] = $data['personalized'] : true;
+            isset($data['privacy_pic']) ? $infoData['privacy_pic'] = $data['privacy_pic'] : true;
+            isset($data['privacy_wechat']) ? $infoData['privacy_wechat'] = $data['privacy_wechat'] : true;
+            isset($data['privacy_qq']) ? $infoData['privacy_qq'] = $data['privacy_qq'] : true;
+            isset($data['username']) ? $dataUser['username'] = $data['username'] : true;
         }
         $time                        = YII_BEGIN_TIME;
         $dataUser['reg_time']        = $time;
@@ -106,7 +110,7 @@ class User extends Base
             $userAuth = array_merge($userAuth, $data['auth']);
             unset($data['auth']);
         }
-
+        var_dump($userInfo);
         $infoData['auth'] = json_encode($userAuth);
         $infoData['info'] = json_encode($userInfo);
 
@@ -743,6 +747,7 @@ class User extends Base
 
     public function editInfoInfo($data)
     {
+        $data['age'] = $data['age'] ? strtotime($data['age']) : '';
         $data['level'] = isset($data['level']) ? $data['level'] : '';
         $data['local'] = isset($data['local']) ? $data['local'] : '';
         $data['head_pic'] = isset($data['head_pic']) ? $data['head_pic'] : '';
@@ -760,7 +765,7 @@ class User extends Base
         !empty($data['photosList']) ? $this->upPhoto($user_id, 1, $data['photosList']) : true;
         // 上传头像
         if(!empty($data['headPic'])) {
-            $headPic = UserPhoto::getInstance()->findOne(['thumb_path' =>  $data['headPic']]);
+            $headPic = UserPhoto::getInstance('user_photo')->findOne(['thumb_path' =>  $data['headPic']]);
             UserPhoto::getInstance()->setHeadPic($user_id, ['id' => $headPic->id, 'thumb_path' => $data['headPic']]);
         }
         // 上传身份证
