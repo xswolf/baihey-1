@@ -91,7 +91,7 @@ class User extends Base
             isset($data['privacy_wechat']) ? $infoData['privacy_wechat'] = $data['privacy_wechat'] : true;
             isset($data['privacy_qq']) ? $infoData['privacy_qq'] = $data['privacy_qq'] : true;
 
-            isset($data['went_travel']) ? $infoData['went_travel'] = implode(',', $data['privacy_qq']) : true;
+            isset($data['went_travel']) ? $infoData['went_travel'] = implode(',', $data['went_travel']) : true;
             isset($data['want_travel']) ? $infoData['want_travel'] = implode(',', $data['want_travel']) : true;
             isset($data['like_food']) ? $infoData['like_food'] = implode(',', $data['like_food']) : true;
             isset($data['love_sport']) ? $infoData['love_sport'] = implode(',', $data['love_sport']) : true;
