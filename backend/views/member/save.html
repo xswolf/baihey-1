@@ -531,7 +531,7 @@
                                         <div class="tab-pane fade" id="box_tab4">
                                             <input type="file" id="file_upload_cardHouse"/>
                                             <div class="row">
-                                                <div class="col-sm-12 house">
+                                                <div class="col-sm-12 housing">
                                                 </div>
                                             </div>
                                         </div>
@@ -725,7 +725,7 @@
             'onUploadSuccess': function (file, data, response) {
                 var _data = data.replace('thumb', 'picture');
                 var imgHtml = '<div class="pr imgBox"><a href="' + _data + '" rel="group5"><img src="' + data + '" ></a><i class="del fa fa-times-circle-o text-danger" onclick="delImg(this,6)"></i></div>';
-                $('.house').append(imgHtml);
+                $('.housing').append(imgHtml);
                 houseArr.push(data);
                 $('#houseList').val(houseArr);
             }
