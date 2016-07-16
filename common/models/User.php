@@ -110,7 +110,7 @@ class User extends Base
             $userAuth = array_merge($userAuth, $data['auth']);
             unset($data['auth']);
         }
-        var_dump($userInfo);
+
         $infoData['auth'] = json_encode($userAuth);
         $infoData['info'] = json_encode($userInfo);
 
