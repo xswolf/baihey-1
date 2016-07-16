@@ -343,14 +343,14 @@
                             <div class="form-group">
                                 <label class="col-md-3 control-label">职业要求</label>
                                 <div class="input-group col-md-6">
-                                    <select multiple class="col-md-12 mult_select occupation" name="zo[zo_occupation]">
+                                    <select multiple class="col-md-12 mult_select occupation" name="zo[zo_occupation][]">
                                     </select>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-md-3 control-label">婚姻要求</label>
                                 <div class="input-group col-md-6">
-                                    <select multiple class="col-md-12 mult_select" name="zo[zo_marriage]">
+                                    <select multiple class="col-md-12 mult_select" name="zo[zo_marriage][]">
                                         <option value="1">未婚</option>
                                         <option value="2">离异</option>
                                         <option value="3">丧偶</option>
@@ -360,7 +360,7 @@
                             <div class="form-group">
                                 <label class="col-md-3 control-label">属相要求</label>
                                 <div class="input-group col-md-6">
-                                    <select multiple class="col-md-12 mult_select zodiac" name="zo[zodiac]">
+                                    <select multiple class="col-md-12 mult_select zodiac" name="zo[zo_zodiac][]">
                                     </select>
                                 </div>
                             </div>
@@ -368,14 +368,14 @@
                                 <label class="col-md-3 control-label">星座要求</label>
                                 <div class="input-group col-md-6">
                                     <select multiple class="form-control mult_select constellation"
-                                            name="zo[zo_constellation]"></select>
+                                            name="zo[zo_constellation][]"></select>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-md-3 control-label">地区要求</label>
                                 <div class="input-group col-md-6">
                                     <select multiple class="form-control mult_select dq-Province"
-                                            name="zo[zo_address]"></select>
+                                            name="zo[zo_address][]"></select>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -423,7 +423,7 @@
                             <div class="form-group">
                                 <label class="col-md-3 control-label">照片显示权限</label>
                                 <div class="input-group col-md-6">
-                                    <select class="form-control">
+                                    <select class="form-control" name="privacy_pic">
                                         <option value="1">完全公开</option>
                                         <option value="2">关注可见</option>
                                         <option value="3">VIP可见</option>
@@ -434,7 +434,7 @@
                             <div class="form-group">
                                 <label class="col-md-3 control-label">微信显示权限</label>
                                 <div class="input-group col-md-6">
-                                    <select class="form-control">
+                                    <select class="form-control" name="privacy_wechat">
                                         <option value="1">完全公开</option>
                                         <option value="2">关注可见</option>
                                         <option value="3">VIP可见</option>
@@ -445,7 +445,7 @@
                             <div class="form-group">
                                 <label class="col-md-3 control-label">QQ显示权限</label>
                                 <div class="input-group col-md-6">
-                                    <select class="form-control">
+                                    <select class="form-control" name="privacy_qq">
                                         <option value="1">完全公开</option>
                                         <option value="2">关注可见</option>
                                         <option value="3">VIP可见</option>

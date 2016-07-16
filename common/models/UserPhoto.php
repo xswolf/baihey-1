@@ -28,7 +28,11 @@ class UserPhoto extends Base
         $sum = $this->find()->where(['user_id' => $user_id, 'type' => $type])->count('id');
         $count = isset($data['type']) ? 2 : 12;
         if ($count >= $sum) {
-            $this->user_id = $user_id;
+            $data['user_id'] = $user_id;
+            $data['create_time'] = $data['time'];
+            $data['update_time'] = $data['time'];
+            unset($data['time']);
+            /*$this->user_id = $user_id;
             $this->pic_path = $data['pic_path'];
             $this->thumb_path = $data['thumb_path'];
             $this->create_time = $data['time'];
@@ -36,11 +40,18 @@ class UserPhoto extends Base
             if (isset($data['type'])) {
                 $this->type = $data['type'];
             }
+            if(isset($data['is_check'])) {
+                $this->is_check = $data['is_check'];
+            }*/
             if (0 == $sum) {
-                $this->is_head = 1;
+                $data['is_head'] = 1;
+                //$this->is_head = 1;
                 UserInformation::getInstance()->updateUserInfo($user_id, ['head_pic' => $data['thumb_path']]);
             }
-            $this->insert(false);
+            $this->getDb()->createCommand()
+                ->insert($this->tablePrefix.'user_photo', $data)
+                ->execute();
+            //$this->insert(false);
             return $this->getDb()->getLastInsertID();
         } else {
             return false;
@@ -103,6 +114,10 @@ class UserPhoto extends Base
                 'is_head'       => 0,
                 'type'          => $v['type']
             ];
+            if(isset($v['is_check'])) {
+                $data['is_check'] = $v['is_check'];
+            }
+
             $ist = $this->getDb()->createCommand()
                 ->insert(static::tableName(), $data)
                 ->execute();

@@ -81,27 +81,30 @@ class MemberController extends BaseController
     public function actionSave()
     {
         if ($data = \Yii::$app->request->post()) {
+
             if ($data['phone'] == '' || $data['info']['real_name'] == '') {
                 return $this->__error('信息不全');
             }
+            $data['zo'] = User::getInstance()->editInfoZo($data['zo']);
+            $data['info'] = User::getInstance()->editInfoInfo($data['info']);
             $data['username'] = $data['phone'];
-            $photo            = $data['thumb_path'];
             $data['info']     = array_merge($data['info'], $data['zo']);
+            $photo = $data;
+
             unset($data['zo']);
-            unset($data['thumb_path']);
-            //            var_dump($data);exit;
-            $uid = \common\models\User::getInstance()->addUser($data);
-            foreach ($photo as $k => $v) {
-                $time              = time();
-                $pt['pic_path']    = $v;
-                $pt['thumb_path']  = $v;
-                $pt['create_time'] = $time;
-                $pt['create_time'] = time();
-                $pt['update_time'] = time();
-                $pt['user_id']     = $uid;
-                (new \common\models\UserPhoto)->addPhotoComment($pt);
-            }
-            if ($uid > 0) {
+            unset($data['photosList']);
+            unset($data['headPic']);
+            unset($data['cardFace_List']);
+            unset($data['cardBack_List']);
+            unset($data['eduList']);
+            unset($data['houseList']);
+            unset($data['marrList']);
+//var_dump($photo);exit;
+            //$user = \common\models\User::getInstance()->addUser($data);
+            // 添加图片
+            //User::getInstance()->insertUserPhoto($user['id'], $photo);
+            User::getInstance()->insertUserPhoto(10071, $photo);exit;
+            if ($user['id'] > 0) {
                 return $this->__success('添加成功');
             } else {
                 return $this->__error('添加失败');

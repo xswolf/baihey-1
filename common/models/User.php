@@ -730,4 +730,68 @@ class User extends Base
             ->update($this->tablePrefix.'user' , ['status'=>4] , ['id'=>$id])
             ->execute();
     }
+
+    public function editInfoZo($data)
+    {
+        $data['zo_occupation'] = isset($data['zo_occupation']) ? implode(',', $data['zo_occupation']) : '';
+        $data['zo_marriage'] = isset($data['zo_marriage']) ? implode(',', $data['zo_marriage']) : '';
+        $data['zo_zodiac'] = isset($data['zo_zodiac']) ? implode(',', $data['zo_zodiac']) : '';
+        $data['zo_constellation'] = isset($data['zo_constellation']) ? implode(',', $data['zo_constellation']) : '';
+        $data['zo_address'] = isset($data['zo_address']) ? implode(',', $data['zo_address']) : '';
+        return $data;
+    }
+
+    public function editInfoInfo($data)
+    {
+        $data['level'] = isset($data['level']) ? $data['level'] : '';
+        $data['local'] = isset($data['local']) ? $data['local'] : '';
+        $data['head_pic'] = isset($data['head_pic']) ? $data['head_pic'] : '';
+        $data['mate'] = isset($data['mate']) ? $data['mate'] : '';
+        $data['haunt_address'] = isset($data['haunt_address']) ? $data['haunt_address'] : '';
+        $data['work'] = isset($data['work']) ? $data['work'] : '';
+        $data['blood'] = isset($data['blood']) ? $data['blood'] : '';
+        return $data;
+    }
+
+    // 图片处理
+    public function insertUserPhoto($user_id, $data)
+    {
+        // 上传照片
+        !empty($data['photosList']) ? $this->upPhoto($user_id, 1, $data['photosList']) : true;
+        // 上传头像
+        if(!empty($data['headPic'])) {
+            $headPic = UserPhoto::getInstance()->findOne(['thumb_path' =>  $data['headPic']]);
+            UserPhoto::getInstance()->setHeadPic($user_id, ['id' => $headPic->id, 'thumb_path' => $data['headPic']]);
+        }
+        // 上传身份证
+        !empty($data['cardFace_List']) ? $this->upPhoto($user_id, 2, $data['cardFace_List']) : true;
+        !empty($data['cardBack_List']) ? $this->upPhoto($user_id, 3, $data['cardBack_List']) : true;
+        // 上传学历
+        !empty($data['eduList']) ? $this->upPhoto($user_id, 4, $data['eduList']) : true;
+        // 上传房产证
+        !empty($data['houseList']) ? $this->upPhoto($user_id, 6, $data['houseList']) : true;
+        // 上传婚姻证明
+        !empty($data['marrList']) ? $this->upPhoto($user_id, 5, $data['marrList']) : true;
+        exit;
+    }
+
+    // 图片上传
+    public function upPhoto($user_id, $type, $data)
+    {
+        $photo = explode(',', $data);
+        foreach($photo as $k => $v) {
+            $arr[$k]['pic_path'] = str_replace('thumb', 'picture', $v);
+            $arr[$k]['thumb_path'] = $v;
+            $arr[$k]['is_check'] = 1;
+            $arr[$k]['time'] = time();
+            if($type != 1) {
+                $arr[$k]['type'] = $type;
+            } else {
+                UserPhoto::getInstance()->addPhoto($user_id, $arr[$k]);
+            }
+        }
+        if($type != 1) {
+            UserPhoto::getInstance()->savePhoto($arr, $user_id);
+        }
+    }
 }
