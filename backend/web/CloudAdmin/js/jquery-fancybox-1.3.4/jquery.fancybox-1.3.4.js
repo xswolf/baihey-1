@@ -26,8 +26,8 @@
 
 		titleHeight = 0, titleStr = '', start_pos, final_pos, busy = false, fx = $.extend($('<div/>')[0], { prop: 0 }),
 
-		isIE6 = $.browser.msie && $.browser.version < 7 && !window.XMLHttpRequest,
-
+		isIE = !+"\v1",
+		isIE6 = isIE && window.XMLHttpRequest === undefined,
 		/*
 		 * Private methods 
 		 */
@@ -322,7 +322,8 @@
 			loading.hide();
 
 			if (wrap.is(":visible") && false === currentOpts.onCleanup(currentArray, currentIndex, currentOpts)) {
-				$.event.trigger('fancybox-cancel');
+
+				$('.fancybox-inline-tmp').trigger('fancybox-cancel');
 
 				busy = false;
 				return;
@@ -389,7 +390,7 @@
 						content.html( tmp.contents() ).fadeTo(currentOpts.changeFade, 1, _finish);
 					};
 
-					$.event.trigger('fancybox-change');
+                    $('.fancybox-inline-tmp').trigger('fancybox-change');
 
 					content
 						.empty()
@@ -577,8 +578,14 @@
 
 		_finish = function () {
 			if (!$.support.opacity) {
-				content.get(0).style.removeAttribute('filter');
-				wrap.get(0).style.removeAttribute('filter');
+                for(var ind=0;ind<content.length;ind++){
+                    content[ind].removeAttribute('filter');
+                }
+                for(var ind=0;ind<wrap.length;ind++){
+                    wrap[ind].removeAttribute('filter');
+                }
+				//content.get(0).style.removeAttr('filter');
+				//wrap.get(0).style.removeAttr('filter');
 			}
 
 			if (selectedOpts.autoDimensions) {
@@ -612,7 +619,7 @@
 			}
 
 			if (currentOpts.type == 'iframe') {
-				$('<iframe id="fancybox-frame" name="fancybox-frame' + new Date().getTime() + '" frameborder="0" hspace="0" ' + ($.browser.msie ? 'allowtransparency="true""' : '') + ' scrolling="' + selectedOpts.scrolling + '" src="' + currentOpts.href + '"></iframe>').appendTo(content);
+                $('<iframe id="fancybox-frame" name="fancybox-frame' + new Date().getTime() + '" frameborder="0" hspace="0" ' + (isIE ? 'allowtransparency="true""' : '') + ' scrolling="' + selectedOpts.scrolling + '" src="' + currentOpts.href + '"></iframe>').appendTo(content);
 			}
 
 			wrap.show();
@@ -912,7 +919,7 @@
 
 		busy = true;
 
-		$.event.trigger('fancybox-cancel');
+        $('.fancybox-inline-tmp').trigger('fancybox-cancel');
 
 		_abort();
 
@@ -957,7 +964,7 @@
 			title.empty().hide();
 			wrap.hide();
 
-			$.event.trigger('fancybox-cleanup');
+            $('.fancybox-inline-tmp, select:not(#fancybox-tmp select)').trigger('fancybox-cleanup');
 
 			content.empty();
 
