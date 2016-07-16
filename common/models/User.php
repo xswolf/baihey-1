@@ -772,7 +772,7 @@ class User extends Base
         !empty($data['houseList']) ? $this->upPhoto($user_id, 6, $data['houseList']) : true;
         // 上传婚姻证明
         !empty($data['marrList']) ? $this->upPhoto($user_id, 5, $data['marrList']) : true;
-        exit;
+
     }
 
     // 图片上传
