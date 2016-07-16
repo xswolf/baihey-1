@@ -391,31 +391,51 @@
                             <div class="form-group">
                                 <label class="col-md-3 control-label">想去的地方</label>
                                 <div class="input-group col-md-6">
-                                    <select multiple class="form-control mult_select"></select>
+                                    <select multiple class="form-control mult_select" name="went_travel[]">
+                                        {{foreach from=$travel item=vo}}
+                                        <option value="{{$vo.id}}">{{$vo.name}}</option>
+                                        {{/foreach}}
+                                    </select>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-md-3 control-label">去过的地方</label>
                                 <div class="input-group col-md-6">
-                                    <select multiple class="form-control mult_select"></select>
+                                    <select multiple class="form-control mult_select" name="want_travel[]">
+                                        {{foreach from=$travel item=vo}}
+                                        <option value="{{$vo.id}}">{{$vo.name}}</option>
+                                        {{/foreach}}
+                                    </select>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-md-3 control-label">喜欢的美食</label>
                                 <div class="input-group col-md-6">
-                                    <select multiple class="form-control mult_select"></select>
+                                    <select multiple class="form-control mult_select" name="like_food[]">
+                                        {{foreach from=$food item=vo}}
+                                        <option value="{{$vo.id}}">{{$vo.name}}</option>
+                                        {{/foreach}}
+                                    </select>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-md-3 control-label">喜欢的运动</label>
                                 <div class="input-group col-md-6">
-                                    <select multiple class="form-control mult_select"></select>
+                                    <select multiple class="form-control mult_select" name="love_sport[]">
+                                        {{foreach from=$sport item=vo}}
+                                        <option value="{{$vo.id}}">{{$vo.name}}</option>
+                                        {{/foreach}}
+                                    </select>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-md-3 control-label">想看的电影</label>
                                 <div class="input-group col-md-6">
-                                    <select multiple class="form-control mult_select"></select>
+                                    <select multiple class="form-control mult_select" name="want_film[]">
+                                        {{foreach from=$movie item=vo}}
+                                        <option value="{{$vo.id}}">{{$vo.name}}</option>
+                                        {{/foreach}}
+                                    </select>
                                 </div>
                             </div>
 

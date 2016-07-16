@@ -109,6 +109,10 @@ class MemberController extends BaseController
                 return $this->__error('添加失败');
             }
         }
+        $this->assign('sport' , Config::getInstance()->getListByType(1));
+        $this->assign('movie' , Config::getInstance()->getListByType(2));
+        $this->assign('food' , Config::getInstance()->getListByType(3));
+        $this->assign('travel' , Area::getInstance()->getWentTravelList());
         return $this->render();
     }
 

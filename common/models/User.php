@@ -90,6 +90,13 @@ class User extends Base
             isset($data['privacy_pic']) ? $infoData['privacy_pic'] = $data['privacy_pic'] : true;
             isset($data['privacy_wechat']) ? $infoData['privacy_wechat'] = $data['privacy_wechat'] : true;
             isset($data['privacy_qq']) ? $infoData['privacy_qq'] = $data['privacy_qq'] : true;
+
+            isset($data['went_travel']) ? $infoData['went_travel'] = implode(',', $data['privacy_qq']) : true;
+            isset($data['want_travel']) ? $infoData['want_travel'] = implode(',', $data['want_travel']) : true;
+            isset($data['like_food']) ? $infoData['like_food'] = implode(',', $data['like_food']) : true;
+            isset($data['love_sport']) ? $infoData['love_sport'] = implode(',', $data['love_sport']) : true;
+            isset($data['want_film']) ? $infoData['want_film'] = implode(',', $data['want_film']) : true;
+
             isset($data['username']) ? $dataUser['username'] = $data['username'] : true;
         }
         $time                        = YII_BEGIN_TIME;
