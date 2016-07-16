@@ -332,6 +332,7 @@ table .user_img{
 .col9{ color: #888;}
 .col10{ color: #999;}
 .m10{ margin: 10px 0;}
+.mt5{ margin-top: 5px;}
 .mt10{ margin-top: 10px;}
 .mt20{ margin-top: 20px;}
 .mt30{ margin-top: 30px;}
@@ -364,6 +365,8 @@ table .user_img{
 .imgBox{
     display: inline-block;
     cursor: pointer;
+    margin-right: 15px;
+    margin-bottom: 15px;
 }
 .imgBox .del,.imgBox .del:hover{
     font-size: 22px;
