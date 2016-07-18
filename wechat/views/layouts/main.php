@@ -18,13 +18,13 @@
     <link href="/wechat/web/css/plugin/photoswipe/default-skin.css" rel="stylesheet">
     <script>
         function addElement() {
-            if (location.hash == '#/index' || location.hash == '#/wechat_redirect') {
+//            if (location.hash == '#/index' || location.hash == '#/wechat_redirect') {
                 alert(location.hash);
                 var div = document.createElement("div");
                 div.setAttribute("id", "welcome");
                 div.innerHTML = '<div class="loading"><img src="/wechat/web/images/domLoading.gif" /><p>加载中，请稍候</p></div>';
                 document.body.appendChild(div);
-            }
+//            }
         }
     </script>
     <!-- STYLESHEETS --><!--[if lt IE 9]>
