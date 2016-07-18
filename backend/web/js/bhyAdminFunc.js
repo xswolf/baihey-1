@@ -190,7 +190,7 @@ var bhyFunc = {
             this.layerClickedCancelButton('page');
         })
     },
-    resetPass: function () {  // 重置密码
+    resetPass: function (user_id) {  // 重置密码
         layer.confirm('确定重置该用户密码吗？', {icon: 3, title: '提示'}, function (index) {
             bhyFunc.ajaxRequest('url', {user_id: bhyFunc.user_id}, function (res) {
                 if (res.status == 1) {
@@ -202,7 +202,7 @@ var bhyFunc = {
             })
         });
     },
-    closeUserInfo: function (a) {   // 关闭用户资料
+    closeUserInfo: function (a , user_id) {   // 关闭用户资料
         var isShow = $(a).data('isshow');
         var status = $('#status').data('status');
         if (status != 1) {
@@ -237,7 +237,7 @@ var bhyFunc = {
         }
 
     },
-    addBlacklist: function () {
+    addBlacklist: function (user_id) {
         var t = $('#userBlackList').text();
         if (t == '列入黑名单') {
             layer.confirm('列入黑名单后，该用户无法登录，您确定吗？', {icon: 3, title: '提示'}, function (index) {

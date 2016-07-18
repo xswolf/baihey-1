@@ -113,18 +113,18 @@
                                             <i class="fa fa-rmb fa-fw"></i>
                                             充值/开通
                                         </a>
-                                        <a href="/admin/member/edit?id=1" data-toggle="modal" class="list-group-item">
+                                        <a href="/admin/member/edit?id={{$user.id}}" data-toggle="modal" class="list-group-item">
                                             <i class="fa fa-edit fa-fw"></i>
                                             修改资料</a>
                                         <a id="sendMsg" href="javascript:;" class="list-group-item"><i
                                                 class="fa fa-comment-o fa-fw"></i> 发站内信</a>
-                                        <a onclick="bhyFunc.resetPass()" href="javascript:;" class="list-group-item"><i
+                                        <a onclick="bhyFunc.resetPass({{$user.id}})" href="javascript:;" class="list-group-item"><i
                                                 class="fa fa-unlock-alt fa-fw"></i> 重置密码</a>
                                         <!-- TODO data-isshow这个属性必须要有值，true或者false, 代表该用户资料是否在前台展示。 对应按钮文字也要判断是开放资料还是关闭资料 -->
-                                        <a onclick="bhyFunc.closeUserInfo(this)" data-isshow="true" href="javascript:;" class="list-group-item">
+                                        <a onclick="bhyFunc.closeUserInfo(this , {{$user.id}})" data-isshow="true" href="javascript:;" class="list-group-item">
                                             <i class="fa fa-power-off fa-fw"></i>
                                             <span id="closeUserInfoBtnTitle">关闭资料</span></a>
-                                        <a onclick="bhyFunc.addBlacklist()" id="addBlacklist" href="javascript:;" class="list-group-item">
+                                        <a onclick="bhyFunc.addBlacklist({{$user.id}})" id="addBlacklist" href="javascript:;" class="list-group-item">
                                             <i class="fa fa-minus-circle fa-fw"></i>
                                             <!-- TODO 根据用户是否黑名单显示按钮文字，列入黑名单、解除黑名单-->
                                             <span id="userBlackList">列入黑名单</span></a>
