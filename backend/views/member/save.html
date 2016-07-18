@@ -37,6 +37,7 @@
                                             <option value="">请选择</option>
                                         </select>
                                     </div>
+                                    <input type="hidden" name="info[local]" id="local" value="">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -780,14 +781,23 @@
             $('#constellation').val(constellation.id);
         })
 
-
+        var local = '';
         // 地区联动-选择省
         $("#dq-Province").on("change", function () {
+            local = $("#dq-Province").find("option:selected").text()
+            $("#local").val(local);
             addressLink($(this), $("#dq-City"), citys, true);
         });
         // 地区联动-选择市
         $("#dq-City").on("change", function () {
+            local = $("#dq-City").find("option:selected").text()
+            $("#local").val(local);
             addressLink($(this), $("#dq-Area"), area, false);
+        });
+        // 地区联动-选择区
+        $("#dq-Area").on("change", function () {
+            local = $("#dq-Area").find("option:selected").text()
+            $("#local").val(local);
         });
 
         //地区联动函数
