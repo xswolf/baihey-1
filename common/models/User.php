@@ -751,6 +751,7 @@ class User extends Base
         $data['zo_zodiac'] = isset($data['zo_zodiac']) ? implode(',', $data['zo_zodiac']) : '';
         $data['zo_constellation'] = isset($data['zo_constellation']) ? implode(',', $data['zo_constellation']) : '';
         $data['zo_address'] = isset($data['zo_address']) ? implode(',', $data['zo_address']) : '';
+        $data['zo_other'] = isset($data['zo_other']) ? $data['zo_other'] : '';
         return $data;
     }
 
