@@ -19,7 +19,7 @@
     <script>
         function addElement() {
 //            if (location.hash == '#/index' || location.hash == '#/wechat_redirect') {
-                alert(location.hash);
+                alert(location.href);
                 var div = document.createElement("div");
                 div.setAttribute("id", "welcome");
                 div.innerHTML = '<div class="loading"><img src="/wechat/web/images/domLoading.gif" /><p>加载中，请稍候</p></div>';
