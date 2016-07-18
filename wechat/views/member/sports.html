@@ -20,7 +20,7 @@
         </p>
     </ion-content>
     <ion-content class="bhy com_w_100 sports t140">
-        <ion-checkbox ng-repeat="sp in sportsList" ng-model="sp.checked" ng-click="scrollSmallToBottom($event)"><i
+        <ion-checkbox ng-repeat="sp in sportsList" ng-model="sp.checked" ng-click="scrollSmallToBottom($event,sp)"><i
                 class="icon-sport-{{sp.pic_path}} fs16 cor30 mr5"></i>{{sp.name}}
         </ion-checkbox>
     </ion-content>

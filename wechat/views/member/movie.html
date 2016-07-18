@@ -23,13 +23,13 @@
         <div class="item item-divider">
             <div class="padding">电影</div>
         </div>
-        <ion-checkbox ng-repeat="mv in list | filter:{pic_path: 2}" ng-click="scrollSmallToBottom($event)"
+        <ion-checkbox ng-repeat="mv in list | filter:{pic_path: 2}" ng-click="scrollSmallToBottom($event,mv)"
                       ng-model="mv.checked">{{mv.name}}
         </ion-checkbox>
         <div class="item item-divider">
             <div class="padding">电视</div>
         </div>
-        <ion-checkbox ng-repeat="tv in list | filter:{pic_path: 1}" ng-click="scrollSmallToBottom($event)"
+        <ion-checkbox ng-repeat="tv in list | filter:{pic_path: 1}" ng-click="scrollSmallToBottom($event,tv)"
                       ng-model="tv.checked">{{tv.name}}
         </ion-checkbox>
     </ion-content>

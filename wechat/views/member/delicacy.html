@@ -21,7 +21,7 @@
             </p>
     </ion-content>
     <ion-content class="bhy com_w_100 delicacy t140">
-        <ion-checkbox ng-repeat="f in foodList" ng-click="scrollSmallToBottom($event)"
+        <ion-checkbox ng-repeat="f in foodList" ng-click="scrollSmallToBottom($event,f)"
                       ng-model="f.checked">{{f.name}}
         </ion-checkbox>
     </ion-content>

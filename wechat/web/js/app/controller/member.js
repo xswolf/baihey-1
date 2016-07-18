@@ -830,7 +830,13 @@ define(['app/module', 'app/directive/directiveApi'
         }
 
         // 横向滚动至底部
-        $scope.scrollSmallToBottom = function (event) {
+        $scope.scrollSmallToBottom = function (event,da) {
+            var list = $filter('filter')($scope.data,{checked: true});
+            if(list.length > 6){
+                da.checked = false;
+                ar.saveDataAlert($ionicPopup,'您最多能选择6项！');
+                return;
+            }
             if (event.target.checked) {
                 $ionicScrollDelegate.$getByHandle('small').scrollBottom();
             } else {
@@ -928,7 +934,13 @@ define(['app/module', 'app/directive/directiveApi'
         }
 
         // 横向滚动至底部
-        $scope.scrollSmallToBottom = function (event) {
+        $scope.scrollSmallToBottom = function (event,da) {
+            var list = $filter('filter')($scope.data,{checked: true});
+            if(list.length > 6){
+                da.checked = false;
+                ar.saveDataAlert($ionicPopup,'您最多能选择6项！');
+                return;
+            }
             if (event.target.checked) {
                 $ionicScrollDelegate.$getByHandle('small').scrollBottom();
             } else {
@@ -962,7 +974,7 @@ define(['app/module', 'app/directive/directiveApi'
     ]);
 
     // 喜欢的运动
-    module.controller("member.sports", ['app.serviceApi', '$scope', '$ionicPopup', '$ionicScrollDelegate', '$ionicLoading', '$location', function (api, $scope, $ionicPopup, $ionicScrollDelegate, $ionicLoading, $location) {
+    module.controller("member.sports", ['app.serviceApi', '$scope', '$ionicPopup', '$ionicScrollDelegate', '$ionicLoading', '$location','$filter', function (api, $scope, $ionicPopup, $ionicScrollDelegate, $ionicLoading, $location,$filter) {
 
         $scope.formData = [];
         $scope.formData.userSportsIdList = $scope.userInfo.love_sport != null && $scope.userInfo.love_sport ? $scope.userInfo.love_sport.split(',') : [];  // 用户数据
@@ -983,7 +995,13 @@ define(['app/module', 'app/directive/directiveApi'
         });
 
         // 横向滚动至底部
-        $scope.scrollSmallToBottom = function (event) {
+        $scope.scrollSmallToBottom = function (event,da) {
+            var list = $filter('filter')($scope.sportsList,{checked: true});
+            if(list.length > 6){
+                da.checked = false;
+                ar.saveDataAlert($ionicPopup,'您最多能选择6项！');
+                return;
+            }
             if (event.target.checked) {
                 $ionicScrollDelegate.$getByHandle('small').scrollBottom();
             } else {
@@ -1056,7 +1074,13 @@ define(['app/module', 'app/directive/directiveApi'
         }
 
         // 横向滚动至底部
-        $scope.scrollSmallToBottom = function (event) {
+        $scope.scrollSmallToBottom = function (event,da) {
+            var list = $filter('filter')($scope.list,{checked: true});
+            if(list.length > 6){
+                da.checked = false;
+                ar.saveDataAlert($ionicPopup,'您最多能选择6项！');
+                return;
+            }
             if (event.target.checked) {
                 $ionicScrollDelegate.$getByHandle('small').scrollBottom();
             } else {
@@ -1120,7 +1144,13 @@ define(['app/module', 'app/directive/directiveApi'
         }
 
         // 横向滚动至底部
-        $scope.scrollSmallToBottom = function (event) {
+        $scope.scrollSmallToBottom = function (event,da) {
+            var list = $filter('filter')($scope.foodList,{checked: true});
+            if(list.length > 6){
+                da.checked = false;
+                ar.saveDataAlert($ionicPopup,'您最多能选择6项！');
+                return;
+            }
             if (event.target.checked) {
                 $ionicScrollDelegate.$getByHandle('small').scrollBottom();
             } else {

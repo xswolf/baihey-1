@@ -27,13 +27,13 @@
             <div class="item item-divider" ng-if="typeTab==1"
                  ng-repeat="d in domestic | orderBy:['-id'] | limitTo:pageSize">
                 <div class="padding">{{d.name}}</div>
-                <ion-checkbox ng-repeat="da in data" ng-if="da.parentId == d.id" ng-click="scrollSmallToBottom($event)"
+                <ion-checkbox ng-repeat="da in data" ng-if="da.parentId == d.id" ng-click="scrollSmallToBottom($event,da)"
                               ng-model="da.checked">{{da.name}}
                 </ion-checkbox>
             </div>
             <div class="item item-divider" ng-if="typeTab==2" ng-repeat="a in abroad | limitTo:pageSize">
                 <div class="padding">{{a.name}}</div>
-                <ion-checkbox ng-repeat="da in data" ng-if="da.parentId == a.id" ng-click="scrollSmallToBottom($event)"
+                <ion-checkbox ng-repeat="da in data" ng-if="da.parentId == a.id" ng-click="scrollSmallToBottom($event,da)"
                               ng-model="da.checked">{{da.name}}
                 </ion-checkbox>
             </div>
