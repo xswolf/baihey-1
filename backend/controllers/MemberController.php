@@ -261,7 +261,11 @@ class MemberController extends BaseController
 
     public function actionDel(){
         $id = \Yii::$app->request->post('id');
-        User::getInstance()->delUser($id);
+        if (User::getInstance()->delUser($id)){
+            $this->renderAjax(['status'=>1 , 'message'=>'成功']);
+        }else{
+            $this->renderAjax(['status'=>0 , 'message'=>'失败']);
+        }
     }
 
 }

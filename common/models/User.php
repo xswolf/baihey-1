@@ -735,10 +735,12 @@ class User extends Base
     /**
      * 删除用户
      * @param $id
+     * @param $status
+     * @return bool
      */
-    public function delUser($id){
-        \Yii::$app->db->createCommand()
-            ->update($this->tablePrefix.'user' , ['status'=>4] , ['id'=>$id])
+    public function delUser($id , $status = 4){
+        return \Yii::$app->db->createCommand()
+            ->update($this->tablePrefix.'user' , ['status'=>$status] , ['id'=>$id])
             ->execute();
     }
 

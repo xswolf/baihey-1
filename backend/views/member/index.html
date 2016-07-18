@@ -196,20 +196,23 @@
         } );
 
         $('.del-user').click(function () {
-            $('table .selected').each(function () {
-                var id = ($(this).children().next().html());
-                if(confirm('确认删除')){
-                    $.ajax({ type:'post',
-                        url: "/admin/member/del",
-                        data:{id:id},
-                        success: function(res){
+            if(confirm('确认删除')){
+                var id = [];
+                $('table .selected').each(function () {
+                    id.push($(this).children().next().html());
+                })
 
+                $.ajax({ type:'post',
+                    url: "/admin/member/del",
+                    data:{id:id},
+                    success: function(res){
+                        if (res.status == 1) {
+                            window.location.reload();
                         }
-                    });
-                }
+                    }
+                });
+            }
 
-            })
-            window.location.reload();
         })
     });
 </script>
