@@ -206,6 +206,7 @@
                     url: "/admin/member/del",
                     data:{id:id},
                     success: function(res){
+                        res = JSON.parse(res);
                         if (res.status == 1) {
                             window.location.reload();
                         }
