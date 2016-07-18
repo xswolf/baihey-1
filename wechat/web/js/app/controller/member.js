@@ -819,8 +819,13 @@ define(['app/module', 'app/directive/directiveApi'
         }
 
         // 删除
-        $scope.remove = function (event) {
-            $scope.data[event].checked = false;
+        $scope.remove = function (dat) {
+            for(var i in $scope.data){
+                if($scope.data[i].id == dat.id){
+                    $scope.data[i].checked=false;
+                    break;
+                }
+            }
             $ionicScrollDelegate.$getByHandle('small').scrollTop();
         }
 
