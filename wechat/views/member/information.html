@@ -368,15 +368,17 @@
                     <span ng-if="userInfo.info.zo_zodiac"
                           class="ml20 mr10">{{userInfo.info.zo_zodiac | zo_zodiac}}</span>
                 </p>
+                <i class="icon ion-ios-arrow-right cor52"></i>
             </ion-item>
-            <ion-item class="mb30 item-icon-right" href="#/member/zo_constellation">
+            <ion-item class="item-icon-right" href="#/member/zo_constellation">
                 <p>
                     <span class="cor4">星座要求</span>
                     <span ng-if="!userInfo.info.zo_constellation" class="ml20 mr10 cor21">不限</span>
                     <span ng-if="userInfo.info.zo_constellation" class="ml20 mr10">{{userInfo.info.zo_constellation | zo_constellation}}</span>
                 </p>
+                <i class="icon ion-ios-arrow-right cor52"></i>
             </ion-item>
-            <ion-item class="item-icon-right" href="#/member/mate">
+            <ion-item class="mb30 item-icon-right" href="#/member/mate">
                 <p>
                     <span class="cor4">心目中的TA</span>
                     <span ng-if="!userInfo.info.mate" class="ml20 mr10 cor21">立即填写</span>
