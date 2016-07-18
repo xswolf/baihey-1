@@ -346,8 +346,8 @@ var bhyFunc = {
             })
         }
     },
-    getJsonShowImg: function (type) {
-        if (type = 'discovery') {
+    getJsonShowImg: function (type,id) {
+        if (type == 'discovery') {
             //$.getJSON('url',{user_id,this.user_id}, function(res){
             //    layer.photos({
             //        photos: res
@@ -357,6 +357,32 @@ var bhyFunc = {
             // 数据格式
             var imgList = {
                 "title": "李倩的动态", //相册标题
+                "id": 1, //相册id
+                "start": 0, //初始显示的图片序号，默认0
+                "data": [   //相册包含的图片，数组格式
+                    {
+                        "alt": ".",
+                        "pid": 1, //图片id
+                        "src": "/wechat/web/images/test.jpg", //原图地址
+                        "thumb": "/wechat/web/images/test.jpg" //缩略图地址
+                    }
+                ]
+            }
+            layer.photos({
+                photos: imgList
+            });
+        }
+
+        if(type == 'message'){
+            //$.getJSON('url',{meg_id,id}, function(res){
+            //    layer.photos({
+            //        photos: res
+            //    });
+            //});
+
+            // 数据格式
+            var imgList = {
+                "title": "", //相册标题
                 "id": 1, //相册id
                 "start": 0, //初始显示的图片序号，默认0
                 "data": [   //相册包含的图片，数组格式

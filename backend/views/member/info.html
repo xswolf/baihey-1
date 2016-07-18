@@ -6,7 +6,8 @@
         <!-- BOX -->
         <div class="box border">
             <div class="box-title">
-                <h4><i class="fa fa-user"></i><span class="hidden-inline-mobile">{{$user['info']->real_name}} 的资料</span></h4>
+                <h4><i class="fa fa-user"></i><span class="hidden-inline-mobile">{{$user['info']->real_name}} 的资料</span>
+                </h4>
             </div>
             <div class="box-body">
                 <div class="tabbable header-tabs user-profile">
@@ -36,11 +37,12 @@
                                                 <!-- Indicators -->
                                                 <ol class="carousel-indicators">
                                                     <!--<li data-target="#carousel-example-generic" data-slide-to="0"-->
-                                                        <!--class="active"></li>-->
+                                                    <!--class="active"></li>-->
                                                     <!--<li data-target="#carousel-example-generic" data-slide-to="1"></li>-->
                                                     <!--<li data-target="#carousel-example-generic" data-slide-to="2"></li>-->
                                                     {{foreach from=$photoList key=k item=vo }}
-                                                        <li data-target="#carousel-example-generic" class="{{if $k == 0}}active{{/if}}" data-slide-to="{{$k}}"></li>
+                                                    <li data-target="#carousel-example-generic"
+                                                        class="{{if $k == 0}}active{{/if}}" data-slide-to="{{$k}}"></li>
                                                     {{/foreach}}
                                                 </ol>
 
@@ -49,13 +51,13 @@
 
                                                     {{foreach from=$photoList key=k item=vo }}
 
-                                                        <div class="item {{if $k == 0}}active{{/if}}">
-                                                            <a class="colorbox-button"
-                                                               href="{{$vo.thumb_path}}">
-                                                                <img alt=""
-                                                                     src="{{$vo.thumb_path}}">
-                                                            </a>
-                                                        </div>
+                                                    <div class="item {{if $k == 0}}active{{/if}}">
+                                                        <a class="colorbox-button"
+                                                           href="{{$vo.thumb_path}}">
+                                                            <img alt=""
+                                                                 src="{{$vo.thumb_path}}">
+                                                        </a>
+                                                    </div>
                                                     {{/foreach}}
 
                                                 </div>
@@ -121,10 +123,12 @@
                                         <a onclick="bhyFunc.resetPass()" href="javascript:;" class="list-group-item"><i
                                                 class="fa fa-unlock-alt fa-fw"></i> 重置密码</a>
                                         <!-- TODO data-isshow这个属性必须要有值，true或者false, 代表该用户资料是否在前台展示。 对应按钮文字也要判断是开放资料还是关闭资料 -->
-                                        <a onclick="bhyFunc.closeUserInfo(this)" data-isshow="true" href="javascript:;" class="list-group-item">
+                                        <a onclick="bhyFunc.closeUserInfo(this)" data-isshow="true" href="javascript:;"
+                                           class="list-group-item">
                                             <i class="fa fa-power-off fa-fw"></i>
                                             <span id="closeUserInfoBtnTitle">关闭资料</span></a>
-                                        <a onclick="bhyFunc.addBlacklist()" id="addBlacklist" href="javascript:;" class="list-group-item">
+                                        <a onclick="bhyFunc.addBlacklist()" id="addBlacklist" href="javascript:;"
+                                           class="list-group-item">
                                             <i class="fa fa-minus-circle fa-fw"></i>
                                             <!-- TODO 根据用户是否黑名单显示按钮文字，列入黑名单、解除黑名单-->
                                             <span id="userBlackList">列入黑名单</span></a>
@@ -435,11 +439,13 @@
                                             <td>1</td>
                                             <td>{{$user['info']->real_name}}(15301)</td>
                                             <td>看过后就能看见的那个好看</td>
-                                            <td><a href="javascript:;" onclick="bhyFunc.getJsonShowImg('discovery')">查看图片</a></td>
+                                            <td><a href="javascript:;" onclick="bhyFunc.getJsonShowImg('discovery')">查看图片</a>
+                                            </td>
                                             <td>58</td>
                                             <td>3</td>
                                             <td>2016-05-31 13:55:14</td>
-                                            <td><a href="javascript:;" onclick="bhyFunc.deleteItemByList(1,this)">删除</a></td>
+                                            <td><a href="javascript:;" onclick="bhyFunc.deleteItemByList(1,this)">删除</a>
+                                            </td>
                                         </tr>
                                         <tr>
                                             <td>2</td>
@@ -449,7 +455,8 @@
                                             <td>114</td>
                                             <td>21</td>
                                             <td>2016-07-10 18:00:55</td>
-                                            <td><a href="javascript:;" onclick="bhyFunc.deleteItemByList(2,this)">删除</a></td>
+                                            <td><a href="javascript:;" onclick="bhyFunc.deleteItemByList(2,this)">删除</a>
+                                            </td>
                                         </tr>
                                         </tbody>
                                     </table>
@@ -479,19 +486,23 @@
                                             <td>1</td>
                                             <td>唐明曙</td>
                                             <td>2016-05-31 18:11:10</td>
-                                            <td><a href="/admin/member/info?id=5615001">胡素娥(5615001)</a>-><a href="/admin/member/info?id=5615001">刘天贵(275001)</a></td>
+                                            <td><a href="/admin/member/info?id=5615001">胡素娥(5615001)</a>-><a
+                                                    href="/admin/member/info?id=5615001">刘天贵(275001)</a></td>
                                             <td>2015.6.26互留电话 自己约见</td>
                                             <td>成功</td>
-                                            <td><a href="javascript:;" onclick="bhyFunc.deleteItemByList(1,this)">删除</a></td>
+                                            <td><a href="javascript:;" onclick="bhyFunc.deleteItemByList(1,this)">删除</a>
+                                            </td>
                                         </tr>
                                         <tr>
                                             <td>2</td>
                                             <td>唐明曙</td>
                                             <td>2016-05-31 18:11:10</td>
-                                            <td><a href="/admin/member/info?id=5615001">胡素娥(5615001)</a>-><a href="/admin/member/info?id=5615001">刘天贵(275001)</a></td>
+                                            <td><a href="/admin/member/info?id=5615001">胡素娥(5615001)</a>-><a
+                                                    href="/admin/member/info?id=5615001">刘天贵(275001)</a></td>
                                             <td>2015.6.26互留电话 自己约见</td>
                                             <td>成功</td>
-                                            <td><a href="javascript:;" onclick="bhyFunc.deleteItemByList(2,this)">删除</a></td>
+                                            <td><a href="javascript:;" onclick="bhyFunc.deleteItemByList(2,this)">删除</a>
+                                            </td>
                                         </tr>
                                         </tbody>
                                     </table>
@@ -509,75 +520,142 @@
                                     <div class="panel-group" id="msgList">
                                         <div class="panel panel-default">
                                             <div class="panel-heading">
-                                                <h3 class="panel-title"> <a class="accordion-toggle" data-toggle="collapse" data-parent="#msgList" href="#list1">张三 <i class="fa fa-arrow-right"></i> 李四</a> </h3>
+                                                <h3 class="panel-title"><a class="accordion-toggle"
+                                                                           data-toggle="collapse" data-parent="#msgList"
+                                                                           href="#list1">阿三 <i
+                                                        class="fa fa-arrows-h"></i> 李四</a></h3>
                                             </div>
                                             <div id="list1" class="panel-collapse collapse in">
-                                                <div class="panel-body"> Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS. </div>
+                                                <div class="panel-body">
+                                                    <table class="table table-hover">
+                                                        <thead>
+                                                        <tr>
+                                                            <th>ID</th>
+                                                            <th>发送者</th>
+                                                            <th>接收者</th>
+                                                            <th>时间</th>
+                                                            <th>内容</th>
+                                                            <th>状态</th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                        <tr>
+                                                            <td>1</td>
+                                                            <td><a href="/admin/member/info?id=155521">李四(155521)</a>
+                                                            </td>
+                                                            <td><a href="/admin/member/info?id=5615001">阿三(16581001)</a>
+                                                            </td>
+                                                            <td>2016-05-31 13:55:14</td>
+                                                            <td>可以认识一下吗？</td>
+                                                            <td>成功</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>2</td>
+                                                            <td><a href="/admin/member/info?id=5615001">阿三(16581001)</a>
+                                                            </td>
+                                                            <td><a href="/admin/member/info?id=155521">李四(155521)</a>
+                                                            </td>
+                                                            <td>2016-05-31 18:11:10</td>
+                                                            <td>你好。</td>
+                                                            <td>成功</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>3</td>
+                                                            <td><a href="/admin/member/info?id=155521">李四(155521)</a>
+                                                            </td>
+                                                            <td><a href="/admin/member/info?id=5615001">阿三(16581001)</a>
+                                                            </td>
+                                                            <td>2016-05-31 18:11:10</td>
+                                                            <td>你好！</td>
+                                                            <td>成功</td>
+                                                        </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="panel panel-default">
                                             <div class="panel-heading">
-                                                <h3 class="panel-title"> <a class="accordion-toggle" data-toggle="collapse" data-parent="#msgList" href="#list2">Group Item #2 </a> </h3>
+                                                <h3 class="panel-title"><a class="accordion-toggle"
+                                                                           data-toggle="collapse" data-parent="#msgList"
+                                                                           href="#list2">阿三 <i
+                                                        class="fa fa-arrows-h"></i> 系统管理员</a></h3>
                                             </div>
                                             <div id="list2" class="panel-collapse collapse">
-                                                <div class="panel-body"> Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS. </div>
+                                                <div class="panel-body">
+                                                    <table class="table table-hover">
+                                                        <thead>
+                                                        <tr>
+                                                            <th>ID</th>
+                                                            <th>发送者</th>
+                                                            <th>接收者</th>
+                                                            <th>时间</th>
+                                                            <th>内容</th>
+                                                            <th>状态</th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                        <tr>
+                                                            <td>1</td>
+                                                            <td>系统管理员</td>
+                                                            <td><a href="/admin/member/info?id=5615001">阿三(16581001)</a>
+                                                            </td>
+                                                            <td>2016-05-31 13:55:14</td>
+                                                            <td>您上传的身份证照片未审核通过，请重新上传！</td>
+                                                            <td>成功</td>
+                                                        </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="panel panel-default">
                                             <div class="panel-heading">
-                                                <h3 class="panel-title"> <a class="accordion-toggle" data-toggle="collapse" data-parent="#msgList" href="#list3">Group Item #3 </a> </h3>
+                                                <h3 class="panel-title"><a class="accordion-toggle"
+                                                                           data-toggle="collapse" data-parent="#msgList"
+                                                                           href="#list3">阿三 <i
+                                                        class="fa fa-arrows-h"></i> 王武</a></h3>
                                             </div>
                                             <div id="list3" class="panel-collapse collapse">
-                                                <div class="panel-body"> Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS. </div>
+                                                <div class="panel-body">
+                                                    <table class="table table-hover">
+                                                        <thead>
+                                                        <tr>
+                                                            <th>ID</th>
+                                                            <th>发送者</th>
+                                                            <th>接收者</th>
+                                                            <th>时间</th>
+                                                            <th>内容</th>
+                                                            <th>状态</th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                        <tr>
+                                                            <td>1</td>
+                                                            <td><a href="/admin/member/info?id=155521">王武(155521)</a>
+                                                            </td>
+                                                            <td><a href="/admin/member/info?id=5615001">阿三(16581001)</a>
+                                                            </td>
+                                                            <td>2016-05-31 13:55:14</td>
+                                                            <td>在吗？</td>
+                                                            <td>成功</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>1</td>
+                                                            <td><a href="/admin/member/info?id=155521">王武(155521)</a>
+                                                            </td>
+                                                            <td><a href="/admin/member/info?id=5615001">阿三(16581001)</a>
+                                                            </td>
+                                                            <td>2016-05-31 13:55:14</td>
+                                                            <td><a href="javascript:;" onclick="bhyFunc.getJsonShowImg('message',43)">[图片]</a></td>
+                                                            <td>成功</td>
+                                                        </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <!--<table class="table table-hover">
-                                        <thead>
-                                        <tr>
-                                            <th>ID</th>
-                                            <th>类型</th>
-                                            <th>作者</th>
-                                            <th>对象</th>
-                                            <th>时间</th>
-                                            <th>内容</th>
-                                            <th>状态</th>
-                                            <th>操作</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        <tr>
-                                            <td>1</td>
-                                            <td>系统信息</td>
-                                            <td>管理员</td>
-                                            <td><a href="/admin/member/info?id=5615001">张三(16581001)</a></td>
-                                            <td>2016-05-31 13:55:14</td>
-                                            <td>您的资料已审核通过！</td>
-                                            <td>成功</td>
-                                            <td><a href="javascript:;" onclick="bhyFunc.deleteItemByList(2,this)">删除</a></td>
-                                        </tr>
-                                        <tr>
-                                            <td>2</td>
-                                            <td>打招呼</td>
-                                            <td><a href="/admin/member/info?id=5615001">潇潇(8438019)</a></td>
-                                            <td><a href="/admin/member/info?id=5615001">赵静(1513001)</a></td>
-                                            <td>2016-05-31 18:11:10</td>
-                                            <td>看到你的照片，让人觉得很是倾慕，可以认识一下么？</td>
-                                            <td>成功</td>
-                                            <td><a href="javascript:;" onclick="bhyFunc.deleteItemByList(2,this)">删除</a></td>
-                                        </tr>
-                                        <tr>
-                                            <td>3</td>
-                                            <td>信息</td>
-                                            <td><a href="/admin/member/info?id=5615001">潇潇(8438019)</a></td>
-                                            <td><a href="/admin/member/info?id=5615001">徐姝(878001)</a></td>
-                                            <td>2016-05-31 18:11:10</td>
-                                            <td>你好</td>
-                                            <td>成功</td>
-                                            <td><a href="javascript:;" onclick="bhyFunc.deleteItemByList(2,this)">删除</a></td>
-                                        </tr>
-                                        </tbody>
-                                    </table>-->
                                 </div>
                             </div>
                         </div>
@@ -774,7 +852,8 @@
         </div>
         <div class="form-group m10 center discount">
             <label>是否打折</label>
-            <div class="make-switch switch-small" data-on="info" data-off="success" data-on-label="<i class='fa fa-check icon-white'></i>" data-off-label="<i class='fa fa-times'></i>">
+            <div class="make-switch switch-small" data-on="info" data-off="success"
+                 data-on-label="<i class='fa fa-check icon-white'></i>" data-off-label="<i class='fa fa-times'></i>">
                 <input id="discount" type="checkbox" onchange="bhyFunc.checkedDiscount(this)">
             </div>
         </div>
@@ -817,7 +896,7 @@
             });
         })
 
-        $('#charge').click(function(){
+        $('#charge').click(function () {
             $('#charge_goods').trigger('change');
             layer.open({
                 type: 1,
