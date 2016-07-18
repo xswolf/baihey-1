@@ -476,9 +476,20 @@
                                             <label class="col-md-3 control-label">喜欢的影视</label>
                                             <div class="input-group col-md-6">
                                                 <select multiple class="form-control mult_select" data-name="want_film">
-                                                    {{foreach from=$movie item=vo}}
-                                                    <option value="{{$vo.id}}">{{$vo.name}}</option>
-                                                    {{/foreach}}
+                                                    <optgroup label="电影">
+                                                        {{foreach from=$movie item=vo}}
+                                                        {{if $vo.pic_path eq 2}}
+                                                        <option value="{{$vo.id}}">{{$vo.name}}</option>
+                                                        {{/if}}
+                                                        {{/foreach}}
+                                                    </optgroup>
+                                                    <optgroup label="电视">
+                                                        {{foreach from=$movie item=vo}}
+                                                        {{if $vo.pic_path eq 1}}
+                                                        <option value="{{$vo.id}}">{{$vo.name}}</option>
+                                                        {{/if}}
+                                                        {{/foreach}}
+                                                    </optgroup>
                                                 </select>
                                                 <input type="hidden" name="want_film" value="" id="want_film">
                                             </div>

@@ -67,9 +67,9 @@
                             <!--<div class="make-switch switch-small" data-on-label="已审核" data-off-label="未审核" data-on="success" data-off="danger">-->
                                 <!--<input type="checkbox" data-id="{{$vo.id}}" class="mySwitch" {{if ($vo.is_check == 1)}} checked {{/if}}>-->
                                 <select class="form-control mySwitch" data-id="{{$vo.id}}">
-                                    <option value="2">未审核</option>
-                                    <option value="1">审核通过</option>
-                                    <option value="0">审核未通过</option>
+                                    <option value="2" {{if $vo.is_check eq 2}} selected {{/if}}>未审核</option>
+                                    <option value="1" {{if $vo.is_check eq 1}} selected {{/if}}>审核通过</option>
+                                    <option value="0" {{if $vo.is_check eq 0}} selected {{/if}}>审核未通过</option>
                                 </select>
                             <!--</div>-->
                         </td>
