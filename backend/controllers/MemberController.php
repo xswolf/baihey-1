@@ -13,6 +13,7 @@ use backend\models\User as UserModel;
 use common\models\Area;
 use common\models\ChargeGoods;
 use common\models\ChargeOrder;
+use common\models\Message;
 use common\models\User;
 use common\models\UserPhoto;
 use wechat\models\Config;
@@ -160,12 +161,12 @@ class MemberController extends BaseController
         $user['info'] = json_decode($user['info']);
         $user['auth'] = json_decode($user['auth']);
         // 获取登陆次数
-        $loginTime    = User::getInstance()->getLoginTimes($userId);
-        $moneyAll     = User::getInstance()->getPayAll($userId);
+        $loginTime = User::getInstance()->getLoginTimes($userId);
+        $moneyAll  = User::getInstance()->getPayAll($userId);
         // 获取红娘名称
-        $userModel    = new UserModel();
-        $matchmaker   = $userModel->getFindUser(['id' => $user['matchmaker']]);
-        $matchmaking  = $userModel->getFindUser(['id' => $user['matchmaking']]);
+        $userModel   = new UserModel();
+        $matchmaker  = $userModel->getFindUser(['id' => $user['matchmaker']]);
+        $matchmaking = $userModel->getFindUser(['id' => $user['matchmaking']]);
 
         $this->assign('user', $user);
         $this->assign('loginTime', $loginTime);
@@ -175,9 +176,25 @@ class MemberController extends BaseController
         $this->assign('photoList', UserPhoto::getInstance()->getPhotoList(\Yii::$app->request->get('id')));
 
 
-        $messageList  = UserMessage::getInstance()->chatList($userId);
+        $messageList = UserMessage::getInstance()->chatList($userId);
+        foreach($messageList as $k=>$v){
+            $messageList[$k]['info'] = json_decode($messageList[$k]['info']);
+        }
         $this->assign('messageList', $messageList);
 
+        return $this->render();
+    }
+
+    public function actionMessage()
+    {
+        $this->layout  = false;
+        $sendUserId    = \Yii::$app->request->get('send_user_id');
+        $receiveUserId = \Yii::$app->request->get('receive_user_id');
+        $list          = Message::getInstance()->getMessageList($sendUserId, $receiveUserId);
+        $this->assign('sendName' , \Yii::$app->request->get('send_name'));
+        $this->assign('receiveName' , \Yii::$app->request->get('receive_name'));
+        $this->assign('sendUserId' , $sendUserId);
+        $this->assign('list' , $list);
         return $this->render();
     }
 

@@ -10,6 +10,8 @@ namespace common\models;
 
 
 
+use yii\db\Query;
+
 class Message extends Base {
 
     /**
@@ -37,6 +39,14 @@ class Message extends Base {
         $list = $handle->all();
         \Yii::$app->db->createCommand("update bhy_{$table} set status=1 where {$where}")->execute();
         return $list;
+    }
+
+    public function getMessageList( $sendId , $receiveId ){
+        return (new Query())->from($this->tablePrefix."user_message")
+            ->where(["receive_user_id" => $sendId , "send_user_id" =>$receiveId])
+            ->orWhere(["receive_user_id" => $receiveId , "send_user_id" =>$sendId])
+            ->select("*")
+            ->all();
     }
 
 

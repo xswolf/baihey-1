@@ -46,7 +46,7 @@ SELECT send_user_id,COUNT(send_user_id) sumSend,MAX(create_time) create_time FRO
     public function chatList($userId){
         $sql = "SELECT
                   i.user_id,
-                  json_extract (i.info, '$.real_name') as name,
+                  info,
                   a.create_time
                 FROM
                   (SELECT

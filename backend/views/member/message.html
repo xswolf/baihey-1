@@ -1,0 +1,46 @@
+<table class="table table-hover">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>发送者</th>
+        <th>接收者</th>
+        <th>时间</th>
+        <th>内容</th>
+        <th>状态</th>
+    </tr>
+    </thead>
+    <tbody>
+    {{foreach from=$list key=k item=vo}}
+        <tr>
+            <td>{{$vo.id}}</td>
+            <td><a href="/admin/member/info?id=155521">
+                {{if $vo.send_user_id == $sendUserId }}
+                    {{$sendName}}
+                {{else}}
+                    {{$receiveName}}
+                {{/if}}
+                ({{$vo.send_user_id}})
+            </a>
+            </td>
+            <td><a href="/admin/member/info?id=5615001">
+                {{if $vo.send_user_id == $sendUserId }}
+                    {{$receiveName}}
+                {{else}}
+                    {{$sendName}}
+                {{/if}}
+                ({{$vo.receive_user_id}})
+            </a>
+            </td>
+            <td>{{date('Y-m-d H:i:s',$vo.create_time)}}</td>
+            <td>{{$vo.message}}</td>
+            <td>
+                {{if $vo.status == 1}}
+                    已读
+                {{else}}
+                    未读
+                {{/if}}
+            </td>
+        </tr>
+   {{/foreach}}
+    </tbody>
+</table>

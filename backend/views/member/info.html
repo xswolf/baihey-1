@@ -517,57 +517,14 @@
                                         {{foreach from=$messageList key=k item=vo}}
                                         <div class="panel panel-default">
                                             <div class="panel-heading">
-                                                <h3 class="panel-title"><a class="accordion-toggle"
-                                                                           data-toggle="collapse" data-parent="#msgList"
-                                                                           href="#list1">{{$user.info->real_name}} <i
-                                                        class="fa fa-arrows-h"></i> {{$vo.name}}</a></h3>
+                                                <h3 class="panel-title"><a class="accordion-toggle message-list" data-receive="{{$vo.user_id}}" data-receive-name="{{$vo.info->real_name}}"
+                                                                           data-toggle="collapse" data-parent="#msgList" data-index="list{{$k}}"
+                                                                           href="#list{{$k}}">{{$user.info->real_name}} <i
+                                                        class="fa fa-arrows-h"></i> {{$vo.info->real_name}}</a></h3>
                                             </div>
                                             <div id="list{{$k}}" class="panel-collapse collapse in">
-                                                <div class="panel-body">
-                                                    <table class="table table-hover">
-                                                        <thead>
-                                                        <tr>
-                                                            <th>ID</th>
-                                                            <th>发送者</th>
-                                                            <th>接收者</th>
-                                                            <th>时间</th>
-                                                            <th>内容</th>
-                                                            <th>状态</th>
-                                                        </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                        <tr>
-                                                            <td>1</td>
-                                                            <td><a href="/admin/member/info?id=155521">李四(155521)</a>
-                                                            </td>
-                                                            <td><a href="/admin/member/info?id=5615001">阿三(16581001)</a>
-                                                            </td>
-                                                            <td>2016-05-31 13:55:14</td>
-                                                            <td>可以认识一下吗？</td>
-                                                            <td>成功</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>2</td>
-                                                            <td><a href="/admin/member/info?id=5615001">阿三(16581001)</a>
-                                                            </td>
-                                                            <td><a href="/admin/member/info?id=155521">李四(155521)</a>
-                                                            </td>
-                                                            <td>2016-05-31 18:11:10</td>
-                                                            <td>你好。</td>
-                                                            <td>成功</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>3</td>
-                                                            <td><a href="/admin/member/info?id=155521">李四(155521)</a>
-                                                            </td>
-                                                            <td><a href="/admin/member/info?id=5615001">阿三(16581001)</a>
-                                                            </td>
-                                                            <td>2016-05-31 18:11:10</td>
-                                                            <td>你好！</td>
-                                                            <td>成功</td>
-                                                        </tr>
-                                                        </tbody>
-                                                    </table>
+                                                <div class="panel-body message-content">
+
                                                 </div>
                                             </div>
                                         </div>
@@ -856,22 +813,18 @@
         jQuery(window).resize(resizeColorBox);
         window.addEventListener("orientationchange", resizeColorBox, false);
 
-//        $.ajax({
-//            url: "/admin/member/get-pic", data: {id: '{{$user.user_id}}' }, success: function (res) {
-//                var html = '';
-//
-//                res = JSON.parse(res);
-//                var active = '';
-//                for (var i in res.data){
-//                    if (i == 0) active = 'active';
-//                    html +=    '<div class="item ' + active + '">'
-//                         +      '<a class="colorbox-button" href="' +  res.data[i].thumb_path  + '"> '
-//                         +      '<img alt="" src="' + res.data[i].thumb_path +  '">'
-//                         +      '</a> '
-//                         +    '</div> ';
-//                }
-//                $(".photo").html(html);
-//            }
-//        });
+        $(".message-list").click(function () {
+            var send_name = '{{$user.info->real_name}}';
+            var receive_name = $(this).data('receive-name');
+            var send_user_id = '{{$user.id}}';
+            var receive_user_id = $(this).data("receive")
+            var index = $(this).data('index');
+            $.ajax({
+                url: "/admin/member/message", data: {send_user_id: send_user_id,receive_user_id:receive_user_id ,send_name:send_name,receive_name:receive_name}, success: function (res) {
+                    $("#"+index).find(".message-content").html(res);
+                }
+            });
+        })
+
     });
 </script>
