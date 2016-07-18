@@ -2,10 +2,8 @@
 namespace wechat\controllers;
 
 use common\models\Message;
-use common\models\User;
 use wechat\models\UserBribery;
 use wechat\models\UserMessage;
-use yii\web\Cookie;
 
 
 /**

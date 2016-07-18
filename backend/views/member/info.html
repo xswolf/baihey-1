@@ -513,14 +513,16 @@
                                 <!-- NAV -->
                                 <div class="col-md-12">
                                     <div class="panel-group" id="msgList">
+
+                                        {{foreach from=$messageList key=k item=vo}}
                                         <div class="panel panel-default">
                                             <div class="panel-heading">
                                                 <h3 class="panel-title"><a class="accordion-toggle"
                                                                            data-toggle="collapse" data-parent="#msgList"
-                                                                           href="#list1">阿三 <i
-                                                        class="fa fa-arrows-h"></i> 李四</a></h3>
+                                                                           href="#list1">{{$user.info->real_name}} <i
+                                                        class="fa fa-arrows-h"></i> {{$vo.name}}</a></h3>
                                             </div>
-                                            <div id="list1" class="panel-collapse collapse in">
+                                            <div id="list{{$k}}" class="panel-collapse collapse in">
                                                 <div class="panel-body">
                                                     <table class="table table-hover">
                                                         <thead>
@@ -569,87 +571,8 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="panel panel-default">
-                                            <div class="panel-heading">
-                                                <h3 class="panel-title"><a class="accordion-toggle"
-                                                                           data-toggle="collapse" data-parent="#msgList"
-                                                                           href="#list2">阿三 <i
-                                                        class="fa fa-arrows-h"></i> 系统管理员</a></h3>
-                                            </div>
-                                            <div id="list2" class="panel-collapse collapse">
-                                                <div class="panel-body">
-                                                    <table class="table table-hover">
-                                                        <thead>
-                                                        <tr>
-                                                            <th>ID</th>
-                                                            <th>发送者</th>
-                                                            <th>接收者</th>
-                                                            <th>时间</th>
-                                                            <th>内容</th>
-                                                            <th>状态</th>
-                                                        </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                        <tr>
-                                                            <td>1</td>
-                                                            <td>系统管理员</td>
-                                                            <td><a href="/admin/member/info?id=5615001">阿三(16581001)</a>
-                                                            </td>
-                                                            <td>2016-05-31 13:55:14</td>
-                                                            <td>您上传的身份证照片未审核通过，请重新上传！</td>
-                                                            <td>成功</td>
-                                                        </tr>
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="panel panel-default">
-                                            <div class="panel-heading">
-                                                <h3 class="panel-title"><a class="accordion-toggle"
-                                                                           data-toggle="collapse" data-parent="#msgList"
-                                                                           href="#list3">阿三 <i
-                                                        class="fa fa-arrows-h"></i> 王武</a></h3>
-                                            </div>
-                                            <div id="list3" class="panel-collapse collapse">
-                                                <div class="panel-body">
-                                                    <table class="table table-hover">
-                                                        <thead>
-                                                        <tr>
-                                                            <th>ID</th>
-                                                            <th>发送者</th>
-                                                            <th>接收者</th>
-                                                            <th>时间</th>
-                                                            <th>内容</th>
-                                                            <th>状态</th>
-                                                        </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                        <tr>
-                                                            <td>1</td>
-                                                            <td><a href="/admin/member/info?id=155521">王武(155521)</a>
-                                                            </td>
-                                                            <td><a href="/admin/member/info?id=5615001">阿三(16581001)</a>
-                                                            </td>
-                                                            <td>2016-05-31 13:55:14</td>
-                                                            <td>在吗？</td>
-                                                            <td>成功</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>1</td>
-                                                            <td><a href="/admin/member/info?id=155521">王武(155521)</a>
-                                                            </td>
-                                                            <td><a href="/admin/member/info?id=5615001">阿三(16581001)</a>
-                                                            </td>
-                                                            <td>2016-05-31 13:55:14</td>
-                                                            <td><a href="javascript:;" onclick="bhyFunc.getJsonShowImg('message',43)">[图片]</a></td>
-                                                            <td>成功</td>
-                                                        </tr>
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                            </div>
-                                        </div>
+                                        {{/foreach}}
+
                                     </div>
                                 </div>
                             </div>

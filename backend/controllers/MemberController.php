@@ -9,13 +9,14 @@
 namespace backend\controllers;
 
 
+use backend\models\User as UserModel;
 use common\models\Area;
 use common\models\ChargeGoods;
 use common\models\ChargeOrder;
 use common\models\User;
-use backend\models\User as UserModel;
 use common\models\UserPhoto;
 use wechat\models\Config;
+use wechat\models\UserMessage;
 
 class MemberController extends BaseController
 {
@@ -29,32 +30,32 @@ class MemberController extends BaseController
     public function actionSearch()
     {
         $request = \Yii::$app->request;
-        $start = $request->get('iDisplayStart');
-        $limit = $request->get('iDisplayLength');
+        $start   = $request->get('iDisplayStart');
+        $limit   = $request->get('iDisplayLength');
 
-        $andWhere = [];
+        $andWhere      = [];
         $id_phone_name = $request->get('id_phone_name');
-        if ($request->get('id_phone_name') != ''){
-            if (is_numeric($id_phone_name)){
-                if (strlen($id_phone_name.'') == 11){
-                    $andWhere[] = ["=" ,"phone", $id_phone_name];
-                }else{
-                    $andWhere[] = ["=" ,"id", $id_phone_name];
+        if ($request->get('id_phone_name') != '') {
+            if (is_numeric($id_phone_name)) {
+                if (strlen($id_phone_name . '') == 11) {
+                    $andWhere[] = ["=", "phone", $id_phone_name];
+                } else {
+                    $andWhere[] = ["=", "id", $id_phone_name];
                 }
-            }else{
-                $andWhere[] = ["like" ,"json_extract(info,'$.real_name')", $id_phone_name];
+            } else {
+                $andWhere[] = ["like", "json_extract(info,'$.real_name')", $id_phone_name];
             }
 
         }
-        if ($request->get('is_show') != ''){
-            $andWhere[] = ["=" ,"is_show", $request->get('is_show')];
+        if ($request->get('is_show') != '') {
+            $andWhere[] = ["=", "is_show", $request->get('is_show')];
         }
-        if ($request->get('status') != ''){
-            $andWhere[] = ["=","status",$request->get('status')];
+        if ($request->get('status') != '') {
+            $andWhere[] = ["=", "status", $request->get('status')];
         }
 
 
-        $list  = User::getInstance()->lists($start, $limit ,$andWhere);
+        $list  = User::getInstance()->lists($start, $limit, $andWhere);
         $count = User::getInstance()->count($andWhere);
         foreach ($list as $k => $v) {
 
@@ -70,10 +71,10 @@ class MemberController extends BaseController
         }
 
         $data = [
-            'draw'              => \Yii::$app->request->get('sEcho'),
-            'recordsTotal'      => $count,
-            'recordsFiltered'   => $count,
-            'data'              => $list
+            'draw' => \Yii::$app->request->get('sEcho'),
+            'recordsTotal' => $count,
+            'recordsFiltered' => $count,
+            'data' => $list
         ];
         $this->renderAjax($data);
     }
@@ -85,11 +86,11 @@ class MemberController extends BaseController
             if ($data['phone'] == '' || $data['info']['real_name'] == '') {
                 return $this->__error('信息不全');
             }
-            $data['zo'] = User::getInstance()->editInfoZo($data['zo']);
-            $data['info'] = User::getInstance()->editInfoInfo($data['info']);
+            $data['zo']       = User::getInstance()->editInfoZo($data['zo']);
+            $data['info']     = User::getInstance()->editInfoInfo($data['info']);
             $data['username'] = $data['phone'];
             $data['info']     = array_merge($data['info'], $data['zo']);
-            $photo = $data;
+            $photo            = $data;
 
             unset($data['zo']);
             unset($data['photosList']);
@@ -109,43 +110,44 @@ class MemberController extends BaseController
                 return $this->__error('添加失败');
             }
         }
-        $this->assign('sport' , Config::getInstance()->getListByType(1));
-        $this->assign('movie' , Config::getInstance()->getListByType(2));
-        $this->assign('food' , Config::getInstance()->getListByType(3));
-        $this->assign('travel' , Area::getInstance()->getWentTravelList());
+        $this->assign('sport', Config::getInstance()->getListByType(1));
+        $this->assign('movie', Config::getInstance()->getListByType(2));
+        $this->assign('food', Config::getInstance()->getListByType(3));
+        $this->assign('travel', Area::getInstance()->getWentTravelList());
         return $this->render();
     }
 
     // 修改会员资料
-    public function actionEdit(){
+    public function actionEdit()
+    {
         $request = \Yii::$app->request;
-        $id = $request->get('id');
-        if ($id < 1 ){
+        $id      = $request->get('id');
+        if ($id < 1) {
             exit();
         }
-        if ($postData = $request->post()){
-//            var_dump($postData);exit;
+        if ($postData = $request->post()) {
+            //            var_dump($postData);exit;
             $postData['zo']['other'] = trim($postData['zo']['zo_other']);
-            $postData['zo']['other'] = str_replace("\t" , "" , $postData['zo']['other']);
-            $postData['user_id'] = $id;
+            $postData['zo']['other'] = str_replace("\t", "", $postData['zo']['other']);
+            $postData['user_id']     = $id;
 
             $postData['info']['age'] = strtotime($postData['info']['age']);
 
             User::getInstance()->editUser($postData);
         }
-        $user = User::getInstance()->getUserById($id);
+        $user         = User::getInstance()->getUserById($id);
         $user['info'] = json_decode($user['info']);
         $user['auth'] = json_decode($user['auth']);
 
-        $this->assign('id' , $id);
-        $this->assign('user' , $user);
-        $this->assign('sport' , Config::getInstance()->getListByType(1));
-        $this->assign('movie' , Config::getInstance()->getListByType(2));
-        $this->assign('food' , Config::getInstance()->getListByType(3));
-        $this->assign('travel' , Area::getInstance()->getWentTravelList());
+        $this->assign('id', $id);
+        $this->assign('user', $user);
+        $this->assign('sport', Config::getInstance()->getListByType(1));
+        $this->assign('movie', Config::getInstance()->getListByType(2));
+        $this->assign('food', Config::getInstance()->getListByType(3));
+        $this->assign('travel', Area::getInstance()->getWentTravelList());
 
-        $list = UserPhoto::getInstance()->lists('' , '2,3,4,5,6');
-        $this->assign('list' , $list);
+        $list = UserPhoto::getInstance()->lists('', '2,3,4,5,6');
+        $this->assign('list', $list);
 
 
         return $this->render();
@@ -153,25 +155,29 @@ class MemberController extends BaseController
 
     public function actionInfo()
     {
-        $userId = \Yii::$app->request->get('id');
-        $user   = User::getInstance()->getUserById($userId);
+        $userId       = \Yii::$app->request->get('id');
+        $user         = User::getInstance()->getUserById($userId);
         $user['info'] = json_decode($user['info']);
         $user['auth'] = json_decode($user['auth']);
         // 获取登陆次数
-        $loginTime = User::getInstance()->getLoginTimes($userId);
-        $moneyAll = User::getInstance()->getPayAll($userId);
+        $loginTime    = User::getInstance()->getLoginTimes($userId);
+        $moneyAll     = User::getInstance()->getPayAll($userId);
         // 获取红娘名称
-        $userModel = new UserModel();
-        $matchmaker = $userModel->getFindUser(['id' => $user['matchmaker']]);
-        $matchmaking = $userModel->getFindUser(['id' => $user['matchmaking']]);
+        $userModel    = new UserModel();
+        $matchmaker   = $userModel->getFindUser(['id' => $user['matchmaker']]);
+        $matchmaking  = $userModel->getFindUser(['id' => $user['matchmaking']]);
 
-        $this->assign('user' , $user);
-        $this->assign('loginTime' , $loginTime);
-        $this->assign('moneyAll' , $moneyAll);
-        $this->assign('matchmaker' , $matchmaker['name']);
-        $this->assign('matchmaking' , $matchmaking['name']);
-        $this->assign('photoList' , UserPhoto::getInstance()->getPhotoList(\Yii::$app->request->get('id')));
-//        var_dump($user);exit;
+        $this->assign('user', $user);
+        $this->assign('loginTime', $loginTime);
+        $this->assign('moneyAll', $moneyAll);
+        $this->assign('matchmaker', $matchmaker['name']);
+        $this->assign('matchmaking', $matchmaking['name']);
+        $this->assign('photoList', UserPhoto::getInstance()->getPhotoList(\Yii::$app->request->get('id')));
+
+
+        $messageList  = UserMessage::getInstance()->chatList($userId);
+        $this->assign('messageList', $messageList);
+
         return $this->render();
     }
 
@@ -179,48 +185,54 @@ class MemberController extends BaseController
     public function actionOrder()
     {
         $vo = ChargeOrder::getInstance()->getOrderAllInfo();
-        $this->assign('list',$vo);
+        $this->assign('list', $vo);
         return $this->render();
     }
 
-    public function actionCharge(){
-        if(\Yii::$app->request->post()){
-           $orderId = ChargeOrder::getInstance()->createOrder(\Yii::$app->request->post('user_id'), \Yii::$app->request->post()); // 创建订单
-           $result = ChargeOrder::getInstance()->setOrderStatus($orderId);
-           $this->renderAjax(['status'=>$result]);exit();
+    public function actionCharge()
+    {
+        if (\Yii::$app->request->post()) {
+            $orderId = ChargeOrder::getInstance()->createOrder(\Yii::$app->request->post('user_id'), \Yii::$app->request->post()); // 创建订单
+            $result  = ChargeOrder::getInstance()->setOrderStatus($orderId);
+            $this->renderAjax(['status' => $result]);
+            exit();
         }
 
-        $goods = ChargeGoods::getInstance()->getAllList(['status'=>1]);
-        $this->assign('goods',$goods);
+        $goods = ChargeGoods::getInstance()->getAllList(['status' => 1]);
+        $this->assign('goods', $goods);
         return $this->render();
     }
 
-    public function actionGetUserById(){
+    public function actionGetUserById()
+    {
         $this->renderAjax(User::getInstance()->getUserById(\Yii::$app->request->get('id')));
     }
 
     /**
      * 获取用户相册
      */
-    public function actionGetPic(){
+    public function actionGetPic()
+    {
         $list = UserPhoto::getInstance()->getPhotoList(\Yii::$app->request->get('id'));
-        $this->renderAjax(['status'=>1,'data'=>$list]);
+        $this->renderAjax(['status' => 1, 'data' => $list]);
     }
 
-    public function actionUpPic(){
+    public function actionUpPic()
+    {
         $data['thumb_path'] = \Yii::$app->request->get('thumb_path');
-        $data['pic_path'] = \Yii::$app->request->get('pic_path');
-        $data['time'] = time();
-        $result = UserPhoto::getInstance()->addPhoto(\Yii::$app->request->get('id') , $data);
+        $data['pic_path']   = \Yii::$app->request->get('pic_path');
+        $data['time']       = time();
+        $result             = UserPhoto::getInstance()->addPhoto(\Yii::$app->request->get('id'), $data);
 
-        $this->renderAjax(['status'=>$result]);
+        $this->renderAjax(['status' => $result]);
     }
 
-    public function actionSetHead(){
-        $userId = \Yii::$app->request->get('user_id');
-        $data['id'] = \Yii::$app->request->get('id');
+    public function actionSetHead()
+    {
+        $userId             = \Yii::$app->request->get('user_id');
+        $data['id']         = \Yii::$app->request->get('id');
         $data['thumb_path'] = \Yii::$app->request->get('thumb_path');
-        $list = UserPhoto::getInstance()->setHeadPic($userId, $data);
+        $list               = UserPhoto::getInstance()->setHeadPic($userId, $data);
         $this->renderAjax(['status' => 1, 'data' => $list]);
     }
 
@@ -228,43 +240,48 @@ class MemberController extends BaseController
      * 照片列表
      * @return string
      */
-    public function actionPhoto(){
+    public function actionPhoto()
+    {
 
         $isCheck = \Yii::$app->request->get('is_check');
-        $type = \Yii::$app->request->get('type');
-        if ($isCheck == '') $isCheck = 2;
-        $list = UserPhoto::getInstance()->lists($isCheck , $type);
-        if (\Yii::$app->request->isAjax){
-            return $this->renderAjax(['status'=>1 , 'data'=>$list]);
+        $type    = \Yii::$app->request->get('type');
+        if ($isCheck == '')
+            $isCheck = 2;
+        $list = UserPhoto::getInstance()->lists($isCheck, $type);
+        if (\Yii::$app->request->isAjax) {
+            return $this->renderAjax(['status' => 1, 'data' => $list]);
         }
-        $this->assign('list' , $list);
+        $this->assign('list', $list);
         return $this->render();
     }
 
     /**
      * 审核照片
      */
-    public function actionAuthPhoto(){
+    public function actionAuthPhoto()
+    {
 
         $data = \Yii::$app->request->get();
-        $flag = UserPhoto::getInstance()->auth($data['id'] , $data['status']);
+        $flag = UserPhoto::getInstance()->auth($data['id'], $data['status']);
         if ($flag > 0) {
-            $this->renderAjax(['status' => 1, 'message'=>'操作成功' , 'data' => $flag]);
-        }else{
-            $this->renderAjax(['status' => 0, 'message'=>'操作失败' , 'data' => $flag]);
+            $this->renderAjax(['status' => 1, 'message' => '操作成功', 'data' => $flag]);
+        } else {
+            $this->renderAjax(['status' => 0, 'message' => '操作失败', 'data' => $flag]);
         }
     }
 
-    public function actionChat(){
+    public function actionChat()
+    {
         return $this->render();
     }
 
-    public function actionDel(){
+    public function actionDel()
+    {
         $id = \Yii::$app->request->post('id');
-        if (User::getInstance()->delUser($id)){
-            $this->renderAjax(['status'=>1 , 'message'=>'成功']);
-        }else{
-            $this->renderAjax(['status'=>0 , 'message'=>'失败']);
+        if (User::getInstance()->delUser($id)) {
+            $this->renderAjax(['status' => 1, 'message' => '成功']);
+        } else {
+            $this->renderAjax(['status' => 0, 'message' => '失败']);
         }
     }
 

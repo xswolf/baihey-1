@@ -41,6 +41,41 @@ SELECT send_user_id,COUNT(send_user_id) sumSend,MAX(create_time) create_time FRO
     }
 
     /**
+     * 获取聊天列表
+     */
+    public function chatList($userId){
+        $sql = "SELECT
+                  i.user_id,
+                  json_extract (i.info, '$.real_name') as name,
+                  a.create_time
+                FROM
+                  (SELECT
+                    receive_user_id,
+                    MAX(create_time) create_time
+                  FROM
+                    (SELECT
+                      receive_user_id,
+                      create_time
+                    FROM
+                      bhy_user_message
+                    WHERE send_user_id = $userId
+                    UNION
+                    ALL
+                    SELECT
+                      send_user_id,
+                      create_time
+                    FROM
+                      bhy_user_message
+                    WHERE receive_user_id = $userId) ain
+                  GROUP BY receive_user_id) a
+                  INNER JOIN bhy_user_information i
+                    ON a.receive_user_id = i.user_id
+                GROUP BY receive_user_id ";
+        $result = $this->getDb()->createCommand($sql)->queryAll();
+        return $result;
+    }
+
+    /**
      * 获取最新消息总条数
      * @return array|bool
      */
