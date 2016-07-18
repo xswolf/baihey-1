@@ -7,7 +7,7 @@
                 <h4><i class="fa fa-bars"></i>添加会员</h4>
             </div>
             <div class="box-body big">
-                <form class="form-horizontal" role="form" action="/admin/member/save" method="post">
+                <form id="saveForm" class="form-horizontal" role="form" action="/admin/member/save" method="post">
                     <div class="row">
                         <div class="col-md-6">
                             <h3 class="form-title">基本资料</h3>
@@ -43,7 +43,8 @@
                             <div class="form-group">
                                 <label class="col-md-3 control-label">常出没地</label>
                                 <div class="input-group col-md-6">
-                                    <input class="form-control" name="info[haunt_address]" type="text" placeholder="请填写经常出没的地方，15字以内" maxlength="15">
+                                    <input class="form-control" name="info[haunt_address]" type="text"
+                                           placeholder="请填写经常出没的地方，15字以内" maxlength="15">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -151,7 +152,7 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-md-3 control-label">年收入</label>
+                                <label class="col-md-3 control-label">年薪</label>
                                 <div class="input-group col-md-6">
                                     <select class="form-control salary" name="info[year_income]">
                                         <option value="">请选择</option>
@@ -189,7 +190,8 @@
                             <div class="form-group">
                                 <label class="col-md-3 control-label">手机号码</label>
                                 <div class="input-group col-md-6">
-                                    <input class="form-control" name="phone" type="tel" value="" placeholder="请输入手机号码">
+                                    <input class="form-control" name="phone" id="phone" type="tel" value=""
+                                           placeholder="请输入手机号码">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -211,7 +213,7 @@
                                 <label class="col-md-3 control-label">个人签名</label>
                                 <div class="input-group col-md-6">
                                     <textarea name="personalized" class="form-control" rows="3"
-                                             maxlength="100" placeholder="请填写个人签名，100字以内"></textarea>
+                                              maxlength="100" placeholder="请填写个人签名，100字以内"></textarea>
                                 </div>
                             </div>
                         </div>
@@ -266,7 +268,7 @@
                             </div>
 
                             <div class="form-group">
-                                <label class="col-md-3 control-label">年收入要求</label>
+                                <label class="col-md-3 control-label">年薪要求</label>
                                 <div class="input-group col-md-6">
                                     <select class="form-control salary" name="zo[zo_income]">
                                         <option value="">不限</option>
@@ -302,7 +304,8 @@
                             <div class="form-group">
                                 <label class="col-md-3 control-label">职业要求</label>
                                 <div class="input-group col-md-6">
-                                    <select multiple class="col-md-12 mult_select occupation" name="zo[zo_occupation][]">
+                                    <select multiple class="col-md-12 mult_select occupation"
+                                            name="zo[zo_occupation][]">
                                     </select>
                                 </div>
                             </div>
@@ -333,7 +336,8 @@
                             <div class="form-group">
                                 <label class="col-md-3 control-label">心目中的TA</label>
                                 <div class="input-group col-md-6">
-                                    <textarea class="form-control" maxlength="150" rows="3" name="info[mate]" placeholder="请填写你对心目中的TA的要求，150字以内"></textarea>
+                                    <textarea class="form-control" maxlength="150" rows="3" name="info[mate]"
+                                              placeholder="请填写你对心目中的TA的要求，150字以内"></textarea>
                                 </div>
                             </div>
                             <div style="display: none" id="img_hidden">
@@ -387,16 +391,16 @@
                                     <select multiple class="form-control mult_select6" name="want_film[]">
                                         <optgroup label="电影">
                                             {{foreach from=$movie item=vo}}
-                                                {{if $vo.pic_path eq 2}}
-                                                    <option value="{{$vo.id}}">{{$vo.name}}</option>
-                                                {{/if}}
-                                                {{/foreach}}
+                                            {{if $vo.pic_path eq 2}}
+                                            <option value="{{$vo.id}}">{{$vo.name}}</option>
+                                            {{/if}}
+                                            {{/foreach}}
                                         </optgroup>
                                         <optgroup label="电视">
                                             {{foreach from=$movie item=vo}}
-                                                {{if $vo.pic_path eq 1}}
-                                                    <option value="{{$vo.id}}">{{$vo.name}}</option>
-                                                {{/if}}
+                                            {{if $vo.pic_path eq 1}}
+                                            <option value="{{$vo.id}}">{{$vo.name}}</option>
+                                            {{/if}}
                                             {{/foreach}}
                                         </optgroup>
                                     </select>
@@ -531,7 +535,7 @@
                         </div>
                     </div>
                     <div class="form-group center">
-                        <button class="btn btn-lg btn-primary" type="submit">提交</button>
+                        <button id="saveSubmit" class="btn btn-lg btn-primary" type="button">提交</button>
                     </div>
                 </form>
             </div>
@@ -597,13 +601,13 @@
     }
 
     // 设置头像
-    function setHeadPic(a){
+    function setHeadPic(a) {
         var src = $(a).data('src');
         $('#headPic').val(src);
-        $('.imgBox').each(function(){
+        $('.imgBox').each(function () {
             console.log($(this).find('p').find('span'));
-            if($(this).find('p').find('span')){
-                $(this).find('p').find('span').replaceWith('<a data-src="'+src+'" onclick="setHeadPic(this)">设置头像</a>');
+            if ($(this).find('p').find('span')) {
+                $(this).find('p').find('span').replaceWith('<a data-src="' + src + '" onclick="setHeadPic(this)">设置头像</a>');
             }
         })
         $(a).replaceWith('<span class="text-danger">头像</span>');
@@ -620,15 +624,15 @@
             'fileTypeExts': '*.gif; *.jpg; *.png; *.bmp',
             'swf': '/backend/web/CloudAdmin/js/jQuery-uploadify/uploadify.swf',
             'uploader': '/admin/file/upload-img',
-            'uploadLimit' : 12,
+            'uploadLimit': 12,
             'onUploadSuccess': function (file, data, response) {
                 console.log($('#photos div').length);
                 var _data = data.replace('thumb', 'picture');
-                if($('#photos div').length == 0){
+                if ($('#photos div').length == 0) {
                     var imgHtml = '<div class="pr imgBox"><a href="' + _data + '" rel="group1"><img src="' + data + '" ></a><i class="del fa fa-times-circle-o text-danger" onclick="delImg(this,1)"></i><p class="center mt5"><span class="text-danger">头像</span></p></div>';
                     $('#headPic').val(data);
-                }else{
-                    var imgHtml = '<div class="pr imgBox"><a href="' + _data + '" rel="group1"><img src="' + data + '" ></a><i class="del fa fa-times-circle-o text-danger" onclick="delImg(this,1)"></i><p class="center mt5"><a data-src="'+data+'" onclick="setHeadPic(this)">设置头像</a></p></div>';
+                } else {
+                    var imgHtml = '<div class="pr imgBox"><a href="' + _data + '" rel="group1"><img src="' + data + '" ></a><i class="del fa fa-times-circle-o text-danger" onclick="delImg(this,1)"></i><p class="center mt5"><a data-src="' + data + '" onclick="setHeadPic(this)">设置头像</a></p></div>';
                 }
                 $('#photos').append(imgHtml);
                 photoArr.push(data);
@@ -684,7 +688,7 @@
             'fileTypeExts': '*.gif; *.jpg; *.png; *.bmp',
             'swf': '/backend/web/CloudAdmin/js/jQuery-uploadify/uploadify.swf',
             'uploader': '/admin/file/upload-img',
-            'uploadLimit' : 5,
+            'uploadLimit': 5,
             'onUploadSuccess': function (file, data, response) {
                 var _data = data.replace('thumb', 'picture');
                 var imgHtml = '<div class="pr imgBox"><a href="' + _data + '" rel="group3"><img src="' + data + '" ></a><i class="del fa fa-times-circle-o text-danger" onclick="delImg(this,4)"></i></div>';
@@ -704,7 +708,7 @@
             'fileTypeExts': '*.gif; *.jpg; *.png; *.bmp',
             'swf': '/backend/web/CloudAdmin/js/jQuery-uploadify/uploadify.swf',
             'uploader': '/admin/file/upload-img',
-            'uploadLimit' : 5,
+            'uploadLimit': 5,
             'onUploadError': function (file, errorCode, errorMsg, errorString) {
                 alert('上传出错！文件名： ' + file.name + '， 错误原因: ' + errorString);
             },
@@ -724,7 +728,7 @@
             'fileTypeExts': '*.gif; *.jpg; *.png; *.bmp',
             'swf': '/backend/web/CloudAdmin/js/jQuery-uploadify/uploadify.swf',
             'uploader': '/admin/file/upload-img',
-            'uploadLimit' : 5,
+            'uploadLimit': 5,
             'onUploadError': function (file, errorCode, errorMsg, errorString) {
                 alert('上传出错！文件名： ' + file.name + '， 错误原因: ' + errorString);
             },
@@ -1067,6 +1071,15 @@
             return constellation;
         }
 
+        $('#saveSubmit').click(function () {
+            var myreg = /^(((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1}))+\d{8})$/;
+            if (!myreg.test($("#phone").val())) {
+                layer.tips('请输入有效的手机号码！', $('#phone'));
+                $('#phone').focus();
+                return false;
+            }
+            $('#saveForm').submit();
+        });
 
     });
 

@@ -29,7 +29,9 @@
                         <div class="box-body">
                             <div class="tabbable header-tabs">
                                 <ul class="nav nav-tabs">
-                                    <li><a href="#box_tab7" data-toggle="tab"><i class="fa fa-desktop"></i> <span class="hidden-inline-mobile">诚信认证</span></a></li>
+                                    <li><a href="#box_tab9" data-toggle="tab"><i class="fa fa-desktop"></i> <span class="hidden-inline-mobile">相册</span></a></li>
+                                    <li><a href="#box_tab8" data-toggle="tab"><i class="fa fa-desktop"></i> <span class="hidden-inline-mobile">诚信认证</span></a></li>
+                                    <li><a href="#box_tab7" data-toggle="tab"><i class="fa fa-desktop"></i> <span class="hidden-inline-mobile">隐私设置</span></a></li>
                                     <li><a href="#box_tab6" data-toggle="tab"><i class="fa fa-desktop"></i> <span class="hidden-inline-mobile">兴趣爱好</span></a></li>
                                     <li><a href="#box_tab5" data-toggle="tab"><i class="fa fa-flask"></i> <span class="hidden-inline-mobile">择偶标准</span></a></li>
                                     <li class="active"><a href="#box_tab4" data-toggle="tab"><i class="fa fa-home"></i> <span class="hidden-inline-mobile">基本资料</span></a></li>
@@ -63,12 +65,14 @@
                                                         <option value="">请选择</option>
                                                     </select>
                                                 </div>
-
-
                                             </div>
-
                                         </div>
-
+                                        <div class="form-group">
+                                            <label class="col-md-3 control-label">常出没地</label>
+                                            <div class="input-group col-md-6">
+                                                <input class="form-control" name="info[haunt_address]" type="text" placeholder="请填写经常出没的地方，15字以内" maxlength="15">
+                                            </div>
+                                        </div>
                                         <div class="form-group">
                                             <label class="col-md-3 control-label">性别</label>
                                             <div class="col-md-6">
@@ -104,6 +108,30 @@
                                             </div>
                                         </div>
                                         <div class="form-group">
+                                            <label class="col-md-3 control-label">属相</label>
+                                            <div class="input-group col-md-6">
+                                                <select class="form-control zodiac" id="zodiac" name="info[zodiac]" id="zodiac">
+                                                    <option value="">请选择</option>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="col-md-3 control-label">星座</label>
+                                            <div class="input-group col-md-6">
+                                                <select class="form-control constellation" id="constellation" name="info[constellation]">
+                                                    <option value="">请选择</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-md-3 control-label">身高</label>
+                                            <div class="input-group col-md-6">
+                                                <select id="height" class="form-control" name="info[height]">
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
                                             <label class="col-md-3 control-label">学历</label>
                                             <div class="input-group col-md-6">
                                                 <select class="form-control education" id="education_1" name="info[education]">
@@ -123,29 +151,11 @@
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <label class="col-md-3 control-label">身高</label>
-                                            <div class="input-group col-md-6">
-                                                <select id="height" class="form-control" name="info[height]">
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
                                             <label class="col-md-3 control-label">子女状况</label>
                                             <div class="input-group col-md-6">
                                                 <select class="form-control children" id="is_child" name="info[is_child]">
                                                     <option value="">请选择</option>
                                                 </select>
-                                            </div>
-                                        </div>
-
-                                        <div class="form-group">
-                                            <label class="col-md-3 control-label">体重</label>
-                                            <div class="input-group col-md-6">
-                                                <div class="input-group">
-                                                    <input type="number" class="form-control" name="info[weight]" value="{{if isset($user.info->weight)}}{{$user.info->weight}}{{/if}}"
-                                                           placeholder="请输入体重">
-                                                    <span class="input-group-addon">kg</span>
-                                                </div>
                                             </div>
                                         </div>
 
@@ -166,7 +176,7 @@
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <label class="col-md-3 control-label">年收入</label>
+                                            <label class="col-md-3 control-label">年薪</label>
                                             <div class="input-group col-md-6">
                                                 <select class="form-control salary" name="info[year_income]" id="year_income">
                                                     <option value="">请选择</option>
@@ -192,45 +202,12 @@
                                                 </select>
                                             </div>
                                         </div>
-                                        <div class="form-group">
-                                            <label class="col-md-3 control-label">属相</label>
-                                            <div class="input-group col-md-6">
-                                                <select class="form-control zodiac" id="zodiac" name="info[zodiac]" id="zodiac">
-                                                    <option value="">请选择</option>
-                                                </select>
-                                            </div>
-                                        </div>
-
-                                        <div class="form-group">
-                                            <label class="col-md-3 control-label">星座</label>
-                                            <div class="input-group col-md-6">
-                                                <select class="form-control constellation" id="constellation" name="info[constellation]">
-                                                    <option value="">请选择</option>
-                                                </select>
-                                            </div>
-                                        </div>
 
                                         <div class="form-group">
                                             <label class="col-md-3 control-label">毕业院校</label>
                                             <div class="input-group col-md-6">
                                                 <input class="form-control" name="info[school]" type="text" value="{{$user.info->school}}"
                                                        placeholder="请输入毕业院校">
-                                            </div>
-                                        </div>
-
-                                        <div class="form-group">
-                                            <label class="col-md-3 control-label">身份证地址</label>
-                                            <div class="input-group col-md-6">
-                                                <input class="form-control" name="info[identity_address]" type="text" value="{{$user.info->identity_address}}"
-                                                       placeholder="请输入身份证地址">
-                                            </div>
-                                        </div>
-
-                                        <div class="form-group">
-                                            <label class="col-md-3 control-label">身份证号码</label>
-                                            <div class="input-group col-md-6">
-                                                <input class="form-control" name="info[identity_id]" type="text" value="{{$user.info->identity_id}}"
-                                                       placeholder="请输入身份证号码">
                                             </div>
                                         </div>
 
@@ -256,10 +233,10 @@
                                         </div>
 
                                         <div class="form-group">
-                                            <label class="col-md-3 control-label">个性签名</label>
+                                            <label class="col-md-3 control-label">个人签名</label>
                                             <div class="input-group col-md-6">
-                                            <textarea name="personalized" class="form-control" rows="3"
-                                                      placeholder="请填写个性签名">{{$user.personalized}}</textarea>
+                                            <textarea name="personalized" class="form-control" rows="3" maxlength="100"
+                                                      placeholder="请填写个性签名，100字以内">{{$user.personalized}}</textarea>
                                             </div>
                                         </div>
                                     </div>
@@ -314,24 +291,13 @@
                                         </div>
 
                                         <div class="form-group">
-                                            <label class="col-md-3 control-label">年收入要求</label>
+                                            <label class="col-md-3 control-label">年薪要求</label>
                                             <div class="input-group col-md-6">
                                                 <select class="form-control salary" name="zo[zo_income]" id="zo_income">
                                                     <option value="">不限</option>
                                                 </select>
                                             </div>
                                         </div>
-                                        <!--<div class="form-group">-->
-                                        <!--<label class="col-md-3 control-label">体重要求</label>-->
-                                        <!--<div class="input-group col-md-6">-->
-                                        <!--<select class="form-control" name="zo[zo_weight]">-->
-                                        <!--<option value="">不限</option>-->
-                                        <!--<option value="1">偏胖</option>-->
-                                        <!--<option value="2">标准</option>-->
-                                        <!--<option value="3">偏瘦</option>-->
-                                        <!--</select>-->
-                                        <!--</div>-->
-                                        <!--</div>-->
                                         <div class="form-group">
                                             <label class="col-md-3 control-label">购车要求</label>
                                             <div class="input-group col-md-6">
@@ -358,16 +324,6 @@
                                                 </select>
                                             </div>
                                         </div>
-                                        <!--<div class="form-group">-->
-                                        <!--<label class="col-md-3 control-label">才貌要求</label>-->
-                                        <!--<div class="input-group col-md-6">-->
-                                        <!--<select class="form-control" name="zo[zo_endowed]">-->
-                                        <!--<option value="">不限</option>-->
-                                        <!--<option value="1">出众</option>-->
-                                        <!--<option value="2">一般</option>-->
-                                        <!--</select>-->
-                                        <!--</div>-->
-                                        <!--</div>-->
                                         <div class="form-group">
                                             <label class="col-md-3 control-label">职业要求</label>
                                             <div class="input-group col-md-6">
@@ -392,7 +348,7 @@
                                         <div class="form-group">
                                             <label class="col-md-3 control-label">属相要求</label>
                                             <div class="input-group col-md-6">
-                                                <select multiple class="col-md-12 mult_select zodiac" data-name="zo_zodiac">
+                                                <select multiple class="col-md-12 mult_select5 zodiac" data-name="zo_zodiac">
                                                 </select>
                                                 <input type="hidden" name="zo[zo_zodiac]" id="zo_zodiac">
                                             </div>
@@ -400,22 +356,15 @@
                                         <div class="form-group">
                                             <label class="col-md-3 control-label">星座要求</label>
                                             <div class="input-group col-md-6">
-                                                <select multiple class="form-control mult_select constellation" data-name="zo_constellation"></select>
+                                                <select multiple class="form-control mult_select5 constellation" data-name="zo_constellation"></select>
                                                 <input type="hidden" name="zo[zo_constellation]" id="zo_constellation">
 
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <label class="col-md-3 control-label">地区要求</label>
+                                            <label class="col-md-3 control-label">心目中的TA</label>
                                             <div class="input-group col-md-6">
-                                                <select multiple class="form-control mult_select dq-Province" data-name="zo_address"></select>
-                                                <input type="hidden" name="zo[zo_address]" id="zo_address">
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="col-md-3 control-label">其他要求</label>
-                                            <div class="input-group col-md-6">
-                                                <textarea class="form-control" rows="3" name="zo[zo_other]">{{if isset($user.info->zo_other)}}{{$user.info->zo_other}}{{/if}}</textarea>
+                                                <textarea class="form-control" maxlength="150" rows="3" name="zo[zo_other]" placeholder="150字以内">{{if isset($user.info->zo_other)}}{{$user.info->zo_other}}{{/if}}</textarea>
                                             </div>
                                         </div>
                                         <div style="display: none" id="img_hidden">
@@ -428,7 +377,7 @@
                                             <label class="col-md-3 control-label">想去的地方</label>
                                             <div class="input-group col-md-6">
 
-                                                <select multiple class="form-control mult_select" data-name="want_travel">
+                                                <select multiple class="form-control mult_select6" data-name="want_travel">
                                                     {{foreach from=$travel item=vo}}
                                                     <option value="{{$vo.id}}">{{$vo.name}}</option>
                                                     {{/foreach}}
@@ -441,7 +390,7 @@
                                             <label class="col-md-3 control-label">去过的地方</label>
                                             <div class="input-group col-md-6">
 
-                                                <select multiple class="form-control mult_select" data-name="went_travel">
+                                                <select multiple class="form-control mult_select6" data-name="went_travel">
                                                     {{foreach from=$travel item=vo}}
                                                     <option value="{{$vo.id}}">{{$vo.name}}</option>
                                                     {{/foreach}}
@@ -453,7 +402,7 @@
                                         <div class="form-group">
                                             <label class="col-md-3 control-label">喜欢的美食</label>
                                             <div class="input-group col-md-6">
-                                                <select multiple class="form-control mult_select" data-name="like_food">
+                                                <select multiple class="form-control mult_select6" data-name="like_food">
                                                     {{foreach from=$food item=vo}}
                                                     <option value="{{$vo.id}}">{{$vo.name}}</option>
                                                     {{/foreach}}
@@ -464,7 +413,7 @@
                                         <div class="form-group">
                                             <label class="col-md-3 control-label">喜欢的运动</label>
                                             <div class="input-group col-md-6">
-                                                <select multiple class="form-control mult_select"  data-name="love_sport">
+                                                <select multiple class="form-control mult_select6"  data-name="love_sport">
                                                     {{foreach from=$sport item=vo}}
                                                     <option value="{{$vo.id}}">{{$vo.name}}</option>
                                                     {{/foreach}}
@@ -475,7 +424,8 @@
                                         <div class="form-group">
                                             <label class="col-md-3 control-label">喜欢的影视</label>
                                             <div class="input-group col-md-6">
-                                                <select multiple class="form-control mult_select" data-name="want_film">
+                                                <div style="clear:both;"></div>
+                                                <select multiple class="form-control mult_select6" data-name="want_film">
                                                     <optgroup label="电影">
                                                         {{foreach from=$movie item=vo}}
                                                         {{if $vo.pic_path eq 2}}
@@ -495,8 +445,22 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <!--------------------诚信认证------------------------------>
+
+                                    <!--------------------隐私设置------------------------------>
                                     <div class="tab-pane fade" id="box_tab7">
+                                        <h3 class="form-title">隐私设置</h3>
+                                        <div class="form-group">
+                                        </div>
+                                        <div class="form-group">
+                                        </div>
+                                        <div class="form-group">
+                                        </div>
+                                        <div class="form-group">
+                                        </div>
+                                    </div>
+
+                                    <!--------------------诚信认证------------------------------>
+                                    <div class="tab-pane fade" id="box_tab8">
                                         <h3 class="form-title">诚信认证</h3>
                                         <div class="form-group">
                                             <label class="col-md-3 control-label">身份证</label>
@@ -530,6 +494,19 @@
                                             </div>
                                         </div>
                                     </div>
+
+                                    <!--------------------相册------------------------------>
+                                    <div class="tab-pane fade" id="box_tab9">
+                                        <h3 class="form-title">诚信认证</h3>
+                                        <div class="form-group">
+                                        </div>
+                                        <div class="form-group">
+                                        </div>
+                                        <div class="form-group">
+                                        </div>
+                                        <div class="form-group">
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -552,7 +529,7 @@
 <script>
     jQuery(document).ready(function () {
 
-        $(".mult_select").click(function () {
+        $(".mult_select,.mult_select5,.mult_select6").click(function () {
             $("#"+$(this).data('name')).val($(this).val())
         })
 
@@ -563,6 +540,14 @@
         $(".mult_select").select2({
             placeholder: "不限",
             maximumSelectionSize: 3
+        });
+        $(".mult_select5").select2({
+            placeholder: "不限",
+            maximumSelectionSize: 5
+        });
+        $(".mult_select6").select2({
+            placeholder: "不限",
+            maximumSelectionSize: 6
         });
 
         $('.form_date').datetimepicker({
