@@ -109,17 +109,6 @@
                             </div>
 
                             <div class="form-group">
-                                <label class="col-md-3 control-label">体重</label>
-                                <div class="input-group col-md-6">
-                                    <div class="input-group">
-                                        <input type="number" class="form-control" name="info[weight]"
-                                               placeholder="请输入体重">
-                                        <span class="input-group-addon">kg</span>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="form-group">
                                 <label class="col-md-3 control-label">职业</label>
                                 <div class="input-group col-md-6">
                                     <div class="col-xs-6 pd0">
@@ -191,22 +180,6 @@
                             </div>
 
                             <div class="form-group">
-                                <label class="col-md-3 control-label">身份证地址</label>
-                                <div class="input-group col-md-6">
-                                    <input class="form-control" name="info[identity_address]" type="text" value=""
-                                           placeholder="请输入身份证地址">
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label class="col-md-3 control-label">身份证号码</label>
-                                <div class="input-group col-md-6">
-                                    <input class="form-control" name="info[identity_id]" type="text" value=""
-                                           placeholder="请输入身份证号码">
-                                </div>
-                            </div>
-
-                            <div class="form-group">
                                 <label class="col-md-3 control-label">手机号码</label>
                                 <div class="input-group col-md-6">
                                     <input class="form-control" name="phone" type="tel" value="" placeholder="请输入手机号码">
@@ -228,10 +201,10 @@
                             </div>
 
                             <div class="form-group">
-                                <label class="col-md-3 control-label">个性签名</label>
+                                <label class="col-md-3 control-label">个人签名</label>
                                 <div class="input-group col-md-6">
                                     <textarea name="personalized" class="form-control" rows="3"
-                                              placeholder="请填写个性签名"></textarea>
+                                             maxlength="100" placeholder="请填写个人签名，100字以内"></textarea>
                                 </div>
                             </div>
                         </div>
@@ -294,17 +267,6 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-md-3 control-label">体重要求</label>
-                                <div class="input-group col-md-6">
-                                    <select class="form-control" name="zo[zo_weight]">
-                                        <option value="">不限</option>
-                                        <option value="1">偏胖</option>
-                                        <option value="2">标准</option>
-                                        <option value="3">偏瘦</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="form-group">
                                 <label class="col-md-3 control-label">购车要求</label>
                                 <div class="input-group col-md-6">
                                     <select class="form-control" name="zo[zo_car]">
@@ -331,16 +293,6 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-md-3 control-label">才貌要求</label>
-                                <div class="input-group col-md-6">
-                                    <select class="form-control" name="zo[zo_endowed]">
-                                        <option value="">不限</option>
-                                        <option value="1">出众</option>
-                                        <option value="2">一般</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="form-group">
                                 <label class="col-md-3 control-label">职业要求</label>
                                 <div class="input-group col-md-6">
                                     <select multiple class="col-md-12 mult_select occupation" name="zo[zo_occupation][]">
@@ -360,28 +312,21 @@
                             <div class="form-group">
                                 <label class="col-md-3 control-label">属相要求</label>
                                 <div class="input-group col-md-6">
-                                    <select multiple class="col-md-12 mult_select zodiac" name="zo[zo_zodiac][]">
+                                    <select multiple class="col-md-12 mult_select5 zodiac" name="zo[zo_zodiac][]">
                                     </select>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-md-3 control-label">星座要求</label>
                                 <div class="input-group col-md-6">
-                                    <select multiple class="form-control mult_select constellation"
+                                    <select multiple class="form-control mult_select5 constellation"
                                             name="zo[zo_constellation][]"></select>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-md-3 control-label">地区要求</label>
+                                <label class="col-md-3 control-label">心目中的TA</label>
                                 <div class="input-group col-md-6">
-                                    <select multiple class="form-control mult_select dq-Province"
-                                            name="zo[zo_address][]"></select>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-md-3 control-label">其他要求</label>
-                                <div class="input-group col-md-6">
-                                    <textarea class="form-control" rows="3" name="zo[other]"></textarea>
+                                    <textarea class="form-control" maxlength="300" rows="3" name="zo[other]" placeholder="请填写你对心目中的TA的要求，300字以内"></textarea>
                                 </div>
                             </div>
                             <div style="display: none" id="img_hidden">
@@ -391,7 +336,7 @@
                             <div class="form-group">
                                 <label class="col-md-3 control-label">想去的地方</label>
                                 <div class="input-group col-md-6">
-                                    <select multiple class="form-control mult_select" name="went_travel[]">
+                                    <select multiple class="form-control mult_select6" name="went_travel[]">
                                         {{foreach from=$travel item=vo}}
                                         <option value="{{$vo.id}}">{{$vo.name}}</option>
                                         {{/foreach}}
@@ -401,7 +346,7 @@
                             <div class="form-group">
                                 <label class="col-md-3 control-label">去过的地方</label>
                                 <div class="input-group col-md-6">
-                                    <select multiple class="form-control mult_select" name="want_travel[]">
+                                    <select multiple class="form-control mult_select6" name="want_travel[]">
                                         {{foreach from=$travel item=vo}}
                                         <option value="{{$vo.id}}">{{$vo.name}}</option>
                                         {{/foreach}}
@@ -411,7 +356,7 @@
                             <div class="form-group">
                                 <label class="col-md-3 control-label">喜欢的美食</label>
                                 <div class="input-group col-md-6">
-                                    <select multiple class="form-control mult_select" name="like_food[]">
+                                    <select multiple class="form-control mult_select6" name="like_food[]">
                                         {{foreach from=$food item=vo}}
                                         <option value="{{$vo.id}}">{{$vo.name}}</option>
                                         {{/foreach}}
@@ -421,7 +366,7 @@
                             <div class="form-group">
                                 <label class="col-md-3 control-label">喜欢的运动</label>
                                 <div class="input-group col-md-6">
-                                    <select multiple class="form-control mult_select" name="love_sport[]">
+                                    <select multiple class="form-control mult_select6" name="love_sport[]">
                                         {{foreach from=$sport item=vo}}
                                         <option value="{{$vo.id}}">{{$vo.name}}</option>
                                         {{/foreach}}
@@ -429,12 +374,15 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-md-3 control-label">想看的电影</label>
+                                <label class="col-md-3 control-label">喜欢的影视</label>
                                 <div class="input-group col-md-6">
-                                    <select multiple class="form-control mult_select" name="want_film[]">
-                                        {{foreach from=$movie item=vo}}
-                                        <option value="{{$vo.id}}">{{$vo.name}}</option>
-                                        {{/foreach}}
+                                    <div style="clear:both;"></div>
+                                    <select multiple class="form-control mult_select6" name="want_film[]">
+                                        <optgroup label="电影">
+                                            {{foreach from=$movie item=vo}}
+                                            <option value="{{$vo.id}}">{{$vo.name}}</option>
+                                            {{/foreach}}
+                                        </optgroup>
                                     </select>
                                 </div>
                             </div>
@@ -790,6 +738,14 @@
         $(".mult_select").select2({
             placeholder: "不限",
             maximumSelectionSize: 3
+        });
+        $(".mult_select5").select2({
+            placeholder: "不限",
+            maximumSelectionSize: 5
+        });
+        $(".mult_select6").select2({
+            placeholder: "不限",
+            maximumSelectionSize: 6
         });
 
         $('.form_date').datetimepicker({
