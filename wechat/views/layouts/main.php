@@ -16,6 +16,16 @@
     <link href="/wechat/web/css/newFontIcon160613.css" rel="stylesheet">
     <link href="/wechat/web/css/plugin/photoswipe/photoswipe.css" rel="stylesheet">
     <link href="/wechat/web/css/plugin/photoswipe/default-skin.css" rel="stylesheet">
+    <script>
+        function addElement() {
+            if (location.hash == '#/index') {
+                var div = document.createElement("div");
+                div.setAttribute("id", "welcome");
+                div.innerHTML = '<div class="loading"><img src="/wechat/web/images/domLoading.gif" /><p>加载中，请稍候</p></div>';
+                document.body.appendChild(div);
+            }
+        }
+    </script>
     <!-- STYLESHEETS --><!--[if lt IE 9]>
     <script src="/backend/web/CloudAdmin/js/flot/excanvas.min.js"></script>
     <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -24,19 +34,8 @@
 <!--<script src="//cdn.bootcss.com/ionic/1.2.4/js/ionic.bundle.min.js"></script>-->
 <script data-main="/wechat/web/js/app" src="/wechat/web/js/plugin/requirejs/require.js"></script>
 <!--<script data-main="/wechat/web/js/build" src="/wechat/web/js/plugin/requirejs/require.js"></script>-->
-<body ng-controller="main">
+<body onload="addElement();" ng-controller="main">
 <?= $content ?>
-<script>
-    if (location.hash == '#/index') {
-        addElement();
-    }
-    function addElement() {
-        var div = document.createElement("div");
-        div.setAttribute("id", "welcome");
-        div.innerHTML= '<div class="loading"><img src="/wechat/web/images/domLoading.gif" /><p>加载中，请稍候</p></div>';
-        document.body.appendChild(div);
-    }
-</script>
 <!--[if lt IE 9]>
 <script src="/wechat/web/js/plugin/h5/html5.js"></script>
 <script src="/wechat/web/js/plugin/h5/excanvas.min.js"></script>
