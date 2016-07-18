@@ -917,8 +917,13 @@ define(['app/module', 'app/directive/directiveApi'
         }
 
         // 删除
-        $scope.remove = function (index) {
-            $scope.data[index].checked = false;
+        $scope.remove = function (dat) {
+            for(var i in $scope.data){
+                if($scope.data[i].id == dat.id){
+                    $scope.data[i].checked=false;
+                    break;
+                }
+            }
             $ionicScrollDelegate.$getByHandle('small').scrollTop();
         }
 
@@ -987,8 +992,13 @@ define(['app/module', 'app/directive/directiveApi'
         };
 
         // 删除
-        $scope.remove = function (index) {
-            $scope.sportsList[index].checked = false;
+        $scope.remove = function (s) {
+            for(var i in $scope.sportsList){
+                if($scope.sportsList[i].id == s.id){
+                    $scope.sportsList[i].checked=false;
+                    break;
+                }
+            }
             $ionicScrollDelegate.$getByHandle('small').scrollTop();
         }
 
@@ -1035,8 +1045,13 @@ define(['app/module', 'app/directive/directiveApi'
         });
 
         // 删除
-        $scope.remove = function (index) {
-            $scope.list[index].checked = false;
+        $scope.remove = function (l) {
+            for(var i in $scope.list){
+                if($scope.list[i].id == l.id){
+                    $scope.list[i].checked=false;
+                    break;
+                }
+            }
             $ionicScrollDelegate.$getByHandle('small').scrollTop();
         }
 
@@ -1094,8 +1109,13 @@ define(['app/module', 'app/directive/directiveApi'
         });
 
         // 删除
-        $scope.remove = function (index) {
-            $scope.foodList[index].checked = false;
+        $scope.remove = function (f) {
+            for(var i in $scope.foodList){
+                if($scope.foodList[i].id == f.id){
+                    $scope.foodList[i].checked=false;
+                    break;
+                }
+            }
             $ionicScrollDelegate.$getByHandle('small').scrollTop();
         }
 

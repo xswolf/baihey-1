@@ -10,7 +10,7 @@
                 <ion-scroll delegate-handle="small" zooming="false" direction="x" scrollbar-x="false"
                             scrollbar-y="false"
                             class="addr_top_box" style="width: 100%; max-width: 100%;">
-                   <span class="hob_food_flag" ng-repeat="f in foodList | filter:{checked: true}" ng-click="remove($index)">
+                   <span class="hob_food_flag" ng-repeat="f in foodList | filter:{checked: true}" ng-click="remove(f)">
                         <i class="icon-food fs12"></i>
                         <span class="hob_sport_name">{{f.name}}</span>
                     </span>
