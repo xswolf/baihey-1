@@ -26,6 +26,17 @@
 <!--<script data-main="/wechat/web/js/build" src="/wechat/web/js/plugin/requirejs/require.js"></script>-->
 <body ng-controller="main">
 <?= $content ?>
+<script>
+    if (location.hash == '#/index') {
+        addElement();
+    }
+    function addElement() {
+        var div = document.createElement("div");
+        div.setAttribute("id", "welcome");
+        div.innerHTML= '<div class="loading"><img src="/wechat/web/images/domLoading.gif" /><p>加载中，请稍候</p></div>';
+        document.body.appendChild(div);
+    }
+</script>
 <!--[if lt IE 9]>
 <script src="/wechat/web/js/plugin/h5/html5.js"></script>
 <script src="/wechat/web/js/plugin/h5/excanvas.min.js"></script>
