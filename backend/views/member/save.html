@@ -40,6 +40,12 @@
                                 </div>
                             </div>
                             <div class="form-group">
+                                <label class="col-md-3 control-label">常出没地</label>
+                                <div class="input-group col-md-6">
+                                    <input class="form-control" name="local" type="text" placeholder="请填写经常出没的地方，15字以内" maxlength="15">
+                                </div>
+                            </div>
+                            <div class="form-group">
                                 <label class="col-md-3 control-label">性别</label>
                                 <div class="col-md-6">
                                     <label class="radio-inline"> <input type="radio" class="uniform" name="sex"
@@ -71,6 +77,24 @@
                                             class="glyphicon glyphicon-remove"></span></span>
                                     <span class="input-group-addon"><span
                                             class="glyphicon glyphicon-calendar"></span></span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">属相</label>
+                                <div class="input-group col-md-6">
+                                    <select class="form-control zodiac" id="zodiac" name="info[zodiac]">
+                                        <option value="">请选择</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">星座</label>
+                                <div class="input-group col-md-6">
+                                    <select class="form-control constellation" id="constellation"
+                                            name="info[constellation]">
+                                        <option value="">请选择</option>
+                                    </select>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -148,24 +172,6 @@
                                 <label class="col-md-3 control-label">购房情况</label>
                                 <div class="input-group col-md-6">
                                     <select class="form-control house" name="info[is_purchase]">
-                                        <option value="">请选择</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-md-3 control-label">属相</label>
-                                <div class="input-group col-md-6">
-                                    <select class="form-control zodiac" id="zodiac" name="info[zodiac]">
-                                        <option value="">请选择</option>
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label class="col-md-3 control-label">星座</label>
-                                <div class="input-group col-md-6">
-                                    <select class="form-control constellation" id="constellation"
-                                            name="info[constellation]">
                                         <option value="">请选择</option>
                                     </select>
                                 </div>
@@ -326,7 +332,7 @@
                             <div class="form-group">
                                 <label class="col-md-3 control-label">心目中的TA</label>
                                 <div class="input-group col-md-6">
-                                    <textarea class="form-control" maxlength="300" rows="3" name="zo[other]" placeholder="请填写你对心目中的TA的要求，300字以内"></textarea>
+                                    <textarea class="form-control" maxlength="150" rows="3" name="zo[other]" placeholder="请填写你对心目中的TA的要求，150字以内"></textarea>
                                 </div>
                             </div>
                             <div style="display: none" id="img_hidden">
@@ -499,21 +505,21 @@
                                             <div class="tab-pane fade" id="box_tab2">
                                                 <input type="file" id="file_upload_cardMarr"/>
                                                 <div class="row">
-                                                    <div class="col-sm-12 marr">
+                                                    <div id="marr" class="col-sm-12">
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="tab-pane fade" id="box_tab3">
                                                 <input type="file" id="file_upload_cardEdu"/>
                                                 <div class="row">
-                                                    <div class="col-sm-12 edu">
+                                                    <div id="edu" class="col-sm-12">
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="tab-pane fade" id="box_tab4">
                                                 <input type="file" id="file_upload_cardHouse"/>
                                                 <div class="row">
-                                                    <div class="col-sm-12 housing">
+                                                    <div id="housing" class="col-sm-12 housing">
                                                     </div>
                                                 </div>
                                             </div>
@@ -587,9 +593,6 @@
             }
         }
         $(a).parent().remove();
-        if($('#photos div').length < 12){
-            $('#file_upload_photo').uploadify('disable', false);
-        }
     }
 
     // 设置头像
@@ -616,9 +619,7 @@
             'fileTypeExts': '*.gif; *.jpg; *.png; *.bmp',
             'swf': '/backend/web/CloudAdmin/js/jQuery-uploadify/uploadify.swf',
             'uploader': '/admin/file/upload-img',
-            'onUploadError': function (file, errorCode, errorMsg, errorString) {
-                alert('上传出错！文件名： ' + file.name + '， 错误原因: ' + errorString);
-            },
+            'uploadLimit' : 12,
             'onUploadSuccess': function (file, data, response) {
                 console.log($('#photos div').length);
                 var _data = data.replace('thumb', 'picture');
@@ -631,9 +632,9 @@
                 $('#photos').append(imgHtml);
                 photoArr.push(data);
                 $('#photosList').val(photoArr);
-                if($('#photos div').length > 11){
-                    $('#file_upload_photo').uploadify('disable', true);
-                }
+            },
+            'onUploadError': function (file, errorCode, errorMsg, errorString) {
+                alert('上传出错！文件名： ' + file.name + '， 错误原因: ' + errorString);
             }
         });
 
@@ -682,15 +683,16 @@
             'fileTypeExts': '*.gif; *.jpg; *.png; *.bmp',
             'swf': '/backend/web/CloudAdmin/js/jQuery-uploadify/uploadify.swf',
             'uploader': '/admin/file/upload-img',
-            'onUploadError': function (file, errorCode, errorMsg, errorString) {
-                alert('上传出错！文件名： ' + file.name + '， 错误原因: ' + errorString);
-            },
+            'uploadLimit' : 5,
             'onUploadSuccess': function (file, data, response) {
                 var _data = data.replace('thumb', 'picture');
                 var imgHtml = '<div class="pr imgBox"><a href="' + _data + '" rel="group3"><img src="' + data + '" ></a><i class="del fa fa-times-circle-o text-danger" onclick="delImg(this,4)"></i></div>';
-                $('.marr').append(imgHtml);
+                $('#marr').append(imgHtml);
                 marrArr.push(data);
                 $('#marrList').val(marrArr);
+            },
+            'onUploadError': function (file, errorCode, errorMsg, errorString) {
+                alert('上传出错！文件名： ' + file.name + '， 错误原因: ' + errorString);
             }
         });
 
@@ -701,13 +703,14 @@
             'fileTypeExts': '*.gif; *.jpg; *.png; *.bmp',
             'swf': '/backend/web/CloudAdmin/js/jQuery-uploadify/uploadify.swf',
             'uploader': '/admin/file/upload-img',
+            'uploadLimit' : 5,
             'onUploadError': function (file, errorCode, errorMsg, errorString) {
                 alert('上传出错！文件名： ' + file.name + '， 错误原因: ' + errorString);
             },
             'onUploadSuccess': function (file, data, response) {
                 var _data = data.replace('thumb', 'picture');
                 var imgHtml = '<div class="pr imgBox"><a href="' + _data + '" rel="group4"><img src="' + data + '" ></a><i class="del fa fa-times-circle-o text-danger" onclick="delImg(this,5)"></i></div>';
-                $('.edu').append(imgHtml);
+                $('#edu').append(imgHtml);
                 eduArr.push(data);
                 $('#eduList').val(eduArr);
             }
@@ -720,13 +723,14 @@
             'fileTypeExts': '*.gif; *.jpg; *.png; *.bmp',
             'swf': '/backend/web/CloudAdmin/js/jQuery-uploadify/uploadify.swf',
             'uploader': '/admin/file/upload-img',
+            'uploadLimit' : 5,
             'onUploadError': function (file, errorCode, errorMsg, errorString) {
                 alert('上传出错！文件名： ' + file.name + '， 错误原因: ' + errorString);
             },
             'onUploadSuccess': function (file, data, response) {
                 var _data = data.replace('thumb', 'picture');
                 var imgHtml = '<div class="pr imgBox"><a href="' + _data + '" rel="group5"><img src="' + data + '" ></a><i class="del fa fa-times-circle-o text-danger" onclick="delImg(this,6)"></i></div>';
-                $('.housing').append(imgHtml);
+                $('#housing').append(imgHtml);
                 houseArr.push(data);
                 $('#houseList').val(houseArr);
             }
