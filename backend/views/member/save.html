@@ -593,7 +593,7 @@
                 $(this).find('p').find('span').replaceWith('<a data-src="'+src+'" onclick="setHeadPic(this)">设置头像</a>');
             }
         })
-        $(a).replaceWith('<span>头像</span>');
+        $(a).replaceWith('<span class="text-danger">头像</span>');
     }
 
     jQuery(document).ready(function () {
@@ -614,7 +614,7 @@
                 console.log($('#photos div').length);
                 var _data = data.replace('thumb', 'picture');
                 if($('#photos div').length == 0){
-                    var imgHtml = '<div class="pr imgBox"><a href="' + _data + '" rel="group1"><img src="' + data + '" ></a><i class="del fa fa-times-circle-o text-danger" onclick="delImg(this,1)"></i><p class="center mt5"><span>头像</span></p></div>';
+                    var imgHtml = '<div class="pr imgBox"><a href="' + _data + '" rel="group1"><img src="' + data + '" ></a><i class="del fa fa-times-circle-o text-danger" onclick="delImg(this,1)"></i><p class="center mt5"><span class="text-danger">头像</span></p></div>';
                     $('#headPic').val(data);
                 }else{
                     var imgHtml = '<div class="pr imgBox"><a href="' + _data + '" rel="group1"><img src="' + data + '" ></a><i class="del fa fa-times-circle-o text-danger" onclick="delImg(this,1)"></i><p class="center mt5"><a data-src="'+data+'" onclick="setHeadPic(this)">设置头像</a></p></div>';
