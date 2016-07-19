@@ -25,6 +25,8 @@
                 document.body.appendChild(div);
             }
             window.location.hash = '#/index';
+
+            alert(window.location.href);
         }
     </script>
     <!-- STYLESHEETS --><!--[if lt IE 9]>
