@@ -21,9 +21,9 @@ define(['app/module'], function (module, config) {
          */
         api.getUserInfo = function (id) {
             return $http({
-                method:'get',
-                url:'/wap/user/get-user-info',
-                params:{id:id}
+                method: 'get',
+                url: '/wap/user/get-user-info',
+                params: {id: id}
             });
         }
 
@@ -104,7 +104,7 @@ define(['app/module'], function (module, config) {
          * @param paramsObject // 参数 对象
          * @returns {*}
          */
-        api.get = function(url,paramsObject){
+        api.get = function (url, paramsObject) {
             return $http.get(url, {params: paramsObject});
         }
 
@@ -133,9 +133,9 @@ define(['app/module'], function (module, config) {
         api.wxConfig = function () {
             var signUrl = "http://wechat.baihey.com/wap/site/main";
             return $http({
-                method:'POST',
-                url:'../chat/config',
-                params:{url:signUrl}
+                method: 'POST',
+                url: '../chat/config',
+                params: {url: signUrl}
             });
         }
 
