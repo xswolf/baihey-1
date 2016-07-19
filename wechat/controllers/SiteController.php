@@ -41,6 +41,13 @@ class SiteController extends BaseController
                 setcookie('wx_login', 'out', time() + 3600 * 24 * 30, '/wap');
             }
         }
+
+        $code = \Yii::$app->request->get( 'code' );
+        if ( $code != null ) {
+
+            header("Location:http://wechat.baihey.com/wap/site/main#/index");
+            exit;
+        }
         return $this->render();
     }
 
