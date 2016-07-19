@@ -105,7 +105,7 @@ var bhyFunc = {
                 })
             });
         }
-        if (type == 2) {   // 婚姻证
+        if (type == 5) {   // 婚姻证
             var cause = '';
             layer.prompt({
                 formType: 2,
@@ -124,7 +124,7 @@ var bhyFunc = {
                 })
             });
         }
-        if (type == 3) {   // 学历证
+        if (type == 4) {   // 学历证
             var cause = '';
             layer.prompt({
                 formType: 2,
@@ -143,7 +143,7 @@ var bhyFunc = {
                 })
             });
         }
-        if (type == 4) {   // 房产证
+        if (type == 6) {   // 房产证
             var cause = '';
             layer.prompt({
                 formType: 2,
