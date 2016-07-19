@@ -15,6 +15,7 @@ use common\models\ChargeGoods;
 use common\models\ChargeOrder;
 use common\models\Message;
 use common\models\User;
+use common\models\UserDynamic;
 use common\models\UserPhoto;
 use wechat\models\Config;
 use wechat\models\UserMessage;
@@ -175,13 +176,15 @@ class MemberController extends BaseController
         $this->assign('matchmaking', $matchmaking['name']);
         $this->assign('photoList', UserPhoto::getInstance()->getPhotoList(\Yii::$app->request->get('id')));
 
-
+        // 消息
         $messageList = UserMessage::getInstance()->chatList($userId);
         foreach($messageList as $k=>$v){
             $messageList[$k]['info'] = json_decode($messageList[$k]['info']);
         }
         $this->assign('messageList', $messageList);
 
+        $dynamicList = UserDynamic::getInstance()->getDynamicList($userId , 0 , 1000 ,-2);
+        $this->assign('dynamicList' , $dynamicList);
         return $this->render();
     }
 

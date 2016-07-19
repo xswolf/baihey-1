@@ -37,6 +37,7 @@ return [
         ],
         'request' => [
             'baseUrl' => '/admin',
+            'cookieValidationKey' => 'jrbhy',
         ],
 
         'authManager'=> [
@@ -59,5 +60,6 @@ return [
     ],
     'homeUrl' => '/admin',
     'params' => $params,
+
 
 ];
