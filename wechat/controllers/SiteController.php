@@ -41,7 +41,7 @@ class SiteController extends BaseController
                 setcookie('wx_login', 'out', time() + 3600 * 24 * 30, '/wap');
             }
         }
-        if($_GET['code']){
+        if(isset($_GET['code'])){
             header("Location: http://wechat.baihey.com/wap/site/main#/index");
         }
         return $this->render();
