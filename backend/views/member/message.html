@@ -13,7 +13,7 @@
     {{foreach from=$list key=k item=vo}}
         <tr>
             <td>{{$vo.id}}</td>
-            <td><a href="/admin/member/info?id=155521">
+            <td><a href="/admin/member/info?id={{$vo.send_user_id}}">
                 {{if $vo.send_user_id == $sendUserId }}
                     {{$sendName}}
                 {{else}}
@@ -22,7 +22,7 @@
                 ({{$vo.send_user_id}})
             </a>
             </td>
-            <td><a href="/admin/member/info?id=5615001">
+            <td><a href="/admin/member/info?id={{$vo.receive_user_id}}">
                 {{if $vo.send_user_id == $sendUserId }}
                     {{$receiveName}}
                 {{else}}
