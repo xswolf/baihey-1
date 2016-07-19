@@ -25,7 +25,6 @@
                 document.body.appendChild(div);
             }
         }
-        alert(window.location.href);
     </script>
     <!-- STYLESHEETS --><!--[if lt IE 9]>
     <script src="/backend/web/CloudAdmin/js/flot/excanvas.min.js"></script>
