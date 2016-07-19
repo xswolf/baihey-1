@@ -36,4 +36,18 @@ class AuthUser extends Base
 
         return $row;
     }
+
+    /**
+     * 获取角色下面的用户
+     * @param $role
+     * @return array
+     */
+    public function getUserByRole($role){
+
+        return (new Query())->from($this->tablePrefix.'auth_assignment a')
+            ->innerJoin($this->tablePrefix.'auth_user u' , 'a.user_id=u.id')
+            ->where(['item_name'=>$role,'status'=>1])
+            ->select("u.id,u.name")
+            ->all();
+    }
 }

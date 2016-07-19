@@ -834,4 +834,29 @@ class User extends Base
             UserInformation::getInstance()->updateUserInfo($user_id, ['honesty_value' => $honesty_value]);
         }
     }
+
+    /**
+     * 认证
+     * @param $data
+     * @return bool
+     */
+    public function auth($data){
+        $user = (new Query())->from($this->tablePrefix.'user_information')
+            ->where(['user_id' => $data['user_id']])
+            ->select('honesty_value')
+            ->all();
+        if (is_array($user) && count($user) ==1){
+            if ($user[0]['honesty_value'] & $data['honesty_value'] > 0){
+                $honesty_value = $user[0]['honesty_value'];
+            }else{
+                $honesty_value = $user[0]['honesty_value'] + $data['honesty_value'];
+            }
+        }else{
+            return 0;
+        }
+        $data['honesty_value'] = $honesty_value;
+        return \Yii::$app->db->createCommand()
+            ->update($this->tablePrefix.'user_information' ,$data ,['user_id'=>$data['user_id']])
+            ->execute();
+    }
 }

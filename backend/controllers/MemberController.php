@@ -11,6 +11,7 @@ namespace backend\controllers;
 
 use backend\models\User as UserModel;
 use common\models\Area;
+use common\models\AuthUser;
 use common\models\ChargeGoods;
 use common\models\ChargeOrder;
 use common\models\Message;
@@ -184,9 +185,20 @@ class MemberController extends BaseController
             $messageList[$k]['info'] = json_decode($messageList[$k]['info']);
         }
         $this->assign('messageList', $messageList);
-
+        // 动态
         $dynamicList = UserDynamic::getInstance()->getDynamicList($userId , 0 , 1000 ,-2);
         $this->assign('dynamicList' , $dynamicList);
+        // 身份认证
+        $identify = UserPhoto::getInstance()->getPhotoList($userId , [2,3,4,5,6]);
+        $identifyType = [];
+        foreach ($identify as $k=>$v){
+            $identifyType[$v['type']][] = $v;
+        }
+        $this->assign('identify' , $identify);
+        $this->assign('identifyType' , $identifyType);
+        // 红娘列表
+        $adminUserList = AuthUser::getInstance()->getUserByRole("服务红娘");
+        $this->assign('adminUserList' , $adminUserList);
         return $this->render();
     }
 
@@ -290,6 +302,20 @@ class MemberController extends BaseController
         } else {
             $this->renderAjax(['status' => 0, 'message' => '操作失败', 'data' => $flag]);
         }
+    }
+
+    /**
+     * 审核用户
+     */
+    public function actionAuth()
+    {
+        $data = \Yii::$app->request->post();
+        if ($flag = User::getInstance()->auth($data)){
+            $this->renderAjax(['status' => 1, 'message' => '操作成功', 'data' => $flag]);
+        }else{
+            $this->renderAjax(['status' => 0, 'message' => '操作失败', 'data' => $flag]);
+        }
+
     }
 
     public function actionChat()

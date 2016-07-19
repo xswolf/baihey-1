@@ -54,31 +54,31 @@ var bhyFunc = {
                 content: $('#layer_review')
             });
         }
-        if (type == 2) {  // 婚姻证明
-            this.ajaxRequest('url', {user_id: this.user_id, type: type}, function (res) {
+        if (type == 5) {  // 婚姻证明
+            this.ajaxRequest('/admin/member/auth', {user_id: this.user_id, honesty_value: 2}, function (res) {
                 if (res.status == 1) {
-                    $('.marrInfo').hide();
-                    $('.marrSuccess').show()
+                    $('.info'+5).hide();
+                    $('.id-toggle'+5).removeClass('hide');
                 } else {
                     layer.msg('审核出错，请刷新重试！');
                 }
             })
         }
-        if (type == 3) {  // 学历证明
-            this.ajaxRequest('url', {user_id: this.user_id, type: type}, function (res) {
+        if (type == 4) {  // 学历证明
+            this.ajaxRequest('/admin/member/auth', {user_id: this.user_id, honesty_value: 4}, function (res) {
                 if (res.status == 1) {
-                    $('.eduInfo').hide();
-                    $('.eduSuccess').show()
+                    $('.info'+4).hide();
+                    $('.id-toggle'+4).removeClass('hide');
                 } else {
                     layer.msg('审核出错，请刷新重试！');
                 }
             })
         }
-        if (type == 4) {  // 房产证明
-            this.ajaxRequest('url', {user_id: this.user_id, type: type}, function (res) {
+        if (type == 6) {  // 房产证明
+            this.ajaxRequest('/admin/member/auth', {user_id: this.user_id, honesty_value: 8}, function (res) {
                 if (res.status == 1) {
-                    $('.houseInfo').hide();
-                    $('.houseSuccess').show()
+                    $('.info'+6).hide();
+                    $('.id-toggle'+6).removeClass('hide');
                 } else {
                     layer.msg('审核出错，请刷新重试！');
                 }
@@ -163,31 +163,27 @@ var bhyFunc = {
             });
         }
     },
-    reviewIsOk: function () {  // 身份证审核通过
+    reviewIsOk: function (user_id) {  // 身份证审核通过
         var matchmaking = $('#matchmaking');
         if (!matchmaking.val()) {
             layer.tips('请选择服务红娘', matchmaking);
             return false;
         }
-        this.ajaxRequest('url', {
-            user_id: this.user_id,
+        this.ajaxRequest('/admin/member/auth', {
+            user_id: user_id,
             matchmaking: matchmaking.val(),
             service_status: $('#service_status').val(),
-            is_sign: $('#is_sign').val()
+            is_sign: $('#is_sign').val(),
+            honesty_value:1
         }, function (res) {
+            console.log(res)
             if (res.status == 1) {
                 $('.idCardInfo').hide();
-                $('.idCardSuccess').show();
-                setTimeout(function () {
-                    layer.confirm('是否现在为该会员充值/开通服务吗？', {icon: 3, title: '提示'}, function (index) {
-                        alert('需要');
-                        layer.close(index);
-                    });
-                }, 1000)
+                $('.idCardSuccess').removeClass('hide')
             } else {
                 layer.msg('审核出错，请刷新重试！');
             }
-            this.layerClickedCancelButton('page');
+            bhyFunc.layerClickedCancelButton('page');
         })
     },
     resetPass: function (user_id) {  // 重置密码

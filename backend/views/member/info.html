@@ -1,7 +1,7 @@
 <!-- COLORBOX -->
 <link rel="stylesheet" type="text/css" href="/backend/web/CloudAdmin/js/colorbox/colorbox.min.css"/>
 <div class="row">
-    <input id="user_id" type="hidden" value="223">
+    <input id="user_id" type="hidden" value="{{$user.id}}">
     <div class="col-md-12">
         <!-- BOX -->
         <div class="box border">
@@ -542,7 +542,7 @@
                                             </div>
                                             <div id="collapseOne" class="panel-collapse collapse in">
                                                 <div class="panel-body">
-                                                    <div class="alert alert-info idCardInfo">
+                                                    <div class="alert alert-info idCardInfo {{if ($user.honesty_value & 1)}}hide{{/if}}">
                                                         请您确认以下信息，该会员身份证照片是否审核通过？&nbsp;&nbsp;&nbsp;&nbsp;
                                                         <button class="btn btn-success" onclick="bhyFunc.reviewYes(1)">
                                                             <i class="fa fa-check"></i> 通过
@@ -551,92 +551,106 @@
                                                                 class="fa fa-times"></i> 不通过
                                                         </button>
                                                     </div>
-                                                    <div class="alert alert-success idCardSuccess">
+                                                    <div class="alert alert-success idCardSuccess {{if !($user.honesty_value & 1)}}hide{{/if}}">
                                                         该会员身份证已审核通过！
                                                     </div>
-                                                    <ul id="layer-photos-demo" class="list-unstyled list-inline">
-                                                        <img layer-src="/backend/web/images/idCard1.jpg"
-                                                             src="/backend/web/images/idCard1.jpg" width="200"
+
+                                                    <ul id="layer-photos-demo1" class="list-unstyled list-inline">
+                                                        {{foreach from=$identify item=vo}}
+                                                            {{if $vo.type==2 || $vo.type ==3}}
+                                                            {{$path = str_replace('thumb','picture',$vo.thumb_path)}}
+                                                            <img layer-src="{{$path}}"
+                                                                 src="{{$vo.thumb_path}}" width="200"
                                                              height="200">
-                                                        <img layer-src="/backend/web/images/idCard2.jpg"
-                                                             src="/backend/web/images/idCard2.jpg" width="200"
-                                                             height="200">
+                                                            {{/if}}
+                                                        {{/foreach}}
+
                                                     </ul>
                                                 </div>
                                             </div>
                                         </div>
+                                        {{foreach from=$identifyType key=k item=vo}}
+                                        {{if $k<4}}{{continue}}{{/if}}
                                         <div class="panel panel-default">
                                             <div class="panel-heading">
                                                 <h3 class="panel-title"><a class="accordion-toggle"
                                                                            data-toggle="collapse"
-                                                                           data-parent="#accordion" href="#collapseTwo">婚姻证明</a>
+                                                                           data-parent="#accordion" href="#collapseTwo{{$k}}">
+                                                    {{if $k == 5}}
+                                                        婚姻证明
+                                                    {{else if $k ==6}}
+                                                        房产证明
+                                                    {{else if $k ==4}}
+                                                        学历证明
+                                                    {{/if}}
+                                                </a>
                                                 </h3>
                                             </div>
-                                            <div id="collapseTwo" class="panel-collapse collapse">
+                                            <div id="collapseTwo{{$k}}" class="panel-collapse collapse">
                                                 <div class="panel-body">
-                                                    <div class="alert alert-info marrInfo hide">
-                                                        请您确认以下信息，该会员婚姻证明照片是否审核通过？&nbsp;&nbsp;&nbsp;&nbsp;
-                                                        <button class="btn btn-success" onclick="bhyFunc.reviewYes(2)">
-                                                            <i class="fa fa-check"></i> 通过
-                                                        </button>
-                                                        <button class="btn btn-danger" onclick="bhyFunc.reviewNo(2)"><i
-                                                                class="fa fa-times"></i> 不通过
-                                                        </button>
-                                                    </div>
-                                                    <div class="alert alert-success marrSuccess hide">
-                                                        该会员婚姻证明已审核通过！
-                                                    </div>
+                                                        {{if $k == 5}}
+                                                            <div class="alert alert-info info{{$k}} {{if ($user.honesty_value & 2)}}hide{{/if}}">
+                                                                请您确认以下信息，该会员婚姻证明照片是否审核通过？&nbsp;&nbsp;&nbsp;&nbsp;
+                                                                <button class="btn btn-success" onclick="bhyFunc.reviewYes({{$k}})">
+                                                                    <i class="fa fa-check"></i> 通过
+                                                                </button>
+                                                                <button class="btn btn-danger" onclick="bhyFunc.reviewNo({{$k}})"><i
+                                                                        class="fa fa-times"></i> 不通过
+                                                                </button>
+                                                            </div>
+                                                        {{else if $k ==6}}
+                                                            <div class="alert alert-info info{{$k}} {{if ($user.honesty_value & 8)}}hide{{/if}}">
+                                                                请您确认以下信息，该会员房产证明照片是否审核通过？&nbsp;&nbsp;&nbsp;&nbsp;
+                                                                <button class="btn btn-success" onclick="bhyFunc.reviewYes({{$k}})">
+                                                                    <i class="fa fa-check"></i> 通过
+                                                                </button>
+                                                                <button class="btn btn-danger" onclick="bhyFunc.reviewNo({{$k}})"><i
+                                                                        class="fa fa-times"></i> 不通过
+                                                                </button>
+                                                            </div>
+                                                        {{else if $k ==4}}
+                                                            <div class="alert alert-info info{{$k}} {{if ($user.honesty_value & 4)}}hide{{/if}}">
+                                                                请您确认以下信息，该会员学历证明照片是否审核通过？&nbsp;&nbsp;&nbsp;&nbsp;
+                                                                <button class="btn btn-success" onclick="bhyFunc.reviewYes({{$k}})">
+                                                                    <i class="fa fa-check"></i> 通过
+                                                                </button>
+                                                                <button class="btn btn-danger" onclick="bhyFunc.reviewNo({{$k}})"><i
+                                                                        class="fa fa-times"></i> 不通过
+                                                                </button>
+                                                            </div>
+
+                                                        {{/if}}
+
+
+                                                        {{if $k == 5}}
+                                                        <div class="alert alert-success marrSuccess id-toggle{{$k}} {{if !($user.honesty_value & 2)}}hide{{/if}}">
+                                                            该会员婚姻证明已审核通过！
+                                                        </div>
+                                                        {{else if $k ==6}}
+                                                        <div class="alert alert-success marrSuccess id-toggle{{$k}} {{if !($user.honesty_value & 8)}}hide{{/if}}">
+                                                            该会员房产证明已审核通过！
+                                                        </div>
+                                                        {{else if $k ==4}}
+                                                        <div class="alert alert-success marrSuccess id-toggle{{$k}} {{if !($user.honesty_value & 4) }}hide{{/if}}">
+                                                            该会员学历证明已审核通过！
+                                                        </div>
+                                                        {{/if}}
+
+                                                    <ul id="layer-photos-demo{{$k}}" class="list-unstyled list-inline">
+                                                        {{foreach from=$identify item=vo}}
+                                                        {{if $vo.type==$k}}
+                                                        {{$path = str_replace('thumb','picture',$vo.thumb_path)}}
+                                                        <img layer-src="{{$path}}"
+                                                             src="{{$vo.thumb_path}}" width="200"
+                                                             height="200">
+                                                        {{/if}}
+                                                        {{/foreach}}
+
+                                                    </ul>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="panel panel-default">
-                                            <div class="panel-heading">
-                                                <h3 class="panel-title"><a class="accordion-toggle"
-                                                                           data-toggle="collapse"
-                                                                           data-parent="#accordion"
-                                                                           href="#collapseThree">学历证明</a></h3>
-                                            </div>
-                                            <div id="collapseThree" class="panel-collapse collapse">
-                                                <div class="panel-body">
-                                                    <div class="alert alert-info eduInfo hide">
-                                                        请您确认以下信息，该会员学历证明照片是否审核通过？&nbsp;&nbsp;&nbsp;&nbsp;
-                                                        <button class="btn btn-success" onclick="bhyFunc.reviewYes(3)">
-                                                            <i class="fa fa-check"></i> 通过
-                                                        </button>
-                                                        <button class="btn btn-danger" onclick="bhyFunc.reviewNo(3)"><i
-                                                                class="fa fa-times"></i> 不通过
-                                                        </button>
-                                                    </div>
-                                                    <div class="alert alert-success eduSuccess hide">
-                                                        该会员学历证明已审核通过！
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="panel panel-default">
-                                            <div class="panel-heading">
-                                                <h3 class="panel-title"><a class="accordion-toggle"
-                                                                           data-toggle="collapse"
-                                                                           data-parent="#accordion"
-                                                                           href="#collapseFour">房产证明</a></h3>
-                                            </div>
-                                            <div id="collapseFour" class="panel-collapse collapse">
-                                                <div class="panel-body">
-                                                    <div class="alert alert-info houseInfo hide">
-                                                        请您确认以下信息，该会员房产证明照片是否审核通过？&nbsp;&nbsp;&nbsp;&nbsp;
-                                                        <button class="btn btn-success" onclick="bhyFunc.reviewYes(4)">
-                                                            <i class="fa fa-check"></i> 通过
-                                                        </button>
-                                                        <button class="btn btn-danger" onclick="bhyFunc.reviewNo(4)"><i
-                                                                class="fa fa-times"></i> 不通过
-                                                        </button>
-                                                    </div>
-                                                    <div class="alert alert-success houseSuccess hide">
-                                                        该会员房产证明已审核通过！
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
+                                        {{/foreach}}
                                     </div>
                                 </div>
                             </div>
@@ -663,14 +677,15 @@
     <div class="col-sm-12">
         <div class="form-group m10">
             <label for="matchmaker">销售红娘</label>
-            <input id="matchmaker" class="form-control" type="text" disabled="disabled" value="袁军">
+            <input id="matchmaker" class="form-control" type="text" disabled="disabled" value="{{$matchmaker}}">
         </div>
         <div class="form-group m10">
             <label for="matchmaking">服务红娘</label>
             <select id="matchmaking" class="form-control">
                 <option value="">请选择</option>
-                <option value="1">唐明曙</option>
-                <option value="2">方莉</option>
+                {{foreach from=$adminUserList key=k item=vo}}
+                <option value="{{$vo.id}}">{{$vo.name}}</option>
+                {{/foreach}}
             </select>
         </div>
         <div class="form-group m10">
@@ -689,7 +704,7 @@
         </div>
         <div class="form-group mt20">
             <p class="btn-toolbar center">
-                <button class="btn btn-success" onclick="bhyFunc.reviewIsOk()">确认无误，审核通过</button>
+                <button class="btn btn-success" onclick="bhyFunc.reviewIsOk({{$user.id}})">确认无误，审核通过</button>
                 <button class="btn btn-light-grey" onclick="bhyFunc.layerClickedCancelButton('page')">取消</button>
             </p>
         </div>
@@ -742,9 +757,10 @@
 <script>
     $(function () {
         layer.ready(function () {
-            layer.photos({
-                photos: '#layer-photos-demo'
-            });
+            layer.photos({photos: '#layer-photos-demo1'});
+            layer.photos({photos: '#layer-photos-demo4'});
+            layer.photos({photos: '#layer-photos-demo5'});
+            layer.photos({photos: '#layer-photos-demo6'});
         });
 
         // 发站内信
@@ -815,6 +831,5 @@
                 }
             });
         })
-
     });
 </script>
