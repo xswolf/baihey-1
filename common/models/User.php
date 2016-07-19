@@ -278,8 +278,18 @@ class User extends Base
 
         $userInfo['info'] = json_encode(array_merge($this->getDefaultInfo(), $userInfo['zo'], $userInfo['info']));
         unset ($userInfo['zo']);
-        \Yii::$app->db->createCommand()->update($this->tablePrefix . "user_information", $userInfo, ['user_id' => $data['user_id']])->execute();
-        \Yii::$app->db->createCommand()->update($this->tablePrefix . "user", $user, ['id' => $data['user_id']])->execute();
+        // 添加图片
+        User::getInstance()->insertUserPhoto($user['id'], $userInfo);
+        unset($userInfo['photosList']);
+        unset($userInfo['headPic']);
+        unset($userInfo['cardFace_List']);
+        unset($userInfo['cardBack_List']);
+        unset($userInfo['eduList']);
+        unset($userInfo['houseList']);
+        unset($userInfo['marrList']);
+        $this->getDb()->createCommand()->update($this->tablePrefix . "user_information", $userInfo, ['user_id' => $data['user_id']])->execute();
+        $this->getDb()->createCommand()->update($this->tablePrefix . "user", $user, ['id' => $data['user_id']])->execute();
+        return $user;
     }
 
     /**
@@ -771,6 +781,7 @@ class User extends Base
     // 图片处理
     public function insertUserPhoto($user_id, $data)
     {
+        UserPhoto::getInstance()->deleteAll(['user_id' => $user_id]);
         // 上传照片
         !empty($data['photosList']) ? $this->upPhoto($user_id, 1, $data['photosList']) : true;
         // 上传头像

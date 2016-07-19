@@ -129,14 +129,17 @@ class MemberController extends BaseController
             exit();
         }
         if ($postData = $request->post()) {
-            //            var_dump($postData);exit;
-            $postData['zo']['other'] = trim($postData['zo']['zo_other']);
-            $postData['zo']['other'] = str_replace("\t", "", $postData['zo']['other']);
+            $postData['info']['mate'] = trim($postData['info']['mate']);
+            $postData['info']['mate'] = str_replace("\t", "", $postData['info']['mate']);
             $postData['user_id']     = $id;
-
             $postData['info']['age'] = strtotime($postData['info']['age']);
 
-            User::getInstance()->editUser($postData);
+            $user = User::getInstance()->editUser($postData);
+            if ($user['id'] > 0) {
+                return $this->__success('修改成功');
+            } else {
+                return $this->__error('修改失败');
+            }
         }
         $user         = User::getInstance()->getUserById($id);
         $user['info'] = json_decode($user['info']);
@@ -152,7 +155,7 @@ class MemberController extends BaseController
         $photoList = UserPhoto::getInstance()->getPhotoList($id, 0, 12);
         $photoList = json_encode($photoList);
 
-        $this->assign('photoArr', $photoList);
+        $this->assign('photoList', $photoList);
 
 
         return $this->render();

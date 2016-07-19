@@ -57,7 +57,7 @@
                                         <div class="form-group">
                                             <label class="col-md-3 control-label">常出没地</label>
                                             <div class="input-group col-md-6">
-                                                <input class="form-control" name="info[haunt_address]" type="text" placeholder="请填写经常出没的地方，15字以内" maxlength="15">
+                                                <input class="form-control" name="info[haunt_address]" type="text" placeholder="请填写经常出没的地方，15字以内" maxlength="15" value="{{$user.info->haunt_address}}">
                                             </div>
                                         </div>
                                         <div class="form-group">
@@ -351,7 +351,7 @@
                                         <div class="form-group">
                                             <label class="col-md-3 control-label">心目中的TA</label>
                                             <div class="input-group col-md-6">
-                                                <textarea class="form-control" maxlength="150" rows="3" name="zo[zo_other]" placeholder="150字以内">{{if isset($user.info->zo_other)}}{{$user.info->zo_other}}{{/if}}</textarea>
+                                                <textarea class="form-control" maxlength="150" rows="3" name="info[mate]" placeholder="150字以内">{{if isset($user.info->mate)}}{{$user.info->mate}}{{/if}}</textarea>
                                             </div>
                                         </div>
                                         <div style="display: none" id="img_hidden">
@@ -439,7 +439,7 @@
                                         <div class="form-group">
                                             <label class="col-md-3 control-label">照片显示权限</label>
                                             <div class="input-group col-md-6">
-                                                <select class="form-control" name="privacy_pic">
+                                                <select class="form-control" name="privacy_pic" id="privacy_pic">
                                                     <option value="1">完全公开</option>
                                                     <option value="2">关注可见</option>
                                                     <option value="3">VIP可见</option>
@@ -450,7 +450,7 @@
                                         <div class="form-group">
                                             <label class="col-md-3 control-label">微信显示权限</label>
                                             <div class="input-group col-md-6">
-                                                <select class="form-control" name="privacy_wechat">
+                                                <select class="form-control" name="privacy_wechat" id="privacy_wechat">
                                                     <option value="1">完全公开</option>
                                                     <option value="2">关注可见</option>
                                                     <option value="3">VIP可见</option>
@@ -461,7 +461,7 @@
                                         <div class="form-group">
                                             <label class="col-md-3 control-label">QQ显示权限</label>
                                             <div class="input-group col-md-6">
-                                                <select class="form-control" name="privacy_qq">
+                                                <select class="form-control" name="privacy_qq" id="privacy_qq">
                                                     <option value="1">完全公开</option>
                                                     <option value="2">关注可见</option>
                                                     <option value="3">VIP可见</option>
@@ -586,7 +586,7 @@
     var marrArr = [];
     var eduArr = [];
     var houseArr = [];
-    var photoList = '{{$photoArr}}';
+    var photoList = '{{$photoList}}';
     photoList = JSON.parse(photoList);
     for(var i in photoList) {
         var data = photoList[i]['thumb_path'];
@@ -967,12 +967,17 @@
             }
 
             $("#zo_education").val("{{$user.info->zo_education}}");
-            $("#zo_income").val("{{if isset($user.info->zo_income)}} {{$user.info->zo_income}} {{/if}}");
+            $("#zo_income").val("{{$user.info->zo_income}}");
             $("#zo_car").val("{{$user.info->zo_car}}");
             $("#zo_house").val("{{$user.info->zo_house}}");
             $("#zo_children").val("{{if isset($user.info->zo_children)}}{{$user.info->zo_children}}{{/if}}");
 
-            $(".mult_select").each(function () {
+
+            $("#privacy_pic").val("{{$user.privacy_pic}}");
+            $("#privacy_wechat").val("{{$user.privacy_wechat}}");
+            $("#privacy_qq").val("{{$user.privacy_qq}}");
+
+            $(".mult_select,.mult_select5,.mult_select6").each(function () {
                 var zo = {};
                 zo.zo_occupation = '{{if isset($user.info->zo_occupation)}}{{$user.info->zo_occupation}}{{/if}}';
                 zo.zo_marriage = '{{if isset($user.info->zo_marriage)}}{{$user.info->zo_marriage}}{{/if}}';
