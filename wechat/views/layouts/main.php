@@ -24,8 +24,6 @@
                 div.innerHTML = '<div class="loading"><img src="/wechat/web/images/domLoading.gif" /><p>加载中，请稍候</p></div>';
                 document.body.appendChild(div);
             }
-            window.location.hash = '#/index';
-
             alert(window.location.href);
         }
     </script>
