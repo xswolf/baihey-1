@@ -243,7 +243,7 @@ class User extends \common\models\User
             ->orderBy('u.id desc, u.last_login_time desc')
             ->limit($pageSize)
             ->offset($offset);
-        if(!$where['where']['u.id']) {
+        if(!isset($where['where']['u.id'])) {
             $result->
             innerJoin($this->tablePrefix . 'user_photo p', "u.id=p.user_id and p.is_check=1 and p.is_head=1 and p.type=1");
         }

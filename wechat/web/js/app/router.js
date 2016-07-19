@@ -88,6 +88,19 @@ define(["app/module", 'app/service/serviceApi'],
         return module.config(["$stateProvider", "$urlRouterProvider", "$ionicConfigProvider", "$controllerProvider", function ($stateProvider, $urlRouterProvider, $ionicConfigProvider, $controllerProvider) {
                 $ionicConfigProvider.templates.maxPrefetch(0);
                 $stateProvider
+                    .state('main', {   // 首页
+                        templateUrl: "/wechat/views/site/index.html",
+                        controller: 'site.index',
+                        resolve: {
+                            dataFilter: function ($http) {
+                                return $http({
+                                    method: 'POST',
+                                    url: '/wap/user/index-is-show-data',
+                                    params: {}
+                                });
+                            }
+                        }
+                    })
                     .state('index', {   // 首页
                         url: "/index",
                         templateUrl: "/wechat/views/site/index.html",
