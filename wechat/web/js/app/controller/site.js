@@ -98,7 +98,7 @@ define(['app/module', 'app/directive/directiveApi'
                         init();
                         $scope.searchForm.sex = 1;
                         $ionicScrollDelegate.$getByHandle('mainScroll').scrollTop(true);
-                        $scope.loadMore();
+                        //$scope.loadMore();
                         setSearchCondition($scope.searchForm,$scope.userId);
                     }
                     if (index == 0) {   //只看女
@@ -106,7 +106,7 @@ define(['app/module', 'app/directive/directiveApi'
                         init();
                         $scope.searchForm.sex = 0;
                         $ionicScrollDelegate.$getByHandle('mainScroll').scrollTop(true);
-                        $scope.loadMore();
+                        //$scope.loadMore();
                         setSearchCondition($scope.searchForm,$scope.userId);
                     }
                     if (index == 2) {   //高级搜索
