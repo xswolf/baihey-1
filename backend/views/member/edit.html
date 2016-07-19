@@ -1,4 +1,5 @@
-<link rel="stylesheet" type="text/css" href="/backend/web/CloudAdmin/js/dropzone/dropzone.min.css"/>
+<link href="/backend/web/CloudAdmin/js/jQuery-uploadify/uploadify.css" rel="stylesheet">
+<link href="/backend/web/CloudAdmin/js/jquery-fancybox-1.3.4/jquery.fancybox-1.3.4.css" rel="stylesheet">
 <div class="row">
     <div class="col-md-12">
         <div class="box border green">
@@ -20,7 +21,7 @@
                 </div>
             </div>
             <div class="box-body big">
-                <form class="form-horizontal" role="form" name="form1" action="/admin/member/edit?id={{$id}}" method="post">
+                <form class="form-horizontal" role="form" id="editForm" action="/admin/member/edit?id={{$id}}" method="post">
                     <!-- BOX -->
                     <div class="box border">
                         <div class="box-title">
@@ -29,12 +30,12 @@
                         <div class="box-body">
                             <div class="tabbable header-tabs">
                                 <ul class="nav nav-tabs">
-                                    <li><a href="#box_tab9" data-toggle="tab"><i class="fa fa-desktop"></i> <span class="hidden-inline-mobile">相册</span></a></li>
-                                    <li><a href="#box_tab8" data-toggle="tab"><i class="fa fa-desktop"></i> <span class="hidden-inline-mobile">诚信认证</span></a></li>
-                                    <li><a href="#box_tab7" data-toggle="tab"><i class="fa fa-desktop"></i> <span class="hidden-inline-mobile">隐私设置</span></a></li>
-                                    <li><a href="#box_tab6" data-toggle="tab"><i class="fa fa-desktop"></i> <span class="hidden-inline-mobile">兴趣爱好</span></a></li>
-                                    <li><a href="#box_tab5" data-toggle="tab"><i class="fa fa-flask"></i> <span class="hidden-inline-mobile">择偶标准</span></a></li>
-                                    <li class="active"><a href="#box_tab4" data-toggle="tab"><i class="fa fa-home"></i> <span class="hidden-inline-mobile">基本资料</span></a></li>
+                                    <li><a href="#box_tab9" data-toggle="tab"><i class="fa fa-circle-o"></i> <span class="hidden-inline-mobile">相册</span></a></li>
+                                    <li><a href="#box_tab8" data-toggle="tab"><i class="fa fa-circle-o"></i> <span class="hidden-inline-mobile">证件</span></a></li>
+                                    <li><a href="#box_tab7" data-toggle="tab"><i class="fa fa-circle-o"></i> <span class="hidden-inline-mobile">隐私设置</span></a></li>
+                                    <li><a href="#box_tab6" data-toggle="tab"><i class="fa fa-circle-o"></i> <span class="hidden-inline-mobile">兴趣爱好</span></a></li>
+                                    <li><a href="#box_tab5" data-toggle="tab"><i class="fa fa-circle-o"></i> <span class="hidden-inline-mobile">择偶标准</span></a></li>
+                                    <li class="active"><a href="#box_tab4" data-toggle="tab"><i class="fa fa-circle-o"></i> <span class="hidden-inline-mobile">基本资料</span></a></li>
                                 </ul>
                                 <div class="tab-content">
                                     <div class="tab-pane fade in active" id="box_tab4">
@@ -214,7 +215,7 @@
                                         <div class="form-group">
                                             <label class="col-md-3 control-label">手机号码</label>
                                             <div class="input-group col-md-6">
-                                                <input class="form-control" name="user[phone]" type="tel" value="{{$user.phone}}" placeholder="请输入手机号码">
+                                                <input id="phone" class="form-control" name="user[phone]" type="text" value="{{$user.phone}}" placeholder="请输入手机号码">
                                             </div>
                                         </div>
                                         <div class="form-group">
@@ -450,61 +451,127 @@
                                     <div class="tab-pane fade" id="box_tab7">
                                         <h3 class="form-title">隐私设置</h3>
                                         <div class="form-group">
+                                            <label class="col-md-3 control-label">照片显示权限</label>
+                                            <div class="input-group col-md-6">
+                                                <select class="form-control" name="privacy_pic">
+                                                    <option value="1">完全公开</option>
+                                                    <option value="2">关注可见</option>
+                                                    <option value="3">VIP可见</option>
+                                                    <option value="4">不公开</option>
+                                                </select>
+                                            </div>
                                         </div>
                                         <div class="form-group">
+                                            <label class="col-md-3 control-label">微信显示权限</label>
+                                            <div class="input-group col-md-6">
+                                                <select class="form-control" name="privacy_wechat">
+                                                    <option value="1">完全公开</option>
+                                                    <option value="2">关注可见</option>
+                                                    <option value="3">VIP可见</option>
+                                                    <option value="4" selected>不公开</option>
+                                                </select>
+                                            </div>
                                         </div>
                                         <div class="form-group">
-                                        </div>
-                                        <div class="form-group">
+                                            <label class="col-md-3 control-label">QQ显示权限</label>
+                                            <div class="input-group col-md-6">
+                                                <select class="form-control" name="privacy_qq">
+                                                    <option value="1">完全公开</option>
+                                                    <option value="2">关注可见</option>
+                                                    <option value="3">VIP可见</option>
+                                                    <option value="4" selected>不公开</option>
+                                                </select>
+                                            </div>
                                         </div>
                                     </div>
 
                                     <!--------------------诚信认证------------------------------>
                                     <div class="tab-pane fade" id="box_tab8">
-                                        <h3 class="form-title">诚信认证</h3>
-                                        <div class="form-group">
-                                            <label class="col-md-3 control-label">身份证</label>
-                                            <div class="input-group col-md-6">
-                                                <div id="layer-photos-demo" class="layer-photos-demo">
-                                                    {{foreach from=$list item=vo}}
-                                                    {{if ($vo.type == 2)}}
-                                                    <img layer-src="{{$vo.thumb_path}}" src="{{getPathByThumb($vo.thumb_path)}}" alt="">
-                                                    {{/if}}
-                                                    {{/foreach}}
-
+                                        <h3 class="form-title">证件</h3>
+                                        <input id="cardFace_List" type="hidden" name="cardFace_List">
+                                        <input id="cardBack_List" type="hidden" name="cardBack_List">
+                                        <input id="eduList" type="hidden" name="eduList">
+                                        <input id="houseList" type="hidden" name="houseList">
+                                        <input id="marrList" type="hidden" name="marrList">
+                                        <div class="panel-group" id="idCardList">
+                                            <div class="panel panel-default">
+                                                <div class="panel-heading">
+                                                    <h3 class="panel-title"> <a class="accordion-toggle" data-toggle="collapse" data-parent="#idCardList" href="#idCard1">身份证</a> </h3>
+                                                </div>
+                                                <div id="idCard1" class="panel-collapse collapse in">
+                                                    <div class="panel-body">
+                                                        <div class="dib mr20">
+                                                        <p class="center">正面</p>
+                                                        <img class="card_face"
+                                                             src="/wechat/web/images/member/card-face.png">
+                                                        <p class="mt10"><input type="file" id="file_upload_cardFace"/></p>
+                                                    </div>
+                                                        <div class="dib center">
+                                                            <p class="center">反面</p>
+                                                            <img class="card_back"
+                                                                 src="/wechat/web/images/member/card-back.png">
+                                                            <p class="mt10"><input type="file" id="file_upload_cardBack"/></p>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="col-md-3 control-label">学历证</label>
-                                            <div class="input-group col-md-6">
-
+                                            <div class="panel panel-default">
+                                                <div class="panel-heading">
+                                                    <h3 class="panel-title"> <a class="accordion-toggle" data-toggle="collapse" data-parent="#idCardList" href="#idCard2"> 离婚证 </a> </h3>
+                                                </div>
+                                                <div id="idCard2" class="panel-collapse collapse">
+                                                    <div class="panel-body">
+                                                        <input type="file" id="file_upload_cardMarr"/>
+                                                        <div class="row">
+                                                            <div id="marr" class="col-sm-12">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="col-md-3 control-label">离婚证</label>
-                                            <div class="input-group col-md-6">
-
+                                            <div class="panel panel-default">
+                                                <div class="panel-heading">
+                                                    <h3 class="panel-title"> <a class="accordion-toggle" data-toggle="collapse" data-parent="#idCardList" href="#idCard3"> 学历证 </a> </h3>
+                                                </div>
+                                                <div id="idCard3" class="panel-collapse collapse">
+                                                    <div class="panel-body">
+                                                        <input type="file" id="file_upload_cardEdu"/>
+                                                        <div class="row">
+                                                            <div id="edu" class="col-sm-12">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="col-md-3 control-label">房产证</label>
-                                            <div class="input-group col-md-6">
 
+                                            <div class="panel panel-default">
+                                                <div class="panel-heading">
+                                                    <h3 class="panel-title"> <a class="accordion-toggle" data-toggle="collapse" data-parent="#idCardList" href="#idCard4"> 房产证 </a> </h3>
+                                                </div>
+                                                <div id="idCard4" class="panel-collapse collapse">
+                                                    <div class="panel-body">
+                                                        <input type="file" id="file_upload_cardHouse"/>
+                                                        <div class="row">
+                                                            <div id="housing" class="col-sm-12 housing">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
 
                                     <!--------------------相册------------------------------>
                                     <div class="tab-pane fade" id="box_tab9">
-                                        <h3 class="form-title">诚信认证</h3>
-                                        <div class="form-group">
-                                        </div>
-                                        <div class="form-group">
-                                        </div>
-                                        <div class="form-group">
-                                        </div>
-                                        <div class="form-group">
+                                        <h3 class="form-title">相册</h3>
+                                        <input id="photosList" type="hidden" name="photosList">
+                                        <input id="headPic" type="hidden" name="headPic">
+                                        <input type="file" id="file_upload_photo"/>
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <div id="photos" class="photos">
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -515,7 +582,7 @@
                 </form>
 
                 <div class="form-group center">
-                    <button class="btn btn-lg btn-primary" onclick="javascript:form1.submit()" type="button">提交</button>
+                    <button id="editSubmit" class="btn btn-lg btn-primary" type="button">提交</button>
                 </div>
 
             </div>
@@ -525,8 +592,73 @@
 <script src="/wechat/web/js/config/infoData.js"></script>
 <script src="/wechat/web/js/config/area.js"></script>
 <script src="/wechat/web/js/config/city.js"></script>
-
+<script src="/backend/web/CloudAdmin/js/jQuery-uploadify/jquery.uploadify.min.js"></script>
+<script src="/backend/web/CloudAdmin/js/jquery-fancybox-1.3.4/jquery.fancybox-1.3.4.js"></script>
 <script>
+
+    var photoArr = [];
+    var marrArr = [];
+    var eduArr = [];
+    var houseArr = [];
+    // 删除照片
+    function delImg(a, type) {
+
+        if (type == 1) {  //删除照片
+            var src = $(a).prev().find('img').attr('src');
+            if (photoArr.indexOf(src) == -1) {
+                layer.msg('删除失败，该照片不存在！');
+                return false;
+            } else {
+                photoArr.splice($.inArray(src, photoArr), 1);
+                $('#photosList').val(photoArr);
+            }
+        }
+        if (type == 4) {  //删除离婚证
+            var src = $(a).prev().find('img').attr('src');
+            if (marrArr.indexOf(src) == -1) {
+                layer.msg('删除失败，该照片不存在！');
+                return false;
+            } else {
+                marrArr.splice($.inArray(src, marrArr), 1);
+                $('#marrList').val(marrArr);
+            }
+        }
+        if (type == 5) {  //删除学历证
+            var src = $(a).prev().find('img').attr('src');
+            if (eduArr.indexOf(src) == -1) {
+                layer.msg('删除失败，该照片不存在！');
+                return false;
+            } else {
+                eduArr.splice($.inArray(src, eduArr), 1);
+                $('#eduList').val(eduArr);
+            }
+        }
+        if (type == 6) {  //删除房产证
+            var src = $(a).prev().find('img').attr('src');
+            if (houseArr.indexOf(src) == -1) {
+                layer.msg('删除失败，该照片不存在！');
+                return false;
+            } else {
+                houseArr.splice($.inArray(src, houseArr), 1);
+                $('#houseList').val(houseArr);
+            }
+        }
+        $(a).parent().remove();
+    }
+
+    // 设置头像
+    function setHeadPic(a) {
+        var src = $(a).data('src');
+        $('#headPic').val(src);
+        $('.imgBox').each(function () {
+            console.log($(this).find('p').find('span'));
+            if ($(this).find('p').find('span')) {
+                $(this).find('p').find('span').replaceWith('<a data-src="' + src + '" onclick="setHeadPic(this)">设置头像</a>');
+            }
+        })
+        $(a).replaceWith('<span class="text-danger">头像</span>');
+    }
+
     jQuery(document).ready(function () {
 
         $(".mult_select,.mult_select5,.mult_select6").click(function () {
@@ -534,6 +666,138 @@
         })
 
         SelectInit();
+        $('#file_upload_photo').uploadify({
+            'buttonText': '选择照片',
+            'fileSizeLimit': '8MB',
+            'fileTypeDesc': '图片文件',
+            'fileTypeExts': '*.gif; *.jpg; *.png; *.bmp',
+            'swf': '/backend/web/CloudAdmin/js/jQuery-uploadify/uploadify.swf',
+            'uploader': '/admin/file/upload-img',
+            'uploadLimit': 12,
+            'onUploadSuccess': function (file, data, response) {
+                console.log($('#photos div').length);
+                var _data = data.replace('thumb', 'picture');
+                if ($('#photos div').length == 0) {
+                    var imgHtml = '<div class="pr imgBox"><a href="' + _data + '" rel="group1"><img src="' + data + '" ></a><i class="del fa fa-times-circle-o text-danger" onclick="delImg(this,1)"></i><p class="center mt5"><span class="text-danger">头像</span></p></div>';
+                    $('#headPic').val(data);
+                } else {
+                    var imgHtml = '<div class="pr imgBox"><a href="' + _data + '" rel="group1"><img src="' + data + '" ></a><i class="del fa fa-times-circle-o text-danger" onclick="delImg(this,1)"></i><p class="center mt5"><a data-src="' + data + '" onclick="setHeadPic(this)">设置头像</a></p></div>';
+                }
+                $('#photos').append(imgHtml);
+                photoArr.push(data);
+                $('#photosList').val(photoArr);
+            },
+            'onUploadError': function (file, errorCode, errorMsg, errorString) {
+                alert('上传出错！文件名： ' + file.name + '， 错误原因: ' + errorString);
+            }
+        });
+
+        $('#file_upload_cardFace').uploadify({
+            'width': '100%',
+            'buttonText': '点击上传',
+            'fileSizeLimit': '8MB',
+            'fileTypeDesc': '图片文件',
+            'fileTypeExts': '*.gif; *.jpg; *.png; *.bmp',
+            'swf': '/backend/web/CloudAdmin/js/jQuery-uploadify/uploadify.swf',
+            'uploader': '/admin/file/upload-img',
+            'onUploadError': function (file, errorCode, errorMsg, errorString) {
+                alert('上传出错！文件名： ' + file.name + '， 错误原因: ' + errorString);
+            },
+            'onUploadSuccess': function (file, data, response) {
+                var _data = data.replace('thumb', 'picture');
+                var imgHtml = '<a class="card_face" href="' + _data + '" rel="group2"><img src="' + data + '" ></a>';
+                $('.card_face').replaceWith(imgHtml);
+                $('#cardFace_List').val(data);
+            }
+        });
+
+        $('#file_upload_cardBack').uploadify({
+            'width': '100%',
+            'buttonText': '点击上传',
+            'fileSizeLimit': '8MB',
+            'fileTypeDesc': '图片文件',
+            'fileTypeExts': '*.gif; *.jpg; *.png; *.bmp',
+            'swf': '/backend/web/CloudAdmin/js/jQuery-uploadify/uploadify.swf',
+            'uploader': '/admin/file/upload-img',
+            'onUploadError': function (file, errorCode, errorMsg, errorString) {
+                alert('上传出错！文件名： ' + file.name + '， 错误原因: ' + errorString);
+            },
+            'onUploadSuccess': function (file, data, response) {
+                var _data = data.replace('thumb', 'picture');
+                var imgHtml = '<a class="card_back" href="' + _data + '" rel="group2"><img src="' + data + '" ></a>';
+                $('.card_back').replaceWith(imgHtml);
+                $('#cardBack_List').val(data);
+            }
+        });
+
+        $('#file_upload_cardMarr').uploadify({
+            'buttonText': '点击上传离婚证',
+            'fileSizeLimit': '8MB',
+            'fileTypeDesc': '图片文件',
+            'fileTypeExts': '*.gif; *.jpg; *.png; *.bmp',
+            'swf': '/backend/web/CloudAdmin/js/jQuery-uploadify/uploadify.swf',
+            'uploader': '/admin/file/upload-img',
+            'uploadLimit': 5,
+            'onUploadSuccess': function (file, data, response) {
+                var _data = data.replace('thumb', 'picture');
+                var imgHtml = '<div class="pr imgBox"><a href="' + _data + '" rel="group3"><img src="' + data + '" ></a><i class="del fa fa-times-circle-o text-danger" onclick="delImg(this,4)"></i></div>';
+                $('#marr').append(imgHtml);
+                marrArr.push(data);
+                $('#marrList').val(marrArr);
+            },
+            'onUploadError': function (file, errorCode, errorMsg, errorString) {
+                alert('上传出错！文件名： ' + file.name + '， 错误原因: ' + errorString);
+            }
+        });
+
+        $('#file_upload_cardEdu').uploadify({
+            'buttonText': '点击上传学历证',
+            'fileSizeLimit': '8MB',
+            'fileTypeDesc': '图片文件',
+            'fileTypeExts': '*.gif; *.jpg; *.png; *.bmp',
+            'swf': '/backend/web/CloudAdmin/js/jQuery-uploadify/uploadify.swf',
+            'uploader': '/admin/file/upload-img',
+            'uploadLimit': 5,
+            'onUploadError': function (file, errorCode, errorMsg, errorString) {
+                alert('上传出错！文件名： ' + file.name + '， 错误原因: ' + errorString);
+            },
+            'onUploadSuccess': function (file, data, response) {
+                var _data = data.replace('thumb', 'picture');
+                var imgHtml = '<div class="pr imgBox"><a href="' + _data + '" rel="group4"><img src="' + data + '" ></a><i class="del fa fa-times-circle-o text-danger" onclick="delImg(this,5)"></i></div>';
+                $('#edu').append(imgHtml);
+                eduArr.push(data);
+                $('#eduList').val(eduArr);
+            }
+        });
+
+        $('#file_upload_cardHouse').uploadify({
+            'buttonText': '点击上传房产证',
+            'fileSizeLimit': '8MB',
+            'fileTypeDesc': '图片文件',
+            'fileTypeExts': '*.gif; *.jpg; *.png; *.bmp',
+            'swf': '/backend/web/CloudAdmin/js/jQuery-uploadify/uploadify.swf',
+            'uploader': '/admin/file/upload-img',
+            'uploadLimit': 5,
+            'onUploadError': function (file, errorCode, errorMsg, errorString) {
+                alert('上传出错！文件名： ' + file.name + '， 错误原因: ' + errorString);
+            },
+            'onUploadSuccess': function (file, data, response) {
+                var _data = data.replace('thumb', 'picture');
+                var imgHtml = '<div class="pr imgBox"><a href="' + _data + '" rel="group5"><img src="' + data + '" ></a><i class="del fa fa-times-circle-o text-danger" onclick="delImg(this,6)"></i></div>';
+                $('#housing').append(imgHtml);
+                houseArr.push(data);
+                $('#houseList').val(houseArr);
+            }
+        });
+
+        $("#photos,#idCard1,#marr,#edu,#housing").on("focusin", function () {
+            for (var i = 0; i < 5; i++) {
+                $("a[rel=group" + i + "]").fancybox({
+                    'transitionIn': 'elastic',
+                    'transitionOut': 'elastic'
+                });
+            }
+        });
 
         $(".uniform").uniform();
 
@@ -935,16 +1199,21 @@
             return constellation;
         }
 
-
-
-
         layer.ready(function(){ //为了layer.ext.js加载完毕再执行
             layer.photos({
                 photos: '#layer-photos-demo'
             });
         });
 
-
+        $('#editSubmit').click(function(){
+            var myreg = /^(((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1}))+\d{8})$/;
+            if (!myreg.test($("#phone").val())) {
+                layer.tips('请输入有效的手机号码！', $('#phone'));
+                $('#phone').focus();
+                return false;
+            }
+            $('#editForm').submit();
+        })
 
 
     });
