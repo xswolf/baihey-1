@@ -240,9 +240,13 @@ class User extends \common\models\User
             ->where($condition)
             ->from(static::tableName() . ' u')
             ->innerJoin($joinTable . ' i', "u.id=i.user_id")
-            ->orderBy('id desc, last_login_time desc')
+            ->orderBy('u.id desc, u.last_login_time desc')
             ->limit($pageSize)
             ->offset($offset);
+        if(!$where['where']['u.id']) {
+            $result->
+            innerJoin($this->tablePrefix . 'user_photo p', "u.id=p.user_id and p.is_check=1 and p.is_head=1 and p.type=1");
+        }
 
         //echo $result->createCommand()->getRawSql();
         $result = $result->all();
@@ -262,7 +266,7 @@ class User extends \common\models\User
         if (isset($where['id']) && is_numeric($where['id'])) {
 
             $data['offset'] = ($where['pageNum'] - 1) * $pageSize;
-            $data['where']['id'] = $where['id'];
+            $data['where']['u.id'] = $where['id'];
         } else {
 
             foreach ($where as $key => $val) {
@@ -308,10 +312,10 @@ class User extends \common\models\User
                         break;
                 }
             }
+            $data['where']["json_extract(info,'$.head_pic')"] = ['!=' => ''];
         }
         $data['where']['is_show'] = 1;
         $data['where']['status'] = ['between' => [1, 2]];
-        $data['where']["json_extract(info,'$.head_pic')"] = ['!=' => ''];
 
         return $data;
     }
