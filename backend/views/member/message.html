@@ -32,7 +32,13 @@
             </a>
             </td>
             <td>{{date('Y-m-d H:i:s',$vo.create_time)}}</td>
-            <td>{{$vo.message}}</td>
+            <td>
+                {{if $vo.message_type == 3}}
+                    <a href="javascript:;" onclick='bhyFunc.getJsonShowImg("message","{{$vo.message}}" )'>查看图片</a>
+                {{else}}
+                    {{$vo.message}}
+                {{/if}}
+            </td>
             <td>
                 {{if $vo.status == 1}}
                     已读

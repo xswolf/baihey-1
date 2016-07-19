@@ -429,30 +429,20 @@
                                             <th>点赞数</th>
                                             <th>评论数</th>
                                             <th>发布时间</th>
-                                            <th>操作</th>
                                         </tr>
                                         </thead>
                                         <tbody>
+                                        {{foreach from=$dynamicList key=k item=vo}}
                                         <tr>
-                                            <td>1</td>
-                                            <td>{{$user['info']->real_name}}(15301)</td>
-                                            <td>看过后就能看见的那个好看</td>
-                                            <td><a href="javascript:;" onclick="bhyFunc.getJsonShowImg('discovery')">查看图片</a></td>
-                                            <td>58</td>
-                                            <td>3</td>
-                                            <td>2016-05-31 13:55:14</td>
-                                            <td><a href="javascript:;" onclick="bhyFunc.deleteItemByList(1,this)">删除</a></td>
+                                            <td>{{$vo.id}}</td>
+                                            <td>{{$user['info']->real_name}}({{$vo.user_id}})</td>
+                                            <td>{{$vo.content}}</td>
+                                            <td><a href="javascript:;" onclick='bhyFunc.getJsonShowImg("discovery",{{$vo.pic}} )'>查看图片</a></td>
+                                            <td>{{$vo.like_num}}</td>
+                                            <td>{{$vo.comment_num}}</td>
+                                            <td>{{date('Y-m-d H:i:s' , $vo.create_time)}}</td>
                                         </tr>
-                                        <tr>
-                                            <td>2</td>
-                                            <td>{{$user['info']->real_name}}(15301)</td>
-                                            <td>符合法规和地方干活干活</td>
-                                            <td></td>
-                                            <td>114</td>
-                                            <td>21</td>
-                                            <td>2016-07-10 18:00:55</td>
-                                            <td><a href="javascript:;" onclick="bhyFunc.deleteItemByList(2,this)">删除</a></td>
-                                        </tr>
+                                        {{/foreach}}
                                         </tbody>
                                     </table>
                                 </div>

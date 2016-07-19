@@ -42,9 +42,9 @@ class UserDynamic extends Base
      * @param $page
      * @return array
      */
-    public function getDynamicList($uid, $page = 0, $limit = 5)
+    public function getDynamicList($uid, $page = 0, $limit = 5 , $loginUserId = -1)
     {
-        $loginUserId = \common\util\Cookie::getInstance()->getCookie('bhy_id')->value;
+        $loginUserId = $loginUserId == -1 ? \common\util\Cookie::getInstance()->getCookie('bhy_id')->value : $loginUserId;
         $offset      = $page * $limit;
         $obj         = (new Query())
             ->from($this->tablePrefix . "user_dynamic d")

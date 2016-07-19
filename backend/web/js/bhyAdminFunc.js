@@ -346,7 +346,7 @@ var bhyFunc = {
             })
         }
     },
-    getJsonShowImg: function (type,id) {
+    getJsonShowImg: function (type,imgList) {
         if (type == 'discovery') {
             //$.getJSON('url',{user_id,this.user_id}, function(res){
             //    layer.photos({
@@ -354,19 +354,16 @@ var bhyFunc = {
             //    });
             //});
 
+            for (var i in imgList){
+                imgList[i].src = imgList[i].thumb_path.replace("thumb" , "picture");
+                imgList[i].thumb = imgList[i].thumb_path;
+            }
             // 数据格式
             var imgList = {
-                "title": "李倩的动态", //相册标题
+                "title": "", //相册标题
                 "id": 1, //相册id
                 "start": 0, //初始显示的图片序号，默认0
-                "data": [   //相册包含的图片，数组格式
-                    {
-                        "alt": ".",
-                        "pid": 1, //图片id
-                        "src": "/wechat/web/images/test.jpg", //原图地址
-                        "thumb": "/wechat/web/images/test.jpg" //缩略图地址
-                    }
-                ]
+                data :imgList
             }
             layer.photos({
                 photos: imgList
@@ -374,23 +371,18 @@ var bhyFunc = {
         }
 
         if(type == 'message'){
-            //$.getJSON('url',{meg_id,id}, function(res){
-            //    layer.photos({
-            //        photos: res
-            //    });
-            //});
+
+            console.log(imgList)
 
             // 数据格式
             var imgList = {
                 "title": "", //相册标题
                 "id": 1, //相册id
                 "start": 0, //初始显示的图片序号，默认0
-                "data": [   //相册包含的图片，数组格式
+                data:[
                     {
-                        "alt": ".",
-                        "pid": 1, //图片id
-                        "src": "/wechat/web/images/test.jpg", //原图地址
-                        "thumb": "/wechat/web/images/test.jpg" //缩略图地址
+                        src: imgList.replace("thumb" , "picture"),
+                        thumb: imgList,
                     }
                 ]
             }
