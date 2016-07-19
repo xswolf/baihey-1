@@ -75,18 +75,17 @@ class UserPhoto extends Base
     public function getPhotoList($user_id, $type = 1, $pageSize = 12)
     {
         if ($type == 23) {
-            $result = (new Query())->select(['*'])
-                ->where(['and', 'user_id='.$user_id, ['in', 'type', [2, 3]]])
-                ->from(static::tableName())
-                ->orderBy('is_head desc, update_time asc')
-                ->limit($pageSize);
+            $where = ['and', 'user_id='.$user_id, ['in', 'type', [2, 3]]];
+        } elseif($type == 0) {
+            $where = ['user_id' => $user_id];
         } else {
-            $result = (new Query())->select(['*'])
-                ->where(['user_id' => $user_id, 'type' => $type])
-                ->from(static::tableName())
-                ->orderBy('is_head desc, update_time asc')
-                ->limit($pageSize);
+            $where = ['user_id' => $user_id, 'type' => $type];
         }
+        $result = (new Query())->select(['*'])
+            ->where($where)
+            ->from($this->tablePrefix.'user_photo')
+            ->orderBy('is_head desc, update_time asc')
+            ->limit($pageSize);
         $result = $result->all();
         return $result;
     }

@@ -102,8 +102,8 @@ class MemberController extends BaseController
             unset($data['eduList']);
             unset($data['houseList']);
             unset($data['marrList']);
-            //var_dump($data);exit;
             $user = \common\models\User::getInstance()->addUser($data);
+            //$user['id'] = 15081;
             // 添加图片
             User::getInstance()->insertUserPhoto($user['id'], $photo);
             if ($user['id'] > 0) {
@@ -148,8 +148,10 @@ class MemberController extends BaseController
         $this->assign('food', Config::getInstance()->getListByType(3));
         $this->assign('travel', Area::getInstance()->getWentTravelList());
 
-        $list = UserPhoto::getInstance()->lists('', '2,3,4,5,6');
-        $this->assign('list', $list);
+        $photoList = UserPhoto::getInstance()->getPhotoList($id, 0, 12);
+        $photoList = json_encode($photoList);
+
+        $this->assign('photoArr', $photoList);
 
 
         return $this->render();

@@ -806,7 +806,32 @@ class User extends Base
             }
         }
         if($type != 1) {
+            // 上传认证照片
             UserPhoto::getInstance()->savePhoto($arr, $user_id);
+            $user = $this->getUserById($user_id);
+            // 修改用户认证值
+            if (($type == 2 || $type == 3) && $card = UserPhoto::getInstance()->getPhotoList($user_id, 23)) {
+                if(count($card) == 2 && !($user['honesty_value'] & 1)) {
+                    $honesty_value = $user['honesty_value'] + 1;
+                } else {
+                    $honesty_value = $user['honesty_value'] - 1;
+                }
+
+            } elseif ($type == 4) {
+                if(!($user['honesty_value'] & 4)) {
+                    $honesty_value = $user['honesty_value'] + 4;
+                }
+            } elseif ($type == 5) {
+                if(!($user['honesty_value'] & 2)) {
+                    $honesty_value = $user['honesty_value'] + 2;
+                }
+            } elseif ($type == 6) {
+                if(!($user['honesty_value'] & 8)) {
+                    $honesty_value = $user['honesty_value'] + 8;
+                }
+            }
+            // 修改认证值
+            UserInformation::getInstance()->updateUserInfo($user_id, ['honesty_value' => $honesty_value]);
         }
     }
 }

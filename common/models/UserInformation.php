@@ -26,6 +26,7 @@ class UserInformation extends Base
             $_user_information_table = static::tableName();// 表名
             switch (key($data)) {
                 case 'personalized'     :// 个性签名
+                case 'honesty_value'    :// 诚信认证值
                 case 'went_travel'      :// 去过的地方
                 case 'want_travel'      :// 想去的地方
                 case 'love_sport'       :// 喜欢的运动
@@ -34,7 +35,13 @@ class UserInformation extends Base
                 case 'privacy_pic'      :// 照片权限
                 case 'privacy_per'      :// 动态权限
                 case 'privacy_wechat'   :// 微信显示
-                case 'privacy_qq'       :// QQ显示
+                case 'privacy_qq'       :// QQ显示（1全部2关注3vip4不公开）
+                case 'mature_time'      :// 到期时间
+                case 'service_status'   :// 服务状态 1：已申请，0：未申请
+                case 'is_auth'          :// 是否认证 1：已申请，0：未申请
+                case 'is_sign'          :// 是否签约 1：已申请，0：未申请
+                case 'matchmaker'       :// 专属红娘
+                case 'matchmaking'      :// 服务红娘
                     $sql = "UPDATE {$_user_information_table} SET ".key($data)." = '".$data[key($data)]."' WHERE user_id={$user_id}";
                     break;
 

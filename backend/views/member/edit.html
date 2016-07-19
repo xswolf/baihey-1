@@ -586,6 +586,52 @@
     var marrArr = [];
     var eduArr = [];
     var houseArr = [];
+    var photoList = '{{$photoArr}}';
+    photoList = JSON.parse(photoList);
+    for(var i in photoList) {
+        var data = photoList[i]['thumb_path'];
+        var _data = photoList[i]['pic_path'];
+
+        if (photoList[i]['type'] == 1) {
+            if(photoList[i]['is_head'] == 1) {
+                var imgHtml = '<div class="pr imgBox"><a href="' + _data + '" rel="group1"><img src="' + data + '" ></a><i class="del fa fa-times-circle-o text-danger" onclick="delImg(this,1)"></i><p class="center mt5"><span class="text-danger">头像</span></p></div>';
+                $('#headPic').val(data);
+            } else {
+                var imgHtml = '<div class="pr imgBox"><a href="' + _data + '" rel="group1"><img src="' + data + '" ></a><i class="del fa fa-times-circle-o text-danger" onclick="delImg(this,1)"></i><p class="center mt5"><a data-src="' + data + '" onclick="setHeadPic(this)">设置头像</a></p></div>';
+            }
+            $('#photos').append(imgHtml);
+            photoArr.push(data);
+            $('#photosList').val(photoArr);
+
+        } else if(photoList[i]['type'] == 2) {
+            var imgHtml = '<a class="card_face" href="' + _data + '" rel="group2"><img src="' + data + '" ></a>';
+            $('.card_face').replaceWith(imgHtml);
+            $('#cardFace_List').val(data);
+        } else if(photoList[i]['type'] == 3) {
+            var imgHtml = '<a class="card_back" href="' + _data + '" rel="group2"><img src="' + data + '" ></a>';
+            $('.card_back').replaceWith(imgHtml);
+            $('#cardBack_List').val(data);
+
+        } else if(photoList[i]['type'] == 4) {
+            var imgHtml = '<div class="pr imgBox"><a href="' + _data + '" rel="group4"><img src="' + data + '" ></a><i class="del fa fa-times-circle-o text-danger" onclick="delImg(this,5)"></i></div>';
+            $('#edu').append(imgHtml);
+            eduArr.push(data);
+            $('#eduList').val(eduArr);
+
+        } else if(photoList[i]['type'] == 5) {
+            var imgHtml = '<div class="pr imgBox"><a href="' + _data + '" rel="group3"><img src="' + data + '" ></a><i class="del fa fa-times-circle-o text-danger" onclick="delImg(this,4)"></i></div>';
+            $('#marr').append(imgHtml);
+            marrArr.push(data);
+            $('#marrList').val(marrArr);
+
+        } else if(photoList[i]['type'] == 6) {
+            var imgHtml = '<div class="pr imgBox"><a href="' + _data + '" rel="group5"><img src="' + data + '" ></a><i class="del fa fa-times-circle-o text-danger" onclick="delImg(this,6)"></i></div>';
+            $('#housing').append(imgHtml);
+            houseArr.push(data);
+            $('#houseList').val(houseArr);
+        }
+    }
+
     // 删除照片
     function delImg(a, type) {
 
@@ -661,6 +707,7 @@
             'uploader': '/admin/file/upload-img',
             'uploadLimit': 12,
             'onUploadSuccess': function (file, data, response) {
+                console.log(data);
                 console.log($('#photos div').length);
                 var _data = data.replace('thumb', 'picture');
                 if ($('#photos div').length == 0) {
