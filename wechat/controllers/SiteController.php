@@ -42,8 +42,7 @@ class SiteController extends BaseController
             }
         }
         if($_GET['code']){
-            $redirectUri = urlencode("http://wechat.baihey.com/wap/site/main#/index");
-            header("Location: $redirectUri");
+            header("Location: http://wechat.baihey.com/wap/site/main#/index");
         }
         return $this->render();
     }
