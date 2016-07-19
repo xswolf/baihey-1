@@ -89,7 +89,6 @@ define(["app/module", 'app/service/serviceApi'],
                 $ionicConfigProvider.templates.maxPrefetch(0);
                 $stateProvider
                     .state('main', {   // 首页
-                        url: "",
                         templateUrl: "/wechat/views/site/index.html",
                         controller: 'site.index',
                         resolve: {
