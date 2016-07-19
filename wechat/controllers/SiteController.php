@@ -43,6 +43,7 @@ class SiteController extends BaseController
         }
         if(isset($_GET['code'])){
             header("Location: http://wechat.baihey.com/wap/site/main#/index");
+            exit();
         }
         return $this->render();
     }
