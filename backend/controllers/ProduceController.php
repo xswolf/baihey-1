@@ -17,13 +17,14 @@ class ProduceController extends BaseController
 
     public function actionIndex(){
 
-        $list = ChargeGoods::getInstance()->getAllList();
+        $list = ChargeGoods::getInstance()->getAllList('id != 8');
         $this->assign('list' , $list);
         return $this->render();
     }
 
     public function actionSave(){
 
+        return $this->render();
     }
 
     public function actionDel(){

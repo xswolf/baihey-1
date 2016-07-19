@@ -1,9 +1,9 @@
-
 <div class="wrapper wrapper-content animated fadeInUp">
     <div class="ibox">
         <div class="ibox-title"><h5>产品管理</h5>
             <div class="ibox-tools rboor">
-                <button id="multiple-select" class="btn btn-green btn-xs p310"><i class="fa fa-check-square-o"></i> 批量禁用</button>
+                <button id="multiple-select" class="btn btn-green btn-xs p310"><i class="fa fa-check-square-o"></i> 批量禁用
+                </button>
             </div>
         </div>
 
@@ -47,9 +47,9 @@
                     <td>{{$vo.name}}</td>
                     <td>
                         {{if $vo.status == 1}}
-                            正常
+                        正常
                         {{else}}
-                            禁用
+                        禁用
                         {{/if}}
                     </td>
                     <td>
@@ -61,10 +61,11 @@
                     </td>
                     <td>{{$vo.price/100}}</td>
                     <td>{{$vo.native_price/100}}</td>
-                    <td><img src="{{$vo.img}}"></td>
+                    <td>{{if $vo.img}}<img src="{{$vo.img}}">{{else}}{{/if}}</td>
                     <td>{{$vo.content}}</td>
                     <td>
-                        <p class="btn-toolbar"><a class="btn btn-info btn-sm tip" title="管理" href="/admin/member/info?"><i class="fa fa-cog"></i> </a></p>
+                        <p class="btn-toolbar"><a class="btn btn-info btn-sm tip" title="管理" href="/admin/produce/save?id={{$vo.id}}"><i
+                                class="fa fa-cog"></i> </a></p>
                     </td>
                 </tr>
                 {{/foreach}}
@@ -90,9 +91,9 @@
             $(".j-datatables tbody tr").toggleClass('selected');
         })
 
-        $('.j-datatables tbody').on( 'click', 'tr', function () {
+        $('.j-datatables tbody').on('click', 'tr', function () {
             $(this).toggleClass('selected');
-        } );
+        });
 
     })
 </script>

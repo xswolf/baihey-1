@@ -63,7 +63,7 @@ var App = function () {
      /*-----------------------------------------------------------------------------------*/
     var handleSidebar = function () {
 
-        saveMenu(readCookie('sub'),readCookie('sub-sub'));
+        saveMenu(readCookie("sub"), readCookie("sub-sub"));
 
         jQuery('.sidebar-menu .has-sub > a').click(function (e) {
             writeCookie('sub', jQuery(this).data('menu'), 72);
@@ -127,26 +127,19 @@ var App = function () {
     }
 
     var readCookie = function (name) {
-        var cookieValue = "";
-        var search = name + "=";
-        if (document.cookie.length > 0) {
-            offset = document.cookie.indexOf(search);
-            if (offset != -1) {
-                offset += search.length;
-                end = document.cookie.indexOf(";", offset);
-                if (end == -1) end = document.cookie.length;
-                cookieValue = unescape(document.cookie.substring(offset, end))
-            }
-        }
-        return cookieValue;
+        var arr, reg = new RegExp("(^| )" + name + "=([^;]*)(;|$)");
+        if (arr = document.cookie.match(reg))
+            return unescape(arr[2]);
+        else
+            return null;
     }
 
-    var saveMenu = function (sub,sub_sub) {
-       var subOpj = jQuery('.sidebar-menu .has-sub>a[data-menu='+sub+']');
+    var saveMenu = function (sub, sub_sub) {
+        var subOpj = jQuery('.sidebar-menu .has-sub>a[data-menu=' + sub + ']');
         subOpj.parent().addClass('open');
         subOpj.children('.arrow').addClass('open');
         subOpj.next().show();
-       jQuery('.sidebar-menu .has-sub .sub .has-sub-sub > a[data-menu='+sub_sub+']').parent().addClass('open');
+        jQuery('.sidebar-menu .has-sub .sub .has-sub-sub > a[data-menu=' + sub_sub + ']').parent().addClass('open');
     }
 
     /*-----------------------------------------------------------------------------------*/
