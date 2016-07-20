@@ -8,25 +8,25 @@
                 <div class="form-group">
                     <label class="col-sm-3 control-label">产品名称</label>
                     <div class="col-sm-9">
-                        <input id="name" name="name" class="form-control" type="text" placeholder="请输入产品名称">
+                        <input id="name" name="name" class="form-control" value="{{if isset($good['name'])}}{{$good['name']}}{{/if}}" type="text" placeholder="请输入产品名称">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">产品标识</label>
                     <div class="col-sm-9">
-                        <input id="value" name="value" class="form-control" type="text" placeholder="请输入产品标识，整数">
+                        <input id="value" name="value" class="form-control" value="{{if isset($good['value'])}}{{$good['value']}}{{/if}}" type="text" placeholder="请输入产品标识，整数">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">现价</label>
                     <div class="col-sm-9">
-                        <input id="price" name="price" class="form-control" type="number" min="0.01" max="20000" placeholder="请输入现价，单位：元。最低1分，最高20000">
+                        <input id="price" name="price" class="form-control" value="{{if isset($good['price'])}}{{$good['price']}}{{/if}}" type="number" min="0.01" max="20000" placeholder="请输入现价，单位：元。最低1分，最高20000">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">原价</label>
                     <div class="col-sm-9">
-                        <input id="native_price" name="native_price" class="form-control" type="number" min="0.01" max="20000" placeholder="请输入原价，单位：元。最低1分，最高20000">
+                        <input id="native_price" name="native_price" class="form-control" value="{{if isset($good['native_price'])}}{{$good['native_price']}}{{/if}}" type="number" min="0.01" max="20000" placeholder="请输入原价，单位：元。最低1分，最高20000">
                     </div>
                 </div>
                 <div class="form-group">
@@ -42,7 +42,7 @@
                 <div class="form-group">
                     <label class="col-sm-3 control-label">描述</label>
                     <div class="col-sm-9">
-                        <input name="content" id="_content" class="form-control" type="text" maxlength="100" placeholder="100字以内">
+                        <input name="content" id="_content" class="form-control" value="{{if isset($good['content'])}}{{$good['content']}}{{/if}}" type="text" maxlength="100" placeholder="100字以内">
                     </div>
                 </div>
                 <div class="form-group">
@@ -59,6 +59,14 @@
 <script>
     jQuery(document).ready(function () {
 
+        var data = "{{if isset($good['img'])}}{{$good['img']}}{{/if}}";
+        if(data) {
+            //var _data = data.replace('thumb', 'picture');
+            var imgHtml = '<img src="' + data + '" height="100">';
+            $('#imgBox').empty().append(imgHtml);
+            $('#img').val(data);
+        }
+
         $('#saveSubmit').click(function(){
             if(!$.trim($('#name').val())){
                 layer.tips('请输入产品名称', '#name', {
@@ -73,13 +81,13 @@
                 return false;
             }
             if(!$('#price').val()){
-                layer.tips('现价不合法', '#value', {
+                layer.tips('现价不合法', '#price', {
                     tips: 1
                 });
                 return false;
             }
             if(!$('#native_price').val()){
-                layer.tips('原价不合法', '#value', {
+                layer.tips('原价不合法', '#native_price', {
                     tips: 1
                 });
                 return false;
@@ -101,7 +109,7 @@
                 var _data = data.replace('thumb', 'picture');
                 var imgHtml = '<img src="' + data + '" height="100">';
                 $('#imgBox').empty().append(imgHtml);
-                $('#img').val(_data);
+                $('#img').val(data);
             }
         });
 
