@@ -22,7 +22,8 @@ class UserInformation extends Base
     public function updateUserInfo($user_id, $data)
     {
         $row = false;
-        if ($data && $this->findOne($user_id)) {
+        $userInfo = User::getInstance()->getUserById($user_id);
+        if ($data && $userInfo) {
             $_user_information_table = $this->tablePrefix.'user_information';// 表名
             switch (key($data)) {
                 case 'personalized'     :// 个性签名
@@ -81,7 +82,7 @@ class UserInformation extends Base
                     break;
             }
             $row = $this->getDb()->createCommand($sql)->execute();
-            var_dump($row);echo $sql.'<br/>';
+            //var_dump($row);echo $sql.'<br/>';
         }
 
         return $row;

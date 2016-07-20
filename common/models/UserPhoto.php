@@ -33,6 +33,7 @@ class UserPhoto extends Base
             $data['update_time'] = $data['time'];
             unset($data['time']);
             if (0 == $sum) {
+                echo 'sum=';var_dump($sum);
                 $data['is_head'] = 1;
                 UserInformation::getInstance()->updateUserInfo($user_id, ['head_pic' => $data['thumb_path']]);
             }
@@ -85,11 +86,11 @@ class UserPhoto extends Base
      */
     public function savePhoto($where, $user_id)
     {
+        // 删除原有身份证
+        $del = $this->getDb()->createCommand()
+            ->delete($this->tablePrefix.'user_photo', ['user_id' => $user_id, 'type' => $where[0]['type']])
+            ->execute();
         foreach ($where as $k => $v) {
-            // 删除原有身份证
-            $del = $this->getDb()->createCommand()
-                ->delete($this->tablePrefix.'user_photo', ['user_id' => $user_id, 'type' => $v['type']])
-                ->execute();
             // 新增
             $data = [
                 'user_id'       => $user_id,
@@ -102,6 +103,11 @@ class UserPhoto extends Base
             ];
             if(isset($v['is_check'])) {
                 $data['is_check'] = $v['is_check'];
+            }
+            if($v['type'] == 1 && $k == 0) {
+                $data['is_head'] = 1;
+                echo $k;
+                UserInformation::getInstance()->updateUserInfo($user_id, ['head_pic' => $data['thumb_path']]);
             }
 
             $ist = $this->getDb()->createCommand()

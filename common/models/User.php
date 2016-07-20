@@ -798,7 +798,7 @@ class User extends Base
             $photo = array_unique($photo);
             $this->upPhoto($user_id, 1, $photo);
         }
-        //var_dump($data);exit;
+        //exit;
     }
 
     // 图片上传
@@ -810,15 +810,16 @@ class User extends Base
             $arr[$k]['thumb_path'] = $v;
             $arr[$k]['is_check'] = 1;
             $arr[$k]['time'] = time();
-            if($type != 1) {
+            $arr[$k]['type'] = $type;
+            /*if($type != 1) {
                 $arr[$k]['type'] = $type;
             } else {
                 UserPhoto::getInstance()->addPhoto($user_id, $arr[$k]);
-            }
+            }*/
         }
+        // 上传照片
+        UserPhoto::getInstance()->savePhoto($arr, $user_id);
         if($type != 1) {
-            // 上传认证照片
-            UserPhoto::getInstance()->savePhoto($arr, $user_id);
             $user = (new Query())->select('*')->from($this->tablePrefix.'user_information')->where(['user_id' => $user_id])->one();
 
             // 修改用户认证值
