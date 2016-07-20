@@ -86,6 +86,7 @@ var bhyFunc = {
         }
     },
     reviewNo: function (type) {
+        var $this = this;
         if (type == 1) {   // 审核身份证不通过
             var cause = '';
             layer.prompt({
@@ -94,10 +95,9 @@ var bhyFunc = {
                 title: '请填写审核不通过原因'
             }, function (value, index, elem) {
                 cause = value ? value : '图片模糊不清';
-                this.ajaxRequest('url', {user_id: this.user_id, type: type, cause: cause}, function (res) {
+                $this.ajaxRequest('/admin/member/sys-msg', {user_id: $this.user_id, type: '2,3', content: cause}, function (res) {
                     if (res.status == 1) {
-                        $('.idCardInfo').hide();
-                        $('.idCardSuccess').hide();
+                        $('.identify-auth').hide();
                     } else {
                         layer.msg('审核出错，请刷新重试！');
                     }
@@ -113,10 +113,9 @@ var bhyFunc = {
                 title: '请填写审核不通过原因'
             }, function (value, index, elem) {
                 cause = value ? value : '图片模糊不清';
-                this.ajaxRequest('url', {user_id: this.user_id, type: type, cause: cause}, function (res) {
+                $this.ajaxRequest('/admin/member/sys-msg', {user_id: $this.user_id, type: '5', content: cause}, function (res) {
                     if (res.status == 1) {
-                        $('.marrInfo').hide();
-                        $('.marrSuccess').hide();
+                        $('.identify-auth-' + type).hide();
                     } else {
                         layer.msg('审核出错，请刷新重试！');
                     }
@@ -132,10 +131,9 @@ var bhyFunc = {
                 title: '请填写审核不通过原因'
             }, function (value, index, elem) {
                 cause = value ? value : '图片模糊不清';
-                this.ajaxRequest('url', {user_id: this.user_id, type: type, cause: cause}, function (res) {
+                $this.ajaxRequest('/admin/member/sys-msg', {user_id: $this.user_id, type: '4', content: cause}, function (res) {
                     if (res.status == 1) {
-                        $('.eduInfo').hide();
-                        $('.eduSuccess').hide();
+                        $('.identify-auth-' + type).hide();
                     } else {
                         layer.msg('审核出错，请刷新重试！');
                     }
@@ -151,10 +149,9 @@ var bhyFunc = {
                 title: '请填写审核不通过原因'
             }, function (value, index, elem) {
                 cause = value ? value : '图片模糊不清';
-                this.ajaxRequest('url', {user_id: this.user_id, type: type, cause: cause}, function (res) {
+                $this.ajaxRequest('/admin/member/sys-msg', {user_id: $this.user_id, type: '6', content: cause}, function (res) {
                     if (res.status == 1) {
-                        $('.houseInfo').hide();
-                        $('.houseSuccess').hide();
+                        $('.identify-auth-' + type).hide();
                     } else {
                         layer.msg('审核出错，请刷新重试！');
                     }

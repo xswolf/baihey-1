@@ -72,7 +72,7 @@ class UserPhoto extends Base
      * @param int $pageSize
      * @return $this|array
      */
-    public function getPhotoList($user_id, $type = 1, $pageSize = 12)
+    public function getPhotoList($user_id, $type = 1, $pageSize = 12 , $check = '')
     {
         if ($type == 23) {
             $where = ['and', 'user_id='.$user_id, ['in', 'type', [2, 3]]];

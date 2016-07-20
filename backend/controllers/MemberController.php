@@ -191,10 +191,14 @@ class MemberController extends BaseController
         // 动态
         $dynamicList = UserDynamic::getInstance()->getDynamicList($userId , 0 , 1000 ,-2);
         $this->assign('dynamicList' , $dynamicList);
-        // 身份认证
+        // 认证
         $identify = UserPhoto::getInstance()->getPhotoList($userId , [2,3,4,5,6]);
         $identifyType = [];
         foreach ($identify as $k=>$v){
+            if ($v['is_check'] == '0'){
+                unset($identify[$k]);
+                continue;
+            }
             $identifyType[$v['type']][] = $v;
         }
         $this->assign('identify' , $identify);
@@ -319,6 +323,24 @@ class MemberController extends BaseController
             $this->renderAjax(['status' => 0, 'message' => '操作失败', 'data' => $flag]);
         }
 
+    }
+
+    /**
+     * 发送系统消息
+     */
+    public function actionSysMsg(){
+        $userId = \Yii::$app->request->post('user_id');
+        $type   = \Yii::$app->request->post('type');
+        $content = \Yii::$app->request->post('content');
+        if ($type == '2,3') $type = explode(',' , $type);
+        User::getInstance()->editPhoto( $type , ['user_id'=>$userId] ,  0);
+        if ($flag = (new Message())->add(1,$userId,$content,1,2)){
+            $this->renderAjax(['status' => 1, 'message' => '操作成功', 'data' => $flag]);
+
+        }else{
+            $this->renderAjax(['status' => 0, 'message' => '操作失败', 'data' => $flag]);
+
+        }
     }
 
     public function actionChat()

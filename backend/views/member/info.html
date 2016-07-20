@@ -533,13 +533,16 @@
                                 <div class="col-md-12">
 
                                     <div class="panel-group" id="accordion">
-                                        <div class="panel panel-danger">
+                                        <div class="panel panel-danger identify-auth">
+                                            {{foreach from=$identifyType key=k item=vo}}
+                                            {{if $k==2}}
                                             <div class="panel-heading">
                                                 <h3 class="panel-title"><a class="accordion-toggle"
                                                                            data-toggle="collapse"
                                                                            data-parent="#accordion" href="#collapseOne">身份证</a>
                                                 </h3>
                                             </div>
+
                                             <div id="collapseOne" class="panel-collapse collapse in">
                                                 <div class="panel-body">
                                                     <div class="alert alert-info idCardInfo {{if ($user.honesty_value & 1)}}hide{{/if}}">
@@ -569,9 +572,11 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        {{/if}}
+                                        {{/foreach}}
                                         {{foreach from=$identifyType key=k item=vo}}
                                         {{if $k<4}}{{continue}}{{/if}}
-                                        <div class="panel panel-default">
+                                        <div class="panel panel-default identify-auth-{{$k}}">
                                             <div class="panel-heading">
                                                 <h3 class="panel-title"><a class="accordion-toggle"
                                                                            data-toggle="collapse"

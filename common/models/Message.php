@@ -70,7 +70,9 @@ class Message extends Base {
             'create_time' => time(),
             'status' => $status,
         ];
-        return \Yii::$app->db->createCommand($this->tablePrefix.'message' , $data);
+        return \Yii::$app->db->createCommand()
+            ->insert($this->tablePrefix.'user_message',$data)
+            ->execute();
 
     }
 }

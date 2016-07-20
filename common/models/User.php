@@ -854,12 +854,21 @@ class User extends Base
      * @return bool
      */
     public function auth($data){
+        if ($data['honesty_value'] == 1){
+            $type = [2,3];
+        }else if ($data['honesty_value'] == 2){
+            $type = 5;
+        }else if ($data['honesty_value'] == 4) {
+            $type = 4;
+        }else if ($data['honesty_value'] == 8) {
+            $type = 6;
+        }
         $user = (new Query())->from($this->tablePrefix.'user_information')
             ->where(['user_id' => $data['user_id']])
             ->select('honesty_value')
             ->all();
         if (is_array($user) && count($user) ==1){
-            if ($user[0]['honesty_value'] & $data['honesty_value'] > 0){
+            if ($user[0]['honesty_value'] & $data['honesty_value']){
                 $honesty_value = $user[0]['honesty_value'];
             }else{
                 $honesty_value = $user[0]['honesty_value'] + $data['honesty_value'];
@@ -868,8 +877,25 @@ class User extends Base
             return 0;
         }
         $data['honesty_value'] = $honesty_value;
-        return \Yii::$app->db->createCommand()
+        $tran = \Yii::$app->db->beginTransaction();
+        $flag1 = \Yii::$app->db->createCommand()
             ->update($this->tablePrefix.'user_information' ,$data ,['user_id'=>$data['user_id']])
+            ->execute();
+        $flag2 = $this->editPhoto($type,$data);
+
+        if ($flag1 >0 && $flag2 > 0 ){
+            $tran->commit();
+            return 1;
+        }else{
+            $tran->rollBack();
+            return 0;
+        }
+
+    }
+
+    public function editPhoto($type,$data , $check = 1){
+        return \Yii::$app->db->createCommand()
+            ->update($this->tablePrefix.'user_photo' ,['is_check'=>$check], ['user_id'=>$data['user_id'] , 'type'=>$type])
             ->execute();
     }
 }
