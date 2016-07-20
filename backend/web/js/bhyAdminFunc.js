@@ -385,6 +385,7 @@ var bhyFunc = {
         }
     },
     deleteItemByList:function(itemId,td,url){
+        console.log(itemId);
         layer.confirm('确定要删除该条记录？', {icon: 3, title: '提示'}, function (index) {
             bhyFunc.ajaxRequest(url,{id:itemId},function(res){
                 layer.close(index);

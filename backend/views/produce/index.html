@@ -4,7 +4,7 @@
             <div class="ibox-tools rboor">
                 <a class="btn btn-green btn-xs p310" href="/admin/produce/save"><i class="fa fa-plus"></i> 添加
                 </a>
-                <button class="btn btn-green btn-xs p310"><i class="fa fa-trash-o"></i> 删除
+                <button class="btn btn-green btn-xs p310 del-goods"><i class="fa fa-trash-o"></i> 删除
                 </button>
             </div>
         </div>
@@ -73,7 +73,7 @@
                                 class="fa fa-check"></i> </a>
                         {{/if}}
                         <!-- fa-check -->
-                        <a class="btn btn-warning btn-sm tip" title="删除" onclick="bhyFunc.deleteItemByList(1,this,'url')" href="javascript:;"><i
+                        <a class="btn btn-warning btn-sm tip" title="删除" onclick="bhyFunc.deleteItemByList('{{$vo.id}}',this,'/admin/produce/del-goods')" href="javascript:;"><i
                                 class="fa fa-trash-o"></i> </a>
                     </td>
                 </tr>
@@ -87,9 +87,10 @@
 
     // 禁/启用
     function changeStatus(id,a){
-        var flag = $(a).attr('title');
+        var flag = $(a).attr('data-original-title');
+        console.log(flag);
         if(flag == '禁用'){
-            bhyFunc.ajaxRequest('url',{id:id,status:0},function(res){
+            bhyFunc.ajaxRequest('/admin/produce/change-status',{id:id,status:0},function(res){
                 if(res.status > 0){
                     $(a).parent().siblings('.status').html('<span class="text-danger">禁用</span>');
                     $(a).removeClass('btn-danger')
@@ -103,7 +104,7 @@
                 }
             })
         }else{
-            bhyFunc.ajaxRequest('url',{id:id,status:1},function(res){
+            bhyFunc.ajaxRequest('/admin/produce/change-status',{id:id,status:1},function(res){
                 if(res.status > 0){
                     $(a).parent().siblings('.status').html('正常');
                     $(a).removeClass('btn-success')
@@ -139,7 +140,26 @@
             $(this).toggleClass('selected');
         });
 
+        $('.del-goods').click(function () {
+            if(confirm('确认删除')){
+                var id = [];
+                $('table .selected').each(function () {
+                    id.push($(this).children().html());
+                })
 
+                $.ajax({ type:'post',
+                    url: "/admin/produce/del-goods",
+                    data:{id:id},
+                    success: function(res){
+                        res = JSON.parse(res);
+                        if (res.status == 1) {
+                            window.location.reload();
+                        }
+                    }
+                });
+            }
+
+        })
 
     })
 </script>

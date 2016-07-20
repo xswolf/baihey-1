@@ -68,4 +68,18 @@ class ChargeGoods extends Base
 
         return $row;
     }
+
+    /**
+     * 删除good
+     * @param $id
+     * @return int
+     * @throws \yii\db\Exception
+     */
+    public function delGoods($id)
+    {
+        $row = $this->getDb()->createCommand()
+            ->delete($this->tablePrefix.'charge_goods', ['id' => $id])
+            ->execute();
+        return $row;
+    }
 }
