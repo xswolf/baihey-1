@@ -45,7 +45,7 @@ class User extends Base
 
     public function getUserById($id)
     {
-        $userTable            = static::tableName();
+        $userTable            = $this->tablePrefix.'user';
         $userInformationTable = $this->tablePrefix . 'user_information';
         $row                  = (new Query)
             ->select('*')
@@ -278,8 +278,6 @@ class User extends Base
 
         $userInfo['info'] = json_encode(array_merge($this->getDefaultInfo(), $userInfo['zo'], $userInfo['info']));
         unset ($userInfo['zo']);
-        // 添加图片
-        User::getInstance()->insertUserPhoto($user['id'], $userInfo);
         unset($userInfo['photosList']);
         unset($userInfo['headPic']);
         unset($userInfo['cardFace_List']);
@@ -289,6 +287,8 @@ class User extends Base
         unset($userInfo['marrList']);
         $this->getDb()->createCommand()->update($this->tablePrefix . "user_information", $userInfo, ['user_id' => $data['user_id']])->execute();
         $this->getDb()->createCommand()->update($this->tablePrefix . "user", $user, ['id' => $data['user_id']])->execute();
+        // 添加图片
+        User::getInstance()->insertUserPhoto($user['id'], $data);
         return $user;
     }
 
@@ -466,7 +466,7 @@ class User extends Base
         $userInfo['balance'] = $userInfo['balance'] - $money;
         $db                  = $this->getDb();
         $balance             = $db->createCommand()
-            ->update(static::tableName(), ['balance' => $userInfo['balance']], ['id' => $user_id])
+            ->update($this->tablePrefix.'user', ['balance' => $userInfo['balance']], ['id' => $user_id])
             ->execute();
         return $balance;
     }
@@ -683,7 +683,7 @@ class User extends Base
      */
     public function getUserPropertyValue($user_id, $propertyKey)
     {
-        $userTable            = static::tableName();
+        $userTable            = $this->tablePrefix.'user';
         $userInformationTable = $this->tablePrefix . 'user_information';
         $row = (new Query)
             ->select($propertyKey)
@@ -782,13 +782,6 @@ class User extends Base
     public function insertUserPhoto($user_id, $data)
     {
         UserPhoto::getInstance()->deleteAll(['user_id' => $user_id]);
-        // 上传照片
-        !empty($data['photosList']) ? $this->upPhoto($user_id, 1, $data['photosList']) : true;
-        // 上传头像
-        if(!empty($data['headPic'])) {
-            $headPic = UserPhoto::getInstance('user_photo')->findOne(['thumb_path' =>  $data['headPic']]);
-            UserPhoto::getInstance()->setHeadPic($user_id, ['id' => $headPic->id, 'thumb_path' => $data['headPic']]);
-        }
         // 上传身份证
         !empty($data['cardFace_List']) ? $this->upPhoto($user_id, 2, $data['cardFace_List']) : true;
         !empty($data['cardBack_List']) ? $this->upPhoto($user_id, 3, $data['cardBack_List']) : true;
@@ -798,13 +791,20 @@ class User extends Base
         !empty($data['houseList']) ? $this->upPhoto($user_id, 6, $data['houseList']) : true;
         // 上传婚姻证明
         !empty($data['marrList']) ? $this->upPhoto($user_id, 5, $data['marrList']) : true;
-        //exit;
+        // 上传照片
+        if(!empty($data['headPic']) && !empty($data['photosList'])) {
+            $photo = explode(',', $data['photosList']);
+            $photo = array_merge([$data['headPic']], $photo);
+            $photo = array_unique($photo);
+            $this->upPhoto($user_id, 1, $photo);
+        }
+        //var_dump($data);exit;
     }
 
     // 图片上传
     public function upPhoto($user_id, $type, $data)
     {
-        $photo = explode(',', $data);
+        $photo = $type == 1 ? $data : explode(',', $data);
         foreach($photo as $k => $v) {
             $arr[$k]['pic_path'] = str_replace('thumb', 'picture', $v);
             $arr[$k]['thumb_path'] = $v;
@@ -844,7 +844,8 @@ class User extends Base
             }
 
             // 修改认证值
-            $this->getDb()->createCommand()->update($this->tablePrefix.'user_information', ['honesty_value' => $user['honesty_value']], ['user_id' => $user_id])->execute();
+            UserInformation::getInstance()->updateUserInfo($user_id, ['honesty_value' => $user['honesty_value']]);
+            //$this->getDb()->createCommand()->update($this->tablePrefix.'user_information', ['honesty_value' => $user['honesty_value']], ['user_id' => $user_id])->execute();
         }
     }
 

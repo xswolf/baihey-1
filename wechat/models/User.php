@@ -160,7 +160,7 @@ class User extends \common\models\User
         $joinTable = \Yii::$app->getDb()->tablePrefix . $this->_user_information_table;
         $row = (new Query())
             ->select('*')
-            ->from(static::tableName() . ' u')
+            ->from($this->tablePrefix.'user' . ' u')
             ->innerJoin($joinTable . ' i', "u.id=i.user_id")
             ->where(['u.username' => $name]);
 
@@ -188,7 +188,7 @@ class User extends \common\models\User
         $joinTable = \Yii::$app->getDb()->tablePrefix . $this->_user_information_table;
         $row = (new Query())
             ->select('*')
-            ->from(static::tableName() . ' u')
+            ->from($this->tablePrefix.'user' . ' u')
             ->innerJoin($joinTable . ' i', "u.id=i.user_id")
             ->where(['u.id' => $id]);
 
@@ -238,7 +238,7 @@ class User extends \common\models\User
 
         $result = (new Query())->select(['*'])
             ->where($condition)
-            ->from(static::tableName() . ' u')
+            ->from($this->tablePrefix.'user' . ' u')
             ->innerJoin($joinTable . ' i', "u.id=i.user_id")
             ->orderBy('u.id desc, u.last_login_time desc')
             ->limit($pageSize)
@@ -365,7 +365,7 @@ class User extends \common\models\User
     {
         $row = false;
         if ($data && $this->findOne($user_id)) {
-            $_user_table = static::tableName();// 表名
+            $_user_table = $this->tablePrefix.'user';// 表名
             switch (key($data)) {
                 case 'phone':
                 case 'sex':

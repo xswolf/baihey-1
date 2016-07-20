@@ -19,7 +19,7 @@ class Feedback extends Base
         $data['user_id'] = $user_id;
         $data['create_time'] = time();
         $row = $this->getDb()->createCommand()
-            ->insert(static::tableName(), $data)
+            ->insert($this->tablePrefix.'feedback', $data)
             ->execute();
         return $row;
     }

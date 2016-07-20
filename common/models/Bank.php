@@ -35,7 +35,7 @@ class Bank extends Base
     {
         $bank = $this->bankData();
         $row = $this->getDb()->createCommand()
-            ->batchInsert(static::tableName(), ['bin', 'name'], $bank)
+            ->batchInsert($this->tablePrefix.'bank', ['bin', 'name'], $bank)
             ->execute();
         return $row;
     }

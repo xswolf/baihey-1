@@ -29,7 +29,7 @@ class AuthUser extends Base
             $condition = ['type' => 3];
         }
         $row = (new Query())->select(['real_name', 'id as job', 'phone', 'landline', 'qq', 'wechat', 'email', 'introduction', 'photo', 'address'])
-            ->from(static::tableName())
+            ->from($this->tablePrefix.'auth_user')
             ->where($condition)
             ->andWhere(['status' => 1])
             ->all();

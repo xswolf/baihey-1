@@ -32,26 +32,13 @@ class UserPhoto extends Base
             $data['create_time'] = $data['time'];
             $data['update_time'] = $data['time'];
             unset($data['time']);
-            /*$this->user_id = $user_id;
-            $this->pic_path = $data['pic_path'];
-            $this->thumb_path = $data['thumb_path'];
-            $this->create_time = $data['time'];
-            $this->update_time = $data['time'];
-            if (isset($data['type'])) {
-                $this->type = $data['type'];
-            }
-            if(isset($data['is_check'])) {
-                $this->is_check = $data['is_check'];
-            }*/
             if (0 == $sum) {
                 $data['is_head'] = 1;
-                //$this->is_head = 1;
                 UserInformation::getInstance()->updateUserInfo($user_id, ['head_pic' => $data['thumb_path']]);
             }
             $this->getDb()->createCommand()
                 ->insert($this->tablePrefix.'user_photo', $data)
                 ->execute();
-            //$this->insert(false);
             return $this->getDb()->getLastInsertID();
         } else {
             return false;
@@ -101,7 +88,7 @@ class UserPhoto extends Base
         foreach ($where as $k => $v) {
             // 删除原有身份证
             $del = $this->getDb()->createCommand()
-                ->delete(static::tableName(), ['user_id' => $user_id, 'type' => $v['type']])
+                ->delete($this->tablePrefix.'user_photo', ['user_id' => $user_id, 'type' => $v['type']])
                 ->execute();
             // 新增
             $data = [
@@ -118,7 +105,7 @@ class UserPhoto extends Base
             }
 
             $ist = $this->getDb()->createCommand()
-                ->insert(static::tableName(), $data)
+                ->insert($this->tablePrefix.'user_photo', $data)
                 ->execute();
 
         }
@@ -204,7 +191,7 @@ class UserPhoto extends Base
     {
         $result = (new Query())
             ->select('*')
-            ->from(static::tableName())
+            ->from($this->tablePrefix.'user_photo')
             ->where(['user_id' => $user_id, 'is_head' => 1, 'type' => 1])
             ->one();
         return $result;

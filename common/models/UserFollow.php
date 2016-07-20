@@ -46,7 +46,7 @@ class UserFollow extends Base
         }
         $result = (new Query())->select(['f.*', 'u.id other', 'u.sex', 'i.*'])
             ->where($condition)
-            ->from(static::tableName() . ' f')
+            ->from($this->tablePrefix.'user_follow' . ' f')
             ->innerJoin($infoTable . ' i', $join)
             ->innerJoin($userTable . ' u', 'i.user_id = u.id')
             ->orderBy('create_time desc')
@@ -87,7 +87,7 @@ class UserFollow extends Base
             $row = (new Query())
                 ->select(['status'])
                 ->where($where)
-                ->from(static::tableName())
+                ->from($this->tablePrefix.'user_follow')
                 ->one();
             return $row;
         } else {

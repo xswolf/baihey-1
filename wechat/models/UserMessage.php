@@ -85,7 +85,7 @@ SELECT send_user_id,COUNT(send_user_id) sumSend,MAX(create_time) create_time FRO
         $result    = (new Query())
             ->select(['count(id) sumSend'])
             ->where($condition)
-            ->from(static::tableName())
+            ->from($this->tablePrefix.'user_message')
             ->one();
 
         return $result;

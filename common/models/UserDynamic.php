@@ -29,7 +29,7 @@ class UserDynamic extends Base
         $data['address'] = isset($data['address']) ? $data['address'] : '';
         $data['create_time'] = time();
         $row = $this->getDb()->createCommand()
-            ->insert(static::tableName(), $data)
+            ->insert($this->tablePrefix.'user_dynamic', $data)
             ->execute();
 
         return $this->getDb()->lastInsertID;
@@ -88,7 +88,7 @@ class UserDynamic extends Base
     {
         $data['user_id'] = $user_id;
         $row = $this->getDb()->createCommand()
-            ->update(static::tableName(), $data, ['id' => $id, 'user_id' => $user_id])
+            ->update($this->tablePrefix.'user_dynamic', $data, ['id' => $id, 'user_id' => $user_id])
             ->execute();
 
         return $row;

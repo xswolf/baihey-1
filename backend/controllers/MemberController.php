@@ -104,7 +104,7 @@ class MemberController extends BaseController
             unset($data['houseList']);
             unset($data['marrList']);
             $user = \common\models\User::getInstance()->addUser($data);
-            //$user['id'] = 15081;
+            //$user['id'] = 15087;
             // 添加图片
             User::getInstance()->insertUserPhoto($user['id'], $photo);
             if ($user['id'] > 0) {

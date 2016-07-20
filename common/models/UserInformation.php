@@ -23,7 +23,7 @@ class UserInformation extends Base
     {
         $row = false;
         if ($data && $this->findOne($user_id)) {
-            $_user_information_table = static::tableName();// 表名
+            $_user_information_table = $this->tablePrefix.'user_information';// 表名
             switch (key($data)) {
                 case 'personalized'     :// 个性签名
                 case 'honesty_value'    :// 诚信认证值
@@ -80,8 +80,8 @@ class UserInformation extends Base
                     $sql = "UPDATE {$_user_information_table} SET info = JSON_REPLACE(info,'$.".key($data)."','".$data[key($data)]."') WHERE user_id={$user_id}";
                     break;
             }
-
             $row = $this->getDb()->createCommand($sql)->execute();
+            var_dump($row);echo $sql.'<br/>';
         }
 
         return $row;
@@ -92,7 +92,7 @@ class UserInformation extends Base
         $select = "json_extract(auth,'$.".$name."') $name";
         $row = (new Query())
             ->select([$select])
-            ->from(static::tableName())
+            ->from($this->tablePrefix.'user_information')
             ->where(['user_id' => $user_id]);
         //echo $row->createCommand()->getRawSql();exit;
         $row = $row->one();

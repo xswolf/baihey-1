@@ -21,7 +21,7 @@ class Config  extends \common\models\Base
     {
         $result = (new Query())->select(['*'])
             ->where(['type' => $type])
-            ->from(static::tableName())
+            ->from($this->tablePrefix.'config')
             ->all();
         return $result;
     }
@@ -36,7 +36,7 @@ class Config  extends \common\models\Base
         $arrId = explode(',' ,$strId);
         $result = (new Query())->select(['*'])
             ->where(['in', 'id', $arrId])
-            ->from(static::tableName())
+            ->from($this->tablePrefix.'config')
             ->all();
         return $result;
     }

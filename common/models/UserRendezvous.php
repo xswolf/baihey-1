@@ -130,7 +130,7 @@ class UserRendezvous extends Base
     public function getRendezvousInfo($where)
     {
         $obj = (new Query())
-            ->from(static::tableName())
+            ->from($this->tablePrefix.'user_rendezvous')
             ->select('*')
             ->where($where)
             ->one();
@@ -183,7 +183,7 @@ class UserRendezvous extends Base
         $offset = ($pageNum - 1) * $pageSize;
         $obj = (new Query())
             ->from($this->tablePrefix.'user_rendezvous_apply a')
-            ->innerJoin(static::tableName().' r', "a.rendezvous_id=r.id")
+            ->innerJoin($this->tablePrefix.'user_rendezvous'.' r', "a.rendezvous_id=r.id")
             ->innerJoin($this->tablePrefix.'user_information i', "i.user_id=r.user_id")
             ->innerJoin($this->tablePrefix.'user u', "u.id=i.user_id")
             ->select("*,a.id apply_id,a.status apply_status")

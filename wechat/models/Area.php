@@ -96,7 +96,7 @@ class Area extends \common\models\Base
     {
         $db = $this->getDb();
         $paren = $db->createCommand()
-            ->insert(static::tableName(), $data)
+            ->insert($this->tablePrefix.'area', $data)
             ->execute();
         return $db->getLastInsertID();
     }
