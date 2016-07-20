@@ -1,66 +1,12 @@
-<link rel="stylesheet" type="text/css" href="/backend/web/CloudAdmin/js/dropzone/dropzone.min.css"/>
 <script src="/wechat/web/js/config/area.js"></script>
 <script src="/wechat/web/js/config/city.js"></script>
-<script>
-    var userId = 0
-    function showUpload(id,userName,obj) {
-        userId = id;
-        $(".new_item").remove();
-        $(".dz-success").remove();
 
-        $.ajax({ url: "/admin/member/get-pic", data:{id:id}, success: function(res){
-            var res = JSON.parse(res);
-            for (var i in res.data){
-                var pic = $(".preview-pic").clone();
-                console.log(res.data[i].thumb_path);
-                pic.find("img").attr('src' , res.data[i].thumb_path);
-                $("#my-awesome-dropzone").append(pic.removeClass("preview-pic").addClass('new_item').css('width' , '100px').css('display','inline-block'));
-
-                if(res.data[i].is_head == 1){
-                    pic.find('.setHead').text('是头像')
-                }
-
-                pic.find(".setHead")
-                        .attr('data-id' , res.data[i].id)
-                        .attr('data-img' , res.data[i].thumb_path)
-                        .click(function () {
-                    $.ajax({
-                        url:"/admin/member/set-head",
-                        data:{user_id:userId,id:$(this).data('id'),thumb_path:$(this).data('img')},
-                        success: function () {
-                            alert('设置成功');
-                        }
-                    })
-                })
-            }
-        }});
-
-        $(obj).removeClass('btn-info').addClass('btn-danger');
-        layer.open({
-            type: 1,
-            shade: false,
-            area: '800px',
-            offset: ['100px', '200px'],
-            title: false, //不显示标题
-            content: $('#upload'), //捕获的元素
-            cancel: function (index) {
-                layer.close(index);
-            },
-            success:function(content,index){
-                content.find('.userName').text(userName);
-            }
-
-        });
-    }
-
-</script>
 <div class="wrapper wrapper-content animated fadeInUp">
     <div class="ibox">
         <div class="ibox-title"><h5>会员列表</h5>
             <div class="ibox-tools rboor">
                 <a href="/admin/member/save" class="btn btn-green btn-xs p310"><i class="fa fa-plus"></i> 添加</a>
                 <button class="btn btn-green btn-xs p310 del-user"><i class="fa fa-trash-o"></i> 删除</button>
-                <button id="tb-refresh" class="btn btn-green btn-xs p310"><i class="fa fa-refresh"></i> 刷新</button>
             </div>
         </div>
 
@@ -131,66 +77,10 @@
             </table>
         </div>
     </div>
-    <div class="box border blue" id="upload" style="display: none; width:800px; height: 400px;">
-        <div class="box-title">
-            <h4><i class="fa fa-picture-o"></i>上传照片 <span class="userName"></span></h4>
-        </div>
-        <div class="box-body">
-            <form action="/wap/file/thumb"
-                  class="dropzone"
-                  id="my-awesome-dropzone">
-                <div class="fallback">
-                    <input name="file" type="file" multiple=""/>
-                </div>
-
-                <div class="dz-preview dz-processing dz-image-preview preview-pic" style="display: none">
-                    <div class="dz-details">
-                        <div class="dz-filename"><span data-dz-name="">c2cec3fdfc03924578c6cfe18394a4c27c1e25e8.jpg</span></div>
-                        <div data-dz-size="" class="dz-size"><strong>6.4</strong> KB</div>
-                        <img data-dz-thumbnail="" alt="c2cec3fdfc03924578c6cfe18394a4c27c1e25e8.jpg" src="">
-                    </div>
-                    <div class="progress progress-sm progress-striped active"><div data-dz-uploadprogress="" class="progress-bar progress-bar-success" style="width: 100%;"></div></div>
-                    <div class="dz-success-mark"><span></span></div>
-                    <div class="dz-error-mark"><span></span></div>
-                    <div class="dz-error-message"><span data-dz-errormessage=""></span></div>
-                    <a href="javascript:undefined;" class="dz-remove setHead">设为头像</a>
-                </div>
-            </form>
-        </div>
-
-    </div>
 </div>
 
 <script>
     jQuery(document).ready(function () {
-//        App.setPage("dynamic_table");  //Set current page
-
-       /* Dropzone.options.myAwesomeDropzone = false;
-        $(".dropzone").dropzone({
-            paramName: "file", // The name that will be used to transfer the file
-            maxFilesize: 8, // MB
-            addRemoveLinks: true,
-            dictResponseError: '同时上传文件时出错！',
-            //change the previewTemplate to use Bootstrap progress bars
-            previewTemplate: "<div class=\"dz-preview dz-file-preview\">\n  <div class=\"dz-details\">\n    <div class=\"dz-filename\"><span data-dz-name></span></div>\n    <div class=\"dz-size\" data-dz-size></div>\n    <img data-dz-thumbnail />\n  </div>\n  <div class=\"progress progress-sm progress-striped active\"><div class=\"progress-bar progress-bar-success\" data-dz-uploadprogress></div></div>\n  <div class=\"dz-success-mark\"><span></span></div>\n  <div class=\"dz-error-mark\"><span></span></div>\n  <div class=\"dz-error-message\"><span data-dz-errormessage></span></div>\n</div>",
-
-            init: function () {
-                this.on('success' , function (f,res){
-                    var thumb_path = JSON.parse(res).thumb_path;
-                    var pic_path = JSON.parse(res).pic_path;
-
-                    $.ajax({ type:'get',
-                        url: "/admin/member/up-pic",
-                        data:{id:userId,thumb_path:thumb_path , pic_path: pic_path},
-                        success: function(res){
-
-                        }
-                    });
-
-                });
-
-            }
-        });*/
         $('.j-datatables tbody').on( 'click', 'tr', function () {
             $(this).toggleClass('selected');
         } );

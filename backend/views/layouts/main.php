@@ -244,57 +244,58 @@
                     </a>
                 </li>
 
-                <li class="has-sub">
-                    <a href="javascript:;" class="" data-menu="2">
-                        <i class="fa fa-file-text fa-fw"></i> <span class="menu-text">功能</span>
-                        <span class="arrow"></span>
-                    </a>
-                    <ul class="sub">
-                        <li class="has-sub-sub"><a data-menu="1" class="" href="javascript:;"><span class="sub-menu-text">功能 1</span></a></li>
-                        <li class="has-sub-sub"><a data-menu="2" class=""  href="javascript:;"><span class="sub-menu-text">功能 2</span></a></li>
-                    </ul>
-                </li>
                 <li class="has-sub" >
-                    <a href="javascript:;" class="" data-menu="3">
+                    <a href="javascript:;" class="" data-menu="2">
                         <i class="fa fa-file-text fa-fw"></i> <span class="menu-text">权限管理</span>
                         <span class="arrow"></span>
                     </a>
                     <ul class="sub">
-                        <li class="has-sub-sub"><a data-menu="3" class="" href="/admin/rbac/list-permission"><span class="sub-menu-text">权限列表</span></a></li>
-                        <li class="has-sub-sub"><a data-menu="4" class="" href="/admin/rbac/list-role"><span class="sub-menu-text">角色列表</span></a></li>
+                        <li class="has-sub-sub"><a data-menu="1" class="" href="/admin/rbac/list-permission"><span class="sub-menu-text">权限列表</span></a></li>
+                        <li class="has-sub-sub"><a data-menu="2" class="" href="/admin/rbac/list-role"><span class="sub-menu-text">角色列表</span></a></li>
                     </ul>
                 </li>
                 <li class="has-sub">
-                    <a href="javascript:;" class="" data-menu="4">
+                    <a href="javascript:;" class="" data-menu="3">
                         <i class="fa fa-file-text fa-fw"></i> <span class="menu-text">用户管理</span>
                         <span class="arrow"></span>
                     </a>
                     <ul class="sub">
-                        <li class="has-sub-sub"><a data-menu="5" class="has-sub-sub"  href="/admin/user/list-user"><span class="sub-menu-text">用户列表</span></a></li>
+                        <li class="has-sub-sub"><a data-menu="3" class="has-sub-sub"  href="/admin/user/list-user"><span class="sub-menu-text">用户列表</span></a></li>
                     </ul>
                 </li>
                 <li class="has-sub">
-                    <a href="javascript:;" class="" data-menu="5">
+                    <a href="javascript:;" class="" data-menu="4">
                         <i class="fa fa-file-text fa-fw"></i> <span class="menu-text">配置</span>
                         <span class="arrow"></span>
                     </a>
                     <ul class="sub">
-                        <li class="has-sub-sub"><a data-menu="5" class="has-sub-sub"  href="/admin/config/list"><span class="sub-menu-text">基础配置</span></a></li>
+                        <li class="has-sub-sub"><a data-menu="4" class="has-sub-sub"  href="/admin/config/list"><span class="sub-menu-text">基础配置</span></a></li>
                     </ul>
                 </li>
                 <li class="has-sub">
-                    <a href="javascript:;" class="" data-menu="6">
+                    <a href="javascript:;" class="" data-menu="5">
                         <i class="fa fa-file-text fa-fw"></i> <span class="menu-text">综合管理</span>
                         <span class="arrow"></span>
                     </a>
                     <ul class="sub">
-                        <li class="has-sub-sub"><a data-menu="7" class="has-sub-sub"  href="/admin/member/index"><span class="sub-menu-text">会员列表</span></a></li>
-                        <li class="has-sub-sub"><a data-menu="8" class="has-sub-sub"  href="/admin/member/photo?is_check=2&type=1"><span class="sub-menu-text">照片审核</span></a></li>
-                        <li class="has-sub-sub"><a data-menu="9" class="has-sub-sub"  href="/admin/member/order"><span class="sub-menu-text">订单列表</span></a></li>
-                        <li class="has-sub-sub"><a data-menu="10" class="has-sub-sub"  href="/admin/cash/index?status=2"><span class="sub-menu-text">提现管理</span></a></li>
-                        <li class="has-sub-sub"><a data-menu="11" class="has-sub-sub"  href="/admin/chat/index"><span class="sub-menu-text">聊天管理</span></a></li>
-                        <li class="has-sub-sub"><a data-menu="12" class="has-sub-sub"  href="/admin/feedback/index?status=2"><span class="sub-menu-text">举报管理</span></a></li>
-                        <li class="has-sub-sub"><a data-menu="13" class="has-sub-sub"  href="/admin/produce/index"><span class="sub-menu-text">产品管理</span></a></li>
+                        <li class="has-sub-sub"><a data-menu="5" class="has-sub-sub"  href="/admin/member/index"><span class="sub-menu-text">会员列表</span></a></li>
+                        <li class="has-sub-sub"><a data-menu="6" class="has-sub-sub"  href="/admin/member/photo?is_check=2&type=1"><span class="sub-menu-text">照片审核</span></a></li>
+                        <li class="has-sub-sub"><a data-menu="7" class="has-sub-sub"  href="/admin/member/order"><span class="sub-menu-text">订单列表</span></a></li>
+                        <li class="has-sub-sub"><a data-menu="8" class="has-sub-sub"  href="/admin/cash/index?status=2"><span class="sub-menu-text">提现管理</span></a></li>
+                        <li class="has-sub-sub"><a data-menu="9" class="has-sub-sub"  href="/admin/chat/index"><span class="sub-menu-text">聊天管理</span></a></li>
+                        <li class="has-sub-sub"><a data-menu="10" class="has-sub-sub"  href="/admin/feedback/index?status=2"><span class="sub-menu-text">举报管理</span></a></li>
+                        <li class="has-sub-sub"><a data-menu="11" class="has-sub-sub"  href="/admin/produce/index"><span class="sub-menu-text">产品管理</span></a></li>
+                    </ul>
+                </li>
+                <li class="has-sub">
+                    <a href="javascript:;" class="" data-menu="6">
+                        <i class="fa fa-file-text fa-fw"></i> <span class="menu-text">会员管理</span>
+                        <span class="arrow"></span>
+                    </a>
+                    <ul class="sub">
+                        <li class="has-sub-sub"><a data-menu="12" class="has-sub-sub"  href="/admin/matchmaker/index"><span class="sub-menu-text">会员列表</span></a></li>
+                        <li class="has-sub-sub"><a data-menu="13" class="has-sub-sub"  href="/admin/matchmaker/my"><span class="sub-menu-text">我的会员</span></a></li>
+                        <li class="has-sub-sub"><a data-menu="14" class="has-sub-sub"  href="/admin/matchmaker/add"><span class="sub-menu-text">添加会员</span></a></li>
                     </ul>
                 </li>
 

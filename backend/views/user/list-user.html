@@ -1,53 +1,138 @@
-<!--过滤表单-->
-<!--<div class="box border green">-->
-<!--    <div class="box-body small">-->
-<!--        <div class="row">-->
-<!--            <div class="col-xs-2">-->
-<!--                <input type="text" class="form-control j-dt-filter" data-col="name:name" placeholder="Rendering engine">-->
-<!--            </div>-->
-<!--            <div class="col-xs-3">-->
-<!--                <input type="text" class="form-control j-dt-filter" data-col="level:name" placeholder="Browser">-->
-<!--            </div>-->
-<!--        </div>-->
-<!--    </div>-->
-<!--</div>-->
-<!--表格-->
-<div class="row">
-    <div class="col-md-12">
-        <!-- BOX -->
-        <div class="box border primary">
-
-            <div class="box-body">
-                <p class="btn-toolbar text-right"><a href="/admin/user/create-user" class="btn btn-primary"><i class="fa fa-pencil"></i> 添加用户</a></p>
-                <table cellpadding="0" cellspacing="0" border="0" class="j-datatables table table-striped table-bordered table-hover">
-                    <thead>
-                    <tr>
-                        <th data-name="id">id</th>
-                        <th data-name="name">用户名</th>
-                        <th class="hidden-xs">状态</th>
-                        <th class="hidden-xs">操作</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-
-                    <ul>
-                        {{foreach from=$list item=vo}}
-                            <tr class="gradeX">
-                                <td>{{$vo.id}}</td>
-                                <td>{{$vo.name}}</td>
-                                <td>{{if $vo.status eq 1}}正常{{else}}禁用{{/if}}</td>
-                                <td>
-                                    <a href="/admin/user/edit-user?id={{$vo.id}}"><button type="button" class="btn btn-primary">编辑</button></a>
-                                    <button type="button" data-url="/admin/user/delete-user?id={{$vo.id}}" class="btn btn-danger btn_del">删除</button>
-                                </td>
-                            </tr>
-                        {{/foreach}}
-                    </ul>
-
-                </table>
+<div class="wrapper wrapper-content animated fadeInUp">
+    <div class="ibox">
+        <div class="ibox-title"><h5>用户列表</h5>
+            <div class="ibox-tools rboor">
+                <a href="/admin/user/create-user" class="btn btn-green btn-xs p310"><i class="fa fa-plus"></i> 添加</a>
             </div>
+        </div>
+
+        <div class="ibox-content">
+
+            <div class="form-horizontal clearfix">
+                <form action="" method="get">
+                    <div class="col-sm-12">
+                        <div class="box-body big">
+                            <div class="row">
+                                <div class="col-sm-2">
+                                    <select name="group" class="form-control">
+                                        <option value="">用户组</option>
+                                        <option value="">普通红娘</option>
+                                        <option value="">贵宾红娘</option>
+                                        <option value="">钻石红娘</option>
+                                    </select>
+                                </div>
+                                <div class="col-sm-2">
+                                    <select name="duty" class="form-control">
+                                        <option value="">值班</option>
+                                        <option value="1">是</option>
+                                        <option value="0">否</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <button type="submit" class="btn btn-primary">搜索</button>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+            <table cellpadding="0" cellspacing="0" border="0"
+                   class="j-datatables table table-striped table-bordered table-hover">
+                <thead>
+                <tr>
+                    <th data-name="id">工号</th>
+                    <th>头像</th>
+                    <th data-name="name">姓名</th>
+                    <th>用户组</th>
+                    <th>手机号码</th>
+                    <th>办公电话</th>
+                    <th>值班</th>
+                    <th class="hidden-xs">状态</th>
+                    <th class="hidden-xs">操作</th>
+                </tr>
+                </thead>
+                <tbody>
+
+                <ul>
+                    {{foreach from=$list item=vo}}
+                    <tr class="gradeX">
+                        <td>{{$vo.id}}</td>
+                        <td><img src=""></td>
+                        <td>{{$vo.name}}</td>
+                        <td>贵宾红娘</td>
+                        <td>18916841611</td>
+                        <td>02368800997</td>
+                        <td class="duty">否</td>
+                        <td class="status">{{if $vo.status eq 1}}正常{{else}}禁用{{/if}}</td>
+                        <td>
+                            <a href="javascript:;" onclick="changeDuty('{{$vo.id}}',this)" class="btn btn-primary btn-sm">设置值班</a>
+                            <a href="/admin/user/edit-user?id={{$vo.id}}" class="btn btn-sm btn-info">编辑</a>
+                            <a href="javascript:;" onclick="changeStatus('{{$vo.id}}',this)" class="btn btn-sm btn-danger">禁用</a>
+                            <a href="javascript:;" data-url="/admin/user/delete-user?id={{$vo.id}}" class="btn btn-sm btn-warning btn_del">删除</a>
+                        </td>
+                    </tr>
+                    {{/foreach}}
+                </ul>
+
+            </table>
         </div>
     </div>
 </div>
+<script>
+    // 禁/启用
+    function changeStatus(id,a){
+        var flag = $(a).text();
+        if(flag == '禁用'){
+            bhyFunc.ajaxRequest('url',{id:id,status:0},function(res){
+                if(res.status > 0){
+                    $(a).parent().siblings('.status').html('<span class="text-danger">禁用</span>');
+                    $(a).removeClass('btn-danger')
+                            .addClass('btn-success')
+                            .text('启用');
+                }else{
+                    layer.msg('禁用失败！');
+                }
+            })
+        }else{
+            bhyFunc.ajaxRequest('url',{id:id,status:1},function(res){
+                if(res.status > 0){
+                    $(a).parent().siblings('.status').html('正常');
+                    $(a).removeClass('btn-success')
+                            .addClass('btn-danger')
+                            .text('禁用');
+                }else{
+                    layer.msg('启用失败！');
+                }
+            })
+        }
+    }
 
 
+    function changeDuty(id,a){
+        var flag = $(a).text();
+        if(flag == '设置值班'){
+            bhyFunc.ajaxRequest('url',{id:id,status:0},function(res){
+                if(res.status > 0){
+                    $(a).parent().siblings('.duty').html('<span class="text-danger">是</span>');
+                    $(a).removeClass('btn-danger')
+                            .addClass('btn-success')
+                            .text('取消值班');
+                }else{
+                    layer.msg('设置值班失败！');
+                }
+            })
+        }else{
+            bhyFunc.ajaxRequest('url',{id:id,status:1},function(res){
+                if(res.status > 0){
+                    $(a).parent().siblings('.duty').html('否');
+                    $(a).removeClass('btn-success')
+                            .addClass('btn-danger')
+                            .text('设置值班');
+                }else{
+                    layer.msg('取消值班失败！');
+                }
+            })
+        }
+    }
+</script>

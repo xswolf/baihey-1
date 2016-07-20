@@ -63,18 +63,13 @@
                     <td>{{if $vo.img}}<img src="{{$vo.img}}" height="30">{{else}}{{/if}}</td>
                     <td>{{$vo.content}}</td>
                     <td>
-                        <a class="btn btn-info btn-sm tip" title="编辑" href="/admin/produce/save?id={{$vo.id}}"><i
-                                class="fa fa-edit"></i> </a>
+                        <a class="btn btn-info btn-sm" href="/admin/produce/save?id={{$vo.id}}">编辑</a>
                         {{if $vo.status == 1}}
-                        <a class="btn btn-danger btn-sm tip" title="禁用" onclick="changeStatus('{{$vo.id}}',this)" href="javascript:;"><i
-                                class="fa fa-power-off"></i> </a>
+                        <a class="btn btn-danger btn-sm" onclick="changeStatus('{{$vo.id}}',this)" href="javascript:;">禁用</a>
                         {{else}}
-                        <a class="btn btn-success btn-sm tip" title="启用" onclick="changeStatus('{{$vo.id}}',this)" href="javascript:;"><i
-                                class="fa fa-check"></i> </a>
+                        <a class="btn btn-success btn-sm" onclick="changeStatus('{{$vo.id}}',this)" href="javascript:;">启用</a>
                         {{/if}}
-                        <!-- fa-check -->
-                        <a class="btn btn-warning btn-sm tip" title="删除" onclick="bhyFunc.deleteItemByList(1,this,'url')" href="javascript:;"><i
-                                class="fa fa-trash-o"></i> </a>
+                        <a class="btn btn-warning btn-sm" onclick="bhyFunc.deleteItemByList(1,this,'url')" href="javascript:;">删除</a>
                     </td>
                 </tr>
                 {{/foreach}}
@@ -87,17 +82,14 @@
 
     // 禁/启用
     function changeStatus(id,a){
-        var flag = $(a).attr('title');
+        var flag = $(a).text();
         if(flag == '禁用'){
             bhyFunc.ajaxRequest('url',{id:id,status:0},function(res){
                 if(res.status > 0){
                     $(a).parent().siblings('.status').html('<span class="text-danger">禁用</span>');
                     $(a).removeClass('btn-danger')
                             .addClass('btn-success')
-                            .attr('data-original-title','启用')
-                            .find('i')
-                            .removeClass('fa-power-off')
-                            .addClass('fa-check');
+                            .text('启用');
                 }else{
                     layer.msg('禁用失败！');
                 }
@@ -108,10 +100,7 @@
                     $(a).parent().siblings('.status').html('正常');
                     $(a).removeClass('btn-success')
                             .addClass('btn-danger')
-                            .attr('data-original-title','禁用')
-                            .find('i')
-                            .removeClass('fa-check')
-                            .addClass('fa-power-off');
+                            .text('禁用');
                 }else{
                     layer.msg('启用失败！');
                 }

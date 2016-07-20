@@ -1,0 +1,1085 @@
+<link href="/backend/web/CloudAdmin/js/jQuery-uploadify/uploadify.css" rel="stylesheet">
+<link href="/backend/web/CloudAdmin/js/jquery-fancybox-1.3.4/jquery.fancybox-1.3.4.css" rel="stylesheet">
+<div class="row">
+    <div class="col-md-12">
+        <div class="box border green">
+            <div class="box-title">
+                <h4><i class="fa fa-bars"></i>添加会员</h4>
+            </div>
+            <div class="box-body big">
+                <form id="saveForm" class="form-horizontal" role="form" action="/admin/member/save" method="post">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h3 class="form-title">基本资料</h3>
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">会员姓名</label>
+                                <div class="input-group col-md-6">
+                                    <input class="form-control" name="info[real_name]" type="text" value=""
+                                           placeholder="请输入真实姓名">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">地区</label>
+                                <div class="input-group col-md-6">
+                                    <div class="col-xs-4 pd0">
+                                        <select class="form-control dq-Province" name="province" id="dq-Province">
+                                            <option value="">请选择</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-xs-4 pd0">
+                                        <select class="form-control" name="city" id="dq-City">
+                                            <option value="">请选择</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-xs-4 pd0">
+                                        <select class="form-control" name="area" id="dq-Area">
+                                            <option value="">请选择</option>
+                                        </select>
+                                    </div>
+                                    <input type="hidden" name="info[local]" id="local" value="">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">常出没地</label>
+                                <div class="input-group col-md-6">
+                                    <input class="form-control" name="info[haunt_address]" type="text"
+                                           placeholder="请填写经常出没的地方，15字以内" maxlength="15">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">性别</label>
+                                <div class="col-md-6">
+                                    <label class="radio-inline"> <input type="radio" class="uniform" name="sex"
+                                                                        value="1"> 男
+                                    </label>
+                                    <label class="radio-inline"> <input type="radio" class="uniform" name="sex"
+                                                                        value="0"
+                                                                        checked> 女 </label>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">民族</label>
+                                <div class="input-group col-md-6">
+                                    <select name="info[nation]" id="nation" class="form-control">
+                                        <option value="">请选择</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="dtp_input" class="col-md-3 control-label">出生年月</label>
+                                <div id="dtp_input" class="input-group date form_date col-md-6" data-date=""
+                                     data-date-format="yyyy-mm-dd" data-link-field="dtp_input"
+                                     data-link-format="yyyy-mm-dd">
+                                    <input id="age" name="info[age]" class="form-control" size="16" type="text" value=""
+                                           readonly>
+                                    <span class="input-group-addon"><span
+                                            class="glyphicon glyphicon-remove"></span></span>
+                                    <span class="input-group-addon"><span
+                                            class="glyphicon glyphicon-calendar"></span></span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">属相</label>
+                                <div class="input-group col-md-6">
+                                    <select class="form-control zodiac" id="zodiac" name="info[zodiac]">
+                                        <option value="">请选择</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">星座</label>
+                                <div class="input-group col-md-6">
+                                    <select class="form-control constellation" id="constellation"
+                                            name="info[constellation]">
+                                        <option value="">请选择</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">身高</label>
+                                <div class="input-group col-md-6">
+                                    <select id="height" class="form-control" name="info[height]">
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">学历</label>
+                                <div class="input-group col-md-6">
+                                    <select class="form-control education" name="info[education]">
+                                        <option value="">请选择</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">婚姻状况</label>
+                                <div class="input-group col-md-6">
+                                    <select class="form-control" name="info[is_marriage]">
+                                        <option value="">请选择</option>
+                                        <option value="1">未婚</option>
+                                        <option value="2">离异</option>
+                                        <option value="3">丧偶</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">子女状况</label>
+                                <div class="input-group col-md-6">
+                                    <select class="form-control children" name="info[is_child]">
+                                        <option value="">请选择</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">职业</label>
+                                <div class="input-group col-md-6">
+                                    <div class="col-xs-6 pd0">
+                                        <select class="form-control occupation" name="info[occupation]"
+                                                id="occupation_1">
+                                            <option value="">请选择</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-xs-6 pd0">
+                                        <select class="form-control" name="info[children_occupation]" id="occupation_2">
+                                            <option value="">请选择</option>
+                                        </select>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">年薪</label>
+                                <div class="input-group col-md-6">
+                                    <select class="form-control salary" name="info[year_income]">
+                                        <option value="">请选择</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">购车情况</label>
+                                <div class="input-group col-md-6">
+                                    <select class="form-control" name="info[is_car]">
+                                        <option value="">请选择</option>
+                                        <option value="1">已购车</option>
+                                        <option value="2">未购车</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">购房情况</label>
+                                <div class="input-group col-md-6">
+                                    <select class="form-control house" name="info[is_purchase]">
+                                        <option value="">请选择</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">毕业院校</label>
+                                <div class="input-group col-md-6">
+                                    <input class="form-control" name="info[school]" type="text" value=""
+                                           placeholder="请输入毕业院校">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">手机号码</label>
+                                <div class="input-group col-md-6">
+                                    <input class="form-control" name="phone" id="phone" type="tel" value=""
+                                           placeholder="请输入手机号码">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">qq</label>
+                                <div class="input-group col-md-6">
+                                    <input class="form-control" name="info[qq]" type="text" value=""
+                                           placeholder="请输入QQ号码">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">微信</label>
+                                <div class="input-group col-md-6">
+                                    <input class="form-control" name="info[wechat]" type="text" value=""
+                                           placeholder="请输入微信号码">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">个人签名</label>
+                                <div class="input-group col-md-6">
+                                    <textarea name="personalized" class="form-control" rows="3"
+                                              maxlength="100" placeholder="请填写个人签名，100字以内"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <h3 class="form-title">择偶标准</h3>
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">年龄范围</label>
+                                <input name="zo[zo_age]" id="zo_age" type="hidden" value="18-0">
+                                <div class="input-group col-md-6">
+                                    <div class="col-xs-5 pd0">
+                                        <select class="form-control" id="age1">
+                                        </select>
+                                    </div>
+                                    <div class="col-xs-1 pd0 center">
+                                        <span class="fa fa-minus fa-1x" style="margin-top: 8px;"></span>
+                                    </div>
+                                    <div class="col-xs-5 pd0">
+                                        <select class="form-control" id="age2">
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">身高要求</label>
+                                <input name="zo[zo_height]" id="zo_height" type="hidden" value="140-0">
+                                <div class="input-group col-md-6">
+                                    <div class="col-xs-5 pd0">
+                                        <select class="form-control" id="height1">
+                                        </select>
+                                    </div>
+                                    <div class="col-xs-1 pd0 center">
+                                        <span class="fa fa-minus fa-1x" style="margin-top: 8px;"></span>
+                                    </div>
+                                    <div class="col-xs-5 pd0">
+                                        <select class="form-control" id="height2">
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">学历要求</label>
+                                <div class="input-group col-md-6">
+                                    <div class="col-xs-8 pd0">
+                                        <select class="form-control education" name="zo[zo_education]">
+                                            <option value="">不限</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-xs-4 pd0">
+                                        <label class="checkbox-inline">及以上</label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">年薪要求</label>
+                                <div class="input-group col-md-6">
+                                    <select class="form-control salary" name="zo[zo_income]">
+                                        <option value="">不限</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">购车要求</label>
+                                <div class="input-group col-md-6">
+                                    <select class="form-control" name="zo[zo_car]">
+                                        <option value="">不限</option>
+                                        <option value="1">已购车</option>
+                                        <option value="2">未购车</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">购房要求</label>
+                                <div class="input-group col-md-6">
+                                    <select class="form-control house" name="zo[zo_house]">
+                                        <option value="">不限</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">子女要求</label>
+                                <div class="input-group col-md-6">
+                                    <select class="form-control children" name="zo[zo_children]">
+                                        <option value="">不限</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">婚姻要求</label>
+                                <div class="input-group col-md-6">
+                                    <select multiple class="col-md-12 mult_select" name="zo[zo_marriage][]">
+                                        <option value="1">未婚</option>
+                                        <option value="2">离异</option>
+                                        <option value="3">丧偶</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">职业要求</label>
+                                <div class="input-group col-md-6">
+                                    <select multiple class="col-md-12 mult_select occupation"
+                                            name="zo[zo_occupation][]">
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">属相要求</label>
+                                <div class="input-group col-md-6">
+                                    <select multiple class="col-md-12 mult_select5 zodiac" name="zo[zo_zodiac][]">
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">星座要求</label>
+                                <div class="input-group col-md-6">
+                                    <select multiple class="form-control mult_select5 constellation"
+                                            name="zo[zo_constellation][]"></select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">心目中的TA</label>
+                                <div class="input-group col-md-6">
+                                    <textarea class="form-control" maxlength="150" rows="3" name="info[mate]"
+                                              placeholder="请填写你对心目中的TA的要求，150字以内"></textarea>
+                                </div>
+                            </div>
+                            <div style="display: none" id="img_hidden">
+
+                            </div>
+                            <h3 class="form-title">兴趣爱好</h3>
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">想去的地方</label>
+                                <div class="input-group col-md-6">
+                                    <select multiple class="form-control mult_select6" name="went_travel[]">
+                                        {{foreach from=$travel item=vo}}
+                                        <option value="{{$vo.id}}">{{$vo.name}}</option>
+                                        {{/foreach}}
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">去过的地方</label>
+                                <div class="input-group col-md-6">
+                                    <select multiple class="form-control mult_select6" name="want_travel[]">
+                                        {{foreach from=$travel item=vo}}
+                                        <option value="{{$vo.id}}">{{$vo.name}}</option>
+                                        {{/foreach}}
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">喜欢的美食</label>
+                                <div class="input-group col-md-6">
+                                    <select multiple class="form-control mult_select6" name="like_food[]">
+                                        {{foreach from=$food item=vo}}
+                                        <option value="{{$vo.id}}">{{$vo.name}}</option>
+                                        {{/foreach}}
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">喜欢的运动</label>
+                                <div class="input-group col-md-6">
+                                    <select multiple class="form-control mult_select6" name="love_sport[]">
+                                        {{foreach from=$sport item=vo}}
+                                        <option value="{{$vo.id}}">{{$vo.name}}</option>
+                                        {{/foreach}}
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">喜欢的影视</label>
+                                <div class="input-group col-md-6">
+                                    <div style="clear:both;"></div>
+                                    <select multiple class="form-control mult_select6" name="want_film[]">
+                                        <optgroup label="电影">
+                                            {{foreach from=$movie item=vo}}
+                                            {{if $vo.pic_path eq 2}}
+                                            <option value="{{$vo.id}}">{{$vo.name}}</option>
+                                            {{/if}}
+                                            {{/foreach}}
+                                        </optgroup>
+                                        <optgroup label="电视">
+                                            {{foreach from=$movie item=vo}}
+                                            {{if $vo.pic_path eq 1}}
+                                            <option value="{{$vo.id}}">{{$vo.name}}</option>
+                                            {{/if}}
+                                            {{/foreach}}
+                                        </optgroup>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <h3 class="form-title">隐私设置</h3>
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">照片显示权限</label>
+                                <div class="input-group col-md-6">
+                                    <select class="form-control" name="privacy_pic">
+                                        <option value="1">完全公开</option>
+                                        <option value="2">关注可见</option>
+                                        <option value="3">VIP可见</option>
+                                        <option value="4">不公开</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">微信显示权限</label>
+                                <div class="input-group col-md-6">
+                                    <select class="form-control" name="privacy_wechat">
+                                        <option value="1">完全公开</option>
+                                        <option value="2">关注可见</option>
+                                        <option value="3">VIP可见</option>
+                                        <option value="4" selected>不公开</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">QQ显示权限</label>
+                                <div class="input-group col-md-6">
+                                    <select class="form-control" name="privacy_qq">
+                                        <option value="1">完全公开</option>
+                                        <option value="2">关注可见</option>
+                                        <option value="3">VIP可见</option>
+                                        <option value="4" selected>不公开</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="box border blue">
+                                <div class="box-title">
+                                    <h4><i class="fa fa-picture-o"></i>上传照片</h4>
+                                </div>
+                                <div class="box-body">
+                                    <input id="photosList" type="hidden" name="photosList">
+                                    <input id="headPic" type="hidden" name="headPic">
+                                    <input type="file" id="file_upload_photo"/>
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <div id="photos" class="photos">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="box border blue">
+                                <div class="box-title">
+                                    <h4><i class="fa fa-picture-o"></i>上传证件照</h4>
+                                </div>
+                                <div class="box-body">
+                                    <input id="cardFace_List" type="hidden" name="cardFace_List">
+                                    <input id="cardBack_List" type="hidden" name="cardBack_List">
+                                    <input id="eduList" type="hidden" name="eduList">
+                                    <input id="houseList" type="hidden" name="houseList">
+                                    <input id="marrList" type="hidden" name="marrList">
+                                    <div class="tabbable header-tabs">
+                                        <ul class="nav nav-tabs">
+                                            <li><a href="#box_tab4" data-toggle="tab"><i
+                                                    class="fa fa-circle-o"></i> <span
+                                                    class="hidden-inline-mobile">房产证</span></a></li>
+                                            <li><a href="#box_tab3" data-toggle="tab"><i
+                                                    class="fa fa-circle-o"></i> <span
+                                                    class="hidden-inline-mobile">学历证</span></a></li>
+                                            <li><a href="#box_tab2" data-toggle="tab"><i
+                                                    class="fa fa-circle-o"></i> <span
+                                                    class="hidden-inline-mobile">离婚证</span></a></li>
+                                            <li class="active"><a href="#box_tab1" data-toggle="tab"><i
+                                                    class="fa fa-circle-o"></i> <span
+                                                    class="hidden-inline-mobile">身份证</span></a></li>
+                                        </ul>
+                                        <div class="tab-content">
+
+                                            <div class="tab-pane fade in active card" id="box_tab1">
+                                                <div class="dib mr20">
+                                                    <p class="center">正面</p>
+                                                    <img class="card_face"
+                                                         src="/wechat/web/images/member/card-face.png">
+                                                    <p class="mt10"><input type="file" id="file_upload_cardFace"/></p>
+                                                </div>
+                                                <div class="dib center">
+                                                    <p class="center">反面</p>
+                                                    <img class="card_back"
+                                                         src="/wechat/web/images/member/card-back.png">
+                                                    <p class="mt10"><input type="file" id="file_upload_cardBack"/></p>
+                                                </div>
+
+                                            </div>
+                                            <div class="tab-pane fade" id="box_tab2">
+                                                <input type="file" id="file_upload_cardMarr"/>
+                                                <div class="row">
+                                                    <div id="marr" class="col-sm-12">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="tab-pane fade" id="box_tab3">
+                                                <input type="file" id="file_upload_cardEdu"/>
+                                                <div class="row">
+                                                    <div id="edu" class="col-sm-12">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="tab-pane fade" id="box_tab4">
+                                                <input type="file" id="file_upload_cardHouse"/>
+                                                <div class="row">
+                                                    <div id="housing" class="col-sm-12 housing">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group center">
+                        <button id="saveSubmit" class="btn btn-lg btn-primary" type="button">提交</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+<script src="/wechat/web/js/config/infoData.js"></script>
+<script src="/wechat/web/js/config/area.js"></script>
+<script src="/wechat/web/js/config/city.js"></script>
+<script src="/backend/web/CloudAdmin/js/jQuery-uploadify/jquery.uploadify.min.js"></script>
+<script src="/backend/web/CloudAdmin/js/jquery-fancybox-1.3.4/jquery.fancybox-1.3.4.js"></script>
+<script>
+    var photoArr = [];
+    var marrArr = [];
+    var eduArr = [];
+    var houseArr = [];
+    // 删除照片
+    function delImg(a, type) {
+
+        if (type == 1) {  //删除照片
+            var src = $(a).prev().find('img').attr('src');
+            if (photoArr.indexOf(src) == -1) {
+                layer.msg('删除失败，该照片不存在！');
+                return false;
+            } else {
+                photoArr.splice($.inArray(src, photoArr), 1);
+                $('#photosList').val(photoArr);
+            }
+        }
+        if (type == 4) {  //删除离婚证
+            var src = $(a).prev().find('img').attr('src');
+            if (marrArr.indexOf(src) == -1) {
+                layer.msg('删除失败，该照片不存在！');
+                return false;
+            } else {
+                marrArr.splice($.inArray(src, marrArr), 1);
+                $('#marrList').val(marrArr);
+            }
+        }
+        if (type == 5) {  //删除学历证
+            var src = $(a).prev().find('img').attr('src');
+            if (eduArr.indexOf(src) == -1) {
+                layer.msg('删除失败，该照片不存在！');
+                return false;
+            } else {
+                eduArr.splice($.inArray(src, eduArr), 1);
+                $('#eduList').val(eduArr);
+            }
+        }
+        if (type == 6) {  //删除房产证
+            var src = $(a).prev().find('img').attr('src');
+            if (houseArr.indexOf(src) == -1) {
+                layer.msg('删除失败，该照片不存在！');
+                return false;
+            } else {
+                houseArr.splice($.inArray(src, houseArr), 1);
+                $('#houseList').val(houseArr);
+            }
+        }
+        $(a).parent().remove();
+    }
+
+    // 设置头像
+    function setHeadPic(a) {
+        var src = $(a).data('src');
+        $('#headPic').val(src);
+        $('.imgBox').each(function () {
+            console.log($(this).find('p').find('span'));
+            if ($(this).find('p').find('span')) {
+                $(this).find('p').find('span').replaceWith('<a data-src="' + src + '" onclick="setHeadPic(this)">设置头像</a>');
+            }
+        })
+        $(a).replaceWith('<span class="text-danger">头像</span>');
+    }
+
+    jQuery(document).ready(function () {
+
+        SelectInit();
+
+        $('#file_upload_photo').uploadify({
+            'buttonText': '选择照片',
+            'fileSizeLimit': '8MB',
+            'fileTypeDesc': '图片文件',
+            'fileTypeExts': '*.gif; *.jpg; *.png; *.bmp',
+            'swf': '/backend/web/CloudAdmin/js/jQuery-uploadify/uploadify.swf',
+            'uploader': '/admin/file/upload-img',
+            'uploadLimit': 12,
+            'onUploadSuccess': function (file, data, response) {
+                console.log($('#photos div').length);
+                var _data = data.replace('thumb', 'picture');
+                if ($('#photos div').length == 0) {
+                    var imgHtml = '<div class="pr imgBox"><a href="' + _data + '" rel="group1"><img src="' + data + '" ></a><i class="del fa fa-times-circle-o text-danger" onclick="delImg(this,1)"></i><p class="center mt5"><span class="text-danger">头像</span></p></div>';
+                    $('#headPic').val(data);
+                } else {
+                    var imgHtml = '<div class="pr imgBox"><a href="' + _data + '" rel="group1"><img src="' + data + '" ></a><i class="del fa fa-times-circle-o text-danger" onclick="delImg(this,1)"></i><p class="center mt5"><a data-src="' + data + '" onclick="setHeadPic(this)">设置头像</a></p></div>';
+                }
+                $('#photos').append(imgHtml);
+                photoArr.push(data);
+                $('#photosList').val(photoArr);
+            },
+            'onUploadError': function (file, errorCode, errorMsg, errorString) {
+                alert('上传出错！文件名： ' + file.name + '， 错误原因: ' + errorString);
+            }
+        });
+
+        $('#file_upload_cardFace').uploadify({
+            'width': '100%',
+            'buttonText': '点击上传',
+            'fileSizeLimit': '8MB',
+            'fileTypeDesc': '图片文件',
+            'fileTypeExts': '*.gif; *.jpg; *.png; *.bmp',
+            'swf': '/backend/web/CloudAdmin/js/jQuery-uploadify/uploadify.swf',
+            'uploader': '/admin/file/upload-img',
+            'onUploadError': function (file, errorCode, errorMsg, errorString) {
+                alert('上传出错！文件名： ' + file.name + '， 错误原因: ' + errorString);
+            },
+            'onUploadSuccess': function (file, data, response) {
+                var _data = data.replace('thumb', 'picture');
+                var imgHtml = '<a class="card_face" href="' + _data + '" rel="group2"><img src="' + data + '" ></a>';
+                $('.card_face').replaceWith(imgHtml);
+                $('#cardFace_List').val(data);
+            }
+        });
+
+        $('#file_upload_cardBack').uploadify({
+            'width': '100%',
+            'buttonText': '点击上传',
+            'fileSizeLimit': '8MB',
+            'fileTypeDesc': '图片文件',
+            'fileTypeExts': '*.gif; *.jpg; *.png; *.bmp',
+            'swf': '/backend/web/CloudAdmin/js/jQuery-uploadify/uploadify.swf',
+            'uploader': '/admin/file/upload-img',
+            'onUploadError': function (file, errorCode, errorMsg, errorString) {
+                alert('上传出错！文件名： ' + file.name + '， 错误原因: ' + errorString);
+            },
+            'onUploadSuccess': function (file, data, response) {
+                var _data = data.replace('thumb', 'picture');
+                var imgHtml = '<a class="card_back" href="' + _data + '" rel="group2"><img src="' + data + '" ></a>';
+                $('.card_back').replaceWith(imgHtml);
+                $('#cardBack_List').val(data);
+            }
+        });
+
+        $('#file_upload_cardMarr').uploadify({
+            'buttonText': '点击上传离婚证',
+            'fileSizeLimit': '8MB',
+            'fileTypeDesc': '图片文件',
+            'fileTypeExts': '*.gif; *.jpg; *.png; *.bmp',
+            'swf': '/backend/web/CloudAdmin/js/jQuery-uploadify/uploadify.swf',
+            'uploader': '/admin/file/upload-img',
+            'uploadLimit': 5,
+            'onUploadSuccess': function (file, data, response) {
+                var _data = data.replace('thumb', 'picture');
+                var imgHtml = '<div class="pr imgBox"><a href="' + _data + '" rel="group3"><img src="' + data + '" ></a><i class="del fa fa-times-circle-o text-danger" onclick="delImg(this,4)"></i></div>';
+                $('#marr').append(imgHtml);
+                marrArr.push(data);
+                $('#marrList').val(marrArr);
+            },
+            'onUploadError': function (file, errorCode, errorMsg, errorString) {
+                alert('上传出错！文件名： ' + file.name + '， 错误原因: ' + errorString);
+            }
+        });
+
+        $('#file_upload_cardEdu').uploadify({
+            'buttonText': '点击上传学历证',
+            'fileSizeLimit': '8MB',
+            'fileTypeDesc': '图片文件',
+            'fileTypeExts': '*.gif; *.jpg; *.png; *.bmp',
+            'swf': '/backend/web/CloudAdmin/js/jQuery-uploadify/uploadify.swf',
+            'uploader': '/admin/file/upload-img',
+            'uploadLimit': 5,
+            'onUploadError': function (file, errorCode, errorMsg, errorString) {
+                alert('上传出错！文件名： ' + file.name + '， 错误原因: ' + errorString);
+            },
+            'onUploadSuccess': function (file, data, response) {
+                var _data = data.replace('thumb', 'picture');
+                var imgHtml = '<div class="pr imgBox"><a href="' + _data + '" rel="group4"><img src="' + data + '" ></a><i class="del fa fa-times-circle-o text-danger" onclick="delImg(this,5)"></i></div>';
+                $('#edu').append(imgHtml);
+                eduArr.push(data);
+                $('#eduList').val(eduArr);
+            }
+        });
+
+        $('#file_upload_cardHouse').uploadify({
+            'buttonText': '点击上传房产证',
+            'fileSizeLimit': '8MB',
+            'fileTypeDesc': '图片文件',
+            'fileTypeExts': '*.gif; *.jpg; *.png; *.bmp',
+            'swf': '/backend/web/CloudAdmin/js/jQuery-uploadify/uploadify.swf',
+            'uploader': '/admin/file/upload-img',
+            'uploadLimit': 5,
+            'onUploadError': function (file, errorCode, errorMsg, errorString) {
+                alert('上传出错！文件名： ' + file.name + '， 错误原因: ' + errorString);
+            },
+            'onUploadSuccess': function (file, data, response) {
+                var _data = data.replace('thumb', 'picture');
+                var imgHtml = '<div class="pr imgBox"><a href="' + _data + '" rel="group5"><img src="' + data + '" ></a><i class="del fa fa-times-circle-o text-danger" onclick="delImg(this,6)"></i></div>';
+                $('#housing').append(imgHtml);
+                houseArr.push(data);
+                $('#houseList').val(houseArr);
+            }
+        });
+
+        $("#photos,.card,#marr,#edu,#housing").on("focusin", function () {
+            for (var i = 0; i < 5; i++) {
+                $("a[rel=group" + i + "]").fancybox({
+                    'transitionIn': 'elastic',
+                    'transitionOut': 'elastic'
+                });
+            }
+        });
+
+
+        $(".uniform").uniform();
+
+        $(".mult_select").select2({
+            placeholder: "不限",
+            maximumSelectionSize: 3
+        });
+        $(".mult_select5").select2({
+            placeholder: "不限",
+            maximumSelectionSize: 5
+        });
+        $(".mult_select6").select2({
+            placeholder: "不限",
+            maximumSelectionSize: 6
+        });
+
+        $('.form_date').datetimepicker({
+            language: 'zh-CN',
+            weekStart: 1,
+            todayBtn: 1,
+            autoclose: 1,
+            todayHighlight: 1,
+            startView: 2,
+            minView: 2,
+            forceParse: 0
+        });
+
+        // 出生日期联动 星座、属相
+        $('#age').on('change', function () {
+            var zodiac = getZodicByBirthday($(this).val());
+            var constellation = getConstellationByBirthday($(this).val());
+            $('#zodiac').val(zodiac.id);
+            $('#constellation').val(constellation.id);
+        })
+
+        var local = '';
+        // 地区联动-选择省
+        $("#dq-Province").on("change", function () {
+            local = $("#dq-Province").find("option:selected").text()
+            $("#local").val(local);
+            addressLink($(this), $("#dq-City"), citys, true);
+        });
+        // 地区联动-选择市
+        $("#dq-City").on("change", function () {
+            local = $("#dq-City").find("option:selected").text()
+            $("#local").val(local);
+            addressLink($(this), $("#dq-Area"), area, false);
+        });
+        // 地区联动-选择区
+        $("#dq-Area").on("change", function () {
+            local = $("#dq-Area").find("option:selected").text()
+            $("#local").val(local);
+        });
+
+        //地区联动函数
+        function addressLink(obj1, obj2, data, isProvince) {
+            var index = obj1.find("option:selected").val(),
+                    html = '<option value="">请选择</option>';
+            if (typeof data !== 'undefined') {
+                for (var i in data) {
+                    if (data[i].parentId == index) {
+                        html += '<option value="';
+                        html += data[i].id;
+                        html += '">';
+                        html += data[i].name;
+                        html += '</option>';
+                    }
+                }
+                if (isProvince) {
+                    $("#dq-Area").html('<option value="">请选择</option>');
+                }
+                obj2.empty().append(html);
+            }
+        }
+
+        // 初始化下拉框
+        function SelectInit() {
+            function createSelect(item) {
+                var html = "";
+                var data = eval(item);
+                for (var i in data) {
+                    html += "<option value='" + data[i].id + "'>" + data[i].name + "</option>"
+                }
+                return html;
+            }
+
+            $("#height").append(heightLink(140, '请选择'));
+            $(".dq-Province").append(createSelect(provines)); // 省份
+            $(".occupation").append(createSelect("config_infoData.occupation")); // 职业
+            $(".salary").append(createSelect("config_infoData.salary"));
+            $(".house").append(createSelect("config_infoData.house"));
+            $(".zodiac").append(createSelect("config_infoData.zodiac"));
+            $(".constellation").append(createSelect("config_infoData.constellation"));
+            $("#nation").append(createSelect("config_infoData.nation"));
+            $(".children").append(createSelect("config_infoData.children"));
+            $("#provines").append(createSelect("provines"));
+            $("#age1").append(ageLink(18));
+            $("#age2").append(ageLink(18));
+            $("#height1").append(heightLink(140, '不限'));
+            $("#height2").append(heightLink(140, '不限'));
+            $(".education").append(createSelect("config_infoData.education"))
+        }
+
+        // 职业联动
+        $("#occupation_1").on("change", function () {
+            occupationLink($(this), $("#occupation_2"));
+        });
+
+        // 职业联动函数
+        function occupationLink(obj1, obj2) {
+            var index = obj1.find("option:selected").val(),
+                    html = '<option value="">请选择</option>';
+            for (var i in config_infoData.occupation[index - 1].children) {
+                html += '<option value="';
+                html += config_infoData.occupation[index - 1].children[i].id;
+                html += '">';
+                html += config_infoData.occupation[index - 1].children[i].name;
+                html += '</option>';
+            }
+            obj2.empty().append(html);
+        }
+
+        //年龄联动
+        $("#age1").on("change", function () {
+            var val1 = $(this).val(),
+                    val2 = $("#age2").val();
+            $("#age2").empty().append(ageLink(val1));
+            if (val1 <= val2) {
+                $("#age2 option[value=" + val2 + "]").attr("selected", "selected");
+            }
+            if (val1 == 0) $('#age2').empty().append(ageLink(18));
+        });
+
+        // 年龄联动函数
+        function ageLink(min) {
+            var ageHtml = "",
+                    ageMin = min,
+                    ageMax = 99;
+            ageHtml += '<option value="0">不限</option>';
+            for (ageMin; ageMin <= ageMax; ageMin++) {
+                ageHtml += '<option value="';
+                ageHtml += ageMin;
+                ageHtml += '">';
+                ageHtml += ageMin;
+                ageHtml += '</option>';
+            }
+            return ageHtml;
+        }
+
+        //身高联动
+        $("#height1").on("change", function () {
+            var val1 = $(this).val(),
+                    val2 = $("#height2").val();
+            $("#height2").empty().append(heightLink(val1, '不限'));
+            if (val1 <= val2) {
+                $("#height2 option[value=" + val2 + "]").attr("selected", "selected");
+            }
+            if (val1 == 0) $('#height2').empty().append(heightLink(140, '不限'));
+        });
+
+        // 身高联动函数
+        function heightLink(min, nullText) {
+            var ageHtml = "",
+                    ageMin = min,
+                    ageMax = 260;
+            ageHtml += '<option value="0">' + nullText + '</option>';
+            for (ageMin; ageMin <= ageMax; ageMin++) {
+                ageHtml += '<option value="';
+                ageHtml += ageMin;
+                ageHtml += '">';
+                ageHtml += ageMin;
+                ageHtml += '厘米</option>';
+            }
+            return ageHtml;
+        }
+
+        /**
+         * 根据出生年月计算属相
+         * @param birthday
+         * @returns {*[]} id name
+         */
+        function getZodicByBirthday(birthday) {
+            var toyear = 1997;
+            var birthyear = new Date(birthday).getFullYear();
+            var zodic = [{id: 0, name: '未知'}]
+            x = (toyear - birthyear) % 12
+            if ((x == 1) || (x == -11)) {
+                zodic.id = 1;
+                zodic.name = '鼠';
+            }
+            else {
+                if (x == 0) {
+                    zodic.id = 2;
+                    zodic.name = '牛';
+                }
+                else {
+                    if ((x == 11) || (x == -1)) {
+                        zodic.id = 3;
+                        zodic.name = '虎';
+                    }
+                    else {
+                        if ((x == 10) || (x == -2)) {
+                            zodic.id = 4;
+                            zodic.name = '兔';
+                        }
+                        else {
+                            if ((x == 9) || (x == -3)) {
+                                zodic.id = 5;
+                                zodic.name = '龙';
+                            }
+                            else {
+                                if ((x == 8) || (x == -4)) {
+                                    zodic.id = 6;
+                                    zodic.name = '蛇';
+                                }
+                                else {
+                                    if ((x == 7) || (x == -5)) {
+                                        zodic.id = 7;
+                                        zodic.name = '马';
+                                    }
+                                    else {
+                                        if ((x == 6) || (x == -6)) {
+                                            zodic.id = 8;
+                                            zodic.name = '羊';
+                                        }
+                                        else {
+                                            if ((x == 5) || (x == -7)) {
+                                                zodic.id = 9;
+                                                zodic.name = '猴';
+                                            }
+                                            else {
+                                                if ((x == 4) || (x == -8)) {
+                                                    zodic.id = 10;
+                                                    zodic.name = '鸡';
+                                                }
+                                                else {
+                                                    if ((x == 3) || (x == -9)) {
+                                                        zodic.id = 11;
+                                                        zodic.name = '狗';
+                                                    }
+                                                    else {
+                                                        if ((x == 2) || (x == -10)) {
+                                                            zodic.id = 12;
+                                                            zodic.name = '猪';
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            return zodic;
+        }
+
+
+        /**
+         * 根据出生日期计算星座
+         * @param birthday
+         * @returns {*[]} id name
+         */
+        function getConstellationByBirthday(birthday) {
+            var start = 1901, date = new Date(birthday).getDate(), month = new Date(birthday).getMonth() + 1, constellation = [{
+                id: 0,
+                name: '未知'
+            }];
+            if (month == 1 && date >= 20 || month == 2 && date <= 18) {
+                constellation.id = 1;
+                constellation.name = '水瓶座';
+            }
+            if (month == 2 && date >= 19 || month == 3 && date <= 20) {
+                constellation.id = 2;
+                constellation.name = '双鱼座';
+            }
+            if (month == 3 && date >= 21 || month == 4 && date <= 19) {
+                constellation.id = 3;
+                constellation.name = '白羊座';
+            }
+            if (month == 4 && date >= 20 || month == 5 && date <= 20) {
+                constellation.id = 4;
+                constellation.name = '金牛座';
+            }
+            if (month == 5 && date >= 21 || month == 6 && date <= 21) {
+                constellation.id = 5;
+                constellation.name = '双子座';
+            }
+            if (month == 6 && date >= 22 || month == 7 && date <= 22) {
+                constellation.id = 6;
+                constellation.name = '巨蟹座';
+            }
+            if (month == 7 && date >= 23 || month == 8 && date <= 22) {
+                constellation.id = 7;
+                constellation.name = '狮子座';
+            }
+            if (month == 8 && date >= 23 || month == 9 && date <= 22) {
+                constellation.id = 8;
+                constellation.name = '处女座';
+            }
+            if (month == 9 && date >= 23 || month == 10 && date <= 23) {
+                constellation.id = 9;
+                constellation.name = '天秤座';
+            }
+            if (month == 10 && date >= 24 || month == 11 && date <= 22) {
+                constellation.id = 10;
+                constellation.name = '天蝎座';
+            }
+            if (month == 11 && date >= 23 || month == 12 && date <= 21) {
+                constellation.id = 11;
+                constellation.name = '射手座';
+            }
+            if (month == 12 && date >= 22 || month == 1 && date <= 19) {
+                constellation.id = 12;
+                constellation.name = '摩羯座';
+            }
+            return constellation;
+        }
+
+        $('#saveSubmit').click(function () {
+            var myreg = /^(((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1}))+\d{8})$/;
+            if (!myreg.test($("#phone").val())) {
+                layer.tips('请输入有效的手机号码！', $('#phone'));
+                $('#phone').focus();
+                return false;
+            }
+            $('#saveForm').submit();
+        });
+
+    });
+
+</script>
