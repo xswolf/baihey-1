@@ -387,9 +387,9 @@ var bhyFunc = {
             });
         }
     },
-    deleteItemByList:function(itemId,td){
+    deleteItemByList:function(itemId,td,url){
         layer.confirm('确定要删除该条记录？', {icon: 3, title: '提示'}, function (index) {
-            bhyFunc.ajaxRequest('url',{id:itemId},function(res){
+            bhyFunc.ajaxRequest(url,{id:itemId},function(res){
                 layer.close(index);
                 if(res.status == 1){
                     layer.msg('删除成功！');

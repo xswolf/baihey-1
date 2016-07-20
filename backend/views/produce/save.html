@@ -1,17 +1,109 @@
-
+<link href="/backend/web/CloudAdmin/js/jQuery-uploadify/uploadify.css" rel="stylesheet">
 <div class="wrapper wrapper-content animated fadeInUp">
     <div class="ibox">
         <div class="ibox-title"><h5>添加/修改</h5>
         </div>
-
         <div class="ibox-content">
+            <form id="saveForm" action="" method="post" class="form-horizontal" role="form">
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">产品名称</label>
+                    <div class="col-sm-9">
+                        <input id="name" name="name" class="form-control" type="text" placeholder="请输入产品名称">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">产品标识</label>
+                    <div class="col-sm-9">
+                        <input id="value" name="value" class="form-control" type="text" placeholder="请输入产品标识，整数">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">现价</label>
+                    <div class="col-sm-9">
+                        <input id="price" name="price" class="form-control" type="number" min="0.01" max="20000" placeholder="请输入现价，单位：元。最低1分，最高20000">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">原价</label>
+                    <div class="col-sm-9">
+                        <input id="native_price" name="native_price" class="form-control" type="number" min="0.01" max="20000" placeholder="请输入原价，单位：元。最低1分，最高20000">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">图片</label>
+                    <input type="hidden" id="img" name="img">
+                    <div class="col-sm-9">
+                        <input type="file" id="file_upload_img"/>
+                        <div id="imgBox">
 
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">描述</label>
+                    <div class="col-sm-9">
+                        <input name="content" id="_content" class="form-control" type="text" maxlength="100" placeholder="100字以内">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-12 center">
+                        <button type="button" class="btn btn-info" id="saveSubmit">确定保存</button>
+                    </div>
+                </div>
+            </form>
 
         </div>
     </div>
 </div>
+<script src="/backend/web/CloudAdmin/js/jQuery-uploadify/jquery.uploadify.min.js"></script>
 <script>
     jQuery(document).ready(function () {
+
+        $('#saveSubmit').click(function(){
+            if(!$.trim($('#name').val())){
+                layer.tips('请输入产品名称', '#name', {
+                    tips: 1
+                });
+                return false;
+            }
+            if(!$.trim($('#value').val()) || isNaN($.trim($('#value').val()))){
+                layer.tips('产品标识不合法', '#value', {
+                    tips: 1
+                });
+                return false;
+            }
+            if(!$('#price').val()){
+                layer.tips('现价不合法', '#value', {
+                    tips: 1
+                });
+                return false;
+            }
+            if(!$('#native_price').val()){
+                layer.tips('原价不合法', '#value', {
+                    tips: 1
+                });
+                return false;
+            }
+            $('#saveForm').submit();
+        })
+
+        $('#file_upload_img').uploadify({
+            'buttonText': '选择图片',
+            'fileSizeLimit': '8MB',
+            'fileTypeDesc': '图片文件',
+            'fileTypeExts': '*.gif; *.jpg; *.png; *.bmp',
+            'swf': '/backend/web/CloudAdmin/js/jQuery-uploadify/uploadify.swf',
+            'uploader': '/admin/file/upload-img',
+            'onUploadError': function (file, errorCode, errorMsg, errorString) {
+                alert('上传出错！文件名： ' + file.name + '， 错误原因: ' + errorString);
+            },
+            'onUploadSuccess': function (file, data, response) {
+                var _data = data.replace('thumb', 'picture');
+                var imgHtml = '<img src="' + data + '" height="100">';
+                $('#imgBox').empty().append(imgHtml);
+                $('#img').val(_data);
+            }
+        });
 
     })
 </script>

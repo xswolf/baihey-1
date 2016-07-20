@@ -2,7 +2,9 @@
     <div class="ibox">
         <div class="ibox-title"><h5>产品管理</h5>
             <div class="ibox-tools rboor">
-                <button id="multiple-select" class="btn btn-green btn-xs p310"><i class="fa fa-check-square-o"></i> 批量禁用
+                <a class="btn btn-green btn-xs p310" href="/admin/produce/save"><i class="fa fa-plus"></i> 添加
+                </a>
+                <button class="btn btn-green btn-xs p310"><i class="fa fa-trash-o"></i> 删除
                 </button>
             </div>
         </div>
@@ -13,12 +15,7 @@
                 <div class="col-lg-12 col-sm-12">
                     <div class="form-group">
                         <div class="col-lg-12 col-sm-12 input-group date">
-                            <!--<a href="/admin/feedback/index?status=2" class="btn {{if (\Yii::$app->request->get('status') == 2)}} btn-success {{else}} btn-grey {{/if}}">待审核</a>-->
-                            <!--<a href="/admin/feedback/index?status=1" class="btn {{if (\Yii::$app->request->get('status') == 1)}} btn-success {{else}} btn-grey {{/if}}">审核属实</a>-->
-                            <!--<a href="/admin/feedback/index?status=3" class="btn {{if (\Yii::$app->request->get('status') == 3)}} btn-success {{else}} btn-grey {{/if}}">审核不属实</a>-->
-                            <!--<button class="btn" id="select-all">反选</button>-->
-
-
+                            <!-- 筛选 -->
                         </div>
                     </div>
                 </div>
@@ -31,6 +28,7 @@
                 <tr>
                     <th class="tn">ID</th>
                     <th>产品名称</th>
+                    <th>产品标识</th>
                     <th>产品状态</th>
                     <th>产品类型</th>
                     <th>现价(元)</th>
@@ -45,11 +43,12 @@
                 <tr data-id="{{$vo.id}}">
                     <td>{{$vo.id}}</td>
                     <td>{{$vo.name}}</td>
-                    <td>
+                    <td>{{$vo.value}}</td>
+                    <td class="status">
                         {{if $vo.status == 1}}
                         正常
                         {{else}}
-                        禁用
+                        <span class="text-danger">禁用</span>
                         {{/if}}
                     </td>
                     <td>
@@ -61,11 +60,21 @@
                     </td>
                     <td>{{$vo.price/100}}</td>
                     <td>{{$vo.native_price/100}}</td>
-                    <td>{{if $vo.img}}<img src="{{$vo.img}}">{{else}}{{/if}}</td>
+                    <td>{{if $vo.img}}<img src="{{$vo.img}}" height="30">{{else}}{{/if}}</td>
                     <td>{{$vo.content}}</td>
                     <td>
-                        <p class="btn-toolbar"><a class="btn btn-info btn-sm tip" title="管理" href="/admin/produce/save?id={{$vo.id}}"><i
-                                class="fa fa-cog"></i> </a></p>
+                        <a class="btn btn-info btn-sm tip" title="编辑" href="/admin/produce/save?id={{$vo.id}}"><i
+                                class="fa fa-edit"></i> </a>
+                        {{if $vo.status == 1}}
+                        <a class="btn btn-danger btn-sm tip" title="禁用" onclick="changeStatus('{{$vo.id}}',this)" href="javascript:;"><i
+                                class="fa fa-power-off"></i> </a>
+                        {{else}}
+                        <a class="btn btn-success btn-sm tip" title="启用" onclick="changeStatus('{{$vo.id}}',this)" href="javascript:;"><i
+                                class="fa fa-check"></i> </a>
+                        {{/if}}
+                        <!-- fa-check -->
+                        <a class="btn btn-warning btn-sm tip" title="删除" onclick="bhyFunc.deleteItemByList(1,this,'url')" href="javascript:;"><i
+                                class="fa fa-trash-o"></i> </a>
                     </td>
                 </tr>
                 {{/foreach}}
@@ -75,6 +84,41 @@
     </div>
 </div>
 <script>
+
+    // 禁/启用
+    function changeStatus(id,a){
+        var flag = $(a).attr('title');
+        if(flag == '禁用'){
+            bhyFunc.ajaxRequest('url',{id:id,status:0},function(res){
+                if(res.status > 0){
+                    $(a).parent().siblings('.status').html('<span class="text-danger">禁用</span>');
+                    $(a).removeClass('btn-danger')
+                            .addClass('btn-success')
+                            .attr('data-original-title','启用')
+                            .find('i')
+                            .removeClass('fa-power-off')
+                            .addClass('fa-check');
+                }else{
+                    layer.msg('禁用失败！');
+                }
+            })
+        }else{
+            bhyFunc.ajaxRequest('url',{id:id,status:1},function(res){
+                if(res.status > 0){
+                    $(a).parent().siblings('.status').html('正常');
+                    $(a).removeClass('btn-success')
+                            .addClass('btn-danger')
+                            .attr('data-original-title','禁用')
+                            .find('i')
+                            .removeClass('fa-check')
+                            .addClass('fa-power-off');
+                }else{
+                    layer.msg('启用失败！');
+                }
+            })
+        }
+    }
+
     jQuery(document).ready(function () {
 //        $('.mySwitch').on('change', function () {
 //            var status = $(this).val();
@@ -94,6 +138,8 @@
         $('.j-datatables tbody').on('click', 'tr', function () {
             $(this).toggleClass('selected');
         });
+
+
 
     })
 </script>
