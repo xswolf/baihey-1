@@ -51,7 +51,7 @@
                 <img class="rounded" ng-click="jump('/userInfo?userId={{user.user_id}}')"
                      ng-src="{{user.info.head_pic | isNull}}"
                      onerror="this.src='/wechat/web/images/no_img.png'">
-                <div ng-click="jump('/chat1?id={{user.id}}&head_pic={{user.info.head_pic}}&real_name={{user.info.real_name}}&sex={{user.sex}}&age={{user.info.age}}')">
+                <div ng-click="jump('/chat1?id={{user.user_id}}&head_pic={{user.info.head_pic}}&real_name={{user.info.real_name}}&sex={{user.sex}}&age={{user.info.age}}')">
                     <div class="clearfix">
                         <p class="fl">
                             <span ng-if="user.info.real_name">{{user.info.real_name | sex:user.sex :user.info.age}}</span>
