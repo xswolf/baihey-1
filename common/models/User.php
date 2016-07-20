@@ -808,7 +808,7 @@ class User extends Base
         foreach($photo as $k => $v) {
             $arr[$k]['pic_path'] = str_replace('thumb', 'picture', $v);
             $arr[$k]['thumb_path'] = $v;
-            $arr[$k]['is_check'] = 2;
+            $arr[$k]['is_check'] = 1;
             $arr[$k]['time'] = time();
             if($type != 1) {
                 $arr[$k]['type'] = $type;
