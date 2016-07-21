@@ -63,12 +63,12 @@
                         <td>贵宾红娘</td>
                         <td>{{$vo.phone}}</td>
                         <td>{{$vo.landline}}</td>
-                        <td class="duty">{{if $vo.duty eq 1}}是{{else}}否{{/if}}</td>
-                        <td class="status">{{if $vo.status eq 1}}正常{{else}}禁用{{/if}}</td>
+                        <td class="duty">{{if $vo.duty eq 1}}<span class="text-danger">是</span>{{else}}否{{/if}}</td>
+                        <td class="status">{{if $vo.status eq 1}}正常{{else}}<span class="text-danger">禁用</span>{{/if}}</td>
                         <td>
-                            <a href="javascript:;" onclick="changeDuty('{{$vo.id}}',this)" class="btn btn-primary btn-sm">设置值班</a>
+                            <a href="javascript:;" onclick="changeDuty('{{$vo.id}}',this)" {{if $vo.duty eq 1}} class="btn btn-primary btn-sm btn-success">取消值班{{else}} class="btn btn-primary btn-sm">设置值班{{/if}}</a>
                             <a href="/admin/user/edit-user?id={{$vo.id}}" class="btn btn-sm btn-info">编辑</a>
-                            <a href="javascript:;" onclick="changeStatus('{{$vo.id}}',this)" class="btn btn-sm btn-danger">禁用</a>
+                            <a href="javascript:;" onclick="changeStatus('{{$vo.id}}',this)" {{if $vo.status eq 1}} class="btn btn-sm btn-danger">禁用{{else}}class="btn btn-sm btn-success">启用{{/if}}</a>
                             <a href="javascript:;" data-url="/admin/user/delete-user?id={{$vo.id}}" class="btn btn-sm btn-warning btn_del">删除</a>
                         </td>
                     </tr>
@@ -84,7 +84,7 @@
     function changeStatus(id,a){
         var flag = $(a).text();
         if(flag == '禁用'){
-            bhyFunc.ajaxRequest('url',{id:id,status:0},function(res){
+            bhyFunc.ajaxRequest('/admin/user/update-auth-user',{id:id,status:0},function(res){
                 if(res.status > 0){
                     $(a).parent().siblings('.status').html('<span class="text-danger">禁用</span>');
                     $(a).removeClass('btn-danger')
@@ -95,7 +95,7 @@
                 }
             })
         }else{
-            bhyFunc.ajaxRequest('url',{id:id,status:1},function(res){
+            bhyFunc.ajaxRequest('/admin/user/update-auth-user',{id:id,status:1},function(res){
                 if(res.status > 0){
                     $(a).parent().siblings('.status').html('正常');
                     $(a).removeClass('btn-success')
@@ -112,7 +112,7 @@
     function changeDuty(id,a){
         var flag = $(a).text();
         if(flag == '设置值班'){
-            bhyFunc.ajaxRequest('url',{id:id,status:0},function(res){
+            bhyFunc.ajaxRequest('/admin/user/update-auth-user',{id:id,duty:1},function(res){
                 if(res.status > 0){
                     $(a).parent().siblings('.duty').html('<span class="text-danger">是</span>');
                     $(a).removeClass('btn-danger')
@@ -123,7 +123,7 @@
                 }
             })
         }else{
-            bhyFunc.ajaxRequest('url',{id:id,status:1},function(res){
+            bhyFunc.ajaxRequest('/admin/user/update-auth-user',{id:id,duty:0},function(res){
                 if(res.status > 0){
                     $(a).parent().siblings('.duty').html('否');
                     $(a).removeClass('btn-success')
