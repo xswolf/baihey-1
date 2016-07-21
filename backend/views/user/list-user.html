@@ -61,9 +61,9 @@
                         <td><img src=""></td>
                         <td>{{$vo.name}}</td>
                         <td>贵宾红娘</td>
-                        <td>18916841611</td>
-                        <td>02368800997</td>
-                        <td class="duty">否</td>
+                        <td>{{$vo.phone}}</td>
+                        <td>{{$vo.landline}}</td>
+                        <td class="duty">{{if $vo.duty eq 1}}是{{else}}否{{/if}}</td>
                         <td class="status">{{if $vo.status eq 1}}正常{{else}}禁用{{/if}}</td>
                         <td>
                             <a href="javascript:;" onclick="changeDuty('{{$vo.id}}',this)" class="btn btn-primary btn-sm">设置值班</a>

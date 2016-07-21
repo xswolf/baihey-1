@@ -56,7 +56,7 @@ class User extends Model
      */
     public function getList() {
         $row = (new Query)
-            ->select(['id', 'name', 'password', 'status', 'created_at', 'updated_at'])
+            ->select('*')
             ->from($this->userTable)
             ->where(['status' => 1])
             ->all();
