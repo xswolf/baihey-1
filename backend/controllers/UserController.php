@@ -21,8 +21,19 @@ class UserController extends BaseController
      */
     public function actionListUser() {
         $user = new User();
-        $list = $user->getList();
-
+        $auth = \Yii::$app->authManager;
+        $group = $auth->getRoles();
+        $where = [];
+        if($get = $this->get) {
+            $get['group'] != '' ? $where['group'] = $get['group'] : true;
+            $get['duty'] != '' ? $where['duty'] = $get['duty'] : true;
+        } else {
+            $get = ['group' => '', 'duty' => ''];
+        }
+        $list = $user->getList($where);
+        //var_dump($group);exit;
+        $this->assign('get',$get);
+        $this->assign('group',$group);
         $this->assign('list',$list);
         return $this->render();
     }

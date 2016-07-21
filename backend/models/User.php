@@ -54,16 +54,23 @@ class User extends Model
      * @return array|null
      * 获取列表
      */
-    public function getList() {
+    public function getList($where = [])
+    {
+        $authAssignmentTable = \Yii::$app->db->tablePrefix . 'auth_assignment';
+        $authUserTable = \Yii::$app->db->tablePrefix . 'auth_user';
+        if (isset($where['group'])) {
+            $aaWhere = " AND aa.item_name='" . $where['group'] ."'";
+            unset($where['group']);
+        } else {
+            $aaWhere = '';
+        }
         $row = (new Query)
             ->select('*')
-            ->from($this->userTable)
-            //->where(['status' => 1])
+            ->from($authUserTable . ' AS au')
+            ->innerJoin($authAssignmentTable . ' AS aa', "aa.user_id=au.id". $aaWhere)
+            ->where($where)
             ->all();
 
-        if ($row === false) {
-            return null;
-        }
         return $row;
     }
 
