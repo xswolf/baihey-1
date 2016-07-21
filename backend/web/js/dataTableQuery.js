@@ -1,7 +1,7 @@
 /**
  * Created by Administrator on 2016/2/19.
  */
-$(function(){
+$(function () {
 
     function getUrlParamToArr() {
         var url = window.location.search;
@@ -48,97 +48,108 @@ $(function(){
             }
         }
 
-        if ($this.data('is-ajax') == 1){
+        if ($this.data('is-ajax') == 1) {
             var ajaxUrl = $this.data('ajax-url')
             ext_params.bServerSide = true;
             ext_params.stateSave = false;
             ext_params.sAjaxSource = ajaxUrl;
-            ext_params.fnServerData =function(sSource, aoData, fnCallback) {
+            ext_params.fnServerData = function (sSource, aoData, fnCallback) {
                 var params = getUrlParamToArr();
                 for (var i in params) {
                     aoData.push({"name": i, "value": params[i]});
                 }
                 $.ajax({
-                    "type" : 'GET',
-                    "url" : ajaxUrl,
-                    "dataType" : "json",
-                    "data" : aoData,
-                    "success" : function(resp) {
+                    "type": 'GET',
+                    "url": ajaxUrl,
+                    "dataType": "json",
+                    "data": aoData,
+                    "success": function (resp) {
                         fnCallback(resp);
                     }
                 });
 
             };
             ext_params.columns = [
-                {"data" : "info.head_pic","fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
-                    $(nTd).html("<a href='/admin/member/info?id="+oData.id+"'><img class='user_img' src='"+oData.info.head_pic+"'></a>");
-                }},
-                {"data" : "id"},
-                {"data" : "info.real_name"},
-                {"data" : "sex"},
-                {"data" : "age"},
-                {"data" : "info.is_marriage"},
-                {"data" : "info.height"},
-                {"data" : "info.education" , fnCreatedCell : function (nTd, sData, oData, iRow, iCol) {
+                {
+                    "data": "info.head_pic", "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
+                    $(nTd).html("<a href='/admin/member/info?id=" + oData.id + "'><img class='user_img' src='" + oData.info.head_pic + "'></a>");
+                }
+                },
+                {"data": "id"},
+                {"data": "info.real_name"},
+                {"data": "sex"},
+                {"data": "age"},
+                {"data": "info.is_marriage"},
+                {"data": "info.height"},
+                {
+                    "data": "info.education", fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
                     var education = '';
-                    if (oData.info.education == 1){
+                    if (oData.info.education == 1) {
                         education = '初中';
-                    } else if (oData.info.education == 2){
+                    } else if (oData.info.education == 2) {
                         education = '高中';
-                    } else if (oData.info.education == 3){
+                    } else if (oData.info.education == 3) {
                         education = '大专';
-                    }else if (oData.info.education == 4){
+                    } else if (oData.info.education == 4) {
                         education = '本科';
-                    }else if (oData.info.education == 5){
+                    } else if (oData.info.education == 5) {
                         education = '硕士';
-                    }else if (oData.info.education == 6){
+                    } else if (oData.info.education == 6) {
                         education = '博士';
                     }
                     $(nTd).html(education);
-                }},
-                {"data" : "info.level"},
-                {"data" : "service_status"},
-                {"data" : "is_auth"},
-                {"data" : "is_sign"},
-                {"data" : "is_show",fnCreatedCell:function (nTd, sData, oData, iRow, iCol) {
+                }
+                },
+                {"data": "info.level"},
+                {"data": "service_status"},
+                {"data": "is_auth"},
+                {"data": "is_sign"},
+                {
+                    "data": "is_show", fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
                     var isShow = '';
-                    if (oData.is_show == 1){
+                    if (oData.is_show == 1) {
                         isShow = '开放';
-                    } else{
+                    } else {
                         isShow = '<span style="color: red;">关闭</span>';
                     }
                     $(nTd).html(isShow);
-                }},
-                {"data" : "area",fnCreatedCell:function (nTd, sData, oData, iRow, iCol) {
-                    for (var i in area){
-                        if (area[i].id == oData.area){
-                            $(nTd).html(area[i].name+" " + oData.address)
+                }
+                },
+                {
+                    "data": "area", fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
+                    for (var i in area) {
+                        if (area[i].id == oData.area) {
+                            $(nTd).html(area[i].name + " " + oData.address)
                             break;
                         }
                     }
-                }},
-                {"data" : "auth.identity_check"},
-                {"data" : "status" , fnCreatedCell:function (nTd, sData, oData, iRow, iCol) {
+                }
+                },
+                {"data": "auth.identity_check"},
+                {
+                    "data": "status", fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
                     var html = '';
-                    if (oData.status == 1){
-                        html ='未分配红娘';
-                    }else if (oData.status == 2){
-                        html ='已分配红娘';
-                    }else if (oData.status == 3){
-                        html ='黑名单';
-                    }else if (oData.status == 4){
-                        html ='删除';
+                    if (oData.status == 1) {
+                        html = '未分配红娘';
+                    } else if (oData.status == 2) {
+                        html = '已分配红娘';
+                    } else if (oData.status == 3) {
+                        html = '黑名单';
+                    } else if (oData.status == 4) {
+                        html = '删除';
                     }
                     $(nTd).html(html)
-                }},
-                {"data" : "id","fnCreatedCell":function (nTd, sData, oData, iRow, iCol) {
-                    var html = '<a class="btn btn-primary btn-sm" href="/admin/member/info?id=' +oData.id+ '">管理</a> <a class="btn btn-info btn-sm" data-uid="'+oData.id+'" id="returningBtn" href="javascript:;">回访</a> <a class="btn btn-info btn-sm" href="javascript:;">配对</a>';
+                }
+                },
+                {
+                    "data": "id", "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
+                    var html = '<a class="btn btn-primary btn-sm" href="/admin/member/info?id=' + oData.id + '">管理</a> <a class="btn btn-info btn-sm" data-uid="' + oData.id + '" data-uname="' + oData.info.real_name + '" id="returningBtn" href="javascript:;">回访</a> <a class="btn btn-info btn-sm" href="javascript:;">配对</a>';
                     $(nTd).html(html);
-                }}
+                }
+                }
             ]
 
         }
-
         var table = $this.DataTable(ext_params);
 
         $('.j-dt-filter', $filterContainer).each(function () {
@@ -178,12 +189,6 @@ $(function(){
 
     });
 });
-
-
-
-
-
-
 
 
 ////////////////// Filter Start ////////////////////////

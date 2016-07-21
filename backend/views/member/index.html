@@ -271,9 +271,9 @@
 </div>
 <div class="ibox" id="returningBox" style="display: none;">
     <div class="ibox-title">
-        <h5>回访列表</h5>
+        <h5>回访</h5>
         <div class="ibox-tools rboor">
-            <a class="btn btn-green btn-xs p310" href="javascript:;">
+            <a class="btn btn-green btn-xs p310" id="addReturningBtn" href="javascript:;">
                 <i class="fa fa-plus"></i>
                 添加回访
             </a>
@@ -295,6 +295,26 @@
         </table>
     </div>
 </div>
+<div class="ibox" id="addReturningBox" style="display: none;">
+    <div class="ibox-title"><h5>添加回访</h5></div>
+    <div class="ibox-content">
+        <div class="form-group">
+            <label>回访红娘</label>
+            <input class="form-control" id="matchName" type="text" disabled value="">
+        </div>
+        <div class="form-group">
+            <label>回访对象</label>
+            <input class="form-control" id="userName" type="text" disabled value="">
+        </div>
+        <div class="form-group">
+            <label>内容</label>
+            <textarea id="return_content" class="form-control" style="resize: none;" maxlength="300" placeholder="300字以内"></textarea>
+        </div>
+        <div class="form-group center">
+            <button class="btn btn-primary" id="addReturningSubmit">确定添加</button>
+        </div>
+    </div>
+</div>
 <script>
     jQuery(document).ready(function () {
 
@@ -302,33 +322,73 @@
 
         $('#demo1').delegate('#returningBtn', 'click', function () {
             var userId = $(this).data('uid');
+            var userName = $(this).data('uname');
             layer.open({
                 type: 1,
                 title: false,
                 area: '600px',
                 shadeClose: true,
                 content: $('#returningBox'),
-                success: function (layero, index) {
+                success: function (layero1, index1) {
+                    if($.trim(userName)){
+                        layero1.find('.ibox-title>h5').html(userName+'的回访');
+                    }else {
+                        layero1.find('.ibox-title>h5').html(userId+'的回访');
+                    }
+
                     bhyFunc.ajaxRequest('url', {user_id: userId}, function (res) {
-                        var html = "";
+                        var html1 = "";
                         if (res.status > 0) {
                             for (var i in res.data) {
-                                html += '<tr><td>' + res.data[i].id + '</td>';
-                                html += '<td>' + res.data[i].match_name + '</td>';
-                                html += '<td>' + res.data[i].real_name + '(' + res.data[i].user_id + ')</td>';
-                                html += '<td>' + res.data[i].content + '</td>';
-                                html += '<td>' + res.data[i].create_time + '</td></tr>';
+                                html1 += '<tr><td>' + res.data[i].id + '</td>';
+                                html1 += '<td>' + res.data[i].match_name + '</td>';
+                                html1 += '<td>' + res.data[i].real_name + '(' + res.data[i].user_id + ')</td>';
+                                html1 += '<td>' + res.data[i].content + '</td>';
+                                html1 += '<td>' + res.data[i].create_time + '</td></tr>';
                             }
                         } else {
-                            html = '<tr><td colspan="5">没有数据</td></tr>';
+                            html1 = '<tr><td colspan="5">没有数据</td></tr>';
                         }
-                        $(layero).find('.table').find('tbody').empty().append(html);
+                        $(layero1).find('.table').find('tbody').empty().append(html1);
                     })
 
-
+                    $(layero).find('#addReturningBtn').click(function(){
+                        layer.open({
+                            type: 1,
+                            title: false,
+                            area: '400px',
+                            shadeClose: true,
+                            content: $('#addReturningBox'),
+                            success:function(layero2, index2){
+                                $(layero2).find('#matchName').val('郭禹杉');  //TODO $matchName 当前登录红娘姓名
+                                $(layero2).find('#userName').val(userName+'('+userId+')');
+                                $(layero2).find('#addReturningSubmit').click(function(){
+                                    if(!$.trim($('#return_content').val())){
+                                        layer.tips('请输入回访内容',$('#return_content'));
+                                        return false;
+                                    }
+                                    bhyFunc.ajaxRequest('url',{},function(res){  // 添加回访
+                                        if(res.status > 0){
+                                            var html2 = "";
+                                                html2 += '<tr><td>' + res.data.id + '</td>';
+                                                html2 += '<td>' + res.data.match_name + '</td>';
+                                                html2 += '<td>' + res.data.real_name + '(' + res.data[i].user_id + ')</td>';
+                                                html2 += '<td>' + res.data.content + '</td>';
+                                                html2 += '<td>' + res.data.create_time + '</td></tr>';
+                                            layer.close(index2);
+                                            $(layero1).find('.table').find('tbody').append(html2);
+                                        }else{
+                                            layer.msg('添加回访失败！');
+                                        }
+                                    })
+                                })
+                            }
+                        });
+                    })
                 }
             });
         })
+
 
         $('#age1,#age2').append(bhyFunc.ageLink(18));
         $('#age1').change(function () {
