@@ -107,9 +107,20 @@ class UserController extends BaseController
         $user_id = $this->get['user_id'];
         unset($this->get['user_id']);
         if($data = \common\models\User::getInstance()->editUserTableInfo($user_id, $this->get)) {
-            return $this->renderAjax(['status' => 1, 'data' => $data, 'msg' => '修改成功']);
+            return $this->renderAjax(['status' => 1, 'data' => $data, 'message' => '修改成功']);
         } else {
-            return $this->renderAjax(['status' => 0, 'data' => [], 'msg' => '修改失败']);
+            return $this->renderAjax(['status' => 0, 'data' => [], 'message' => '修改失败']);
+        }
+    }
+
+    // 更新管理用户
+    public function actionUpdateAuthUser()
+    {
+        $authUser = new User();
+        if ($authUser->updateAuthUser($this->post)) {
+            $this->renderAjax(['status' => 1, 'message' => '成功']);
+        } else {
+            $this->renderAjax(['status' => 0, 'message' => '失败']);
         }
     }
 }

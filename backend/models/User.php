@@ -58,7 +58,7 @@ class User extends Model
         $row = (new Query)
             ->select('*')
             ->from($this->userTable)
-            ->where(['status' => 1])
+            //->where(['status' => 1])
             ->all();
 
         if ($row === false) {
@@ -195,24 +195,27 @@ class User extends Model
     }
 
     public function delUser($id) {
-        if($this->getFindUser(['id' => $id])) {
-            //删除用户角色
-            /*$auth = \Yii::$app->authManager;
-            $uidRole = $auth->getAssignments($id);
-            if(!empty($uidRole) && !$auth->revokeAll($id)) {
-                $this->__error('清除角色失败');
-            }*/
+        //删除用户角色
+        /*$auth = \Yii::$app->authManager;
+        $uidRole = $auth->getAssignments($id);
+        if(!empty($uidRole) && !$auth->revokeAll($id)) {
+            $this->__error('清除角色失败');
+        }*/
 
-            //更改用户状态
-            $row = $this->db->createCommand()
-                ->update($this->userTable, ['status' => 0], ['id' => $id])
-                ->execute();
-            if($row) {
-                return true;
-            } else {
-                return false;
-            }
-        }
+        // 删除用户
+        $row = $this->db->createCommand()
+            ->delete($this->userTable, ['id' => $id])
+            ->execute();
+        return $row;
+    }
 
+    public function updateAuthUser($data)
+    {
+        $id = $data['id'];
+        $row = $this->db->createCommand()
+            ->update($this->userTable, $data, ['id' => $id])
+            ->execute();
+
+        return $row;
     }
 }
