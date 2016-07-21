@@ -287,17 +287,6 @@
                         <li class="has-sub-sub"><a data-menu="11" class="has-sub-sub"  href="/admin/produce/index"><span class="sub-menu-text">产品管理</span></a></li>
                     </ul>
                 </li>
-                <li class="has-sub">
-                    <a href="javascript:;" class="" data-menu="6">
-                        <i class="fa fa-file-text fa-fw"></i> <span class="menu-text">会员管理</span>
-                        <span class="arrow"></span>
-                    </a>
-                    <ul class="sub">
-                        <li class="has-sub-sub"><a data-menu="12" class="has-sub-sub"  href="/admin/matchmaker/index"><span class="sub-menu-text">会员列表</span></a></li>
-                        <li class="has-sub-sub"><a data-menu="13" class="has-sub-sub"  href="/admin/matchmaker/my"><span class="sub-menu-text">我的会员</span></a></li>
-                        <li class="has-sub-sub"><a data-menu="14" class="has-sub-sub"  href="/admin/matchmaker/add"><span class="sub-menu-text">添加会员</span></a></li>
-                    </ul>
-                </li>
 
             </ul>
             <!-- /左侧菜单 -->

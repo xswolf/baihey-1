@@ -132,7 +132,7 @@ $(function(){
                     $(nTd).html(html)
                 }},
                 {"data" : "id","fnCreatedCell":function (nTd, sData, oData, iRow, iCol) {
-                    var html = '<p class="btn-toolbar"><a class="btn btn-info btn-sm tip" title="管理" href="/admin/member/info?id=' +oData.id+ '"><i class="fa fa-cog"></i> </a></p>';
+                    var html = '<a class="btn btn-primary btn-sm" href="/admin/member/info?id=' +oData.id+ '">管理</a> <a class="btn btn-info btn-sm" href="javascript:;">回访</a> <a class="btn btn-info btn-sm" href="javascript:;">配对</a>';
                     $(nTd).html(html);
                 }}
             ]

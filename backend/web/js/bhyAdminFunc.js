@@ -31,16 +31,16 @@ var bhyFunc = {
         }
         this.ajaxRequest('/admin/member/sys-msg',
             {
-            user_id: this.user_id,
-            content: content.val()
-        }, function (res) {
-            if (res.status == 1) {
-                layer.msg('发送成功！');
-            } else {
-                layer.msg('发送失败，请重试！');
-            }
-            bhyFunc.layerClickedCancelButton('page');
-        })
+                user_id: this.user_id,
+                content: content.val()
+            }, function (res) {
+                if (res.status == 1) {
+                    layer.msg('发送成功！');
+                } else {
+                    layer.msg('发送失败，请重试！');
+                }
+                bhyFunc.layerClickedCancelButton('page');
+            })
     },
     reviewYes: function (type) {
         if (type == 1) {  // 身份证
@@ -58,8 +58,8 @@ var bhyFunc = {
         if (type == 5) {  // 婚姻证明
             this.ajaxRequest('/admin/member/auth', {user_id: this.user_id, honesty_value: 2}, function (res) {
                 if (res.status == 1) {
-                    $('.info'+5).hide();
-                    $('.id-toggle'+5).removeClass('hide');
+                    $('.info' + 5).hide();
+                    $('.id-toggle' + 5).removeClass('hide');
                 } else {
                     layer.msg('审核出错，请刷新重试！');
                 }
@@ -68,8 +68,8 @@ var bhyFunc = {
         if (type == 4) {  // 学历证明
             this.ajaxRequest('/admin/member/auth', {user_id: this.user_id, honesty_value: 4}, function (res) {
                 if (res.status == 1) {
-                    $('.info'+4).hide();
-                    $('.id-toggle'+4).removeClass('hide');
+                    $('.info' + 4).hide();
+                    $('.id-toggle' + 4).removeClass('hide');
                 } else {
                     layer.msg('审核出错，请刷新重试！');
                 }
@@ -78,8 +78,8 @@ var bhyFunc = {
         if (type == 6) {  // 房产证明
             this.ajaxRequest('/admin/member/auth', {user_id: this.user_id, honesty_value: 8}, function (res) {
                 if (res.status == 1) {
-                    $('.info'+6).hide();
-                    $('.id-toggle'+6).removeClass('hide');
+                    $('.info' + 6).hide();
+                    $('.id-toggle' + 6).removeClass('hide');
                 } else {
                     layer.msg('审核出错，请刷新重试！');
                 }
@@ -96,7 +96,11 @@ var bhyFunc = {
                 title: '请填写审核不通过原因'
             }, function (value, index, elem) {
                 cause = value ? value : '图片模糊不清';
-                $this.ajaxRequest('/admin/member/sys-msg', {user_id: $this.user_id, type: '2,3', content: cause}, function (res) {
+                $this.ajaxRequest('/admin/member/sys-msg', {
+                    user_id: $this.user_id,
+                    type: '2,3',
+                    content: cause
+                }, function (res) {
                     if (res.status == 1) {
                         $('.identify-auth').hide();
                     } else {
@@ -114,7 +118,11 @@ var bhyFunc = {
                 title: '请填写审核不通过原因'
             }, function (value, index, elem) {
                 cause = value ? value : '图片模糊不清';
-                $this.ajaxRequest('/admin/member/sys-msg', {user_id: $this.user_id, type: '5', content: cause}, function (res) {
+                $this.ajaxRequest('/admin/member/sys-msg', {
+                    user_id: $this.user_id,
+                    type: '5',
+                    content: cause
+                }, function (res) {
                     if (res.status == 1) {
                         $('.identify-auth-' + type).hide();
                     } else {
@@ -132,7 +140,11 @@ var bhyFunc = {
                 title: '请填写审核不通过原因'
             }, function (value, index, elem) {
                 cause = value ? value : '图片模糊不清';
-                $this.ajaxRequest('/admin/member/sys-msg', {user_id: $this.user_id, type: '4', content: cause}, function (res) {
+                $this.ajaxRequest('/admin/member/sys-msg', {
+                    user_id: $this.user_id,
+                    type: '4',
+                    content: cause
+                }, function (res) {
                     if (res.status == 1) {
                         $('.identify-auth-' + type).hide();
                     } else {
@@ -150,7 +162,11 @@ var bhyFunc = {
                 title: '请填写审核不通过原因'
             }, function (value, index, elem) {
                 cause = value ? value : '图片模糊不清';
-                $this.ajaxRequest('/admin/member/sys-msg', {user_id: $this.user_id, type: '6', content: cause}, function (res) {
+                $this.ajaxRequest('/admin/member/sys-msg', {
+                    user_id: $this.user_id,
+                    type: '6',
+                    content: cause
+                }, function (res) {
                     if (res.status == 1) {
                         $('.identify-auth-' + type).hide();
                     } else {
@@ -172,7 +188,7 @@ var bhyFunc = {
             matchmaking: matchmaking.val(),
             service_status: $('#service_status').val(),
             is_sign: $('#is_sign').val(),
-            honesty_value:1
+            honesty_value: 1
         }, function (res) {
             console.log(res)
             if (res.status == 1) {
@@ -186,7 +202,7 @@ var bhyFunc = {
     },
     resetPass: function (user_id) {  // 重置密码
         layer.confirm('确定重置该用户密码吗？', {icon: 3, title: '提示'}, function (index) {
-            bhyFunc.ajaxRequest('/admin/member/switch', {user_id: bhyFunc.user_id,field:'password'}, function (res) {
+            bhyFunc.ajaxRequest('/admin/member/switch', {user_id: bhyFunc.user_id, field: 'password'}, function (res) {
                 if (res.status == 1) {
                     layer.msg('重置密码成功！');
                 } else {
@@ -196,26 +212,30 @@ var bhyFunc = {
             })
         });
     },
-    isShow:$('#is-show').data('isshow'),
-    closeUserInfo: function (a , user_id) {   // 开关用户资料
+    isShow: $('#is-show').data('isshow'),
+    closeUserInfo: function (a, user_id) {   // 开关用户资料
         var isShow = this.isShow;
         var status = $('#status').data('status');
         if (status != 2) {
             layer.alert('操作失败！该会员不是已审核状态。');
             return false;
         }
-        if (isShow){
+        if (isShow) {
             var confirm = '关闭资料后，该用户无法在前台展示，您确定吗？';
             var cui_txt = '开放资料';
             var stat_txt = '关闭资料';
-        }else{
+        } else {
             var confirm = '开放资料，该用户会在前台展示，您确定吗？';
             var cui_txt = '关闭资料';
             var stat_txt = '已审核';
         }
 
         layer.confirm(confirm, {icon: 3, title: '提示'}, function (index) {
-            bhyFunc.ajaxRequest('/admin/member/switch', {user_id: bhyFunc.user_id, is_show: !isShow , field:'is_show'}, function (res) {
+            bhyFunc.ajaxRequest('/admin/member/switch', {
+                user_id: bhyFunc.user_id,
+                is_show: !isShow,
+                field: 'is_show'
+            }, function (res) {
                 if (res.status == 1) {
                     layer.msg('操作成功！');
                     bhyFunc.isShow = !isShow;
@@ -234,7 +254,11 @@ var bhyFunc = {
         var t = $('#userBlackList').text();
         if (t == '列入黑名单') {
             layer.confirm('列入黑名单后，该用户无法登录，您确定吗？', {icon: 3, title: '提示'}, function (index) {
-                bhyFunc.ajaxRequest('/admin/member/switch', {user_id: bhyFunc.user_id, status: 3,field:'status'}, function (res) {
+                bhyFunc.ajaxRequest('/admin/member/switch', {
+                    user_id: bhyFunc.user_id,
+                    status: 3,
+                    field: 'status'
+                }, function (res) {
                     if (res.status == 1) {
                         layer.msg('列入黑名单成功！');
                         $('#userBlackList').text('解除黑名单');
@@ -245,7 +269,11 @@ var bhyFunc = {
                 layer.close(index);
             });
         } else {
-            this.ajaxRequest('/admin/member/switch', {user_id: this.user_id, status: 1,field:'status'}, function (res) {
+            this.ajaxRequest('/admin/member/switch', {
+                user_id: this.user_id,
+                status: 1,
+                field: 'status'
+            }, function (res) {
                 if (res.status == 1) {
                     layer.msg('解除黑名单成功！');
                     $('#userBlackList').text('列入黑名单');
@@ -279,7 +307,7 @@ var bhyFunc = {
         }
     },
     charge: function (userId) {
-        if(!userId){
+        if (!userId) {
             userId = this.user_id;
         }
         var charge_goods = $('#charge_goods');
@@ -297,10 +325,10 @@ var bhyFunc = {
                 }
                 // 自定义金额充值
                 this.ajaxRequest('/admin/member/charge', {
-                    user_id:userId,
+                    user_id: userId,
                     goodsId: charge_goods.val(),
                     money: charge_money.val(),
-                    chargeTypeId:3
+                    chargeTypeId: 3
                 }, function (res) {
                     if (res.status) {
                         layer.msg('充值成功！');
@@ -310,7 +338,11 @@ var bhyFunc = {
                     }
                 })
             } else {
-                this.ajaxRequest('/admin/member/charge', {user_id:userId,goodsId: charge_goods.val(),chargeTypeId:3}, function (res) {
+                this.ajaxRequest('/admin/member/charge', {
+                    user_id: userId,
+                    goodsId: charge_goods.val(),
+                    chargeTypeId: 3
+                }, function (res) {
                     if (res.status) {
                         layer.msg('充值成功！');
                         top.location.reload();
@@ -325,10 +357,10 @@ var bhyFunc = {
                 return false;
             }
             this.ajaxRequest('/admin/member/charge', {
-                user_id:userId,
+                user_id: userId,
                 goodsId: charge_goods.val(),
                 money: $('#money').val(),
-                chargeTypeId:3
+                chargeTypeId: 3
             }, function (res) {
                 if (res.status) {
                     layer.msg('充值成功！');
@@ -339,7 +371,7 @@ var bhyFunc = {
             })
         }
     },
-    getJsonShowImg: function (type,imgList) {
+    getJsonShowImg: function (type, imgList) {
         if (type == 'discovery') {
             //$.getJSON('url',{user_id,this.user_id}, function(res){
             //    layer.photos({
@@ -347,8 +379,8 @@ var bhyFunc = {
             //    });
             //});
 
-            for (var i in imgList){
-                imgList[i].src = imgList[i].thumb_path.replace("thumb" , "picture");
+            for (var i in imgList) {
+                imgList[i].src = imgList[i].thumb_path.replace("thumb", "picture");
                 imgList[i].thumb = imgList[i].thumb_path;
             }
             // 数据格式
@@ -356,14 +388,14 @@ var bhyFunc = {
                 "title": "", //相册标题
                 "id": 1, //相册id
                 "start": 0, //初始显示的图片序号，默认0
-                data :imgList
+                data: imgList
             }
             layer.photos({
                 photos: imgList
             });
         }
 
-        if(type == 'message'){
+        if (type == 'message') {
 
             console.log(imgList)
 
@@ -372,9 +404,9 @@ var bhyFunc = {
                 "title": "", //相册标题
                 "id": 1, //相册id
                 "start": 0, //初始显示的图片序号，默认0
-                data:[
+                data: [
                     {
-                        src: imgList.replace("thumb" , "picture"),
+                        src: imgList.replace("thumb", "picture"),
                         thumb: imgList,
                     }
                 ]
@@ -384,15 +416,15 @@ var bhyFunc = {
             });
         }
     },
-    deleteItemByList:function(itemId,td,url){
+    deleteItemByList: function (itemId, td, url) {
         console.log(itemId);
         layer.confirm('确定要删除该条记录？', {icon: 3, title: '提示'}, function (index) {
-            bhyFunc.ajaxRequest(url,{id:itemId},function(res){
+            bhyFunc.ajaxRequest(url, {id: itemId}, function (res) {
                 layer.close(index);
-                if(res.status == 1){
+                if (res.status == 1) {
                     layer.msg('删除成功！');
                     $(td).parent().parent('tr').remove();
-                }else {
+                } else {
                     layer.msg('删除失败！');
                 }
             })
@@ -401,5 +433,57 @@ var bhyFunc = {
     layerClickedCancelButton: function (type) {  // 关闭相应类型的layer弹出窗口
         layer.closeAll(type);
     },
+    cityPickerInit: function () {
+        var html = "";
+        for (var i in provines) {
+            html += '<option value="' + provines[i].id + '">' + provines[i].name + '</option>';
+        }
+        $('#provines').append(html);
+    },
+    selectedProvines:function(p){
+        var html = '<option>城市</option>';
+        for (var i in citys) {
+            if(citys[i].parentId == $(p).val()){
+                html += '<option value="' + citys[i].id + '">' + citys[i].name + '</option>';
+            }
+        }
+        $('#citys').empty().append(html);
+        $('#area').empty().append('<option>区县</option>');
+    },
+    selectedCitys:function(c){
+        var html = '<option>区县</option>';
+        for (var i in area) {
+            if(area[i].parentId == $(c).val()){
+                html += '<option value="' + area[i].id + '">' + area[i].name + '</option>';
+            }
+        }
+        $('#area').empty().append(html);
+    },
+    ageLink:function(min){
+        var ageHtml = "",
+            ageMin = min,
+            ageMax = 99;
+        for (ageMin; ageMin <= ageMax; ageMin++) {
+            ageHtml += '<option value="';
+            ageHtml += ageMin;
+            ageHtml += '">';
+            ageHtml += ageMin;
+            ageHtml += '</option>';
+        }
+        return ageHtml;
+    },
+    heightLink:function(min){
+        var ageHtml = "",
+            ageMin = min,
+            ageMax = 260;
+        for (ageMin; ageMin <= ageMax; ageMin++) {
+            ageHtml += '<option value="';
+            ageHtml += ageMin;
+            ageHtml += '">';
+            ageHtml += ageMin;
+            ageHtml += '厘米以上</option>';
+        }
+        return ageHtml;
+    }
 
 };

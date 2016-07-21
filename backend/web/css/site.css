@@ -8,6 +8,12 @@ body {
 .fr{
     float: right;
 }
+.pr{
+    position: relative;
+}
+.po{
+    position: absolute;
+}
 .fs14{
     font-size: 14px;
 }
@@ -376,6 +382,37 @@ table .user_img{
     text-decoration: none;
     cursor: pointer;
     z-index: 1;
+}
+#addressPanel{
+    position: absolute;
+    width: 400px;
+    height: auto;
+    z-index: 99;
+}
+#addressPanel dl dd a{
+    color: #333;
+    cursor: pointer;
+    display: inline-block;
+    margin-right: 2px;
+    outline: 0 none;
+    padding: 0 10px;
+    text-decoration: none;
+    white-space: nowrap;
+}
+#addressPanel dl dd a:hover, #addressPanel dl dd a:focus {
+    background-color: #f1f8ff;
+    border-radius: 2px;
+    color: #46a4ff;
+}
+#addressPanel dl dd a.active{
+    background-color: #46a4ff;
+    border-radius: 2px;
+    color: #fff;
+}
+
+#addressPanel dl dd{
+    line-height: 2;
+    margin-left: 0;
 }
 
 
