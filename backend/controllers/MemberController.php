@@ -209,6 +209,10 @@ class MemberController extends BaseController
         return $this->render();
     }
 
+    /**
+     * 用户消息列表
+     * @return string
+     */
     public function actionMessage()
     {
         $this->layout  = false;
@@ -222,6 +226,28 @@ class MemberController extends BaseController
         return $this->render();
     }
 
+    /**
+     * 开关资料，黑名单，重置密码
+     */
+    public function actionSwitch(){
+        $field = \Yii::$app->request->post('field');
+        if ($field == 'is_show') { // 资料开关
+            $fieldValue = \Yii::$app->request->post($field) == 'true' ? 1 : 0;
+        }else if ($field == 'password'){
+            $fieldValue = md5(md5('123456'));
+        }else{
+            $fieldValue = \Yii::$app->request->post($field);
+        }
+        $data = [
+            'id'=> \Yii::$app->request->post('user_id'),
+            $field => $fieldValue,
+        ];
+        if ($flag = User::getInstance()->editUser1($data)){
+            $this->renderAjax(['status' => 1, 'message' => '操作成功', 'data' => $flag]);
+        } else {
+            $this->renderAjax(['status' => 0, 'message' => '操作失败', 'data' => $flag]);
+        }
+    }
 
     public function actionOrder()
     {
@@ -333,7 +359,9 @@ class MemberController extends BaseController
         $type   = \Yii::$app->request->post('type');
         $content = \Yii::$app->request->post('content');
         if ($type == '2,3') $type = explode(',' , $type);
-        User::getInstance()->editPhoto( $type , ['user_id'=>$userId] ,  0);
+        if (isset($type) && $type != '') { // 相册发消息
+            User::getInstance()->editPhoto($type, ['user_id' => $userId], 0);
+        }
         if ($flag = (new Message())->add(1,$userId,$content,1,2)){
             $this->renderAjax(['status' => 1, 'message' => '操作成功', 'data' => $flag]);
 

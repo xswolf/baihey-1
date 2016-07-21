@@ -29,7 +29,8 @@ var bhyFunc = {
             layer.tips('请填写信息内容', content);
             return false;
         }
-        this.ajaxRequest('url', {
+        this.ajaxRequest('/admin/member/sys-msg',
+            {
             user_id: this.user_id,
             content: content.val()
         }, function (res) {
@@ -38,7 +39,7 @@ var bhyFunc = {
             } else {
                 layer.msg('发送失败，请重试！');
             }
-            this.layerClickedCancelButton('page');
+            bhyFunc.layerClickedCancelButton('page');
         })
     },
     reviewYes: function (type) {
@@ -185,7 +186,7 @@ var bhyFunc = {
     },
     resetPass: function (user_id) {  // 重置密码
         layer.confirm('确定重置该用户密码吗？', {icon: 3, title: '提示'}, function (index) {
-            bhyFunc.ajaxRequest('url', {user_id: bhyFunc.user_id}, function (res) {
+            bhyFunc.ajaxRequest('/admin/member/switch', {user_id: bhyFunc.user_id,field:'password'}, function (res) {
                 if (res.status == 1) {
                     layer.msg('重置密码成功！');
                 } else {
@@ -195,46 +196,45 @@ var bhyFunc = {
             })
         });
     },
-    closeUserInfo: function (a , user_id) {   // 关闭用户资料
-        var isShow = $(a).data('isshow');
+    isShow:$('#is-show').data('isshow'),
+    closeUserInfo: function (a , user_id) {   // 开关用户资料
+        var isShow = this.isShow;
         var status = $('#status').data('status');
-        if (status != 1) {
+        if (status != 2) {
             layer.alert('操作失败！该会员不是已审核状态。');
             return false;
         }
-        if (isShow) {
-            layer.confirm('关闭资料后，该用户无法在前台展示，您确定吗？', {icon: 3, title: '提示'}, function (index) {
-                bhyFunc.ajaxRequest('url', {user_id: bhyFunc.user_id, is_show: !isShow}, function (res) {
-                    if (res.status == 1) {
-                        layer.msg('关闭资料成功！');
-                        $('#closeUserInfoBtnTitle').text('开放资料');
-                        $('#status_icon').removeClass('text-green').addClass('text-warning');
-                        $('#status').text('关闭资料');
-                    } else {
-                        layer.msg('关闭资料失败，请刷新重试！')
-                    }
-                    layer.close(index);
-                })
-            });
-        } else {
-            this.ajaxRequest('url', {user_id: this.user_id, is_show: !isShow}, function (res) {
-                if (res.status == 1) {
-                    layer.msg('开放资料成功！');
-                    $('#closeUserInfoBtnTitle').text('关闭资料');
-                    $('#status_icon').removeClass('text-green').addClass('text-warning');
-                    $('#status').text('已审核');
-                } else {
-                    layer.msg('开放资料失败，请刷新重试！')
-                }
-            })
+        if (isShow){
+            var confirm = '关闭资料后，该用户无法在前台展示，您确定吗？';
+            var cui_txt = '开放资料';
+            var stat_txt = '关闭资料';
+        }else{
+            var confirm = '开放资料，该用户会在前台展示，您确定吗？';
+            var cui_txt = '关闭资料';
+            var stat_txt = '已审核';
         }
+
+        layer.confirm(confirm, {icon: 3, title: '提示'}, function (index) {
+            bhyFunc.ajaxRequest('/admin/member/switch', {user_id: bhyFunc.user_id, is_show: !isShow , field:'is_show'}, function (res) {
+                if (res.status == 1) {
+                    layer.msg('操作成功！');
+                    bhyFunc.isShow = !isShow;
+                    $('#closeUserInfoBtnTitle').text(cui_txt);
+                    $('#status_icon').removeClass('text-green').addClass('text-warning');
+                    $('#status').text(stat_txt);
+                } else {
+                    layer.msg('关闭资料失败，请刷新重试！')
+                }
+                layer.close(index);
+            })
+        });
 
     },
     addBlacklist: function (user_id) {
         var t = $('#userBlackList').text();
         if (t == '列入黑名单') {
             layer.confirm('列入黑名单后，该用户无法登录，您确定吗？', {icon: 3, title: '提示'}, function (index) {
-                bhyFunc.ajaxRequest('url', {user_id: bhyFunc.user_id, black: true}, function (res) {
+                bhyFunc.ajaxRequest('/admin/member/switch', {user_id: bhyFunc.user_id, status: 3,field:'status'}, function (res) {
                     if (res.status == 1) {
                         layer.msg('列入黑名单成功！');
                         $('#userBlackList').text('解除黑名单');
@@ -245,7 +245,7 @@ var bhyFunc = {
                 layer.close(index);
             });
         } else {
-            this.ajaxRequest('url', {user_id: this.user_id, black: false}, function (res) {
+            this.ajaxRequest('/admin/member/switch', {user_id: this.user_id, status: 1,field:'status'}, function (res) {
                 if (res.status == 1) {
                     layer.msg('解除黑名单成功！');
                     $('#userBlackList').text('列入黑名单');

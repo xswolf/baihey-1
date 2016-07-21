@@ -292,6 +292,12 @@ class User extends Base
         return $user;
     }
 
+    public function editUser1($data){
+        return \Yii::$app->db->createCommand()
+            ->update($this->tablePrefix . "user" , $data , ['id' => $data['id']])
+            ->execute();
+    }
+
     /**
      * 设置点赞
      * @param $dynamicId

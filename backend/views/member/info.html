@@ -123,13 +123,13 @@
                                         <a onclick='bhyFunc.resetPass("{{$user.id}}")' href="javascript:;" class="list-group-item"><i
                                                 class="fa fa-unlock-alt fa-fw"></i> 重置密码</a>
                                         <!-- TODO data-isshow这个属性必须要有值，true或者false, 代表该用户资料是否在前台展示。 对应按钮文字也要判断是开放资料还是关闭资料 -->
-                                        <a onclick='bhyFunc.closeUserInfo(this , "{{$user.id}}")' data-isshow="true" href="javascript:;" class="list-group-item">
+                                        <a onclick='bhyFunc.closeUserInfo(this , "{{$user.id}}")' id="is-show" data-isshow="{{$user.is_show}}" href="javascript:;" class="list-group-item">
                                             <i class="fa fa-power-off fa-fw"></i>
-                                            <span id="closeUserInfoBtnTitle">关闭资料</span></a>
+                                            <span id="closeUserInfoBtnTitle">{{if $user.is_show == 1}}关闭资料{{else}}开放资料{{/if}}</span></a>
                                         <a onclick='bhyFunc.addBlacklist("{{$user.id}}")' id="addBlacklist" href="javascript:;" class="list-group-item">
                                             <i class="fa fa-minus-circle fa-fw"></i>
                                             <!-- TODO 根据用户是否黑名单显示按钮文字，列入黑名单、解除黑名单-->
-                                            <span id="userBlackList">列入黑名单</span></a>
+                                            <span id="userBlackList">{{if $user.is_show != 3}}列入黑名单{{else}}解除黑名单{{/if}}</span></a>
                                     </div>
                                 </div>
 
@@ -669,7 +669,7 @@
 <div id="layer_sendMsg">
     <div class="col-sm-12">
         <div class="col-sm-6 center m10">发送者：<span class="text-primary">系统管理员</span></div>
-        <div class="col-sm-6 center m10">接收者：<span class="text-danger">李倩</span></div>
+        <div class="col-sm-6 center m10">接收者：<span class="text-danger">{{$user.info->real_name}}</span></div>
         <div class="col-sm-12">
             <textarea id="msg_content" class="form-control" rows="4"></textarea>
         </div>
@@ -720,7 +720,7 @@
     <div class="col-sm-12">
         <div class="form-group m10">
             <label for="charge_user_id">充值用户</label>
-            <input id="charge_user_id" class="form-control" type="text" disabled="disabled" value="张三(15030)">
+            <input id="charge_user_id" class="form-control" type="text" disabled="disabled" value="{{$user.info->real_name}}({{$user.id}})">
         </div>
         <div class="form-group m10">
             <label for="charge_goods">充值产品</label>
