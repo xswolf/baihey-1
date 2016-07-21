@@ -16,7 +16,7 @@
                 <div class="col-lg-4 col-sm-3 pl0">
                     <div class="form-group">
                         <div class="col-lg-8 col-sm-7">
-                            <select class="input-sm form-control input-s-sm inline">
+                            <select class="input-sm form-control input-s-sm inline" data-column="status:name" id="status">
                                 <option value="0">请选择</option>
                                 <option value="1">冻结</option>
                                 <option value="2">开放</option>
@@ -32,7 +32,7 @@
                             <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
                             <input type="email" placeholder="2014-11-17" class="input-sm form-control">
                             <span class="input-group-addon">到</span>
-                            <input type="text" class="input-sm form-control" name="end" value="" placeholder="2014-11-17">
+                            <input type="text" class="input-sm form-control" id="sex" data-colo="sex:name" name="end" value="" placeholder="2014-11-17">
                         </div>
                     </div>
                 </div>
@@ -51,7 +51,7 @@
                 <thead>
                 <tr>
                     <th class="tn"><input id="checkall" name="" type="checkbox" value=""></th>
-                    <th>姓名</th>
+                    <th data-name="status">姓名</th>
                     <th>地址</th>
                     <th>详细地址</th>
                     <th>年龄</th>
@@ -177,9 +177,13 @@
 
 
 <script>
-
     jQuery(document).ready(function() {
-        App.setPage("dynamic_table");  //Set current page
+//        App.setPage("dynamic_table");  //Set current page
+        var table = $('table').DataTable();
+        $("#status").change(function () {
+            var col = $(this).data('column');
+            console.log(table.column(col).index());
+        });
     });
 
 </script>
