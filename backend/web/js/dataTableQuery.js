@@ -143,7 +143,7 @@ $(function () {
                 },
                 {
                     "data": "id", "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
-                    var html = '<a class="btn btn-primary btn-sm" href="/admin/member/info?id=' + oData.id + '">管理</a> <a class="btn btn-info btn-sm" data-uid="' + oData.id + '" data-uname="' + oData.info.real_name + '" id="returningBtn" href="javascript:;">回访</a> <a class="btn btn-info btn-sm" href="javascript:;">配对</a>';
+                    var html = '<a class="btn btn-primary btn-sm" href="/admin/member/info?id=' + oData.id + '">管理</a> <a class="btn btn-info btn-sm" data-uid="' + oData.id + '" data-uname="' + oData.info.real_name + '" id="returningBtn" href="javascript:;">回访</a> <a id="pairBtn" class="btn btn-info btn-sm" data-uid="' + oData.id + '" data-uname="' + oData.info.real_name + '" href="javascript:;">配对</a>';
                     $(nTd).html(html);
                 }
                 }

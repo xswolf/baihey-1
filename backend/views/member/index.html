@@ -300,18 +300,69 @@
     <div class="ibox-content">
         <div class="form-group">
             <label>回访红娘</label>
-            <input class="form-control" id="matchName" type="text" disabled value="">
+            <input class="form-control" id="return_match_name" type="text" disabled value="">
         </div>
         <div class="form-group">
             <label>回访对象</label>
-            <input class="form-control" id="userName" type="text" disabled value="">
+            <input class="form-control" id="return_user_name" type="text" disabled value="">
         </div>
         <div class="form-group">
             <label>内容</label>
-            <textarea id="return_content" class="form-control" style="resize: none;" maxlength="300" placeholder="300字以内"></textarea>
+            <textarea class="return_content" class="form-control" style="resize: none;" maxlength="300" placeholder="300字以内"></textarea>
         </div>
         <div class="form-group center">
             <button class="btn btn-primary" id="addReturningSubmit">确定添加</button>
+        </div>
+    </div>
+</div>
+
+<div class="ibox" id="pairBox" style="display: none;">
+    <div class="ibox-title">
+        <h5>配对</h5>
+        <div class="ibox-tools rboor">
+            <a class="btn btn-green btn-xs p310" id="addPairBtn" href="javascript:;">
+                <i class="fa fa-plus"></i>
+                添加配对
+            </a>
+        </div>
+    </div>
+    <div class="ibox-content">
+        <table class="table">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>操作人</th>
+                <th>配对双方</th>
+                <th>内容</th>
+                <th>时间</th>
+            </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="ibox" id="addPairBox" style="display: none;">
+    <div class="ibox-title"><h5>添加配对</h5></div>
+    <div class="ibox-content">
+        <div class="form-group">
+            <label>操作人</label>
+            <input class="form-control" id="pair_match_name" type="text" disabled value="">
+        </div>
+        <div class="form-group">
+            <label>配对对象1</label>
+            <input class="form-control" id="pair_user_name1" type="text" disabled value="">
+        </div>
+        <div class="form-group">
+            <label>配对对象2</label>
+            <input class="form-control" id="pair_user_name2" type="text" value="">
+        </div>
+        <div class="form-group">
+            <label>内容</label>
+            <textarea id="pair_content" class="form-control" style="resize: none;" maxlength="300" placeholder="300字以内"></textarea>
+        </div>
+        <div class="form-group center">
+            <button class="btn btn-primary" id="addPairSubmit">确定添加</button>
         </div>
     </div>
 </div>
@@ -320,6 +371,43 @@
 
         bhyFunc.cityPickerInit();
 
+        $('#age1,#age2').append(bhyFunc.ageLink(18));
+        $('#age1').change(function () {
+            if ($(this).val()) {
+                $('#age2').empty().append('<option>最大年龄</option>' + bhyFunc.ageLink($(this).val()));
+            } else {
+                $('#age2').empty().append('<option>最大年龄</option>' + bhyFunc.ageLink(18));
+            }
+        })
+        $('#height').append(bhyFunc.heightLink(140));
+
+        $('.j-datatables tbody').on('click', 'tr', function () {
+            $(this).toggleClass('selected');
+        });
+
+        $('.del-user').click(function () {
+            if (confirm('确认删除')) {
+                var id = [];
+                $('table .selected').each(function () {
+                    id.push($(this).children().next().html());
+                })
+
+                $.ajax({
+                    type: 'post',
+                    url: "/admin/member/del",
+                    data: {id: id},
+                    success: function (res) {
+                        res = JSON.parse(res);
+                        if (res.status == 1) {
+                            window.location.reload();
+                        }
+                    }
+                });
+            }
+
+        })
+
+        // 回访
         $('#demo1').delegate('#returningBtn', 'click', function () {
             var userId = $(this).data('uid');
             var userName = $(this).data('uname');
@@ -352,7 +440,7 @@
                         $(layero1).find('.table').find('tbody').empty().append(html1);
                     })
 
-                    $(layero).find('#addReturningBtn').click(function(){
+                    $(layero1).find('#addReturningBtn').click(function(){  //添加回访
                         layer.open({
                             type: 1,
                             title: false,
@@ -360,9 +448,9 @@
                             shadeClose: true,
                             content: $('#addReturningBox'),
                             success:function(layero2, index2){
-                                $(layero2).find('#matchName').val('郭禹杉');  //TODO $matchName 当前登录红娘姓名
-                                $(layero2).find('#userName').val(userName+'('+userId+')');
-                                $(layero2).find('#addReturningSubmit').click(function(){
+                                $(layero2).find('#return_match_name').val('郭禹杉');  //TODO $matchName 当前登录红娘姓名
+                                $(layero2).find('#return_user_name').val(userName+'('+userId+')');
+                                $(layero2).find('#addReturningBtn').click(function(){
                                     if(!$.trim($('#return_content').val())){
                                         layer.tips('请输入回访内容',$('#return_content'));
                                         return false;
@@ -370,11 +458,11 @@
                                     bhyFunc.ajaxRequest('url',{},function(res){  // 添加回访
                                         if(res.status > 0){
                                             var html2 = "";
-                                                html2 += '<tr><td>' + res.data.id + '</td>';
-                                                html2 += '<td>' + res.data.match_name + '</td>';
-                                                html2 += '<td>' + res.data.real_name + '(' + res.data[i].user_id + ')</td>';
-                                                html2 += '<td>' + res.data.content + '</td>';
-                                                html2 += '<td>' + res.data.create_time + '</td></tr>';
+                                            html2 += '<tr><td>' + res.data.id + '</td>';
+                                            html2 += '<td>' + res.data.match_name + '</td>';
+                                            html2 += '<td>' + res.data.real_name + '(' + res.data[i].user_id + ')</td>';
+                                            html2 += '<td>' + res.data.content + '</td>';
+                                            html2 += '<td>' + res.data.create_time + '</td></tr>';
                                             layer.close(index2);
                                             $(layero1).find('.table').find('tbody').append(html2);
                                         }else{
@@ -387,44 +475,75 @@
                     })
                 }
             });
-        })
-
-
-        $('#age1,#age2').append(bhyFunc.ageLink(18));
-        $('#age1').change(function () {
-            if ($(this).val()) {
-                $('#age2').empty().append('<option>最大年龄</option>' + bhyFunc.ageLink($(this).val()));
-            } else {
-                $('#age2').empty().append('<option>最大年龄</option>' + bhyFunc.ageLink(18));
-            }
-        })
-        $('#height').append(bhyFunc.heightLink(140));
-
-
-        $('.j-datatables tbody').on('click', 'tr', function () {
-            $(this).toggleClass('selected');
-        });
-
-        $('.del-user').click(function () {
-            if (confirm('确认删除')) {
-                var id = [];
-                $('table .selected').each(function () {
-                    id.push($(this).children().next().html());
-                })
-
-                $.ajax({
-                    type: 'post',
-                    url: "/admin/member/del",
-                    data: {id: id},
-                    success: function (res) {
-                        res = JSON.parse(res);
-                        if (res.status == 1) {
-                            window.location.reload();
-                        }
+        }).delegate('#pairBtn', 'click', function () {   // 配对
+            var userId = $(this).data('uid');
+            var userName = $(this).data('uname');
+            layer.open({
+                type: 1,
+                title: false,
+                area: '600px',
+                shadeClose: true,
+                content: $('#pairBox'),
+                success: function (layero1, index1) {
+                    if($.trim(userName)){
+                        layero1.find('.ibox-title>h5').html(userName+'的配对');
+                    }else {
+                        layero1.find('.ibox-title>h5').html(userId+'的配对');
                     }
-                });
-            }
 
+                   /* bhyFunc.ajaxRequest('url', {user_id: userId}, function (res) {
+                        var html1 = "";
+                        if (res.status > 0) {
+                            for (var i in res.data) {
+                                html1 += '<tr><td>' + res.data[i].id + '</td>';
+                                html1 += '<td>' + res.data[i].match_name + '</td>';
+                                html1 += '<td>' + res.data[i].sendRealName + '(' + res.data[i].sendUserId + ') <i class="fa fa-arrows-h"></i> '+res.data[i].recRealName+' ('+res.data[i].recUserId+')</td>';
+                                html1 += '<td>' + res.data[i].content + '</td>';
+                                html1 += '<td>' + res.data[i].create_time + '</td></tr>';
+                            }
+                        } else {
+                            html1 = '<tr><td colspan="5">没有数据</td></tr>';
+                        }
+                        $(layero1).find('.table').find('tbody').empty().append(html1);
+                    })*/
+
+                    $(layero1).find('#addPairBtn').click(function(){  // 添加配对
+                        layer.open({
+                            type: 1,
+                            title: false,
+                            area: '400px',
+                            shadeClose: true,
+                            content: $('#addPairBox'),
+                            success:function(layero2, index2){
+                                $(layero2).find('#pair_match_name').val('郭禹杉');  //TODO $matchName 当前登录红娘姓名
+                                $(layero2).find('#pair_user_name1').val(userName+'('+userId+')');
+                                $(layero2).find('#pair_user_name2').val();
+                                $(layero2).find('#addPairSubmit').click(function(){
+                                    if(!$.trim($('#pair_content').val())){
+                                        layer.tips('请输入配对内容',$('#pair_content'));
+                                        return false;
+                                    }
+                                    bhyFunc.ajaxRequest('url',{},function(res){
+                                        if(res.status > 0){
+                                            var html2 = "";
+                                            html2 += '<tr><td>' + res.data.id + '</td>';
+                                            html2 += '<td>' + res.data.match_name + '</td>';
+                                            html2 += '<td>' + res.data.sendRealName + '(' + res.data.sendUserId + ') <i class="fa fa-arrows-h"></i> '+res.data.recRealName+' ('+res.data.recUserId+')</td>';
+                                            html2 += '<td>' + res.data.content + '</td>';
+                                            html2 += '<td>' + res.data.create_time + '</td></tr>';
+                                            layer.close(index2);
+                                            $(layero1).find('.table').find('tbody').append(html2);
+                                        }else{
+                                            layer.msg('添加配对失败！');
+                                        }
+                                    })
+                                })
+                            }
+                        });
+                    })
+                }
+            });
         })
+
     });
 </script>
