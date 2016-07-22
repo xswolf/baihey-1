@@ -71,7 +71,7 @@
                                     </select>
                                 </div>
                                 <div class="col-sm-2">
-                                    <select class="form-control" name="salary">
+                                    <select class="form-control" name="year_income">
                                         <option value="">年薪</option>
                                         <option value="1">3-5万</option>
                                         <option value="2">6-9万</option>
@@ -81,7 +81,7 @@
                                     </select>
                                 </div>
                                 <div class="col-sm-2">
-                                    <select class="form-control" name="marriage">
+                                    <select class="form-control" name="is_marriage">
                                         <option value="">婚姻</option>
                                         <option value="1">未婚</option>
                                         <option value="2">离异</option>
@@ -89,7 +89,7 @@
                                     </select>
                                 </div>
                                 <div class="col-sm-2">
-                                    <select class="form-control" name="children">
+                                    <select class="form-control" name="is_child">
                                         <option value="">子女</option>
                                         <option value="1">无小孩</option>
                                         <option value="2">有小孩归自己</option>
@@ -125,7 +125,7 @@
                                     </select>
                                 </div>
                                 <div class="col-sm-2">
-                                    <select class="form-control" name="house">
+                                    <select class="form-control" name="is_purchase">
                                         <option value="">购房</option>
                                         <option value="1">已购房</option>
                                         <option value="2">未购房</option>
@@ -134,7 +134,7 @@
                             </div>
                             <div class="row form-group">
                                 <div class="col-sm-2">
-                                    <select class="form-control" name="car">
+                                    <select class="form-control" name="is_car">
                                         <option value="">购车</option>
                                         <option value="1">已购车</option>
                                         <option value="2">未购车</option>
@@ -184,13 +184,19 @@
                                     </select>
                                 </div>
                                 <div class="col-sm-2">
-                                    <select class="form-control">
+                                    <select class="form-control" name="matchmaker">
                                         <option value="">销售红娘</option>
+                                        {{foreach from=$salesUser key=k item=vo}}
+                                        <option value="{{$vo.id}}">{{$vo.name}}</option>
+                                        {{/foreach}}
                                     </select>
                                 </div>
                                 <div class="col-sm-2">
-                                    <select class="form-control">
+                                    <select class="form-control" name="matchmaking">
                                         <option value="">服务红娘</option>
+                                        {{foreach from=$serverUser key=k item=vo}}
+                                        <option value="{{$vo.id}}">{{$vo.name}}</option>
+                                        {{/foreach}}
                                     </select>
                                 </div>
                             </div>

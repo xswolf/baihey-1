@@ -441,7 +441,7 @@ var bhyFunc = {
         $('#provines').append(html);
     },
     selectedProvines: function (p) {
-        var html = '<option>城市</option>';
+        var html = '<option value="">城市</option>';
         for (var i in citys) {
             if (citys[i].parentId == $(p).val()) {
                 html += '<option value="' + citys[i].id + '">' + citys[i].name + '</option>';
@@ -451,7 +451,7 @@ var bhyFunc = {
         $('#area').empty().append('<option>区县</option>');
     },
     selectedCitys: function (c) {
-        var html = '<option>区县</option>';
+        var html = '<option value="">区县</option>';
         for (var i in area) {
             if (area[i].parentId == $(c).val()) {
                 html += '<option value="' + area[i].id + '">' + area[i].name + '</option>';

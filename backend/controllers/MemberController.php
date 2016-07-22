@@ -26,8 +26,27 @@ class MemberController extends BaseController
 
     public function actionIndex()
     {
-
+        $serverUser = AuthUser::getInstance()->getUserByRole("服务红娘");
+        $salesUser = AuthUser::getInstance()->getUserByRole("销售红娘");
+        $this->assign('serverUser' , $serverUser);
+        $this->assign('salesUser' , $salesUser);
         return $this->render();
+    }
+
+    private function searchWhere(&$andWhere , $get){
+        foreach ($get as $k=>$v){
+            if ($v=='' || !in_array($k , ['constellation','zodiac','level','is_car','is_purchase','occupation','is_child','is_marriage','year_income','education','is_show','status','sex','age1','age2','height','province','city','area'])) continue;
+            if ($k=='age1'){
+                $andWhere[] = ['>=' , 'age' , $v];
+            }else if ($k=='age2'){
+                $andWhere[] = ['<=' , 'age' , $v];
+            }else if (in_array($k,['constellation','zodiac','level','is_car','is_purchase','occupation','is_child','is_marriage','year_income','height','education'])){
+                $andWhere[] = [">=", "json_extract(info,'$.{$k}')", intval($v)];
+            }else{
+                $andWhere[] = ["=", $k, $v];
+            }
+        }
+        return $andWhere;
     }
 
     public function actionSearch()
@@ -38,7 +57,7 @@ class MemberController extends BaseController
 
         $andWhere      = [];
         $id_phone_name = $request->get('id_phone_name');
-        if ($request->get('id_phone_name') != '') {
+        if ($request->get('id_phone_name') != '') { // 电话、ID、姓名
             if (is_numeric($id_phone_name)) {
                 if (strlen($id_phone_name . '') == 11) {
                     $andWhere[] = ["=", "phone", $id_phone_name];
@@ -50,13 +69,7 @@ class MemberController extends BaseController
             }
 
         }
-        if ($request->get('is_show') != '') {
-            $andWhere[] = ["=", "is_show", $request->get('is_show')];
-        }
-        if ($request->get('status') != '') {
-            $andWhere[] = ["=", "status", $request->get('status')];
-        }
-
+        $this->searchWhere($andWhere , $request->get());
 
         $list  = User::getInstance()->lists($start, $limit, $andWhere);
         $count = User::getInstance()->count($andWhere);
