@@ -201,13 +201,18 @@ class User extends Model
         return true;
     }
 
+    /**
+     * 删除用户
+     * @param $id
+     * @return mixed
+     */
     public function delUser($id) {
         //删除用户角色
-        /*$auth = \Yii::$app->authManager;
+        $auth = \Yii::$app->authManager;
         $uidRole = $auth->getAssignments($id);
         if(!empty($uidRole) && !$auth->revokeAll($id)) {
             $this->__error('清除角色失败');
-        }*/
+        }
 
         // 删除用户
         $row = $this->db->createCommand()
