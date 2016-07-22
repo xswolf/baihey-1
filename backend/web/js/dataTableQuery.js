@@ -54,20 +54,24 @@ $(function () {
             ext_params.stateSave = false;
             ext_params.sAjaxSource = ajaxUrl;
             ext_params.fnServerData = function (sSource, aoData, fnCallback) {
-                var params = getUrlParamToArr();
-                for (var i in params) {
-                    aoData.push({"name": i, "value": params[i]});
+                var server_ajax = function () {
+                    $.ajax({
+                        "type": 'GET',
+                        "url": ajaxUrl,
+                        "dataType": "json",
+                        "data": aoData,
+                        "success": function (resp) {
+                            fnCallback(resp);
+                        }
+                    });
                 }
-                $.ajax({
-                    "type": 'GET',
-                    "url": ajaxUrl,
-                    "dataType": "json",
-                    "data": aoData,
-                    "success": function (resp) {
-                        fnCallback(resp);
-                    }
-                });
+                $(".submit-form").click(function () {
+                    var url_param = $("form").serialize();
+                    ajaxUrl = ajaxUrl + "?" + url_param;
+                    server_ajax();
+                })
 
+                server_ajax();
             };
             ext_params.columns = [
                 {
