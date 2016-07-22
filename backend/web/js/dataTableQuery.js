@@ -54,7 +54,7 @@ $(function () {
             ext_params.stateSave = false;
             ext_params.sAjaxSource = ajaxUrl;
             ext_params.fnServerData = function (sSource, aoData, fnCallback) {
-                var server_ajax = function () {
+                var server_ajax = function (ajaxUrl) {
                     $.ajax({
                         "type": 'GET',
                         "url": ajaxUrl,
@@ -65,13 +65,7 @@ $(function () {
                         }
                     });
                 }
-                $(".submit-form").click(function () {
-                    var url_param = $("form").serialize();
-                    ajaxUrl = $this.data('ajax-url') + "?" + url_param;
-                    server_ajax();
-                })
-
-                server_ajax();
+                server_ajax(ajaxUrl);
             };
             ext_params.columns = [
                 {
@@ -155,7 +149,11 @@ $(function () {
 
         }
         var table = $this.DataTable(ext_params);
-
+        $(".submit-form").click(function () {
+            var url_param = $("form").serialize();
+            ajaxUrl = $this.data('ajax-url') + "?" + url_param;
+            table.ajax.url(ajaxUrl).load();
+        })
         $('.j-dt-filter', $filterContainer).each(function () {
             var $this = $(this);
             var type;
