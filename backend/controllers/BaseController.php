@@ -70,7 +70,12 @@ class BaseController extends Controller
                 return true;
             }
         }
-        $this->__error('对不起，您现在还没获此操作的权限');
+        if (\Yii::$app->request->isAjax){
+            $this->renderAjax(['status'=>-1 ,'message'=>'无权限']);
+        }else{
+            $this->__error('对不起，您现在还没获此操作的权限');
+
+        }
 
     }
 
