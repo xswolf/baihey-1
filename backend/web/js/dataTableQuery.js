@@ -49,7 +49,7 @@ $(function () {
         }
 
         if ($this.data('is-ajax') == 1) {
-            var ajaxUrl = $this.data('ajax-url')
+            var ajaxUrl = $this.data('ajax-url');
             ext_params.bServerSide = true;
             ext_params.stateSave = false;
             ext_params.sAjaxSource = ajaxUrl;
@@ -67,7 +67,7 @@ $(function () {
                 }
                 $(".submit-form").click(function () {
                     var url_param = $("form").serialize();
-                    ajaxUrl = ajaxUrl + "?" + url_param;
+                    ajaxUrl = $this.data('ajax-url') + "?" + url_param;
                     server_ajax();
                 })
 
