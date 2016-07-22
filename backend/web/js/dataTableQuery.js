@@ -350,6 +350,5 @@ Filter.prototype.groupSearch = function (settings, data, dataIndex) {
             }
         }
     }
-
-    return true
+    return true;
 }

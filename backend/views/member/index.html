@@ -355,7 +355,8 @@
         </div>
         <div class="form-group">
             <label>配对对象2</label>
-            <input class="form-control" id="pair_user_name2" type="text" value="">
+            <input class="form-control" id="pair_user_name2" type="text" value="" placeholder="请输入会员ID" onblur="bhyFunc.getUserById(this)">
+
         </div>
         <div class="form-group">
             <label>内容</label>
@@ -515,10 +516,13 @@
                             shadeClose: true,
                             content: $('#addPairBox'),
                             success:function(layero2, index2){
-                                $(layero2).find('#pair_match_name').val('郭禹杉');  //TODO $matchName 当前登录红娘姓名
-                                $(layero2).find('#pair_user_name1').val(userName+'('+userId+')');
-                                $(layero2).find('#pair_user_name2').val();
-                                $(layero2).find('#addPairSubmit').click(function(){
+                                $('#pair_match_name').val('郭禹杉');  //TODO $matchName 当前登录红娘姓名
+                                $('#pair_user_name1').val(userName+'('+userId+')');
+                                $('#addPairSubmit').click(function(){
+                                    if($('#pair_user_name2').data('ok') && $('#pair_user_name2').data('ok') != 'yes'){
+                                        layer.tips('未找到该会员，请核对会员ID',$('#pair_user_name2'));
+                                        return false;
+                                    }
                                     if(!$.trim($('#pair_content').val())){
                                         layer.tips('请输入配对内容',$('#pair_content'));
                                         return false;

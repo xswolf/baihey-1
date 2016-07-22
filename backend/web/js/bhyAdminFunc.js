@@ -440,26 +440,26 @@ var bhyFunc = {
         }
         $('#provines').append(html);
     },
-    selectedProvines:function(p){
+    selectedProvines: function (p) {
         var html = '<option>城市</option>';
         for (var i in citys) {
-            if(citys[i].parentId == $(p).val()){
+            if (citys[i].parentId == $(p).val()) {
                 html += '<option value="' + citys[i].id + '">' + citys[i].name + '</option>';
             }
         }
         $('#citys').empty().append(html);
         $('#area').empty().append('<option>区县</option>');
     },
-    selectedCitys:function(c){
+    selectedCitys: function (c) {
         var html = '<option>区县</option>';
         for (var i in area) {
-            if(area[i].parentId == $(c).val()){
+            if (area[i].parentId == $(c).val()) {
                 html += '<option value="' + area[i].id + '">' + area[i].name + '</option>';
             }
         }
         $('#area').empty().append(html);
     },
-    ageLink:function(min){
+    ageLink: function (min) {
         var ageHtml = "",
             ageMin = min,
             ageMax = 99;
@@ -472,7 +472,7 @@ var bhyFunc = {
         }
         return ageHtml;
     },
-    heightLink:function(min){
+    heightLink: function (min) {
         var ageHtml = "",
             ageMin = min,
             ageMax = 260;
@@ -484,6 +484,22 @@ var bhyFunc = {
             ageHtml += '厘米以上</option>';
         }
         return ageHtml;
+    },
+    getUserById: function (input) {   // 根据用户ID获取用户姓名
+        if ($.trim(input.value)) {
+            this.ajaxRequest('url', function (res) {
+                var html = "";
+                if (res.status > 0) {
+                    html += '<p class="text-danger">' + res.data.real_name + ' ';
+                    html += res.data.sex + '</p>';
+                    $(input).attr('data-ok','yes');
+                }else{
+                    html += '<p>未找到该会员，请核对会员ID</p>'
+                    $(input).attr('data-ok','no');
+                }
+                $(input).after(html);
+            })
+        }
     }
 
 };
