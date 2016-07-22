@@ -160,6 +160,7 @@
                                                                 <div class="col-sm-3">
                                                                     <span class="text-muted fwb">手机号码：</span>
                                                                     <span class="text-warning">{{$user.phone}}</span>
+                                                                    <button id="showPhone" class="btn btn-warning btn-sm">查看</button>
                                                                 </div>
                                                             </div>
                                                             <div class="row m10">
@@ -835,6 +836,10 @@
                     $("#"+index).find(".message-content").html(res);
                 }
             });
+        })
+
+        $('#showPhone').click(function(){
+            layer.alert('您没有权限查看');
         })
     });
 </script>
