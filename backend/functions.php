@@ -18,6 +18,11 @@ function getAge($timeStamp)
     return $year_diff;
 }
 
+// 时间戳转日期
+function timeStampToDate($timeStamp){
+    return date('Y-m-d H:i:s',$timeStamp);
+}
+
 function getSex($sex)
 {
     return $sex == 1 ? '男' : '女';

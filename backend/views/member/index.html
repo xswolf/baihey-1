@@ -429,7 +429,7 @@
                             for (var i in res.data) {
                                 html1 += '<tr><td>' + res.data[i].id + '</td>';
                                 html1 += '<td>' + res.data[i].admin_name + '</td>';
-                                html1 += '<td>' + res.data[i].to_name.replace(/"/g, '') + '(' + res.data[i].to_user_id + ')</td>';
+                                html1 += '<td>' + res.data[i].to_name + '(' + res.data[i].to_user_id + ')</td>';
                                 html1 += '<td>' + res.data[i].content + '</td>';
                                 html1 += '<td>' + bhyFunc.timesTampToDate(res.data[i].create_time) + '</td></tr>';
                             }

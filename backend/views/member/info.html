@@ -117,21 +117,27 @@
                                             充值/开通
                                         </a>
                                         {{/if}}
+                                        {{if authValidate('/admin/member/edit')}}
                                         <a href="/admin/member/edit?id={{$user.id}}" data-toggle="modal" class="list-group-item">
                                             <i class="fa fa-edit fa-fw"></i>
                                             修改资料</a>
+                                        {{/if}}
+                                        {{if authValidate('/admin/member/sys-msg')}}
                                         <a id="sendMsg" href="javascript:;" class="list-group-item"><i
                                                 class="fa fa-comment-o fa-fw"></i> 发站内信</a>
+                                        {{/if}}
+                                        {{if authValidate('/admin/member/switch')}}
                                         <a onclick='bhyFunc.resetPass("{{$user.id}}")' href="javascript:;" class="list-group-item"><i
                                                 class="fa fa-unlock-alt fa-fw"></i> 重置密码</a>
-                                        <!-- TODO data-isshow这个属性必须要有值，true或者false, 代表该用户资料是否在前台展示。 对应按钮文字也要判断是开放资料还是关闭资料 -->
+
                                         <a onclick='bhyFunc.closeUserInfo(this , "{{$user.id}}")' id="is-show" data-isshow="{{$user.is_show}}" href="javascript:;" class="list-group-item">
                                             <i class="fa fa-power-off fa-fw"></i>
                                             <span id="closeUserInfoBtnTitle">{{if $user.is_show == 1}}关闭资料{{else}}开放资料{{/if}}</span></a>
+
                                         <a onclick='bhyFunc.addBlacklist("{{$user.id}}")' id="addBlacklist" href="javascript:;" class="list-group-item">
                                             <i class="fa fa-minus-circle fa-fw"></i>
-                                            <!-- TODO 根据用户是否黑名单显示按钮文字，列入黑名单、解除黑名单-->
                                             <span id="userBlackList">{{if $user.is_show != 3}}列入黑名单{{else}}解除黑名单{{/if}}</span></a>
+                                        {{/if}}
                                     </div>
                                 </div>
 
@@ -161,8 +167,7 @@
                                                                 </div>
                                                                 <div class="col-sm-3">
                                                                     <span class="text-muted fwb">手机号码：</span>
-                                                                    <span class="text-warning">{{$user.phone}}</span>
-                                                                    <button id="showPhone" class="btn btn-warning btn-sm">查看</button>
+                                                                    <button id="showPhone" class="btn btn-warning btn-sm" style="padding: 0 10px;">查看</button>
                                                                 </div>
                                                             </div>
                                                             <div class="row m10">
@@ -338,7 +343,7 @@
                                                                 </div>
                                                                 <div class="col-sm-3">
                                                                     <span class="text-muted fwb">服务到期时间：</span>
-                                                                    <span class="text-danger">{{$user.mature_time}}</span>
+                                                                    <span class="text-danger">{{timeStampToDate($user.mature_time)}}</span>
                                                                 </div>
                                                             </div>
                                                             <div class="row m10">
@@ -536,7 +541,7 @@
                                 <div class="col-md-12">
 
                                     <div class="panel-group" id="accordion">
-                                        <div class="panel panel-danger identify-auth">
+                                        <div class="panel  identify-auth">
                                             {{foreach from=$identifyType key=k item=vo}}
                                             {{if $k==2}}
                                             <div class="panel-heading">
@@ -548,6 +553,7 @@
 
                                             <div id="collapseOne" class="panel-collapse collapse in">
                                                 <div class="panel-body">
+                                                    {{if authValidate('/admin/member/auth-photo')}}
                                                     <div class="alert alert-info idCardInfo {{if ($user.honesty_value & 1)}}hide{{/if}}">
                                                         请您确认以下信息，该会员身份证照片是否审核通过？&nbsp;&nbsp;&nbsp;&nbsp;
                                                         <button class="btn btn-success" onclick="bhyFunc.reviewYes(1)">
@@ -560,7 +566,7 @@
                                                     <div class="alert alert-success idCardSuccess {{if !($user.honesty_value & 1)}}hide{{/if}}">
                                                         该会员身份证已审核通过！
                                                     </div>
-
+                                                    {{/if}}
                                                     <ul id="layer-photos-demo1" class="list-unstyled list-inline">
                                                         {{foreach from=$identify item=vo}}
                                                             {{if $vo.type==2 || $vo.type ==3}}
@@ -596,6 +602,7 @@
                                             </div>
                                             <div id="collapseTwo{{$k}}" class="panel-collapse collapse">
                                                 <div class="panel-body">
+                                                    {{if authValidate('/admin/member/auth-photo')}}
                                                         {{if $k == 5}}
                                                             <div class="alert alert-info info{{$k}} {{if ($user.honesty_value & 2)}}hide{{/if}}">
                                                                 请您确认以下信息，该会员婚姻证明照片是否审核通过？&nbsp;&nbsp;&nbsp;&nbsp;
@@ -643,7 +650,7 @@
                                                             该会员学历证明已审核通过！
                                                         </div>
                                                         {{/if}}
-
+                                                    {{/if}}
                                                     <ul id="layer-photos-demo{{$k}}" class="list-unstyled list-inline">
                                                         {{foreach from=$identify item=vo}}
                                                         {{if $vo.type==$k}}
@@ -804,7 +811,6 @@
 <script>
     jQuery(document).ready(function () {
         $('.colorbox-button').colorbox({rel: 'colorbox-button', maxWidth: '95%', maxHeight: '95%'});
-        /* Colorbox resize function */
         var resizeTimer;
 
         function resizeColorBox() {
@@ -841,7 +847,11 @@
         })
 
         $('#showPhone').click(function(){
+            "{{if authValidate('/admin/member/show-phone')}}"
+            layer.alert('{{$user.phone}}');
+            "{{else }}"
             layer.alert('您没有权限查看');
+            "{{/if}}"
         })
     });
 </script>
