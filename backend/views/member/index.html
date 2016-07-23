@@ -372,9 +372,9 @@
         $('#age1,#age2').append(bhyFunc.ageLink(18));
         $('#age1').change(function () {
             if ($(this).val()) {
-                $('#age2').empty().append('<option>最大年龄</option>' + bhyFunc.ageLink($(this).val()));
+                $('#age2').empty().append('<option value="">最大年龄</option>' + bhyFunc.ageLink($(this).val()));
             } else {
-                $('#age2').empty().append('<option>最大年龄</option>' + bhyFunc.ageLink(18));
+                $('#age2').empty().append('<option value="">最大年龄</option>' + bhyFunc.ageLink(18));
             }
         })
         $('#height').append(bhyFunc.heightLink(140));
@@ -409,6 +409,7 @@
         $('#demo1').delegate('#returningBtn', 'click', function () {
             var userId = $(this).data('uid');
             var userName = $(this).data('uname');
+            $('#return_content').val('');
             layer.open({
                 type: 1,
                 title: false,
@@ -479,6 +480,8 @@
         }).delegate('#pairBtn', 'click', function () {   // 配对
             var userId = $(this).data('uid');
             var userName = $(this).data('uname');
+            $('#pair_user_name2').val('');
+            $('#pair_content').val('');
             layer.open({
                 type: 1,
                 title: false,
@@ -516,10 +519,11 @@
                             shadeClose: true,
                             content: $('#addPairBox'),
                             success:function(layero2, index2){
+                                var from_user_id = $.trim($('#pair_user_name2').val());
                                 $('#pair_match_name').val(admin_name);  //TODO $matchName 当前登录红娘姓名
                                 $('#pair_user_name1').val(userName+'('+userId+')');
                                 $('#addPairSubmit').click(function(){
-                                    if(!$('#pair_user_name2').data('ok') && $('#pair_user_name2').data('ok') != 'yes'){
+                                    if(!bhyFunc.getUserById(from_user_id)){
                                         layer.tips('未找到该会员，请核对会员ID',$('#pair_user_name2'));
                                         return false;
                                     }
@@ -528,13 +532,15 @@
                                         return false;
                                     }
                                     var content = $.trim($('#pair_content').val());
-                                    var from_user_id = $.trim($('#pair_user_name2').val());
+                                    var fromUser = bhyFunc.getUserById(from_user_id);
+                                    var fromUserInfo = JSON.parse(fromUser.info);
+
                                     bhyFunc.ajaxRequest('/admin/member/add-pair',{admin_id:admin_id, to_user_id:userId, from_user_id:from_user_id, content:content, type:1, status:2},function(res){
                                         if(res.status > 0){
                                             var html2 = "";
                                             html2 += '<tr><td>' + res.data.id + '</td>';
                                             html2 += '<td>' + admin_name + '</td>';
-                                            html2 += '<td>' + userName + '(' + userId + ') <i class="fa fa-arrows-h"></i> '+res.data.recRealName+' ('+res.data.recUserId+')</td>';
+                                            html2 += '<td>' + userName + '(' + userId + ') <i class="fa fa-arrows-h"></i> '+fromUserInfo.real_name+' ('+from_user_id+')</td>';
                                             html2 += '<td>' + content + '</td>';
                                             html2 += '<td>' + bhyFunc.timesTampToDate(res.data.create_time) + '</td></tr>';
                                             layer.close(index2);
