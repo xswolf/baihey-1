@@ -279,7 +279,7 @@
                     </a>
                     <ul class="sub">
                         <li class="has-sub-sub"><a data-menu="5" class="has-sub-sub"  href="/admin/member/index"><span class="sub-menu-text">会员列表</span></a></li>
-                        <li class="has-sub-sub"><a data-menu="6" class="has-sub-sub"  href="/admin/member/photo?is_check=2&type=1"><span class="sub-menu-text">照片审核</span></a></li>
+                        <li class="has-sub-sub"><a data-menu="6" class="has-sub-sub"  href="/admin/member/photo?is_check=2&type=1"><span class="sub-menu-text">图片管理</span></a></li>
                         <li class="has-sub-sub"><a data-menu="7" class="has-sub-sub"  href="/admin/member/order"><span class="sub-menu-text">订单列表</span></a></li>
                         <li class="has-sub-sub"><a data-menu="8" class="has-sub-sub"  href="/admin/cash/index?status=2"><span class="sub-menu-text">提现管理</span></a></li>
                         <li class="has-sub-sub"><a data-menu="9" class="has-sub-sub"  href="/admin/chat/index"><span class="sub-menu-text">聊天管理</span></a></li>
