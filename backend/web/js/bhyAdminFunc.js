@@ -486,12 +486,17 @@ var bhyFunc = {
         return ageHtml;
     },
     getUserById: function (input) {   // 根据用户ID获取用户姓名
-        if ($.trim(input.value)) {
-            this.ajaxRequest('url', function (res) {
+        var user_id = $.trim(input.value);
+        if (user_id) {
+            this.ajaxRequest('/admin/member/get-user',{user_id:user_id}, function (res) {
                 var html = "";
+                var userInfo = JSON.parse(res.data.info);
+                var sex = res.data.sex == 1 ? '男' : '女';
+                //console.log(res.data.sex);
+                //console.log(userInfo.real_name);return false;
                 if (res.status > 0) {
-                    html += '<p class="text-danger">' + res.data.real_name + ' ';
-                    html += res.data.sex + '</p>';
+                    html += '<p class="text-danger">' + userInfo.real_name + ' ';
+                    html += sex + '</p>';
                     $(input).attr('data-ok','yes');
                 }else{
                     html += '<p>未找到该会员，请核对会员ID</p>'

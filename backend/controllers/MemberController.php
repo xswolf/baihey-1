@@ -401,6 +401,16 @@ class MemberController extends BaseController
         }
     }
 
+    // 获取用户信息
+    public function actionGetUser()
+    {
+        if($data = User::getInstance()->getUserById($this->post['user_id'])) {
+            $this->renderAjax(['status' => 1, 'data' => $data, 'message' => '成功']);
+        } else {
+            $this->renderAjax(['status' => 0, 'data' => [], 'message' => '失败']);
+        }
+    }
+
     // 回访记录配对记录
     public function actionPairList()
     {

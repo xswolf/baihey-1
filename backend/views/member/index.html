@@ -492,21 +492,21 @@
                         layero1.find('.ibox-title>h5').html(userId+'的配对');
                     }
 
-                   /* bhyFunc.ajaxRequest('url', {user_id: userId}, function (res) {
+                    bhyFunc.ajaxRequest('/admin/member/pair-list', {to_user_id: userId, type: 1}, function (res) {
                         var html1 = "";
                         if (res.status > 0) {
                             for (var i in res.data) {
                                 html1 += '<tr><td>' + res.data[i].id + '</td>';
-                                html1 += '<td>' + res.data[i].match_name + '</td>';
-                                html1 += '<td>' + res.data[i].sendRealName + '(' + res.data[i].sendUserId + ') <i class="fa fa-arrows-h"></i> '+res.data[i].recRealName+' ('+res.data[i].recUserId+')</td>';
+                                html1 += '<td>' + res.data[i].admin_name + '</td>';
+                                html1 += '<td>' + res.data[i].to_name + '(' + res.data[i].to_user_id + ') <i class="fa fa-arrows-h"></i> '+res.data[i].form_name+' ('+res.data[i].from_user_id+')</td>';
                                 html1 += '<td>' + res.data[i].content + '</td>';
-                                html1 += '<td>' + res.data[i].create_time + '</td></tr>';
+                                html1 += '<td>' + bhyFunc.timesTampToDate(res.data[i].create_time) + '</td></tr>';
                             }
                         } else {
                             html1 = '<tr><td colspan="5">没有数据</td></tr>';
                         }
                         $(layero1).find('.table').find('tbody').empty().append(html1);
-                    })*/
+                    })
 
                     $(layero1).find('#addPairBtn').click(function(){  // 添加配对
                         layer.open({
@@ -516,10 +516,10 @@
                             shadeClose: true,
                             content: $('#addPairBox'),
                             success:function(layero2, index2){
-                                $('#pair_match_name').val('郭禹杉');  //TODO $matchName 当前登录红娘姓名
+                                $('#pair_match_name').val(admin_name);  //TODO $matchName 当前登录红娘姓名
                                 $('#pair_user_name1').val(userName+'('+userId+')');
                                 $('#addPairSubmit').click(function(){
-                                    if($('#pair_user_name2').data('ok') && $('#pair_user_name2').data('ok') != 'yes'){
+                                    if(!$('#pair_user_name2').data('ok') && $('#pair_user_name2').data('ok') != 'yes'){
                                         layer.tips('未找到该会员，请核对会员ID',$('#pair_user_name2'));
                                         return false;
                                     }
@@ -527,14 +527,16 @@
                                         layer.tips('请输入配对内容',$('#pair_content'));
                                         return false;
                                     }
-                                    bhyFunc.ajaxRequest('url',{},function(res){
+                                    var content = $.trim($('#pair_content').val());
+                                    var from_user_id = $.trim($('#pair_user_name2').val());
+                                    bhyFunc.ajaxRequest('/admin/member/add-pair',{admin_id:admin_id, to_user_id:userId, from_user_id:from_user_id, content:content, type:1, status:2},function(res){
                                         if(res.status > 0){
                                             var html2 = "";
                                             html2 += '<tr><td>' + res.data.id + '</td>';
-                                            html2 += '<td>' + res.data.match_name + '</td>';
-                                            html2 += '<td>' + res.data.sendRealName + '(' + res.data.sendUserId + ') <i class="fa fa-arrows-h"></i> '+res.data.recRealName+' ('+res.data.recUserId+')</td>';
-                                            html2 += '<td>' + res.data.content + '</td>';
-                                            html2 += '<td>' + res.data.create_time + '</td></tr>';
+                                            html2 += '<td>' + admin_name + '</td>';
+                                            html2 += '<td>' + userName + '(' + userId + ') <i class="fa fa-arrows-h"></i> '+res.data.recRealName+' ('+res.data.recUserId+')</td>';
+                                            html2 += '<td>' + content + '</td>';
+                                            html2 += '<td>' + bhyFunc.timesTampToDate(res.data.create_time) + '</td></tr>';
                                             layer.close(index2);
                                             $(layero1).find('.table').find('tbody').append(html2);
                                         }else{
