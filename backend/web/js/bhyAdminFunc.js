@@ -3,13 +3,14 @@
  */
 var bhyFunc = {
     user_id: $('#user_id').val() ? $('#user_id').val() : 0,
-    ajaxRequest: function (url, param, success, type) {
+    ajaxRequest: function (url, param, success, type, async) {
         var _type = type ? type : 'POST';
         $.ajax({
             type: _type,
             url: url,
             data: param,
             dataType: "json",
+            async: async == null || async == undefined ? true : async,
             success: success,
             beforeSend: function () {
                 App.blockUI($('body'));
@@ -486,30 +487,40 @@ var bhyFunc = {
         return ageHtml;
     },
     getUserById: function (input) {   // 根据用户ID获取用户姓名
-        var user_id = $.trim(input.value);
-        if (user_id) {
-            this.ajaxRequest('/admin/member/get-user',{user_id:user_id}, function (res) {
-                var html = "";
-                var userInfo = JSON.parse(res.data.info);
-                var sex = res.data.sex == 1 ? '男' : '女';
-                //console.log(res.data.sex);
-                //console.log(userInfo.real_name);return false;
+        if (input.value) {
+            var user_id = $.trim(input.value);
+            if (user_id) {
+                this.ajaxRequest('/admin/member/get-user', {user_id: user_id}, function (res) {
+                    var html = "";
+                    var userInfo = JSON.parse(res.data.info);
+                    var sex = res.data.sex == 1 ? '男' : '女';
+                    //console.log(res.data.sex);
+                    //console.log(userInfo.real_name);return false;
+                    if (res.status > 0) {
+                        html += '<p class="text-danger">' + userInfo.real_name + ' ';
+                        html += sex + '</p>';
+                        $(input).attr('data-ok', 'yes');
+                    } else {
+                        html += '<p>未找到该会员，请核对会员ID</p>'
+                        $(input).attr('data-ok', 'no');
+                    }
+                    $(input).after(html);
+                })
+            }
+        } else {
+            var result = false;
+            this.ajaxRequest('/admin/member/get-user', {user_id: input}, function (res) {
                 if (res.status > 0) {
-                    html += '<p class="text-danger">' + userInfo.real_name + ' ';
-                    html += sex + '</p>';
-                    $(input).attr('data-ok','yes');
-                }else{
-                    html += '<p>未找到该会员，请核对会员ID</p>'
-                    $(input).attr('data-ok','no');
+                    result = res.data;
                 }
-                $(input).after(html);
-            })
+            },'post',false)
+            return result;
         }
+
     },
     timesTampToDate: function (timesTamp) {   //将时间戳转为中文日期格式 2016/1/1 上午1:43:02
         var unixTimestamp = new Date(timesTamp * 1000);
         return unixTimestamp.toLocaleString();
-    },
-
+    }
 
 };

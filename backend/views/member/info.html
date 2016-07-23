@@ -13,7 +13,7 @@
                 <div class="tabbable header-tabs user-profile">
                     <ul class="nav nav-tabs">
                         <li><a href="#pro_identity" data-toggle="tab"><i class="fa fa-credit-card"></i> <span
-                                class="hidden-inline-mobile"> 审核证件</span></a></li>
+                                class="hidden-inline-mobile"> 证件</span></a></li>
                         <li><a href="#pro_msg" data-toggle="tab"><i class="fa fa-comments-o"></i> <span
                                 class="hidden-inline-mobile"> 消息记录</span></a></li>
                         <li><a href="#pro_peidui" data-toggle="tab"><i class="fa fa-heart-o"></i> <span
@@ -111,10 +111,12 @@
                                                 </span>
                                             </p>
                                         </div>
+                                        {{if(authValidate('dju'))}}
                                         <a id="charge" href="javascript:;" class="list-group-item">
                                             <i class="fa fa-rmb fa-fw"></i>
                                             充值/开通
                                         </a>
+                                        {{/if}}
                                         <a href="/admin/member/edit?id={{$user.id}}" data-toggle="modal" class="list-group-item">
                                             <i class="fa fa-edit fa-fw"></i>
                                             修改资料</a>
