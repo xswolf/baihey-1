@@ -500,6 +500,11 @@ var bhyFunc = {
                 $(input).after(html);
             })
         }
-    }
+    },
+    timesTampToDate: function (timesTamp) {   //将时间戳转为中文日期格式 2016/1/1 上午1:43:02
+        var unixTimestamp = new Date(timesTamp * 1000);
+        return unixTimestamp.toLocaleString();
+    },
+
 
 };
