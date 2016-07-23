@@ -90,10 +90,8 @@
             </li>
         </ul>
         <!-- /NAVBAR LEFT -->
-        <!-- BEGIN TOP NAVIGATION MENU -->
         <ul class="nav navbar-nav pull-right">
-            <!-- BEGIN USER LOGIN DROPDOWN -->
-            <li class="dropdown" id="header-notification">
+            <!--<li class="dropdown" id="header-notification">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                     <i class="fa fa-bell"></i>
                     <span class="badge">2</span>
@@ -192,7 +190,7 @@
                         <a href="#">现在去查看 <i class="fa fa-arrow-circle-right"></i></a>
                     </li>
                 </ul>
-            </li>
+            </li>-->
             <li class="dropdown user" id="header-user">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                     <img alt="" src="/backend/web/CloudAdmin/img/avatars/avatar9.jpg" />
@@ -221,9 +219,7 @@
                 </ul>
 
             </li>
-            <!-- END USER LOGIN DROPDOWN -->
         </ul>
-        <!-- END TOP NAVIGATION MENU -->
     </div>
 
 </header>
@@ -237,13 +233,15 @@
 
             <!-- 左侧菜单 -->
             <ul>
+                <?php  if(authValidate('/admin/site')){  ?>
                 <li class="has-sub">
                     <a href="/admin/site" data-menu="1">
                         <i class="fa fa-tachometer fa-fw"></i> <span class="menu-text">主页</span>
                         <span class="selected"></span>
                     </a>
                 </li>
-
+                <?php }  ?>
+                <?php  if(authValidate('/admin/rbac')){  ?>
                 <li class="has-sub" >
                     <a href="javascript:;" class="" data-menu="2">
                         <i class="fa fa-file-text fa-fw"></i> <span class="menu-text">权限管理</span>
@@ -254,6 +252,8 @@
                         <li class="has-sub-sub"><a data-menu="2" class="" href="/admin/rbac/list-role"><span class="sub-menu-text">角色列表</span></a></li>
                     </ul>
                 </li>
+                <?php }  ?>
+                <?php  if(authValidate('/admin/user')){  ?>
                 <li class="has-sub">
                     <a href="javascript:;" class="" data-menu="3">
                         <i class="fa fa-file-text fa-fw"></i> <span class="menu-text">用户管理</span>
@@ -263,6 +263,8 @@
                         <li class="has-sub-sub"><a data-menu="3" class="has-sub-sub"  href="/admin/user/list-user"><span class="sub-menu-text">用户列表</span></a></li>
                     </ul>
                 </li>
+                <?php }  ?>
+                <?php  if(authValidate('/admin/config')){  ?>
                 <li class="has-sub">
                     <a href="javascript:;" class="" data-menu="4">
                         <i class="fa fa-file-text fa-fw"></i> <span class="menu-text">配置</span>
@@ -272,22 +274,38 @@
                         <li class="has-sub-sub"><a data-menu="4" class="has-sub-sub"  href="/admin/config/list"><span class="sub-menu-text">基础配置</span></a></li>
                     </ul>
                 </li>
+                <?php }  ?>
+                <?php  if(authValidate('/admin/member')){  ?>
                 <li class="has-sub">
                     <a href="javascript:;" class="" data-menu="5">
                         <i class="fa fa-file-text fa-fw"></i> <span class="menu-text">综合管理</span>
                         <span class="arrow"></span>
                     </a>
                     <ul class="sub">
+                        <?php  if(authValidate('/admin/member/index')){  ?>
                         <li class="has-sub-sub"><a data-menu="5" class="has-sub-sub"  href="/admin/member/index"><span class="sub-menu-text">会员列表</span></a></li>
+                        <?php }  ?>
+                        <?php  if(authValidate('/admin/member/auth-photo')){  ?>
                         <li class="has-sub-sub"><a data-menu="6" class="has-sub-sub"  href="/admin/member/photo?is_check=2&type=1"><span class="sub-menu-text">图片管理</span></a></li>
+                        <?php }  ?>
+                        <?php  if(authValidate('/admin/member/order')){  ?>
                         <li class="has-sub-sub"><a data-menu="7" class="has-sub-sub"  href="/admin/member/order"><span class="sub-menu-text">订单列表</span></a></li>
+                        <?php }  ?>
+                        <?php  if(authValidate('/admin/cash/index')){  ?>
                         <li class="has-sub-sub"><a data-menu="8" class="has-sub-sub"  href="/admin/cash/index?status=2"><span class="sub-menu-text">提现管理</span></a></li>
+                        <?php }  ?>
+                        <?php  if(authValidate('/admin/chat/index')){  ?>
                         <li class="has-sub-sub"><a data-menu="9" class="has-sub-sub"  href="/admin/chat/index"><span class="sub-menu-text">聊天管理</span></a></li>
+                        <?php }  ?>
+                        <?php  if(authValidate('/admin/feedback/index')){  ?>
                         <li class="has-sub-sub"><a data-menu="10" class="has-sub-sub"  href="/admin/feedback/index?status=2"><span class="sub-menu-text">举报管理</span></a></li>
+                        <?php }  ?>
+                        <?php  if(authValidate('/admin/produce/index')){  ?>
                         <li class="has-sub-sub"><a data-menu="11" class="has-sub-sub"  href="/admin/produce/index"><span class="sub-menu-text">产品管理</span></a></li>
+                        <?php }  ?>
                     </ul>
                 </li>
-
+                <?php }  ?>
             </ul>
             <!-- /左侧菜单 -->
         </div>
