@@ -69,7 +69,7 @@
                         {{else}}
                         <a class="btn btn-success btn-sm" onclick="changeStatus('{{$vo.id}}',this)" href="javascript:;">启用</a>
                         {{/if}}
-                        <a class="btn btn-warning btn-sm" onclick="bhyFunc.deleteItemByList(1,this,'url')" href="javascript:;">删除</a>
+                        <a class="btn btn-warning btn-sm" onclick="bhyFunc.deleteItemByList('{{$vo.id}}',this,'/admin/produce/del-goods')" href="javascript:;">删除</a>
                     </td>
                 </tr>
                 {{/foreach}}
