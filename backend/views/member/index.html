@@ -372,9 +372,9 @@
         $('#age1,#age2').append(bhyFunc.ageLink(18));
         $('#age1').change(function () {
             if ($(this).val()) {
-                $('#age2').empty().append('<option>最大年龄</option>' + bhyFunc.ageLink($(this).val()));
+                $('#age2').empty().append('<option value="">最大年龄</option>' + bhyFunc.ageLink($(this).val()));
             } else {
-                $('#age2').empty().append('<option>最大年龄</option>' + bhyFunc.ageLink(18));
+                $('#age2').empty().append('<option value="">最大年龄</option>' + bhyFunc.ageLink(18));
             }
         })
         $('#height').append(bhyFunc.heightLink(140));

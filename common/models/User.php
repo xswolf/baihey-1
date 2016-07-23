@@ -83,6 +83,9 @@ class User extends Base
             $dataUser['password'] = md5(md5($data['password']));
             $dataUser['phone']    = $data['phone'];
 
+            if($data['age']) {
+                $infoData['age'] = floor((time() - $data['age'])/ 365 / 24 / 3600);
+            }
             isset($data['province']) ? $infoData['province'] = $data['province'] : true;
             isset($data['city']) ? $infoData['city'] = $data['city'] : true;
             isset($data['area']) ? $infoData['area'] = $data['area'] : true;
@@ -275,7 +278,9 @@ class User extends Base
         $user['id'] = $data['user_id'];
         unset($data['user']);
         $userInfo = $data;
-
+        if($userInfo['info']['age']) {
+            $userInfo['age'] = floor((time() - $userInfo['info']['age'])/ 365 / 24 / 3600);
+        }
         $userInfo['info'] = json_encode(array_merge($this->getDefaultInfo(), $userInfo['zo'], $userInfo['info']));
         unset ($userInfo['zo']);
         unset($userInfo['photosList']);
