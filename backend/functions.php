@@ -7,29 +7,32 @@
  */
 
 // 根据时间戳获取年龄
-function getAge($timeStamp){
+function getAge($timeStamp)
+{
 
-    $timeStamp = (int) $timeStamp;
-    if (empty($timeStamp) && $timeStamp<1000) return;
-    $birthday = date('Y-m-d' , $timeStamp);
-    list($year,$month,$day) = explode("-",$birthday);
+    $timeStamp = (int)$timeStamp;
+    if (empty($timeStamp) && $timeStamp < 1000) return;
+    $birthday = date('Y-m-d', $timeStamp);
+    list($year, $month, $day) = explode("-", $birthday);
     $year_diff = date("Y") - $year;
     return $year_diff;
 }
 
-function getSex($sex){
+function getSex($sex)
+{
     return $sex == 1 ? '男' : '女';
 }
 
-function getMarriage($marriage){
-    if ($marriage == 1){
+function getMarriage($marriage)
+{
+    if ($marriage == 1) {
         return '未婚';
-    }elseif ($marriage == 2){
+    } elseif ($marriage == 2) {
         return '离异';
 
-    }elseif ($marriage ==3){
+    } elseif ($marriage == 3) {
         return '丧偶';
-    }else{
+    } else {
         return '未婚';
     }
 }
@@ -48,8 +51,9 @@ function getMarriage($marriage){
 //    return $str;
 //}
 
-function getEducation($e){
-    switch ($e){
+function getEducation($e)
+{
+    switch ($e) {
         case 1 :
             return '初中';
         case 2 :
@@ -71,7 +75,8 @@ function getEducation($e){
 
 }
 
-function getLevel($l){
+function getLevel($l)
+{
     switch ($l) {
         case 1 :
             return 'VIP';
@@ -84,150 +89,165 @@ function getLevel($l){
     }
 }
 
-function getIsNot($s){
+function getIsNot($s)
+{
     $value = $s == 0 ? '否' : '是';
     return $value;
 }
 
-function getTitleByOrderListStatus($status){
+function getTitleByOrderListStatus($status)
+{
     $title = $status == 0 ? '待付款' : '<span class="text-danger">成功</span>';
     return $title;
 }
 
-function getTitleByOrderListValue($value){
-    $title = $value == 0 ? '' : '('.$value.'个月)';
+function getTitleByOrderListValue($value)
+{
+    $title = $value == 0 ? '' : '(' . $value . '个月)';
     return $title;
 }
 
-function getName($name){
-    return str_replace("\"" , "" , $name);
+function getName($name)
+{
+    return str_replace("\"", "", $name);
 }
 
-function getPathByThumb($thumb){
-    return str_replace('thumb','picture',$thumb);
+function getPathByThumb($thumb)
+{
+    return str_replace('thumb', 'picture', $thumb);
 }
 
 // 获取省市区
-function getSSQ($s , $shi , $q){
+function getSSQ($s, $shi, $q)
+{
     $list1 = \common\models\Area::getInstance()->getTravelListById($s);
     $list2 = \common\models\Area::getInstance()->getTravelListById($shi);
     $list3 = \common\models\Area::getInstance()->getTravelListById($q);
     $str = '';
     if (is_array($list1) && count($list1) > 0) {
-        $str =  $list1[0]['name'] ;
+        $str = $list1[0]['name'];
         if (is_array($list2) && count($list2) > 0) {
             $str .= '-' . $list2[0]['name'];
             if (is_array($list3) && count($list3) > 0) {
-                $str .= '-' . $list3[0]['name'] ;
+                $str .= '-' . $list3[0]['name'];
             }
         }
     }
-    return$str;
+    return $str;
 }
 
-function yearIncome($id){
+function yearIncome($id)
+{
     $arr = [
-        1=>'3-5万',
-        2=>'6-9万',
-        3=>'10-15万',
-        4=>'16-25万',
-        5=>'100万'
+        1 => '3-5万',
+        2 => '6-9万',
+        3 => '10-15万',
+        4 => '16-25万',
+        5 => '100万'
     ];
     return isset($arr[$id]) ? $arr[$id] : '';
 }
 
-function blood($id){
+function blood($id)
+{
     $arr = [
-        1=>'A型',
-            2=>'B型',
-            3=>'AB型',
-            4=>'O型',
-            5=>'RH型'
+        1 => 'A型',
+        2 => 'B型',
+        3 => 'AB型',
+        4 => 'O型',
+        5 => 'RH型'
     ];
     return isset($arr[$id]) ? $arr[$id] : '';
 }
 
 //
-function manySelect($ids , $func='getMarriage'){
-    $idArr = explode("," , $ids);
+function manySelect($ids, $func = 'getMarriage')
+{
+    $idArr = explode(",", $ids);
     $str = "";
-    foreach ($idArr as $k=>$v){
-        $str .= $func($v). " ";
+    foreach ($idArr as $k => $v) {
+        $str .= $func($v) . " ";
     }
     return $str;
 }
 
-function constellation($id){
+function constellation($id)
+{
     $arr = [
-        1=>'水瓶座',
-        2=>'双鱼座',
-        3=>'白羊座',
-        4=>'金牛座',
-        5=>'双子座',
-        6=>'巨蟹座',
-        7=>'狮子座',
-        8=>'处女座',
-        9=>'天秤座',
-        10=>'天蝎座',
-        11=>'射手座',
-        12=>'摩羯座'
+        1 => '水瓶座',
+        2 => '双鱼座',
+        3 => '白羊座',
+        4 => '金牛座',
+        5 => '双子座',
+        6 => '巨蟹座',
+        7 => '狮子座',
+        8 => '处女座',
+        9 => '天秤座',
+        10 => '天蝎座',
+        11 => '射手座',
+        12 => '摩羯座'
     ];
     return isset($arr[$id]) ? $arr[$id] : '';
 }
 
-function zodiac($id){
+function zodiac($id)
+{
     $arr = [
-        1=>'鼠',
-        2=>'牛',
-        3=>'虎',
-        4=>'兔',
-        5=>'龙',
-        6=>'蛇',
-        7=>'马',
-        8=>'羊',
-        9=>'猴',
-        10=>'鸡',
-        11=>'狗',
-        12=>'猪'
+        1 => '鼠',
+        2 => '牛',
+        3 => '虎',
+        4 => '兔',
+        5 => '龙',
+        6 => '蛇',
+        7 => '马',
+        8 => '羊',
+        9 => '猴',
+        10 => '鸡',
+        11 => '狗',
+        12 => '猪'
     ];
     return isset($arr[$id]) ? $arr[$id] : '';
 }
 
-function getBuy($id){
+function getBuy($id)
+{
     $arr = [
-        '1'=>'已购',
-        '2'=>'未购',
+        '1' => '已购',
+        '2' => '未购',
     ];
     return isset($arr[$id]) ? $arr[$id] : '';
 }
 
-function getNation($id){
+function getNation($id)
+{
     $arr = [
-        1=>'汉族',
-        2=>'藏族',
-        3=>'朝鲜族',
-        4=>'蒙古族',
-        5=>'回族',
-        6=>'满族',
-        7=>'维吾尔族',
-        8=>'壮族',
-        9=>'彝族',
-        10=>'苗族',
-        11=>'其他',
+        1 => '汉族',
+        2 => '藏族',
+        3 => '朝鲜族',
+        4 => '蒙古族',
+        5 => '回族',
+        6 => '满族',
+        7 => '维吾尔族',
+        8 => '壮族',
+        9 => '彝族',
+        10 => '苗族',
+        11 => '其他',
     ];
     return isset($arr[$id]) ? $arr[$id] : '';
 }
 
-function getChild($id){
+function getChild($id)
+{
     $arr = [
-        1=>'无小孩',
-        2=>'有小孩归自己',
-        3=>'有小孩归对方',
+        1 => '无小孩',
+        2 => '有小孩归自己',
+        3 => '有小孩归对方',
     ];
     return isset($arr[$id]) ? $arr[$id] : '';
 }
 
-function getOccupation($id , $oid = ''){
+function getOccupation($id, $oid = '')
+{
     $occupation = '[
         {
             "id": 1,
@@ -607,11 +627,11 @@ function getOccupation($id , $oid = ''){
     ]';
     $o = json_decode($occupation);
     $zy = '';
-    foreach($o as $k=>$v){
-        if ($v->id == $id){
+    foreach ($o as $k => $v) {
+        if ($v->id == $id) {
             $zy = $v->name;
-            foreach($v->children as $c){
-                if ($c->id == $oid){
+            foreach ($v->children as $c) {
+                if ($c->id == $oid) {
                     $zy .= $c->name;
                     break;
                 }
@@ -621,4 +641,22 @@ function getOccupation($id , $oid = ''){
         }
     }
     return $zy;
+}
+
+// 权限验证
+function authValidate($url)
+{
+    $auth = \Yii::$app->authManager;
+    //$reAction = explode('.com',$_SERVER['HTTP_REFERER']);
+    $userInfo = \Yii::$app->session->get(USER_SESSION);
+    if ($userInfo['name'] == 'admin') return true;
+    $uid = $userInfo['id'];
+    $permissions = $auth->getPermissionsByUser($uid);
+
+    foreach ($permissions as $vo) {
+        if ($url == $vo->description) {
+            return true;
+        }
+    }
+    return false;
 }

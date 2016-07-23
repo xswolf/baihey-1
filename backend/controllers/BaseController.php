@@ -147,21 +147,4 @@ class BaseController extends Controller
 
     }
 
-    // 权限验证
-    public function authValidate($url)
-    {
-        $auth = \Yii::$app->authManager;
-        //$reAction = explode('.com',$_SERVER['HTTP_REFERER']);
-        $userInfo = \Yii::$app->session->get(USER_SESSION);
-        if ($userInfo['name'] == 'admin') return true;
-        $uid = $userInfo['id'];
-        $permissions = $auth->getPermissionsByUser($uid);
-
-        foreach ($permissions as $vo) {
-            if ($url == $vo->description) {
-                return true;
-            }
-        }
-        return false;
-    }
 }
