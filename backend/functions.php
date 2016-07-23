@@ -19,8 +19,9 @@ function getAge($timeStamp)
 }
 
 // 时间戳转日期
-function timeStampToDate($timeStamp){
-    return date('Y-m-d H:i:s',$timeStamp);
+function timeStampToDate($timeStamp)
+{
+    return date('Y-m-d H:i:s', $timeStamp);
 }
 
 function getSex($sex)
