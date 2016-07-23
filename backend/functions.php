@@ -84,11 +84,11 @@ function getLevel($l)
 {
     switch ($l) {
         case 1 :
-            return 'VIP';
+            return '<span class="text-warning">VIP</span>';
         case 2 :
-            return '贵宾';
+            return '<span class="text-pink">贵宾</span>';
         case 3 :
-            return '钻石';
+            return '<span class="text-purple">钻石</span>';
         default:
             return '普通';
     }
