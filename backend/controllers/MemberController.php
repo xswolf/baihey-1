@@ -9,6 +9,7 @@
 namespace backend\controllers;
 
 
+use backend\models\PairLog;
 use backend\models\User as UserModel;
 use common\models\Area;
 use common\models\AuthUser;
@@ -28,6 +29,7 @@ class MemberController extends BaseController
     {
         $serverUser = AuthUser::getInstance()->getUserByRole("服务红娘");
         $salesUser = AuthUser::getInstance()->getUserByRole("销售红娘");
+        $this->assign('admin' , $_SESSION['bhy_user']);
         $this->assign('serverUser' , $serverUser);
         $this->assign('salesUser' , $salesUser);
         return $this->render();
@@ -396,6 +398,31 @@ class MemberController extends BaseController
             $this->renderAjax(['status' => 1, 'message' => '成功']);
         } else {
             $this->renderAjax(['status' => 0, 'message' => '失败']);
+        }
+    }
+
+    // 回访记录配对记录
+    public function actionPairList()
+    {
+        $pairLog = new PairLog();
+        if($data = $pairLog->getPairList($this->post)) {
+            $this->renderAjax(['status' => 1, 'data' => $data, 'message' => '成功']);
+        } else {
+            $this->renderAjax(['status' => 0, 'data' => [], 'message' => '失败']);
+        }
+    }
+
+    // 新增回访或配对记录
+    public function actionAddPair()
+    {
+        $pairLog = new PairLog();
+        $data = $this->post;
+        $data['create_time'] = time();
+        $data['update_time'] = time();
+        if($data['id'] = $pairLog->addPair($data)) {
+            $this->renderAjax(['status' => 1, 'data' => $data, 'message' => '成功']);
+        } else {
+            $this->renderAjax(['status' => 0, 'data' => [], 'message' => '失败']);
         }
     }
 

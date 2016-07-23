@@ -303,7 +303,7 @@
         </div>
         <div class="form-group">
             <label>内容</label>
-            <textarea class="return_content" class="form-control" style="resize: none;" maxlength="300" placeholder="300字以内"></textarea>
+            <textarea id="return_content" class="form-control" style="resize: none;" maxlength="300" placeholder="300字以内"></textarea>
         </div>
         <div class="form-group center">
             <button class="btn btn-primary" id="addReturningSubmit">确定添加</button>
@@ -365,6 +365,8 @@
 <script>
     jQuery(document).ready(function () {
 
+        var admin_id = "{{$admin['id']}}";
+        var admin_name = "{{$admin['name']}}";
         bhyFunc.cityPickerInit();
 
         $('#age1,#age2').append(bhyFunc.ageLink(18));
@@ -420,15 +422,15 @@
                         layero1.find('.ibox-title>h5').html(userId+'的回访');
                     }
 
-                    bhyFunc.ajaxRequest('url', {user_id: userId}, function (res) {
+                    bhyFunc.ajaxRequest('/admin/member/pair-list', {to_user_id: userId, type: 2}, function (res) {
                         var html1 = "";
                         if (res.status > 0) {
                             for (var i in res.data) {
                                 html1 += '<tr><td>' + res.data[i].id + '</td>';
-                                html1 += '<td>' + res.data[i].match_name + '</td>';
-                                html1 += '<td>' + res.data[i].real_name + '(' + res.data[i].user_id + ')</td>';
+                                html1 += '<td>' + res.data[i].admin_name + '</td>';
+                                html1 += '<td>' + res.data[i].to_name + '(' + res.data[i].to_user_id + ')</td>';
                                 html1 += '<td>' + res.data[i].content + '</td>';
-                                html1 += '<td>' + res.data[i].create_time + '</td></tr>';
+                                html1 += '<td>' + bhyFunc.timesTampToDate(res.data[i].create_time) + '</td></tr>';
                             }
                         } else {
                             html1 = '<tr><td colspan="5">没有数据</td></tr>';
@@ -444,21 +446,24 @@
                             shadeClose: true,
                             content: $('#addReturningBox'),
                             success:function(layero2, index2){
-                                $(layero2).find('#return_match_name').val('郭禹杉');  //TODO $matchName 当前登录红娘姓名
+                                $(layero2).find('#return_match_name').val(admin_name);  //TODO $matchName 当前登录红娘姓名
                                 $(layero2).find('#return_user_name').val(userName+'('+userId+')');
-                                $(layero2).find('#addReturningBtn').click(function(){
+                                $(layero2).find('#addReturningSubmit').click(function(){
+
                                     if(!$.trim($('#return_content').val())){
+                                        alert(11);
                                         layer.tips('请输入回访内容',$('#return_content'));
                                         return false;
                                     }
-                                    bhyFunc.ajaxRequest('url',{},function(res){  // 添加回访
+                                    var content = $.trim($('#return_content').val());
+                                    bhyFunc.ajaxRequest('/admin/member/add-pair',{admin_id:admin_id, to_user_id:userId, content:content, type:2, status:1},function(res){  // 添加回访
                                         if(res.status > 0){
                                             var html2 = "";
                                             html2 += '<tr><td>' + res.data.id + '</td>';
-                                            html2 += '<td>' + res.data.match_name + '</td>';
-                                            html2 += '<td>' + res.data.real_name + '(' + res.data[i].user_id + ')</td>';
-                                            html2 += '<td>' + res.data.content + '</td>';
-                                            html2 += '<td>' + res.data.create_time + '</td></tr>';
+                                            html2 += '<td>' + admin_name + '</td>';
+                                            html2 += '<td>' + userName + '(' + userId + ')</td>';
+                                            html2 += '<td>' + content + '</td>';
+                                            html2 += '<td>' + bhyFunc.timesTampToDate(res.data.create_time) + '</td></tr>';
                                             layer.close(index2);
                                             $(layero1).find('.table').find('tbody').append(html2);
                                         }else{
