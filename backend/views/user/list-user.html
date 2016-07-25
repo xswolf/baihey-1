@@ -114,12 +114,12 @@
         if(flag == '设置值班'){
             bhyFunc.ajaxRequest('/admin/user/set-duty',{id:id},function(res){
                 if(res.status > 0){
-                    $(".btn-primary").removeClass('btn-success');
                     $(".duty").html('否');
                     $(a).parent().siblings('.duty').html('<span class="text-danger">是</span>');
-                    $(a).removeClass('btn-danger')
+                    $(a).removeClass('btn-primary')
                             .addClass('btn-success')
                             .text('取消值班');
+                    $(a).parent().parent('tr').siblings().find('.btn-success').removeClass('btn-success').addClass('btn-primary').text('设置值班');
                 }else{
                     layer.msg('设置值班失败！');
                 }
@@ -129,7 +129,7 @@
                 if(res.status > 0){
                     $(a).parent().siblings('.duty').html('否');
                     $(a).removeClass('btn-success')
-                            .addClass('btn-danger')
+                            .addClass('btn-primary')
                             .text('设置值班');
                 }else{
                     layer.msg('取消值班失败！');
