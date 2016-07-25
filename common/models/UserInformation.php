@@ -41,6 +41,7 @@ class UserInformation extends Base
                 case 'service_status'   :// 服务状态 1：已申请，0：未申请
                 case 'is_auth'          :// 是否认证 1：已申请，0：未申请
                 case 'is_sign'          :// 是否签约 1：已申请，0：未申请
+                case 'intention'        :// 有无意向
                 case 'matchmaker'       :// 专属红娘
                 case 'matchmaking'      :// 服务红娘
                     $sql = "UPDATE {$_user_information_table} SET ".key($data)." = '".$data[key($data)]."' WHERE user_id={$user_id}";

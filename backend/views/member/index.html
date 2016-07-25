@@ -312,7 +312,7 @@
         </div>
         <div class="form-group">
             <label>意向情况</label>
-            <select class="form-control">
+            <select id="intention" class="form-control">
                 <option value="2">请选择</option>
                 <option value="1">有意向</option>
                 <option value="0">无意向</option>
@@ -518,9 +518,11 @@
                 return false;
             }
             var content = $.trim($('#return_content').val());
+            var intention = $.trim($('#intention').val());
             bhyFunc.ajaxRequest('/admin/member/add-pair', {
                 admin_id: admin_id,
                 to_user_id: userId,
+                intention: intention,
                 content: content,
                 type: 2,
                 status: 1

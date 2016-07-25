@@ -18,6 +18,7 @@ use common\models\ChargeOrder;
 use common\models\Message;
 use common\models\User;
 use common\models\UserDynamic;
+use common\models\UserInformation;
 use common\models\UserPhoto;
 use wechat\models\Config;
 use wechat\models\UserMessage;
@@ -433,6 +434,10 @@ class MemberController extends BaseController
         $data = $this->post;
         $data['create_time'] = time();
         $data['update_time'] = time();
+        if($data['intention'] != 2) {
+            UserInformation::getInstance()->updateUserInfo($data['to_user_id'], ['intention' => $data['intention']]);
+        }
+        unset($data['intention']);
         if($data['id'] = $pairLog->addPair($data)) {
             $this->renderAjax(['status' => 1, 'data' => $data, 'message' => '成功']);
         } else {
