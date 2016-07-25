@@ -1,14 +1,10 @@
 <?php
 namespace wechat\controllers;
 
-use common\models\Feedback;
 use common\models\UserFollow;
 use common\models\UserPhoto;
 use common\util\AutoAddress;
 use common\util\Cookie;
-use common\util\Curl;
-use common\wechat\WeChat;
-use wechat\models\Area;
 use wechat\models\User;
 
 /**
