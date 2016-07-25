@@ -471,32 +471,30 @@
                                             <th>对象</th>
                                             <th>内容</th>
                                             <th>状态</th>
-                                            <th>操作</th>
                                         </tr>
                                         </thead>
                                         <tbody>
+
+                                        {{foreach from=$pairLogList item=vo}}
                                         <tr>
-                                            <td>1</td>
-                                            <td>唐明曙</td>
-                                            <td>2016-05-31 18:11:10</td>
-                                            <td><a href="/admin/member/info?id=5615001">胡素娥(5615001)</a>-><a
-                                                    href="/admin/member/info?id=5615001">刘天贵(275001)</a></td>
-                                            <td>2015.6.26互留电话 自己约见</td>
-                                            <td>成功</td>
-                                            <td><a href="javascript:;" onclick="bhyFunc.deleteItemByList(1,this)">删除</a>
+                                            <td>{{$vo.id}}</td>
+                                            <td>{{$vo.name}}</td>
+                                            <td>{{date('Y-m-d',$vo.create_time)}}</td>
+                                            <td><a href="/admin/member/info?id={{$vo.user_id1}}">{{$vo.info1->real_name}}({{$vo.user_id1}})</a>-><a
+                                                    href="/admin/member/info?id={{$vo.user_id2}}">{{$vo.info2->real_name}}({{$vo.user_id2}})</a></td>
+                                            <td>{{$vo.content}}</td>
+                                            <td>
+                                                {{if $vo.status == 1}}
+                                                    成功
+                                                {{else if $vo.status == 2}}
+                                                    配对中
+                                                {{else}}
+                                                    失败
+                                                {{/if}}
                                             </td>
+
                                         </tr>
-                                        <tr>
-                                            <td>2</td>
-                                            <td>唐明曙</td>
-                                            <td>2016-05-31 18:11:10</td>
-                                            <td><a href="/admin/member/info?id=5615001">胡素娥(5615001)</a>-><a
-                                                    href="/admin/member/info?id=5615001">刘天贵(275001)</a></td>
-                                            <td>2015.6.26互留电话 自己约见</td>
-                                            <td>成功</td>
-                                            <td><a href="javascript:;" onclick="bhyFunc.deleteItemByList(2,this)">删除</a>
-                                            </td>
-                                        </tr>
+                                        {{/foreach}}
                                         </tbody>
                                     </table>
                                 </div>

@@ -221,6 +221,10 @@ class MemberController extends BaseController
         // 红娘列表
         $adminUserList = AuthUser::getInstance()->getUserByRole("服务红娘");
         $this->assign('adminUserList' , $adminUserList);
+        // 配对记录
+        $pairLogList = \common\models\PairLog::getInstance()->getPairLog($userId);
+//        var_dump($pairLogList);exit();
+        $this->assign('pairLogList' , $pairLogList);
         return $this->render();
     }
 
