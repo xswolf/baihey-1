@@ -124,7 +124,8 @@ class BaseController extends Controller {
     protected function weChatMember() {
         $code = \Yii::$app->request->get( 'code' );
         if ( $code == null ) {
-            return false;
+            echo 'code is not exist';
+            exit();
         } else {
             setcookie('wx_login', 'login', time() + 3600 * 24 * 30, '/wap');
         }
