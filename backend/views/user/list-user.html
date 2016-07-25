@@ -114,6 +114,8 @@
         if(flag == '设置值班'){
             bhyFunc.ajaxRequest('/admin/user/set-duty',{id:id},function(res){
                 if(res.status > 0){
+                    $(".btn-primary").removeClass('btn-success');
+                    $(".duty").html('否');
                     $(a).parent().siblings('.duty').html('<span class="text-danger">是</span>');
                     $(a).removeClass('btn-danger')
                             .addClass('btn-success')
