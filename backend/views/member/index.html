@@ -256,7 +256,7 @@
                     <th>认证</th>
                     <th>签单</th>
                     <th>资料</th>
-                    <th>地址</th>
+                    <th>意向</th>
                     <th>证件</th>
                     <th>状态</th>
                     <th>操作</th>
@@ -309,6 +309,14 @@
             <label>内容</label>
             <textarea id="return_content" class="form-control" style="resize: none;" maxlength="300"
                       placeholder="300字以内"></textarea>
+        </div>
+        <div class="form-group">
+            <label>意向情况</label>
+            <select class="form-control">
+                <option value="2">请选择</option>
+                <option value="1">有意向</option>
+                <option value="0">无意向</option>
+            </select>
         </div>
         <div class="form-group center">
             <button class="btn btn-primary" id="addReturningSubmit">确定添加</button>

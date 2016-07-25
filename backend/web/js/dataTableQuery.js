@@ -114,13 +114,14 @@ $(function () {
                 }
                 },
                 {
-                    "data": "area", fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
-                    for (var i in area) {
-                        if (area[i].id == oData.area) {
-                            $(nTd).html(area[i].name + " " + oData.address)
-                            break;
-                        }
+                    "data": "intention", fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
+                    var title = '';
+                    if (oData.intention == 0) {
+                        title = '无';
+                    } else if(oData.intention == 1){
+                        title = '<span style="color: red;">有</span>';
                     }
+                    $(nTd).html(title);
                 }
                 },
                 {"data": "auth.identity_check"},
