@@ -29,6 +29,7 @@ class SiteController extends BaseController
      */
     public function actionMain()
     {
+
         if($user_id = Cookie::getInstance()->getCookie('bhy_id')) {
             $user = User::getInstance()->findOne(['id' => $user_id]);
         } else {
@@ -42,12 +43,6 @@ class SiteController extends BaseController
             }
         }
 
-        $code = \Yii::$app->request->get( 'code' );
-        if ( $code != null ) {
-
-            header("Location:http://wechat.baihey.com/wap/site/main#/index");
-            exit;
-        }
         return $this->render();
     }
 

@@ -138,8 +138,9 @@ class BaseController extends Controller {
             'sex'        => ($memberInfo['sex'] == 2) ? 0 : 1
         ];
 
-        $user = User::getInstance()->findOne( [ 'wx_id' => $data['wx_id'] ] );
-        if ( ! $user ) { // 用户不存在，写入数据
+        $user = User::getInstance()->getUser( [ 'wx_id' => $data['wx_id'] ] );
+
+        if ( !$user ) { // 用户不存在，写入数据
             $userInfo = \common\models\User::getInstance()->addUser($data);
             $user     = User::getInstance()->findOne( [ 'id' => $userInfo['id'] ] );
         }
@@ -148,7 +149,6 @@ class BaseController extends Controller {
         \common\models\User::getInstance()->loginLog($user['id']);
         // 设置登录cookie
         Cookie::getInstance()->setLoginCookie($user);
-
         return $user;
     }
 }

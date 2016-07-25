@@ -47,17 +47,24 @@ class User extends Base
     {
         $userTable            = $this->tablePrefix.'user';
         $userInformationTable = $this->tablePrefix . 'user_information';
-        $row                  = (new Query)
+        return (new Query)
             ->select('*')
             ->from($userTable)
-            ->leftJoin($this->tablePrefix . 'user_information', "$userTable.id = " . $userInformationTable . '.user_id')
+            ->innerJoin($this->tablePrefix . 'user_information', "$userTable.id = " . $userInformationTable . '.user_id')
             ->where(['id' => $id])
             ->one();
+    }
 
-        if ($row === false) {
-            return null;
-        }
-        return $row;
+    public function getUser($where){
+
+        $user = (new Query())->from($this->tablePrefix.'user u')
+            ->innerJoin($this->tablePrefix . 'user_information i' , 'u.id=i.user_id')
+            ->where($where)
+            ->select("*")
+            ->one();
+
+
+        return $user;
     }
 
     /**

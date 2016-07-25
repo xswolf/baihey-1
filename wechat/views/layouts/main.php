@@ -31,6 +31,7 @@
     <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <script src="http://css3-mediaqueries-js.googlecode.com/svn/trunk/css3-mediaqueries.js"></script><![endif]-->
 </head>
+
 <!--<script src="//cdn.bootcss.com/ionic/1.2.4/js/ionic.bundle.min.js"></script>-->
 <script data-main="/wechat/web/js/app" src="/wechat/web/js/plugin/requirejs/require.js"></script>
 <!--<script data-main="/wechat/web/js/build" src="/wechat/web/js/plugin/requirejs/require.js"></script>-->
@@ -44,3 +45,11 @@
 </body>
 
 </html>
+<?php
+//$code = \Yii::$app->request->get( 'code' );
+//if ( $code != null ) {
+//
+//    header("Location:http://wechat.baihey.com/wap/site/main#/index");
+//    exit;
+//}
+?>
