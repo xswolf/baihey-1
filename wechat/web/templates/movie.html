@@ -1,0 +1,37 @@
+<ion-modal-view>
+    <link href="/wechat/web/css/member.css" rel="stylesheet">
+    <ion-header-bar class="com_w_100 bhy">
+        <button class="button button-icon" ng-click="closeModal()">取消</button>
+        <title class="title">喜欢的影视</title>
+        <button class="button button-icon cor21" ng-click="saveData(formData)">保存</button>
+    </ion-header-bar>
+    <ion-content class="bhy com_w_100" style="background-color:#f5f5f5;">
+        <ion-item class="bhy_item_b mt10 mb10">
+            <ion-scroll delegate-handle="small" zooming="false" direction="x" scrollbar-x="false"
+                        scrollbar-y="false"
+                        class="addr_top_box fl">
+                   <span class="hob_tv_flag f2" ng-click="remove(l)" ng-repeat="l in list | filter:{checked: true}">
+                        <i class="ion-location hob_addr_icon"></i>
+                        <span class="hob_addr_name">{{l.name}}</span>
+                    </span>
+            </ion-scroll>
+        </ion-item>
+        <div class="pl16 cor20 clearfix hr_30">
+            <span class="fl">热门推荐</span>
+        </div>
+    </ion-content>
+    <ion-content class="bhy com_w_100 t140">
+        <div class="item item-divider">
+            <div class="padding">电影</div>
+        </div>
+        <ion-checkbox ng-repeat="mv in list | filter:{pic_path: 2}" ng-click="scrollSmallToBottom($event,mv)"
+                      ng-model="mv.checked">{{mv.name}}
+        </ion-checkbox>
+        <div class="item item-divider">
+            <div class="padding">电视</div>
+        </div>
+        <ion-checkbox ng-repeat="tv in list | filter:{pic_path: 1}" ng-click="scrollSmallToBottom($event,tv)"
+                      ng-model="tv.checked">{{tv.name}}
+        </ion-checkbox>
+    </ion-content>
+</ion-modal-view>

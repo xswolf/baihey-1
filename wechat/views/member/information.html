@@ -55,7 +55,7 @@
                     </ul>
                 <i class="icon ion-ios-arrow-right cor52"></i>
             </ion-item>
-            <ion-item class="mb10 item-icon-right" href="#/member/signature">
+            <ion-item class="mb10 item-icon-right" ng-click="updateInfo('signature')">
                 <p>
                     <span class="cor4">个人签名</span>
                     <span class="cor21 ml20" ng-if="!userInfo.personalized">立即填写</span>
@@ -63,14 +63,7 @@
                 </p>
                 <i class="icon ion-ios-arrow-right cor52"></i>
             </ion-item>
-            <!--<ion-item>
-                <p>
-                    <span class="cor4">性别</span>
-                    <span class="ml20" ng-if="userInfo.sex == 0"><i class="icon ion-woman cor13 vam"></i><span class="vam">女</span></span>
-                    <span class="ml20" ng-if="userInfo.sex == 1"><i class="icon ion-man cor13 vam"></i><span class="vam">男</span></span>
-                </p>
-            </ion-item>-->
-            <ion-item class="item-icon-right" href="#/member/real_name">
+            <ion-item class="item-icon-right" ng-click="updateInfo('real_name')">
                 <p>
                     <span class="cor4">真实姓名</span>
                     <span ng-if="!userInfo.info.real_name" class="ml20 mr10 cor21">立即填写</span>
@@ -79,7 +72,7 @@
                 </p>
                 <i ng-if="!userInfo.info.real_name" class="icon ion-ios-arrow-right cor52"></i>
             </ion-item>
-            <ion-item class="item-icon-right" ng-href="{{userInfo.age ? '' : '#/member/age'}}">
+            <ion-item class="item-icon-right" ng-click="updateInfo(userInfo.age ? '' : 'age')">
                 <p>
                     <span class="cor4">年龄</span>
                     <span ng-if="!userInfo.age" class="ml48 mr10 cor21">立即填写</span>
@@ -87,7 +80,7 @@
                 </p>
                 <i ng-if="!userInfo.age" class="icon ion-ios-arrow-right cor52"></i>
             </ion-item>
-            <ion-item class="item-icon-right" ng-href="{{userInfo.info.height ? '' : '#/member/height'}}">
+            <ion-item class="item-icon-right" ng-click="updateInfo(userInfo.info.height ? '' : 'height')">
                 <p>
                     <span class="cor4">身高</span>
                     <span ng-if="!userInfo.info.height" class="ml48 mr10 cor21">立即填写</span>
@@ -95,7 +88,7 @@
                 </p>
                 <i ng-if="!userInfo.info.height" class="icon ion-ios-arrow-right cor52"></i>
             </ion-item>
-            <ion-item class="item-icon-right" href="#/member/education">
+            <ion-item class="item-icon-right" ng-click="updateInfo('education')">
                 <p>
                     <span class="cor4">学历</span>
                     <span ng-if="!userInfo.info.education" class="ml48 mr10 cor21">立即填写</span>
@@ -103,7 +96,7 @@
                 </p>
                 <i class="icon ion-ios-arrow-right cor52"></i>
             </ion-item>
-            <ion-item class="item-icon-right" ng-href="{{userInfo.info.is_marriage ? '' : '#/member/is_marriage'}}">
+            <ion-item class="item-icon-right" ng-click="updateInfo(userInfo.info.is_marriage ? '' : 'is_marriage')" >
                 <p>
                     <span class="cor4">婚姻状况</span>
                     <span ng-if="!userInfo.info.is_marriage" class="ml20 mr10 cor21">立即填写</span>
@@ -112,7 +105,7 @@
                 </p>
                 <i ng-if="!userInfo.info.is_marriage" class="icon ion-ios-arrow-right cor52"></i>
             </ion-item>
-            <ion-item class="item-icon-right" href="#/member/occupation">
+            <ion-item class="item-icon-right" ng-click="updateInfo('occupation')">
                 <p>
                     <span class="cor4">职业</span>
                     <span ng-if="!userInfo.info.occupation" class="ml48 mr10 cor21">立即填写</span>
@@ -120,7 +113,7 @@
                 </p>
                 <i class="icon ion-ios-arrow-right cor52"></i>
             </ion-item>
-            <ion-item class="item-icon-right" href="#/member/address">
+            <ion-item class="item-icon-right" ng-click="updateInfo('address')">
                 <p>
                     <span class="cor4">地区</span>
                     <span ng-if="!userInfo.province" class="ml48 mr10 cor21">立即填写</span>
@@ -128,7 +121,7 @@
                 </p>
                 <i class="icon ion-ios-arrow-right cor52"></i>
             </ion-item>
-            <ion-item class="item-icon-right" href="#/member/haunt_address">
+            <ion-item class="item-icon-right" ng-click="updateInfo('haunt_address')">
                 <p>
                     <span class="cor4">常出没地</span>
                     <span ng-if="!userInfo.info.haunt_address" class="ml20 mr10 cor21">立即填写</span>
@@ -153,7 +146,7 @@
                     <i class=" ion-ios-arrow-right"></i>
                 </div>
             </ion-item>-->
-            <ion-item class="item-icon-right" href="#/member/wechat_number">
+            <ion-item class="item-icon-right" ng-click="updateInfo('wechat_number')">
                 <p>
                     <span class="cor4">微信号码</span>
                     <span ng-if="!userInfo.info.wechat" class="ml20 mr10 cor21">立即填写</span>
@@ -161,7 +154,7 @@
                 </p>
                 <i class="icon ion-ios-arrow-right cor52"></i>
             </ion-item>
-            <ion-item class="item-icon-right" href="#/member/qq_number">
+            <ion-item class="item-icon-right" ng-click="updateInfo('qq_number')">
                 <p>
                     <span class="cor4">Q Q号码</span>
                     <span ng-if="!userInfo.info.qq" class="ml20 mr10 cor21">立即填写</span>
@@ -179,7 +172,7 @@
                     </div>
                 </div>
             </div>
-            <ion-item class="item-icon-right" href="#/member/been_address">
+            <ion-item class="item-icon-right" ng-click="updateInfo('been_address')">
                 <p><span class="cor4">我去过的地方({{went_travel_count}})</span></p>
                 <div class="hob_addr clearfix">
                         <span class="hob_addr_flag" ng-repeat="addrt in went_travel track by addrt.id">
@@ -189,7 +182,7 @@
                 </div>
                 <i class="icon ion-ios-arrow-right cor52"></i>
             </ion-item>
-            <ion-item class="item-icon-right" href="#/member/want_address">
+            <ion-item class="item-icon-right" ng-click="updateInfo('want_address')">
                     <p><span class="cor4">想去的地方({{want_travel_count}})</span></p>
                     <div class="hob_addr clearfix">
                             <span class="hob_addr_flag f2" ng-repeat="addrt in want_travel track by addrt.id">
@@ -199,7 +192,7 @@
                     </div>
                 <i class="icon ion-ios-arrow-right cor52"></i>
             </ion-item>
-            <ion-item class="item-icon-right" href="#/member/sports">
+            <ion-item class="item-icon-right" ng-click="updateInfo('sports')">
                 <p><span class="cor4">喜欢的运动({{love_sport_count}})</span></p>
                     <div class="hob_sport clearfix">
                         <span class="hob_sport_flag" ng-repeat="addrt in love_sport track by addrt.id">
@@ -210,7 +203,7 @@
                 <i class="icon ion-ios-arrow-right cor52"></i>
             </ion-item>
 
-            <ion-item class="item-icon-right" href="#/member/movie">
+            <ion-item class="item-icon-right" ng-click="updateInfo('movie')">
                     <p><span class="cor4">喜欢的影视({{want_film_count}})</span></p>
                 <div class="hob_sport clearfix">
                         <span class="hob_tv_flag" ng-repeat="addrt in want_film track by addrt.id">
@@ -221,7 +214,7 @@
                 <i class="icon ion-ios-arrow-right cor52"></i>
             </ion-item>
 
-            <ion-item class="item-icon-right" href="#/member/delicacy">
+            <ion-item class="item-icon-right" ng-click="updateInfo('delicacy')">
                     <p><span class="cor4">喜欢的美食({{like_food_count}})</span></p>
                     <div class="hob_food clearfix">
                         <span class="hob_food_flag" ng-repeat="addrt in like_food track by addrt.id">
@@ -234,7 +227,7 @@
             <ion-item class="item-divider">
                 详细资料
             </ion-item>
-            <ion-item class="item-icon-right" href="#/member/children">
+            <ion-item class="item-icon-right" ng-click="updateInfo('children')">
                 <p>
                     <span class="cor4">子女状况</span>
                     <span ng-if="!userInfo.info.is_child" class="ml20 mr10 cor21">立即填写</span>
@@ -242,7 +235,7 @@
                 </p>
                 <i class="icon ion-ios-arrow-right cor52"></i>
             </ion-item>
-            <ion-item class="item-icon-right" ng-href="{{userInfo.info.nation ? '' : '#/member/nation'}}">
+            <ion-item class="item-icon-right" ng-click="updateInfo(userInfo.info.nation ? '' : 'nation')">
                 <p>
                     <span class="cor4">民族</span>
                     <span ng-if="!userInfo.info.nation" class="ml48 mr10 cor21">立即填写</span>
@@ -251,7 +244,7 @@
                 <i class="icon ion-ios-arrow-right cor52"></i>
             </ion-item>
 
-            <ion-item class="item-icon-right" href="#/member/work">
+            <ion-item class="item-icon-right" ng-click="updateInfo('work')">
                 <p>
                     <span class="cor4">工作单位</span>
                     <span ng-if="!userInfo.info.work" class="ml20 mr10 cor21">立即填写</span>
@@ -259,7 +252,7 @@
                 </p>
                 <i class="icon ion-ios-arrow-right cor52"></i>
             </ion-item>
-            <ion-item class="item-icon-right" href="#/member/salary">
+            <ion-item class="item-icon-right" ng-click="updateInfo('salary')">
                 <p>
                     <span class="cor4">年薪</span>
                     <span ng-if="!userInfo.info.year_income" class="ml48 mr10 cor21">立即填写</span>
@@ -268,7 +261,7 @@
                 </p>
                 <i class="icon ion-ios-arrow-right cor52"></i>
             </ion-item>
-            <ion-item class="item-icon-right" href="#/member/house">
+            <ion-item class="item-icon-right" ng-click="updateInfo('house')">
                 <p>
                     <span class="cor4">购房情况</span>
                     <span ng-if="!userInfo.info.is_purchase" class="ml20 mr10 cor21">立即填写</span>
@@ -277,7 +270,7 @@
                 </p>
                 <i class="icon ion-ios-arrow-right cor52"></i>
             </ion-item>
-            <ion-item class="item-icon-right" href="#/member/car">
+            <ion-item class="item-icon-right" ng-click="updateInfo('car')">
                 <p>
                     <span class="cor4">购车情况</span>
                     <span ng-if="!userInfo.info.is_car" class="ml20 mr10 cor21">立即填写</span>
@@ -285,7 +278,7 @@
                 </p>
                 <i class="icon ion-ios-arrow-right cor52"></i>
             </ion-item>
-            <ion-item class="item-icon-right" href="#/member/blood">
+            <ion-item class="item-icon-right" ng-click="updateInfo('blood')">
                 <p>
                     <span class="cor4">血型</span>
                     <span ng-if="!userInfo.info.blood" class="ml48 mr10 cor21">立即填写</span>
@@ -293,7 +286,7 @@
                 </p>
                 <i class="icon ion-ios-arrow-right cor52"></i>
             </ion-item>
-            <ion-item class="item-icon-right" href="#/member/school">
+            <ion-item class="item-icon-right" ng-click="updateInfo('school')">
                 <p>
                     <span class="cor4">毕业院校</span>
                     <span ng-if="!userInfo.info.school" class="ml20 mr10 cor21">立即填写</span>
@@ -304,7 +297,7 @@
             <ion-item class="item-divider">
                 择偶标准
             </ion-item>
-            <ion-item class="item-icon-right" href="#/member/zo_age">
+            <ion-item class="item-icon-right" ng-click="updateInfo('zo_age')">
                 <p>
                     <span class="cor4">年龄要求</span>
                     <span ng-if="!userInfo.info.zo_age" class="ml20 mr10 cor21">不限</span>
@@ -312,7 +305,7 @@
                 </p>
                 <i class="icon ion-ios-arrow-right cor52"></i>
             </ion-item>
-            <ion-item class="item-icon-right" href="#/member/zo_height">
+            <ion-item class="item-icon-right" ng-click="updateInfo('zo_height')">
                 <p>
                     <span class="cor4">身高要求</span>
                     <span ng-if="!userInfo.info.zo_height" class="ml20 mr10 cor21">不限</span>
@@ -321,7 +314,7 @@
                 </p>
                 <i class="icon ion-ios-arrow-right cor52"></i>
             </ion-item>
-            <ion-item class="item-icon-right" href="#/member/zo_education">
+            <ion-item class="item-icon-right" ng-click="updateInfo('zo_education')">
                 <p>
                     <span class="cor4">学历要求</span>
                     <span ng-if="!userInfo.info.zo_education" class="ml20 mr10 cor21">不限</span>
@@ -329,7 +322,7 @@
                 </p>
                 <i class="icon ion-ios-arrow-right cor52"></i>
             </ion-item>
-            <ion-item class="item-icon-right" href="#/member/zo_marriage">
+            <ion-item class="item-icon-right" ng-click="updateInfo('zo_marriage')">
                 <p>
                     <span class="cor4">婚姻要求</span>
                     <span ng-if="!userInfo.info.zo_marriage" class="ml20 mr10 cor21">不限</span>
@@ -337,7 +330,7 @@
                 </p>
                 <i class="icon ion-ios-arrow-right cor52"></i>
             </ion-item>
-            <ion-item class="item-icon-right" href="#/member/zo_children">
+            <ion-item class="item-icon-right" ng-click="updateInfo('zo_children')">
                 <p>
                     <span class="cor4">子女要求</span>
                     <span ng-if="!userInfo.info.zo_children" class="ml20 mr10 cor21">不限</span>
@@ -345,7 +338,7 @@
                 </p>
                 <i class="icon ion-ios-arrow-right cor52"></i>
             </ion-item>
-            <ion-item class="item-icon-right" href="#/member/zo_house">
+            <ion-item class="item-icon-right" ng-click="updateInfo('zo_house')">
                 <p>
                     <span class="cor4">购房要求</span>
                     <span ng-if="!userInfo.info.zo_house" class="ml20 mr10 cor21">不限</span>
@@ -353,7 +346,7 @@
                 </p>
                 <i class="icon ion-ios-arrow-right cor52"></i>
             </ion-item>
-            <ion-item class="item-icon-right" href="#/member/zo_car">
+            <ion-item class="item-icon-right" ng-click="updateInfo('zo_car')">
                 <p>
                     <span class="cor4">购车要求</span>
                     <span ng-if="!userInfo.info.zo_car" class="ml20 mr10 cor21">不限</span>
@@ -361,7 +354,7 @@
                 </p>
                 <i class="icon ion-ios-arrow-right cor52"></i>
             </ion-item>
-            <ion-item class="item-icon-right" href="#/member/zo_zodiac">
+            <ion-item class="item-icon-right" ng-click="updateInfo('zo_zodiac')">
                 <p>
                     <span class="cor4">属相要求</span>
                     <span ng-if="!userInfo.info.zo_zodiac" class="ml20 mr10 cor21">不限</span>
@@ -370,7 +363,7 @@
                 </p>
                 <i class="icon ion-ios-arrow-right cor52"></i>
             </ion-item>
-            <ion-item class="item-icon-right" href="#/member/zo_constellation">
+            <ion-item class="item-icon-right" ng-click="updateInfo('zo_constellation')">
                 <p>
                     <span class="cor4">星座要求</span>
                     <span ng-if="!userInfo.info.zo_constellation" class="ml20 mr10 cor21">不限</span>
@@ -378,7 +371,7 @@
                 </p>
                 <i class="icon ion-ios-arrow-right cor52"></i>
             </ion-item>
-            <ion-item class="mb30 item-icon-right" href="#/member/mate">
+            <ion-item class="mb30 item-icon-right" ng-click="updateInfo('mate')">
                 <p>
                     <span class="cor4">心目中的TA</span>
                     <span ng-if="!userInfo.info.mate" class="ml20 mr10 cor21">立即填写</span>

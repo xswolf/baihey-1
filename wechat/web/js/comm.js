@@ -1,6 +1,7 @@
 /**
  * Created by Administrator on 2016/3/14.
  */
+
 var ar = {
     'currentDate': function () {
         var myDate = new Date();
@@ -745,7 +746,787 @@ var ar = {
             }
 
         })
-    }
+    },
+
+    processData:function(fieldName,$scope,api,$ionicPopup,$filter,$ionicScrollDelegate){
+        if(fieldName == 'address'){    // 地区
+            address();
+        }
+        if(fieldName == 'age'){   // 年龄
+            age();
+        }
+        if(fieldName == 'been_address'){  // 去过的地方
+            beenAddress();
+        }
+        if(fieldName == 'blood'){      // 血型
+            blood();
+        }
+        if(fieldName == 'car' || fieldName == 'zo_car'){      // 购车
+            car();
+        }
+        if(fieldName == 'children' || fieldName == 'zo_children'){      // 子女
+            children();
+        }
+        if(fieldName == 'delicacy'){      // 喜欢的美食
+            delicacy();
+        }
+        if(fieldName == 'education' || fieldName == 'zo_education'){      // 学历
+            education();
+        }
+        if(fieldName == 'height'){      // 身高
+            height();
+        }
+        if(fieldName == 'house' || fieldName == 'zo_house'){      // 购房
+            house();
+        }
+        if(fieldName == 'is_marriage'){      // 婚姻状况
+            isMarriage();
+        }
+        if(fieldName == 'movie'){      // 喜欢的影视
+            movie();
+        }
+        if(fieldName == 'nation'){      // 民族
+            nation();
+        }
+        if(fieldName == 'occupation'){      // 职业
+            occupation();
+        }
+        if(fieldName == 'salary'){      // 年薪
+            salary();
+        }
+        if(fieldName == 'sports'){      // 喜欢的运动
+            sports();
+        }
+        if(fieldName == 'want_address'){      // 想去的地方
+            wantAddress();
+        }
+        if(fieldName == 'zo_age'){      // 择偶年龄
+            zoAge();
+        }
+        if(fieldName == 'zo_constellation'){      // 择偶星座
+            zoConstellation();
+        }
+        if(fieldName == 'zo_height'){      // 择偶身高
+            zoHeight();
+        }
+        if(fieldName == 'zo_marriage'){      // 择偶婚姻
+            zoMarriage();
+        }
+        if(fieldName == 'zo_zodiac'){      // 择偶属相
+            zoZodiac();
+        }
+
+
+
+        function address(){
+            $scope.provinceList = provines;
+            $scope.cityList = citys;
+            $scope.areaList = area;
+            $scope.formData = {};
+            $scope.formData.province = ar.getObjById(provines, $scope.userInfo.province);
+            $scope.formData.city = ar.getObjById(citys, $scope.userInfo.city);
+            $scope.formData.area = ar.getObjById(area, $scope.userInfo.area);
+        }
+
+        function age(){
+            $scope.settings = {
+                theme: 'mobiscroll',
+                lang: 'zh',
+                display: 'bottom',
+                controls: ['date'],
+                mode: $scope.mode
+            };
+            $scope.formData = {};
+            $scope.age = '年龄';
+            $scope.zodiac = {id: 0, name: '生肖'};
+            $scope.constellation = {id: 0, name: '星座'};
+            $scope.birthdayChange = function () {
+                $scope.age = ar.getAgeByBirthday(ar.DateTimeToDate($scope.formData.birthday)) + '岁';
+                $scope.zodiac = ar.getZodicByBirthday(ar.DateTimeToDate($scope.formData.birthday));
+                $scope.constellation = ar.getConstellationByBirthday(ar.DateTimeToDate($scope.formData.birthday));
+            }
+        }
+
+        function beenAddress(){
+            $scope.formData = {};
+            $scope.formData.went_travel = $scope.userInfo.went_travel ? $scope.userInfo.went_travel.split(',') : [];// 用户已选择的地区，ID数据集，存数据库
+            $scope.isMore = true;
+            $scope.typeTab = 1;     // 默认国内
+            $scope.domestic = [];   // 国内
+            $scope.abroad = [];     // 国外
+            $scope.data = [];
+            $scope.pageSize = 1;     // 默认一页显示3条
+            api.list('/wap/member/went-travel-list', {}).success(function (res) {    //typeId:2，国内。 typeId:3，国外
+                $scope.data = res.data;
+                for (var i in $scope.data) {
+                    for (var j in $scope.formData.went_travel) {
+                        if ($scope.formData.went_travel[j] == $scope.data[i].id) {
+                            $scope.data[i].checked = true;
+                            break;
+                        } else {
+                            $scope.data[i].checked = false;
+                        }
+                    }
+                    if ($scope.data[i].type == 2 && $scope.data[i].parentId == 0) {
+                        $scope.domestic.push($scope.data[i]);
+                    }
+                    if ($scope.data[i].type == 3 && $scope.data[i].parentId == 0) {
+                        $scope.abroad.push($scope.data[i]);
+                    }
+                }
+            });
+
+            // 加载更多
+            $scope.loadMore = function (typeTab) {
+                if (typeTab == 1) {
+                    if ($scope.pageSize == $scope.domestic.length) {
+                        $scope.isMore = false;
+                    }
+                } else {
+                    if ($scope.pageSize == $scope.abroad.length) {
+                        $scope.isMore = false;
+                    }
+                }
+                $scope.pageSize += 1;
+                $scope.$broadcast('scroll.infiniteScrollComplete');
+            }
+
+            // 是否还有更多
+            $scope.moreDataCanBeLoaded = function () {
+                return $scope.isMore;
+            }
+
+            // 删除
+            $scope.remove = function (dat) {
+                for (var i in $scope.data) {
+                    if ($scope.data[i].id == dat.id) {
+                        $scope.data[i].checked = false;
+                        break;
+                    }
+                }
+                delItem(dat);
+                $ionicScrollDelegate.$getByHandle('small').scrollTop();
+            }
+
+            // 横向滚动至底部
+            $scope.scrollSmallToBottom = function (event, da) {
+                var list = $filter('filter')($scope.data, {checked: true});
+                if (list.length > 6) {
+                    da.checked = false;
+                    ar.saveDataAlert($ionicPopup, '您最多能选择6项！');
+                    return;
+                }
+                if (event.target.checked) {
+                    addItem(da);
+                    $ionicScrollDelegate.$getByHandle('small').scrollBottom();
+                } else {
+                    delItem(da);
+                    $ionicScrollDelegate.$getByHandle('small').scrollTop();
+                }
+            };
+
+            $scope.showTab = function (tab) {
+                $scope.typeTab = tab;
+            }
+
+            function addItem(item){
+                $scope.formData.went_travel.push(item.id);
+            }
+
+            function delItem(item){
+                for(var i in $scope.formData.went_travel){
+                    if($scope.formData.went_travel[i] == item.id){
+                        $scope.formData.went_travel.splice(i,1);
+                        break;
+                    }
+                }
+            }
+
+        }
+
+        function blood(){
+            $scope.formData = {};
+            $scope.formData.blood = $scope.userInfo.info.blood;
+            $scope.bloodList = config_infoData.blood;
+        }
+
+        function car(){
+            $scope.formData = {};
+            $scope.formData.is_car = $scope.userInfo.info.is_car;
+            $scope.carList = config_infoData.car;
+            $scope.formData.zo_car = $scope.userInfo.info.zo_car;
+            $scope.zo_carList = config_infoData.car;
+        }
+
+        function children(){
+            $scope.formData = {};
+            $scope.formData.is_child = $scope.userInfo.info.is_child;
+            $scope.childrenList = config_infoData.children;
+            $scope.formData.zo_children = $scope.userInfo.info.zo_children;
+            $scope.childrenList = config_infoData.children;
+        }
+
+        function delicacy(){
+            $scope.formData = {};
+            $scope.formData.like_food = $scope.userInfo.like_food ? $scope.userInfo.like_food.split(',') : [];
+
+            // 默认数据处理
+            api.list('/wap/member/config-list', {'type': 3}).success(function (res) {
+                $scope.foodList = res.data;
+                for (var i in $scope.foodList) {
+                    for (var j in $scope.formData.like_food) {
+                        if ($scope.foodList[i].id == $scope.formData.like_food[j]) {
+                            $scope.foodList[i].checked = true;
+                            break;
+                        } else {
+                            $scope.foodList[i].checked = false;
+                        }
+                    }
+                }
+            });
+
+            // 删除
+            $scope.remove = function (f) {
+                for (var i in $scope.foodList) {
+                    if ($scope.foodList[i].id == f.id) {
+                        $scope.foodList[i].checked = false;
+                        break;
+                    }
+                }
+                delItem(da);
+                $ionicScrollDelegate.$getByHandle('small').scrollTop();
+            }
+
+            // 横向滚动至底部
+            $scope.scrollSmallToBottom = function (event, da) {
+                var list = $filter('filter')($scope.foodList, {checked: true});
+                if (list.length > 6) {
+                    da.checked = false;
+                    ar.saveDataAlert($ionicPopup, '您最多能选择6项！');
+                    return;
+                }
+                if (event.target.checked) {
+                    addItem(da);
+                    $ionicScrollDelegate.$getByHandle('small').scrollBottom();
+                } else {
+                    delItem(da);
+                    $ionicScrollDelegate.$getByHandle('small').scrollTop();
+                }
+            }
+
+            function addItem(item){
+                $scope.formData.like_food.push(item.id);
+            }
+
+            function delItem(item){
+                for(var i in $scope.formData.like_food){
+                    if($scope.formData.like_food[i] == item.id){
+                        $scope.formData.like_food.splice(i,1);
+                        break;
+                    }
+                }
+            }
+        }
+
+        function education(){
+            $scope.formData = {};
+            $scope.formData.education = $scope.userInfo.info.education;
+            $scope.educationList = config_infoData.education;
+            $scope.formData.zo_education = $scope.userInfo.info.zo_education;
+            $scope.zo_educationList = config_infoData.education;
+        }
+
+        function height(){
+            $scope.formData = {};
+            $scope.formData.height = $scope.userInfo.info.height;
+            $scope.heightList = config_infoData.height;
+        }
+
+        function house(){
+            $scope.formData = {};
+            $scope.formData.is_purchase = $scope.userInfo.info.is_purchase;
+            $scope.houseList = config_infoData.house;
+            $scope.formData.zo_house = $scope.userInfo.info.zo_house;
+            $scope.zo_houseList = config_infoData.house;
+        }
+
+        function isMarriage(){
+            $scope.formData = {};
+            $scope.formData.is_marriage = $scope.userInfo.info.is_marriage;
+            $scope.marriageList = config_infoData.marriage;
+        }
+
+        function movie(){
+            $scope.formData = {};
+            $scope.formData.want_film = $scope.userInfo.want_film ? $scope.userInfo.want_film.split(',') : [];
+
+            // 默认数据处理
+            api.list('/wap/member/config-list', {'type': 2}).success(function (res) {
+                $scope.list = res.data;
+                for (var i in $scope.list) {
+                    for (var j in $scope.formData.want_film) {
+                        if ($scope.list[i].id == $scope.formData.want_film[j]) {
+                            $scope.list[i].checked = true;
+                            break;
+                        } else {
+                            $scope.list[i].checked = false;
+                        }
+                    }
+                }
+            });
+
+            // 删除
+            $scope.remove = function (l) {
+                for (var i in $scope.list) {
+                    if ($scope.list[i].id == l.id) {
+                        $scope.list[i].checked = false;
+                        break;
+                    }
+                }
+                delItem(l);
+                $ionicScrollDelegate.$getByHandle('small').scrollTop();
+            }
+
+            // 横向滚动至底部
+            $scope.scrollSmallToBottom = function (event, da) {
+                var list = $filter('filter')($scope.list, {checked: true});
+                if (list.length > 6) {
+                    da.checked = false;
+                    ar.saveDataAlert($ionicPopup, '您最多能选择6项！');
+                    return;
+                }
+                if (event.target.checked) {
+                    addItem(da);
+                    $ionicScrollDelegate.$getByHandle('small').scrollBottom();
+                } else {
+                    delItem(da);
+                    $ionicScrollDelegate.$getByHandle('small').scrollTop();
+                }
+            }
+
+            function addItem(item){
+                $scope.formData.want_film.push(item.id);
+            }
+
+            function delItem(item){
+                for(var i in $scope.formData.want_film){
+                    if($scope.formData.want_film[i] == item.id){
+                        $scope.formData.want_film.splice(i,1);
+                        break;
+                    }
+                }
+            }
+
+        }
+
+        function nation(){
+            $scope.formData = {};
+            $scope.formData.nation = $scope.userInfo.info.nation;
+            $scope.nationList = config_infoData.nation;
+        }
+
+        function occupation(){
+            $scope.formData = {};
+            $scope.occupation = $scope.userInfo.info.occupation ? $scope.userInfo.info.occupation : 1;
+            $scope.children_occupation = $scope.userInfo.info.children_occupation ? $scope.userInfo.info.children_occupation : 1;
+
+            // 获取文档高度以适应ion-scroll
+            $scope.bodyHeight = document.body.scrollHeight;
+            if ($scope.bodyHeight == 0) $scope.bodyHeight = window.screen.height;
+            $scope.scrollStyle = {
+                'height': ($scope.bodyHeight - 44) + 'px'
+            }
+
+            $scope.occupationModel = config_infoData.occupation;
+
+            // 用户职业
+            $scope.useroccBig = $scope.occupation;  // 职业大类
+            $scope.useroccSmall = $scope.children_occupation; // 职业小类
+
+            // 如用户未填写职业，默认加载小类数据
+            $scope.occupation = $scope.occupationModel[$scope.occupation - 1].children;
+
+            $scope.selected_bigo = function (item) {
+                $scope.occupation = item.children;
+                $scope.big_selected = true;
+                $scope.useroccBig = item.id;
+            }
+
+            $scope.selected_smallo = function (item) {
+                $scope.useroccSmall = item.id;
+            }
+        }
+
+        function salary(){
+            $scope.formData = {};
+            $scope.formData.year_income = $scope.userInfo.info.year_income;
+            $scope.salaryList = config_infoData.salary;
+        }
+
+        function sports(){
+            $scope.formData = {};
+            $scope.formData.love_sport = $scope.userInfo.love_sport ? $scope.userInfo.love_sport.split(',') : [];
+
+            // 默认数据处理
+            api.list('/wap/member/config-list', {'type': 1}).success(function (res) {
+                $scope.sportsList = res.data;
+                for (var i in $scope.sportsList) {
+                    for (var j in $scope.formData.love_sport) {
+                        if ($scope.formData.love_sport[j] == $scope.sportsList[i].id) {
+                            $scope.sportsList[i].checked = true;
+                            break;
+                        } else {
+                            $scope.sportsList[i].checked = false;
+                        }
+                    }
+                }
+            });
+
+            // 横向滚动至底部
+            $scope.scrollSmallToBottom = function (event, da) {
+                var list = $filter('filter')($scope.sportsList, {checked: true});
+                if (list.length > 6) {
+                    da.checked = false;
+                    ar.saveDataAlert($ionicPopup, '您最多能选择6项！');
+                    return;
+                }
+                if (event.target.checked) {
+                    addItem(da);
+                    $ionicScrollDelegate.$getByHandle('small').scrollBottom();
+                } else {
+                    delItem(da);
+                    $ionicScrollDelegate.$getByHandle('small').scrollTop();
+                }
+            };
+
+            // 删除
+            $scope.remove = function (s) {
+                for (var i in $scope.sportsList) {
+                    if ($scope.sportsList[i].id == s.id) {
+                        $scope.sportsList[i].checked = false;
+                        break;
+                    }
+                }
+                delItem(s);
+                $ionicScrollDelegate.$getByHandle('small').scrollTop();
+            }
+
+            function addItem(item){
+                $scope.formData.love_sport.push(item.id);
+            }
+
+            function delItem(item){
+                for(var i in $scope.formData.love_sport){
+                    if($scope.formData.love_sport[i] == item.id){
+                        $scope.formData.love_sport.splice(i,1);
+                        break;
+                    }
+                }
+            }
+        }
+
+        function wantAddress(){
+            $scope.formData = {};
+            $scope.formData.want_travel = $scope.userInfo.want_travel ? $scope.userInfo.want_travel.split(',') : [];
+            $scope.isMore = true;
+            $scope.typeTab = 1;     // 默认国内
+            $scope.domestic = [];   // 国内
+            $scope.abroad = [];     // 国外
+            $scope.data = [];
+            $scope.pageSize = 1;     // 默认一页显示3条
+            api.list('/wap/member/went-travel-list', {}).success(function (res) {    //typeId:2，国内。 typeId:3，国外
+                $scope.data = res.data;
+                for (var i in $scope.data) {
+                    for (var j in $scope.formData.want_travel) {
+                        if ($scope.formData.want_travel[j] == $scope.data[i].id) {
+                            $scope.data[i].checked = true;
+                            break;
+                        } else {
+                            $scope.data[i].checked = false;
+                        }
+                    }
+                    if ($scope.data[i].type == 2 && $scope.data[i].parentId == 0) {
+                        $scope.domestic.push($scope.data[i]);
+                    }
+                    if ($scope.data[i].type == 3 && $scope.data[i].parentId == 0) {
+                        $scope.abroad.push($scope.data[i]);
+                    }
+                }
+            });
+
+            // 加载更多
+            $scope.loadMore = function (typeTab) {
+                if (typeTab == 1) {
+                    if ($scope.pageSize == $scope.domestic.length) {
+                        $scope.isMore = false;
+                    }
+                } else {
+                    if ($scope.pageSize == $scope.abroad.length) {
+                        $scope.isMore = false;
+                    }
+                }
+                $scope.pageSize += 1;
+                $scope.$broadcast('scroll.infiniteScrollComplete');
+            }
+
+            // 是否还有更多
+            $scope.moreDataCanBeLoaded = function () {
+                return $scope.isMore;
+            }
+
+            // 删除
+            $scope.remove = function (dat) {
+                for (var i in $scope.data) {
+                    if ($scope.data[i].id == dat.id) {
+                        $scope.data[i].checked = false;
+                        break;
+                    }
+                }
+                delItem(dat);
+                $ionicScrollDelegate.$getByHandle('small').scrollTop();
+            }
+
+            // 横向滚动至底部
+            $scope.scrollSmallToBottom = function (event, da) {
+                var list = $filter('filter')($scope.data, {checked: true});
+                if (list.length > 6) {
+                    da.checked = false;
+                    ar.saveDataAlert($ionicPopup, '您最多能选择6项！');
+                    return;
+                }
+                if (event.target.checked) {
+                    addItem(da);
+                    $ionicScrollDelegate.$getByHandle('small').scrollBottom();
+                } else {
+                    delItem(da);
+                    $ionicScrollDelegate.$getByHandle('small').scrollTop();
+                }
+            };
+
+            $scope.showTab = function (tab) {
+                $scope.typeTab = tab;
+            }
+
+            function addItem(item){
+                $scope.formData.want_travel.push(item.id);
+            }
+
+            function delItem(item){
+                for(var i in $scope.formData.want_travel){
+                    if($scope.formData.want_travel[i] == item.id){
+                        $scope.formData.want_travel.splice(i,1);
+                        break;
+                    }
+                }
+            }
+        }
+
+        function zoAge(){
+            $scope.formData = {};
+            $scope.formData.zo_age = '18-22';
+            // 年龄范围 控件
+            var minAge = [], maxAge = [];
+            for (var i = 18; i <= 99; i++) {
+                maxAge.push(i);
+                if (i < 99) {
+                    minAge.push(i);
+                }
+            }
+            $scope.settingsAge = {
+                theme: 'mobiscroll',
+                lang: 'zh',
+                display: 'bottom',
+                rows: 5,
+                wheels: [
+                    [{
+                        circular: false,
+                        data: minAge,
+                        label: '最低年龄'
+                    }, {
+                        circular: false,
+                        data: maxAge,
+                        label: '最高年龄'
+                    }]
+                ],
+                showLabel: true,
+                minWidth: 130,
+                cssClass: 'md-pricerange',
+                validate: function (event, inst) {
+                    var i,
+                        values = event.values,
+                        disabledValues = [];
+
+                    for (i = 0; i < maxAge.length; ++i) {
+                        if (maxAge[i] <= values[0]) {
+                            disabledValues.push(maxAge[i]);
+                        }
+                    }
+                    return {
+                        disabled: [
+                            [], disabledValues
+                        ]
+                    }
+                },
+                formatValue: function (data) {
+                    return data[0] + '-' + data[1];
+                },
+                parseValue: function (valueText) {
+                    if (valueText) {
+                        return valueText.replace(/\s/gi, '').split('-');
+                    }
+                    return [18, 22];
+                }
+            };
+        }
+
+        function zoConstellation(){
+            $scope.formData = {};
+            $scope.constellationList = config_infoData.constellation;
+            if (!$scope.userInfo.info.zo_constellation) {
+                $scope.isNull = true;
+            } else {
+                $scope.isNull = false;
+                $scope.userInfo.info.zo_constellation = $scope.userInfo.info.zo_constellation.split(',');
+            }
+            for (var i in $scope.constellationList) {
+                for (var j in $scope.userInfo.info.zo_constellation) {
+                    if ($scope.userInfo.info.zo_constellation[j] == $scope.constellationList[i].id) {
+                        $scope.constellationList[i].checked = true;
+                        break;
+                    } else {
+                        $scope.constellationList[i].checked = false;
+                    }
+                }
+            }
+
+            $scope.isNullFunc = function (event) {
+                if (event.target.checked) {
+                    for (var i in $scope.constellationList) {
+                        $scope.constellationList[i].checked = false;
+                    }
+                }
+            }
+        }
+
+        function zoHeight(){
+            $scope.formData = {};
+            $scope.formData.zo_height = '160-180';
+            // 身高范围
+            var minHeight = [], maxHeight = [];
+            for (var i = 140; i <= 260; i++) {
+                maxHeight.push(i);
+                if (i < 260) {
+                    minHeight.push(i);
+                }
+            }
+            $scope.settingsHeight = {
+                theme: 'mobiscroll',
+                lang: 'zh',
+                display: 'bottom',
+                rows: 5,
+                wheels: [
+                    [{
+                        circular: false,
+                        data: minHeight,
+                        label: '最低身高(厘米)'
+                    }, {
+                        circular: false,
+                        data: maxHeight,
+                        label: '最高身高(厘米)'
+                    }]
+                ],
+                showLabel: true,
+                minWidth: 130,
+                cssClass: 'md-pricerange',
+                validate: function (event, inst) {
+                    var i,
+                        values = event.values,
+                        disabledValues = [];
+
+                    for (i = 0; i < maxHeight.length; ++i) {
+                        if (maxHeight[i] <= values[0]) {
+                            disabledValues.push(maxHeight[i]);
+                        }
+                    }
+
+                    return {
+                        disabled: [
+                            [], disabledValues
+                        ]
+                    }
+                },
+                formatValue: function (data) {
+                    return data[0] + '-' + data[1];
+                },
+                parseValue: function (valueText) {
+                    if (valueText) {
+                        return valueText.replace(/\s/gi, '').split('-');
+                    }
+                    return [160, 180];
+                }
+            };
+        }
+
+        function zoMarriage(){
+            $scope.formData = {};
+            $scope.marriageList = config_infoData.marriage;
+            if (!$scope.userInfo.info.zo_marriage) {
+                $scope.isNull = true;
+            } else {
+                $scope.isNull = false;
+                $scope.userInfo.info.zo_marriage = $scope.userInfo.info.zo_marriage.split(',');
+            }
+            for (var i in $scope.marriageList) {
+                for (var j in $scope.userInfo.info.zo_marriage) {
+                    if ($scope.userInfo.info.zo_marriage[j] == $scope.marriageList[i].id) {
+                        $scope.marriageList[i].checked = true;
+                        break;
+                    } else {
+                        $scope.marriageList[i].checked = false;
+                    }
+                }
+            }
+
+            $scope.isNullFunc = function (event) {
+                if (event.target.checked) {
+                    for (var i in $scope.marriageList) {
+                        $scope.marriageList[i].checked = false;
+                    }
+                }
+            }
+        }
+
+        function zoZodiac(){
+            $scope.formData = {};
+            if (!$scope.userInfo.info.zo_zodiac) {
+                $scope.isNull = true;
+            } else {
+                $scope.isNull = false;
+                $scope.userInfo.info.zo_zodiac = $scope.userInfo.info.zo_zodiac.split(',');
+            }
+            $scope.isSelectedNull = false;
+            $scope.zodiacList = config_infoData.zodiac;
+            for (var i in $scope.zodiacList) {
+                for (var j in $scope.userInfo.info.zo_zodiac) {
+                    if ($scope.userInfo.info.zo_zodiac[j] == $scope.zodiacList[i].id) {
+                        $scope.zodiacList[i].checked = true;
+                        break;
+                    } else {
+                        $scope.zodiacList[i].checked = false;
+                    }
+                }
+            }
+
+            $scope.isNullFunc = function (event) {
+                if (event.target.checked) {
+                    for (var i in $scope.zodiacList) {
+                        $scope.zodiacList[i].checked = false;
+                    }
+                }
+            }
+        }
+    },
+
 
 
 };

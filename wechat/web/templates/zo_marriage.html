@@ -1,0 +1,14 @@
+<ion-modal-view>
+    <link href="/wechat/web/css/member.css" rel="stylesheet">
+    <ion-header-bar class="com_w_100 bhy">
+        <button class="button button-icon" ng-click="closeModal()">取消</button>
+        <title class="title">婚姻状况要求</title>
+        <button class="button button-icon cor21" ng-click="saveData(formData)">保存</button>
+    </ion-header-bar>
+    <ion-content class="bhy com_w_100 m_bg">
+        <ion-list>
+            <ion-checkbox ng-model="isNull" ng-click="isNullFunc($event)">不限</ion-checkbox>
+            <ion-checkbox ng-model="marriage.checked" ng-repeat="marriage in marriageList" ng-checked="marriage.checked" ng-disabled="isNull">{{marriage.name}}</ion-checkbox>
+        </ion-list>
+    </ion-content>
+</ion-modal-view>
