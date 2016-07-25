@@ -129,9 +129,9 @@ $(function () {
                     "data": "status", fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
                     var html = '';
                     if (oData.status == 1) {
-                        html = '未分配红娘';
+                        html = '未审核';
                     } else if (oData.status == 2) {
-                        html = '已分配红娘';
+                        html = '已审核';
                     } else if (oData.status == 3) {
                         html = '黑名单';
                     } else if (oData.status == 4) {
