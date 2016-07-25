@@ -904,7 +904,7 @@ var ar = {
                         break;
                     }
                 }
-                delItem(dat);
+                delItem(dat,'went_travel');
                 $ionicScrollDelegate.$getByHandle('small').scrollTop();
             }
 
@@ -917,29 +917,16 @@ var ar = {
                     return;
                 }
                 if (event.target.checked) {
-                    addItem(da);
+                    addItem(da,'went_travel');
                     $ionicScrollDelegate.$getByHandle('small').scrollBottom();
                 } else {
-                    delItem(da);
+                    delItem(da,'went_travel');
                     $ionicScrollDelegate.$getByHandle('small').scrollTop();
                 }
             };
 
             $scope.showTab = function (tab) {
                 $scope.typeTab = tab;
-            }
-
-            function addItem(item){
-                $scope.formData.went_travel.push(item.id);
-            }
-
-            function delItem(item){
-                for(var i in $scope.formData.went_travel){
-                    if($scope.formData.went_travel[i] == item.id){
-                        $scope.formData.went_travel.splice(i,1);
-                        break;
-                    }
-                }
             }
 
         }
@@ -993,7 +980,7 @@ var ar = {
                         break;
                     }
                 }
-                delItem(da);
+                delItem(da,'like_food');
                 $ionicScrollDelegate.$getByHandle('small').scrollTop();
             }
 
@@ -1006,26 +993,14 @@ var ar = {
                     return;
                 }
                 if (event.target.checked) {
-                    addItem(da);
+                    addItem(da,'like_food');
                     $ionicScrollDelegate.$getByHandle('small').scrollBottom();
                 } else {
-                    delItem(da);
+                    delItem(da,'like_food');
                     $ionicScrollDelegate.$getByHandle('small').scrollTop();
                 }
             }
 
-            function addItem(item){
-                $scope.formData.like_food.push(item.id);
-            }
-
-            function delItem(item){
-                for(var i in $scope.formData.like_food){
-                    if($scope.formData.like_food[i] == item.id){
-                        $scope.formData.like_food.splice(i,1);
-                        break;
-                    }
-                }
-            }
         }
 
         function education(){
@@ -1083,7 +1058,7 @@ var ar = {
                         break;
                     }
                 }
-                delItem(l);
+                delItem(l,'want_film');
                 $ionicScrollDelegate.$getByHandle('small').scrollTop();
             }
 
@@ -1096,24 +1071,11 @@ var ar = {
                     return;
                 }
                 if (event.target.checked) {
-                    addItem(da);
+                    addItem(da,'want_film');
                     $ionicScrollDelegate.$getByHandle('small').scrollBottom();
                 } else {
-                    delItem(da);
+                    delItem(da,'want_film');
                     $ionicScrollDelegate.$getByHandle('small').scrollTop();
-                }
-            }
-
-            function addItem(item){
-                $scope.formData.want_film.push(item.id);
-            }
-
-            function delItem(item){
-                for(var i in $scope.formData.want_film){
-                    if($scope.formData.want_film[i] == item.id){
-                        $scope.formData.want_film.splice(i,1);
-                        break;
-                    }
                 }
             }
 
@@ -1191,10 +1153,10 @@ var ar = {
                     return;
                 }
                 if (event.target.checked) {
-                    addItem(da);
+                    addItem(da,'love_sport');
                     $ionicScrollDelegate.$getByHandle('small').scrollBottom();
                 } else {
-                    delItem(da);
+                    delItem(da,'love_sport');
                     $ionicScrollDelegate.$getByHandle('small').scrollTop();
                 }
             };
@@ -1207,22 +1169,10 @@ var ar = {
                         break;
                     }
                 }
-                delItem(s);
+                delItem(s,'love_sport');
                 $ionicScrollDelegate.$getByHandle('small').scrollTop();
             }
 
-            function addItem(item){
-                $scope.formData.love_sport.push(item.id);
-            }
-
-            function delItem(item){
-                for(var i in $scope.formData.love_sport){
-                    if($scope.formData.love_sport[i] == item.id){
-                        $scope.formData.love_sport.splice(i,1);
-                        break;
-                    }
-                }
-            }
         }
 
         function wantAddress(){
@@ -1282,7 +1232,7 @@ var ar = {
                         break;
                     }
                 }
-                delItem(dat);
+                delItem(dat,'want_travel');
                 $ionicScrollDelegate.$getByHandle('small').scrollTop();
             }
 
@@ -1295,10 +1245,10 @@ var ar = {
                     return;
                 }
                 if (event.target.checked) {
-                    addItem(da);
+                    addItem(da,'want_travel');
                     $ionicScrollDelegate.$getByHandle('small').scrollBottom();
                 } else {
-                    delItem(da);
+                    delItem(da,'want_travel');
                     $ionicScrollDelegate.$getByHandle('small').scrollTop();
                 }
             };
@@ -1307,18 +1257,6 @@ var ar = {
                 $scope.typeTab = tab;
             }
 
-            function addItem(item){
-                $scope.formData.want_travel.push(item.id);
-            }
-
-            function delItem(item){
-                for(var i in $scope.formData.want_travel){
-                    if($scope.formData.want_travel[i] == item.id){
-                        $scope.formData.want_travel.splice(i,1);
-                        break;
-                    }
-                }
-            }
         }
 
         function zoAge(){
@@ -1404,6 +1342,15 @@ var ar = {
                     for (var i in $scope.constellationList) {
                         $scope.constellationList[i].checked = false;
                     }
+                    $scope.formData.zo_constellation = [];
+                }
+            }
+
+            $scope.saveFormData = function(event,item){
+                if(event.target.checked){
+                    addItem(item,'zo_constellation');
+                }else{
+                    delItem(item,'zo_constellation');
                 }
             }
         }
@@ -1492,8 +1439,18 @@ var ar = {
                     for (var i in $scope.marriageList) {
                         $scope.marriageList[i].checked = false;
                     }
+                    $scope.formData.zo_marriage = [];
                 }
             }
+
+            $scope.saveFormData = function(event,item){
+                if(event.target.checked){
+                    addItem(item,'marriage');
+                }else{
+                    delItem(item,'marriage');
+                }
+            }
+
         }
 
         function zoZodiac(){
@@ -1522,8 +1479,113 @@ var ar = {
                     for (var i in $scope.zodiacList) {
                         $scope.zodiacList[i].checked = false;
                     }
+                    $scope.formData.zo_zodiac = [];
                 }
             }
+
+            $scope.saveFormData = function(event,item){
+                if(event.target.checked){
+                    addItem(item,'zo_zodiac');
+                }else{
+                    delItem(item,'zo_zodiac');
+                }
+            }
+        }
+
+        function addItem(item,name){
+            if(name == 'went_travel'){
+                $scope.formData.went_travel.push(item.id);
+            }
+            if(name == 'want_travel'){
+                $scope.formData.want_travel.push(item.id);
+            }
+            if(name == 'love_sport'){
+                $scope.formData.love_sport.push(item.id);
+            }
+            if(name == 'want_film'){
+                $scope.formData.want_film.push(item.id);
+            }
+            if(name == 'like_food'){
+                $scope.formData.like_food.push(item.id);
+            }
+            if(name == 'zo_marriage'){
+                $scope.formData.zo_marriage.push(item.id);
+            }
+            if(name == 'zo_zodiac'){
+                $scope.formData.zo_zodiac.push(item.id);
+            }
+            if(name == 'zo_constellation'){
+                $scope.formData.zo_constellation.push(item.id);
+            }
+
+        }
+
+        function delItem(item,name){
+            if(name == 'went_travel'){
+                for(var i in $scope.formData.went_travel){
+                    if($scope.formData.went_travel[i] == item.id){
+                        $scope.formData.went_travel.splice(i,1);
+                        break;
+                    }
+                }
+            }
+            if(name == 'want_travel'){
+                for(var i in $scope.formData.want_travel){
+                    if($scope.formData.want_travel[i] == item.id){
+                        $scope.formData.want_travel.splice(i,1);
+                        break;
+                    }
+                }
+            }
+            if(name == 'love_sport'){
+                for(var i in $scope.formData.love_sport){
+                    if($scope.formData.love_sport[i] == item.id){
+                        $scope.formData.love_sport.splice(i,1);
+                        break;
+                    }
+                }
+            }
+            if(name == 'want_film'){
+                for(var i in $scope.formData.want_film){
+                    if($scope.formData.want_film[i] == item.id){
+                        $scope.formData.want_film.splice(i,1);
+                        break;
+                    }
+                }
+            }
+            if(name == 'like_food'){
+                for(var i in $scope.formData.like_food){
+                    if($scope.formData.like_food[i] == item.id){
+                        $scope.formData.like_food.splice(i,1);
+                        break;
+                    }
+                }
+            }
+            if(name == 'zo_marriage'){
+                for(var i in $scope.formData.zo_marriage){
+                    if($scope.formData.zo_marriage[i] == item.id){
+                        $scope.formData.zo_marriage.splice(i,1);
+                        break;
+                    }
+                }
+            }
+            if(name == 'zo_zodiac'){
+                for(var i in $scope.formData.zo_zodiac){
+                    if($scope.formData.zo_zodiac[i] == item.id){
+                        $scope.formData.zo_zodiac.splice(i,1);
+                        break;
+                    }
+                }
+            }
+            if(name == 'zo_constellation'){
+                for(var i in $scope.formData.zo_constellation){
+                    if($scope.formData.zo_constellation[i] == item.id){
+                        $scope.formData.zo_constellation.splice(i,1);
+                        break;
+                    }
+                }
+            }
+
         }
     },
 

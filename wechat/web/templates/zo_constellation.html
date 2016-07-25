@@ -8,7 +8,7 @@
     <ion-content class="bhy com_w_100">
         <ion-list>
             <ion-checkbox ng-model="isNull" ng-click="isNullFunc($event)">不限</ion-checkbox>
-            <ion-checkbox ng-model="constellation.checked" ng-repeat="constellation in constellationList" ng-checked="constellation.checked" ng-disabled="isNull">{{constellation.name}}</ion-checkbox>
+            <ion-checkbox ng-model="constellation.checked" ng-repeat="constellation in constellationList" ng-disabled="isNull" ng-click="saveFormData($event,constellation)">{{constellation.name}}</ion-checkbox>
         </ion-list>
     </ion-content>
 </ion-modal-view>
