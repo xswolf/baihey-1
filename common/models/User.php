@@ -490,7 +490,7 @@ class User extends Base
      * @return bool
      * @throws \yii\db\Exception
      */
-    public function changeMatureTime($user_id, $goods_id, $level = 1)
+    public function changeMatureTime($user_id, $goods_id, $level = 0)
     {
         $goods    = ArrayHelper::toArray(ChargeGoods::getInstance()->findOne($goods_id));
         $userInfo = $this->getUserById($user_id);
