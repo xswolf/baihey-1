@@ -221,11 +221,33 @@ class User extends Model
         return $row;
     }
 
+    /**
+     * 更新用户数据
+     * @param $data
+     * @return mixed
+     */
     public function updateAuthUser($data)
     {
         $id = $data['id'];
         $row = $this->db->createCommand()
             ->update($this->userTable, $data, ['id' => $id])
+            ->execute();
+
+        return $row;
+    }
+
+    /**
+     * 设置值班
+     * @param $id
+     * @return mixed
+     */
+    public function setDuty($id)
+    {
+        $this->db->createCommand()
+            ->update($this->userTable, ['duty' => 0])
+            ->execute();
+        $row = $this->db->createCommand()
+            ->update($this->userTable, ['duty' => 1], ['id' => $id])
             ->execute();
 
         return $row;

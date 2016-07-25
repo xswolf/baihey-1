@@ -134,4 +134,15 @@ class UserController extends BaseController
             $this->renderAjax(['status' => 0, 'message' => '失败']);
         }
     }
+
+    // 设置值班
+    public function actionSetDuty()
+    {
+        $authUser = new User();
+        if ($authUser->setDuty($this->post)) {
+            $this->renderAjax(['status' => 1, 'message' => '成功']);
+        } else {
+            $this->renderAjax(['status' => 0, 'message' => '失败']);
+        }
+    }
 }

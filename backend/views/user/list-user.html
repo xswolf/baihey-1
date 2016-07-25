@@ -112,7 +112,7 @@
     function changeDuty(id,a){
         var flag = $(a).text();
         if(flag == '设置值班'){
-            bhyFunc.ajaxRequest('/admin/user/update-auth-user',{id:id,duty:1},function(res){
+            bhyFunc.ajaxRequest('/admin/user/set-duty',{id:id},function(res){
                 if(res.status > 0){
                     $(a).parent().siblings('.duty').html('<span class="text-danger">是</span>');
                     $(a).removeClass('btn-danger')
