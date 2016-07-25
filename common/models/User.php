@@ -520,7 +520,8 @@ class User extends Base
         // 修改到期时间
         $_user_information_table = $this->tablePrefix . 'user_information';// 表名
         $userInfo['mature_time'] = YII_BEGIN_TIME > $userInfo['mature_time'] ? YII_BEGIN_TIME + $time : $userInfo['mature_time'] + $time;
-        if($goods['level'] != 0) {
+        $level = $goods['level'];
+        if($level != 0) {
             $sql = "UPDATE {$_user_information_table} SET info = JSON_REPLACE(info,'$.level','" . $level . "'), mature_time = " . $userInfo['mature_time'] . " WHERE user_id={$user_id}";
         } else {
             $sql = "UPDATE {$_user_information_table} SET mature_time = " . $userInfo['mature_time'] . " WHERE user_id={$user_id}";
