@@ -4,8 +4,12 @@
     <div class="ibox">
         <div class="ibox-title"><h5>会员列表</h5>
             <div class="ibox-tools rboor">
+                {{if authValidate('/admin/member/save')}}
                 <a href="/admin/member/save" class="btn btn-green btn-xs p310"><i class="fa fa-plus"></i> 添加</a>
+                {{/if}}
+                {{if authValidate('/admin/member/del')}}
                 <button class="btn btn-green btn-xs p310 del-user"><i class="fa fa-trash-o"></i> 删除</button>
+                {{/if}}
             </div>
         </div>
 
@@ -252,7 +256,7 @@
                     <th>认证</th>
                     <th>签单</th>
                     <th>资料</th>
-                    <th>地址</th>
+                    <th>意向</th>
                     <th>证件</th>
                     <th>状态</th>
                     <th>操作</th>
@@ -303,7 +307,16 @@
         </div>
         <div class="form-group">
             <label>内容</label>
-            <textarea id="return_content" class="form-control" style="resize: none;" maxlength="300" placeholder="300字以内"></textarea>
+            <textarea id="return_content" class="form-control" style="resize: none;" maxlength="300"
+                      placeholder="300字以内"></textarea>
+        </div>
+        <div class="form-group">
+            <label>意向情况</label>
+            <select class="form-control">
+                <option value="2">请选择</option>
+                <option value="1">有意向</option>
+                <option value="0">无意向</option>
+            </select>
         </div>
         <div class="form-group center">
             <button class="btn btn-primary" id="addReturningSubmit">确定添加</button>
@@ -350,12 +363,14 @@
         </div>
         <div class="form-group">
             <label>配对对象2</label>
-            <input class="form-control" id="pair_user_name2" type="text" value="" placeholder="请输入会员ID" onblur="bhyFunc.getUserById(this)">
+            <input class="form-control" id="pair_user_name2" type="text" value="" placeholder="请输入会员ID"
+                   onblur="bhyFunc.getUserById(this)">
 
         </div>
         <div class="form-group">
             <label>内容</label>
-            <textarea id="pair_content" class="form-control" style="resize: none;" maxlength="300" placeholder="300字以内"></textarea>
+            <textarea id="pair_content" class="form-control" style="resize: none;" maxlength="300"
+                      placeholder="300字以内"></textarea>
         </div>
         <div class="form-group center">
             <button class="btn btn-primary" id="addPairSubmit">确定添加</button>
@@ -367,6 +382,7 @@
 
         var admin_id = "{{$admin['id']}}";
         var admin_name = "{{$admin['name']}}";
+
         bhyFunc.cityPickerInit();
 
         $('#age1,#age2').append(bhyFunc.ageLink(18));
@@ -405,22 +421,23 @@
 
         })
 
+        var userId, userName, layerIndex;
         // 回访
         $('#demo1').delegate('#returningBtn', 'click', function () {
-            var userId = $(this).data('uid');
-            var userName = $(this).data('uname');
-            $('#return_content').val('');
+            userId = $(this).data('uid');
+            userName = $(this).data('uname');
             layer.open({
                 type: 1,
                 title: false,
-                area: '600px',
+                area: '700px',
                 shadeClose: true,
                 content: $('#returningBox'),
-                success: function (layero1, index1) {
-                    if($.trim(userName)){
-                        layero1.find('.ibox-title>h5').html(userName+'的回访');
-                    }else {
-                        layero1.find('.ibox-title>h5').html(userId+'的回访');
+                success: function (layero, index) {
+                    layerIndex = index;
+                    if ($.trim(userName)) {
+                        layero.find('.ibox-title>h5').html(userName + '的回访');
+                    } else {
+                        layero.find('.ibox-title>h5').html(userId + '的回访');
                     }
 
                     bhyFunc.ajaxRequest('/admin/member/pair-list', {to_user_id: userId, type: 2}, function (res) {
@@ -436,63 +453,24 @@
                         } else {
                             html1 = '<tr><td colspan="5">没有数据</td></tr>';
                         }
-                        $(layero1).find('.table').find('tbody').empty().append(html1);
-                    })
-
-                    $(layero1).find('#addReturningBtn').click(function(){  //添加回访
-                        layer.open({
-                            type: 1,
-                            title: false,
-                            area: '400px',
-                            shadeClose: true,
-                            content: $('#addReturningBox'),
-                            success:function(layero2, index2){
-                                $(layero2).find('#return_match_name').val(admin_name);  //TODO $matchName 当前登录红娘姓名
-                                $(layero2).find('#return_user_name').val(userName+'('+userId+')');
-                                $(layero2).find('#addReturningSubmit').click(function(){
-
-                                    if(!$.trim($('#return_content').val())){
-                                        alert(11);
-                                        layer.tips('请输入回访内容',$('#return_content'));
-                                        return false;
-                                    }
-                                    var content = $.trim($('#return_content').val());
-                                    bhyFunc.ajaxRequest('/admin/member/add-pair',{admin_id:admin_id, to_user_id:userId, content:content, type:2, status:1},function(res){  // 添加回访
-                                        if(res.status > 0){
-                                            var html2 = "";
-                                            html2 += '<tr><td>' + res.data.id + '</td>';
-                                            html2 += '<td>' + admin_name + '</td>';
-                                            html2 += '<td>' + userName + '(' + userId + ')</td>';
-                                            html2 += '<td>' + content + '</td>';
-                                            html2 += '<td>' + bhyFunc.timesTampToDate(res.data.create_time) + '</td></tr>';
-                                            layer.close(index2);
-                                            $(layero1).find('.table').find('tbody').append(html2);
-                                        }else{
-                                            layer.msg('添加回访失败！');
-                                        }
-                                    })
-                                })
-                            }
-                        });
+                        $(layero).find('.table').find('tbody').empty().append(html1);
                     })
                 }
             });
         }).delegate('#pairBtn', 'click', function () {   // 配对
-            var userId = $(this).data('uid');
-            var userName = $(this).data('uname');
-            $('#pair_user_name2').val('');
-            $('#pair_content').val('');
+            userId = $(this).data('uid');
+            userName = $(this).data('uname');
             layer.open({
                 type: 1,
                 title: false,
-                area: '600px',
+                area: '700px',
                 shadeClose: true,
                 content: $('#pairBox'),
                 success: function (layero1, index1) {
-                    if($.trim(userName)){
-                        layero1.find('.ibox-title>h5').html(userName+'的配对');
-                    }else {
-                        layero1.find('.ibox-title>h5').html(userId+'的配对');
+                    if ($.trim(userName)) {
+                        layero1.find('.ibox-title>h5').html(userName + '的配对');
+                    } else {
+                        layero1.find('.ibox-title>h5').html(userId + '的配对');
                     }
 
                     bhyFunc.ajaxRequest('/admin/member/pair-list', {to_user_id: userId, type: 1}, function (res) {
@@ -501,7 +479,7 @@
                             for (var i in res.data) {
                                 html1 += '<tr><td>' + res.data[i].id + '</td>';
                                 html1 += '<td>' + res.data[i].admin_name + '</td>';
-                                html1 += '<td>' + res.data[i].to_name.replace(/"/g, '') + '(' + res.data[i].to_user_id + ') <i class="fa fa-arrows-h"></i> '+res.data[i].form_name.replace(/"/g, '')+' ('+res.data[i].from_user_id+')</td>';
+                                html1 += '<td>' + res.data[i].to_name + '(' + res.data[i].to_user_id + ') <i class="fa fa-arrows-h"></i> ' + res.data[i].form_name + ' (' + res.data[i].from_user_id + ')</td>';
                                 html1 += '<td>' + res.data[i].content + '</td>';
                                 html1 += '<td>' + bhyFunc.timesTampToDate(res.data[i].create_time) + '</td></tr>';
                             }
@@ -511,51 +489,110 @@
                         $(layero1).find('.table').find('tbody').empty().append(html1);
                     })
 
-                    $(layero1).find('#addPairBtn').click(function(){  // 添加配对
-                        layer.open({
-                            type: 1,
-                            title: false,
-                            area: '400px',
-                            shadeClose: true,
-                            content: $('#addPairBox'),
-                            success:function(layero2, index2){
-                                var from_user_id = $.trim($('#pair_user_name2').val());
-                                $('#pair_match_name').val(admin_name);  //TODO $matchName 当前登录红娘姓名
-                                $('#pair_user_name1').val(userName+'('+userId+')');
-                                $('#addPairSubmit').click(function(){
-                                    if(!bhyFunc.getUserById(from_user_id)){
-                                        layer.tips('未找到该会员，请核对会员ID',$('#pair_user_name2'));
-                                        return false;
-                                    }
-                                    if(!$.trim($('#pair_content').val())){
-                                        layer.tips('请输入配对内容',$('#pair_content'));
-                                        return false;
-                                    }
-                                    var content = $.trim($('#pair_content').val());
-                                    var fromUser = bhyFunc.getUserById(from_user_id);
-                                    var fromUserInfo = JSON.parse(fromUser.info);
 
-                                    bhyFunc.ajaxRequest('/admin/member/add-pair',{admin_id:admin_id, to_user_id:userId, from_user_id:from_user_id, content:content, type:1, status:2},function(res){
-                                        if(res.status > 0){
-                                            var html2 = "";
-                                            html2 += '<tr><td>' + res.data.id + '</td>';
-                                            html2 += '<td>' + admin_name + '</td>';
-                                            html2 += '<td>' + userName + '(' + userId + ') <i class="fa fa-arrows-h"></i> '+fromUserInfo.real_name+' ('+from_user_id+')</td>';
-                                            html2 += '<td>' + content + '</td>';
-                                            html2 += '<td>' + bhyFunc.timesTampToDate(res.data.create_time) + '</td></tr>';
-                                            layer.close(index2);
-                                            $(layero1).find('.table').find('tbody').append(html2);
-                                        }else{
-                                            layer.msg('添加配对失败！');
-                                        }
-                                    })
-                                })
-                            }
-                        });
-                    })
                 }
             });
         })
 
+        // 点击添加回访
+        $('#addReturningBtn').on('click', function () {
+            layer.open({
+                type: 1,
+                title: false,
+                area: '400px',
+                shadeClose: true,
+                content: $('#addReturningBox'),
+                success: function (layero, index) {
+                    $('#return_content').val('');
+                    layerIndex = index;
+                    $('#return_match_name').val(admin_name);
+                    $('#return_user_name').val(userName + '(' + userId + ')');
+                }
+            });
+        })
+
+        // 添加回访提交
+        $('#addReturningSubmit').click(function () {
+            if (!$.trim($('#return_content').val())) {
+                layer.tips('请输入回访内容', $('#return_content'));
+                return false;
+            }
+            var content = $.trim($('#return_content').val());
+            bhyFunc.ajaxRequest('/admin/member/add-pair', {
+                admin_id: admin_id,
+                to_user_id: userId,
+                content: content,
+                type: 2,
+                status: 1
+            }, function (res) {  // 添加回访
+                if (res.status > 0) {
+                    var html2 = "";
+                    html2 += '<tr><td>' + res.data.id + '</td>';
+                    html2 += '<td>' + admin_name + '</td>';
+                    html2 += '<td>' + userName + '(' + userId + ')</td>';
+                    html2 += '<td>' + content + '</td>';
+                    html2 += '<td>' + bhyFunc.timesTampToDate(res.data.create_time) + '</td></tr>';
+                    layer.close(layerIndex);
+                    $('#returningBox').find('.table').find('tbody').append(html2);
+                } else {
+                    layer.msg('添加回访失败！');
+                }
+            })
+        })
+
+        // 点击添加配对
+        $('#addPairBtn').on('click', function () {
+            layer.open({
+                type: 1,
+                title: false,
+                area: '400px',
+                shadeClose: true,
+                content: $('#addPairBox'),
+                success: function (layero, index) {
+                    $('#pair_user_name2').val('');
+                    $('#pair_content').val('');
+                    layerIndex = index;
+                    $('#pair_match_name').val(admin_name);
+                    $('#pair_user_name1').val(userName + '(' + userId + ')');
+                }
+            });
+        })
+
+        // 添加配对提交
+        $('#addPairSubmit').click(function () {
+            if (!bhyFunc.getUserById($.trim($('#pair_user_name2').val()))) {
+                layer.tips('未找到该会员，请核对会员ID', $('#pair_user_name2'));
+                return false;
+            }
+            if (!$.trim($('#pair_content').val())) {
+                layer.tips('请输入配对内容', $('#pair_content'));
+                return false;
+            }
+            var content = $.trim($('#pair_content').val());
+            var fromUser = bhyFunc.getUserById($.trim($('#pair_user_name2').val()));
+            var fromUserInfo = JSON.parse(fromUser.info);
+
+            bhyFunc.ajaxRequest('/admin/member/add-pair', {
+                admin_id: admin_id,
+                to_user_id: userId,
+                from_user_id: $.trim($('#pair_user_name2').val()),
+                content: content,
+                type: 1,
+                status: 2
+            }, function (res) {
+                if (res.status > 0) {
+                    var html2 = "";
+                    html2 += '<tr><td>' + res.data.id + '</td>';
+                    html2 += '<td>' + admin_name + '</td>';
+                    html2 += '<td>' + userName + '(' + userId + ') <i class="fa fa-arrows-h"></i> ' + fromUserInfo.real_name + ' (' + $.trim($('#pair_user_name2').val()) + ')</td>';
+                    html2 += '<td>' + content + '</td>';
+                    html2 += '<td>' + bhyFunc.timesTampToDate(res.data.create_time) + '</td></tr>';
+                    layer.close(layerIndex);
+                    $('#pairBox').find('.table').find('tbody').append(html2);
+                } else {
+                    layer.msg('添加配对失败！');
+                }
+            })
+        })
     });
 </script>
