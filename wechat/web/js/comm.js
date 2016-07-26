@@ -1553,35 +1553,34 @@ var ar = {
         if(!formData) return true;
         var form = formData;
         if(form.birthday){
-            form.info.age = this.dateToTimestamp(form.birbirthday);
-            form.info.zodiac = form.zodiac.id;
-            form.info.constellation = form.constellation.id;
+            $scope.userInfo.info.age = this.dateToTimestamp(form.birbirthday);
+            $scope.userInfo.info.zodiac = form.zodiac.id;
+            $scope.userInfo.info.constellation = form.constellation.id;
         }
         if(form.went_travel){
-            form.went_travel = form.went_travel.join(',');
+            $scope.userInfo.went_travel = form.went_travel.join(',');
         }
         if(form.want_travel){
-            form.want_travel = form.want_travel.join(',');
+            $scope.userInfo.want_travel = form.want_travel.join(',');
         }
         if(form.love_sport){
-            form.love_sport = form.love_sport.join(',');
+            $scope.userInfo.love_sport = form.love_sport.join(',');
         }
         if(form.want_film){
-            form.want_film = form.want_film.join(',');
+            $scope.userInfo.want_film = form.want_film.join(',');
         }
         if(form.like_food){
-            form.want_film = form.like_food.join(',');
+            $scope.userInfo.want_film = form.like_food.join(',');
         }
         if(form.zo_marriage){
-            form.zo_marriage = form.zo_marriage.join(',');
+            $scope.userInfo.zo_marriage = form.zo_marriage.join(',');
         }
         if(form.zo_zodiac){
-            form.zo_zodiac = form.zo_zodiac.join(',');
+            $scope.userInfo.zo_zodiac = form.zo_zodiac.join(',');
         }
         if(form.zo_constellation){
-            form.zo_constellation = form.zo_constellation.join(',');
+            $scope.userInfo.zo_constellation = form.zo_constellation.join(',');
         }
-        $scope.userInfo = form;
     }
 
 

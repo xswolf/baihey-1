@@ -45,8 +45,24 @@ class MemberController extends BaseController
     public function actionSaveData()
     {
         $user_id = Cookie::getInstance()->getCookie('bhy_id')->value;
-        var_dump($this->get);exit;
-        UserInformation::getInstance()->updateUserInfo($user_id, $this->get);
+        $data = $this->get;
+        $data['user'] = $data;
+        $data['user_id'] = $user_id;
+        if($data['info']) {
+            $data['info'] = json_decode($data['info']);
+            if(is_object($data['info'])) {
+                $data['info'] = get_object_vars($data['info']);
+                $data['info']['age'] = (int)$data['info']['age'];
+            }
+        } else {
+            $data['info'] = [];
+        }
+
+        if(User::getInstance()->editUser($data)){
+            $this->renderAjax(['status' => 1, 'msg' => '修改成功']);
+        }else{
+            $this->renderAjax(['status' => 0, 'msg' => '修改失败']);
+        }
     }
 
     /**
