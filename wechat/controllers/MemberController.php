@@ -45,7 +45,7 @@ class MemberController extends BaseController
     public function actionSaveData()
     {
         $user_id = Cookie::getInstance()->getCookie('bhy_id')->value;
-
+        var_dump($this->get);exit;
         UserInformation::getInstance()->updateUserInfo($user_id, $this->get);
     }
 
