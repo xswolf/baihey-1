@@ -164,19 +164,28 @@ define(['app/module'], function (module) {
 
     // 返回职业
     module.filter('occupation', function () {
-        return function (input, arr) {
-            if (typeof(input) != 'undefined' && input != '') {
-                var infoData = config_infoData.occupation;
-                for (var i in infoData) {
-                    if (infoData[i].id == parseInt(input)) {
-                        for (var j in infoData[i].children) {
-                            if (infoData[i].children[j].id == parseInt(arr)) {
-                                return infoData[i].name + '-' + infoData[i].children[j].name;
-                            }
+        return function (input, children) {
+            var result = '';
+            if (input) {
+                var data = config_infoData.occupation;
+                for (var i in data) {
+                    if (data[i].id == input) {
+                        result = data[i].name;
+                        break;
+                    }
+                }
+                if(children){
+                    var childrenData = config_infoData.children_occupation;
+                    for (var i in childrenData) {
+                        if (childrenData[i].id == children) {
+                            result += '&nbsp;&nbsp;' + childrenData[i].name;
+                            break;
                         }
                     }
                 }
+                return result;
             }
+            return '';
         }
     });
 
