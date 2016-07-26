@@ -280,7 +280,13 @@ class User extends Base
         if($userInfo['info']['age']) {
             $userInfo['age'] = floor((time() - $userInfo['info']['age'])/ 365 / 24 / 3600);
         }
-        $userInfo['info'] = json_encode(array_merge($this->getDefaultInfo(), $userInfo['zo'], $userInfo['info']));
+        $oldUser = $this->getUserById($data['user_id']);
+        $defaultInfo = json_decode($oldUser['info']);
+        if(is_object($defaultInfo)) {
+            $defaultInfo = (array)$defaultInfo;
+        }
+        //var_dump($defaultInfo);exit;
+        $userInfo['info'] = json_encode(array_merge($defaultInfo, $userInfo['info']));
 //        unset ($userInfo['zo']);
 //        unset($userInfo['photosList']);
 //        unset($userInfo['headPic']);
