@@ -209,7 +209,9 @@ define(['app/module', 'app/directive/directiveApi'
         // 保存数据
         $scope.saveData = function (formData) {
             console.log(formData);
-            api.save('url', formData).success(function (res) {
+            ar.processParams($scope,formData);
+            api.save('url', $scope.userInfo).success(function (res) {
+
                 $scope.closeModal();
             })
         }

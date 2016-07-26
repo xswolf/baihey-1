@@ -3,7 +3,7 @@
     <ion-header-bar class="com_w_100 bhy">
         <button class="button button-icon" ng-click="closeModal()">取消</button>
         <title class="title">购车要求</title>
-        <button class="button button-icon cor21" ng-click="saveData(formData)">保存</button>
+        <button class="button button-icon cor21" ng-click="saveData()">保存</button>
     </ion-header-bar>
     <ion-content class="bhy com_w_100 m_bg">
         <ion-list>
@@ -16,7 +16,7 @@
                     <div class="input-label">
                         购车要求
                     </div>
-                    <select ng-model="formData.zo_car" ng-options="zo_car.id as zo_car.name for zo_car in zo_carList">
+                    <select ng-model="userInfo.info.zo_car" ng-options="zo_car.id as zo_car.name for zo_car in carList">
                         <option value="">不限</option>
                     </select>
                 </label>

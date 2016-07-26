@@ -3,7 +3,7 @@
     <ion-header-bar class="com_w_100 bhy">
         <button class="button button-icon" ng-click="closeModal()">取消</button>
         <title class="title">身高</title>
-        <button class="button button-icon cor21" ng-click="saveData(formData)">保存</button>
+        <button class="button button-icon cor21" ng-click="saveData()">保存</button>
     </ion-header-bar>
     <ion-content class="bhy com_w_100 m_bg">
         <ion-list>
@@ -16,7 +16,7 @@
                     <div class="input-label">
                         身高
                     </div>
-                    <select ng-model="formData.height" ng-options="height.id as height.name for height in heightList">
+                    <select ng-model="userInfo.info.height" ng-options="height.id as height.name for height in heightList">
                         <option value="">请选择</option>
                     </select>
                 </label>

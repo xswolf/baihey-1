@@ -3,7 +3,7 @@
     <ion-header-bar class="com_w_100 bhy">
         <button class="button button-icon" ng-click="closeModal()">取消</button>
         <title class="title">真实姓名</title>
-        <button class="button button-icon cor21" ng-click="saveData(formData)">保存</button>
+        <button class="button button-icon cor21" ng-click="saveData()">保存</button>
     </ion-header-bar>
     <ion-content class="bhy com_w_100 m_bg">
         <ion-list>
@@ -12,7 +12,7 @@
             </div>
             <div class="item item-text-wrap">
                 <label class="item item-input mb20">
-                    <input type="text" placeholder="真实姓名一旦填写不可更改" ng-model="formData.real_name">
+                    <input type="text" placeholder="真实姓名一旦填写不可更改" ng-model="userInfo.info.real_name">
                 </label>
                 <label class="m_tips">
                     <p class="fwb">温馨提示：</p>

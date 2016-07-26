@@ -4,7 +4,7 @@
     <ion-header-bar class="com_w_100 bhy">
         <button class="button button-icon" ng-click="closeModal()">取消</button>
         <title class="title">身高要求</title>
-        <button class="button button-icon cor21" ng-click="saveData(formData)">保存</button>
+        <button class="button button-icon cor21" ng-click="saveData()">保存</button>
     </ion-header-bar>
     <ion-content class="bhy com_w_100 m_bg">
         <ion-list>
@@ -17,7 +17,7 @@
                     <div class="input-label">
                         身高范围
                     </div>
-                    <input ng-model="formData.zo_height" mobiscroll-scroller="settingsHeight" mobiscroll-instance="demo"  />
+                    <input ng-model="userInfo.info.zo_height" mobiscroll-scroller="settingsHeight" mobiscroll-instance="demo"  />
                 </label>
                 <div class="m_b_bg w100 mt20 tal">
                     <img src="/wechat/web/images/member/children_bg.png">

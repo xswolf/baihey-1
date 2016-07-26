@@ -3,7 +3,7 @@
     <ion-header-bar class="com_w_100 bhy">
         <button class="button button-icon" ng-click="closeModal()">取消</button>
         <title class="title">民族</title>
-        <button class="button button-icon cor21" ng-click="saveData(formData)">保存</button>
+        <button class="button button-icon cor21" ng-click="saveData()">保存</button>
     </ion-header-bar>
     <ion-content class="bhy com_w_100 m_bg">
         <ion-list>
@@ -16,7 +16,7 @@
                     <div class="input-label">
                         民族
                     </div>
-                    <select ng-model="formData.nation" ng-options="nation.id as nation.name for nation in nationList">
+                    <select ng-model="userInfo.info.nation" ng-options="nation.id as nation.name for nation in nationList">
                         <option value="">请选择</option>
                     </select>
                 </label>

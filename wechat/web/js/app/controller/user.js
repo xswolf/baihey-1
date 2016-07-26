@@ -114,6 +114,16 @@ define(['app/module', 'app/directive/directiveApi'
 
         }
 
+        $scope.getVerify = function(){
+            api.get('/wap/user/GetVerify')
+        }
+
+        $scope.checkVerify= function(){
+
+        }
+
+
+
         $scope.validateFrom = function () {
 
             if (!$scope.User.username) {

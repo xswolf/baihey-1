@@ -16,7 +16,7 @@
                     <div class="input-label">
                         省
                     </div>
-                    <select ng-model="formData.province" ng-options="p.id as p.name for p in provinceList">
+                    <select ng-model="userInfo.province" ng-options="p.id as p.name for p in provinceList">
                     </select>
                 </label>
 
@@ -24,8 +24,8 @@
                     <div class="input-label">
                         市/区
                     </div>
-                    <select ng-model="formData.city"
-                            ng-options="c.id as c.name for c in cityList | filter:{parentId:formData.province}:true">
+                    <select ng-model="userInfo.city"
+                            ng-options="c.id as c.name for c in cityList | filter:{parentId:userInfo.province}:true">
                     </select>
                 </label>
 
@@ -33,8 +33,8 @@
                     <div class="input-label">
                         区/县
                     </div>
-                    <select ng-model="formData.area"
-                            ng-options="a.id as a.name for a in areaList | filter:{parentId:formData.city}:true">
+                    <select ng-model="userInfo.area"
+                            ng-options="a.id as a.name for a in areaList | filter:{parentId:userInfo.city}:true">
                     </select>
                 </label>
                 <div class="m_b_bg w100 mt20 tar">

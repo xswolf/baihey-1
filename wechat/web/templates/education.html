@@ -3,7 +3,7 @@
     <ion-header-bar class="com_w_100 bhy">
         <button class="button button-icon" ng-click="closeModal()">取消</button>
         <title class="title">学历</title>
-        <button class="button button-icon cor21" ng-click="saveData(formData)">保存</button>
+        <button class="button button-icon cor21" ng-click="saveData()">保存</button>
     </ion-header-bar>
     <ion-content class="bhy com_w_100 m_bg">
         <ion-list>
@@ -16,7 +16,7 @@
                     <div class="input-label">
                         学历
                     </div>
-                    <select ng-model="formData.education" ng-options="education.id as education.name for education in educationList">
+                    <select ng-model="userInfo.info.education" ng-options="education.id as education.name for education in educationList">
                         <option value="">请选择</option>
                     </select>
                 </label>

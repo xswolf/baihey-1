@@ -170,6 +170,10 @@ var ar = {
         return unixTimestamp.toLocaleString();
     },
 
+    dateToTimestamp:function(date){
+        return new Date(data).getTime() / 1000;
+    },
+
     /**
      * 根据出生日期计算年龄
      * @param Birthday
@@ -468,7 +472,7 @@ var ar = {
         }
     },
 
-    initPhotoSwipeFromDOM:function (gallerySelector) {
+    initPhotoSwipeFromDOM: function (gallerySelector) {
         requirejs(['photoswipe', 'photoswipe_ui'], function (PhotoSwipe, PhotoSwipeUI_Default) {
             var parseThumbnailElements = function (el) {
 
@@ -718,16 +722,16 @@ var ar = {
                 });
 
                 /*gallery.listen('gettingData', function (index, item) {
-                    if (useLargeImages) {
-                        item.src = item.o.src;
-                        item.w = item.o.w;
-                        item.h = item.o.h;
-                    } else {
-                        item.src = item.m.src;
-                        item.w = item.m.w;
-                        item.h = item.m.h;
-                    }
-                });*/
+                 if (useLargeImages) {
+                 item.src = item.o.src;
+                 item.w = item.o.w;
+                 item.h = item.o.h;
+                 } else {
+                 item.src = item.m.src;
+                 item.w = item.m.w;
+                 item.h = item.m.h;
+                 }
+                 });*/
 
                 gallery.init();
             };
@@ -748,87 +752,82 @@ var ar = {
         })
     },
 
-    processData:function(fieldName,$scope,api,$ionicPopup,$filter,$ionicScrollDelegate){
-        if(fieldName == 'address'){    // 地区
+    processData: function (fieldName, $scope, api, $ionicPopup, $filter, $ionicScrollDelegate) {
+        if (fieldName == 'address') {    // 地区
             address();
         }
-        if(fieldName == 'age'){   // 年龄
+        if (fieldName == 'age') {   // 年龄
             age();
         }
-        if(fieldName == 'been_address'){  // 去过的地方
+        if (fieldName == 'been_address') {  // 去过的地方
             beenAddress();
         }
-        if(fieldName == 'blood'){      // 血型
+        if (fieldName == 'blood') {      // 血型
             blood();
         }
-        if(fieldName == 'car' || fieldName == 'zo_car'){      // 购车
+        if (fieldName == 'car' || fieldName == 'zo_car') {      // 购车
             car();
         }
-        if(fieldName == 'children' || fieldName == 'zo_children'){      // 子女
+        if (fieldName == 'children' || fieldName == 'zo_children') {      // 子女
             children();
         }
-        if(fieldName == 'delicacy'){      // 喜欢的美食
+        if (fieldName == 'delicacy') {      // 喜欢的美食
             delicacy();
         }
-        if(fieldName == 'education' || fieldName == 'zo_education'){      // 学历
+        if (fieldName == 'education' || fieldName == 'zo_education') {      // 学历
             education();
         }
-        if(fieldName == 'height'){      // 身高
+        if (fieldName == 'height') {      // 身高
             height();
         }
-        if(fieldName == 'house' || fieldName == 'zo_house'){      // 购房
+        if (fieldName == 'house' || fieldName == 'zo_house') {      // 购房
             house();
         }
-        if(fieldName == 'is_marriage'){      // 婚姻状况
+        if (fieldName == 'is_marriage') {      // 婚姻状况
             isMarriage();
         }
-        if(fieldName == 'movie'){      // 喜欢的影视
+        if (fieldName == 'movie') {      // 喜欢的影视
             movie();
         }
-        if(fieldName == 'nation'){      // 民族
+        if (fieldName == 'nation') {      // 民族
             nation();
         }
-        if(fieldName == 'occupation'){      // 职业
+        if (fieldName == 'occupation') {      // 职业
             occupation();
         }
-        if(fieldName == 'salary'){      // 年薪
+        if (fieldName == 'salary') {      // 年薪
             salary();
         }
-        if(fieldName == 'sports'){      // 喜欢的运动
+        if (fieldName == 'sports') {      // 喜欢的运动
             sports();
         }
-        if(fieldName == 'want_address'){      // 想去的地方
+        if (fieldName == 'want_address') {      // 想去的地方
             wantAddress();
         }
-        if(fieldName == 'zo_age'){      // 择偶年龄
+        if (fieldName == 'zo_age') {      // 择偶年龄
             zoAge();
         }
-        if(fieldName == 'zo_constellation'){      // 择偶星座
+        if (fieldName == 'zo_constellation') {      // 择偶星座
             zoConstellation();
         }
-        if(fieldName == 'zo_height'){      // 择偶身高
+        if (fieldName == 'zo_height') {      // 择偶身高
             zoHeight();
         }
-        if(fieldName == 'zo_marriage'){      // 择偶婚姻
+        if (fieldName == 'zo_marriage') {      // 择偶婚姻
             zoMarriage();
         }
-        if(fieldName == 'zo_zodiac'){      // 择偶属相
+        if (fieldName == 'zo_zodiac') {      // 择偶属相
             zoZodiac();
         }
 
 
-
-        function address(){
+        function address() {
             $scope.provinceList = provines;
             $scope.cityList = citys;
             $scope.areaList = area;
-            $scope.formData = {};
-            $scope.formData.province = ar.getObjById(provines, $scope.userInfo.province);
-            $scope.formData.city = ar.getObjById(citys, $scope.userInfo.city);
-            $scope.formData.area = ar.getObjById(area, $scope.userInfo.area);
         }
 
-        function age(){
+        function age() {
             $scope.settings = {
                 theme: 'mobiscroll',
                 lang: 'zh',
@@ -837,17 +836,17 @@ var ar = {
                 mode: $scope.mode
             };
             $scope.formData = {};
-            $scope.age = '年龄';
-            $scope.zodiac = {id: 0, name: '生肖'};
-            $scope.constellation = {id: 0, name: '星座'};
+            $scope.formData.age = '年龄';
+            $scope.formData.zodiac = {id: 0, name: '生肖'};
+            $scope.formData.constellation = {id: 0, name: '星座'};
             $scope.birthdayChange = function () {
-                $scope.age = ar.getAgeByBirthday(ar.DateTimeToDate($scope.formData.birthday)) + '岁';
-                $scope.zodiac = ar.getZodicByBirthday(ar.DateTimeToDate($scope.formData.birthday));
-                $scope.constellation = ar.getConstellationByBirthday(ar.DateTimeToDate($scope.formData.birthday));
+                $scope.formData.age = ar.getAgeByBirthday(ar.DateTimeToDate($scope.formData.birthday)) + '岁';
+                $scope.formData.zodiac = ar.getZodicByBirthday(ar.DateTimeToDate($scope.formData.birthday));
+                $scope.formData.constellation = ar.getConstellationByBirthday(ar.DateTimeToDate($scope.formData.birthday));
             }
         }
 
-        function beenAddress(){
+        function beenAddress() {
             $scope.formData = {};
             $scope.formData.went_travel = $scope.userInfo.went_travel ? $scope.userInfo.went_travel.split(',') : [];// 用户已选择的地区，ID数据集，存数据库
             $scope.isMore = true;
@@ -904,7 +903,7 @@ var ar = {
                         break;
                     }
                 }
-                delItem(dat,'went_travel');
+                delItem(dat, 'went_travel');
                 $ionicScrollDelegate.$getByHandle('small').scrollTop();
             }
 
@@ -917,10 +916,10 @@ var ar = {
                     return;
                 }
                 if (event.target.checked) {
-                    addItem(da,'went_travel');
+                    addItem(da, 'went_travel');
                     $ionicScrollDelegate.$getByHandle('small').scrollBottom();
                 } else {
-                    delItem(da,'went_travel');
+                    delItem(da, 'went_travel');
                     $ionicScrollDelegate.$getByHandle('small').scrollTop();
                 }
             };
@@ -931,29 +930,19 @@ var ar = {
 
         }
 
-        function blood(){
-            $scope.formData = {};
-            $scope.formData.blood = $scope.userInfo.info.blood;
+        function blood() {
             $scope.bloodList = config_infoData.blood;
         }
 
-        function car(){
-            $scope.formData = {};
-            $scope.formData.is_car = $scope.userInfo.info.is_car;
+        function car() {
             $scope.carList = config_infoData.car;
-            $scope.formData.zo_car = $scope.userInfo.info.zo_car;
-            $scope.zo_carList = config_infoData.car;
         }
 
-        function children(){
-            $scope.formData = {};
-            $scope.formData.is_child = $scope.userInfo.info.is_child;
-            $scope.childrenList = config_infoData.children;
-            $scope.formData.zo_children = $scope.userInfo.info.zo_children;
+        function children() {
             $scope.childrenList = config_infoData.children;
         }
 
-        function delicacy(){
+        function delicacy() {
             $scope.formData = {};
             $scope.formData.like_food = $scope.userInfo.like_food ? $scope.userInfo.like_food.split(',') : [];
 
@@ -980,7 +969,7 @@ var ar = {
                         break;
                     }
                 }
-                delItem(da,'like_food');
+                delItem(da, 'like_food');
                 $ionicScrollDelegate.$getByHandle('small').scrollTop();
             }
 
@@ -993,45 +982,33 @@ var ar = {
                     return;
                 }
                 if (event.target.checked) {
-                    addItem(da,'like_food');
+                    addItem(da, 'like_food');
                     $ionicScrollDelegate.$getByHandle('small').scrollBottom();
                 } else {
-                    delItem(da,'like_food');
+                    delItem(da, 'like_food');
                     $ionicScrollDelegate.$getByHandle('small').scrollTop();
                 }
             }
 
         }
 
-        function education(){
-            $scope.formData = {};
-            $scope.formData.education = $scope.userInfo.info.education;
+        function education() {
             $scope.educationList = config_infoData.education;
-            $scope.formData.zo_education = $scope.userInfo.info.zo_education;
-            $scope.zo_educationList = config_infoData.education;
         }
 
-        function height(){
-            $scope.formData = {};
-            $scope.formData.height = $scope.userInfo.info.height;
+        function height() {
             $scope.heightList = config_infoData.height;
         }
 
-        function house(){
-            $scope.formData = {};
-            $scope.formData.is_purchase = $scope.userInfo.info.is_purchase;
+        function house() {
             $scope.houseList = config_infoData.house;
-            $scope.formData.zo_house = $scope.userInfo.info.zo_house;
-            $scope.zo_houseList = config_infoData.house;
         }
 
-        function isMarriage(){
-            $scope.formData = {};
-            $scope.formData.is_marriage = $scope.userInfo.info.is_marriage;
+        function isMarriage() {
             $scope.marriageList = config_infoData.marriage;
         }
 
-        function movie(){
+        function movie() {
             $scope.formData = {};
             $scope.formData.want_film = $scope.userInfo.want_film ? $scope.userInfo.want_film.split(',') : [];
 
@@ -1058,7 +1035,7 @@ var ar = {
                         break;
                     }
                 }
-                delItem(l,'want_film');
+                delItem(l, 'want_film');
                 $ionicScrollDelegate.$getByHandle('small').scrollTop();
             }
 
@@ -1071,27 +1048,26 @@ var ar = {
                     return;
                 }
                 if (event.target.checked) {
-                    addItem(da,'want_film');
+                    addItem(da, 'want_film');
                     $ionicScrollDelegate.$getByHandle('small').scrollBottom();
                 } else {
-                    delItem(da,'want_film');
+                    delItem(da, 'want_film');
                     $ionicScrollDelegate.$getByHandle('small').scrollTop();
                 }
             }
 
         }
 
-        function nation(){
-            $scope.formData = {};
-            $scope.formData.nation = $scope.userInfo.info.nation;
+        function nation() {
             $scope.nationList = config_infoData.nation;
         }
 
-        function occupation(){
+        function occupation() {
             $scope.formData = {};
-            $scope.occupation = $scope.userInfo.info.occupation ? $scope.userInfo.info.occupation : 1;
-            $scope.children_occupation = $scope.userInfo.info.children_occupation ? $scope.userInfo.info.children_occupation : 1;
-
+            $scope.occupationList = config_infoData.occupation;
+            $scope.childrenOccupationList = config_infoData.children_occupation;
+            $scope.formData.occupation = $scope.userInfo.info.occupation ? $scope.userInfo.info.occupation : 1;
+            $scope.formData.children_occupation = $scope.userInfo.info.children_occupation ? $scope.userInfo.info.children_occupation : 1;
             // 获取文档高度以适应ion-scroll
             $scope.bodyHeight = document.body.scrollHeight;
             if ($scope.bodyHeight == 0) $scope.bodyHeight = window.screen.height;
@@ -1099,33 +1075,21 @@ var ar = {
                 'height': ($scope.bodyHeight - 44) + 'px'
             }
 
-            $scope.occupationModel = config_infoData.occupation;
-
-            // 用户职业
-            $scope.useroccBig = $scope.occupation;  // 职业大类
-            $scope.useroccSmall = $scope.children_occupation; // 职业小类
-
-            // 如用户未填写职业，默认加载小类数据
-            $scope.occupation = $scope.occupationModel[$scope.occupation - 1].children;
-
-            $scope.selected_bigo = function (item) {
-                $scope.occupation = item.children;
-                $scope.big_selected = true;
-                $scope.useroccBig = item.id;
+            $scope.selected_big = function (item) {
+                $scope.formData.occupation = item.id;
+                $scope.formData.children_occupation = 0;
             }
 
-            $scope.selected_smallo = function (item) {
-                $scope.useroccSmall = item.id;
+            $scope.selected_small = function (item) {
+                $scope.formData.children_occupation = item.id;
             }
         }
 
-        function salary(){
-            $scope.formData = {};
-            $scope.formData.year_income = $scope.userInfo.info.year_income;
+        function salary() {
             $scope.salaryList = config_infoData.salary;
         }
 
-        function sports(){
+        function sports() {
             $scope.formData = {};
             $scope.formData.love_sport = $scope.userInfo.love_sport ? $scope.userInfo.love_sport.split(',') : [];
 
@@ -1153,10 +1117,10 @@ var ar = {
                     return;
                 }
                 if (event.target.checked) {
-                    addItem(da,'love_sport');
+                    addItem(da, 'love_sport');
                     $ionicScrollDelegate.$getByHandle('small').scrollBottom();
                 } else {
-                    delItem(da,'love_sport');
+                    delItem(da, 'love_sport');
                     $ionicScrollDelegate.$getByHandle('small').scrollTop();
                 }
             };
@@ -1169,13 +1133,13 @@ var ar = {
                         break;
                     }
                 }
-                delItem(s,'love_sport');
+                delItem(s, 'love_sport');
                 $ionicScrollDelegate.$getByHandle('small').scrollTop();
             }
 
         }
 
-        function wantAddress(){
+        function wantAddress() {
             $scope.formData = {};
             $scope.formData.want_travel = $scope.userInfo.want_travel ? $scope.userInfo.want_travel.split(',') : [];
             $scope.isMore = true;
@@ -1232,7 +1196,7 @@ var ar = {
                         break;
                     }
                 }
-                delItem(dat,'want_travel');
+                delItem(dat, 'want_travel');
                 $ionicScrollDelegate.$getByHandle('small').scrollTop();
             }
 
@@ -1245,10 +1209,10 @@ var ar = {
                     return;
                 }
                 if (event.target.checked) {
-                    addItem(da,'want_travel');
+                    addItem(da, 'want_travel');
                     $ionicScrollDelegate.$getByHandle('small').scrollBottom();
                 } else {
-                    delItem(da,'want_travel');
+                    delItem(da, 'want_travel');
                     $ionicScrollDelegate.$getByHandle('small').scrollTop();
                 }
             };
@@ -1259,9 +1223,7 @@ var ar = {
 
         }
 
-        function zoAge(){
-            $scope.formData = {};
-            $scope.formData.zo_age = '18-22';
+        function zoAge() {
             // 年龄范围 控件
             var minAge = [], maxAge = [];
             for (var i = 18; i <= 99; i++) {
@@ -1317,7 +1279,7 @@ var ar = {
             };
         }
 
-        function zoConstellation(){
+        function zoConstellation() {
             $scope.formData = {};
             $scope.constellationList = config_infoData.constellation;
             if (!$scope.userInfo.info.zo_constellation) {
@@ -1346,18 +1308,16 @@ var ar = {
                 }
             }
 
-            $scope.saveFormData = function(event,item){
-                if(event.target.checked){
-                    addItem(item,'zo_constellation');
-                }else{
-                    delItem(item,'zo_constellation');
+            $scope.saveFormData = function (event, item) {
+                if (event.target.checked) {
+                    addItem(item, 'zo_constellation');
+                } else {
+                    delItem(item, 'zo_constellation');
                 }
             }
         }
 
-        function zoHeight(){
-            $scope.formData = {};
-            $scope.formData.zo_height = '160-180';
+        function zoHeight() {
             // 身高范围
             var minHeight = [], maxHeight = [];
             for (var i = 140; i <= 260; i++) {
@@ -1414,7 +1374,7 @@ var ar = {
             };
         }
 
-        function zoMarriage(){
+        function zoMarriage() {
             $scope.formData = {};
             $scope.marriageList = config_infoData.marriage;
             if (!$scope.userInfo.info.zo_marriage) {
@@ -1443,17 +1403,17 @@ var ar = {
                 }
             }
 
-            $scope.saveFormData = function(event,item){
-                if(event.target.checked){
-                    addItem(item,'marriage');
-                }else{
-                    delItem(item,'marriage');
+            $scope.saveFormData = function (event, item) {
+                if (event.target.checked) {
+                    addItem(item, 'marriage');
+                } else {
+                    delItem(item, 'marriage');
                 }
             }
 
         }
 
-        function zoZodiac(){
+        function zoZodiac() {
             $scope.formData = {};
             if (!$scope.userInfo.info.zo_zodiac) {
                 $scope.isNull = true;
@@ -1483,104 +1443,104 @@ var ar = {
                 }
             }
 
-            $scope.saveFormData = function(event,item){
-                if(event.target.checked){
-                    addItem(item,'zo_zodiac');
-                }else{
-                    delItem(item,'zo_zodiac');
+            $scope.saveFormData = function (event, item) {
+                if (event.target.checked) {
+                    addItem(item, 'zo_zodiac');
+                } else {
+                    delItem(item, 'zo_zodiac');
                 }
             }
         }
 
-        function addItem(item,name){
-            if(name == 'went_travel'){
+        function addItem(item, name) {
+            if (name == 'went_travel') {
                 $scope.formData.went_travel.push(item.id);
             }
-            if(name == 'want_travel'){
+            if (name == 'want_travel') {
                 $scope.formData.want_travel.push(item.id);
             }
-            if(name == 'love_sport'){
+            if (name == 'love_sport') {
                 $scope.formData.love_sport.push(item.id);
             }
-            if(name == 'want_film'){
+            if (name == 'want_film') {
                 $scope.formData.want_film.push(item.id);
             }
-            if(name == 'like_food'){
+            if (name == 'like_food') {
                 $scope.formData.like_food.push(item.id);
             }
-            if(name == 'zo_marriage'){
+            if (name == 'zo_marriage') {
                 $scope.formData.zo_marriage.push(item.id);
             }
-            if(name == 'zo_zodiac'){
+            if (name == 'zo_zodiac') {
                 $scope.formData.zo_zodiac.push(item.id);
             }
-            if(name == 'zo_constellation'){
+            if (name == 'zo_constellation') {
                 $scope.formData.zo_constellation.push(item.id);
             }
 
         }
 
-        function delItem(item,name){
-            if(name == 'went_travel'){
-                for(var i in $scope.formData.went_travel){
-                    if($scope.formData.went_travel[i] == item.id){
-                        $scope.formData.went_travel.splice(i,1);
+        function delItem(item, name) {
+            if (name == 'went_travel') {
+                for (var i in $scope.formData.went_travel) {
+                    if ($scope.formData.went_travel[i] == item.id) {
+                        $scope.formData.went_travel.splice(i, 1);
                         break;
                     }
                 }
             }
-            if(name == 'want_travel'){
-                for(var i in $scope.formData.want_travel){
-                    if($scope.formData.want_travel[i] == item.id){
-                        $scope.formData.want_travel.splice(i,1);
+            if (name == 'want_travel') {
+                for (var i in $scope.formData.want_travel) {
+                    if ($scope.formData.want_travel[i] == item.id) {
+                        $scope.formData.want_travel.splice(i, 1);
                         break;
                     }
                 }
             }
-            if(name == 'love_sport'){
-                for(var i in $scope.formData.love_sport){
-                    if($scope.formData.love_sport[i] == item.id){
-                        $scope.formData.love_sport.splice(i,1);
+            if (name == 'love_sport') {
+                for (var i in $scope.formData.love_sport) {
+                    if ($scope.formData.love_sport[i] == item.id) {
+                        $scope.formData.love_sport.splice(i, 1);
                         break;
                     }
                 }
             }
-            if(name == 'want_film'){
-                for(var i in $scope.formData.want_film){
-                    if($scope.formData.want_film[i] == item.id){
-                        $scope.formData.want_film.splice(i,1);
+            if (name == 'want_film') {
+                for (var i in $scope.formData.want_film) {
+                    if ($scope.formData.want_film[i] == item.id) {
+                        $scope.formData.want_film.splice(i, 1);
                         break;
                     }
                 }
             }
-            if(name == 'like_food'){
-                for(var i in $scope.formData.like_food){
-                    if($scope.formData.like_food[i] == item.id){
-                        $scope.formData.like_food.splice(i,1);
+            if (name == 'like_food') {
+                for (var i in $scope.formData.like_food) {
+                    if ($scope.formData.like_food[i] == item.id) {
+                        $scope.formData.like_food.splice(i, 1);
                         break;
                     }
                 }
             }
-            if(name == 'zo_marriage'){
-                for(var i in $scope.formData.zo_marriage){
-                    if($scope.formData.zo_marriage[i] == item.id){
-                        $scope.formData.zo_marriage.splice(i,1);
+            if (name == 'zo_marriage') {
+                for (var i in $scope.formData.zo_marriage) {
+                    if ($scope.formData.zo_marriage[i] == item.id) {
+                        $scope.formData.zo_marriage.splice(i, 1);
                         break;
                     }
                 }
             }
-            if(name == 'zo_zodiac'){
-                for(var i in $scope.formData.zo_zodiac){
-                    if($scope.formData.zo_zodiac[i] == item.id){
-                        $scope.formData.zo_zodiac.splice(i,1);
+            if (name == 'zo_zodiac') {
+                for (var i in $scope.formData.zo_zodiac) {
+                    if ($scope.formData.zo_zodiac[i] == item.id) {
+                        $scope.formData.zo_zodiac.splice(i, 1);
                         break;
                     }
                 }
             }
-            if(name == 'zo_constellation'){
-                for(var i in $scope.formData.zo_constellation){
-                    if($scope.formData.zo_constellation[i] == item.id){
-                        $scope.formData.zo_constellation.splice(i,1);
+            if (name == 'zo_constellation') {
+                for (var i in $scope.formData.zo_constellation) {
+                    if ($scope.formData.zo_constellation[i] == item.id) {
+                        $scope.formData.zo_constellation.splice(i, 1);
                         break;
                     }
                 }
@@ -1589,6 +1549,40 @@ var ar = {
         }
     },
 
+    processParams: function ($scope,formData) {
+        if(!formData) return true;
+        var form = formData;
+        if(form.birthday){
+            form.info.age = this.dateToTimestamp(form.birbirthday);
+            form.info.zodiac = form.zodiac.id;
+            form.info.constellation = form.constellation.id;
+        }
+        if(form.went_travel){
+            form.went_travel = form.went_travel.join(',');
+        }
+        if(form.want_travel){
+            form.want_travel = form.want_travel.join(',');
+        }
+        if(form.love_sport){
+            form.love_sport = form.love_sport.join(',');
+        }
+        if(form.want_film){
+            form.want_film = form.want_film.join(',');
+        }
+        if(form.like_food){
+            form.want_film = form.like_food.join(',');
+        }
+        if(form.zo_marriage){
+            form.zo_marriage = form.zo_marriage.join(',');
+        }
+        if(form.zo_zodiac){
+            form.zo_zodiac = form.zo_zodiac.join(',');
+        }
+        if(form.zo_constellation){
+            form.zo_constellation = form.zo_constellation.join(',');
+        }
+        $scope.userInfo = form;
+    }
 
 
 };
