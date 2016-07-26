@@ -265,9 +265,13 @@ class QueryBuilder extends \yii\base\Object
                     $params[$n] = $v;
                 }
             } else {
+                if (!isset($columnSchemas[$name])){
+                    continue;
+                }
                 $phName = self::PARAM_PREFIX . count($params);
                 $lines[] = $this->db->quoteColumnName($name) . '=' . $phName;
                 $params[$phName] = !is_array($value) && isset($columnSchemas[$name]) ? $columnSchemas[$name]->dbTypecast($value) : $value;
+
             }
         }
 
