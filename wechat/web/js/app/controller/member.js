@@ -210,7 +210,7 @@ define(['app/module', 'app/directive/directiveApi'
         $scope.saveData = function (formData) {
             console.log(formData);
             ar.processParams($scope,formData);
-            api.save('url', $scope.userInfo).success(function (res) {
+            api.save('/wap/member/save-data', $scope.userInfo).success(function (res) {
 
                 $scope.closeModal();
             })
