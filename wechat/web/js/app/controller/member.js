@@ -205,7 +205,61 @@ define(['app/module', 'app/directive/directiveApi'
                 ar.processData(fieldName,$scope,api,$ionicPopup,$filter,$ionicScrollDelegate);
             });
         }
+// 年龄范围 控件
 
+        var minAge = [], maxAge = [];
+        for (var i = 18; i <= 99; i++) {
+            maxAge.push(i);
+            if (i < 99) {
+                minAge.push(i);
+            }
+        }
+        $scope.settingsAge = {
+            theme: 'mobiscroll',
+            lang: 'zh',
+            display: 'bottom',
+            rows: 5,
+            wheels: [
+                [{
+                    circular: false,
+                    data: minAge,
+                    label: '最低年龄'
+                }, {
+                    circular: false,
+                    data: maxAge,
+                    label: '最高年龄'
+                }]
+            ],
+            showLabel: true,
+            minWidth: 130,
+            cssClass: 'md-pricerange',
+            validate: function (event, inst) {
+                var i,
+                    values = event.values,
+                    disabledValues = [];
+
+                for (i = 0; i < maxAge.length; ++i) {
+                    if (maxAge[i] <= values[0]) {
+                        disabledValues.push(maxAge[i]);
+                    }
+                }
+                return {
+                    disabled: [
+                        [], disabledValues
+                    ]
+                }
+            },
+            formatValue: function (data) {
+                return data[0] + '-' + data[1];
+            },
+            parseValue: function (valueText) {
+                if (valueText) {
+                    return valueText.replace(/\s/gi, '').split('-');
+                }
+                return [18, 22];
+            }
+        };
+        ar.loadMobiscroll();
         // 保存数据
         $scope.saveData = function (formData) {
             console.log(formData);

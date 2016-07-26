@@ -752,6 +752,115 @@ var ar = {
         })
     },
 
+    loadMobiscroll:function(){
+        var minAge = [], maxAge = [];
+        for (var i = 18; i <= 99; i++) {
+            maxAge.push(i);
+            if (i < 99) {
+                minAge.push(i);
+            }
+        }
+        $scope.settingsAge = {
+            theme: 'mobiscroll',
+            lang: 'zh',
+            display: 'bottom',
+            rows: 5,
+            wheels: [
+                [{
+                    circular: false,
+                    data: minAge,
+                    label: '最低年龄'
+                }, {
+                    circular: false,
+                    data: maxAge,
+                    label: '最高年龄'
+                }]
+            ],
+            showLabel: true,
+            minWidth: 130,
+            cssClass: 'md-pricerange',
+            validate: function (event, inst) {
+                var i,
+                    values = event.values,
+                    disabledValues = [];
+
+                for (i = 0; i < maxAge.length; ++i) {
+                    if (maxAge[i] <= values[0]) {
+                        disabledValues.push(maxAge[i]);
+                    }
+                }
+                return {
+                    disabled: [
+                        [], disabledValues
+                    ]
+                }
+            },
+            formatValue: function (data) {
+                return data[0] + '-' + data[1];
+            },
+            parseValue: function (valueText) {
+                if (valueText) {
+                    return valueText.replace(/\s/gi, '').split('-');
+                }
+                return [18, 22];
+            }
+        };
+
+        // 身高范围
+        var minHeight = [], maxHeight = [];
+        for (var i = 140; i <= 260; i++) {
+            maxHeight.push(i);
+            if (i < 260) {
+                minHeight.push(i);
+            }
+        }
+        $scope.settingsHeight = {
+            theme: 'mobiscroll',
+            lang: 'zh',
+            display: 'bottom',
+            rows: 5,
+            wheels: [
+                [{
+                    circular: false,
+                    data: minHeight,
+                    label: '最低身高(厘米)'
+                }, {
+                    circular: false,
+                    data: maxHeight,
+                    label: '最高身高(厘米)'
+                }]
+            ],
+            showLabel: true,
+            minWidth: 130,
+            cssClass: 'md-pricerange',
+            validate: function (event, inst) {
+                var i,
+                    values = event.values,
+                    disabledValues = [];
+
+                for (i = 0; i < maxHeight.length; ++i) {
+                    if (maxHeight[i] <= values[0]) {
+                        disabledValues.push(maxHeight[i]);
+                    }
+                }
+
+                return {
+                    disabled: [
+                        [], disabledValues
+                    ]
+                }
+            },
+            formatValue: function (data) {
+                return data[0] + '-' + data[1];
+            },
+            parseValue: function (valueText) {
+                if (valueText) {
+                    return valueText.replace(/\s/gi, '').split('-');
+                }
+                return [160, 180];
+            }
+        };
+    },
     processData: function (fieldName, $scope, api, $ionicPopup, $filter, $ionicScrollDelegate) {
         if (fieldName == 'address') {    // 地区
             address();
@@ -804,15 +913,11 @@ var ar = {
         if (fieldName == 'want_address') {      // 想去的地方
             wantAddress();
         }
-        if (fieldName == 'zo_age') {      // 择偶年龄
-            zoAge();
-        }
+
         if (fieldName == 'zo_constellation') {      // 择偶星座
             zoConstellation();
         }
-        if (fieldName == 'zo_height') {      // 择偶身高
-            zoHeight();
-        }
+
         if (fieldName == 'zo_marriage') {      // 择偶婚姻
             zoMarriage();
         }
@@ -1223,61 +1328,6 @@ var ar = {
 
         }
 
-        function zoAge() {
-            // 年龄范围 控件
-            var minAge = [], maxAge = [];
-            for (var i = 18; i <= 99; i++) {
-                maxAge.push(i);
-                if (i < 99) {
-                    minAge.push(i);
-                }
-            }
-            $scope.settingsAge = {
-                theme: 'mobiscroll',
-                lang: 'zh',
-                display: 'bottom',
-                rows: 5,
-                wheels: [
-                    [{
-                        circular: false,
-                        data: minAge,
-                        label: '最低年龄'
-                    }, {
-                        circular: false,
-                        data: maxAge,
-                        label: '最高年龄'
-                    }]
-                ],
-                showLabel: true,
-                minWidth: 130,
-                cssClass: 'md-pricerange',
-                validate: function (event, inst) {
-                    var i,
-                        values = event.values,
-                        disabledValues = [];
-
-                    for (i = 0; i < maxAge.length; ++i) {
-                        if (maxAge[i] <= values[0]) {
-                            disabledValues.push(maxAge[i]);
-                        }
-                    }
-                    return {
-                        disabled: [
-                            [], disabledValues
-                        ]
-                    }
-                },
-                formatValue: function (data) {
-                    return data[0] + '-' + data[1];
-                },
-                parseValue: function (valueText) {
-                    if (valueText) {
-                        return valueText.replace(/\s/gi, '').split('-');
-                    }
-                    return [18, 22];
-                }
-            };
-        }
 
         function zoConstellation() {
             $scope.formData = {};
@@ -1315,63 +1365,6 @@ var ar = {
                     delItem(item, 'zo_constellation');
                 }
             }
-        }
-
-        function zoHeight() {
-            // 身高范围
-            var minHeight = [], maxHeight = [];
-            for (var i = 140; i <= 260; i++) {
-                maxHeight.push(i);
-                if (i < 260) {
-                    minHeight.push(i);
-                }
-            }
-            $scope.settingsHeight = {
-                theme: 'mobiscroll',
-                lang: 'zh',
-                display: 'bottom',
-                rows: 5,
-                wheels: [
-                    [{
-                        circular: false,
-                        data: minHeight,
-                        label: '最低身高(厘米)'
-                    }, {
-                        circular: false,
-                        data: maxHeight,
-                        label: '最高身高(厘米)'
-                    }]
-                ],
-                showLabel: true,
-                minWidth: 130,
-                cssClass: 'md-pricerange',
-                validate: function (event, inst) {
-                    var i,
-                        values = event.values,
-                        disabledValues = [];
-
-                    for (i = 0; i < maxHeight.length; ++i) {
-                        if (maxHeight[i] <= values[0]) {
-                            disabledValues.push(maxHeight[i]);
-                        }
-                    }
-
-                    return {
-                        disabled: [
-                            [], disabledValues
-                        ]
-                    }
-                },
-                formatValue: function (data) {
-                    return data[0] + '-' + data[1];
-                },
-                parseValue: function (valueText) {
-                    if (valueText) {
-                        return valueText.replace(/\s/gi, '').split('-');
-                    }
-                    return [160, 180];
-                }
-            };
         }
 
         function zoMarriage() {

@@ -227,14 +227,6 @@
             <ion-item class="item-divider">
                 详细资料
             </ion-item>
-            <ion-item class="item-icon-right" ng-click="updateInfo('children')">
-                <p>
-                    <span class="cor4">子女状况</span>
-                    <span ng-if="!userInfo.info.is_child" class="ml20 mr10 cor21">立即填写</span>
-                    <span ng-if="userInfo.info.is_child" class="ml20 mr10">{{userInfo.info.is_child | child}}</span>
-                </p>
-                <i class="icon ion-ios-arrow-right cor52"></i>
-            </ion-item>
             <ion-item class="item-icon-right" ng-click="updateInfo(userInfo.info.nation ? '' : 'nation')">
                 <p>
                     <span class="cor4">民族</span>
@@ -244,14 +236,16 @@
                 <i class="icon ion-ios-arrow-right cor52"></i>
             </ion-item>
 
-            <ion-item class="item-icon-right" ng-click="updateInfo('work')">
+            <ion-item class="item-icon-right" ng-click="updateInfo('children')">
                 <p>
-                    <span class="cor4">工作单位</span>
-                    <span ng-if="!userInfo.info.work" class="ml20 mr10 cor21">立即填写</span>
-                    <span ng-if="userInfo.info.work" class="ml20 mr10">{{userInfo.info.work}}</span>
+                    <span class="cor4">子女状况</span>
+                    <span ng-if="!userInfo.info.is_child" class="ml20 mr10 cor21">立即填写</span>
+                    <span ng-if="userInfo.info.is_child" class="ml20 mr10">{{userInfo.info.is_child | child}}</span>
                 </p>
                 <i class="icon ion-ios-arrow-right cor52"></i>
             </ion-item>
+
+
             <ion-item class="item-icon-right" ng-click="updateInfo('salary')">
                 <p>
                     <span class="cor4">年薪</span>
@@ -291,6 +285,14 @@
                     <span class="cor4">毕业院校</span>
                     <span ng-if="!userInfo.info.school" class="ml20 mr10 cor21">立即填写</span>
                     <span ng-if="userInfo.info.school" class="ml20 mr10">{{userInfo.info.school}}</span>
+                </p>
+                <i class="icon ion-ios-arrow-right cor52"></i>
+            </ion-item>
+            <ion-item class="item-icon-right" ng-click="updateInfo('work')">
+                <p>
+                    <span class="cor4">工作单位</span>
+                    <span ng-if="!userInfo.info.work" class="ml20 mr10"><span class="cor21">立即填写</span> （保密 仅供红娘参考）</span>
+                    <span ng-if="userInfo.info.work" class="ml20 mr10">{{userInfo.info.work}}</span>
                 </p>
                 <i class="icon ion-ios-arrow-right cor52"></i>
             </ion-item>
