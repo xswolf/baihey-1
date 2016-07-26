@@ -5,6 +5,7 @@ use common\models\UserFollow;
 use common\models\UserPhoto;
 use common\util\AutoAddress;
 use common\util\Cookie;
+use vendor\yiisoft\verify\Verify;
 use wechat\models\User;
 
 /**
@@ -61,7 +62,6 @@ class UserController extends BaseController
      */
     public function actionLogin()
     {
-
         // 判断是否自动登录
         if ($this->isLogin()) {
             return $this->redirect('/wap');
@@ -69,7 +69,6 @@ class UserController extends BaseController
 
         //判断是否点击提交
         if (\Yii::$app->request->get('username') && \Yii::$app->request->get('password')) {
-
             if ($user = User::getInstance()->login($this->get['username'], $this->get['password'])) {
                 if ($user['status'] < 3) {
                     $data = \common\models\User::getInstance()->getUserById($user['id']);
@@ -89,6 +88,23 @@ class UserController extends BaseController
         }
 
         return $this->render();
+    }
+
+    public function actionCheckCode()
+    {
+        $Verify = new Verify();
+        return $Verify->check($this->get['verify_code']);
+    }
+
+    public function actionGetVerify()
+    {
+        $config =    array(
+            'fontSize'    =>    30,    // 验证码字体大小
+            'length'      =>    4,     // 验证码位数
+            'useNoise'    =>    false, // 关闭验证码杂点
+        );
+        $Verify = new Verify($config);
+        $Verify->entry();
     }
 
     /**
