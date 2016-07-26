@@ -136,10 +136,7 @@ class User extends Base
             ->insert($this->tableName(), $dataUser)
             ->execute();
 
-        if ($user) {
-            $id = $db->getLastInsertID();// 获取id
-        }
-
+        $id = $db->getLastInsertID();// 获取id
         // user_information表 数据处理
         $infoData['user_id'] = $id;
 
@@ -149,11 +146,6 @@ class User extends Base
             ->execute();
         if ($user && $info) {
             $transaction->commit();
-            // 写入用户日志表
-            $log['user_id']     = $id;
-            $log['type']        = 2;
-            $log['create_time'] = $time;
-            $this->userLog($log);
         } else {
             $transaction->rollBack();
         }

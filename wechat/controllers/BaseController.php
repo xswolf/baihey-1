@@ -142,6 +142,11 @@ class BaseController extends Controller {
 
         if ( !$user ) { // 用户不存在，写入数据
             $userInfo = \common\models\User::getInstance()->addUser($data);
+            // 写入用户日志表
+            $log['user_id']     = $userInfo['id'];
+            $log['type']        = 2;
+            $log['create_time'] = time();
+            \common\models\User::getInstance()->userLog($log);
             $user     = User::getInstance()->findOne( [ 'id' => $userInfo['id'] ] );
         }
 

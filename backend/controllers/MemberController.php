@@ -125,6 +125,11 @@ class MemberController extends BaseController
             User::getInstance()->insertUserPhoto($user['id'], $photo);
             if ($user['id'] > 0) {
                 return $this->__success('添加成功');
+                // 写入用户日志表
+                $log['user_id']     = $user['id'];
+                $log['type']        = 2;
+                $log['create_time'] = time();
+                User::getInstance()->userLog($log);
             } else {
                 return $this->__error('添加失败');
             }

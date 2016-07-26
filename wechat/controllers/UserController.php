@@ -180,6 +180,11 @@ class UserController extends BaseController
                 // 添加用户
                 $userInfo = \common\models\User::getInstance()->addUser($data);
                 if ($userInfo) {
+                    // 写入用户日志表
+                    $log['user_id']     = $userInfo['id'];
+                    $log['type']        = 2;
+                    $log['create_time'] = time();
+                    \common\models\User::getInstance()->userLog($log);
                     // 模拟登录
                     $data = User::getInstance()->login($userInfo['username'], $userInfo['password']);
 
