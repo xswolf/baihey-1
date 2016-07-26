@@ -752,7 +752,7 @@ var ar = {
         })
     },
 
-    loadMobiscroll:function(){
+    loadMobiscroll:function($scope){
         var minAge = [], maxAge = [];
         for (var i = 18; i <= 99; i++) {
             maxAge.push(i);
@@ -862,6 +862,7 @@ var ar = {
         };
     },
     processData: function (fieldName, $scope, api, $ionicPopup, $filter, $ionicScrollDelegate) {
+        this.loadMobiscroll($scope);
         if (fieldName == 'address') {    // 地区
             address();
         }
