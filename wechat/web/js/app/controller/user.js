@@ -126,7 +126,6 @@ define(['app/module', 'app/directive/directiveApi'
                     // 存储userInfo
                     ar.setStorage('userInfo', data.data);
                     top.location.href = '/wap/site/main#/index';
-                    //$location.url('/index');
                 } else {
                     ar.saveDataAlert($ionicPopup, data.msg);
                 }
@@ -137,19 +136,6 @@ define(['app/module', 'app/directive/directiveApi'
 
         }
 
-        $scope.getVerify = function (event) {
-            event.target.src = '/wap/user/get-verify?time=' + ar.timeStamp();
-        }
-
-        var checkVerify = function () {
-            var check = false;
-            api.get('/wap/user/check-code', {verify_code: $scope.verify}).success(function (res) {
-                check = res;
-            });
-            return check;
-        }
-
-
         $scope.validateFrom = function () {
 
             if (!$scope.User.username) {
@@ -159,16 +145,6 @@ define(['app/module', 'app/directive/directiveApi'
 
             if (!$scope.User.password) {
                 ar.saveDataAlert($ionicPopup, '请输入您的密码');
-                return false;
-            }
-
-            if (!$scope.verify) {
-                ar.saveDataAlert($ionicPopup, '请输入验证码');
-                return false;
-            }
-
-            if (!checkVerify()) {
-                ar.saveDataAlert($ionicPopup, '验证码不正确');
                 return false;
             }
 

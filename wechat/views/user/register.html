@@ -50,7 +50,7 @@
                         <button type="button" class="button button-positive button-small" ng-click="getCode()" ng-disabled="codeTitle != '获取验证码' || !User.mobile || User.mobile.length != 11">{{codeTitle}}</button>
                     </div>
                 </div>-->
-                <div class="form-group"><div class="item item-input"><input type="text" class="login_input pass" ng-model="verify" placeholder="请输入验证码"><img id="verify" height="34" src="/wap/user/get-verify" ng-click="getVerify($event)"></div></div>
+                <div class="form-group"><div class="item item-input"><input type="text" class="login_input pass" ng-model="verify" placeholder="请输入验证码"><img id="verify" height="34" src="/wap/user/get-verify" alt="图片验证码，点击可切换" ng-click="getVerify($event)"></div></div>
                 <div class="form-group mt30">
                     <button type="button" class="button button-block button-energized" ng-click="register()" ng-disabled="User.mobile.length != 11 || !verify || verify.length != 4 || !User.sex">立即注册</button>
                 </div>
