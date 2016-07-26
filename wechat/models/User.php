@@ -63,10 +63,7 @@ class User extends \common\models\User
             ->insert($this->tableName(), $data)
             ->execute();
 
-        if ($user) {
-            $id = $db->getLastInsertID();// 获取id
-        }
-
+        $id = $db->getLastInsertID();// 获取id
         // user_information表 数据处理
         $infoData['user_id'] = $id;
         $userInfo = [
