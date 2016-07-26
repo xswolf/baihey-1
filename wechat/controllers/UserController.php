@@ -103,6 +103,7 @@ class UserController extends BaseController
             'length'      =>    4,     // 验证码位数
             'useNoise'    =>    false, // 关闭验证码杂点
         );
+
         $Verify = new Verify($config);
         $Verify->entry();
     }
@@ -166,7 +167,7 @@ class UserController extends BaseController
         if (\Yii::$app->request->get('mobile')) {
 
             // 验证码判断
-            if ($this->get['code'] == \Yii::$app->session->get('reg_code')) {
+//            if ($this->get['code'] == \Yii::$app->session->get('reg_code')) {
 
                 // 注册数据处理
                 $data['phone'] = $this->get['mobile'];
@@ -195,9 +196,9 @@ class UserController extends BaseController
                 } else {
                     return $this->renderAjax(['status' => 0, 'msg' => '注册失败', 'data' => []]);
                 }
-            } else {
-                return $this->renderAjax(['status' => 2, 'msg' => '验证码错误', 'data' => []]);
-            }
+//            } else {
+//                return $this->renderAjax(['status' => 2, 'msg' => '验证码错误', 'data' => []]);
+//            }
         }
 
         return $this->render();

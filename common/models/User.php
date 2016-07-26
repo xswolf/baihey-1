@@ -90,7 +90,7 @@ class User extends Base
             $dataUser['password'] = md5(md5($data['password']));
             $dataUser['phone']    = $data['phone'];
 
-            if($data['age']) {
+            if(isset($data['age'])) {
                 $infoData['age'] = floor((time() - $data['age'])/ 365 / 24 / 3600);
             }
             isset($data['province']) ? $infoData['province'] = $data['province'] : true;
