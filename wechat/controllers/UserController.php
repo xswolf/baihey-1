@@ -5,7 +5,7 @@ use common\models\UserFollow;
 use common\models\UserPhoto;
 use common\util\AutoAddress;
 use common\util\Cookie;
-use vendor\yiisoft\verify\Verify;
+use common\util\Verify;
 use wechat\models\User;
 
 /**
