@@ -289,14 +289,14 @@ class User extends Base
             $userInfo['age'] = floor((time() - $userInfo['info']['age'])/ 365 / 24 / 3600);
         }
         $userInfo['info'] = json_encode(array_merge($this->getDefaultInfo(), $userInfo['zo'], $userInfo['info']));
-        unset ($userInfo['zo']);
-        unset($userInfo['photosList']);
-        unset($userInfo['headPic']);
-        unset($userInfo['cardFace_List']);
-        unset($userInfo['cardBack_List']);
-        unset($userInfo['eduList']);
-        unset($userInfo['houseList']);
-        unset($userInfo['marrList']);
+//        unset ($userInfo['zo']);
+//        unset($userInfo['photosList']);
+//        unset($userInfo['headPic']);
+//        unset($userInfo['cardFace_List']);
+//        unset($userInfo['cardBack_List']);
+//        unset($userInfo['eduList']);
+//        unset($userInfo['houseList']);
+//        unset($userInfo['marrList']);
         $this->getDb()->createCommand()->update($this->tablePrefix . "user_information", $userInfo, ['user_id' => $data['user_id']])->execute();
         $this->getDb()->createCommand()->update($this->tablePrefix . "user", $user, ['id' => $data['user_id']])->execute();
         // 添加图片
