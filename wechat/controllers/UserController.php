@@ -187,7 +187,11 @@ class UserController extends BaseController
                     $log['create_time'] = time();
                     \common\models\User::getInstance()->userLog($log);
                     // 模拟登录
-                    $data = User::getInstance()->login($userInfo['username'], $userInfo['password']);
+                    $data = \common\models\User::getInstance()->getUserById($userInfo['id']);
+                    // 登录日志
+                    \common\models\User::getInstance()->loginLog($userInfo['id']);
+                    // 设置登录cookie
+                    Cookie::getInstance()->setLoginCookie($data);
 
                     // 发送默认密码
                     \Yii::$app->messageApi->passwordMsg($userInfo['username'], $userInfo['password']);
