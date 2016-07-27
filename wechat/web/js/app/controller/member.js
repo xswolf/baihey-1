@@ -1098,8 +1098,6 @@ define(['app/module', 'app/directive/directiveApi'
     module.controller("member.vip", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$interval', '$location', function (api, $scope, $timeout, $ionicPopup, $interval, $location) {
         $scope.formData = [];
 
-        $scope.formData.timer = '78时00分12秒';
-
         // 用户的ID
         $scope.userId = 1;
 
@@ -1108,7 +1106,7 @@ define(['app/module', 'app/directive/directiveApi'
             $scope.goodsList = res;
         });
 
-        var tid = $interval(function () {
+        /*var tid = $interval(function () {
             var totalSec = getTotalSecond($scope.formData.timer) - 1;
             if (totalSec >= 0) {
                 $scope.formData.timer = getNewSyTime(totalSec);
@@ -1152,7 +1150,7 @@ define(['app/module', 'app/directive/directiveApi'
                 + ("0" + s.toString()).substr(-2) + "秒";
 
             return syTimeStr;
-        }
+        }*/
 
         // 生成订单并跳转支付
         $scope.createOrder = function (_goodsId) {
