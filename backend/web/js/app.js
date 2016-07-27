@@ -65,7 +65,7 @@ $(function(){
         // 点击“取消” e: false
         Modal.confirm(
             {
-                msg: "是否删除角色？"
+                msg: "是否删除？"
             })
             .on(function (e) {
                 if (e) {

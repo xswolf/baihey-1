@@ -845,7 +845,7 @@
         })
 
         $('#showPhone').click(function(){
-            "{{if authValidate('/admin/member/show-phone')}}"
+            "{{if showPhoneByUserLevel($user.level)}}"
             layer.alert('{{$user.phone}}');
             "{{else }}"
             layer.alert('您没有权限查看');

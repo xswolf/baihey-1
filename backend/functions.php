@@ -666,3 +666,14 @@ function authValidate($url)
     }
     return false;
 }
+
+// 根据会员等级获取是否有查看手机号码权限
+// 当前登录用户是否属于红娘用户组（多个）
+// 根据会员等级和红娘等级判断查看手机号码权限
+// 规则如下：
+// 普通 = 分配给自己的会员
+// 贵宾 = 分配给自己的会员、所有VIP、贵宾会员
+// 钻石 = 分配给自己的会员、所有VIP、贵宾、钻石会员
+function showPhoneByUserLevel($level){
+    $level  = 1 ;
+}
