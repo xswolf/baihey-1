@@ -100,7 +100,6 @@ $(function () {
                 },
                 {"data": "info.level"},
                 {"data": "service_status"},
-                //{"data": "is_auth"},
                 {"data": "is_sign"},
                 {
                     "data": "is_show", fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
@@ -150,6 +149,7 @@ $(function () {
 
         }
         var table = $this.DataTable(ext_params);
+        table.column("head:name").visible(false);
         $(".submit-form").click(function () {
             var url_param = $("form").serialize();
             ajaxUrl = $this.data('ajax-url') + "?" + url_param;

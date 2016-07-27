@@ -26,6 +26,12 @@ use wechat\models\UserMessage;
 class MemberController extends BaseController
 {
 
+    // 根据当前登录用户所属用户组显隐列表字段
+    private function showColumnByUser(){
+
+        return ['head_pic'];
+    }
+
     public function actionIndex()
     {
         $serverUser = AuthUser::getInstance()->getUserByRole("服务红娘");
