@@ -39,6 +39,12 @@ class UserPhoto extends Base
             $this->getDb()->createCommand()
                 ->insert($this->tablePrefix.'user_photo', $data)
                 ->execute();
+            if(isset($data['type']) && ($data['type'] == 2 || $data['type'] == 3)) {
+                $this->getDb()->createCommand()
+                    ->update($this->tablePrefix.'user_information', ['has_identify' => 1], ['user_id' => $user_id])
+                    ->execute();
+            }
+
             return $this->getDb()->getLastInsertID();
         } else {
             return false;

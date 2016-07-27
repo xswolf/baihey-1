@@ -29,16 +29,27 @@ class MemberController extends BaseController
     // 根据当前登录用户所属用户组显隐列表字段
     private function showColumnByUser(){
 
-        return ['head_pic'];
+        if ($_SESSION['bhy_user']['role'] == 'admin'){ //  管理员类型
+            return ['head_pic'];
+        }elseif (strpos($_SESSION['bhy_user']['role'] , "销售红娘") > 0){  // 销售红娘类型
+            return ['head_pic'];
+        }elseif (strpos($_SESSION['bhy_user']['role'] , "服务红娘") > 0){  // 服务红娘类型
+            return ['head_pic'];
+        }
+
     }
 
     public function actionIndex()
     {
         $serverUser = AuthUser::getInstance()->getUserByRole("服务红娘");
-        $salesUser = AuthUser::getInstance()->getUserByRole("销售红娘");
+        $salesUser  = AuthUser::getInstance()->getUserByRole("销售红娘");
+        $column     = $this->showColumnByUser();
+        $this->assign('column' , $column);
         $this->assign('admin' , $_SESSION['bhy_user']);
         $this->assign('serverUser' , $serverUser);
         $this->assign('salesUser' , $salesUser);
+
+
         return $this->render();
     }
 

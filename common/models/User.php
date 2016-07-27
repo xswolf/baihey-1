@@ -115,6 +115,12 @@ class User extends Base
         $dataUser['reset_pass_time'] = $time;
         $dataUser['sex']             = $data['sex'];
         // userinformation表 数据处理
+        // 值班红娘销售红娘
+        if(!$data['matchmaker']) {
+            $auth_user = new \backend\models\User();
+            $admin = $auth_user->getFindUser(['duty' => 1]);
+            $data['matchmaker'] = $admin['id'];
+        }
         // info
         $userInfo = $this->getDefaultInfo();
         if (isset($data['info'])) {
@@ -850,7 +856,7 @@ class User extends Base
                 } elseif($user['honesty_value'] & 1) {
                     $user['honesty_value'] = $user['honesty_value'] - 1;
                 }
-
+                $userInfo['has_identify'] = 1;
             } elseif ($type == 4) {
                 if(!($user['honesty_value'] & 4)) {
                     $user['honesty_value'] = $user['honesty_value'] + 4;
@@ -864,9 +870,12 @@ class User extends Base
                     $user['honesty_value'] = $user['honesty_value'] + 8;
                 }
             }
-
+            $userInfo['honesty_value'] = $user['honesty_value'];
             // 修改认证值
-            UserInformation::getInstance()->updateUserInfo($user_id, ['honesty_value' => $user['honesty_value']]);
+            $this->getDb()->createCommand()
+                ->update($this->tablePrefix.'user_information', $userInfo, ['user_id' => $user_id])
+                ->execute();
+            //UserInformation::getInstance()->updateUserInfo($user_id, ['honesty_value' => $user['honesty_value']]);
             //$this->getDb()->createCommand()->update($this->tablePrefix.'user_information', ['honesty_value' => $user['honesty_value']], ['user_id' => $user_id])->execute();
         }
     }
@@ -879,6 +888,7 @@ class User extends Base
     public function auth($data){
         if ($data['honesty_value'] == 1){
             $type = [2,3];
+            $data['has_identify'] = 1;
         }else if ($data['honesty_value'] == 2){
             $type = 5;
         }else if ($data['honesty_value'] == 4) {
