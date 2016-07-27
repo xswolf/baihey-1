@@ -33,7 +33,6 @@ class UserPhoto extends Base
             $data['update_time'] = $data['time'];
             unset($data['time']);
             if (0 == $sum) {
-                echo 'sum=';var_dump($sum);
                 $data['is_head'] = 1;
                 UserInformation::getInstance()->updateUserInfo($user_id, ['head_pic' => $data['thumb_path']]);
             }

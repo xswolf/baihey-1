@@ -33,8 +33,11 @@ class FileController extends BaseController {
         $data = $this->thumb();
         // 保存数据
         if(1 == $data['status']) {
-            isset($this->get['type']) ? $data['type'] = $this->get['type'] :true;
-            if($id = UserPhoto::getInstance()->addPhoto($user_id, $data)) {
+            isset($this->get['type']) ? $photo['type'] = $this->get['type'] :true;
+            $photo['thumb_path'] = $data['thumb_path'];
+            $photo['pic_path']   = $data['pic_path'];
+            $photo['time']       = $data['time'];
+            if($id = UserPhoto::getInstance()->addPhoto($user_id, $photo)) {
                 $data['id'] = $id;
             } else {
                 $data = ['status' => -1, 'info' => '保存失败!~'];
@@ -83,8 +86,11 @@ class FileController extends BaseController {
                     $data = ['status' => -1, 'info' => '保存失败!~'];
                 }
             } else {
-                $data['type'] = $this->get['type'];
-                if (!UserPhoto::getInstance()->addPhoto($user_id, $data)) {
+                $photo['type'] = $this->get['type'];
+                $photo['thumb_path'] = $data['thumb_path'];
+                $photo['pic_path']   = $data['pic_path'];
+                $photo['time']       = $data['time'];
+                if (!UserPhoto::getInstance()->addPhoto($user_id, $photo)) {
                     $data = ['status' => -1, 'info' => '保存失败!~'];
                 }
             }
