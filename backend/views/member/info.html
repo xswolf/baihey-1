@@ -845,7 +845,7 @@
         })
 
         $('#showPhone').click(function(){
-            "{{if showPhoneByUserLevel($user.level)}}"
+            "{{if showPhoneByUserLevel($user.matchmaker, $user.matchmaking, $user.info->level)}}"
             layer.alert('{{$user.phone}}');
             "{{else }}"
             layer.alert('您没有权限查看');
