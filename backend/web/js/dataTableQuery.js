@@ -100,7 +100,7 @@ $(function () {
                 },
                 {"data": "info.level"},
                 {"data": "service_status"},
-                {"data": "is_auth"},
+                //{"data": "is_auth"},
                 {"data": "is_sign"},
                 {
                     "data": "is_show", fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
@@ -124,7 +124,7 @@ $(function () {
                     $(nTd).html(title);
                 }
                 },
-                {"data": "auth.identity_check"},
+                {"data": "has_identify"},
                 {
                     "data": "status", fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
                     var html = '';

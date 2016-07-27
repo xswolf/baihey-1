@@ -84,7 +84,7 @@ class MemberController extends BaseController
             $list[$k]['info']->is_marriage    = getMarriage($list[$k]['info']->is_marriage);
             $list[$k]['sex']                  = getSex($list[$k]['sex']);
             $list[$k]['service_status']       = getIsNot($list[$k]['service_status']);
-            $list[$k]['is_auth']              = getIsNot($list[$k]['is_auth']);
+            //$list[$k]['is_auth']              = getIsNot($list[$k]['is_auth']);
             $list[$k]['is_sign']              = getIsNot($list[$k]['is_sign']);
             $list[$k]['auth']->identity_check = getIsNot($list[$k]['auth']->identity_check);
         }
@@ -225,7 +225,7 @@ class MemberController extends BaseController
         $this->assign('identify' , $identify);
         $this->assign('identifyType' , $identifyType);
         // 红娘列表
-        $adminUserList = AuthUser::getInstance()->getUserByRole("服务红娘");
+        $adminUserList = AuthUser::getInstance()->getUserByRole(['普通服务红娘','VIP服务红娘','贵宾服务红娘','钻石服务红娘']);
         $this->assign('adminUserList' , $adminUserList);
         // 配对记录
         $pairLogList = \common\models\PairLog::getInstance()->getPairLog($userId);

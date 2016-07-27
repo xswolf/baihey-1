@@ -39,7 +39,7 @@ class UserInformation extends Base
                 case 'privacy_qq'       :// QQ显示（1全部2关注3vip4不公开）
                 case 'mature_time'      :// 到期时间
                 case 'service_status'   :// 服务状态 1：已申请，0：未申请
-                case 'is_auth'          :// 是否认证 1：已申请，0：未申请
+                case 'has_identify'     :// 是否认证 1：已申请，0：未申请
                 case 'is_sign'          :// 是否签约 1：已申请，0：未申请
                 case 'intention'        :// 有无意向
                 case 'matchmaker'       :// 专属红娘
