@@ -43,10 +43,10 @@ class AuthUser extends Base
      * @return array
      */
     public function getUserByRole($role){
-
         return (new Query())->from($this->tablePrefix.'auth_assignment a')
             ->innerJoin($this->tablePrefix.'auth_user u' , 'a.user_id=u.id')
-            ->where(['item_name'=>$role,'status'=>1])
+            ->where(['status'=>1])
+            ->andWhere(["like", "item_name", $role])
             ->select("u.id,u.name")
             ->all();
     }

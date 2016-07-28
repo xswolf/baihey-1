@@ -239,6 +239,9 @@
 
             <table id="demo1" class="table  table-bordered    j-datatables"
                    data-is-ajax="1"
+                   data-show-column={{$column}}
+                   data-matchmaker ={{json_encode($salesUser)}}
+                   data-matchmaking = {{json_encode($serverUser)}}
                    data-ajax-url="/admin/member/search"
                    cellspacing="0" width="100%">
                 <thead>
@@ -248,15 +251,17 @@
                     <th data-name="real_name">姓名</th>
                     <th data-name="sex">性别</th>
                     <th data-name="age">年龄</th>
-                    <th data-name="is_marriage">婚姻</th>
-                    <th data-name="height">身高</th>
-                    <th data-name="education">学历</th>
-                    <th data-name="level">等级</th>
-                    <th data-name="service_status">服务</th>
-                    <th data-name="is_sign">签单</th>
-                    <th data-name="is_show">资料</th>
+                    <!--<th data-name="is_marriage">婚姻</th>-->
+                    <th data-name="info.height">身高</th>
+                    <th data-name="info.education">学历</th>
+                    <th data-name="info.level">等级</th>
+                    <th data-name="service_status">是否服务</th>
+                    <th data-name="matchmaker">销售红娘</th>
+                    <th data-name="matchmaking">服务红娘</th>
+                    <!--<th data-name="is_sign">签单</th>-->
+                    <!--<th data-name="is_show">资料</th>-->
                     <th data-name="intention">意向</th>
-                    <th data-name="has_identify">证件</th>
+                    <!--<th data-name="has_identify">证件</th>-->
                     <th data-name="status">状态</th>
                     <th>操作</th>
                 </tr>
@@ -327,10 +332,12 @@
     <div class="ibox-title">
         <h5>配对</h5>
         <div class="ibox-tools rboor">
+            {{if strpos($currentUserRole , "服务红娘") > 0 || $currentUserRole == 'admin'}}
             <a class="btn btn-green btn-xs p310" id="addPairBtn" href="javascript:;">
                 <i class="fa fa-plus"></i>
                 添加配对
             </a>
+            {{/if}}
         </div>
     </div>
     <div class="ibox-content">

@@ -28,13 +28,14 @@ class MemberController extends BaseController
 
     // 根据当前登录用户所属用户组显隐列表字段
     private function showColumnByUser(){
-
+        $serviceFiled   = ['intention','matchmaking',];
+        $salesFiled     = ['info.level','matchmaker',];
         if ($_SESSION['bhy_user']['role'] == 'admin'){ //  管理员类型
-            return ['head_pic'];
+            return [];
         }elseif (strpos($_SESSION['bhy_user']['role'] , "销售红娘") > 0){  // 销售红娘类型
-            return ['head_pic'];
+            return $salesFiled ;
         }elseif (strpos($_SESSION['bhy_user']['role'] , "服务红娘") > 0){  // 服务红娘类型
-            return ['head_pic'];
+            return $serviceFiled;
         }
 
     }
@@ -44,11 +45,10 @@ class MemberController extends BaseController
         $serverUser = AuthUser::getInstance()->getUserByRole("服务红娘");
         $salesUser  = AuthUser::getInstance()->getUserByRole("销售红娘");
         $column     = $this->showColumnByUser();
-        $this->assign('column' , $column);
+        $this->assign('column' , json_encode($column));
         $this->assign('admin' , $_SESSION['bhy_user']);
         $this->assign('serverUser' , $serverUser);
         $this->assign('salesUser' , $salesUser);
-
 
         return $this->render();
     }
@@ -88,8 +88,10 @@ class MemberController extends BaseController
                 $andWhere[] = ["like", "json_extract(info,'$.real_name')", $id_phone_name];
             }
 
+        }else{
+            $this->searchWhere($andWhere , $request->get());
         }
-        $this->searchWhere($andWhere , $request->get());
+
 
         $list  = User::getInstance()->lists($start, $limit, $andWhere);
         $count = User::getInstance()->count($andWhere);
@@ -100,8 +102,6 @@ class MemberController extends BaseController
             $list[$k]['info']->level          = getLevel($list[$k]['info']->level);
             $list[$k]['info']->is_marriage    = getMarriage($list[$k]['info']->is_marriage);
             $list[$k]['sex']                  = getSex($list[$k]['sex']);
-            $list[$k]['service_status']       = getIsNot($list[$k]['service_status']);
-            //$list[$k]['is_auth']              = getIsNot($list[$k]['is_auth']);
             $list[$k]['is_sign']              = getIsNot($list[$k]['is_sign']);
             $list[$k]['auth']->identity_check = getIsNot($list[$k]['auth']->identity_check);
         }

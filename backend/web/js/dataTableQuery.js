@@ -19,178 +19,220 @@ $(function () {
         return params;
     }
 
-    $('.j-datatables').each(function () {
-        var $this = $(this);
-        var $filterContainer = $this.data('filter-container') ? $($this.data('filter-container')) : $(document);
-        var filters = [];
-        var ext_params = {
-            "pagingType": "full_numbers",
-            "sLoadingRecords": "正在加载数据...",
-            "sZeroRecords": "暂无数据",
-            stateSave: true,
-            "searching": false,
-            "dom": 'rt<"bottom"iflp<"clear">>',
-            "language": {
-                "processing": "玩命加载中...",
-                "lengthMenu": "显示 _MENU_ 项结果",
-                "zeroRecords": "没有匹配结果",
-                "info": "显示第 _START_ 至 _END_ 项结果，共 _TOTAL_ 项",
-                "infoEmpty": "显示第 0 至 0 项结果，共 0 项",
-                "infoFiltered": "(由 _MAX_ 项结果过滤)",
-                "infoPostFix": "",
-                "url": "",
-                "paginate": {
-                    "first": "首页",
-                    "previous": "上一页",
-                    "next": "下一页",
-                    "last": "末页"
+    var columns = [
+        {
+            "data": "info.head_pic", "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
+            $(nTd).html("<a href='/admin/member/info?id=" + oData.id + "'><img class='user_img' src='" + oData.info.head_pic + "'></a>");
+        }
+        },
+        {"data": "id"},
+        {"data": "info.real_name"},
+        {"data": "sex"},
+        {"data": "age"},
+        {"data": "info.height"},
+        {
+            "data": "info.education", fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
+            var education = '';
+            if (oData.info.education == 1) {
+                education = '初中';
+            } else if (oData.info.education == 2) {
+                education = '高中';
+            } else if (oData.info.education == 3) {
+                education = '大专';
+            } else if (oData.info.education == 4) {
+                education = '本科';
+            } else if (oData.info.education == 5) {
+                education = '硕士';
+            } else if (oData.info.education == 6) {
+                education = '博士';
+            }
+            $(nTd).html(education);
+        }
+        },
+        {"data": "info.level"},
+        {"data": "service_status",fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
+            var title = '';
+            console.log(oData.service_status)
+            if (oData.service_status == 0) {
+                title = '否';
+            } else if(oData.service_status == 1){
+                title = '<span style="color: red;">是</span>';
+            }
+            $(nTd).html(title);
+        }
+        },
+        {
+            "data": "matchmaker", fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
+            var list = $("table").data("matchmaker");
+            for(var i in list){
+                if (list[i].id == oData.matchmaker){
+                    $(nTd).html(list[i].name);
+                    return;
                 }
             }
-        }
-
-        if ($this.data('is-ajax') == 1) {
-            var ajaxUrl = $this.data('ajax-url');
-            ext_params.bServerSide = true;
-            ext_params.stateSave = false;
-            ext_params.sAjaxSource = ajaxUrl;
-            ext_params.fnServerData = function (sSource, aoData, fnCallback) {
-                var server_ajax = function (ajaxUrl) {
-                    $.ajax({
-                        "type": 'GET',
-                        "url": ajaxUrl,
-                        "dataType": "json",
-                        "data": aoData,
-                        "success": function (resp) {
-                            fnCallback(resp);
-                        }
-                    });
-                }
-                server_ajax(ajaxUrl);
-            };
-            ext_params.columns = [
-                {
-                    "data": "info.head_pic", "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
-                    $(nTd).html("<a href='/admin/member/info?id=" + oData.id + "'><img class='user_img' src='" + oData.info.head_pic + "'></a>");
-                }
-                },
-                {"data": "id"},
-                {"data": "info.real_name"},
-                {"data": "sex"},
-                {"data": "age"},
-                {"data": "info.is_marriage"},
-                {"data": "info.height"},
-                {
-                    "data": "info.education", fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
-                    var education = '';
-                    if (oData.info.education == 1) {
-                        education = '初中';
-                    } else if (oData.info.education == 2) {
-                        education = '高中';
-                    } else if (oData.info.education == 3) {
-                        education = '大专';
-                    } else if (oData.info.education == 4) {
-                        education = '本科';
-                    } else if (oData.info.education == 5) {
-                        education = '硕士';
-                    } else if (oData.info.education == 6) {
-                        education = '博士';
-                    }
-                    $(nTd).html(education);
-                }
-                },
-                {"data": "info.level"},
-                {"data": "service_status"},
-                {"data": "is_sign"},
-                {
-                    "data": "is_show", fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
-                    var isShow = '';
-                    if (oData.is_show == 1) {
-                        isShow = '开放';
-                    } else {
-                        isShow = '<span style="color: red;">关闭</span>';
-                    }
-                    $(nTd).html(isShow);
-                }
-                },
-                {
-                    "data": "intention", fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
-                    var title = '';
-                    if (oData.intention == 0) {
-                        title = '无';
-                    } else if(oData.intention == 1){
-                        title = '<span style="color: red;">有</span>';
-                    }
-                    $(nTd).html(title);
-                }
-                },
-                {"data": "has_identify"},
-                {
-                    "data": "status", fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
-                    var html = '';
-                    if (oData.status == 1) {
-                        html = '未审核';
-                    } else if (oData.status == 2) {
-                        html = '已审核';
-                    } else if (oData.status == 3) {
-                        html = '黑名单';
-                    } else if (oData.status == 4) {
-                        html = '删除';
-                    }
-                    $(nTd).html(html)
-                }
-                },
-                {
-                    "data": "id", "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
-                    var html = '<a class="btn btn-primary btn-sm" href="/admin/member/info?id=' + oData.id + '">管理</a> <a class="btn btn-info btn-sm" data-uid="' + oData.id + '" data-uname="' + oData.info.real_name + '" id="returningBtn" href="javascript:;">回访</a> <a id="pairBtn" class="btn btn-info btn-sm" data-uid="' + oData.id + '" data-uname="' + oData.info.real_name + '" href="javascript:;">配对</a>';
-                    $(nTd).html(html);
-                }
-                }
-            ]
+            $(nTd).html('');
 
         }
-        var table = $this.DataTable(ext_params);
-        table.column("head:name").visible(false);
-        $(".submit-form").click(function () {
-            var url_param = $("form").serialize();
-            ajaxUrl = $this.data('ajax-url') + "?" + url_param;
-            table.ajax.url(ajaxUrl).load();
-        })
-        $('.j-dt-filter', $filterContainer).each(function () {
+        },
+        {
+            "data": "matchmaking", fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
+            var list = $("table").data("matchmaking");
+            for(var i in list){
+                if (list[i].id == oData.matchmaking){
+                    $(nTd).html(list[i].name);
+                    return ;
+                }
+            }
+            $(nTd).html('');
+        }
+        },
+        {
+            "data": "intention", fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
+            var title = '';
+            if (oData.intention == 0) {
+                title = '无';
+            } else if(oData.intention == 1){
+                title = '<span style="color: red;">有</span>';
+            }
+            $(nTd).html(title);
+        }
+        },
+        {
+            "data": "status", fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
+            var html = '';
+            if (oData.status == 1) {
+                html = '未审核';
+            } else if (oData.status == 2) {
+                html = '已审核';
+            } else if (oData.status == 3) {
+                html = '黑名单';
+            } else if (oData.status == 4) {
+                html = '删除';
+            }
+            $(nTd).html(html)
+        }
+        },
+        {
+            "data": "id", "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
+            var html = '<a class="btn btn-primary btn-sm" href="/admin/member/info?id=' + oData.id +
+                '">管理</a> <a class="btn btn-info btn-sm" data-uid="' + oData.id +
+                '" data-uname="' + oData.info.real_name +
+                '" id="returningBtn" href="javascript:;">回访</a> <a id="pairBtn" class="btn btn-info btn-sm" data-uid="' + oData.id +
+                '" data-uname="' + oData.info.real_name + '" href="javascript:;">配对</a>';
+            $(nTd).html(html);
+        }
+        }
+    ];
+    var table = function (columns) {
+        $('.j-datatables').each(function () {
             var $this = $(this);
-            var type;
-            if ($this.is('.j-dt-filter-range')) {
-                type = 'range';
-            } else if ($this.is('.j-dt-filter-group')) {
-                type = 'group';
-            } else if ($this.is('input[type=text]')) {
-                type = 'text';
-            } else if ($this.is('.select-like')) {
-                type = 'selectLike';
-            } else if ($this.is('select')) {
-                type = 'select';
-            } else if ($this.is('input[type=checkbox]')) {
-                type = 'checkbox';
-            } else if ($this.is('input[type=radio]')) {
-                type = 'radio';
-            }
-            var f = new Filter($this, type, $filterContainer);
-            f.table = table;
-            filters.push(f);
-            f.init(); // 初始化
-        });
-
-        var filterLength = filters.length;
-        $.fn.dataTable.ext.search.push(function (settings, data, dataIndex) {
-
-            for (var i = 0; i < filterLength; i++) {
-                if (!filters[i].search(settings, data, dataIndex)) {
-                    return false;
+            var $filterContainer = $this.data('filter-container') ? $($this.data('filter-container')) : $(document);
+            var filters = [];
+            var ext_params = {
+                "pagingType": "full_numbers",
+                "sLoadingRecords": "正在加载数据...",
+                "sZeroRecords": "暂无数据",
+                stateSave: true,
+                "searching": false,
+                "dom": 'rt<"bottom"iflp<"clear">>',
+                "language": {
+                    "processing": "玩命加载中...",
+                    "lengthMenu": "显示 _MENU_ 项结果",
+                    "zeroRecords": "没有匹配结果",
+                    "info": "显示第 _START_ 至 _END_ 项结果，共 _TOTAL_ 项",
+                    "infoEmpty": "显示第 0 至 0 项结果，共 0 项",
+                    "infoFiltered": "(由 _MAX_ 项结果过滤)",
+                    "infoPostFix": "",
+                    "url": "",
+                    "paginate": {
+                        "first": "首页",
+                        "previous": "上一页",
+                        "next": "下一页",
+                        "last": "末页"
+                    }
                 }
             }
-            return true;
-        });
 
-    });
+            // 是否ajax
+            if ($this.data('is-ajax') == 1) {
+                var ajaxUrl = $this.data('ajax-url');
+                ext_params.bServerSide = true;
+                ext_params.stateSave = false;
+                ext_params.sAjaxSource = ajaxUrl;
+                ext_params.fnServerData = function (sSource, aoData, fnCallback) {
+                    var server_ajax = function (ajaxUrl) {
+                        $.ajax({
+                            "type": 'GET',
+                            "url": ajaxUrl,
+                            "dataType": "json",
+                            "data": aoData,
+                            "success": function (resp) {
+                                fnCallback(resp);
+                            }
+                        });
+                    }
+                    server_ajax(ajaxUrl);
+                };
+                ext_params.columns = columns;
+
+            }
+            var table = $this.DataTable(ext_params);
+
+            // 控制列显示隐藏
+            var showColumn = $this.data("show-column")
+            if (showColumn != ''){
+                for(var i in showColumn){
+                    var col = '';
+                    col = showColumn[i] + ":name";
+                    table.column(col).visible(false);
+                }
+            }
+
+            // ajax提交查询
+            $(".submit-form").click(function () {
+                var url_param = $("form").serialize();
+                ajaxUrl = $this.data('ajax-url') + "?" + url_param;
+                table.ajax.url(ajaxUrl).load();
+            })
+
+            $('.j-dt-filter', $filterContainer).each(function () {
+                var $this = $(this);
+                var type;
+                if ($this.is('.j-dt-filter-range')) {
+                    type = 'range';
+                } else if ($this.is('.j-dt-filter-group')) {
+                    type = 'group';
+                } else if ($this.is('input[type=text]')) {
+                    type = 'text';
+                } else if ($this.is('.select-like')) {
+                    type = 'selectLike';
+                } else if ($this.is('select')) {
+                    type = 'select';
+                } else if ($this.is('input[type=checkbox]')) {
+                    type = 'checkbox';
+                } else if ($this.is('input[type=radio]')) {
+                    type = 'radio';
+                }
+                var f = new Filter($this, type, $filterContainer);
+                f.table = table;
+                filters.push(f);
+                f.init(); // 初始化
+            });
+
+            var filterLength = filters.length;
+            $.fn.dataTable.ext.search.push(function (settings, data, dataIndex) {
+
+                for (var i = 0; i < filterLength; i++) {
+                    if (!filters[i].search(settings, data, dataIndex)) {
+                        return false;
+                    }
+                }
+                return true;
+            });
+
+        });
+    }(columns);
+
 });
 
 
