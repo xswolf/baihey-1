@@ -15,25 +15,29 @@ class FeedbackController extends BaseController
 {
 
     public function actionIndex(){
-        $andWhere = [];
+        $where = [];
+        $orWhere = [];
         if($this->get) {
             if (isset($this->get['id_phone_name']) && $this->get['id_phone_name'] != '') { // 电话、ID、姓名
                 $id_phone_name = $this->get['id_phone_name'];
                 if (is_numeric($id_phone_name)) {
                     if (strlen($id_phone_name . '') == 11) {
-                        $andWhere[] = ["=", "u.phone", $id_phone_name];
+                        $orWhere[] = ["=", "u.phone", $id_phone_name];
+                        $orWhere[] = ["=", "uf.phone", $id_phone_name];
                     } else {
-                        $andWhere[] = ["=", "f.feedback_id", $id_phone_name];
+                        $orWhere[] = ["=", "f.user_id", $id_phone_name];
+                        $orWhere[] = ["=", "f.feedback_id", $id_phone_name];
                     }
                 } else {
-                    $andWhere[] = ["like", "f.feedback_name", $id_phone_name];
+                    $orWhere[] = ["like", "f.user_name", $id_phone_name];
+                    $orWhere[] = ["like", "f.feedback_name", $id_phone_name];
                 }
             }
             if ($this->get['status'] != ''){
-                $andWhere[] = ['=' , 'f.status' , $this->get['status']];
+                $where = ['f.status' => $this->get['status']];
             }
         }
-        $list = Feedback::getInstance()->lists($andWhere);
+        $list = Feedback::getInstance()->lists($where, $orWhere);
         $this->assign('list' , $list);
         return $this->render();
     }

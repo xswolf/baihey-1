@@ -24,15 +24,18 @@ class Feedback extends Base
         return $row;
     }
 
-    public function lists($where = []){
+    public function lists($where = [], $orWhere = []){
         $row = (new Query())->from($this->tablePrefix . 'feedback f')
-            ->innerJoin($this->tablePrefix . 'user u', 'f.feedback_id = u.id')
+            ->innerJoin($this->tablePrefix . 'user u', 'f.user_id = u.id')
+            ->innerJoin($this->tablePrefix . 'user uf', 'f.feedback_id = uf.id')
             ->select("f.*");
-        if (count($where) > 0) {
-            foreach ($where as $v) {
-                $row->andWhere($v);
+        if (count($orWhere) > 0) {
+            foreach ($orWhere as $v) {
+                $row->orWhere($v);
             }
         }
+        $row->andWhere($where);
+        //echo $row->createCommand()->getRawSql();exit;
         return $row->all();
     }
 
