@@ -51,7 +51,6 @@ class BaseController extends Controller
         $user->setUser(\Yii::$app->session->get(USER_SESSION));
         \Yii::$app->view->params['user'] = $user->getUser(); // 当前用户
         $this->user = $user;
-        var_dump($user->getUser());exit;
         $this->isCan();//权限验证
         $this->assign('currentUserRole' , $user->getUser()['role']);
         $this->assign('currentUserId' , $user->getUser()['id']);
