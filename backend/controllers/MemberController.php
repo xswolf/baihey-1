@@ -293,7 +293,32 @@ class MemberController extends BaseController
 
     public function actionOrder()
     {
-        $vo = ChargeOrder::getInstance()->getOrderAllInfo();
+        $andWhere = [];
+        if($this->get) {
+            if ($this->get['id_phone_name'] != '') { // 电话、ID、姓名
+                $id_phone_name = $this->get['id_phone_name'];
+                if (is_numeric($id_phone_name)) {
+                    if (strlen($id_phone_name . '') == 11) {
+                        $andWhere[] = ["=", "u.phone", $id_phone_name];
+                    } else {
+                        $andWhere[] = ["=", "o.user_id", $id_phone_name];
+                    }
+                } else {
+                    $andWhere[] = ["like", "json_extract(info,'$.real_name')", $id_phone_name];
+                }
+            }
+            if ($this->get['startDate'] != ''){
+                $andWhere[] = ['>=' , 'o.create_time' , strtotime($this->get['startDate'])];
+            }
+            if ($this->get['endDate'] != ''){
+                $andWhere[] = ['<=' , 'o.create_time' , strtotime($this->get['endDate'])];
+            }
+            if ($this->get['status'] != ''){
+                $andWhere[] = ['=' , 'o.status' , $this->get['status']];
+            }
+            //var_dump($this->get);exit;
+        }
+        $vo = ChargeOrder::getInstance()->getOrderAllInfo($andWhere);
         $this->assign('list', $vo);
         return $this->render();
     }

@@ -162,15 +162,21 @@ class ChargeOrder extends Base
 
 
     // 后台订单列表
-    public function getOrderAllInfo()
+    public function getOrderAllInfo($where = [])
     {
         $obj = (new Query())->from($this->tablePrefix . 'charge_order o')
             ->innerJoin($this->tablePrefix . 'charge_goods g', 'o.charge_goods_id = g.id')
+            ->innerJoin($this->tablePrefix . 'user u', 'o.user_id = u.id')
             ->innerJoin($this->tablePrefix . 'user_information i', 'o.user_id = i.user_id')
             ->innerJoin($this->tablePrefix . 'charge_type t', 'o.charge_type_id = t.id')
-            ->where([])
+            //->where($where)
             ->select(["o.order_id", "i.user_id", "json_extract(i.info , '$.real_name') AS real_name", "g.name AS goodsName", "o.money", "t.name AS typeName", "o.authorid", "o.create_time AS time", "o.status","g.value"])
             ->orderBy("time desc");
+        if (count($where) > 0) {
+            foreach ($where as $v) {
+                $obj->andWhere($v);
+            }
+        }
 //          echo $obj->createCommand()->getRawSql();exit();
         return $obj->all();
     }
