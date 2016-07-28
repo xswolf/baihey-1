@@ -9,7 +9,7 @@
 
         <div class="ibox-content">
 
-            <div class="form-horizontal clearfix">
+            <div class="form-horizontal clearfix"><!--
                 <div class="col-lg-12 col-sm-12">
                     <div class="form-group">
                         <div class="col-lg-12 col-sm-12 input-group date">
@@ -21,7 +21,29 @@
 
                         </div>
                     </div>
-                </div>
+                </div>-->
+                <form action="" method="get">
+                    <div class="col-sm-12">
+                        <div class="box-body big">
+                            <div class="row">
+                                <div class="col-sm-2">
+                                    <select name="status" class="form-control">
+                                        <option value="1" {{if \Yii::$app->request->get('status') == 1}} selected="selected" {{/if}}>审核属实</option>
+                                        <option value="2" {{if \Yii::$app->request->get('status') == 2}} selected="selected" {{/if}}>待审核</option>
+                                        <option value="3" {{if \Yii::$app->request->get('status') == 3}} selected="selected" {{/if}}>审核不属实</option>
+                                    </select>
+                                </div>
+                                <div class="col-sm-2">
+                                    <input type="text" name="id_phone_name" class="form-control"
+                                           value="{{\Yii::$app->request->get('id_phone_name')}}"
+                                           placeholder="会员ID、手机号、姓名">
+                                </div>
+                                <button type="submit" class="btn btn-primary">搜索</button>
+                            </div>
+                        </div>
+
+                    </div>
+                </form>
             </div>
 
             <table id="demo1" class="table display  dataTable j-datatables"

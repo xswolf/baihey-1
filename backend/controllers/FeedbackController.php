@@ -15,8 +15,25 @@ class FeedbackController extends BaseController
 {
 
     public function actionIndex(){
-
-        $list = Feedback::getInstance()->lists(\Yii::$app->request->get('status'));
+        $andWhere = [];
+        if($this->get) {
+            if (isset($this->get['id_phone_name']) && $this->get['id_phone_name'] != '') { // 电话、ID、姓名
+                $id_phone_name = $this->get['id_phone_name'];
+                if (is_numeric($id_phone_name)) {
+                    if (strlen($id_phone_name . '') == 11) {
+                        $andWhere[] = ["=", "u.phone", $id_phone_name];
+                    } else {
+                        $andWhere[] = ["=", "f.feedback_id", $id_phone_name];
+                    }
+                } else {
+                    $andWhere[] = ["like", "f.feedback_name", $id_phone_name];
+                }
+            }
+            if ($this->get['status'] != ''){
+                $andWhere[] = ['=' , 'f.status' , $this->get['status']];
+            }
+        }
+        $list = Feedback::getInstance()->lists($andWhere);
         $this->assign('list' , $list);
         return $this->render();
     }

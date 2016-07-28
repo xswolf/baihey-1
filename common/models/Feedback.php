@@ -24,11 +24,16 @@ class Feedback extends Base
         return $row;
     }
 
-    public function lists($status){
-        return  (new Query())->from($this->tablePrefix . 'feedback')
-            ->where(['status'=>$status])
-            ->select("*")
-            ->all();
+    public function lists($where = []){
+        $row = (new Query())->from($this->tablePrefix . 'feedback f')
+            ->innerJoin($this->tablePrefix . 'user u', 'f.feedback_id = u.id')
+            ->select("f.*");
+        if (count($where) > 0) {
+            foreach ($where as $v) {
+                $row->andWhere($v);
+            }
+        }
+        return $row->all();
     }
 
     public function auth($id , $status){
