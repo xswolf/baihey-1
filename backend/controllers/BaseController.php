@@ -9,6 +9,7 @@
 namespace backend\controllers;
 
 use backend\models\User;
+use common\models\AuthUser;
 use yii\web\Controller;
 use yii\web\Cookie;
 
@@ -49,6 +50,7 @@ class BaseController extends Controller
         $user = new User();
         $user->setUser(\Yii::$app->session->get(USER_SESSION));
         \Yii::$app->view->params['user'] = $user->getUser(); // 当前用户
+        $this->user = $user;
         $this->isCan();//权限验证
         $this->assign('currentUserRole' , $user->getUser()['role']);
         $this->assign('currentUserId' , $user->getUser()['id']);
@@ -64,7 +66,11 @@ class BaseController extends Controller
 
         $auth = \Yii::$app->authManager;
         $action = explode('?', \Yii::$app->request->getUrl());
-        //$reAction = explode('.com',$_SERVER['HTTP_REFERER']);
+        // 此方法无需验证
+        if (!AuthUser::getInstance()->getNodeByName($action[0])){
+            return true;
+        }
+
         $userInfo = \Yii::$app->session->get(USER_SESSION);
         if ($userInfo['name'] == 'admin') return true;
         $uid = $userInfo['id'];
@@ -74,6 +80,10 @@ class BaseController extends Controller
             if ($action[0] == $vo->description) {
                 return true;
             }
+        }
+        if (\Yii::$app->request->isAjax){
+            echo '无权限';
+            exit();
         }
         $this->__error('对不起，您现在还没获此操作的权限');
 
@@ -126,14 +136,14 @@ class BaseController extends Controller
         return parent::render($view, $arr);
     }
 
-    public function renderAjax($params = [], $view = '')
+    public function renderAjax($params = [], $flag=true)
     {
-
-        if ($view == '') {
-            $view = \Yii::$app->controller->action->id;
+        if ($flag){
+            $arr = array_merge($params, $this->assign);
+        }else{
+            $arr = $params;
         }
-        $view = $view . ".html";
-        $arr = array_merge($params, $this->assign);
+
         echo json_encode($arr);
 
     }

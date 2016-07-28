@@ -14,10 +14,12 @@
                     <ul class="nav nav-tabs">
                         <li><a href="#pro_identity" data-toggle="tab"><i class="fa fa-credit-card"></i>
                             <span class="hidden-inline-mobile"> 证件</span>
-                            <span class="badge badge-red font-11">3</span>
+                            <span class="badge badge-red font-11">{{count($identify)}}</span>
                         </a></li>
+                        {{if ($currentUserId == $user.matchmaker || currentUserRole == 'admin' )}}
                         <li><a href="#pro_msg" data-toggle="tab"><i class="fa fa-comments-o"></i> <span
                                 class="hidden-inline-mobile"> 消息记录</span></a></li>
+                        {{/if}}
                         <li><a href="#pro_peidui" data-toggle="tab"><i class="fa fa-heart-o"></i> <span
                                 class="hidden-inline-mobile"> 配对记录</span></a></li>
                         <li><a href="#pro_discovery" data-toggle="tab"><i class="fa fa-eye"></i>
@@ -118,7 +120,7 @@
                                             充值/开通
                                         </a>
                                         {{/if}}
-                                        {{if authValidate('/admin/member/edit')}}
+                                        {{if authValidate('/admin/member/edit') && ($currentUserId == $user.matchmaker || currentUserRole == 'admin' )}}
                                         <a href="/admin/member/edit?id={{$user.id}}" data-toggle="modal" class="list-group-item">
                                             <i class="fa fa-edit fa-fw"></i>
                                             修改资料</a>
@@ -334,6 +336,7 @@
                                                                     <span class="text-muted fwb">会员等级：</span>
                                                                     <span class="text-danger">{{getLevel($user.info->level)}}</span>
                                                                 </div>
+                                                                {{if $currentUserRole == 'admin'}}
                                                                 <div class="col-sm-3">
                                                                     <span class="text-muted fwb">账户余额：</span>
                                                                     <span class="text-danger">{{$user.balance/100}}元</span>
@@ -342,6 +345,7 @@
                                                                     <span class="text-muted fwb">缴费金额：</span>
                                                                     <span class="text-danger">{{$moneyAll/100}}元</span>
                                                                 </div>
+                                                                {{/if}}
                                                                 <div class="col-sm-3">
                                                                     <span class="text-muted fwb">服务到期时间：</span>
                                                                     <span id="serviceEndTime" class="text-danger">{{timeStampToDate($user.mature_time)}}</span>

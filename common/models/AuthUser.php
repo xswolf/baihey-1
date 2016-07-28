@@ -50,4 +50,12 @@ class AuthUser extends Base
             ->select("u.id,u.name")
             ->all();
     }
+
+    public function getNodeByName($name){
+
+        return (new Query())->from($this->tablePrefix . 'auth_item')
+            ->where(['description'=>$name])
+            ->select("*")
+            ->one();
+    }
 }

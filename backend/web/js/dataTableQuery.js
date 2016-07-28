@@ -52,7 +52,6 @@ $(function () {
         {"data": "info.level"},
         {"data": "service_status",fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
             var title = '';
-            console.log(oData.service_status)
             if (oData.service_status == 0) {
                 title = '否';
             } else if(oData.service_status == 1){
@@ -114,13 +113,18 @@ $(function () {
         },
         {
             "data": "id", "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
-            var html = '<a class="btn btn-primary btn-sm" href="/admin/member/info?id=' + oData.id +
-                '">管理</a> <a class="btn btn-info btn-sm" data-uid="' + oData.id +
-                '" data-uname="' + oData.info.real_name +
-                '" id="returningBtn" href="javascript:;">回访</a> <a id="pairBtn" class="btn btn-info btn-sm" data-uid="' + oData.id +
-                '" data-uname="' + oData.info.real_name + '" href="javascript:;">配对</a>';
-            $(nTd).html(html);
-        }
+                var userId = $('table').data("user-id");
+                var userType = $('table').data("user-type");
+                var returnLog = '';
+                console.log(userId , oData.matchmaker)
+                if (userId == oData.matchmaker || userType == 'admin'){
+                    returnLog = '<a class="btn btn-info btn-sm" data-uid="' + oData.id +'" data-uname="' + oData.info.real_name +'" id="returningBtn" href="javascript:;">回访</a>' ;
+                }
+                var html = '<a class="btn btn-primary btn-sm" href="/admin/member/info?id=' + oData.id + '">管理</a> '+
+                    returnLog +
+                    '<a id="pairBtn" class="btn btn-info btn-sm" data-uid="' + oData.id +'" data-uname="' + oData.info.real_name + '" href="javascript:;">配对</a>';
+                $(nTd).html(html);
+            }
         }
     ];
     var table = function (columns) {
@@ -155,7 +159,7 @@ $(function () {
 
             // 是否ajax
             if ($this.data('is-ajax') == 1) {
-                var ajaxUrl = $this.data('ajax-url');
+                var ajaxUrl = $this.data('ajax-url')+"?"+ $("form").serialize();;
                 ext_params.bServerSide = true;
                 ext_params.stateSave = false;
                 ext_params.sAjaxSource = ajaxUrl;
@@ -186,6 +190,8 @@ $(function () {
                     col = showColumn[i] + ":name";
                     table.column(col).visible(false);
                 }
+                // 默认隐藏意向
+                table.column('intention:name').visible(false);
             }
 
             // ajax提交查询
@@ -193,6 +199,11 @@ $(function () {
                 var url_param = $("form").serialize();
                 ajaxUrl = $this.data('ajax-url') + "?" + url_param;
                 table.ajax.url(ajaxUrl).load();
+                if ($("#select_intention").val() == ''){
+                    table.column('intention:name').visible(false);
+                }else{
+                    table.column('intention:name').visible(true);
+                }
             })
 
             $('.j-dt-filter', $filterContainer).each(function () {
@@ -310,8 +321,6 @@ Filter.prototype.selectInit = function () {
         var val = $.fn.dataTable.util.escapeRegex(
             _this.$dom.val()
         );
-        console.log(_this.col);
-
         _this.table.column(_this.col).search(val ? '^' + val + '$' : '', true, false).draw();
     });
 };

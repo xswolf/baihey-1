@@ -24,7 +24,7 @@
                                     <select name="status" class="form-control">
                                         <option value="">会员状态</option>
                                         <option value="1">未审核</option>
-                                        <option value="2">已审核</option>
+                                        <option {{if strpos($currentUserRole , "红娘") > 0}}selected{{/if}} value="2">已审核</option>
                                         <option value="3">黑名单</option>
                                         <option value="4">已删除</option>
                                     </select>
@@ -191,7 +191,7 @@
                                     <select class="form-control" name="matchmaker">
                                         <option value="">销售红娘</option>
                                         {{foreach from=$salesUser key=k item=vo}}
-                                        <option value="{{$vo.id}}">{{$vo.name}}</option>
+                                        <option {{if $currentUserId == $vo.id}}selected{{/if}} value="{{$vo.id}}">{{$vo.name}}</option>
                                         {{/foreach}}
                                     </select>
                                 </div>
@@ -199,7 +199,7 @@
                                     <select class="form-control" name="matchmaking">
                                         <option value="">服务红娘</option>
                                         {{foreach from=$serverUser key=k item=vo}}
-                                        <option value="{{$vo.id}}">{{$vo.name}}</option>
+                                        <option {{if $currentUserId == $vo.id}}selected{{/if}} value="{{$vo.id}}">{{$vo.name}}</option>
                                         {{/foreach}}
                                     </select>
                                 </div>
@@ -222,6 +222,16 @@
                                         <option value="">区县</option>
                                     </select>
                                 </div>
+                                {{if strpos($currentUserRole , "销售红娘")>0 || $currentUserRole=='admin'}}
+                                <div class="col-sm-2">
+                                    <select class="form-control" name="intention" id="select_intention">
+                                        <option value="">意向</option>
+                                        <option value="1">有</option>
+                                        <option value="0">无</option>
+                                        <option value="2">未回访</option>
+                                    </select>
+                                </div>
+                                {{/if}}
                                 <div class="col-sm-2">
                                     <input type="text" name="id_phone_name" class="form-control"
                                            value="{{\Yii::$app->request->get('id_phone_name')}}"
@@ -242,6 +252,8 @@
                    data-show-column={{$column}}
                    data-matchmaker ={{json_encode($salesUser)}}
                    data-matchmaking = {{json_encode($serverUser)}}
+                   data-user-type = {{$admin['role']}}
+                   data-user-id = {{$admin['id']}}
                    data-ajax-url="/admin/member/search"
                    cellspacing="0" width="100%">
                 <thead>

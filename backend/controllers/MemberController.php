@@ -55,7 +55,7 @@ class MemberController extends BaseController
 
     private function searchWhere(&$andWhere , $get){
         foreach ($get as $k=>$v){
-            if ($v=='' || !in_array($k , ['constellation','zodiac','level','is_car','is_purchase','occupation','is_child','is_marriage','year_income','education','is_show','status','sex','age1','age2','height','province','city','area'])) continue;
+            if ($v=='' || !in_array($k , ['matchmaker','matchmaking','intention','constellation','zodiac','level','is_car','is_purchase','occupation','is_child','is_marriage','year_income','education','is_show','status','sex','age1','age2','height','province','city','area'])) continue;
             if ($k=='age1'){
                 $andWhere[] = ['>=' , 'age' , $v];
             }else if ($k=='age2'){
@@ -64,6 +64,11 @@ class MemberController extends BaseController
                 $andWhere[] = [">=", "json_extract(info,'$.{$k}')", $v];
             }else{
                 $andWhere[] = ["=", $k, $v];
+            }
+
+            if ($k == 'intention' && strpos($this->user->getUser()['role'] , "销售红娘") >0 ){
+                $id = $this->user->getUser()['id'];
+                $andWhere[] = ["=" , "matchmaker" , $id];
             }
         }
         return $andWhere;
@@ -112,7 +117,7 @@ class MemberController extends BaseController
             'recordsFiltered' => $count,
             'data' => $list
         ];
-        $this->renderAjax($data);
+        $this->renderAjax($data,false);
     }
 
     public function actionSave()
