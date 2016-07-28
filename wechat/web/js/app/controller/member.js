@@ -2209,8 +2209,8 @@ define(['app/module', 'app/directive/directiveApi'
     module.controller("member.report", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$location', function (api, $scope, $timeout, $ionicPopup, $location) {
 
         $scope.title = $location.$$search.title;  // 标题
-        $scope.reportData = [];
-        var formData = [];
+        $scope.reportData = {};
+        var formData = {};
         $scope.report = function () {
             if (!$scope.reportData.item) {
                 ar.saveDataAlert($ionicPopup, '请选择举报内容');

@@ -24,7 +24,7 @@
                 </p>
                 <p class="wsn">{{dis.content}}</p>
                 <div class="dis_gallery bhy-gallery clearfix">
-                    <a ng-repeat="img in dis.imgList | limitTo:6" ng-href="{{img.thumb_path | picture}}" data-size="{{img.thumb_path.split('.')[0].split('_')[1] + 'x' + img.thumb_path.split('.')[0].split('_')[2]}}">
+                    <a ng-repeat="img in dis.imgList | limitTo:6" href="{{img.thumb_path | picture}}" data-size="{{img.thumb_path.split('.')[0].split('_')[1] + 'x' + img.thumb_path.split('.')[0].split('_')[2]}}">
                         <img class="w100" ng-src="{{img.thumb_path}}">
                     </a>
                 </div>
