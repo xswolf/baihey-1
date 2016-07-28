@@ -110,15 +110,40 @@
                 }
             })
             id += "0";
-            $.ajax({
-                url: "/admin/member/auth-photo", data: {id: id, status: 1}, success: function (res) {
-                    res = JSON.parse(res);
-                    if (res.status == 1){
-                       alert("操作成功")
-                        window.location.reload(true);
+            if(id == "0"){
+                layer.msg('请先选择要批量操作的数据');
+                return false;
+            }
+            layer.confirm('请选择操作', {
+                btn: ['通过', '不通过']
+            }, function(index, layero){
+                $.ajax({
+                    url: "/admin/member/auth-photo", data: {id: id, status: 1}, success: function (res) {
+                        res = JSON.parse(res);
+                        if (res.status == 1){
+                            layer.msg('操作成功', function(){
+                                window.location.reload(true);
+                            });
+                        }else{
+                            layer.msg('操作失败，请刷新重试');
+                        }
                     }
-                }
+                });
+            }, function(index){
+                $.ajax({
+                    url: "/admin/member/auth-photo", data: {id: id, status: 0}, success: function (res) {
+                        res = JSON.parse(res);
+                        if (res.status == 1){
+                            layer.msg('操作成功', function(){
+                                window.location.reload(true);
+                            });
+                        }else{
+                            layer.msg('操作失败，请刷新重试');
+                        }
+                    }
+                });
             });
+
         })
 
     })

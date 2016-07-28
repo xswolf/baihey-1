@@ -12,8 +12,10 @@
             <div class="box-body">
                 <div class="tabbable header-tabs user-profile">
                     <ul class="nav nav-tabs">
-                        <li><a href="#pro_identity" data-toggle="tab"><i class="fa fa-credit-card"></i> <span
-                                class="hidden-inline-mobile"> 证件</span></a></li>
+                        <li><a href="#pro_identity" data-toggle="tab"><i class="fa fa-credit-card"></i>
+                            <span class="hidden-inline-mobile"> 证件</span>
+                            <span class="badge badge-red font-11">3</span>
+                        </a></li>
                         <li><a href="#pro_msg" data-toggle="tab"><i class="fa fa-comments-o"></i> <span
                                 class="hidden-inline-mobile"> 消息记录</span></a></li>
                         <li><a href="#pro_peidui" data-toggle="tab"><i class="fa fa-heart-o"></i> <span
@@ -105,9 +107,8 @@
                                                 <span class="label label-info">{{$user.info->height}}cm</span>
                                             </p>
                                             <p>
-                                                <span class="label label-danger">
+                                                <span class="label ">
                                                     {{getLevel($user.info->level)}}
-
                                                 </span>
                                             </p>
                                         </div>
@@ -343,7 +344,7 @@
                                                                 </div>
                                                                 <div class="col-sm-3">
                                                                     <span class="text-muted fwb">服务到期时间：</span>
-                                                                    <span class="text-danger">{{timeStampToDate($user.mature_time)}}</span>
+                                                                    <span id="serviceEndTime" class="text-danger">{{timeStampToDate($user.mature_time)}}</span>
                                                                 </div>
                                                             </div>
                                                             <div class="row m10">
@@ -391,7 +392,7 @@
                                                             <div class="row m10">
                                                                 <div class="col-sm-6">
                                                                     <span class="text-muted fwb">注册时间：</span>
-                                                                    <span class="text-dark">{{date('Y-m-d' , $user.reg_time)}}</span>
+                                                                    <span class="text-dark">{{date('Y-m-d H:i:s' , $user.reg_time)}}</span>
                                                                 </div>
                                                                 <div class="col-sm-6">
                                                                     <span class="text-muted fwb">登录次数：</span>
@@ -401,7 +402,7 @@
                                                             <div class="row m10">
                                                                 <div class="col-sm-6">
                                                                     <span class="text-muted fwb">最后一次登录时间：</span>
-                                                                    <span class="text-dark">{{date('Y-m-d' , $user.last_login_time)}}</span>
+                                                                    <span class="text-dark">{{date('Y-m-d H:i:s' , $user.last_login_time)}}</span>
                                                                 </div>
                                                                 <div class="col-sm-6">
                                                                     <span class="text-muted fwb">最后一次登录IP：</span>
@@ -808,6 +809,11 @@
 <script type="text/javascript" src="/backend/web/CloudAdmin/js/colorbox/jquery.colorbox.min.js"></script>
 <script>
     jQuery(document).ready(function () {
+
+        if(new Date($.trim($('#serviceEndTime').text())) <= new Date()){
+            $('#serviceEndTime').removeClass('text-danger').addClass('text-muted');
+        }
+
         $('.colorbox-button').colorbox({rel: 'colorbox-button', maxWidth: '95%', maxHeight: '95%'});
         var resizeTimer;
 

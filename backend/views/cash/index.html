@@ -49,7 +49,7 @@
                         {{if $vo.status == 1}}
                             已打款
                         {{else}}
-                            <button class="btn confirm" data-id="{{$vo.id}}">确认打款</button>
+                            <button class="btn confirm btn-primary"  data-id="{{$vo.id}}">确认打款</button>
                         {{/if}}
                     </td>
                 </tr>
@@ -63,14 +63,14 @@
     jQuery(document).ready(function () {
         $('.confirm').on('click', function () {
             var id = $(this).data('id');
-            if (window.confirm('是否确认已经打款')){
+            layer.confirm('您确定已经打款？该操作无法恢复。', {icon: 7, title:'重要提示'}, function(index){
                 $.ajax({
                     method:'post',
                     url: "/admin/cash/confirm", data: {id: id }, success: function (res) {
-
                     }
                 });
-            }
+                layer.close(index);
+            });
         });
 
     })
