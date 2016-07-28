@@ -33,7 +33,7 @@ define(['app/module', 'app/directive/directiveApi'
             $location.url(url);
         }
 
-        $scope.more = function (isUser, id, index) {
+        $scope.more = function (isUser, dis, index) {
             var btnList = [
                 {text: '举报'},
                 {text: '屏蔽'}
@@ -52,20 +52,20 @@ define(['app/module', 'app/directive/directiveApi'
                 },
                 buttonClicked: function (i, btnObj) {
                     if (btnObj.text == '屏蔽') {
-                        $scope.display.push(id);
+                        $scope.display.push(dis.id);
                         ar.setStorage('display', $scope.display);
                         $scope.discoveryList.splice(index, 1);
                         // 将参数ID存入localStorage：display
                     }
                     if (btnObj.text == '举报') {
-                        $location.url('/member/report?id=' + id + '&type=2&title=动态&tempUrl=' + $location.$$url);
+                        $location.url('/member/report?id=' + dis.id + '&userName='+dis.real_name+'&type=2&title=动态&tempUrl=' + $location.$$url);
                     }
                     if (btnObj.text == '删除') {
                         $scope.display.push(id);
                         ar.setStorage('display', $scope.display);
                         $scope.discoveryList.splice(index, 1);
                         // 改变状态 api.save
-                        api.save('/wap/member/delete-dynamic', {id: id}).success(function (res) {
+                        api.save('/wap/member/delete-dynamic', {id: dis.id}).success(function (res) {
 
                         });
                     }

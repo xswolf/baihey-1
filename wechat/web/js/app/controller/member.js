@@ -2205,7 +2205,7 @@ define(['app/module', 'app/directive/directiveApi'
 
     }]);
 
-// 举报
+    // 举报
     module.controller("member.report", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$location', function (api, $scope, $timeout, $ionicPopup, $location) {
 
         $scope.title = $location.$$search.title;  // 标题
@@ -2219,6 +2219,8 @@ define(['app/module', 'app/directive/directiveApi'
             formData.feedback_id = $location.$$search.id;
             formData.content = $scope.reportData.item;
             formData.type = $location.$$search.type;
+            formData.user_name = $scope.userInfo.info.real_name;
+            formData.feedback_name = $location.$$search.userName;
             api.save('/wap/member/add-feedback', formData).success(function (res) {   //TODO 保存数据
                 if (res.status == 1) {
                     ar.saveDataAlert($ionicPopup, '您的举报信息我们已受理，我们会尽快核实情况并将处理结果反馈给您，谢谢您对我们的支持！');
@@ -2276,7 +2278,9 @@ define(['app/module', 'app/directive/directiveApi'
                 buttonClicked: function (index) {
                     api.save('/wap/member/add-feedback', {
                         content: config_infoData.feedback[index],
-                        feedback_id: followData.follow_id
+                        feedback_id: followData.follow_id,
+                        feedback_name : $location.$$search.userName,
+                        user_name: $scope.userInfo.info.real_name
                     }).success(function (res) {
                         hideSheet();
                         if (res.status) {
