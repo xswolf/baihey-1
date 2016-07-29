@@ -53,9 +53,9 @@ $(function () {
         {"data": "service_status",fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
             var title = '';
             if (oData.service_status == 0) {
-                title = '否';
+                title = '<span class="text-muted">服务</span>';
             } else if(oData.service_status == 1){
-                title = '<span style="color: red;">是</span>';
+                title = '<span style="color: red;">服务</span>';
             }
             $(nTd).html(title);
         }
@@ -118,11 +118,11 @@ $(function () {
                 var returnLog = '';
                 console.log(userId , oData.matchmaker)
                 if (userId == oData.matchmaker || userType == 'admin'){
-                    returnLog = '<a class="btn btn-info btn-sm" data-uid="' + oData.id +'" data-uname="' + oData.info.real_name +'" id="returningBtn" href="javascript:;">回访</a>' ;
+                    returnLog = '<a class="btn btn-info btn-sm" data-uid="' + oData.id +'" data-uname="' + oData.info.real_name +'" id="returningBtn" href="javascript:;">回访</a> ' ;
                 }
                 var html = '<a class="btn btn-primary btn-sm" href="/admin/member/info?id=' + oData.id + '">管理</a> '+
                     returnLog +
-                    '<a id="pairBtn" class="btn btn-info btn-sm" data-uid="' + oData.id +'" data-uname="' + oData.info.real_name + '" href="javascript:;">配对</a>';
+                    ' <a id="pairBtn" class="btn btn-info btn-sm" data-uid="' + oData.id +'" data-uname="' + oData.info.real_name + '" href="javascript:;">配对</a>';
                 $(nTd).html(html);
             }
         }

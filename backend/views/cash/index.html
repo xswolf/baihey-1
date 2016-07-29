@@ -1,4 +1,3 @@
-
 <div class="wrapper wrapper-content animated fadeInUp">
     <div class="ibox">
         <div class="ibox-title"><h5>提现列表</h5>
@@ -8,17 +7,17 @@
         </div>
 
         <div class="ibox-content">
-<!--
-            <div class="form-horizontal clearfix">
-                <div class="col-lg-12 col-sm-12">
-                    <div class="form-group">
-                        <div class="col-lg-12 col-sm-12 input-group date">
-                            <a href="/admin/cash/index?status=2" class="btn {{if (\Yii::$app->request->get('status') == 2 )}} btn-success {{else}} btn-grey {{/if}}">未打款</a>
-                            <a href="/admin/cash/index?status=1" class="btn {{if (\Yii::$app->request->get('status') == 1 )}} btn-success {{else}} btn-grey {{/if}}">已打款</a>
-                        </div>
-                    </div>
-                </div>
-            </div>-->
+            <!--
+                        <div class="form-horizontal clearfix">
+                            <div class="col-lg-12 col-sm-12">
+                                <div class="form-group">
+                                    <div class="col-lg-12 col-sm-12 input-group date">
+                                        <a href="/admin/cash/index?status=2" class="btn {{if (\Yii::$app->request->get('status') == 2 )}} btn-success {{else}} btn-grey {{/if}}">未打款</a>
+                                        <a href="/admin/cash/index?status=1" class="btn {{if (\Yii::$app->request->get('status') == 1 )}} btn-success {{else}} btn-grey {{/if}}">已打款</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>-->
             <div class="form-horizontal clearfix">
                 <form action="" method="get">
                     <div class="col-sm-12">
@@ -26,8 +25,12 @@
                             <div class="row">
                                 <div class="col-sm-2">
                                     <select name="status" class="form-control">
-                                        <option value="1" {{if \Yii::$app->request->get('status') == 1}} selected="selected" {{/if}}>已打款</option>
-                                        <option value="2" {{if \Yii::$app->request->get('status') == 2}} selected="selected" {{/if}}>未打款</option>
+                                        <option value="1" {{if \Yii::$app->request->get('status') == 1}}
+                                            selected="selected" {{/if}}>已打款
+                                        </option>
+                                        <option value="2" {{if \Yii::$app->request->get('status') == 2}}
+                                            selected="selected" {{/if}}>未打款
+                                        </option>
                                     </select>
                                 </div>
                                 <div class="col-sm-2">
@@ -74,9 +77,9 @@
                     <td>{{$vo.admin_name}}</td>
                     <td>
                         {{if $vo.status == 1}}
-                            已打款
+                        已打款
                         {{else}}
-                            <button class="btn confirm btn-primary"  data-id="{{$vo.id}}">确认打款</button>
+                        <button class="btn confirm btn-primary" data-id="{{$vo.id}}">确认打款</button>
                         {{/if}}
                     </td>
                 </tr>
@@ -90,11 +93,11 @@
     jQuery(document).ready(function () {
         $('.confirm').on('click', function () {
             var id = $(this).data('id');
-            layer.confirm('您确定已经打款？该操作无法恢复。', {icon: 7, title:'重要提示'}, function(index){
+            layer.confirm('您确定已经打款？该操作无法恢复。', {icon: 7, title: '重要提示'}, function (index) {
                 $.ajax({
-                    method:'post',
-                    url: "/admin/cash/confirm", data: {id: id }, success: function (res) {
-
+                    method: 'post',
+                    url: "/admin/cash/confirm", data: {id: id}, success: function (res) {
+                        top.location.href = "/admin/cash/index?status=1";
                     }
                 });
                 layer.close(index);
