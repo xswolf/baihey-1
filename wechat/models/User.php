@@ -226,6 +226,11 @@ class User extends \common\models\User
             unset($where['cityName']);
         }
         unset($where['pageSize']);
+        if (isset($where['id']) && $where['id']) {
+            if (!is_numeric($where['id'])) {
+                $andWhere = ["like", "json_extract(info,'$.real_name')", $where['id']];
+            }
+        }
         // 查询条件处理
         $where = $this->getUserListWhere($where, $pageSize);
         $offset = $where['offset'];
@@ -244,8 +249,11 @@ class User extends \common\models\User
             $result->
             innerJoin($this->tablePrefix . 'user_photo p', "u.id=p.user_id and p.is_check=1 and p.is_head=1 and p.type=1");
         }
+        if(isset($andWhere)) {
+            $result->andWhere($andWhere);
+        }
 
-        //echo $result->createCommand()->getRawSql();
+        //echo $result->createCommand()->getRawSql();exit;
         $result = $result->all();
         return $result;
     }
@@ -260,10 +268,16 @@ class User extends \common\models\User
     {
         $where['pageNum'] = isset($where['pageNum']) ? $where['pageNum'] : 1;
 
-        if (isset($where['id']) && is_numeric($where['id'])) {
-
+        if (isset($where['id']) && $where['id']) {
+            if (is_numeric($where['id'])) {
+                if (strlen($where['id'] . '') == 11) {
+                    $data['where']['u.phone'] = $where['id'];
+                } else {
+                    $data['where']['u.id'] = $where['id'];
+                }
+            }
             $data['offset'] = ($where['pageNum'] - 1) * $pageSize;
-            $data['where']['u.id'] = $where['id'];
+            //$data['where']['u.id'] = $where['id'];
         } else {
 
             foreach ($where as $key => $val) {
