@@ -40,7 +40,11 @@
 
     <!-- JQUERY -->
     <script src="/backend/web/CloudAdmin/js/jquery/jquery-2.0.3.min.js"></script>
-
+    <style>
+        #jello{
+            animation:jello 2s infinite linear ;
+        }
+    </style>
 </head>
 <body>
 <!-- HEADER -->
@@ -88,10 +92,11 @@
                     <li><a href="#" data-skin="graphite">石墨</a></li>
                 </ul>
             </li>
-            <li class="dropdown">
+            <li class="dropdown" id="jello">
                 <a target="_blank" href="<?php echo '/wap/user/login?id='.$view->params['user']['id'].'&time='.time().'&token='.md5($view->params['user']['id'].'jzBhY2016-jr'.time()); ?>" class="dropdown-toggle">
                     <i class="fa fa-comments"></i>
                     <span class="name">站内信</span>
+                    <span class="label label-danger" id="jello">新消息</span>
                 </a>
             </li>
         </ul>
@@ -236,7 +241,6 @@
     <!-- SIDEBAR -->
     <div id="sidebar" class="sidebar sidebar-fixed">
         <div class="sidebar-menu nav-collapse">
-
             <!-- 左侧菜单 -->
             <ul>
                 <?php  if(authValidate('/admin/site')){  ?>
@@ -419,6 +423,8 @@
 
     jQuery(document).ready(function() {
         App.init(); //Initialise plugins and elements
+
+
     });
 
 </script>
