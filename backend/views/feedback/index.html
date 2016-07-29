@@ -1,4 +1,3 @@
-
 <div class="wrapper wrapper-content animated fadeInUp">
     <div class="ibox">
         <div class="ibox-title"><h5>举报管理</h5>
@@ -46,7 +45,7 @@
                     <th>举报内容</th>
                     <th>举报类型</th>
                     <th>举报时间</th>
-                    <th>状态</th>
+                    <th>状态/操作</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -67,11 +66,11 @@
                     </td>
                     <td>{{date('Y-m-d H:i:s' , $vo.create_time)}}</td>
                     <td>
-                        <select class="form-control mySwitch" data-id="{{$vo.id}}">
-                            <option value="2" {{if $vo.status eq 2}}selected{{/if}}>待审核</option>
-                            <option value="1" {{if $vo.status eq 1}}selected{{/if}}>审核属实</option>
-                            <option value="3" {{if $vo.status eq 3}}selected{{/if}}>审核不属实</option>
-                        </select>
+                        {{if $vo.status eq 2}}
+                        <button class="btn btn-info mySwitch" data-id="{{$vo.id}}">审核</button>
+                        {{/if}}
+                        {{if $vo.status eq 1}}<span>审核属实</span>{{/if}}
+                        {{if $vo.status eq 3}}<span>审核不属实</span>{{/if}}
                     </td>
                 </tr>
                 {{/foreach}}
@@ -94,6 +93,18 @@
             </div>
             <div class="form-group clearfix">
                 <div class="divide-10"></div>
+                <label class="col-md-4 control-label">审核</label>
+                <div class="col-md-8">
+                    <label class="radio-inline"> <input type="radio" class="uniform"
+                                                        name="checkStatus"
+                                                        value="1"> 属实 </label>
+                    <label class="radio-inline"> <input type="radio" class="uniform"
+                                                        name="checkStatus"
+                                                        value="2"> 不属实 </label>
+                </div>
+            </div>
+            <div class="form-group clearfix checkContent">
+                <div class="divide-10"></div>
                 <label class="col-md-4 control-label">处理方式</label>
                 <div class="col-md-8">
                     <label class="radio-inline"> <input type="radio" class="uniform"
@@ -101,16 +112,17 @@
                                                         value="1"> 警告 </label>
                     <label class="radio-inline"> <input type="radio" class="uniform"
                                                         name="treatment"
-                                                        value="2" checked> 标记 </label>
+                                                        value="2"> 标记 </label>
                     <label class="radio-inline"> <input type="radio" class="uniform"
                                                         name="treatment"
                                                         value="3"> 禁止登录 </label>
                 </div>
             </div>
-            <div class="form-group clearfix">
+            <div class="form-group clearfix checkContent" id="textBox">
                 <label class="col-md-4 control-label"> 内容 </label>
                 <div class="col-md-8">
-                    <textarea class="form-control" placeholder="100字以内" maxlength="100" style="resize: none;"></textarea>
+                    <textarea id="textContent" class="form-control" placeholder="100字以内" maxlength="100"
+                              style="resize: none;"></textarea>
                 </div>
             </div>
             <div class="form-group clearfix">
@@ -123,7 +135,7 @@
             </div>
             <div class="form-group clearfix">
                 <div class="col-md-12 center">
-                   <button class="btn btn-primary">确定</button>
+                    <button class="btn btn-primary" id="saveCheck">确定</button>
                 </div>
             </div>
         </div>
@@ -133,41 +145,71 @@
 <script>
     jQuery(document).ready(function () {
 
-        $('.mySwitch').on('change', function (s,a) {
-
-            var status = $(this).val();
+        $('.mySwitch').on('click', function () {
             var id = $(this).data('id');
-
-            if (status == 1 || status == 3) {
-                layer.open({
-                    type: 1,
-                    title: '举报处理/反馈',
-                    area: ['600px', '365px'],
-                    content: $('#feedBack_box'),
-                    success: function () {
-                        $(".uniform").uniform();
-                    },
-                    cancel: function (index) {
-
-                        layer.close(index);
-                    }
-                });
-
-            } else {
-                $.ajax({
-                    url: "/admin/feedback/auth", data: {id: id, status: status}, success: function (res) {
-
-                        if (JSON.parse(res).status > 0) {
-                            layer.msg('操作成功');
-                        } else {
-                            layer.msg('操作失败');
-                        }
-
-                    }
-                });
-            }
+            layer.open({
+                type: 1,
+                title: '举报处理/反馈',
+                area: ['600px', '425px'],
+                content: $('#feedBack_box'),
+                success: function (layero) {
+                    $(".uniform").uniform();
+                    layero.find('#saveCheck').attr('data-id',id);
+                },
+                cancel: function (index) {
+                    layer.close(index);
+                }
+            });
 
         });
+
+        $('#saveCheck').on('click',function(){
+            var id = $(this).data('id');
+            var status = $("input[name='checkStatus']:checked").val();
+            if(!status){
+                layer.tips('请选择审核结果',$("input[name='checkStatus']").eq(0),{tips:1});
+                return false;
+            }
+            if(!$("input[name='treatment']:checked").val()){
+                layer.tips('请选择处理方式',$("input[name='treatment']").eq(0),{tips:1});
+                return false;
+            }
+            if($("input[name='treatment']:checked").val() == 1 && !$.trim($('#textContent').val())){
+                layer.tips('请输入警告内容',$('#textContent'),{tips:1});
+                return false;
+            }
+            bhyFunc.ajaxRequest('/admin/feedback/auth',{id: id, status: status,type:$("input[name='treatment']:checked").val(),content:$.trim($('#textContent').val())},function(res){
+                if (JSON.parse(res).status > 0) {
+                    layer.msg('处理成功');
+                } else {
+                    layer.msg('处理失败');
+                }
+            })
+        })
+
+        $("input[name='treatment']").change(function(){
+            if($(this).val() == 1){
+                $('#textBox').show();
+                $('#textContent').val('')
+                                 .prop('readonly',false);
+            }
+            if($(this).val() == 2){
+                $('#textBox').show();
+                $('#textContent').val('对方被举报多次，请谨慎交流！')
+                                 .prop('readonly',true);
+            }
+            if($(this).val() == 3){
+                $('#textBox').hide();
+            }
+        })
+
+        $("input[name='checkStatus']").change(function(){
+            if($(this).val() == 2){
+                $('.checkContent').hide();
+            }else{
+                $('.checkContent').show();
+            }
+        })
 
         // 全选
         $("#select-all").click(function () {

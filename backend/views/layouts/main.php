@@ -422,9 +422,7 @@
 <script>
 
     jQuery(document).ready(function() {
-        App.init(); //Initialise plugins and elements
-
-
+        App.init();
     });
 
 </script>
