@@ -87,9 +87,10 @@ class File
                 $file_name = $dir . "upload/picture/" . $date_time . '/' . $time . $rand . '.' . $model->file->extension;
                 $model->file->saveAs($file_name, true);
                 $fileInfo = getimagesize($file_name);
+                $picInfo = $this->pictureRatio($fileInfo[0], $fileInfo[1]);
 
-                if (rename($file_name, $dir . "upload/picture/" . $date_time . '/' . $time . $rand . '_' . $fileInfo[0] . '_' . $fileInfo[1] . '.' . $model->file->extension)) {
-                    return array('status' => 1, 'info' => '上传成功', 'path' => $date_time . '/' . $time . $rand . '_' . $fileInfo[0] . '_' . $fileInfo[1] . '.' . $model->file->extension, 'extension' => $model->file->extension, 'time' => $time);
+                if (rename($file_name, $dir . "upload/picture/" . $date_time . '/' . $time . $rand . '_' . $picInfo[0] . '_' . $picInfo[1] . '.' . $model->file->extension)) {
+                    return array('status' => 1, 'info' => '上传成功', 'path' => $date_time . '/' . $time . $rand . '_' . $picInfo[0] . '_' . $picInfo[1] . '.' . $model->file->extension, 'extension' => $model->file->extension, 'time' => $time);
                 }
             }
         }
@@ -109,6 +110,11 @@ class File
         $image->open($folder . "/images/upload/picture/" . $data['path']);
         //另存固定宽度是200的压缩图片
         $image->thumb(200, 200, $image::IMAGE_THUMB_FIXED)->save($folder . $url);
+        $fileInfo = getimagesize($folder . "/images/upload/picture/" . $data['path']);
+        $picInfo = $this->pictureRatio($fileInfo[0], $fileInfo[1]);
+        $pic = new Image();
+        $pic->open($folder . "/images/upload/picture/" . $data['path']);
+        $pic->thumb($picInfo[0], $picInfo[1], $image::IMAGE_THUMB_FIXED)->save($folder . "/images/upload/picture/" . $data['path']);
 
         return ['status' => 1, 'info' => '上传成功', 'pic_path' => "/images/upload/picture/" . $data['path'], 'thumb_path' => $url, 'time' => $data['time']];
     }
@@ -127,16 +133,61 @@ class File
             $fileInfo = getimagesize($targetFile);
 
             // 重命名加上图片长宽
-            $picturePath = $imagePath . '_' . $fileInfo[0] . '_' . $fileInfo[1] . '.' . $extension;
+            $picInfo = $this->pictureRatio($fileInfo[0], $fileInfo[1]); //  等比例
+            $picturePath = $imagePath . '_' . $picInfo[0] . '_' . $picInfo[1] . '.' . $extension;
             if (rename($targetFile, $picturePath)) {
                 // 固定压缩图片长宽200
                 $image = new Image();
                 $thumbPath = str_replace('picture', 'thumb', $picturePath);
                 $image->open($picturePath);
                 $image->thumb(200, 200, $image::IMAGE_THUMB_FIXED)->save($thumbPath);
+                $pic = new Image();
+                $pic->open($picturePath);
+                $pic->thumb($picInfo[0], $picInfo[1], $image::IMAGE_THUMB_FIXED)->save($picturePath);
+
             }
         }
         $thumbArr = explode('/../..', $thumbPath);
         echo $thumbArr[1];// 返回压缩图片路径
+    }
+
+    /**
+     * 返回等比例压缩宽高
+     * @param $pic_width
+     * @param $pic_height
+     */
+    public function pictureRatio($pic_width, $pic_height)
+    {
+        $maxwidth = 800;
+        $maxheight = 600;
+        $resizewidth_tag = false;
+        $resizeheight_tag = false;
+        if($maxwidth && $pic_width > $maxwidth) {
+            $widthratio = $maxwidth/$pic_width;
+            $resizewidth_tag = true;
+        }
+        if($maxheight && $pic_height > $maxheight) {
+           $heightratio = $maxheight/$pic_height;
+           $resizeheight_tag = true;
+        }
+
+        if($resizewidth_tag && $resizeheight_tag) {
+            if($widthratio<$heightratio) {
+                $ratio = $widthratio;
+            } else {
+                $ratio = $heightratio;
+            }
+        }
+
+        if($resizewidth_tag && !$resizeheight_tag) {
+            $ratio = $widthratio;
+        }
+        if(!$resizewidth_tag && $resizeheight_tag) {
+            $ratio = $heightratio;
+        }
+
+        $pic[0] = $ratio*$pic_width;
+        $pic[1] = $ratio*$pic_height;
+        return $pic;
     }
 }
