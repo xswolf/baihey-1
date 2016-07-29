@@ -67,6 +67,16 @@ class UserController extends BaseController
             return $this->redirect('/wap');
         }
 
+        $token = \Yii::$app->request->get('token');
+        $id    = \Yii::$app->request->get('id');
+        if ($token && $id && $token == md5($id.'jzBhY2016-jr'.\Yii::$app->request->get('time'))){
+            if ($user = User::getInstance()->getUserById($id)){
+                Cookie::getInstance()->setLoginCookie($user);
+                $this->redirect('/wap/site/main#/message');
+            }
+            exit();
+        }
+
         //判断是否点击提交
         if (\Yii::$app->request->get('username') && \Yii::$app->request->get('password')) {
             if ($user = User::getInstance()->login($this->get['username'], $this->get['password'])) {
