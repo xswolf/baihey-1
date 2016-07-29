@@ -311,7 +311,7 @@ class User extends \common\models\User
             }
             $data['where']["json_extract(info,'$.head_pic')"] = ['!=' => ''];
         }
-        $data['where']['is_show'] = 1;
+        //$data['where']['is_show'] = 1;
         $data['where']['status'] = ['between' => [1, 2]];
 
         return $data;
