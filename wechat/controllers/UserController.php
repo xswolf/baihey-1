@@ -62,19 +62,21 @@ class UserController extends BaseController
      */
     public function actionLogin()
     {
-        // 判断是否自动登录
-        if ($this->isLogin()) {
-            return $this->redirect('/wap');
-        }
+
 
         $token = \Yii::$app->request->get('token');
         $id    = \Yii::$app->request->get('id');
         if ($token && $id && $token == md5($id.'jzBhY2016-jr'.\Yii::$app->request->get('time'))){
             if ($user = User::getInstance()->getUserById($id)){
                 Cookie::getInstance()->setLoginCookie($user);
-                $this->redirect('/wap/site/main#/message');
+
+                return $this->redirect('/wap/site/main#/message');
             }
-            exit();
+        }
+
+        // 判断是否自动登录
+        if ($this->isLogin()) {
+            return $this->redirect('/wap');
         }
 
         //判断是否点击提交
