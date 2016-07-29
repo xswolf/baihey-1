@@ -1,9 +1,7 @@
-
 <div class="wrapper wrapper-content animated fadeInUp">
     <div class="ibox">
         <div class="ibox-title"><h5>举报管理</h5>
             <div class="ibox-tools rboor">
-
             </div>
         </div>
         <div class="ibox-content">
@@ -14,9 +12,15 @@
                             <div class="row">
                                 <div class="col-sm-2">
                                     <select name="status" class="form-control">
-                                        <option value="1" {{if \Yii::$app->request->get('status') == 1}} selected="selected" {{/if}}>审核属实</option>
-                                        <option value="2" {{if \Yii::$app->request->get('status') == 2}} selected="selected" {{/if}}>待审核</option>
-                                        <option value="3" {{if \Yii::$app->request->get('status') == 3}} selected="selected" {{/if}}>审核不属实</option>
+                                        <option value="1" {{if \Yii::$app->request->get('status') == 1}}
+                                            selected="selected" {{/if}}>审核属实
+                                        </option>
+                                        <option value="2" {{if \Yii::$app->request->get('status') == 2}}
+                                            selected="selected" {{/if}}>待审核
+                                        </option>
+                                        <option value="3" {{if \Yii::$app->request->get('status') == 3}}
+                                            selected="selected" {{/if}}>审核不属实
+                                        </option>
                                     </select>
                                 </div>
                                 <div class="col-sm-2">
@@ -48,8 +52,10 @@
                 {{foreach from=$list item=vo}}
                 <tr data-id="{{$vo.id}}">
                     <td>{{$vo.id}}</td>
-                    <td><a target="_blank" href="/admin/member/info?id={{$vo.user_id}}">{{$vo.user_name}}({{$vo.user_id}})</a></td>
-                    <td><a target="_blank" href="/admin/member/info?id={{$vo.feedback_id}}">{{$vo.feedback_name}}({{$vo.feedback_id}})</a></td>
+                    <td><a target="_blank" href="/admin/member/info?id={{$vo.user_id}}">{{$vo.user_name}}({{$vo.user_id}})</a>
+                    </td>
+                    <td><a target="_blank" href="/admin/member/info?id={{$vo.feedback_id}}">{{$vo.feedback_name}}({{$vo.feedback_id}})</a>
+                    </td>
                     <td>{{$vo.content}}</td>
                     <td>
                         {{if ($vo.type == 1)}}
@@ -58,7 +64,7 @@
                         举报动态
                         {{/if}}
                     </td>
-                    <td>{{date('Y-m-d H:i:s' ,  $vo.create_time)}}</td>
+                    <td>{{date('Y-m-d H:i:s' , $vo.create_time)}}</td>
                     <td>
                         <select class="form-control mySwitch" data-id="{{$vo.id}}">
                             <option value="2" {{if $vo.status eq 2}}selected{{/if}}>待审核</option>
@@ -74,32 +80,32 @@
     </div>
 </div>
 <div id="feedBack_box" class="col-md-12" style="display: none;">
-        <div class="panel panel-default">
-            <div class="panel-body">
-                <div class="tabbable">
-                    <ul class="nav nav-tabs">
-                        <li class="active"><a href="#tab_1_1" data-toggle="tab"><i class="fa fa-home"></i>处理被举报人</a></li>
-                        <li><a href="#tab_1_2" data-toggle="tab"><i class="fa fa-envelope"></i> 反馈举报人</a></li>
-                    </ul>
-                    <div class="tab-content">
-                        <div class="tab-pane fade in active" id="tab_1_1">
-                            <div class="divide-10"></div>
-                            <form role="form">
-                                <div class="form-group">
-
-                                </div>
-                            </form>
-                        </div>
-                        <div class="tab-pane fade" id="tab_1_2">
-                            <div class="divide-10"></div>
-
-
-                        </div>
-                    </div>
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <div>处理被举报人</div>
+            <div class="form-group clearfix">
+                <label class="col-md-4 control-label">处理方式</label>
+                <div class="col-md-8">
+                    <label class="radio-inline"> <input type="radio" class="uniform"
+                                                        name="optionsRadios2"
+                                                        value="option1"> 警告 </label>
+                    <label class="radio-inline"> <input type="radio" class="uniform"
+                                                        name="optionsRadios2"
+                                                        value="option2" checked> 标记 </label>
+                    <label class="radio-inline"> <input type="radio" class="uniform"
+                                                        name="optionsRadios2"
+                                                        value="option3"> 禁止登录 </label>
+                </div>
+            </div>
+            <div class="form-group clearfix">
+                <label class="col-md-4 control-label"> 内容 </label>
+                <div class="col-md-8">
+                    <textarea class="form-control" placeholder="100字以内" style="resize: none;"></textarea>
                 </div>
             </div>
         </div>
     </div>
+</div>
 
 <script>
     jQuery(document).ready(function () {
@@ -108,25 +114,28 @@
             var status = $(this).val();
             var id = $(this).data('id');
 
-            if(status == 1 || status == 3){
+            if (status == 1 || status == 3) {
                 layer.open({
                     type: 1,
                     title: '举报处理/反馈',
                     area: ['600px', '400px'],
                     content: $('#feedBack_box'),
-                    cancel: function(index){
+                    success: function () {
+                        $(".uniform").uniform();
+                    },
+                    cancel: function (index) {
                         layer.close(index);
                     }
                 });
 
-            }else{
+            } else {
                 $.ajax({
-                    url: "/admin/feedback/auth", data: {id: id , status:status}, success: function (res) {
+                    url: "/admin/feedback/auth", data: {id: id, status: status}, success: function (res) {
 
-                        if(JSON.parse(res).status > 0){
+                        if (JSON.parse(res).status > 0) {
                             layer.msg('操作成功');
-                        }else{
-                            layer.msg('操');
+                        } else {
+                            layer.msg('操作失败');
                         }
 
                     }
@@ -140,9 +149,10 @@
             $(".j-datatables tbody tr").toggleClass('selected');
         })
 
-        $('.j-datatables tbody').on( 'click', 'tr', function () {
+        $('.j-datatables tbody').on('click', 'tr', function () {
             $(this).toggleClass('selected');
-        } );
+        });
 
     })
+
 </script>

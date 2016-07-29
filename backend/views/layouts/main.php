@@ -88,6 +88,12 @@
                     <li><a href="#" data-skin="graphite">石墨</a></li>
                 </ul>
             </li>
+            <li class="dropdown">
+                <a target="_blank" href="<?php echo '/wap/user/login?id='.$view->params['user']['id'].'&time='.time().'&token='.md5($view->params['user']['id'].'jzBhY2016-jr'.time()); ?>" class="dropdown-toggle">
+                    <i class="fa fa-comments"></i>
+                    <span class="name">站内信</span>
+                </a>
+            </li>
         </ul>
         <!-- /NAVBAR LEFT -->
         <ul class="nav navbar-nav pull-right">

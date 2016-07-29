@@ -30,7 +30,6 @@ class BaseController extends Controller
         $this->get = \Yii::$app->request->get();
         $this->post = \Yii::$app->request->post();
         $this->title = '嘉瑞百合缘';
-
         parent::init();
     }
 
