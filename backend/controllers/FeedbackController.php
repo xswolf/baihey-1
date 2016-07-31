@@ -42,12 +42,14 @@ class FeedbackController extends BaseController
         return $this->render();
     }
 
-    public function actionAuth(){
-
-        $id     = \Yii::$app->request->get('id');
-        $status = \Yii::$app->request->get('status');
-        $id     = Feedback::getInstance()->auth($id, $status);
-
+    public function actionAuth()
+    {
+        $id = \Yii::$app->request->get('id');
+        if($this->post['status'] != 3) {
+            var_dump($this->post);
+        }
+        exit;
+        $id = Feedback::getInstance()->auth($id, $this->post['status']);
         if ($id>0){
             $this->renderAjax(['status'=>1 , 'message'=>'成功']);
         }else{

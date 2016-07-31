@@ -7,10 +7,10 @@
     <ion-content class="bhy com_w_100 follow">
         <div class="item tabs">
             <a class="tab-item" ng-class="{'follow':'cur'}[followType]" ng-click="switching('follow')">
-                我关注的人<span>(5)</span>
+                我关注的人<span>({{followList.length}})</span>
             </a>
             <a class="tab-item" ng-class="{'followed':'cur'}[followType]" ng-click="switching('followed')">
-                关注我的人<span>(51)</span>
+                关注我的人<span>({{followedList.length}})</span>
             </a>
         </div>
         <ion-list ng-if="followType == 'follow'" show-delete="shouldShowDelete">
@@ -47,9 +47,9 @@
                 <p class="mt10 cor8">目前没有人关注您</p>
             </div>-->
             <div class="nullData has-header tac" ng-if="followedList.length == 0 && userInfo.info.level < 1">
-                <img src="/wechat/web/images/member/tip_03.png" height="150" class="vam">
-                <p><span class="fs16">Hi</span>，张先生</p>
-                <p class="mt10">有 <span class="fs16 cor43">51</span> 人关注了您</p>
+                <img src="{{userInfo.info.head_pic | isNull}}" onerror="this.src='/wechat/web/images/u_noimg.jpg'" height="150" class="vam">
+                <p><span class="fs16">Hi</span>，{{userInfo.info.real_name | sex:userInfo.sex :userInfo.info.age}}</p>
+                <p class="mt10">有 <span class="fs16 cor43">({{followedList.length}})</span> 人关注了您</p>
             </div>
 
         </ion-list>
