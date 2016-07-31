@@ -106,14 +106,14 @@ define(['app/module', 'app/directive/directiveApi'
             uploader.onSuccessItem = function (fileItem, response, status, headers) {  // 上传成功
                 if (response.status > 0) {
                     if ($scope.imgList.length < 1) { // 第一张上传相片默认设为头像
-                        api.save('/wap/member/set-head', {
+                        /*api.save('/wap/member/set-head', {
                             id: response.id,
                             thumb_path: response.thumb_path
-                        }).success(function (res) {
+                        }).success(function (res) {*/
                             $scope.imgList.push({id: response.id, thumb_path: response.thumb_path, is_head: 1});
                             $scope.userInfo.info.head_pic = response.thumb_path;
                             $scope.setUserStorage();
-                        })
+                        //})
                     } else {
                         $scope.imgList.push({id: response.id, thumb_path: response.thumb_path, is_head: 0});
                     }
@@ -997,15 +997,15 @@ define(['app/module', 'app/directive/directiveApi'
         // 保存
         $scope.saveData = function () {
             if (!$scope.authList[0]) {
-                ar.saveDataAlert('请上传身份证正面照片');
+                ar.saveDataAlert($ionicPopup, '请上传身份证正面照片');
                 return false;
             }
             if (!$scope.authList[1]) {
-                ar.saveDataAlert('请上传身份证反面照片');
+                ar.saveDataAlert($ionicPopup, '请上传身份证反面照片');
                 return false;
             }
             if (!$scope.formData.real_name) {
-                ar.saveDataAlert('请填写您的真实姓名');
+                ar.saveDataAlert($ionicPopup, '请填写您的真实姓名');
                 return false;
             }
 
@@ -1016,8 +1016,8 @@ define(['app/module', 'app/directive/directiveApi'
                 var formData = [];
                 formData.identity = $scope.formData.real_name;
                 // 保存数据
-                api.save('/wap/member/save-data', formData).success(function (res) {
-                    $scope.userInfo.info.real_name = $scope.formData.real_name;
+                $scope.userInfo.info.real_name = $scope.formData.real_name;
+                api.save('/wap/member/save-data', $scope.userInfo).success(function (res) {
                     $scope.getUserPrivacyStorage('#/member/honesty');
                 });
             });
