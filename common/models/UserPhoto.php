@@ -172,7 +172,7 @@ class UserPhoto extends Base
      */
     public function lists($isCheck = 2, $type = 1)
     {
-
+        $type = $type == 2 ? [2,3] : $type;
         $handle = (new Query())->from($this->tablePrefix . 'user_photo u')
             ->innerJoin($this->tablePrefix . 'user_information i', 'u.user_id=i.user_id')
             ->where(['is_check' => $isCheck, 'type' => $type])
@@ -182,6 +182,7 @@ class UserPhoto extends Base
         if ($isCheck != '') {
             $handle->andWhere(['is_check' => $isCheck]);
         }
+        //echo $handle->createCommand()->getRawSql();exit;
         return $handle->all();
     }
 
