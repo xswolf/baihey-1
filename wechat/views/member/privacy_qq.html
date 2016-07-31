@@ -5,6 +5,10 @@
     </ion-header-bar>
     <ion-content class="bhy com_w_100 m_bg">
         <ion-list>
+            <label class="item item-input mb20">
+                <input type="text" ng-model="userInfo.info.qq" placeholder="请填写您的QQ号">
+            </label>
+
             <ion-radio value="1" name="authGroup" ng-model="formData.privacy_qq">
                 完全公开
             </ion-radio>

@@ -9,18 +9,24 @@
             <div class="item item-divider">
                 嘉瑞 ● 实名制婚恋网
             </div>
-            <div class="item item-text-wrap">
 
-                <i class="icon ion"></i>
-                <label class="item item-input mb20">
-                    <input type="text" ng-model="userInfo.info.wechat" placeholder="请输入您的微信号">
-                </label>
+            <label class="item item-input mb20">
+                <input type="text" ng-model="userInfo.info.wechat" placeholder="请输入您的微信号">
+            </label>
 
-                <div class="m_b_bg w100 mt20 tar">
-                    <img src="/wechat/web/images/member/real_name_bg0.png">
-                </div>
+            <ion-radio value="1" name="authGroup" ng-model="formData.privacy_wechat">
+                完全公开
+            </ion-radio>
+            <ion-radio value="2" name="authGroup" ng-model="formData.privacy_wechat">
+                我关注的人可见
+            </ion-radio>
+            <ion-radio value="3" name="authGroup" ng-model="formData.privacy_wechat">
+                VIP会员可见
+            </ion-radio>
+            <ion-radio value="4" name="authGroup" ng-model="formData.privacy_wechat">
+                不公开
+            </ion-radio>
 
-            </div>
 
         </ion-list>
     </ion-content>

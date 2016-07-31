@@ -5,6 +5,10 @@
     </ion-header-bar>
     <ion-content class="bhy com_w_100 m_bg">
         <ion-list>
+            <label class="item item-input mb20">
+                <input type="text" ng-model="userInfo.info.wechat" placeholder="请填写您的微信号">
+            </label>
+
             <ion-radio value="1" name="authGroup" ng-model="formData.privacy_wechat">
                 完全公开
             </ion-radio>
