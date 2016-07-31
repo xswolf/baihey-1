@@ -7,10 +7,10 @@
     <ion-content class="bhy com_w_100 follow">
         <div class="item tabs">
             <a class="tab-item" ng-class="{'follow':'cur'}[followType]" ng-click="switching('follow')">
-                我关注的人
+                我关注的人<span>(5)</span>
             </a>
             <a class="tab-item" ng-class="{'followed':'cur'}[followType]" ng-click="switching('followed')">
-                关注我的人
+                关注我的人<span>(51)</span>
             </a>
         </div>
         <ion-list ng-if="followType == 'follow'" show-delete="shouldShowDelete">
@@ -26,8 +26,8 @@
                     {{f.info.is_purchase | purchase}} {{f.info.is_car | car}}</p>
             </ion-item>
             <div class="nullData has-header tac" ng-if="followList.length < 1">
-                <img src="/wechat/web/images/nullData.png" width="70" class="vam">
-                <p class="mt10 cor8">您还没关注其他人哦！</p>
+                <img src="/wechat/web/images/member/tip_05.png" width="70" class="vam">
+                <p class="mt10 cor8">您目前没有关注任何人</p>
             </div>
         </ion-list>
 
@@ -42,11 +42,16 @@
                 <p>{{f.info.age | timeToAge}} {{f.info.height}} {{f.info.is_marriage | marriage}}
                     {{f.info.is_purchase | purchase}} {{f.info.is_car | car}}</p>
             </ion-item>
-            <div class="nullData has-header tac" ng-if="followedList.length < 1">
-                <img src="/wechat/web/images/nullData.png" width="70" class="vam">
-                <p class="mt10 cor8">目前还没有人关注您哦！</p>
+            <!--<div class="nullData has-header tac" ng-if="followedList.length < 1">
+                <img src="/wechat/web/images/member/tip_01.png" width="70" class="vam">
+                <p class="mt10 cor8">目前没有人关注您</p>
+            </div>-->
+            <div class="nullData has-header tac" ng-if="followedList.length == 0 && userInfo.info.level < 1">
+                <img src="/wechat/web/images/member/tip_03.png" width="70" class="vam">
+                <p><span class="fs16">Hi</span>，张先生</p>
+                <p class="mt10">有 <span class="fs16 cor43">51</span> 人关注了您</p>
             </div>
-        </ion-list>
 
+        </ion-list>
     </ion-content>
 </ion-view>
