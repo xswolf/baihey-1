@@ -63,7 +63,7 @@
                 </p>
                 <i class="icon ion-ios-arrow-right cor52"></i>
             </ion-item>
-            <ion-item class="item-icon-right" ng-click="updateInfo('real_name')">
+            <ion-item class="item-icon-right" ng-click="updateInfo(userInfo.info.real_name ? '' : 'real_name')">
                 <p>
                     <span class="cor4">真实姓名</span>
                     <span ng-if="!userInfo.info.real_name" class="ml20 mr10 cor21">立即填写</span>

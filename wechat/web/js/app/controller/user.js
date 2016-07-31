@@ -112,16 +112,16 @@ define(['app/module', 'app/directive/directiveApi'
     }])
 
     // 登录
-    module.controller("User.login", ['app.serviceApi', '$scope', '$ionicPopup', '$location', function (api, $scope, $ionicPopup, $location) {
+    module.controller("User.login", ['app.serviceApi', '$scope', '$ionicPopup', '$location','$ionicLoading', function (api, $scope, $ionicPopup, $location,$ionicLoading) {
 
         $scope.User = {};
 
         $scope.login = function () {
 
             if (!$scope.validateFrom()) return;
-
+            $ionicLoading.show({template: '登录中...'});
             api.save('/wap/user/login', $scope.User).success(function (data) {
-
+                $ionicLoading.hide();
                 if (data.status) {
                     // 存储userInfo
                     ar.setStorage('userInfo', data.data);
@@ -131,6 +131,7 @@ define(['app/module', 'app/directive/directiveApi'
                 }
 
             }).error(function () {
+                $ionicLoading.hide();
                 ar.saveDataAlert($ionicPopup, '网络连接错误，请重试');
             })
 

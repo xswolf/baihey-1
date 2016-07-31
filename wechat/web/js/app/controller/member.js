@@ -208,11 +208,10 @@ define(['app/module', 'app/directive/directiveApi'
 
         // 保存数据
         $scope.saveData = function (formData) {
-            console.log(formData);
             ar.processParams($scope,formData);
             api.save('/wap/member/save-data', $scope.userInfo).success(function (res) {
-                console.log($scope.userInfo);
                 $scope.getUserPrivacyStorage('');
+            }).finally(function(){
                 $scope.closeModal();
             })
         }
