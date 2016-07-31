@@ -50,7 +50,7 @@ define(['app/module', 'app/directive/directiveApi'
     }]);
 
     // 资料首页
-    module.controller("member.information", ['app.serviceApi', '$scope', '$ionicPopup', 'FileUploader', '$ionicLoading', '$ionicActionSheet', '$ionicModal','$ionicScrollDelegate','$filter', function (api, $scope, $ionicPopup, FileUploader, $ionicLoading, $ionicActionSheet, $ionicModal,$ionicScrollDelegate,$filter) {
+    module.controller("member.information", ['app.serviceApi', '$scope', '$ionicPopup', 'FileUploader', '$ionicLoading', '$ionicActionSheet', '$ionicModal','$ionicScrollDelegate','$filter','$ionicPlatform','$rootScope','$location', function (api, $scope, $ionicPopup, FileUploader, $ionicLoading, $ionicActionSheet, $ionicModal,$ionicScrollDelegate,$filter,$ionicPlatform,$rootScope,$location) {
 
         // 判断身份证是否认证通过
         api.list('/wap/member/photo-list', {type: 2, pageSize: 2}).success(function (res) {
@@ -63,7 +63,7 @@ define(['app/module', 'app/directive/directiveApi'
             url: '/wap/file/thumb-photo'
         });
 
-        $scope.formData = [];
+        $scope.formData = {};
         $scope.imgList = [];
         api.list('/wap/member/photo-list', []).success(function (res) {
             $scope.imgList = res.data;
@@ -205,6 +205,14 @@ define(['app/module', 'app/directive/directiveApi'
                 ar.processData(fieldName,$scope,api,$ionicPopup,$filter,$ionicScrollDelegate);
             });
         }
+
+        $rootScope.$on('$ionicView.beforeLeave',function(event,data){
+            if(data.stateParams && $scope.infoModal){
+                if($scope.infoModal.isShown()){
+                    $scope.closeModal();
+                }
+            }
+        })
 
         // 保存数据
         $scope.saveData = function (formData) {

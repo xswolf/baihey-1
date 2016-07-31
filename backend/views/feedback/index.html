@@ -118,13 +118,6 @@
                                                         value="3"> 禁止登录 </label>
                 </div>
             </div>
-            <div class="form-group clearfix checkContent" id="textBox">
-                <label class="col-md-4 control-label"> 内容 </label>
-                <div class="col-md-8">
-                    <textarea id="textContent" class="form-control" placeholder="100字以内" maxlength="100"
-                              style="resize: none;"></textarea>
-                </div>
-            </div>
             <div class="form-group clearfix">
                 <div class="col-md-12">
                     <label class="checkbox-inline">
@@ -150,7 +143,7 @@
             layer.open({
                 type: 1,
                 title: '举报处理/反馈',
-                area: ['600px', '425px'],
+                area: ['600px', '350px'],
                 content: $('#feedBack_box'),
                 success: function (layero) {
                     $(".uniform").uniform();
@@ -170,16 +163,14 @@
                 layer.tips('请选择审核结果',$("input[name='checkStatus']").eq(0),{tips:1});
                 return false;
             }
-            if(!$("input[name='treatment']:checked").val()){
-                layer.tips('请选择处理方式',$("input[name='treatment']").eq(0),{tips:1});
-                return false;
-            }
-            if($("input[name='treatment']:checked").val() == 1 && !$.trim($('#textContent').val())){
-                layer.tips('请输入警告内容',$('#textContent'),{tips:1});
-                return false;
+            if(status != 3){
+                if(!$("input[name='treatment']:checked").val()){
+                    layer.tips('请选择处理方式',$("input[name='treatment']").eq(0),{tips:1});
+                    return false;
+                }
             }
             var ret = $("input[name='retMsg']:checked").val();
-            bhyFunc.ajaxRequest('/admin/feedback/auth',{id: id, status: status,type:$("input[name='treatment']:checked").val(),content:$.trim($('#textContent').val()),ret:ret},function(res){
+            bhyFunc.ajaxRequest('/admin/feedback/auth',{id: id, status: status,type:$("input[name='treatment']:checked").val(),ret:ret},function(res){
                 if (JSON.parse(res).status > 0) {
                     layer.msg('处理成功');
                 } else {
@@ -191,13 +182,9 @@
         $("input[name='treatment']").change(function(){
             if($(this).val() == 1){
                 $('#textBox').show();
-                $('#textContent').val('')
-                                 .prop('readonly',false);
             }
             if($(this).val() == 2){
                 $('#textBox').show();
-                $('#textContent').val('对方被举报多次，请谨慎交流！')
-                                 .prop('readonly',true);
             }
             if($(this).val() == 3){
                 $('#textBox').hide();

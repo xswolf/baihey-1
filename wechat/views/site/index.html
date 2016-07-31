@@ -28,6 +28,7 @@
                     <span ng-class="{false:'not'}[userInfo.info.level == '1']" class="identity vip">VIP</span>
                     <span ng-class="{false:'not'}[userInfo.info.level == '2']" class="identity guest">贵宾</span>
                     <span ng-class="{false:'not'}[userInfo.info.level == '3']" class="identity diamond">钻石</span>
+                    <span ng-if='' class="identity assertive-bg">被多次举报</span>
                 </p>
                 <p class="w100 mb0 mt5 lh28 assertive-bg" ng-if="sfzCheck === 0">
                     <i class="cor0 ml5 ion-android-alert vam"></i>
@@ -76,6 +77,7 @@
                         <span ng-if="user.info.level == 1" class="identity vip">VIP</span>
                         <span ng-if="user.info.level == 2" class="identity guest">贵宾</span>
                         <span ng-if="user.info.level == 3" class="identity diamond">钻石</span>
+                        <span ng-if='' class="identity assertive-bg">被多次举报</span>
                     </p>
                     <p class="cor20 signature">{{user.personalized}}&nbsp;</p>
                 </div>

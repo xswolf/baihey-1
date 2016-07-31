@@ -49,23 +49,24 @@ class FeedbackController extends BaseController
         if($data['status'] != 3) {
             var_dump($this->post);
             if($data['type'] == 1) {
-                $content = $data['content'];
+                $content = '你已被举报，被举报内容：诽谤谩骂；被举报时间：2016-7-31；审核情况：情况属实；处理结果：给予警告一次；如有疑问请拨打客服电话023-68800997。';
             } elseif($data['type'] == 2) {
-                $content = $data['content'];
+                $content = '你已被举报，被举报内容：淫秽色情；被举报时间：2015-8-12；审核情况：情况属实；处理结果：资料卡标记；如有疑问请拨打客服电话023-68800997。';
             } elseif($data['type'] == 3) {
-                $content = $data['content'];
+                $content = '你已被举报，被举报内容：违法行为；被举报时间：2016-6-15；审核情况：情况属实；处理结果：永久封禁；如有疑问请拨打客服电话023-68800997。';
             }
+
             // 此处处理发送给被举报人
 
 
             // 是否发送给举报人
             if(isset($data['ret']) && $data['ret'] == 'on') {
-                echo '感谢您对本网站文明建设的支持，经查证情况属实，我们已对该账号做出相应处理';
+                echo '感谢您对本站文明建设的支持，经查证情况属实，我们已对该账号做出相应处理';
             }
         } else {
             // 是否发送给举报人
             if (isset($data['ret']) && $data['ret'] == 'on') {
-                echo '感谢您对本网站文明建设的支持，但因证据不足，暂时不予处理';
+                echo '感谢您对本站文明建设的支持，但因证据不足，暂时不予处理';
             }
         }
         var_dump($this->post);

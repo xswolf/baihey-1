@@ -684,7 +684,7 @@
         <div class="col-sm-6 center m10">发送者：<span class="text-primary">系统管理员</span></div>
         <div class="col-sm-6 center m10">接收者：<span class="text-danger">{{$user.info->real_name}}</span></div>
         <div class="col-sm-12">
-            <textarea id="msg_content" class="form-control" rows="4"></textarea>
+            <textarea id="msg_content" class="ckeditor" name="editor1"></textarea>
         </div>
         <div class="col-sm-12 center">
             <button class="btn btn-yellow m10" onclick="bhyFunc.sendMsg()">发送</button>
@@ -811,8 +811,13 @@
     })
 </script>
 <script type="text/javascript" src="/backend/web/CloudAdmin/js/colorbox/jquery.colorbox.min.js"></script>
+<script type="text/javascript" src="/backend/web/CloudAdmin/js/bootstrap-wysiwyg/jquery.hotkeys.min.js"></script>
+<script type="text/javascript" src="/backend/web/CloudAdmin/js/bootstrap-wysiwyg/bootstrap-wysiwyg.min.js"></script>
+<script type="text/javascript" src="/backend/web/CloudAdmin/js/ckeditor/ckeditor.js"></script>
 <script>
     jQuery(document).ready(function () {
+
+        App.setPage("rich_text_editors");
 
         if(new Date($.trim($('#serviceEndTime').text())) <= new Date()){
             $('#serviceEndTime').removeClass('text-danger').addClass('text-muted');
