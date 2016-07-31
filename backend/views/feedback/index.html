@@ -100,7 +100,7 @@
                                                         value="1"> 属实 </label>
                     <label class="radio-inline"> <input type="radio" class="uniform"
                                                         name="checkStatus"
-                                                        value="2"> 不属实 </label>
+                                                        value="3"> 不属实 </label>
                 </div>
             </div>
             <div class="form-group clearfix checkContent">
@@ -128,7 +128,7 @@
             <div class="form-group clearfix">
                 <div class="col-md-12">
                     <label class="checkbox-inline">
-                        <input type="checkbox" class="uniform" value="" checked>
+                        <input name="retMsg" type="checkbox" class="uniform" checked>
                         将处理结果反馈给举报人
                     </label>
                 </div>
@@ -178,7 +178,8 @@
                 layer.tips('请输入警告内容',$('#textContent'),{tips:1});
                 return false;
             }
-            bhyFunc.ajaxRequest('/admin/feedback/auth',{id: id, status: status,type:$("input[name='treatment']:checked").val(),content:$.trim($('#textContent').val())},function(res){
+            var ret = $("input[name='retMsg']:checked").val();
+            bhyFunc.ajaxRequest('/admin/feedback/auth',{id: id, status: status,type:$("input[name='treatment']:checked").val(),content:$.trim($('#textContent').val()),ret:ret},function(res){
                 if (JSON.parse(res).status > 0) {
                     layer.msg('处理成功');
                 } else {
@@ -204,7 +205,7 @@
         })
 
         $("input[name='checkStatus']").change(function(){
-            if($(this).val() == 2){
+            if($(this).val() == 3){
                 $('.checkContent').hide();
             }else{
                 $('.checkContent').show();
