@@ -162,6 +162,11 @@ class File
         $maxheight = 600;
         $resizewidth_tag = false;
         $resizeheight_tag = false;
+        if($pic_width < $maxwidth && $pic_height < $maxheight) {
+            $pic[0] = $pic_width;
+            $pic[1] = $pic_height;
+            return $pic;
+        }
         if($maxwidth && $pic_width > $maxwidth) {
             $widthratio = $maxwidth/$pic_width;
             $resizewidth_tag = true;
@@ -186,8 +191,8 @@ class File
             $ratio = $heightratio;
         }
 
-        $pic[0] = $ratio*$pic_width;
-        $pic[1] = $ratio*$pic_height;
+        $pic[0] = floor($ratio*$pic_width);
+        $pic[1] = floor($ratio*$pic_height);
         return $pic;
     }
 }
