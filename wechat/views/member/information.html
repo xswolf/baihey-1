@@ -23,22 +23,22 @@
             <input id="pic_fileInput" type="file" nv-file-select="" uploader="uploader"
                    style="visibility: hidden; display: none;" accept="image/*">
 
-            <ion-item class="mb10 item-icon-left item-icon-right positive-bg white" href="#/member/honesty">
+            <ion-item ng-if="sfzCheck === ''" class="mb10 item-icon-left item-icon-right positive-bg white" href="#/member/honesty">
                 <i class="icon ion-android-alert cor0"></i>
                 实名制婚恋，立即上传身份证！
                 <i class="icon ion-ios-arrow-right cor0"></i>
             </ion-item>
-            <ion-item class="mb10 item-icon-left item-icon-right energized-bg white" href="#/member/honesty">
+            <ion-item ng-if="sfzCheck == 2" class="mb10 item-icon-left item-icon-right energized-bg white" href="#/member/honesty">
                 <i class="icon ion-ios-clock cor0"></i>
                 实名制婚恋，您的身份证审核中...
                 <i class="icon ion-ios-arrow-right cor0"></i>
             </ion-item>
-            <ion-item class="mb10 item-icon-left item-icon-right assertive-bg white" href="#/member/honesty">
+            <ion-item ng-if="sfzCheck == 0" class="mb10 item-icon-left item-icon-right assertive-bg white" href="#/member/honesty">
                 <i class="icon ion-android-alert cor0"></i>
                 实名制婚恋，您的身份证未审核通过！
                 <i class="icon ion-ios-arrow-right cor0"></i>
             </ion-item>
-            <ion-item class="mb10 item-icon-left item-icon-right balanced-bg white" href="#/member/honesty">
+            <ion-item ng-if="sfzCheck == 1" class="mb10 item-icon-left item-icon-right balanced-bg white" href="#/member/honesty">
                 <i class="icon ion-ios-checkmark cor0"></i>
                 实名制婚恋，恭喜您的身份已认证成功！
                 <i class="icon ion-ios-arrow-right cor0"></i>

@@ -512,14 +512,43 @@ class MemberController extends BaseController
     public function actionHonestyPhoto()
     {
         $user_id = Cookie::getInstance()->getCookie('bhy_id')->value;
-        $sfz = UserPhoto::getInstance()->getPhotoList($user_id, 23, 2);
-        $marr = UserPhoto::getInstance()->getPhotoList($user_id, 5, 1);
-        $edu = UserPhoto::getInstance()->getPhotoList($user_id, 4, 1);
-        $housing = UserPhoto::getInstance()->getPhotoList($user_id, 6, 1);
-
+        $userInfo = UserInformation::getInstance()->getUserField($user_id, ['honesty_value']);
+        if($userInfo['honesty_value'] & 1) {
+            $sfz = 1;
+        } else{
+            $sfz = UserPhoto::getInstance()->getPhotoList($user_id, 23, 2);
+            if(count($sfz) == 2) {
+                if($sfz[0]['is_check'] == 1 && $sfz[1]['is_check'] == 1) {
+                    $sfz = 1;
+                } elseif($sfz[0]['is_check'] == 0 ||  $sfz[1]['is_check'] == 0) {
+                    $sfz = 0;
+                } else {
+                    $sfz = 2;
+                }
+            } else {
+                $sfz = '';
+            }
+        }
+        $marr = $userInfo['honesty_value'] & 2 ? 1 : $this->checkPhoto($user_id, 5);
+        $edu = $userInfo['honesty_value'] & 4 ? 1 : $this->checkPhoto($user_id, 4);
+        $housing = $userInfo['honesty_value'] & 8 ? 1 : $this->checkPhoto($user_id, 6);
         $this->renderAjax(['status' => 1, 'sfz' => $sfz, 'marr' => $marr, 'edu' => $edu, 'housing' => $housing, 'msg' => '获取成功']);
     }
 
+    public function checkPhoto($user_id, $type)
+    {
+        if($data = UserPhoto::getInstance()->getPhotoList($user_id, $type, 1)) {
+            if ($data[0]['is_check'] == 1) {
+                return 1;
+            } elseif ($data[0]['is_check'] == 0) {
+                return 0;
+            } else {
+                return 2;
+            }
+        } else {
+            return '';
+        }
+    }
 
     /**
      * 退出登录

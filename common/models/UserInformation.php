@@ -105,4 +105,16 @@ class UserInformation extends Base
         return $row;
     }
 
+    /**
+     * 获取$user_id的列
+     * @param $user_id
+     * @param string/array $field
+     * @return array|bool
+     */
+    public function getUserField($user_id, $field = '*')
+    {
+        $_user_information_table = $this->tablePrefix.'user_information';// 表名
+        return (new Query())->select($field)->from($_user_information_table)->where(['user_id' => $user_id])->one();
+    }
+
 }
