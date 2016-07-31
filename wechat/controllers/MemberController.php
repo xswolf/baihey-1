@@ -520,6 +520,7 @@ class MemberController extends BaseController
             if(count($sfz) == 2) {
                 if($sfz[0]['is_check'] == 1 && $sfz[1]['is_check'] == 1) {
                     $sfz = 1;
+                    UserInformation::getInstance()->updateUserInfo($user_id, ['honesty_value' => ($userInfo['honesty_value'] + 1)]);
                 } elseif($sfz[0]['is_check'] == 0 ||  $sfz[1]['is_check'] == 0) {
                     $sfz = 0;
                 } else {
@@ -529,16 +530,24 @@ class MemberController extends BaseController
                 $sfz = '';
             }
         }
-        $marr = $userInfo['honesty_value'] & 2 ? 1 : $this->checkPhoto($user_id, 5);
-        $edu = $userInfo['honesty_value'] & 4 ? 1 : $this->checkPhoto($user_id, 4);
-        $housing = $userInfo['honesty_value'] & 8 ? 1 : $this->checkPhoto($user_id, 6);
+        $marr = $userInfo['honesty_value'] & 2 ? 1 : $this->checkPhoto($user_id, 5, $userInfo['honesty_value']);
+        $edu = $userInfo['honesty_value'] & 4 ? 1 : $this->checkPhoto($user_id, 4, $userInfo['honesty_value']);
+        $housing = $userInfo['honesty_value'] & 8 ? 1 : $this->checkPhoto($user_id, 6, $userInfo['honesty_value']);
         $this->renderAjax(['status' => 1, 'sfz' => $sfz, 'marr' => $marr, 'edu' => $edu, 'housing' => $housing, 'msg' => '获取成功']);
     }
 
-    public function checkPhoto($user_id, $type)
+    public function checkPhoto($user_id, $type, $honesty_value)
     {
         if($data = UserPhoto::getInstance()->getPhotoList($user_id, $type, 1)) {
             if ($data[0]['is_check'] == 1) {
+                if($type == 5) {
+                    $honesty_value = $honesty_value + 2;
+                } elseif($type == 4) {
+                    $honesty_value = $honesty_value + 4;
+                } elseif($type == 6) {
+                    $honesty_value = $honesty_value + 8;
+                }
+                UserInformation::getInstance()->updateUserInfo($user_id, ['honesty_value' => $honesty_value]);
                 return 1;
             } elseif ($data[0]['is_check'] == 0) {
                 return 0;
