@@ -95,14 +95,16 @@ class UserPhoto extends Base
         $del = $this->getDb()->createCommand()
             ->delete($this->tablePrefix.'user_photo', ['user_id' => $user_id, 'type' => $where[0]['type']])
             ->execute();
+        $time = time();
+        $ist = false;
         foreach ($where as $k => $v) {
             // 新增
             $data = [
                 'user_id'       => $user_id,
                 'pic_path'      => $v['pic_path'],
                 'thumb_path'    => $v['thumb_path'],
-                'create_time'   => time(),
-                'update_time'   => time(),
+                'create_time'   => $time,
+                'update_time'   => $time,
                 'is_head'       => 0,
                 'type'          => $v['type']
             ];
@@ -111,14 +113,16 @@ class UserPhoto extends Base
             }
             if($v['type'] == 1 && $k == 0) {
                 $data['is_head'] = 1;
-                echo $k;
                 UserInformation::getInstance()->updateUserInfo($user_id, ['head_pic' => $data['thumb_path']]);
             }
-
+            if(isset($data['type']) && ($data['type'] == 2 || $data['type'] == 3)) {
+                $this->getDb()->createCommand()
+                    ->update($this->tablePrefix.'user_information', ['has_identify' => 1], ['user_id' => $user_id])
+                    ->execute();
+            }
             $ist = $this->getDb()->createCommand()
                 ->insert($this->tablePrefix.'user_photo', $data)
                 ->execute();
-
         }
         return $ist;
     }
