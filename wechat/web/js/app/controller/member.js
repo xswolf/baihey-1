@@ -1005,7 +1005,7 @@ define(['app/module', 'app/directive/directiveApi'
                 return false;
             }
             if (!$scope.formData.real_name) {
-                ar.saveDataAlert($ionicPopup, '请填写您的真实姓名');
+                ar.saveDataAlert($ionicPopup, '请填写您的真实姓名，本站前台只显示您的姓氏。');
                 return false;
             }
 
