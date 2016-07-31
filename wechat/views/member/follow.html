@@ -54,4 +54,7 @@
 
         </ion-list>
     </ion-content>
+    <div class="bar bar-footer bar-positive" ng-if="followType == 'followed' && userInfo.info.level < 1">
+        <div class="title"><i class="icon ion-ios-star fs20 vam mr10"></i><span class="vam">开通VIP，查看关注您的人</span></div>
+    </div>
 </ion-view>
