@@ -29,17 +29,20 @@
                     <span ng-class="{false:'not'}[userInfo.info.level == '2']" class="identity guest">贵宾</span>
                     <span ng-class="{false:'not'}[userInfo.info.level == '3']" class="identity diamond">钻石</span>
                 </p>
-                <p ng-if="!honestyStatus" class="warn w100 mb0 mt5">
-                    <i class="ion-ios-information cor0"></i>
-                    实名制婚恋，上传身份证，完善资料 >>
+                <p class="w100 mb0 mt5 lh28 assertive-bg">
+                    <i class="cor0 ml5 ion-android-alert vam"></i>
+                    <span class="vam cor0">实名制婚恋，您的身份证未审核通过！</span>
                 </p>
-                <p ng-if="honestyStatus == 0" class="warn w100 mb0 mt5">
-                    <i class="ion-ios-information cor0"></i>
-                    您的身份证照片未审核通过，请重新上传 >>
+                <p class="w100 mb0 mt5 lh28 positive-bg">
+                    <i class="cor0 ml5 ion-android-alert vam"></i>
+                    <span class="vam cor0">实名制婚恋，立即上传身份证！</span>
                 </p>
-
+                <p class="w100 mb0 mt5 lh28 energized-bg">
+                    <i class="cor0 ml5 ion-ios-clock vam"></i>
+                    <span class="vam cor0">实名制婚恋，您的身份证审核中...</span>
+                </p>
+                <p class="lh24">个性签名dfghdfghdfghfg</p>
             </a>
-
             <a class="item item-thumbnail-left" href="/wap/user/login" ng-if="!userInfo.info">
                 <img src="/wechat/web/images/u_noimg.jpg" class="rounded">
                 <h2 style="margin-top: 30px;">

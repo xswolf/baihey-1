@@ -244,6 +244,9 @@ p.mb0{ margin-bottom: 0;}
 .sx{ padding: 3px;}
 .vam{ vertical-align: middle;}
 p.wsn{white-space: normal;}
+p.white{ color: #fff !important;}
+.white{ color: #fff;}
+.white .item-content{background: inherit;}
 .underReview{ position: absolute; bottom: 0; left: 0; width: 100%;z-index: 99; opacity: 0.65; background-color: #000; text-align: center;}
 .underReview>span{ color: #fff;}
 
