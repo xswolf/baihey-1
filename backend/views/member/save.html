@@ -912,7 +912,12 @@
                 $("#height2 option[value=" + val2 + "]").attr("selected", "selected");
             }
             if (val1 == 0) $('#height2').empty().append(heightLink(140, '不限'));
+            $("#zo_height").val($(this).val() + "-" +$("#height2").val())
         });
+
+        $("#height2").on("change" , function () {
+            $("#zo_height").val($("#height1").val() + "-" + $(this).val())
+        })
 
         // 身高联动函数
         function heightLink(min, nullText) {
