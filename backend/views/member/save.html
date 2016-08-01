@@ -1089,7 +1089,20 @@
                 $('#phone').focus();
                 return false;
             }
-            $('#saveForm').submit();
+            $.ajax({
+                url: "/admin/member/is-exist-phone", data: {phone:$("#phone").val()}, success: function (res) {
+                    res = JSON.parse(res);
+                    if (res.status != 1){
+                        $('#saveForm').submit();
+                    }else {
+                        alert("手机号重复");
+                    }
+
+                }
+            });
+
+
+
         });
 
     });
