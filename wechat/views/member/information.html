@@ -45,7 +45,7 @@
             </ion-item>
             <ion-item class="idt">
                 <p>
-                    <span ng-class="{0:'not'}[honesty(userInfo.honesty_value)]" class="identity id">身份证</span>
+                    <span ng-class="{0:'not'}[honesty(sfzCheck)]" class="identity id">身份证</span>
                         <span ng-class="{true:'not'}[userInfo.phone == null || userInfo.phone == '']"
                               class="identity phone">手机</span>
                     <span ng-class="{false:'not'}[userInfo.info.level == '1']" class="identity vip">VIP</span>
@@ -132,7 +132,7 @@
             <ion-item class="item-icon-right" ng-click="updateInfo('address')">
                 <p>
                     <span class="cor4">地区</span>
-                    <span ng-if="!userInfo.province" class="ml48 mr10 cor21">立即填写</span>
+                    <span ng-if="!(userInfo.province > 0)" class="ml48 mr10 cor21">立即填写</span>
                     <span ng-if="userInfo.province" class="ml48 mr10">{{userInfo.province | address:userInfo.city:userInfo.area}}</span>
                 </p>
                 <i class="icon ion-ios-arrow-right cor52"></i>

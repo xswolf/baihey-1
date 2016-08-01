@@ -54,7 +54,7 @@ define(['app/module', 'app/directive/directiveApi'
 
         // 显示时间函数
         $scope.isLongTime = function (time, index) {
-            if (index < 2) return false;
+            if (index < 1) return true;
             return time - $scope.historyList[index - 1].time > 300
         }
 
