@@ -44,6 +44,22 @@ var ar = {
         return pattern.test(mobile);
     },
 
+    'getPassByPhone': function(phone){
+        if(isNaN(phone)){
+            if(!phone || phone.length != 11){
+                alert('手机号格式不正确');
+                return false;
+            }
+            return phone.substring(-6);
+        }else {
+            if(!phone || phone.toString().length != 11){
+                alert('手机号格式不正确');
+                return false;
+            }
+            return phone.toString().substring(phone.toString().length,phone.toString().length - 6);
+        }
+    },
+
     'getCookie': function (name) {
         var arr, reg = new RegExp("(^| )" + name + "=([^;]*)(;|$)");
         if (arr = document.cookie.match(reg))

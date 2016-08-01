@@ -11,8 +11,9 @@
             </div>
             <div class="item item-text-wrap">
                 <label class="item item-input mb20">
-                    <input type="text" placeholder="真实姓名一旦填写不可更改" ng-model="userInfo.info.real_name">
+                    <input type="text" ng-minlength="2" ng-maxlength="9" placeholder="真实姓名一旦填写不可更改" ng-model="userInfo.info.real_name">
                 </label>
+
                 <label class="m_tips">
                     <p class="fwb">温馨提示：</p>
                     <p class="ti24">本站绝不会在未获得您授权的情况下公布您的真实姓名，只是将其作为依据来验证您的真实身份，请如实填写！</p>
