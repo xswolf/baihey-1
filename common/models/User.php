@@ -77,7 +77,6 @@ class User extends Base
     {
         $db          = $this->getDb();
         $transaction = $db->beginTransaction();// 启动事务
-
         // user表 数据处理
         if (isset($data['wx_id'])) {
             $dataUser['wx_id']      = $data['wx_id'];
@@ -90,8 +89,8 @@ class User extends Base
             $dataUser['password'] = md5(md5($data['password']));
             $dataUser['phone']    = $data['phone'];
 
-            if(isset($data['age'])) {
-                $infoData['age'] = floor((time() - $data['age'])/ 365 / 24 / 3600);
+            if(isset($data['info']['age'])) {
+                $infoData['age'] = floor((time() - $data['info']['age'])/ 365 / 24 / 3600);
             }
             isset($data['province']) ? $infoData['province'] = $data['province'] : true;
             isset($data['city']) ? $infoData['city'] = $data['city'] : true;
