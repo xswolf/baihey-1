@@ -92,9 +92,18 @@ define(['app/module', 'app/directive/directiveApi'
                             result.success(function (data) {
                                 $ionicLoading.hide();
                                 if (data.status == 1) {
-                                    // 存储userInfo
                                     ar.setStorage('userInfo', data.data);
-                                    top.location.href = '/wap/site/main#/index';
+                                    $scope.showAlert = function() {
+                                        var alertPopup = $ionicPopup.alert({
+                                            title: '重要提示',
+                                            template: '您的初始密码为：'+ar.getPassByPhone($scope.User.mobile) + '，请及时前往个人中心修改您的密码。'
+                                        });
+                                        alertPopup.then(function(res) {
+                                            top.location.href = '/wap/site/main#/index';
+                                        });
+                                    };
+
+
                                 } else {
                                     ar.saveDataAlert($ionicPopup, data.msg);
                                 }

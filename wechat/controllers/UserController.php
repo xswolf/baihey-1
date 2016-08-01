@@ -206,7 +206,7 @@ class UserController extends BaseController
                     Cookie::getInstance()->setLoginCookie($data);
 
                     // 发送默认密码
-                    \Yii::$app->messageApi->passwordMsg($userInfo['username'], $userInfo['password']);
+//                    \Yii::$app->messageApi->passwordMsg($userInfo['username'], $userInfo['password']);
 
                     return $this->renderAjax(['status' => 1, 'msg' => '注册成功', 'data' => $data]);
                 } else {

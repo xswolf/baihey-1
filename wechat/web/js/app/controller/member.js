@@ -50,7 +50,7 @@ define(['app/module', 'app/directive/directiveApi'
     }]);
 
     // 资料首页
-    module.controller("member.information", ['app.serviceApi', '$scope', '$ionicPopup', 'FileUploader', '$ionicLoading', '$ionicActionSheet', '$ionicModal','$ionicScrollDelegate','$filter','$ionicPlatform','$rootScope','$location', function (api, $scope, $ionicPopup, FileUploader, $ionicLoading, $ionicActionSheet, $ionicModal,$ionicScrollDelegate,$filter,$ionicPlatform,$rootScope,$location) {
+    module.controller("member.information", ['app.serviceApi', '$scope', '$ionicPopup', 'FileUploader', '$ionicLoading', '$ionicActionSheet', '$ionicModal','$ionicScrollDelegate','$filter','$rootScope','$location', function (api, $scope, $ionicPopup, FileUploader, $ionicLoading, $ionicActionSheet, $ionicModal,$ionicScrollDelegate,$filter,$rootScope,$location) {
 
         // 判断身份证是否认证通过
         api.list('/wap/member/photo-list', {type: 2, pageSize: 2}).success(function (res) {
@@ -191,7 +191,6 @@ define(['app/module', 'app/directive/directiveApi'
         $scope.getConfig('love_sport', $scope.userInfo.love_sport);// 喜欢的运动
         $scope.getConfig('want_film', $scope.userInfo.want_film);// 想看的电影
         $scope.getConfig('like_food', $scope.userInfo.like_food);// 喜欢的食物
-
 
         // 修改信息弹窗modal
         $scope.updateInfo = function (fieldName) {
