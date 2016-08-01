@@ -45,7 +45,7 @@
             </ion-item>
             <ion-item class="idt">
                 <p>
-                    <span ng-class="{0:'not'}[honesty(userInfo.honesty_value)]" class="identity id">身份证</span>
+                    <span ng-class="{0:'not'}[honesty(sfzCheck)]" class="identity id">身份证</span>
                         <span ng-class="{true:'not'}[userInfo.phone == null || userInfo.phone == '']"
                               class="identity phone">手机</span>
                     <span ng-class="{false:'not'}[userInfo.info.level == '1']" class="identity vip">VIP</span>
