@@ -880,7 +880,12 @@
                 $("#age2 option[value=" + val2 + "]").attr("selected", "selected");
             }
             if (val1 == 0) $('#age2').empty().append(ageLink(18));
+            $("#zo_age").val($(this).val()+"-"+$("#age2").val())
         });
+
+        $("#age2").on('change' , function () {
+            $("#zo_age").val($("#age1").val() + "-" +$(this).val())
+        })
 
         // 年龄联动函数
         function ageLink(min) {
