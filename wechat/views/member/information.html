@@ -132,7 +132,7 @@
             <ion-item class="item-icon-right" ng-click="updateInfo('address')">
                 <p>
                     <span class="cor4">地区</span>
-                    <span ng-if="!userInfo.province" class="ml48 mr10 cor21">立即填写</span>
+                    <span ng-if="!(userInfo.province > 0)" class="ml48 mr10 cor21">立即填写</span>
                     <span ng-if="userInfo.province" class="ml48 mr10">{{userInfo.province | address:userInfo.city:userInfo.area}}</span>
                 </p>
                 <i class="icon ion-ios-arrow-right cor52"></i>
