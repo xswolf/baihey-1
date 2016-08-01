@@ -9,6 +9,7 @@
 namespace console\controllers;
 
 
+use common\models\User;
 use yii\console\Controller;
 
 class ConsoleController extends Controller
@@ -38,5 +39,12 @@ SET age = IF ({$m} - DATE_FORMAT(DATE_ADD(FROM_UNIXTIME(0), INTERVAL json_extrac
         }
 
 
+    }
+
+    public function actionOldToNew(){
+        $data = [];
+        $photo = [];
+        $user = User::getInstance()->addUser($data);
+        User::getInstance()->insertUserPhoto($user['id'], $photo);
     }
 }
