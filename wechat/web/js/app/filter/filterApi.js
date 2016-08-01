@@ -178,7 +178,7 @@ define(['app/module'], function (module) {
                     var childrenData = config_infoData.children_occupation;
                     for (var i in childrenData) {
                         if (childrenData[i].id == children) {
-                            result += '&nbsp;&nbsp;' + childrenData[i].name;
+                            result += ' ' + childrenData[i].name;
                             break;
                         }
                     }
