@@ -58,17 +58,16 @@
                     <span class="ml48">{{otherUserInfo.info.occupation | occupation : otherUserInfo.info.children_occupation}}</span>
                 </p>
             </ion-item>
-
-            <ion-item ng-if="otherUserInfo.province && otherUserInfo.province > 0">
-                <p>
-                    <span class="cor4">地区</span>
-                    <span class="ml48">{{otherUserInfo.province | address : otherUserInfo.city :otherUserInfo.area}}</span>
-                </p>
-            </ion-item>
             <ion-item ng-if="otherUserInfo.info.haunt_address">
                 <p>
                     <span class="cor4">常出没地</span>
                     <span class="ml48">{{otherUserInfo.info.haunt_address}}</span>
+                </p>
+            </ion-item>
+            <ion-item ng-if="otherUserInfo.province && otherUserInfo.province > 0">
+                <p>
+                    <span class="cor4">地区</span>
+                    <span class="ml48">{{otherUserInfo.province | address : otherUserInfo.city :otherUserInfo.area}}</span>
                 </p>
             </ion-item>
             <ion-item ng-if="otherUserInfo.info.wechat && wxAuth">
@@ -138,7 +137,7 @@
             </ion-item>
             <ion-item ng-if="otherUserInfo.info.mate">
                     <p>
-                        <span class="cor4">期待的TA</span>
+                        <span class="cor4">心目中的TA</span>
                         <span class="ml20">{{otherUserInfo.info.mate}}</span>
                     </p>
             </ion-item>

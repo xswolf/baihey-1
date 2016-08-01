@@ -861,12 +861,14 @@
         function occupationLink(obj1, obj2) {
             var index = obj1.find("option:selected").val(),
                     html = '<option value="">请选择</option>';
-            for (var i in config_infoData.occupation[index - 1].children) {
-                html += '<option value="';
-                html += config_infoData.occupation[index - 1].children[i].id;
-                html += '">';
-                html += config_infoData.occupation[index - 1].children[i].name;
-                html += '</option>';
+            for (var i in config_infoData.children_occupation) {
+                if(config_infoData.children_occupation[i].parentId == index){
+                    html += '<option value="';
+                    html += config_infoData.children_occupation[i].id;
+                    html += '">';
+                    html += config_infoData.children_occupation[i].name;
+                    html += '</option>';
+                }
             }
             obj2.empty().append(html);
         }

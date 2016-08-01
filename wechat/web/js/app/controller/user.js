@@ -103,7 +103,6 @@ define(['app/module', 'app/directive/directiveApi'
                                         });
                                     };
 
-
                                 } else {
                                     ar.saveDataAlert($ionicPopup, data.msg);
                                 }
