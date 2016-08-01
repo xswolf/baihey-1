@@ -119,6 +119,18 @@ class MemberController extends BaseController
         $this->renderAjax($data,false);
     }
 
+    /**
+     * 判断手机号是否重复
+     * @param $uid
+     */
+    public function actionIsExistPhone(){
+
+        if(User::getInstance()->getUserByPhone(\Yii::$app->request->get('phone'))){
+            return $this->renderAjax(['status'=>1 , 'message'=>'手机号存在']);
+        }
+        return $this->renderAjax(['status'=>0 , 'message'=>'手机号不存在']);
+    }
+
     public function actionSave()
     {
         if ($data = \Yii::$app->request->post()) {
