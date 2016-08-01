@@ -188,7 +188,6 @@ var bhyFunc = {
             user_id: user_id,
             matchmaking: matchmaking.val(),
             service_status: $('#service_status').val(),
-            is_sign: $('#is_sign').val(),
             honesty_value: 1
         }, function (res) {
             console.log(res)

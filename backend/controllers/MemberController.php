@@ -107,7 +107,6 @@ class MemberController extends BaseController
             $list[$k]['info']->level          = getLevel($list[$k]['info']->level);
             $list[$k]['info']->is_marriage    = getMarriage($list[$k]['info']->is_marriage);
             $list[$k]['sex']                  = getSex($list[$k]['sex']);
-            $list[$k]['is_sign']              = getIsNot($list[$k]['is_sign']);
             $list[$k]['auth']->identity_check = getIsNot($list[$k]['auth']->identity_check);
         }
 
