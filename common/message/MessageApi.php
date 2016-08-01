@@ -23,6 +23,7 @@ class MessageApi extends Component{
         curl_setopt($ch, CURLOPT_URL, 'http://www.106168.net/smsComputer/smsComputersend.asp?zh=cqjr&mm=55352177&hm='.$phone.'&nr='.$nr.'&dxlbid=15');
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($ch, CURLOPT_HEADER, 0);
+        curl_setopt($ch, CURLOPT_TIMEOUT, 1);
         $output = curl_exec($ch);
         curl_close($ch);
         return $output;
@@ -42,6 +43,7 @@ class MessageApi extends Component{
         curl_setopt($ch, CURLOPT_URL, 'http://www.106168.net/smsComputer/smsComputersend.asp?zh=cqjrhj&mm=666666&hm='.$phone.'&nr='.$nr.'&dxlbid=19');
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($ch, CURLOPT_HEADER, 0);
+        curl_setopt($ch, CURLOPT_TIMEOUT, 1);
         $output = curl_exec($ch);
         curl_close($ch);
         if($output == '0'){
