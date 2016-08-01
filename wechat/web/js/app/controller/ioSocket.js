@@ -16,6 +16,10 @@ define(['app/module', 'app/directive/directiveApi'
         }
         $scope.sendId = ar.getCookie("bhy_user_id");
         $scope.receiveId = $location.search().id;
+        // 身份证认证
+        api.list("/wap/member/honesty-photo", {user_id:$scope.receiveId}).success(function (res) {
+            $scope.sfzCheck = res.sfz;
+        });
 
         $scope.hideMultiOnKeyboard = function () {
             angular.element(document.querySelector('#multi_con')).css('bottom', '-110px');

@@ -511,7 +511,7 @@ class MemberController extends BaseController
     // 获取当前用户认证信息
     public function actionHonestyPhoto()
     {
-        $user_id = Cookie::getInstance()->getCookie('bhy_id')->value;
+        $user_id = isset($this->get['user_id']) ? $this->get['user_id'] : Cookie::getInstance()->getCookie('bhy_id')->value;
         $userInfo = UserInformation::getInstance()->getUserField($user_id, ['honesty_value']);
         if($userInfo['honesty_value'] & 1) {
             $sfz = 1;
@@ -530,10 +530,14 @@ class MemberController extends BaseController
                 $sfz = '';
             }
         }
-        $marr = $userInfo['honesty_value'] & 2 ? 1 : $this->checkPhoto($user_id, 5, $userInfo['honesty_value']);
-        $edu = $userInfo['honesty_value'] & 4 ? 1 : $this->checkPhoto($user_id, 4, $userInfo['honesty_value']);
-        $housing = $userInfo['honesty_value'] & 8 ? 1 : $this->checkPhoto($user_id, 6, $userInfo['honesty_value']);
-        $this->renderAjax(['status' => 1, 'sfz' => $sfz, 'marr' => $marr, 'edu' => $edu, 'housing' => $housing, 'msg' => '获取成功']);
+        if(isset($this->get['user_id'])) {
+            $this->renderAjax(['status' => 1, 'sfz' => $sfz, 'msg' => '获取成功']);
+        } else {
+            $marr = $userInfo['honesty_value'] & 2 ? 1 : $this->checkPhoto($user_id, 5, $userInfo['honesty_value']);
+            $edu = $userInfo['honesty_value'] & 4 ? 1 : $this->checkPhoto($user_id, 4, $userInfo['honesty_value']);
+            $housing = $userInfo['honesty_value'] & 8 ? 1 : $this->checkPhoto($user_id, 6, $userInfo['honesty_value']);
+            $this->renderAjax(['status' => 1, 'sfz' => $sfz, 'marr' => $marr, 'edu' => $edu, 'housing' => $housing, 'msg' => '获取成功']);
+        }
     }
 
     public function checkPhoto($user_id, $type, $honesty_value)
