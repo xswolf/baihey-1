@@ -144,12 +144,11 @@ class User extends Model
         } else {
             $role = false;
         }
-        /*$this->db->createCommand()
+        $this->db->createCommand()
             ->insert($this->userTable, $data)
             ->execute();
-        $id = $this->db->getLastInsertID();*/
+        $id = $this->db->getLastInsertID();
         // 添加管理员前端用户
-        $id = 20;
         $this->addAdminUser($id, $data);
         // 角色处理
         if($id && $role) {
