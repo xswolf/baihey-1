@@ -26,7 +26,7 @@ $(function () {
         }
         },
         {"data": "id","fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
-            $(nTd).html("<a href='/admin/member/info?id=" + oData.id + "'>"+oData.id+"</a>");
+            $(nTd).html("<a target='_blank' href='/admin/member/info?id=" + oData.id + "'>"+oData.id+"</a>");
         }
         },
         {"data": "info.real_name"},
@@ -123,7 +123,7 @@ $(function () {
                 if (userId == oData.matchmaker || userType == 'admin'){
                     returnLog = '<a class="btn btn-info btn-sm" data-uid="' + oData.id +'" data-uname="' + oData.info.real_name +'" id="returningBtn" href="javascript:;">回访</a> ' ;
                 }
-                var html = '<a class="btn btn-primary btn-sm" href="/admin/member/info?id=' + oData.id + '">管理</a> '+
+                var html = '<a target="_blank" class="btn btn-primary btn-sm" href="/admin/member/info?id=' + oData.id + '">管理</a> '+
                     returnLog +
                     ' <a id="pairBtn" class="btn btn-info btn-sm" data-uid="' + oData.id +'" data-uname="' + oData.info.real_name + '" href="javascript:;">配对</a>';
                 $(nTd).html(html);
