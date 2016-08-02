@@ -23,7 +23,7 @@
                     <span ng-if="vo.info.level == 1" class="identity vip">VIP</span>
                     <span ng-if="vo.info.level == 2" class="identity guest">贵宾</span>
                     <span ng-if="vo.info.level == 3" class="identity diamond">钻石</span>
-                    <span ng-if='' class="identity assertive-bg">被多次举报</span>
+                    <span ng-if="vo.report_flag == 1" class="identity assertive-bg">被多次举报</span>
                 </p>
             </div>
 

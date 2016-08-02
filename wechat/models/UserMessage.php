@@ -28,7 +28,7 @@ class UserMessage extends \common\models\Base
         $offset               = ($where['pageNum'] - 1) * $pageSize;
         $userTable            = $this->getDb()->tablePrefix . $this->_user_table;
         $userInformationTable = $this->getDb()->tablePrefix . $this->_user_information_table;
-        $sql                  = "SELECT u.username,u.sex,u.phone,i.info,i.auth,c.* FROM $userTable u INNER JOIN $userInformationTable i ON u.id=i.user_id
+        $sql                  = "SELECT i.report_flag,u.username,u.sex,u.phone,i.info,i.auth,c.* FROM $userTable u INNER JOIN $userInformationTable i ON u.id=i.user_id
 INNER JOIN
 (
 SELECT m.id,m.send_user_id,m.receive_user_id,message,m.create_time,STATUS,tmp.sumSend, m.send_user_id other FROM bhy_user_message  m INNER JOIN (
