@@ -33,7 +33,7 @@ INNER JOIN
 (
 SELECT m.id,m.send_user_id,m.receive_user_id,message,m.create_time,STATUS,tmp.sumSend, m.send_user_id other FROM bhy_user_message  m INNER JOIN (
 SELECT send_user_id,COUNT(send_user_id) sumSend,MAX(create_time) create_time FROM bhy_user_message WHERE receive_user_id = $user_id AND STATUS=2 GROUP BY send_user_id
-)tmp ON m.send_user_id = tmp.send_user_id AND m.create_time = tmp.create_time
+)tmp ON m.send_user_id = tmp.send_user_id AND m.create_time = tmp.create_time and m.receive_user_id = $user_id
 ) c ON u.id=c.other GROUP BY c.other ORDER BY create_time DESC limit $offset,$pageSize";
         $result               = $this->getDb()->createCommand($sql)->queryAll();
 
