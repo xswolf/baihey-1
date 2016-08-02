@@ -67,7 +67,7 @@
                     <td>{{date('Y-m-d H:i:s' , $vo.create_time)}}</td>
                     <td>
                         {{if $vo.status eq 2}}
-                        <button class="btn btn-info mySwitch" data-id="{{$vo.id}}">审核</button>
+                        <button class="btn btn-info mySwitch" data-id="{{$vo.id}}" data-vo='{{json_encode($vo)}}'>审核</button>
                         {{/if}}
                         {{if $vo.status eq 1}}<span>审核属实</span>{{/if}}
                         {{if $vo.status eq 3}}<span>审核不属实</span>{{/if}}
@@ -140,6 +140,8 @@
 
         $('.mySwitch').on('click', function () {
             var id = $(this).data('id');
+            var vo = $(this).data('vo');
+
             layer.open({
                 type: 1,
                 title: '举报处理/反馈',
@@ -148,6 +150,8 @@
                 success: function (layero) {
                     $(".uniform").uniform();
                     layero.find('#saveCheck').attr('data-id',id);
+                    layero.find('#saveCheck').attr('data-vo',JSON.stringify(vo));
+
                 },
                 cancel: function (index) {
                     layer.close(index);
@@ -158,6 +162,8 @@
 
         $('#saveCheck').on('click',function(){
             var id = $(this).data('id');
+            var vo = $(this).data('vo');
+
             var status = $("input[name='checkStatus']:checked").val();
             if(!status){
                 layer.tips('请选择审核结果',$("input[name='checkStatus']").eq(0),{tips:1});
@@ -170,7 +176,7 @@
                 }
             }
             var ret = $("input[name='retMsg']:checked").val();
-            bhyFunc.ajaxRequest('/admin/feedback/auth',{id: id, status: status,type:$("input[name='treatment']:checked").val(),ret:ret},function(res){
+            bhyFunc.ajaxRequest('/admin/feedback/auth',{id: id, status: status,type:$("input[name='treatment']:checked").val(),ret:ret,vo:vo},function(res){
                 if (JSON.parse(res).status > 0) {
                     layer.msg('处理成功');
                 } else {
