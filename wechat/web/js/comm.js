@@ -690,7 +690,7 @@ var ar = {
                 options.bgOpacity = 1;
                 options.tapToClose = true;
                 options.tapToToggleControls = false;
-                options.closeEl = false;
+                options.closeEl = true;
 
                 if (disableAnimation) {
                     options.showAnimationDuration = 0;

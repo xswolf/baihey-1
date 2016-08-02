@@ -22,10 +22,13 @@ $(function () {
     var columns = [
         {
             "data": "info.head_pic", "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
-            $(nTd).html("<a href='/admin/member/info?id=" + oData.id + "'><img class='user_img' src='" + oData.info.head_pic + "'></a>");
+            $(nTd).html("<img class='user_img' src='" + oData.info.head_pic + "'>");
         }
         },
-        {"data": "id"},
+        {"data": "id","fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
+            $(nTd).html("<a href='/admin/member/info?id=" + oData.id + "'>"+oData.id+"</a>");
+        }
+        },
         {"data": "info.real_name"},
         {"data": "sex"},
         {"data": "age"},
