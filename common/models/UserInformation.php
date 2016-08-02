@@ -40,7 +40,7 @@ class UserInformation extends Base
                 case 'mature_time'      :// 到期时间
                 case 'service_status'   :// 服务状态 1：已申请，0：未申请
                 case 'has_identify'     :// 是否认证 1：已申请，0：未申请
-                case 'report_flag'        :// 标记被举报 1：已标记，0：未标记
+                case 'report_flag'      :// 标记被举报 1：已标记，0：未标记
                 case 'intention'        :// 有无意向
                 case 'matchmaker'       :// 专属红娘
                 case 'matchmaking'      :// 服务红娘

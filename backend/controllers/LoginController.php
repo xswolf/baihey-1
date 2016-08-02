@@ -26,6 +26,9 @@ class LoginController  extends Controller{
             if( !$userInfo || $userInfo['password'] != $pass) {             //验证用户登录信息
                 return ['msg'=>'用户名或密码错误','status'=>0];
             } else {
+                if($member = \common\models\User::getInstance()->getUserByPhone($userInfo['phone'])) {
+                    $userInfo['member'] = $member;
+                }
                 $auth = \Yii::$app->authManager;
                 $userRole = $auth->getAssignments($userInfo['id']);
                 $userInfo['role'] = key($userRole);

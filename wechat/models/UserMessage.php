@@ -134,4 +134,13 @@ SELECT send_user_id,COUNT(send_user_id) sumSend,MAX(create_time) create_time FRO
         $tran->rollBack();
         return false;
     }
+
+    public function addMessage($msg)
+    {
+        $msg['create_time'] = time();
+        $msg['status'] = 2;
+        return $this->getDb()->createCommand()
+            ->insert($this->tablePrefix.'user_message', $msg)
+            ->execute();
+    }
 }
