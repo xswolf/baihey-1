@@ -25,11 +25,11 @@
                 <p>{{f.info.age | timeToAge}} {{f.info.height}} {{f.info.is_marriage | marriage}}
                     {{f.info.is_purchase | purchase}} {{f.info.is_car | car}}</p>
             </ion-item>
-            <div class="nullData has-header tac" ng-if="followList.length < 1">
-                <img src="/wechat/web/images/member/tip_05.png" height="150" class="vam">
-                <p class="mt10 cor8">您目前没有关注任何人</p>
-            </div>
         </ion-list>
+        <div class="nullData has-header tac" ng-if="followType == 'follow' && followList.length < 1">
+            <img src="/wechat/web/images/member/tip_05.png" height="150" class="vam">
+            <p class="mt10 cor8">您目前没有关注任何人</p>
+        </div>
 
         <ion-list ng-if="followType == 'followed' && userInfo.info.level >= 1">
             <ion-item class="item-avatar" href="#/userInfo?userId={{f.other}}"
@@ -42,17 +42,16 @@
                 <p>{{f.info.age | timeToAge}} {{f.info.height}} {{f.info.is_marriage | marriage}}
                     {{f.info.is_purchase | purchase}} {{f.info.is_car | car}}</p>
             </ion-item>
-            <!--<div class="nullData has-header tac" ng-if="followedList.length < 1">
-                <img src="/wechat/web/images/member/tip_01.png" width="70" class="vam">
-                <p class="mt10 cor8">目前没有人关注您</p>
-            </div>-->
-            <div class="nullData has-header tac" ng-if="followedList.length > 0 && userInfo.info.level < 1">
-                <img src="{{userInfo.info.head_pic | isNull}}" onerror="this.src='/wechat/web/images/u_noimg.jpg'" height="150" class="vam">
-                <p><span class="fs16">Hi</span>，{{userInfo.info.real_name | sex:userInfo.sex :userInfo.info.age}}</p>
-                <p class="mt10">有 <span class="fs16 cor43">({{followedList.length}})</span> 人关注了您</p>
-            </div>
-
         </ion-list>
+        <div class="nullData has-header tac" ng-if="followType == 'followed' && followedList.length < 1">
+            <img src="/wechat/web/images/member/tip_01.png" width="70" class="vam">
+            <p class="mt10 cor8">暂时没有人关注您</p>
+        </div>
+        <div class="nullData has-header tac" ng-if="followType == 'followed' && followedList.length > 0 && userInfo.info.level < 1">
+            <img src="{{userInfo.info.head_pic | isNull}}" onerror="this.src='/wechat/web/images/u_noimg.jpg'" height="150" class="vam">
+            <p><span class="fs16">Hi</span>，{{userInfo.info.real_name | sex:userInfo.sex :userInfo.info.age}}</p>
+            <p class="mt10">有 <span class="fs16 cor43">({{followedList.length}})</span> 人关注了您</p>
+        </div>
     </ion-content>
     <div class="bar bar-footer bar-positive" ng-if="followType == 'followed' && userInfo.info.level < 1">
         <a class="title tdn" href="#/member/vip"><i class="icon ion-ios-star fs20 vam mr10"></i><span class="vam">开通VIP，查看关注您的人</span></a>
