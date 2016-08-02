@@ -1,5 +1,6 @@
 <?php
 namespace backend\models;
+use common\models\UserPhoto;
 use yii\base\Model;
 use yii\db\Connection;
 use yii\db\Query;
@@ -67,7 +68,7 @@ class User extends Model
         $row = (new Query)
             ->select('*')
             ->from($authUserTable . ' AS au')
-            ->innerJoin($authAssignmentTable . ' AS aa', "aa.user_id=au.id". $aaWhere)
+            ->leftJoin($authAssignmentTable . ' AS aa', "aa.user_id=au.id". $aaWhere)
             ->where($where)
             ->all();
 
@@ -143,10 +144,14 @@ class User extends Model
         } else {
             $role = false;
         }
-        $this->db->createCommand()
+        /*$this->db->createCommand()
             ->insert($this->userTable, $data)
             ->execute();
-        $id = $this->db->getLastInsertID();
+        $id = $this->db->getLastInsertID();*/
+        // 添加管理员前端用户
+        $id = 20;
+        $this->addAdminUser($id, $data);
+        // 角色处理
         if($id && $role) {
             foreach($role as $vo) {
                 $auth->assign($auth->getRole($vo),$id);
@@ -251,5 +256,30 @@ class User extends Model
             ->execute();
 
         return $row;
+    }
+
+    /**
+     * 添加管理员用户
+     * @param $id
+     * @param $data
+     */
+    public function addAdminUser($id, $data)
+    {
+        $member['id'] = $id;
+        $member['phone'] = $data['phone'];
+        $member['personalized'] = $data['introduction'];
+        $member['info']['real_name'] = $data['name'];
+        $member['info']['qq'] = empty($data['qq']) ? $data['qq'] : '';
+        $member['password'] = $data['password'];
+        $member['sex'] = !empty($data['sex']) ? $data['sex'] : 1;
+        if(\common\models\User::getInstance()->addUser($member) && !empty($data['photo'])) {
+            $photo['type'] = 1;
+            $photo['thumb_path'] = $data['photo'];
+            $photo['pic_path']   = str_replace('thumb', 'picture', $data['photo']);
+            $photo['time']       = time();
+            $photo['is_check']   = 1;
+            UserPhoto::getInstance()->addPhoto($id, $photo);
+        }
+
     }
 }

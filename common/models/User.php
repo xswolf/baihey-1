@@ -84,9 +84,14 @@ class User extends Base
             $dataUser['password']   = md5(md5($data['password']));
             $dataUser['login_type'] = $data['login_type'];
         } else {
+            if(isset($data['id'])) {
+                $dataUser['id'] = $data['id'];
+                $dataUser['password'] = $data['password'];
+            } else {
+                $data['password'] = substr($data['phone'], -6);
+                $dataUser['password'] = md5(md5($data['password']));
+            }
             $dataUser['username'] = $data['phone'];
-            $data['password']     = substr($data['phone'], -6);
-            $dataUser['password'] = md5(md5($data['password']));
             $dataUser['phone']    = $data['phone'];
 
             if(isset($data['info']['age']) && !empty($data['info']['age'])) {
@@ -282,7 +287,7 @@ class User extends Base
         $user['id'] = $data['user_id'];
         unset($data['user']);
         $userInfo = $data;
-        if($userInfo['info']['age']) {
+        if(isset($userInfo['info']['age']) && !empty($data['info']['age'])) {
             $userInfo['age'] = floor((time() - $userInfo['info']['age'])/ 365 / 24 / 3600);
         }
         $oldUser = $this->getUserById($data['user_id']);
