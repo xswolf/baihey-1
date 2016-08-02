@@ -144,30 +144,31 @@
             <ion-item class="item-divider" ng-if="otherUserInfo.info.is_child || otherUserInfo.info.nation || otherUserInfo.info.work || otherUserInfo.info.year_income || otherUserInfo.info.is_purchase || otherUserInfo.info.is_car || otherUserInfo.info.blood || otherUserInfo.info.school">
                 详细资料
             </ion-item>
+            <ion-item ng-if="otherUserInfo.info.nation">
+                <p>
+                    <span class="cor4">民族</span>
+                    <span class="ml48">{{otherUserInfo.info.nation | nation}}</span>
+                </p>
+            </ion-item>
+            <ion-item ng-if="otherUserInfo.info.year_income">
+                <p>
+                    <span class="cor4">年薪</span>
+                    <span class="ml48">{{otherUserInfo.info.year_income | yearIncome}}</span>
+                </p>
+            </ion-item>
+            <ion-item ng-if="otherUserInfo.info.work">
+                <p>
+                    <span class="cor4">工作单位</span>
+                    <span class="ml20">{{otherUserInfo.info.work}}</span>
+                </p>
+            </ion-item>
             <ion-item ng-if="otherUserInfo.info.is_child">
                 <p>
                     <span class="cor4">子女状况</span>
                     <span class="ml20">{{otherUserInfo.info.is_child | child}}</span>
                 </p>
             </ion-item>
-            <ion-item ng-if="otherUserInfo.info.nation">
-                    <p>
-                        <span class="cor4">民族</span>
-                        <span class="ml48">{{otherUserInfo.info.nation | nation}}</span>
-                    </p>
-            </ion-item>
-            <ion-item ng-if="otherUserInfo.info.work">
-                    <p>
-                        <span class="cor4">工作单位</span>
-                        <span class="ml20">{{otherUserInfo.info.work}}</span>
-                    </p>
-            </ion-item>
-            <ion-item ng-if="otherUserInfo.info.year_income">
-                    <p>
-                        <span class="cor4">年薪</span>
-                        <span class="ml48">{{otherUserInfo.info.year_income | yearIncome}}</span>
-                    </p>
-            </ion-item>
+
             <ion-item ng-if="otherUserInfo.info.is_purchase">
                 <p>
                     <span class="cor4">购房情况</span>
