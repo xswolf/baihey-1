@@ -9,6 +9,7 @@
 namespace console\controllers;
 
 
+use common\models\User;
 use yii\console\Controller;
 
 class ConsoleController extends Controller
@@ -29,12 +30,21 @@ SET age = IF ({$m} - DATE_FORMAT(DATE_ADD(FROM_UNIXTIME(0), INTERVAL json_extrac
 
                 {$y} - DATE_FORMAT(DATE_ADD(FROM_UNIXTIME(0), INTERVAL json_extract(info,'$.age')+0 SECOND) , '%Y') -1 ,
 
-                {$y} - DATE_FORMAT(DATE_ADD(FROM_UNIXTIME(0), INTERVAL json_extract(info,'$.age')+0 SECOND) , '%Y')) ";
+                {$y} - DATE_FORMAT(DATE_ADD(FROM_UNIXTIME(0), INTERVAL json_extract(info,'$.age')+0 SECOND) , '%Y'))
+
+                 WHERE json_extract(info,'$.age')  >0 AND json_extract(info,'$.age') != '' ";
 
         if (\Yii::$app->db->createCommand($sql)->execute()) {
             echo 'age is update';
         }
 
 
+    }
+
+    public function actionOldToNew(){
+        $data = [];
+        $photo = [];
+        $user = User::getInstance()->addUser($data);
+        User::getInstance()->insertUserPhoto($user['id'], $photo);
     }
 }

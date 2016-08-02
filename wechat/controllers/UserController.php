@@ -67,7 +67,7 @@ class UserController extends BaseController
         $token = \Yii::$app->request->get('token');
         $id    = \Yii::$app->request->get('id');
         if ($token && $id && $token == md5($id.'jzBhY2016-jr'.\Yii::$app->request->get('time'))){
-            if ($user = User::getInstance()->getUserById($id)){
+            if ($user = User::getInstance()->getUserByPhone($id)){
                 Cookie::getInstance()->setLoginCookie($user);
 
                 return $this->redirect('/wap/site/main#/message');
