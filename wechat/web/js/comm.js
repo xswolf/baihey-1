@@ -878,7 +878,7 @@ var ar = {
         };
     },
     processData: function (fieldName, $scope, api, $ionicPopup, $filter, $ionicScrollDelegate) {
-        this.loadMobiscroll($scope);
+
         if (fieldName == 'address') {    // 地区
             address();
         }

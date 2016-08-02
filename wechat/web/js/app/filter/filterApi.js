@@ -468,7 +468,7 @@ define(['app/module'], function (module) {
 
     module.filter('height', function () {
         return function (value) {
-            return value ? value + 'cm' : '';
+            return parseInt(value) ? value + 'cm' : '';
         }
     })
 

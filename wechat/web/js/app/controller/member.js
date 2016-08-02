@@ -191,7 +191,7 @@ define(['app/module', 'app/directive/directiveApi'
         $scope.getConfig('love_sport', $scope.userInfo.love_sport);// 喜欢的运动
         $scope.getConfig('want_film', $scope.userInfo.want_film);// 想看的电影
         $scope.getConfig('like_food', $scope.userInfo.like_food);// 喜欢的食物
-
+        ar.loadMobiscroll($scope);
         // 修改信息弹窗modal
         $scope.updateInfo = function (fieldName) {
             if (!fieldName)  return false;

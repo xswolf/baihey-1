@@ -88,21 +88,21 @@
                 </p>
                 <i ng-if="!userInfo.info.real_name" class="icon ion-ios-arrow-right cor52"></i>
             </ion-item>
-            <ion-item class="item-icon-right" ng-click="updateInfo(userInfo.age && userInfo.age != '0' ? '' : 'age')">
+            <ion-item class="item-icon-right" ng-click="updateInfo(userInfo.age && userInfo.age != 0 ? '' : 'age')">
                 <p>
                     <span class="cor4">年龄</span>
-                    <span ng-if="!userInfo.age || userInfo.age == '0'" class="ml48 mr10 cor21">立即填写</span>
-                    <span ng-if="userInfo.age && userInfo.age != '0'" class="ml48 mr10">{{userInfo.age}}岁</span>
+                    <span ng-if="!userInfo.age || userInfo.age == 0" class="ml48 mr10 cor21">立即填写</span>
+                    <span ng-if="userInfo.age && userInfo.age != 0" class="ml48 mr10">{{userInfo.age}}岁</span>
                 </p>
-                <i ng-if="!userInfo.age || userInfo.age == '0'" class="icon ion-ios-arrow-right cor52"></i>
+                <i ng-if="!userInfo.age || userInfo.age == 0" class="icon ion-ios-arrow-right cor52"></i>
             </ion-item>
-            <ion-item class="item-icon-right" ng-click="updateInfo(userInfo.info.height ? '' : 'height')">
+            <ion-item class="item-icon-right" ng-click="updateInfo(userInfo.info.height && userInfo.info.height != 0 ? '' : 'height')">
                 <p>
                     <span class="cor4">身高</span>
-                    <span ng-if="!userInfo.info.height" class="ml48 mr10 cor21">立即填写</span>
-                    <span ng-if="userInfo.info.height" class="ml48 mr10">{{userInfo.info.height}}厘米</span>
+                    <span ng-if="!userInfo.info.height || userInfo.info.height == 0" class="ml48 mr10 cor21">立即填写</span>
+                    <span ng-if="userInfo.info.height && userInfo.info.height != 0" class="ml48 mr10">{{userInfo.info.height}}厘米</span>
                 </p>
-                <i ng-if="!userInfo.info.height" class="icon ion-ios-arrow-right cor52"></i>
+                <i ng-if="!userInfo.info.height || userInfo.info.height == 0" class="icon ion-ios-arrow-right cor52"></i>
             </ion-item>
             <ion-item class="item-icon-right" ng-click="updateInfo('education')">
                 <p>
@@ -166,7 +166,7 @@
                 <p>
                     <span class="cor4">微信号码</span>
                     <span ng-if="!userInfo.info.wechat" class="ml20 mr10 cor21">立即填写</span>
-                    <span ng-if="userInfo.info.wechat" class="ml20 mr10">{{userInfo.info.wechat}}</span>
+                    <span ng-if="userInfo.info.wechat" class="ml20 mr10">{{userInfo.info.wechat}}（{{userInfo.privacy_wechat | privacy}}）</span>
                 </p>
                 <i class="icon ion-ios-arrow-right cor52"></i>
             </ion-item>
@@ -174,7 +174,7 @@
                 <p>
                     <span class="cor4">Q Q号码</span>
                     <span ng-if="!userInfo.info.qq" class="ml20 mr10 cor21">立即填写</span>
-                    <span ng-if="userInfo.info.qq" class="ml20 mr10">{{userInfo.info.qq}}</span>
+                    <span ng-if="userInfo.info.qq" class="ml20 mr10">{{userInfo.info.qq}}（{{userInfo.privacy_qq | privacy}}）</span>
                 </p>
                 <i class="icon ion-ios-arrow-right cor52"></i>
             </ion-item>

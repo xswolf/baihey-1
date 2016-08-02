@@ -141,7 +141,7 @@
                         <span class="ml20">{{otherUserInfo.info.mate}}</span>
                     </p>
             </ion-item>
-            <ion-item class="item-divider" ng-if="otherUserInfo.info.is_child || otherUserInfo.info.nation || otherUserInfo.info.work || ootherUserInfo.info.year_income || otherUserInfo.info.is_purchase || otherUserInfo.info.is_car || otherUserInfo.info.blood || otherUserInfo.info.school">
+            <ion-item class="item-divider" ng-if="otherUserInfo.info.is_child || otherUserInfo.info.nation || otherUserInfo.info.work || otherUserInfo.info.year_income || otherUserInfo.info.is_purchase || otherUserInfo.info.is_car || otherUserInfo.info.blood || otherUserInfo.info.school">
                 详细资料
             </ion-item>
             <ion-item ng-if="otherUserInfo.info.is_child">
@@ -162,7 +162,7 @@
                         <span class="ml20">{{otherUserInfo.info.work}}</span>
                     </p>
             </ion-item>
-            <ion-item ng-if="ootherUserInfo.info.year_income">
+            <ion-item ng-if="otherUserInfo.info.year_income">
                     <p>
                         <span class="cor4">年薪</span>
                         <span class="ml48">{{otherUserInfo.info.year_income | yearIncome}}</span>

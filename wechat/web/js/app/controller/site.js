@@ -15,6 +15,7 @@ define(['app/module', 'app/directive/directiveApi'
         $scope.searchForm.age = '18-28';
         $scope.searchForm.pageNum = 1;
         $scope.searchForm.pageSize = 6;
+        $scope.searchForm.sex = parseInt($scope.userInfo.sex) ? 0 : 1; // 初始化年龄
         // 用户列表
         $scope.userList = [];
 
@@ -65,7 +66,6 @@ define(['app/module', 'app/directive/directiveApi'
         // 条件初始化
         var init = function () {
             $scope.searchForm = {};
-            $scope.searchForm.age = 0; // 初始化年龄
             $scope.searchForm.pageNum = 1; // 初始化页码
         }
         // 高级搜索-点击确定
