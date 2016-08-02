@@ -10,6 +10,7 @@ namespace backend\controllers;
 
 
 use common\models\Feedback;
+use common\models\User;
 use common\models\UserInformation;
 use wechat\models\UserMessage;
 
@@ -52,8 +53,11 @@ class FeedbackController extends BaseController
             if($data['type'] == 1) {
                 $msg['message'] = '你已被举报，被举报内容：'.$data['vo']['content'].'；被举报时间：'.$date.'；审核情况：情况属实；处理结果：给予警告一次；如有疑问请拨打客服电话023-68800997。';
             } elseif($data['type'] == 2) {
+                UserInformation::getInstance()->updateUserInfo($data['vo']['feedback_id'], ['report_flag' => 1]);
                 $msg['message'] = '你已被举报，被举报内容：'.$data['vo']['content'].'；被举报时间：'.$date.'；审核情况：情况属实；处理结果：资料卡标记；如有疑问请拨打客服电话023-68800997。';
             } elseif($data['type'] == 3) {
+                UserInformation::getInstance()->updateUserInfo($data['vo']['feedback_id'], ['report_flag' => 1]);
+                User::getInstance()->editUserTableInfo($data['vo']['feedback_id'], ['status' => 3]);
                 $msg['message'] = '你已被举报，被举报内容：'.$data['vo']['content'].'；被举报时间：'.$date.'；审核情况：情况属实；处理结果：永久封禁；如有疑问请拨打客服电话023-68800997。';
             }
 
@@ -61,8 +65,6 @@ class FeedbackController extends BaseController
             $msg['send_user_id'] = isset($_SESSION[USER_SESSION]['member']) ? $_SESSION[USER_SESSION]['member']['id'] : 1;
             $msg['receive_user_id'] = $data['vo']['feedback_id'];
             UserMessage::getInstance()->addMessage($msg);
-
-            UserInformation::getInstance()->updateUserInfo($data['vo']['feedback_id'], ['report_flag' => 1]);
 
             // 是否发送给举报人
             if(isset($data['ret']) && $data['ret'] == 'on') {

@@ -18,7 +18,7 @@
                     <span ng-if="part.info.level == 1" class="identity vip">VIP</span>
                     <span ng-if="part.info.level == 2" class="identity guest">贵宾</span>
                     <span ng-if="part.info.level == 3" class="identity diamond">钻石</span>
-                    <span ng-if='' class="identity assertive-bg">被多次举报</span>
+                    <span ng-if="part.report_flag == 1" class="identity assertive-bg">被多次举报</span>
                 </p>
                 <p>{{part.info.age | timeToAge}} {{part.info.is_marriage | marriage}}</p>
             </div>

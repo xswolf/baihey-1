@@ -21,7 +21,7 @@
                 <span class="identity vip" ng-if="dis.level == '1'">vip</span>
                 <span class="identity guest" ng-if="dis.level == 2">贵宾</span>
                 <span class="identity diamond" ng-if="dis.level == 3">钻石</span>
-                <span ng-if='' class="identity assertive-bg">被多次举报</span>
+                <span ng-if="dis.report_flag == 1" class="identity assertive-bg">被多次举报</span>
             </p>
             <p class="wsn">{{dis.content}}</p>
             <div class="dis_gallery bhy-gallery clearfix">
@@ -55,7 +55,7 @@
                         <a ng-click="jump({{comment.user_id}})" class="am-comment-author">{{comment.name | sex:comment.sex:comment:age}}</a>
                         评论于
                         <time>{{comment.create_time * 1000 | date:'yyyy-MM-dd HH:mm'}}</time>
-                        <span class="am-badge am-badge-danger am-round">该用户被多次举报</span>
+                        <span ng-if="comment.report_flag == 1" class="am-badge am-badge-danger am-round">被多次举报</span>
                     </div>
                 </header>
 

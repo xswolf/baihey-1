@@ -27,7 +27,7 @@
                         <span ng-class="{false:'not'}[userInfo.info.level == '1']" class="identity vip">VIP</span>
                         <span ng-class="{false:'not'}[userInfo.info.level == '2']" class="identity guest">贵宾</span>
                         <span ng-class="{false:'not'}[userInfo.info.level == '3']" class="identity diamond">钻石</span>
-                        <span ng-if='' class="identity assertive-bg">被多次举报</span>
+                        <span ng-if="userInfo.report_flag == 1" class="identity assertive-bg">被多次举报</span>
                     </p>
                     <p class="mt5 u_id">
                         ID：{{userInfo.id}}
