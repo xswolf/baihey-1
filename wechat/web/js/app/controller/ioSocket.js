@@ -187,6 +187,7 @@ define(['app/module', 'app/directive/directiveApi'
         $scope.real_name = $location.search().real_name;
         $scope.sex = $location.search().sex;
         $scope.age = $location.search().age;
+        $scope.report_flag = $location.search().report_flag;
         $scope.receiveHeadPic = $location.search().head_pic.replace(/~2F/g, "/");
         $scope.sendHeadPic = JSON.parse(ar.getStorage('userInfo').info).head_pic;
         api.getUserInfo($scope.receiveId).success(function (res) {

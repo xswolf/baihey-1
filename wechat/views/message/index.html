@@ -17,7 +17,7 @@
     <ion-content class="has-header bhy-has-footer message">
         <ion-list show-delete="shouldShowDelete" ng-cloak>
             <!--  href="#/chat1?id={{messageInfo.other}}&head_pic={{messageInfo.info.head_pic}}&real_name={{messageInfo.info.real_name}}&sex={{messageInfo.sex}}&age={{messageInfo.info.age}}" -->
-            <ion-item ng-if="indexFilter(messageInfo.other)"  ng-repeat="messageInfo in messageList  | orderBy:'order_time':true" href="#/chat1?id={{messageInfo.other}}&head_pic={{messageInfo.info.head_pic}}&real_name={{messageInfo.info.real_name}}&sex={{messageInfo.sex}}&age={{messageInfo.info.age}}">
+            <ion-item ng-if="indexFilter(messageInfo.other)"  ng-repeat="messageInfo in messageList  | orderBy:'order_time':true" href="#/chat1?id={{messageInfo.other}}&head_pic={{messageInfo.info.head_pic}}&real_name={{messageInfo.info.real_name}}&sex={{messageInfo.sex}}&age={{messageInfo.info.age}}&report_flag={{messageInfo.report_flag}}">
                 <ion-delete-button class="ion-minus-circled" ng-click="removeItem(messageInfo)"></ion-delete-button>
                 <div class="row">
                     <div class="msg_u_img mr20 pr fl">
@@ -35,7 +35,7 @@
                         <span ng-if="messageInfo.info.level == 1 && messageInfo.other < 9999" class="identity vip">VIP</span>
                         <span ng-if="messageInfo.info.level == 2 && messageInfo.other < 9999" class="identity guest">贵宾</span>
                         <span ng-if="messageInfo.info.level == 3 && messageInfo.other > 9999" class="identity diamond">钻石</span>
-                        <span ng-if="messageInfo.other > 9999" class="identity phone">官方</span>
+                        <span ng-if="messageInfo.other < 10000" class="identity phone">官方</span>
                         <span ng-if="messageInfo.report_flag == 1" class="identity assertive-bg">被多次举报</span>
                         <span class="dbl fs12 lh28 msg_text">
                             <span class="mr20" ng-if="messageInfo.info.age && messageInfo.other > 9999">[{{messageInfo.info.age | timeToAge}} {{messageInfo.info.is_marriage | marriage}}]</span>
