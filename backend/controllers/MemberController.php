@@ -135,8 +135,9 @@ class MemberController extends BaseController
     {
         if ($data = \Yii::$app->request->post()) {
 
+//            var_dump($data);exit();
             if ($data['phone'] == '' || $data['info']['real_name'] == '') {
-                return $this->__error('信息不全');
+                return $this->__error('真实姓名、手机号码为必填项');
             }
             $data['zo']       = User::getInstance()->editInfoZo($data['zo']);
             $data['info']     = User::getInstance()->editInfoInfo($data['info']);

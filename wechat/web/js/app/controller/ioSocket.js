@@ -174,14 +174,14 @@ define(['app/module', 'app/directive/directiveApi'
         }
 
         // 红娘评价
-        $scope.marker_rated = function (receviceId) {
-            api.getUserAuthStatus(receviceId).success(function (res) {
-
-                // 显示红娘评价
-                $scope.u_maker_rated = res.status;
-
-            })
-        }
+        //$scope.marker_rated = function (receviceId) {
+        //    api.getUserAuthStatus(receviceId).success(function (res) {
+        //
+        //        // 显示红娘评价
+        //        $scope.u_maker_rated = res.status;
+        //
+        //    })
+        //}
 
         //  获取历史聊天数据
         $scope.real_name = $location.search().real_name;
@@ -203,6 +203,7 @@ define(['app/module', 'app/directive/directiveApi'
 
             ar.initPhotoSwipeFromDOM('.bhy-gallery');   // 查看大图插件
             $scope.doRefresh();
+            viewScroll.scrollBottom(true);
         }).error(function () {
             console.log('页面message.js出现错误，代码：/wap/chat/message-history');
         })

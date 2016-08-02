@@ -89,7 +89,7 @@ class User extends Base
             $dataUser['password'] = md5(md5($data['password']));
             $dataUser['phone']    = $data['phone'];
 
-            if(isset($data['info']['age'])) {
+            if(isset($data['info']['age']) && !empty($data['info']['age'])) {
                 $infoData['age'] = floor((time() - $data['info']['age'])/ 365 / 24 / 3600);
             }
             isset($data['province']) ? $infoData['province'] = $data['province'] : true;
@@ -193,8 +193,8 @@ class User extends Base
             'blood' => '',// 血型
             'school' => '',// 学校
             // 择偶标准
-            'zo_age' => '18-0',// 年龄
-            'zo_height' => '140-0',// 最小身高
+            'zo_age' => '',// 年龄
+            'zo_height' => '',// 最小身高
             'zo_education' => '',// 学历
             'zo_income' => '',// 年收入
             'zo_weight' => '',// 体重
