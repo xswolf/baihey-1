@@ -204,7 +204,10 @@ define(['app/module', 'app/directive/directiveApi'
 
             ar.initPhotoSwipeFromDOM('.bhy-gallery');   // 查看大图插件
             $scope.doRefresh();
-            viewScroll.scrollBottom(true);
+            $timeout(function () {
+                viewScroll.scrollBottom(true);
+            },800);
+
         }).error(function () {
             console.log('页面message.js出现错误，代码：/wap/chat/message-history');
         })
