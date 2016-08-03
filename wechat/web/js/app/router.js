@@ -316,14 +316,6 @@ define(["app/module", 'app/service/serviceApi'],
             }])
             .controller('main', ['$scope', '$location', 'app.serviceApi', '$ionicLoading', '$ionicPopup','$rootScope', function ($scope, $location, api, $ionicLoading, $ionicPopup,$rootScope) {
 
-
-                // 身份证认证
-                api.list("/wap/member/honesty-photo", []).success(function (res) {
-                    $scope.sfzCheck = res.sfz;
-                    $scope.marrCheck = res.marr;
-                    $scope.eduCheck = res.edu;
-                    $scope.housingCheck = res.housing;
-                });
                 $rootScope.$on('msgNumber' , function () {
                     $scope.msgNumber = $rootScope.msgNumber;
                 })
@@ -380,6 +372,13 @@ define(["app/module", 'app/service/serviceApi'],
                 }
 
                 if(ar.getCookie('bhy_user_id')) {
+                    // 身份证认证
+                    api.list("/wap/member/honesty-photo", []).success(function (res) {
+                        $scope.sfzCheck = res.sfz;
+                        $scope.marrCheck = res.marr;
+                        $scope.eduCheck = res.edu;
+                        $scope.housingCheck = res.housing;
+                    });
                     $scope.userInfo = ar.getStorage('userInfo');
                     if ($scope.userInfo != 'undefined' && $scope.userInfo.id == ar.getCookie('bhy_user_id')) {
                         getUserStorage();
