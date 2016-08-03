@@ -421,6 +421,7 @@ define(['app/module', 'app/directive/directiveApi'
                 if (response == "10086") {
                     $scope.historyList = $scope.setMessageStatus($scope.historyList);
                     ar.setStorage('chat_messageHistory' + $scope.receiveId, $scope.historyList); // 每次发送消息后把消息放到浏览器端缓存
+                    $scope.$apply();
                     return;
                 }
                 var setMessage = function (response) {
