@@ -231,7 +231,9 @@ define(["app/module", 'app/service/serviceApi'],
                                 for (i in messageList) {
                                     if (messageList[i].receive_user_id == $rootScope.receiveUserInfo.id || messageList[i].send_user_id == $rootScope.receiveUserInfo.id) {
                                         if ($rootScope.historyListHide != undefined && $rootScope.historyListHide.length > 0) {
-                                            messageList[i].order_time = ar.timeStamp();
+                                            if (messageList[i].message != $rootScope.historyListHide[$rootScope.historyListHide.length - 1].message) {
+                                                messageList[i].order_time = ar.timeStamp();
+                                            }
                                             messageList[i].message = $rootScope.historyListHide[$rootScope.historyListHide.length - 1].message
                                         }
                                         $rootScope.msgNumber = $rootScope.msgNumber - messageList[i].sumSend;
