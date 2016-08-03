@@ -1,7 +1,8 @@
 <ion-view hide-tabs="true">
     <link href="/wechat/web/css/chat.css" rel="stylesheet">
     <ion-header-bar class="bhy com_w_100">
-        <h1 class="title" change-title="{{real_name | sex:sex:age}}"></h1>
+        <h1 class="title" ng-if="receiveId >= 10000" change-title="{{real_name | sex:sex:age}}"></h1>
+        <h1 class="title" ng-if="receiveId < 10000" change-title="{{real_name}}"></h1>
         <button class="button button-icon" ng-click="addFollow()" ng-if="u_isFollow">关注</button>
     </ion-header-bar>
     <ion-content class="bhy com_w_100 has-header chat" id="message-detail-content"
@@ -20,7 +21,7 @@
             <!-- 固定item -->
             <ion-item class="talk_item_u">
                 <div class="talk_user">
-                    <a href="#/userInfo?userId={{receiveId}}">
+                    <a ng-href="{{receiveId >= 10000 ? '#/userInfo?userId='+receiveId : ''}}">
                         <img ng-src="{{receiveHeadPic | isNull}}" onerror="this.src='/wechat/web/images/no_img.png'">
                     </a>
                 </div>
