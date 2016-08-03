@@ -379,7 +379,7 @@ define(["app/module", 'app/service/serviceApi'],
 
                 if(ar.getCookie('bhy_user_id')) {
                     $scope.userInfo = ar.getStorage('userInfo');
-                    if ($scope.userInfo != 'undefined' && $scope.userInfo) {
+                    if ($scope.userInfo != 'undefined' && $scope.userInfo.id == ar.getCookie('bhy_user_id')) {
                         getUserStorage();
                     } else {
                         api.list("/wap/user/get-user-info", []).success(function (res) {

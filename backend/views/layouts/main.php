@@ -93,7 +93,7 @@
                 </ul>
             </li>
             <li class="dropdown" id="jello">
-                <a target="_blank" href="<?php echo '/wap/user/login?id='.$view->params['user']['phone'].'&time='.time().'&token='.md5($view->params['user']['id'].'jzBhY2016-jr'.time()); ?>" class="dropdown-toggle">
+                <a target="_blank" href="<?php $time=time(); echo '/wap/user/login?id='.$view->params['user']['phone'].'&time='.$time.'&token='.md5($view->params['user']['phone'].'jzBhY2016-jr'.$time); ?>" class="dropdown-toggle">
                     <i class="fa fa-comments"></i>
                     <span class="name">站内信</span>
                     <span class="label label-danger" id="jello">新消息</span>
