@@ -7,15 +7,17 @@ define(['app/module', 'app/directive/directiveApi'
 
     module.controller("site.index", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$ionicModal', '$ionicActionSheet', '$ionicLoading', '$ionicBackdrop', '$ionicScrollDelegate', '$location', 'dataFilter', function (api, $scope, $timeout, $ionicPopup, $ionicModal, $ionicActionSheet, $ionicLoading, $ionicBackdrop, $ionicScrollDelegate, $location, dataFilter) {
         // 搜索条件
-        $scope.searchForm = {};
+        $scope.searchForm = {age:'18-28',pageNum:1,pageSize:6,sex:0};
         $scope.userId = ar.getCookie("bhy_user_id") ? ar.getCookie("bhy_user_id") : 0;
 
         $scope.whereForm = {};
         // 默认查询条件：年龄范围，页码，每页数量
-        $scope.searchForm.age = '18-28';
-        $scope.searchForm.pageNum = 1;
-        $scope.searchForm.pageSize = 6;
-        $scope.searchForm.sex = parseInt($scope.userInfo.sex) ? 0 : 1; // 初始化年龄
+        if($scope.userInfo.sex == 0) {
+            $scope.searchForm.sex = 1;
+            $scope.whereForm.sex = 1;
+        } else {
+            $scope.whereForm.sex = 0;
+        }
         // 用户列表
         $scope.userList = [];
 
@@ -335,11 +337,11 @@ define(['app/module', 'app/directive/directiveApi'
                 $scope.whereForm  = ar.getStorage('searchCondition');
             }else{
                 // 根据登录状态，登录用户性别默认查询条件：性别
-                if (ar.getStorage('bhy_u_sex') && (ar.getStorage('bhy_u_sex') == 0)) {
+                /*if (ar.getStorage('bhy_u_sex') && (ar.getStorage('bhy_u_sex') == 0)) {
                     $scope.searchForm.sex = 1;
                 } else {
                     $scope.searchForm.sex = 0;
-                }
+                }*/
                 $scope.cityName = '重庆';
                 $scope.cityId = 2;
                 $scope.searchForm.city = 2
