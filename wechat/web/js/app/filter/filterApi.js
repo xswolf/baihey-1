@@ -191,19 +191,20 @@ define(['app/module'], function (module) {
 
     // 返回地址
     module.filter('address', function () {
-        return function (input, arr1, arr2) {
-            if (typeof(input) != 'undefined' && input != '') {
-                arr2 = arr2 != '0' ? getAddress(area, arr2) : '';
-                arr1 = arr1 != '0' ? getAddress(citys, arr1) : '';
-                input = getAddress(provines, input);
-                if (arr2 != '') {
-                    return input + '-' + arr1 + '-' + arr2;
-                } else if (arr1 != '') {
-                    return input + '-' + arr1;
-                } else {
-                    return input;
+        return function (province, city, areaId) {
+            var title = '';
+            if (province && province != '0') {
+                title += getAddress(provines,province);
+                if(city && city != '0'){
+                    title += '-';
+                    title += getAddress(citys,city);
+                    if(areaId && areaId != '0'){
+                        title += '-';
+                        title += getAddress(area,areaId);
+                    }
                 }
             }
+            return title;
         }
     });
 
