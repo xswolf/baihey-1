@@ -100,6 +100,7 @@ define(['app/module', 'app/directive/directiveApi'
                         $scope.userList = [];
                         init();
                         $scope.searchForm.sex = 1;
+                        $scope.whereForm.sex = 1;
                         $ionicScrollDelegate.$getByHandle('mainScroll').scrollTop(true);
                         //$scope.loadMore();
                         setSearchCondition($scope.searchForm,$scope.userId);
@@ -108,6 +109,7 @@ define(['app/module', 'app/directive/directiveApi'
                         $scope.userList = [];
                         init();
                         $scope.searchForm.sex = 0;
+                        $scope.whereForm.sex = 0;
                         $ionicScrollDelegate.$getByHandle('mainScroll').scrollTop(true);
                         //$scope.loadMore();
                         setSearchCondition($scope.searchForm,$scope.userId);
