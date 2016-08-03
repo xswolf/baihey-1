@@ -16,6 +16,7 @@ define(['app/module', 'app/directive/directiveApi'
             $scope.searchForm.sex = 1;
             $scope.whereForm.sex = 1;
         } else {
+            $scope.searchForm.sex = 0;
             $scope.whereForm.sex = 0;
         }
         // 用户列表
