@@ -204,7 +204,7 @@
             </li>-->
             <li class="dropdown user" id="header-user">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                    <img alt="" src="/backend/web/CloudAdmin/img/avatars/avatar9.jpg" />
+                    <img alt="" src="<?php echo $view->params['user']['photo'] ?>" />
                     <span class="username"><?php echo $view->params['user']['name'] ?></span>
                     <i class="fa fa-angle-down"></i>
                 </a>
