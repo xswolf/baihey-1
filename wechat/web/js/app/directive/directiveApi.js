@@ -409,6 +409,25 @@ define(['app/module'], function (module) {
 
         };
     }]);
+
+    module.directive('lazyload', function () {
+        return {
+            restrict: 'EA',
+            replace: false,
+            link: function (scope, element, attrs) {
+                var img = new Image(); //创建一个Image对象，实现图片的预下载
+                img.src = attrs.lazyload;
+                if (img.complete) { // 如果图片已经存在于浏览器缓存
+                    element.prop('src',img.src);
+                    return; // 直接返回，不用再处理onload事件
+                }
+                img.onload = function () { //图片下载完毕
+                    element.prop('src',img.src);
+                };
+            }
+        };
+    });
+
 })
 
 

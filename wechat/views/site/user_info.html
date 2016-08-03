@@ -11,7 +11,7 @@
             <div class="imgList_con">
                 <div class="imgList_handle clearfix bhy-gallery">
                     <a class="imgItem pr" ng-repeat="img in imgList" ng-href="{{img.thumb_path | picture}}" data-size="{{img.thumb_path.split('.')[0].split('_')[1] + 'x' + img.thumb_path.split('.')[0].split('_')[2]}}">
-                        <img src="{{img.thumb_path}}">
+                        <img src="/wechat/web/images/img_loading.gif" lazyload="{{img.thumb_path}}">
                     </a>
                 </div>
             </div>
@@ -87,7 +87,7 @@
                     <img src="/wechat/web/images/info_hobby_bg.jpg">
                 </div>
             </div>
-            <ion-item ng-if="went_travel_count > 0">
+            <ion-item ng-if="went_travel.length > 0">
                     <p><span class="cor4">去过的地方({{went_travel_count}})</span></p>
                     <div class="hob_addr clearfix">
                         <span class="hob_addr_flag" ng-repeat="addrt in went_travel track by addrt.id">
@@ -96,7 +96,7 @@
                         </span>
                     </div>
             </ion-item>
-            <ion-item ng-if="want_travel_count > 0">
+            <ion-item ng-if="want_travel.length > 0">
                     <p><span class="cor4">想去的地方({{want_travel_count}})</span></p>
                     <div class="hob_addr clearfix">
                         <span class="hob_addr_flag f2" ng-repeat="addrt in want_travel track by addrt.id">
@@ -106,7 +106,7 @@
                     </div>
             </ion-item>
 
-            <ion-item ng-if="love_sport_count > 0">
+            <ion-item ng-if="love_sport.length > 0">
                     <p><span class="cor4">喜欢的运动({{love_sport_count}})</span></p>
                     <div class="hob_sport clearfix">
                         <span class="hob_sport_flag" ng-repeat="addrt in love_sport track by addrt.id">
@@ -116,7 +116,7 @@
                     </div>
             </ion-item>
 
-            <ion-item ng-if="want_film_count > 0">
+            <ion-item ng-if="want_film.length > 0">
                     <p><span class="cor4">喜欢的影视类型({{want_film_count}})</span></p>
                     <div class="hob_sport clearfix">
                         <span class="hob_tv_flag" ng-repeat="addrt in want_film track by addrt.id">
@@ -126,7 +126,7 @@
                     </div>
             </ion-item>
 
-            <ion-item class="hob_item" ng-if="like_food_count > 0">
+            <ion-item class="hob_item" ng-if="like_food.length > 0">
                 <p><span class="cor4">喜欢的美食({{like_food_count}})</span></p>
                 <div class="hob_food clearfix">
                     <span class="hob_food_flag" ng-repeat="addrt in like_food track by addrt.id">
