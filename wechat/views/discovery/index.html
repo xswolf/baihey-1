@@ -5,11 +5,10 @@
         <a class="button button-icon icon ion-plus-circled positive" href="#/member/discovery_add?tempUrl=/discovery"></a>
     </ion-header-bar>
 
-    <ion-content class="com_w_100 bhy discovery bg5" ng-init="pullingText = '继续下拉可刷新';">
+    <ion-content class="com_w_100 bhy discovery bg5">
         <ion-refresher
-                pulling-text="{{pullingText}}"
+                pulling-text="下拉可刷新"
                 on-refresh="doRefresh()"
-                on-pulling="pullingText = '松手立即刷新';"
                 refreshing-text="刷新中">
         </ion-refresher>
         <div class="list">

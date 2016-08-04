@@ -6,8 +6,7 @@
     </ion-header-bar>
     <ion-content class="bhy com_w_100 m_bg">
         <ion-list>
-            <ion-checkbox ng-model="isNull" ng-click="isNullFunc($event)">不限</ion-checkbox>
-            <ion-checkbox ng-model="marriage.checked" ng-repeat="marriage in marriageList" ng-checked="marriage.checked" ng-disabled="isNull" ng-click="saveFormData($event,marriage)">{{marriage.name}}</ion-checkbox>
+            <ion-checkbox ng-model="marriage.checked" ng-repeat="marriage in marriageList" >{{marriage.name}}</ion-checkbox>
         </ion-list>
     </ion-content>
 </ion-modal-view>

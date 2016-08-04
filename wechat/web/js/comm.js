@@ -1216,37 +1216,14 @@ var ar = {
         function zoConstellation() {
             $scope.formData = {};
             $scope.constellationList = config_infoData.constellation;
-            if (!$scope.userInfo.info.zo_constellation) {
-                $scope.isNull = true;
-            } else {
-                $scope.isNull = false;
-                $scope.userInfo.info.zo_constellation = $scope.userInfo.info.zo_constellation.split(',');
-            }
+            $scope.formData.zo_constellation = $scope.constellationList;
             for (var i in $scope.constellationList) {
                 for (var j in $scope.userInfo.info.zo_constellation) {
                     if ($scope.userInfo.info.zo_constellation[j] == $scope.constellationList[i].id) {
                         $scope.constellationList[i].checked = true;
-                        break;
                     } else {
                         $scope.constellationList[i].checked = false;
                     }
-                }
-            }
-
-            $scope.isNullFunc = function (event) {
-                if (event.target.checked) {
-                    for (var i in $scope.constellationList) {
-                        $scope.constellationList[i].checked = false;
-                    }
-                    $scope.formData.zo_constellation = [];
-                }
-            }
-
-            $scope.saveFormData = function (event, item) {
-                if (event.target.checked) {
-                    addItem(item, 'zo_constellation');
-                } else {
-                    delItem(item, 'zo_constellation');
                 }
             }
         }
@@ -1254,37 +1231,14 @@ var ar = {
         function zoMarriage() {
             $scope.formData = {};
             $scope.marriageList = config_infoData.marriage;
-            if (!$scope.userInfo.info.zo_marriage) {
-                $scope.isNull = true;
-            } else {
-                $scope.isNull = false;
-                $scope.userInfo.info.zo_marriage = $scope.userInfo.info.zo_marriage.split(',');
-            }
+            $scope.formData.zo_marriage = $scope.marriageList;
             for (var i in $scope.marriageList) {
                 for (var j in $scope.userInfo.info.zo_marriage) {
                     if ($scope.userInfo.info.zo_marriage[j] == $scope.marriageList[i].id) {
                         $scope.marriageList[i].checked = true;
-                        break;
                     } else {
                         $scope.marriageList[i].checked = false;
                     }
-                }
-            }
-
-            $scope.isNullFunc = function (event) {
-                if (event.target.checked) {
-                    for (var i in $scope.marriageList) {
-                        $scope.marriageList[i].checked = false;
-                    }
-                    $scope.formData.zo_marriage = [];
-                }
-            }
-
-            $scope.saveFormData = function (event, item) {
-                if (event.target.checked) {
-                    addItem(item, 'zo_marriage');
-                } else {
-                    delItem(item, 'zo_marriage');
                 }
             }
 
@@ -1292,39 +1246,15 @@ var ar = {
 
         function zoZodiac() {
             $scope.formData = {};
-            if (!$scope.userInfo.info.zo_zodiac) {
-                $scope.isNull = true;
-            } else {
-                $scope.isNull = false;
-                $scope.userInfo.info.zo_zodiac = $scope.userInfo.info.zo_zodiac.split(',');
-            }
-            $scope.isSelectedNull = false;
             $scope.zodiacList = config_infoData.zodiac;
+            $scope.formData.zo_zodiac = $scope.zodiacList;
             for (var i in $scope.zodiacList) {
                 for (var j in $scope.userInfo.info.zo_zodiac) {
                     if ($scope.userInfo.info.zo_zodiac[j] == $scope.zodiacList[i].id) {
                         $scope.zodiacList[i].checked = true;
-                        break;
                     } else {
                         $scope.zodiacList[i].checked = false;
                     }
-                }
-            }
-
-            $scope.isNullFunc = function (event) {
-                if (event.target.checked) {
-                    for (var i in $scope.zodiacList) {
-                        $scope.zodiacList[i].checked = false;
-                    }
-                    $scope.formData.zo_zodiac = [];
-                }
-            }
-
-            $scope.saveFormData = function (event, item) {
-                if (event.target.checked) {
-                    addItem(item, 'zo_zodiac');
-                } else {
-                    delItem(item, 'zo_zodiac');
                 }
             }
         }
@@ -1345,16 +1275,6 @@ var ar = {
             if (name == 'like_food') {
                 $scope.formData.like_food.push(item.id);
             }
-            if (name == 'zo_marriage') {
-                $scope.formData.zo_marriage.push(item.id);
-            }
-            if (name == 'zo_zodiac') {
-                $scope.formData.zo_zodiac.push(item.id);
-            }
-            if (name == 'zo_constellation') {
-                $scope.formData.zo_constellation.push(item.id);
-            }
-
         }
 
         function delItem(item, name) {
@@ -1398,31 +1318,6 @@ var ar = {
                     }
                 }
             }
-            if (name == 'zo_marriage') {
-                for (var i in $scope.formData.zo_marriage) {
-                    if ($scope.formData.zo_marriage[i] == item.id) {
-                        $scope.formData.zo_marriage.splice(i, 1);
-                        break;
-                    }
-                }
-            }
-            if (name == 'zo_zodiac') {
-                for (var i in $scope.formData.zo_zodiac) {
-                    if ($scope.formData.zo_zodiac[i] == item.id) {
-                        $scope.formData.zo_zodiac.splice(i, 1);
-                        break;
-                    }
-                }
-            }
-            if (name == 'zo_constellation') {
-                for (var i in $scope.formData.zo_constellation) {
-                    if ($scope.formData.zo_constellation[i] == item.id) {
-                        $scope.formData.zo_constellation.splice(i, 1);
-                        break;
-                    }
-                }
-            }
-
         }
     },
 
@@ -1451,13 +1346,34 @@ var ar = {
             $scope.userInfo.like_food = form.like_food.join(',');
         }
         if(form.zo_marriage){
-            $scope.userInfo.info.zo_marriage = form.zo_marriage.join(',');
+            var zo_marriage = [];
+            for(var i in form.zo_marriage){
+                if(form.zo_marriage[i].checked){
+                    zo_marriage.push(form.zo_marriage[i].id);
+                    break;
+                }
+            }
+            $scope.userInfo.info.zo_marriage = zo_marriage.join(',');
         }
         if(form.zo_zodiac){
-            $scope.userInfo.info.zo_zodiac = form.zo_zodiac.join(',');
+            var zo_zodiac = [];
+            for(var i in form.zo_zodiac){
+                if(form.zo_zodiac[i].checked){
+                    zo_zodiac.push(form.zo_zodiac[i].id);
+                    break;
+                }
+            }
+            $scope.userInfo.info.zo_zodiac = zo_zodiac.join(',');
         }
         if(form.zo_constellation){
-            $scope.userInfo.info.zo_constellation = form.zo_constellation.join(',');
+            var zo_constellation = [];
+            for(var i in form.zo_constellation){
+                if(form.zo_constellation[i].checked){
+                    zo_constellation.push(form.zo_constellation[i].id);
+                    break;
+                }
+            }
+            $scope.userInfo.info.zo_constellation = zo_constellation.join(',');
         }
         $scope.getTravel('went_travel', $scope.userInfo.went_travel);// 我去过的地方
         $scope.getTravel('want_travel', $scope.userInfo.want_travel);// 我想去的地方

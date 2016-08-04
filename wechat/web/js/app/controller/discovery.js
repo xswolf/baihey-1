@@ -58,7 +58,7 @@ define(['app/module', 'app/directive/directiveApi'
                         // 将参数ID存入localStorage：display
                     }
                     if (btnObj.text == '举报') {
-                        $location.url('/member/report?id=' + dis.id + '&userName='+dis.real_name+'&type=2&title=动态&tempUrl=' + $location.$$url);
+                        $location.url('/member/report?id=' + dis.id + '&userName=' + dis.real_name + '&type=2&title=动态&tempUrl=' + $location.$$url);
                     }
                     if (btnObj.text == '删除') {
                         $scope.display.push(id);
@@ -111,25 +111,30 @@ define(['app/module', 'app/directive/directiveApi'
                     $scope.discoveryList.push(res.data[i]);
                 }
                 ar.initPhotoSwipeFromDOM('.bhy-gallery');
+            }).finally(function () {
                 $scope.$broadcast('scroll.infiniteScrollComplete');
             })
             $scope.page += 1;
         };
 
         // 下拉刷新
-        $scope.doRefresh = function() {
-            api.get('/new-items')
-                .success(function(newItems) {
-                })
-                .finally(function() {
-                    $scope.$broadcast('scroll.refreshComplete');
-                });
-            console.log('dorefresh | '+$scope.pullingText);
-        };
-
-        $scope.doPulling = function() {
-            $scope.pullingText = '松手立即刷新';
-            console.log('pulling | '+$scope.pullingText);
+        $scope.doRefresh = function () {
+            var refreshForm = {};
+            refreshForm.limit = $scope.discoveryList.length;
+            refreshForm.page = 1;
+            api.list('/wap/member/get-dynamic-list', refreshForm).success(function (res) {
+                for (var i in res.data) {
+                    res.data[i].imgList = JSON.parse(res.data[i].pic);
+                    res.data[i].real_name = res.data[i].real_name.replace(/\"/g, '');
+                    res.data[i].head_pic = res.data[i].head_pic.replace(/\"/g, '');
+                    res.data[i].level = res.data[i].level.replace(/\"/g, '');
+                    res.data[i].age = res.data[i].age.replace(/\"/g, '');
+                    $scope.discoveryList.push(res.data[i]);
+                }
+                ar.initPhotoSwipeFromDOM('.bhy-gallery');
+            }).finally(function () {
+                $scope.$broadcast('scroll.refreshComplete');
+            });
         };
 
         // 是否还有更多

@@ -7,8 +7,8 @@
     </ion-header-bar>
     <ion-content class="com_w_100 site" delegate-handle="mainScroll">
         <ion-refresher
-                pulling-text="下拉刷新.."
-                refreshing-text="刷新中.."
+                pulling-text="下拉可刷新"
+                refreshing-text="刷新中"
                 on-refresh="doRefresh()">
         </ion-refresher>
         <div class="list">
@@ -79,7 +79,7 @@
                         <span ng-if="user.info.level == 3" class="identity diamond">钻石</span>
                         <span ng-if="user.report_flag == 1" class="identity assertive-bg">被多次举报</span>
                     </p>
-                    <p class="cor20 mt5">{{user.personalized}}</p>
+                    <p class="signature mt5">{{user.personalized}}</p>
                 </div>
             </a>
 
