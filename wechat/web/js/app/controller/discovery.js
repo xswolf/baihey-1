@@ -217,10 +217,11 @@ define(['app/module', 'app/directive/directiveApi'
                         name: info.real_name,
                         private: $scope.formData.private == 'true' ? 1 : 0,
                         create_time: res.data.create_time,
-                        content: $scope.formData.content
-
+                        content: $scope.formData.content,
+                        age:$scope.userInfo.info.age,
+                        sex:$scope.userInfo.sex
                     });
-
+                    //console.log($scope.commentList);
                     $scope.dis.comment_num = parseInt($scope.dis.comment_num) + 1;
                     $scope.formData.content = ''; //重置输入框
                     $ionicScrollDelegate.scrollBottom(true);
