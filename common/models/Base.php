@@ -99,7 +99,7 @@ class Base extends \yii\db\ActiveRecord{
 
                             case 'between':
 
-                                $sqlWhere .= " {$k} between " . "'$subV[0]'" . ' and ' . "'$subV[1]'" . "  {$str} ";
+                                $sqlWhere .= " {$k} between " . "$subV[0]" . ' and ' . "$subV[1]" . "  {$str} ";
                                 break;
 
                             case 'or' :

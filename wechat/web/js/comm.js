@@ -1447,7 +1447,7 @@ var ar = {
             $scope.userInfo.want_film = form.want_film.join(',');
         }
         if(form.like_food){
-            $scope.userInfo.want_film = form.like_food.join(',');
+            $scope.userInfo.like_food = form.like_food.join(',');
         }
         if(form.zo_marriage){
             $scope.userInfo.zo_marriage = form.zo_marriage.join(',');
@@ -1458,6 +1458,11 @@ var ar = {
         if(form.zo_constellation){
             $scope.userInfo.zo_constellation = form.zo_constellation.join(',');
         }
+        $scope.getTravel('went_travel', $scope.userInfo.went_travel);// 我去过的地方
+        $scope.getTravel('want_travel', $scope.userInfo.want_travel);// 我想去的地方
+        $scope.getConfig('love_sport', $scope.userInfo.love_sport);// 喜欢的运动
+        $scope.getConfig('want_film', $scope.userInfo.want_film);// 想看的电影
+        $scope.getConfig('like_food', $scope.userInfo.like_food);// 喜欢的食物
     }
 
 
