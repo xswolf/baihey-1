@@ -339,7 +339,6 @@ define(['app/module', 'app/directive/directiveApi'
         // 保存数据
         $scope.saveData = function (formData) {
             ar.processParams($scope,formData);
-            console.log($scope.userInfo.info.zo_marriage); return;
             api.save('/wap/member/save-data', $scope.userInfo).success(function (res) {
                 $scope.getUserPrivacyStorage('');
             }).finally(function(){

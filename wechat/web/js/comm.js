@@ -1221,6 +1221,7 @@ var ar = {
                 for (var j in $scope.userInfo.info.zo_constellation) {
                     if ($scope.userInfo.info.zo_constellation[j] == $scope.constellationList[i].id) {
                         $scope.constellationList[i].checked = true;
+                        break;
                     } else {
                         $scope.constellationList[i].checked = false;
                     }
@@ -1236,6 +1237,7 @@ var ar = {
                 for (var j in $scope.userInfo.info.zo_marriage) {
                     if ($scope.userInfo.info.zo_marriage[j] == $scope.marriageList[i].id) {
                         $scope.marriageList[i].checked = true;
+                        break;
                     } else {
                         $scope.marriageList[i].checked = false;
                     }
@@ -1252,6 +1254,7 @@ var ar = {
                 for (var j in $scope.userInfo.info.zo_zodiac) {
                     if ($scope.userInfo.info.zo_zodiac[j] == $scope.zodiacList[i].id) {
                         $scope.zodiacList[i].checked = true;
+                        break;
                     } else {
                         $scope.zodiacList[i].checked = false;
                     }
@@ -1350,7 +1353,6 @@ var ar = {
             for(var i in form.zo_marriage){
                 if(form.zo_marriage[i].checked){
                     zo_marriage.push(form.zo_marriage[i].id);
-                    break;
                 }
             }
             $scope.userInfo.info.zo_marriage = zo_marriage.join(',');
@@ -1360,7 +1362,6 @@ var ar = {
             for(var i in form.zo_zodiac){
                 if(form.zo_zodiac[i].checked){
                     zo_zodiac.push(form.zo_zodiac[i].id);
-                    break;
                 }
             }
             $scope.userInfo.info.zo_zodiac = zo_zodiac.join(',');
@@ -1370,7 +1371,6 @@ var ar = {
             for(var i in form.zo_constellation){
                 if(form.zo_constellation[i].checked){
                     zo_constellation.push(form.zo_constellation[i].id);
-                    break;
                 }
             }
             $scope.userInfo.info.zo_constellation = zo_constellation.join(',');
