@@ -51,7 +51,7 @@
                 </h2>
             </a>
 
-            <a class="item item-thumbnail-left" ng-repeat="user in userList track by user_id(user) | filter:indexFilter">
+            <a class="item item-thumbnail-left" ng-repeat="user in userList track by user.id | filter:indexFilter">
                 <img class="rounded" ng-click="jump('/userInfo?userId={{user.user_id}}')"
                      ng-src="{{user.info.head_pic | isNull}}"
                      onerror="this.src='/wechat/web/images/no_img.png'">

@@ -380,7 +380,7 @@ define(["app/module", 'app/service/serviceApi'],
                         $scope.housingCheck = res.housing;
                     });
                     $scope.userInfo = ar.getStorage('userInfo');
-                    if ($scope.userInfo != 'undefined' && $scope.userInfo.id == ar.getCookie('bhy_user_id')) {
+                    if ($scope.userInfo && $scope.userInfo.id == ar.getCookie('bhy_user_id')) {
                         getUserStorage();
                     } else {
                         api.list("/wap/user/get-user-info", []).success(function (res) {
