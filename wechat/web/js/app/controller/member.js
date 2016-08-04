@@ -191,7 +191,7 @@ define(['app/module', 'app/directive/directiveApi'
         $scope.getConfig('love_sport', $scope.userInfo.love_sport);// 喜欢的运动
         $scope.getConfig('want_film', $scope.userInfo.want_film);// 想看的电影
         $scope.getConfig('like_food', $scope.userInfo.like_food);// 喜欢的食物
-        ar.loadMobiscroll($scope);
+
         // 修改信息弹窗modal
         $scope.updateInfo = function (fieldName) {
             if (!fieldName)  return false;
@@ -200,10 +200,132 @@ define(['app/module', 'app/directive/directiveApi'
                 animation: 'slide-in-right'
             }).then(function (modal) {
                 $scope.infoModal = modal;
-                $scope.infoModal.show();
-                ar.processData(fieldName,$scope,api,$ionicPopup,$filter,$ionicScrollDelegate);
+               if($scope.infoModal.show()){
+                   ar.processData(fieldName,$scope,api,$ionicPopup,$filter,$ionicScrollDelegate);
+               }
             });
         }
+
+
+        $scope.settingsBirthday = {
+            theme: 'mobiscroll',
+            lang: 'zh',
+            controls: ['date']
+        };
+        $scope.formData.age = '年龄';
+        $scope.formData.zodiac = {id: 0, name: '生肖'};
+        $scope.formData.constellation = {id: 0, name: '星座'};
+        $scope.birthdayChange = function () {
+            $scope.formData.age = ar.getAgeByBirthday(ar.DateTimeToDate($scope.formData.birthday)) + '岁';
+            $scope.formData.zodiac = ar.getZodicByBirthday(ar.DateTimeToDate($scope.formData.birthday));
+            $scope.formData.constellation = ar.getConstellationByBirthday(ar.DateTimeToDate($scope.formData.birthday));
+        }
+
+        var minAge = [], maxAge = [];
+        for (var i = 18; i <= 99; i++) {
+            maxAge.push(i);
+            if (i < 99) {
+                minAge.push(i);
+            }
+        }
+        $scope.settingsAge = {
+            theme: 'mobiscroll',
+            lang: 'zh',
+            rows: 5,
+            wheels: [
+                [{
+                    circular: false,
+                    data: minAge,
+                    label: '最低年龄'
+                }, {
+                    circular: false,
+                    data: maxAge,
+                    label: '最高年龄'
+                }]
+            ],
+            showLabel: true,
+            minWidth: 130,
+            cssClass: 'md-pricerange',
+            validate: function (event, inst) {
+                var i,
+                    values = event.values,
+                    disabledValues = [];
+
+                for (i = 0; i < maxAge.length; ++i) {
+                    if (maxAge[i] <= values[0]) {
+                        disabledValues.push(maxAge[i]);
+                    }
+                }
+                return {
+                    disabled: [
+                        [], disabledValues
+                    ]
+                }
+            },
+            formatValue: function (data) {
+                return data[0] + '-' + data[1];
+            },
+            parseValue: function (valueText) {
+                if (valueText) {
+                    return valueText.replace(/\s/gi, '').split('-');
+                }
+                return [18, 22];
+            }
+        };
+
+        // 身高范围
+        var minHeight = [], maxHeight = [];
+        for (var i = 140; i <= 260; i++) {
+            maxHeight.push(i);
+            if (i < 260) {
+                minHeight.push(i);
+            }
+        }
+        $scope.settingsHeight = {
+            theme: 'mobiscroll',
+            lang: 'zh',
+            rows: 5,
+            wheels: [
+                [{
+                    circular: false,
+                    data: minHeight,
+                    label: '最低身高(厘米)'
+                }, {
+                    circular: false,
+                    data: maxHeight,
+                    label: '最高身高(厘米)'
+                }]
+            ],
+            showLabel: true,
+            minWidth: 130,
+            cssClass: 'md-pricerange',
+            validate: function (event, inst) {
+                var i,
+                    values = event.values,
+                    disabledValues = [];
+
+                for (i = 0; i < maxHeight.length; ++i) {
+                    if (maxHeight[i] <= values[0]) {
+                        disabledValues.push(maxHeight[i]);
+                    }
+                }
+
+                return {
+                    disabled: [
+                        [], disabledValues
+                    ]
+                }
+            },
+            formatValue: function (data) {
+                return data[0] + '-' + data[1];
+            },
+            parseValue: function (valueText) {
+                if (valueText) {
+                    return valueText.replace(/\s/gi, '').split('-');
+                }
+                return [160, 180];
+            }
+        };
 
         $rootScope.$on('$ionicView.beforeLeave',function(event,data){
             if(data.stateParams && $scope.infoModal){

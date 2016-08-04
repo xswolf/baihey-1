@@ -768,122 +768,9 @@ var ar = {
         })
     },
 
-    loadMobiscroll:function($scope){
-        var minAge = [], maxAge = [];
-        for (var i = 18; i <= 99; i++) {
-            maxAge.push(i);
-            if (i < 99) {
-                minAge.push(i);
-            }
-        }
-        $scope.settingsAge = {
-            theme: 'mobiscroll',
-            lang: 'zh',
-            display: 'bottom',
-            rows: 5,
-            wheels: [
-                [{
-                    circular: false,
-                    data: minAge,
-                    label: '最低年龄'
-                }, {
-                    circular: false,
-                    data: maxAge,
-                    label: '最高年龄'
-                }]
-            ],
-            showLabel: true,
-            minWidth: 130,
-            cssClass: 'md-pricerange',
-            validate: function (event, inst) {
-                var i,
-                    values = event.values,
-                    disabledValues = [];
-
-                for (i = 0; i < maxAge.length; ++i) {
-                    if (maxAge[i] <= values[0]) {
-                        disabledValues.push(maxAge[i]);
-                    }
-                }
-                return {
-                    disabled: [
-                        [], disabledValues
-                    ]
-                }
-            },
-            formatValue: function (data) {
-                return data[0] + '-' + data[1];
-            },
-            parseValue: function (valueText) {
-                if (valueText) {
-                    return valueText.replace(/\s/gi, '').split('-');
-                }
-                return [18, 22];
-            }
-        };
-
-        // 身高范围
-        var minHeight = [], maxHeight = [];
-        for (var i = 140; i <= 260; i++) {
-            maxHeight.push(i);
-            if (i < 260) {
-                minHeight.push(i);
-            }
-        }
-        $scope.settingsHeight = {
-            theme: 'mobiscroll',
-            lang: 'zh',
-            display: 'bottom',
-            rows: 5,
-            wheels: [
-                [{
-                    circular: false,
-                    data: minHeight,
-                    label: '最低身高(厘米)'
-                }, {
-                    circular: false,
-                    data: maxHeight,
-                    label: '最高身高(厘米)'
-                }]
-            ],
-            showLabel: true,
-            minWidth: 130,
-            cssClass: 'md-pricerange',
-            validate: function (event, inst) {
-                var i,
-                    values = event.values,
-                    disabledValues = [];
-
-                for (i = 0; i < maxHeight.length; ++i) {
-                    if (maxHeight[i] <= values[0]) {
-                        disabledValues.push(maxHeight[i]);
-                    }
-                }
-
-                return {
-                    disabled: [
-                        [], disabledValues
-                    ]
-                }
-            },
-            formatValue: function (data) {
-                return data[0] + '-' + data[1];
-            },
-            parseValue: function (valueText) {
-                if (valueText) {
-                    return valueText.replace(/\s/gi, '').split('-');
-                }
-                return [160, 180];
-            }
-        };
-    },
     processData: function (fieldName, $scope, api, $ionicPopup, $filter, $ionicScrollDelegate) {
-
         if (fieldName == 'address') {    // 地区
             address();
-        }
-        if (fieldName == 'age') {   // 年龄
-            age();
         }
         if (fieldName == 'been_address') {  // 去过的地方
             beenAddress();
@@ -947,25 +834,6 @@ var ar = {
             $scope.provinceList = provines;
             $scope.cityList = citys;
             $scope.areaList = area;
-        }
-
-        function age() {
-            $scope.settings = {
-                theme: 'mobiscroll',
-                lang: 'zh',
-                display: 'bottom',
-                controls: ['date'],
-                mode: $scope.mode
-            };
-            $scope.formData = {};
-            $scope.formData.age = '年龄';
-            $scope.formData.zodiac = {id: 0, name: '生肖'};
-            $scope.formData.constellation = {id: 0, name: '星座'};
-            $scope.birthdayChange = function () {
-                $scope.formData.age = ar.getAgeByBirthday(ar.DateTimeToDate($scope.formData.birthday)) + '岁';
-                $scope.formData.zodiac = ar.getZodicByBirthday(ar.DateTimeToDate($scope.formData.birthday));
-                $scope.formData.constellation = ar.getConstellationByBirthday(ar.DateTimeToDate($scope.formData.birthday));
-            }
         }
 
         function beenAddress() {

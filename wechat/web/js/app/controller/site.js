@@ -181,7 +181,6 @@ define(['app/module', 'app/directive/directiveApi'
         }
         $scope.settingsAge = {
             theme: 'mobiscroll',
-            display: 'bottom',
             lang: 'zh',
             rows: 5,
             wheels: [
@@ -237,7 +236,6 @@ define(['app/module', 'app/directive/directiveApi'
         $scope.settingsHeight = {
             theme: 'mobiscroll',
             lang: 'zh',
-            display: 'bottom',
             rows: 5,
             wheels: [
                 [{
