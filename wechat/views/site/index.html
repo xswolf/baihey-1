@@ -146,22 +146,21 @@
                             <a class="button button-light" ng-class="{0:'button-calm'}[whereForm.sex]" ng-click="sexChange(0)">女</a>
                         </div>
                         <div class="moreSearch_form_box mt10 clearfix">
-                            <label class="item item-input item-select">
-                                <div class="input-label cor4">
-                                    年龄
-                                </div>
-                                <input class="mobiscrollInput" ng-model="whereForm.age" mobiscroll-scroller="settingsAge"
-                                       mobiscroll-instance="demo"/>
-                            </label>
+                            <div class="input-label cor4">
+                                年龄 {{whereForm.age}}
+                            </div>
+                            <ion-item>
+                                <ion-range dualKnobs="true" ng-model="whereForm.age" min="18" max="80" step="3" snaps="true"></ion-range>
+                            </ion-item>
                         </div>
                         <div class="moreSearch_form_box mt10 clearfix">
-                            <label class="item item-input item-select">
-                                <div class="input-label cor4">
-                                    身高
-                                </div>
-                                <input class="mobiscrollInput" ng-model="whereForm.height" mobiscroll-scroller="settingsHeight"
-                                       mobiscroll-instance="demo"/>
-                            </label>
+                            <div class="input-label cor4">
+                                身高 {{whereForm.height}}
+                            </div>
+                            <ion-item>
+                                <ion-label>dual, step=3, snaps, </ion-label>
+                                <ion-range dualKnobs="true" [(ngModel)]="whereForm.height" min="21" max="72" step="3" snaps="true"></ion-range>
+                            </ion-item>
                         </div>
                     </div>
                 </div>
