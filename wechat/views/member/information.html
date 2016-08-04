@@ -72,11 +72,9 @@
                 <i class="icon ion-ios-arrow-right cor52"></i>
             </ion-item>
             <ion-item class="mb10 item-icon-right" ng-click="updateInfo('signature')">
-                <p>
-                    <span class="cor4">个人签名</span>
-                    <span class="cor21 ml20" ng-if="!userInfo.personalized">立即填写</span>
-                    <span class="ml20" ng-if="userInfo.personalized">{{userInfo.personalized}}</span>
-                </p>
+                <div class="cor4 fl fs14 personalized_l">个人签名</div>
+                <div class="ml20 wn fl fs14 personalized_r cor21" ng-if="!userInfo.personalized">立即填写</div>
+                <div class="ml20 wn fl cor8 fs14 personalized_r" ng-if="userInfo.personalized">{{userInfo.personalized}}</div>
                 <i class="icon ion-ios-arrow-right cor52"></i>
             </ion-item>
             <ion-item class="item-icon-right" ng-click="updateInfo(userInfo.info.real_name ? '' : 'real_name')">

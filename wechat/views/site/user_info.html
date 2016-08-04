@@ -41,10 +41,8 @@
                 <i class="icon ion-ios-arrow-right cor52"></i>
             </ion-item>
             <ion-item ng-if="otherUserInfo.personalized">
-                <p>
-                    <span class="cor4">个性签名</span>
-                    <span class="ml20">{{otherUserInfo.personalized}}</span>
-                </p>
+                <div class="cor4 fl fs14 personalized_l">个人签名</div>
+                <div class="ml20 wn fl cor8 fs14 personalized_r">{{otherUserInfo.personalized}}</div>
             </ion-item>
             <ion-item ng-if="otherUserInfo.info.education">
                 <p>

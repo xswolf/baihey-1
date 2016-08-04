@@ -675,6 +675,12 @@
 .allTextLink {
   text-decoration: none;
 }
+.personalized_l {
+  min-width: 60px;
+}
+.personalized_r {
+  max-width: 72%;
+}
 /* matchmaker */
 .maker_hdr {
   background: #e4007f;

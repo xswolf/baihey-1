@@ -116,6 +116,22 @@ define(['app/module', 'app/directive/directiveApi'
             $scope.page += 1;
         };
 
+        // 下拉刷新
+        $scope.doRefresh = function() {
+            api.get('/new-items')
+                .success(function(newItems) {
+                })
+                .finally(function() {
+                    $scope.$broadcast('scroll.refreshComplete');
+                });
+            console.log('dorefresh | '+$scope.pullingText);
+        };
+
+        $scope.doPulling = function() {
+            $scope.pullingText = '松手立即刷新';
+            console.log('pulling | '+$scope.pullingText);
+        };
+
         // 是否还有更多
         $scope.moreDataCanBeLoaded = function () {
             return $scope.isMore;
