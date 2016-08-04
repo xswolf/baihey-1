@@ -1185,11 +1185,10 @@ var ar = {
         }
 
         function occupation() {
-            $scope.formData = {};
             $scope.occupationList = config_infoData.occupation;
             $scope.childrenOccupationList = config_infoData.children_occupation;
-            $scope.formData.occupation = $scope.userInfo.info.occupation ? $scope.userInfo.info.occupation : 1;
-            $scope.formData.children_occupation = $scope.userInfo.info.children_occupation ? $scope.userInfo.info.children_occupation : 1;
+            $scope.userInfo.info.occupation = $scope.userInfo.info.occupation ? $scope.userInfo.info.occupation : 1;
+            $scope.userInfo.info.children_occupation = $scope.userInfo.info.children_occupation ? $scope.userInfo.info.children_occupation : 1;
             // 获取文档高度以适应ion-scroll
             $scope.bodyHeight = document.body.scrollHeight;
             if ($scope.bodyHeight == 0) $scope.bodyHeight = window.screen.height;
@@ -1198,12 +1197,12 @@ var ar = {
             }
 
             $scope.selected_big = function (item) {
-                $scope.formData.occupation = item.id;
-                $scope.formData.children_occupation = 0;
+                $scope.userInfo.info.occupation = item.id;
+                $scope.userInfo.info.children_occupation = 0;
             }
 
             $scope.selected_small = function (item) {
-                $scope.formData.children_occupation = item.id;
+                $scope.userInfo.info.children_occupation = item.id;
             }
         }
 

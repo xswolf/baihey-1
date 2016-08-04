@@ -2,12 +2,12 @@
     <link href="/wechat/web/css/member.css" rel="stylesheet">
     <ion-header-bar class="com_w_100 bhy">
         <title class="title">请选择职业</title>
-        <button class="button button-icon cor21" ng-click="saveData(formData)">保存</button>
+        <button class="button button-icon cor21" ng-click="saveData()">保存</button>
     </ion-header-bar>
     <ion-content class="bhy com_w_100 m_bg occupation">
         <ion-scroll zooming="false" ng-style="scrollStyle" class="fl w50 bor_r_1c">
             <ion-list style="height: 3000px;">
-                <ion-item ng-repeat="o in occupationList" ng-class="{'{{o.id}}':'selected'}[formData.occupation]" ng-click="selected_big(o)">
+                <ion-item ng-repeat="o in occupationList" ng-class="{'{{o.id}}':'selected'}[userInfo.info.occupation]" ng-click="selected_big(o)">
                     <i class="icon bhy-icon-occupation-{{o.icon}} vam"></i>
                    <span class="o_l">{{o.name}}</span>
                 </ion-item>
@@ -15,7 +15,7 @@
         </ion-scroll>
         <ion-scroll zooming="false" class="fl w50" ng-style="scrollStyle">
             <ion-list class="city" style="height: 3000px;">
-                <ion-item ng-repeat="occ in childrenOccupationList | filter:{parentId:formData.occupation}:true" ng-click="selected_small(occ)" ng-class="{'{{occ.id}}':'selected'}[formData.children_occupation]">
+                <ion-item ng-repeat="occ in childrenOccupationList | filter:{parentId:userInfo.info.occupation}:true" ng-click="selected_small(occ)" ng-class="{'{{occ.id}}':'selected'}[userInfo.info.children_occupation]">
                     <span class="fl">{{occ.name}}</span>
                     <i class="fr ml25 ion-ios-checkmark-outline o_r"></i>
                 </ion-item>
