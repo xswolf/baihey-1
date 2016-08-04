@@ -1140,6 +1140,7 @@ define(['app/module', 'app/directive/directiveApi'
                 formData.identity = $scope.formData.real_name;
                 // 保存数据
                 $scope.userInfo.info.real_name = $scope.formData.real_name;
+                $scope.userInfo.has_identify = 1;
                 api.save('/wap/member/save-data', $scope.userInfo).success(function (res) {
                     $scope.getUserPrivacyStorage('#/member/honesty');
                 });

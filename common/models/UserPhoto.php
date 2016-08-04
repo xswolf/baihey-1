@@ -115,7 +115,7 @@ class UserPhoto extends Base
                 $data['is_head'] = 1;
                 UserInformation::getInstance()->updateUserInfo($user_id, ['head_pic' => $data['thumb_path']]);
             }
-            if(isset($data['type']) && ($data['type'] == 2 || $data['type'] == 3)) {
+            if($v['type'] == 2 || $v['type'] == 3) {
                 $this->getDb()->createCommand()
                     ->update($this->tablePrefix.'user_information', ['has_identify' => 1], ['user_id' => $user_id])
                     ->execute();
