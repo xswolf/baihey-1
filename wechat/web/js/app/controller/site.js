@@ -154,7 +154,7 @@ define(['app/module', 'app/directive/directiveApi'
                 $scope.userList = $scope.userList.concat(res.data);
                 $scope.dataLoading = false;
                 $scope.searchForm.pageNum += 1;
-                console.log($scope.userList);
+                //console.log($scope.userList);
             }).finally(function(){
                 $scope.$broadcast('scroll.infiniteScrollComplete');
             });
