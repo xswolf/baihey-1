@@ -53,7 +53,7 @@ define(['app/module', 'app/directive/directiveApi'
         // 首页搜索过滤条件（拉黑）
         $scope.indexFilter = function (user) {
             if ($scope.userInfo) {
-                return user.user_id != $scope.userInfo.id && dataFilter.data.blacked.indexOf(user.id) == -1;
+                return user.user_id != $scope.userInfo.id && dataFilter.data.blacked.indexOf(user.user_id) == -1;
             }
             return 1;
         }
