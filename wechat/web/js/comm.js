@@ -1282,9 +1282,9 @@ var ar = {
 
             $scope.saveFormData = function (event, item) {
                 if (event.target.checked) {
-                    addItem(item, 'marriage');
+                    addItem(item, 'zo_marriage');
                 } else {
-                    delItem(item, 'marriage');
+                    delItem(item, 'zo_marriage');
                 }
             }
 
@@ -1451,13 +1451,13 @@ var ar = {
             $scope.userInfo.like_food = form.like_food.join(',');
         }
         if(form.zo_marriage){
-            $scope.userInfo.zo_marriage = form.zo_marriage.join(',');
+            $scope.userInfo.info.zo_marriage = form.zo_marriage.join(',');
         }
         if(form.zo_zodiac){
-            $scope.userInfo.zo_zodiac = form.zo_zodiac.join(',');
+            $scope.userInfo.info.zo_zodiac = form.zo_zodiac.join(',');
         }
         if(form.zo_constellation){
-            $scope.userInfo.zo_constellation = form.zo_constellation.join(',');
+            $scope.userInfo.info.zo_constellation = form.zo_constellation.join(',');
         }
         $scope.getTravel('went_travel', $scope.userInfo.went_travel);// 我去过的地方
         $scope.getTravel('want_travel', $scope.userInfo.want_travel);// 我想去的地方
