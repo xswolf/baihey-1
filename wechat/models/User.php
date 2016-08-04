@@ -238,7 +238,7 @@ class User extends \common\models\User
         $condition = $this->processWhere($where['where']);
         $joinTable = \Yii::$app->getDb()->tablePrefix . $this->_user_information_table;
 
-        $result = (new Query())->select(['*'])
+        $result = (new Query())->select(['u.*', 'i.*'])
             ->where($condition)
             ->from($this->tablePrefix.'user' . ' u')
             ->innerJoin($joinTable . ' i', "u.id=i.user_id")
