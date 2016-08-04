@@ -187,7 +187,7 @@ var ar = {
     },
 
     dateToTimestamp:function(date){
-        return new Date(data).getTime() / 1000;
+        return new Date(date).getTime() / 1000;
     },
 
     /**
@@ -1430,7 +1430,8 @@ var ar = {
         if(!formData) return true;
         var form = formData;
         if(form.birthday){
-            $scope.userInfo.info.age = this.dateToTimestamp(form.birbirthday);
+            //$scope.userInfo.info.age = this.dateToTimestamp(form.birbirthday);
+            $scope.userInfo.info.age = form.birthday.getTime()/1000;
             $scope.userInfo.info.zodiac = form.zodiac.id;
             $scope.userInfo.info.constellation = form.constellation.id;
         }
