@@ -355,14 +355,9 @@ define(['app/module', 'app/directive/directiveApi'
          * @returns {*}
          */
         function getSearchCondition(userId){
-            console.log($scope.searchForm);
-            console.log($scope.whereForm);
-            return;
             if(userId == ar.getStorage('searchConditionByUserId') && ar.getStorage('searchCondition')){
                 $scope.searchForm = ar.getStorage('searchCondition');
                 $scope.whereForm  = ar.getStorage('searchCondition');
-                console.log($scope.searchForm);
-                console.log($scope.whereForm);
             }else{
                 // 根据登录状态，登录用户性别默认查询条件：性别
                 /*if (ar.getStorage('bhy_u_sex') && (ar.getStorage('bhy_u_sex') == 0)) {
