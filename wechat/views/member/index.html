@@ -10,7 +10,10 @@
                     <span ng-if="headpicStatus == 2" class="under">审核中</span>
                 </div>
                 <div class="fl u_info ml10">
-                    <p>
+                    <p ng-if="userInfo.id < 10000">
+                        <strong class="fs14" ng-if="userInfo.info.real_name">{{userInfo.info.real_name}}</strong>
+                    </p>
+                    <p ng-if="userInfo.id > 9999">
                         <strong class="fs14" ng-if="userInfo.info.real_name">{{userInfo.info.real_name |
                             sex:userInfo.sex:userInfo.info.age}}</strong>
                         <strong class="fs14" ng-if="!userInfo.info.real_name">会员{{userInfo.id}}</strong>
@@ -20,7 +23,11 @@
                                 <span ng-if="userInfo.info.education"> {{userInfo.info.education | education}}</span>
                             </span>
                     </p>
-                    <p class="mt5">
+
+                    <p ng-if="userInfo.id < 10000" class="mt5">
+                        <span class="identity phone">官方</span>
+                    </p>
+                    <p ng-if="userInfo.id > 9999" class="mt5">
                         <span ng-class="{0:'not'}[honesty(sfzCheck)]" class="identity id">身份证</span>
                         <span ng-class="{true:'not'}[userInfo.phone == null || userInfo.phone == '']"
                               class="identity phone">手机</span>
@@ -41,7 +48,7 @@
                     </button>
                 </div>
             </ion-item>
-            <a class="hdr_tips pr clearfix pl16" ng-if="!honestyStatus"
+            <a class="hdr_tips pr clearfix pl16" ng-if="!honestyStatus && userInfo.id > 9999"
                href="#/member/honesty"><p class="tips fl"><i class="fl bhy-icon-tips-02 mr5"></i><span class="fl">实名制婚恋网，上传身份证</span><i
                     class="fr ion-ios-arrow-right vam fs20"></i></p></a>
             <ion-item class="personal_info mt10"
@@ -79,7 +86,7 @@
                     <i class="ion-ios-arrow-right vam"></i>
                 </div>
             </ion-item>-->
-            <ion-item class="marker_info" href="#/member/matchmaker">
+            <ion-item ng-if="userInfo.id > 9999" class="marker_info" href="#/member/matchmaker">
                 <div class="member_menu_i rounded marker">
                     <i class="bhy-icon-member-menu-04"></i>
                 </div>
@@ -90,7 +97,7 @@
                     <i class="ion-ios-arrow-right vam"></i>
                 </div>
             </ion-item>
-            <ion-item class="privacy_info" href="#/member/privacy">
+            <ion-item ng-if="userInfo.id > 9999" class="privacy_info" href="#/member/privacy">
                 <div class="member_menu_i rounded privacy">
                     <i class="bhy-icon-member-menu-05"></i>
                 </div>
@@ -112,7 +119,7 @@
                     <i class="ion-ios-arrow-right vam"></i>
                 </div>
             </ion-item>
-            <ion-item class="honesty_info" href="#/member/honesty">
+            <ion-item ng-if="userInfo.id > 9999" class="honesty_info" href="#/member/honesty">
                 <div class="member_menu_i rounded honesty">
                     <i class="bhy-icon-member-menu-07"></i>
                 </div>
@@ -123,7 +130,7 @@
                     <i class="ion-ios-arrow-right vam"></i>
                 </div>
             </ion-item>
-            <ion-item class="vip_info" href="#/member/vip">
+            <ion-item ng-if="userInfo.id > 9999" class="vip_info" href="#/member/vip">
                 <div class="member_menu_i rounded vip">
                     <i class="bhy-icon-member-menu-08"></i>
                 </div>
@@ -134,7 +141,7 @@
                     <i class="ion-ios-arrow-right vam"></i>
                 </div>
             </ion-item>
-            <ion-item class="money_info" href="#/member/account">
+            <ion-item ng-if="userInfo.id > 9999" class="money_info" href="#/member/account">
                 <div class="member_menu_i rounded money">
                     <i class="bhy-icon-member-menu-09"></i>
                 </div>

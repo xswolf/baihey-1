@@ -16,12 +16,18 @@
                 <img ng-src="{{userInfo.info.head_pic | isNull}}" onerror="this.src='/wechat/web/images/u_noimg.jpg'"
                      class="rounded">
                 <span ng-if="headpicStatus == 2" class="under">审核中</span>
-                <h2 class="fs16">
+                <h2 class="fs16" ng-if="userInfo.id < 10000">
+                    <span>{{userInfo.info.real_name}}，您好！</span>
+                </h2>
+                <h2 class="fs16" ng-if="userInfo.id > 9999">
                     <span ng-if="userInfo.info.real_name">{{userInfo.info.real_name | sex:userInfo.sex:userInfo.age}}，您好！</span>
                     <span ng-if="!userInfo.info.real_name">会员{{userInfo.id}}，您好！</span>
                 </h2>
                 <span class="cor20 user_id">ID:{{userInfo.id}}</span>
-                <p class="clearfix">
+                <p ng-if="userInfo.id < 10000" class="clearfix">
+                    <span class="identity phone">官方</span>
+                </p>
+                <p class="clearfix" ng-if="userInfo.id > 9999">
                     <span ng-class="{0:'not'}[honesty(sfzCheck)]" class="identity id">身份证</span>
                     <span ng-class="{true:'not'}[userInfo.phone == null || userInfo.phone == '']"
                           class="identity phone">手机</span>
@@ -30,19 +36,19 @@
                     <span ng-class="{false:'not'}[userInfo.info.level == '3']" class="identity diamond">钻石</span>
                     <span ng-if="userInfo.report_flag == 1" class="identity assertive-bg">被多次举报</span>
                 </p>
-                <p class="w100 mb0 mt5 lh28 assertive-bg" ng-if="sfzCheck === 0">
+                <p class="w100 mb0 mt5 lh28 assertive-bg" ng-if="sfzCheck === 0 && userInfo.id > 9999">
                     <i class="cor0 ml5 ion-android-alert vam"></i>
                     <span class="vam cor0">实名制婚恋，您的身份证未审核通过！</span>
                 </p>
-                <p class="w100 mb0 mt5 lh28 positive-bg" ng-if="sfzCheck === ''">
+                <p class="w100 mb0 mt5 lh28 positive-bg" ng-if="sfzCheck === '' && userInfo.id > 9999">
                     <i class="cor0 ml5 ion-android-alert vam"></i>
                     <span class="vam cor0">实名制婚恋，立即上传身份证！</span>
                 </p>
-                <p class="w100 mb0 mt5 lh28 energized-bg" ng-if="sfzCheck == 2">
+                <p class="w100 mb0 mt5 lh28 energized-bg" ng-if="sfzCheck == 2 && userInfo.id > 9999">
                     <i class="cor0 ml5 ion-ios-clock vam"></i>
                     <span class="vam cor0">实名制婚恋，您的身份证审核中...</span>
                 </p>
-                <p class="lh24" ng-if="sfzCheck == 1">个性签名dfghdfghdfghfg</p>
+                <p class="lh24" ng-if="sfzCheck == 1 && userInfo.id > 9999">{{userInfo.personalized}}</p>
             </a>
             <a class="item item-thumbnail-left" href="/wap/user/login" ng-if="!userInfo.info">
                 <img src="/wechat/web/images/u_noimg.jpg" class="rounded">

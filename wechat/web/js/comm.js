@@ -657,7 +657,6 @@ var ar = {
 
                 };
 
-
                 if (fromURL) {
                     if (options.galleryPIDs) {
                         // parse real index when custom PIDs are used
@@ -679,7 +678,6 @@ var ar = {
                 if (isNaN(options.index)) {
                     return;
                 }
-
 
                 options.mainClass = 'pswp--minimal--dark';
                 options.barsSize = {top: 0, bottom: 0};
