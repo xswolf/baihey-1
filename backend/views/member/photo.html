@@ -51,13 +51,13 @@
                         <td>
                             {{if ($vo.type ==1)}}
                                 照片
-                            {{else if ($vo.type ==2)}}
+                            {{else if ($vo.type ==2 || $vo.type == 3)}}
                                 身份证
-                            {{else if ($vo.type ==3)}}
-                                学历
                             {{else if ($vo.type ==4)}}
-                                离婚证
+                                学历
                             {{else if ($vo.type ==5)}}
+                                离婚证
+                            {{else if ($vo.type ==6)}}
                                 房产证
                             {{/if}}
                         </td>
