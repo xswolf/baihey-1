@@ -131,6 +131,7 @@ class User extends Base
             $userInfo = array_merge($userInfo, $data['info']);
             unset($data['info']);
         }
+        $userInfo['real_name'] = trim($userInfo['real_name']);
         // 身份证照片
         $userAuth = $this->getDefaultAuth();
         if (isset($data['auth'])) {
@@ -289,6 +290,9 @@ class User extends Base
         $userInfo = $data;
         if(isset($userInfo['info']['age']) && !empty($data['info']['age'])) {
             $userInfo['age'] = floor((time() - $userInfo['info']['age'])/ 365 / 24 / 3600);
+        }
+        if(isset($userInfo['info']['real_name']) && !empty($data['info']['real_name'])) {
+            $userInfo['info']['real_name'] = trim($userInfo['info']['real_name']);
         }
         $oldUser = $this->getUserById($data['user_id']);
         $defaultInfo = json_decode($oldUser['info']);
