@@ -10,15 +10,25 @@ define(['app/module', 'app/directive/directiveApi'
         $scope.searchForm = {age:'18-28',pageNum:1,pageSize:6,sex:0};
         $scope.userId = ar.getCookie("bhy_user_id") ? ar.getCookie("bhy_user_id") : 0;
 
-        $scope.whereForm = {};
-        // 默认查询条件：年龄范围，页码，每页数量
-        if($scope.userInfo.sex == 0) {
-            $scope.searchForm.sex = 1;
-            $scope.whereForm.sex = 1;
-        } else {
-            $scope.searchForm.sex = 0;
-            $scope.whereForm.sex = 0;
+        // 条件初始化
+        var init = function () {
+            $scope.searchForm = {};
+            $scope.whereForm = {};
+            $scope.searchForm.pageNum = 1; // 初始化页码
+            $scope.searchForm.pageSize = 6; // 初始化页码
+            // 默认查询条件：年龄范围，页码，每页数量
+            if($scope.userInfo.sex == 0) {
+                $scope.searchForm.sex = 1;
+                $scope.whereForm.sex = 1;
+            } else {
+                $scope.searchForm.sex = 0;
+                $scope.whereForm.sex = 0;
+            }
         }
+        init();
+        /*console.log($scope.searchForm);
+        console.log($scope.whereForm);
+        return;*/
         // 用户列表
         $scope.userList = [];
 
@@ -66,20 +76,6 @@ define(['app/module', 'app/directive/directiveApi'
             $scope.moreSearchModal = modal;
         });
 
-        // 条件初始化
-        var init = function () {
-            $scope.searchForm = {};
-            $scope.searchForm.pageNum = 1; // 初始化页码
-            $scope.searchForm.pageSize = 6; // 初始化页码
-            // 默认查询条件：年龄范围，页码，每页数量
-            if($scope.userInfo.sex == 0) {
-                $scope.searchForm.sex = 1;
-                $scope.whereForm.sex = 1;
-            } else {
-                $scope.searchForm.sex = 0;
-                $scope.whereForm.sex = 0;
-            }
-        }
         // 高级搜索-点击确定
         $scope.moreSearchOk = function () {
             $scope.dataLoading = true;
@@ -99,10 +95,8 @@ define(['app/module', 'app/directive/directiveApi'
 
         $rootScope.$on('$ionicView.beforeLeave',function(event,data){
             init();
-            $scope.whereForm = [];
-            $scope.userList = [];
-            $scope.loadMore();
             setSearchCondition($scope.searchForm,$scope.userId);
+            //$scope.loadMore();
         });
         //点击搜索
         $scope.search = function () {
@@ -361,9 +355,14 @@ define(['app/module', 'app/directive/directiveApi'
          * @returns {*}
          */
         function getSearchCondition(userId){
+            console.log($scope.searchForm);
+            console.log($scope.whereForm);
+            return;
             if(userId == ar.getStorage('searchConditionByUserId') && ar.getStorage('searchCondition')){
                 $scope.searchForm = ar.getStorage('searchCondition');
                 $scope.whereForm  = ar.getStorage('searchCondition');
+                console.log($scope.searchForm);
+                console.log($scope.whereForm);
             }else{
                 // 根据登录状态，登录用户性别默认查询条件：性别
                 /*if (ar.getStorage('bhy_u_sex') && (ar.getStorage('bhy_u_sex') == 0)) {

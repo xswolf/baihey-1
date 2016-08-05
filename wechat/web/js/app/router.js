@@ -90,6 +90,7 @@ define(["app/module", 'app/service/serviceApi'],
                 $stateProvider
                     .state('index', {   // 首页
                         url: "/index",
+                        cache: false,
                         templateUrl: "/wechat/views/site/index.html",
                         controller: 'site.index',
                         resolve: {
