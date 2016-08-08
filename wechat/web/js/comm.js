@@ -647,11 +647,11 @@ var ar = {
                     },
 
                     addCaptionHTMLFn: function (item, captionEl, isFake) {
-                        //if (!item.title) {
-                        //    captionEl.children[0].innerHTML = '';
-                        //    return false;
-                        //}
-                        captionEl.children[0].innerHTML = item.title ? item.title : '' + '<br/>' + item.author ;
+                        if (!item.title) {
+                            captionEl.children[0].innerHTML = '';
+                            return false;
+                        }
+                        captionEl.children[0].innerHTML = item.title;
                         return true;
                     },
 
