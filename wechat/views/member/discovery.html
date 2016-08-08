@@ -37,7 +37,7 @@
                         <i class="ion-chatbubble-working fs20 vam"></i>
                         <span class="vam">{{dis.comment_num}}</span>
                     </span>
-                    <span ng-if="dis.auth != 1 && dis.user_id == userInfo.user_id" class="fl ml20 pt2 cp ion-locked fl" ng-class="{2:'energized':3:'assertive'}[dis.auth]"></span>
+                    <span ng-if="dis.auth != 1 && dis.user_id == userInfo.user_id" class="fl ml20 pt2 cp ion-locked fl" ng-class="{2:'energized',3:'assertive'}[dis.auth]"></span>
                     <span class="fr cp cor53" ng-click="more(dis.id,$index)">
                         <i class="ion-more fs20 vam"></i>
                     </span>

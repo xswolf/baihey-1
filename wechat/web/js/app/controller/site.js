@@ -42,7 +42,10 @@ define(['app/module', 'app/directive/directiveApi'
             return val & 1;
         }
 
-        getSearchCondition($scope.userId);
+        $scope.cityName = '重庆';
+        $scope.cityId = 2;
+        $scope.searchForm.city = 2
+        //getSearchCondition($scope.userId);
 
         // 默认还有更多
         $scope.pageLast = true;
@@ -87,14 +90,14 @@ define(['app/module', 'app/directive/directiveApi'
             }
             $scope.searchForm = $scope.whereForm;
             $scope.searchForm.pageNum = 1;
-            setSearchCondition($scope.searchForm, $scope.userId);
+            //setSearchCondition($scope.searchForm, $scope.userId);
             $scope.loadMore();
         };
 
         $rootScope.$on('$stateChangeSuccess',
             function (event, toState, toParams, fromState, fromParams) {
                 init();
-                setSearchCondition($scope.searchForm, $scope.userId);
+                //setSearchCondition($scope.searchForm, $scope.userId);
             });
 
         //点击搜索
@@ -121,7 +124,7 @@ define(['app/module', 'app/directive/directiveApi'
                         $scope.dataLoading = true;
                         $ionicScrollDelegate.$getByHandle('mainScroll').scrollTop(true);
                         //$scope.loadMore();
-                        setSearchCondition($scope.searchForm, $scope.userId);
+                        //setSearchCondition($scope.searchForm, $scope.userId);
                     }
                     if (index == 0) {   //只看女
                         $scope.userList = [];
@@ -132,7 +135,7 @@ define(['app/module', 'app/directive/directiveApi'
                         $scope.dataLoading = true;
                         $ionicScrollDelegate.$getByHandle('mainScroll').scrollTop(true);
                         //$scope.loadMore();
-                        setSearchCondition($scope.searchForm, $scope.userId);
+                        //setSearchCondition($scope.searchForm, $scope.userId);
                     }
                     if (index == 2) {   //高级搜索
                         $scope.moreSearchModal.show();
