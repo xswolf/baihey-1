@@ -12,6 +12,7 @@
                 <div class="imgList_handle clearfix bhy-gallery">
                     <a class="imgItem pr" ng-repeat="img in imgList" ng-href="{{img.thumb_path | picture}}" data-size="{{img.thumb_path.split('.')[0].split('_')[1] + 'x' + img.thumb_path.split('.')[0].split('_')[2]}}">
                         <img src="/wechat/web/images/img_loading.gif" lazyload="{{img.thumb_path}}">
+                        <figure class="hide">轻触照片退出</figure>
                     </a>
                 </div>
             </div>
