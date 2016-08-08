@@ -424,7 +424,16 @@ define(['app/module', 'app/directive/directiveApi'
                 $scope.showLoading(progress);    // 显示loading
             };
             uploader.onSuccessItem = function (fileItem, response, status, headers) {  // 上传成功
+
                 if (response.status > 0) {
+                    $ionicModal.fromTemplateUrl('photoTitleModal.html', {
+                        scope: $scope,
+                        animation: 'slide-in-right'
+                    }).then(function (modal) {
+                        $scope.infoModal = modal;
+
+                    });
+
                     if ($scope.imgList.length < 1) { // 第一张上传相片默认设为头像
                         /*api.save('/wap/member/set-head', {
                          id: response.id,
@@ -437,6 +446,9 @@ define(['app/module', 'app/directive/directiveApi'
                     } else {
                         $scope.imgList.push({id: response.id, thumb_path: response.thumb_path, is_head: 0});
                     }
+
+
+
                 } else {
                     ar.saveDataAlert($ionicPopup, '上传图片失败！');
                 }
@@ -525,6 +537,7 @@ define(['app/module', 'app/directive/directiveApi'
                 }
             });
         }
+
 
 
         $scope.settingsBirthday = {
