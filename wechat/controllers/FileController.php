@@ -34,6 +34,7 @@ class FileController extends BaseController {
         // 保存数据
         if(1 == $data['status']) {
             isset($this->get['type']) ? $photo['type'] = $this->get['type'] :true;
+            $photo['is_check'] = $user_id < 10000 ? 1 : 2;
             $photo['thumb_path'] = $data['thumb_path'];
             $photo['pic_path']   = $data['pic_path'];
             $photo['time']       = $data['time'];
