@@ -62,7 +62,7 @@ define(['app/module', 'app/directive/directiveApi'
             return time - $scope.historyList[index - 1].time > 300
         }
 
-        $scope.followData = [];
+        $scope.followData = {};
         $scope.followData.user_id = $scope.sendId;
         $scope.followData.follow_id = $scope.receiveId;
         // 是否已关注对方， 已关注则不显示关注按钮。

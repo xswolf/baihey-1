@@ -390,7 +390,12 @@ define(['app/module'], function (module) {
     // 动态改变微信浏览器网页title - 聊天页
     module.directive('changeTitle', ['$timeout', function ($timeout) {
         return function (scope, element, attrs) {
-            changeTitle(attrs.changeTitle);
+            if(attrs.receiveId >= 10000){
+                changeTitle(attrs.changeTitle);
+            }else{
+                changeTitle(attrs.realName);
+            }
+
             scope.$on('$ionicView.beforeLeave', function () {
                 changeTitle('嘉瑞百合缘');
             })

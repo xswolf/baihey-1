@@ -7,7 +7,7 @@ define(['app/module', 'app/directive/directiveApi'
 
     module.controller("site.index", ['app.serviceApi', '$rootScope', '$scope', '$timeout', '$ionicPopup', '$ionicModal', '$ionicActionSheet', '$ionicLoading', '$ionicBackdrop', '$ionicScrollDelegate', '$location', 'dataFilter', function (api, $rootScope, $scope, $timeout, $ionicPopup, $ionicModal, $ionicActionSheet, $ionicLoading, $ionicBackdrop, $ionicScrollDelegate, $location, dataFilter) {
         // 搜索条件
-        $scope.searchForm = {age:'18-28',pageNum:1,pageSize:6,sex:0};
+        $scope.searchForm = {age: '18-28', pageNum: 1, pageSize: 6, sex: 0};
         $scope.userId = ar.getCookie("bhy_user_id") ? ar.getCookie("bhy_user_id") : 0;
 
         // 条件初始化
@@ -17,7 +17,7 @@ define(['app/module', 'app/directive/directiveApi'
             $scope.searchForm.pageNum = 1; // 初始化页码
             $scope.searchForm.pageSize = 6; // 初始化页码
             // 默认查询条件：年龄范围，页码，每页数量
-            if($scope.userId > 0 && $scope.userInfo.sex == 0) {
+            if ($scope.userId > 0 && $scope.userInfo.sex == 0) {
                 $scope.searchForm.sex = 1;
                 $scope.whereForm.sex = 1;
             } else {
@@ -79,7 +79,7 @@ define(['app/module', 'app/directive/directiveApi'
             $scope.dataLoading = true;
             $scope.userList = [];
             $scope.moreSearchModal.hide();
-            if($scope.whereForm.id) {
+            if ($scope.whereForm.id) {
                 $scope.searchForm = [];
                 $scope.searchForm.id = $scope.whereForm.id;
                 $scope.whereForm = [];
@@ -87,15 +87,16 @@ define(['app/module', 'app/directive/directiveApi'
             }
             $scope.searchForm = $scope.whereForm;
             $scope.searchForm.pageNum = 1;
-            setSearchCondition($scope.searchForm,$scope.userId);
+            setSearchCondition($scope.searchForm, $scope.userId);
             $scope.loadMore();
         };
 
-        $rootScope.$on('$ionicView.beforeLeave',function(event,data){
-            init();
-            setSearchCondition($scope.searchForm,$scope.userId);
-            //$scope.loadMore();
-        });
+        $rootScope.$on('$stateChangeSuccess',
+            function (event, toState, toParams, fromState, fromParams) {
+                init();
+                setSearchCondition($scope.searchForm, $scope.userId);
+            });
+
         //点击搜索
         $scope.search = function () {
 
@@ -120,7 +121,7 @@ define(['app/module', 'app/directive/directiveApi'
                         $scope.dataLoading = true;
                         $ionicScrollDelegate.$getByHandle('mainScroll').scrollTop(true);
                         //$scope.loadMore();
-                        setSearchCondition($scope.searchForm,$scope.userId);
+                        setSearchCondition($scope.searchForm, $scope.userId);
                     }
                     if (index == 0) {   //只看女
                         $scope.userList = [];
@@ -131,7 +132,7 @@ define(['app/module', 'app/directive/directiveApi'
                         $scope.dataLoading = true;
                         $ionicScrollDelegate.$getByHandle('mainScroll').scrollTop(true);
                         //$scope.loadMore();
-                        setSearchCondition($scope.searchForm,$scope.userId);
+                        setSearchCondition($scope.searchForm, $scope.userId);
                     }
                     if (index == 2) {   //高级搜索
                         $scope.moreSearchModal.show();
@@ -141,7 +142,7 @@ define(['app/module', 'app/directive/directiveApi'
             });
         }
 
-        $scope.doRefresh = function(){
+        $scope.doRefresh = function () {
             var refreshForm = $scope.searchForm;
             refreshForm.pageSize = $scope.userList.length;
             refreshForm.pageNum = 1;
@@ -154,7 +155,7 @@ define(['app/module', 'app/directive/directiveApi'
                 $scope.userList = res.data;
                 $scope.dataLoading = false;
                 $scope.searchForm.pageNum += 1;
-            }).finally(function(){
+            }).finally(function () {
                 $scope.$broadcast('scroll.refreshComplete');
             });
         }
@@ -174,7 +175,7 @@ define(['app/module', 'app/directive/directiveApi'
                 $scope.dataLoading = false;
                 $scope.searchForm.pageNum += 1;
                 //console.log($scope.userList);
-            }).finally(function(){
+            }).finally(function () {
                 $scope.$broadcast('scroll.infiniteScrollComplete');
             });
         }
@@ -343,26 +344,26 @@ define(['app/module', 'app/directive/directiveApi'
          * @param currentSearchCondition 当前搜索条件
          * @param userId 当前用户ID
          */
-        function setSearchCondition(currentSearchCondition,userId){
-            ar.setStorage('searchCondition',currentSearchCondition);
-            ar.setStorage('searchConditionByUserId',userId);
+        function setSearchCondition(currentSearchCondition, userId) {
+            ar.setStorage('searchCondition', currentSearchCondition);
+            ar.setStorage('searchConditionByUserId', userId);
         }
 
         /**
          * 读取搜索条件缓存
          * @returns {*}
          */
-        function getSearchCondition(userId){
-            if(userId == ar.getStorage('searchConditionByUserId') && ar.getStorage('searchCondition')){
+        function getSearchCondition(userId) {
+            if (userId == ar.getStorage('searchConditionByUserId') && ar.getStorage('searchCondition')) {
                 $scope.searchForm = ar.getStorage('searchCondition');
-                $scope.whereForm  = ar.getStorage('searchCondition');
-            }else{
+                $scope.whereForm = ar.getStorage('searchCondition');
+            } else {
                 // 根据登录状态，登录用户性别默认查询条件：性别
                 /*if (ar.getStorage('bhy_u_sex') && (ar.getStorage('bhy_u_sex') == 0)) {
-                    $scope.searchForm.sex = 1;
-                } else {
-                    $scope.searchForm.sex = 0;
-                }*/
+                 $scope.searchForm.sex = 1;
+                 } else {
+                 $scope.searchForm.sex = 0;
+                 }*/
                 $scope.cityName = '重庆';
                 $scope.cityId = 2;
                 $scope.searchForm.city = 2
