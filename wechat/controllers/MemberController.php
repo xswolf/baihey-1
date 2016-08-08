@@ -210,6 +210,10 @@ class MemberController extends BaseController
         $user_id = Cookie::getInstance()->getCookie('bhy_id')->value;
         // 获取用户信息
         $userInfo = User::getInstance()->getUserById($this->get['id']);
+        // 获取admin用户信息
+        $authUser = new \backend\models\User();
+        $authUserInfo = $authUser->authUserById($this->get['id']);
+        $authUserInfo = $authUserInfo ? $authUserInfo : [];
         // 获取用户相册
         $userPhoto = UserPhoto::getInstance()->getPhotoList($this->get['id']);
         // 获取用户动态
@@ -222,9 +226,9 @@ class MemberController extends BaseController
         $followedStatus = $followedStatus ? $followedStatus['status'] : false;
 
         if ($userInfo) {
-            $this->renderAjax(['status' => 1, 'userInfo' => $userInfo, 'userPhoto' => $userPhoto, 'dynamic' => $dynamic, 'followStatus' => $followStatus, 'followedStatus' => $followedStatus, 'msg' => 'user_info页面获取信息成功']);
+            $this->renderAjax(['status' => 1, 'userInfo' => $userInfo, 'authUserInfo' => $authUserInfo, 'userPhoto' => $userPhoto, 'dynamic' => $dynamic, 'followStatus' => $followStatus, 'followedStatus' => $followedStatus, 'msg' => 'user_info页面获取信息成功']);
         } else {
-            $this->renderAjax(['status' => 0, 'userInfo' => $userInfo, 'userPhoto' => $userPhoto, 'dynamic' => $dynamic, 'followStatus' => $followStatus, 'followedStatus' => $followedStatus, 'msg' => 'user_info页面获取信息失败']);
+            $this->renderAjax(['status' => 0, 'userInfo' => $userInfo, 'authUserInfo' => $authUserInfo, 'userPhoto' => $userPhoto, 'dynamic' => $dynamic, 'followStatus' => $followStatus, 'followedStatus' => $followedStatus, 'msg' => 'user_info页面获取信息失败']);
         }
     }
 

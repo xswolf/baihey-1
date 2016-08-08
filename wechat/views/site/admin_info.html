@@ -34,29 +34,29 @@
                 </ul>
                 <i class="icon ion-ios-arrow-right cor52"></i>
             </ion-item>
-            <ion-item>
+            <ion-item ng-if="otherUserInfo.personalized != ''">
                 <div class="cor4 fl fs14 personalized_l">个人签名</div>
                 <div class="ml20 wn fl cor8 fs14 personalized_r">{{otherUserInfo.personalized}}</div>
             </ion-item>
-            <ion-item>
+            <ion-item ng-if="authUserInfo.landline != ''">
                 <p>
                     <span class="cor4">座机号码</span>
-                    <span class="ml20">{{otherUserInfo.info.phone}}</span>
+                    <span class="ml20">{{authUserInfo.landline}}</span>
                 </p>
             </ion-item>
-            <ion-item>
+            <ion-item ng-if="otherUserInfo.phone != '' && authUserInfo.id != 1">
                 <p>
                     <span class="cor4">手机号码</span>
-                    <span class="ml20">{{otherUserInfo.info.phone}}</span>
+                    <span class="ml20">{{otherUserInfo.phone}}</span>
                 </p>
             </ion-item>
-            <ion-item>
+            <ion-item ng-if="otherUserInfo.info.wechat != ''">
                     <p>
                         <span class="cor4">微信号码</span>
                         <span class="ml20">{{otherUserInfo.info.wechat}}</span>
                     </p>
             </ion-item>
-            <ion-item>
+            <ion-item ng-if="otherUserInfo.info.qq != ''">
                     <p>
                         <span class="cor4">Q Q号码</span>
                         <span class="ml20">{{otherUserInfo.info.qq}}</span>

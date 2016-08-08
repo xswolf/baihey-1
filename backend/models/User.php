@@ -269,6 +269,7 @@ class User extends Model
         $member['personalized'] = $data['introduction'];
         $member['info']['real_name'] = $data['name'];
         $member['info']['qq'] = empty($data['qq']) ? $data['qq'] : '';
+        $member['info']['wechat'] = empty($data['wechat']) ? $data['wechat'] : '';
         $member['password'] = $data['password'];
         $member['sex'] = !empty($data['sex']) ? $data['sex'] : 1;
         if(\common\models\User::getInstance()->addUser($member) && !empty($data['photo'])) {
@@ -280,5 +281,10 @@ class User extends Model
             UserPhoto::getInstance()->addPhoto($id, $photo);
         }
 
+    }
+
+    public function authUserById($id)
+    {
+        return (new Query())->select(['id', 'name', 'real_name', 'phone', 'landline', 'qq', 'wechat', 'email', 'introduction', 'photo', 'address', 'duty', 'type'])->from($this->userTable)->where(['id' => $id])->one();
     }
 }

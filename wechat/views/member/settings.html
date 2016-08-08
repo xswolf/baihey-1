@@ -9,14 +9,36 @@
                 把TA推荐给朋友
                 <i class="icon ion-ios-arrow-right cor4"></i>
             </ion-item>-->
-            <ion-item class="item-icon-right" ng-click="report()">
+            <ion-item class="item-icon-right" ng-click="report()" ng-if="userInfo.user_id > 9999">
                 举报
                 <i class="icon ion-ios-arrow-right cor4"></i>
             </ion-item>
-            <ion-toggle ng-model="formData.pullBlack" toggle-class="toggle-positive" ng-click="pullTheBlack()">
+            <ion-item class="item-icon-right" ng-click="openModal()" ng-if="userInfo.user_id < 10000">
+                意见反馈
+                <i class="icon ion-ios-arrow-right cor4"></i>
+            </ion-item>
+            <ion-toggle ng-model="formData.pullBlack" toggle-class="toggle-positive" ng-click="pullTheBlack()"  ng-if="userInfo.user_id > 9999">
                 拉黑
             </ion-toggle>
             <button ng-if="formData.follow && !formData.pullBlack" class="button button-assertive button-block mt10 stable" ng-click="delFollow()">取消关注</button>
         </ion-list>
     </ion-content>
+    <script id="reBackModal.html" type="text/ng-template">
+        <ion-modal-view>
+            <link href="/wechat/web/js/plugin/mobiscroll/mobiscroll.custom-3.0.0-beta.min.css" rel="stylesheet">
+            <ion-header-bar>
+                <a href="javascript:;" ng-click="closeModal()" class="button button-icon">取消</a>
+                <h1 class="title">意见反馈</h1>
+                <a href="javascript:;" ng-click="saveReBack" class="button button-icon">提交</a>
+            </ion-header-bar>
+            <ion-content class="stable-bg" delegate-handle="searchScroll">
+                <ion-item>
+                <textarea></textarea>
+                </ion-item>
+            </ion-content>
+        </ion-modal-view>
+    </script>
+
+
 </ion-view>
+

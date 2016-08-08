@@ -1108,6 +1108,7 @@ define(['app/module', 'app/directive/directiveApi'
             if (res.status) {
                 // 用户信息
                 $scope.otherUserInfo = res.userInfo;
+                $scope.authUserInfo = res.authUserInfo;
                 $scope.otherUserInfo.info = JSON.parse($scope.otherUserInfo.info);
                 $scope.otherUserInfo.auth = JSON.parse($scope.otherUserInfo.auth);
                 // 用户相册
@@ -2816,7 +2817,7 @@ define(['app/module', 'app/directive/directiveApi'
     }]);
 
 // 用户资料-隐私设置
-    module.controller("member.settings", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$location', '$ionicActionSheet', function (api, $scope, $timeout, $ionicPopup, $location, $ionicActionSheet) {
+    module.controller("member.settings", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$location', '$ionicActionSheet','$ionicModal', function (api, $scope, $timeout, $ionicPopup, $location, $ionicActionSheet,$ionicModal) {
         $scope.formData = {};
         var followData = [];
         followData.user_id = ar.getCookie("bhy_user_id");
@@ -2912,6 +2913,20 @@ define(['app/module', 'app/directive/directiveApi'
                 console.log('取消拉黑');
             }
         }
+
+        $ionicModal.fromTemplateUrl('reBackModal.html', {
+            scope: $scope,
+            animation: 'slide-in-right'
+        }).then(function(modal) {
+            $scope.modal = modal;
+        });
+        $scope.openModal = function() {
+            $scope.modal.show();
+        };
+        $scope.closeModal = function() {
+            $scope.modal.hide();
+        };
+
     }]);
 
     return module;
