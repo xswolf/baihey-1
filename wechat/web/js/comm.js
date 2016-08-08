@@ -647,10 +647,10 @@ var ar = {
                     },
 
                     addCaptionHTMLFn: function (item, captionEl, isFake) {
-                        if (!item.title) {
-                            captionEl.children[0].innerHTML = '';
-                            return false;
-                        }
+                        //if (!item.title) {
+                        //    captionEl.children[0].innerText = '';
+                        //    return false;
+                        //}
                         captionEl.children[0].innerHTML = '轻触照片退出';
                         captionEl.children[0].style = 'text-align:center';
                         return true;
