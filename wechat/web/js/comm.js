@@ -648,7 +648,7 @@ var ar = {
 
                     addCaptionHTMLFn: function (item, captionEl, isFake) {
                         if (!item.title) {
-                            captionEl.children[0].innerText = '';
+                            captionEl.children[0].innerText = item.author;
                             return false;
                         }
                         captionEl.children[0].innerHTML = item.title + '<br/><small>' + item.author + '</small>';
