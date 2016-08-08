@@ -195,7 +195,7 @@ define(['app/module', 'app/directive/directiveApi'
 
         // 修改信息弹窗modal
         $scope.updateInfo = function (fieldName) {
-            var userInfo = $scope.userInfo;
+            ar.setStorage('tempData', $scope.userInfo);
             if (!fieldName)  return false;
             $ionicModal.fromTemplateUrl('/wechat/web/templates/' + fieldName + '.html', {
                 scope: $scope,
@@ -207,12 +207,15 @@ define(['app/module', 'app/directive/directiveApi'
                 }
             });
             $scope.saveClose = function () {
-                $scope.userInfo = userInfo;
+                $scope.userInfo = ar.getStorage('tempData');
                 $scope.infoModal.hide();
             }
 
             $scope.$on('modal.hidden', function() {
-                $scope.userInfo = userInfo;
+                $scope.userInfo = ar.getStorage('tempData');
+            });
+            $scope.$on('$ionicView.beforeLeave', function() {
+                localStorage.removeItem('tempData');
             });
         }
 
