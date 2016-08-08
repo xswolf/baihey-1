@@ -652,7 +652,10 @@ var ar = {
                         //    return false;
                         //}
                         captionEl.children[0].innerHTML = '轻触照片退出';
-                        captionEl.children[0].style.cssText = 'text-align:center';
+                        captionEl.children[0].style.cssText = 'text-align:center;font-size:15px;';
+                        captionEl.children[0].onclick = function(){
+                            gallery.close();
+                        }
                         return true;
                     },
 
