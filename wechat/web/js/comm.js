@@ -647,14 +647,14 @@ var ar = {
                     },
 
                     addCaptionHTMLFn: function (item, captionEl, isFake) {
-                        if(!item.title && item.author){
-                            captionEl.children[0].innerHTML = item.author;
-                            return true;
-                        }
-                        if (!item.title) {
-                            captionEl.children[0].innerHTML = '';
-                            return false;
-                        }
+                        //if(!item.title && item.author){
+                        //    captionEl.children[0].innerHTML = item.author;
+                        //    return true;
+                        //}
+                        //if (!item.title) {
+                        //    captionEl.children[0].innerHTML = '';
+                        //    return false;
+                        //}
                         captionEl.children[0].innerHTML = item.title + '<br/><small>' + item.author + '</small>';
                         return true;
                     },
