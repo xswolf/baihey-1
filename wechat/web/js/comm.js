@@ -651,7 +651,7 @@ var ar = {
                             captionEl.children[0].innerText = '';
                             return false;
                         }
-                        captionEl.children[0].innerHTML = item.title + '<br/><small>Photo: ' + item.author + '</small>';
+                        captionEl.children[0].innerHTML = item.title + '<br/><small>' + item.author + '</small>';
                         return true;
                     },
 
@@ -681,14 +681,14 @@ var ar = {
 
                 options.mainClass = 'pswp--minimal--dark';
                 options.barsSize = {top: 0, bottom: 0};
-                options.captionEl = false;
+                options.captionEl = true;
                 options.fullscreenEl = false;
                 options.shareEl = false;
                 options.history = false;
                 options.bgOpacity = 0.9;
                 options.tapToClose = true;
                 options.tapToToggleControls = false;
-                options.closeEl = true;
+                options.closeEl = false;
 
                 if (disableAnimation) {
                     options.showAnimationDuration = 0;

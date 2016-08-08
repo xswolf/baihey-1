@@ -9,8 +9,8 @@
             <div class="imgList_con">
                 <div class="imgList_handle clearfix ">
                     <div class="bhy-gallery">
-                        <a class="imgItem pr" ng-repeat="img in imgList | orderBy:['-is_head']" on-hold="moreImg($index)" ng-href="{{img.thumb_path | picture}}" data-size="{{img.thumb_path.split('.')[0].split('_')[1] + 'x' + img.thumb_path.split('.')[0].split('_')[2]}}">
-                            <img src="/wechat/web/images/img_loading.gif" lazyload="{{img.thumb_path}}">
+                        <a class="imgItem pr" ng-repeat="img in imgList | orderBy:['-is_head']" on-hold="moreImg($index)" data-author="轻触照片退出" ng-href="{{img.thumb_path | picture}}" data-size="{{img.thumb_path.split('.')[0].split('_')[1] + 'x' + img.thumb_path.split('.')[0].split('_')[2]}}">
+                            <img src="/wechat/web/images/img_loading.gif" lazyload="{{img.thumb_path}}" title="kfgjnhfghgfh">
                             <div class="underReview" ng-if="img.is_check != 1"><span class="">审核中</span></div>
                         </a>
                     </div>
@@ -23,31 +23,28 @@
             <input id="pic_fileInput" type="file" nv-file-select="" uploader="uploader"
                    style="visibility: hidden; display: none;" accept="image/*">
 
-            <ion-item ng-if="sfzCheck === '' && userInfo.id > 9999" class="mb10 item-icon-left item-icon-right positive-bg white" href="#/member/honesty">
+            <ion-item ng-if="sfzCheck === ''" class="mb10 item-icon-left item-icon-right positive-bg white" href="#/member/honesty">
                 <i class="icon ion-android-alert cor0"></i>
                 实名制婚恋，立即上传身份证！
                 <i class="icon ion-ios-arrow-right cor0"></i>
             </ion-item>
-            <ion-item ng-if="sfzCheck == 2 && userInfo.id > 9999" class="mb10 item-icon-left item-icon-right energized-bg white" href="#/member/honesty">
+            <ion-item ng-if="sfzCheck == 2" class="mb10 item-icon-left item-icon-right energized-bg white" href="#/member/honesty">
                 <i class="icon ion-ios-clock cor0"></i>
                 实名制婚恋，您的身份证审核中...
                 <i class="icon ion-ios-arrow-right cor0"></i>
             </ion-item>
-            <ion-item ng-if="sfzCheck === 0 && userInfo.id > 9999" class="mb10 item-icon-left item-icon-right assertive-bg white" href="#/member/honesty">
+            <ion-item ng-if="sfzCheck === 0" class="mb10 item-icon-left item-icon-right assertive-bg white" href="#/member/honesty">
                 <i class="icon ion-android-alert cor0"></i>
                 实名制婚恋，您的身份证未审核通过！
                 <i class="icon ion-ios-arrow-right cor0"></i>
             </ion-item>
-            <ion-item ng-if="sfzCheck == 1 && userInfo.id > 9999" class="mb10 item-icon-left item-icon-right balanced-bg white" href="#/member/honesty">
+            <ion-item ng-if="sfzCheck == 1" class="mb10 item-icon-left item-icon-right balanced-bg white" href="#/member/honesty">
                 <i class="icon ion-ios-checkmark cor0"></i>
                 实名制婚恋，恭喜您的身份已认证成功！
                 <i class="icon ion-ios-arrow-right cor0"></i>
             </ion-item>
             <ion-item class="idt">
-                <p ng-if="userInfo.id < 10000">
-                    <span class="identity phone">官方</span>
-                </p>
-                <p ng-if="userInfo.id > 9999">
+                <p>
                     <span ng-class="{0:'not'}[honesty(sfzCheck)]" class="identity id">身份证</span>
                         <span ng-class="{true:'not'}[userInfo.phone == null || userInfo.phone == '']"
                               class="identity phone">手机</span>
@@ -89,7 +86,7 @@
                 </p>
                 <i ng-if="!userInfo.info.real_name" class="icon ion-ios-arrow-right cor52"></i>
             </ion-item>
-            <ion-item ng-if="userInfo.id > 9999" class="item-icon-right" ng-click="updateInfo(userInfo.age && userInfo.age != 0 ? '' : 'age')">
+            <ion-item class="item-icon-right" ng-click="updateInfo(userInfo.age && userInfo.age != 0 ? '' : 'age')">
                 <p>
                     <span class="cor4">年龄</span>
                     <span ng-if="!userInfo.age || userInfo.age == 0" class="ml48 mr10 cor21">立即填写</span>
@@ -97,7 +94,7 @@
                 </p>
                 <i ng-if="!userInfo.age || userInfo.age == 0" class="icon ion-ios-arrow-right cor52"></i>
             </ion-item>
-            <ion-item ng-if="userInfo.id > 9999" class="item-icon-right" ng-click="updateInfo(userInfo.info.height && userInfo.info.height != 0 ? '' : 'height')">
+            <ion-item class="item-icon-right" ng-click="updateInfo(userInfo.info.height && userInfo.info.height != 0 ? '' : 'height')">
                 <p>
                     <span class="cor4">身高</span>
                     <span ng-if="!userInfo.info.height || userInfo.info.height == 0" class="ml48 mr10 cor21">立即填写</span>
@@ -105,7 +102,7 @@
                 </p>
                 <i ng-if="!userInfo.info.height || userInfo.info.height == 0" class="icon ion-ios-arrow-right cor52"></i>
             </ion-item>
-            <ion-item ng-if="userInfo.id > 9999" class="item-icon-right" ng-click="updateInfo('education')">
+            <ion-item class="item-icon-right" ng-click="updateInfo('education')">
                 <p>
                     <span class="cor4">学历</span>
                     <span ng-if="!userInfo.info.education" class="ml48 mr10 cor21">立即填写</span>
@@ -113,7 +110,7 @@
                 </p>
                 <i class="icon ion-ios-arrow-right cor52"></i>
             </ion-item>
-            <ion-item ng-if="userInfo.id > 9999" class="item-icon-right" ng-click="updateInfo(userInfo.info.is_marriage ? '' : 'is_marriage')" >
+            <ion-item class="item-icon-right" ng-click="updateInfo(userInfo.info.is_marriage ? '' : 'is_marriage')" >
                 <p>
                     <span class="cor4">婚姻状况</span>
                     <span ng-if="!userInfo.info.is_marriage" class="ml20 mr10 cor21">立即填写</span>
@@ -122,7 +119,7 @@
                 </p>
                 <i ng-if="!userInfo.info.is_marriage" class="icon ion-ios-arrow-right cor52"></i>
             </ion-item>
-            <ion-item ng-if="userInfo.id > 9999" class="item-icon-right" ng-click="updateInfo('occupation')">
+            <ion-item class="item-icon-right" ng-click="updateInfo('occupation')">
                 <p>
                     <span class="cor4">职业</span>
                     <span ng-if="!userInfo.info.occupation" class="ml48 mr10 cor21">立即填写</span>
@@ -130,7 +127,7 @@
                 </p>
                 <i class="icon ion-ios-arrow-right cor52"></i>
             </ion-item>
-            <ion-item ng-if="userInfo.id > 9999" class="item-icon-right" ng-click="updateInfo('address')">
+            <ion-item class="item-icon-right" ng-click="updateInfo('address')">
                 <p>
                     <span class="cor4">地区</span>
                     <span ng-if="!(userInfo.province > 0)" class="ml48 mr10 cor21">立即填写</span>
@@ -138,7 +135,7 @@
                 </p>
                 <i class="icon ion-ios-arrow-right cor52"></i>
             </ion-item>
-            <ion-item ng-if="userInfo.id > 9999" class="item-icon-right" ng-click="updateInfo('haunt_address')">
+            <ion-item class="item-icon-right" ng-click="updateInfo('haunt_address')">
                 <p>
                     <span class="cor4">常出没地</span>
                     <span ng-if="!userInfo.info.haunt_address" class="ml20 mr10 cor21">立即填写</span>
@@ -179,7 +176,7 @@
                 </p>
                 <i class="icon ion-ios-arrow-right cor52"></i>
             </ion-item>
-            <div ng-if="userInfo.id > 9999" class="hobby">
+            <div class="hobby">
                 <div class="hobby_bg">
                     <img src="/wechat/web/images/info_hobby_bg.jpg">
                 </div>
@@ -189,7 +186,7 @@
                     </div>
                 </div>
             </div>
-            <ion-item ng-if="userInfo.id > 9999" class="item-icon-right" ng-click="updateInfo('been_address')">
+            <ion-item class="item-icon-right" ng-click="updateInfo('been_address')">
                 <p><span class="cor4">我去过的地方({{went_travel_count}})</span></p>
                 <div class="hob_addr clearfix">
                         <span class="hob_addr_flag" ng-repeat="addrt in went_travel track by addrt.id">
@@ -199,7 +196,7 @@
                 </div>
                 <i class="icon ion-ios-arrow-right cor52"></i>
             </ion-item>
-            <ion-item ng-if="userInfo.id > 9999" class="item-icon-right" ng-click="updateInfo('want_address')">
+            <ion-item class="item-icon-right" ng-click="updateInfo('want_address')">
                     <p><span class="cor4">想去的地方({{want_travel_count}})</span></p>
                     <div class="hob_addr clearfix">
                             <span class="hob_addr_flag f2" ng-repeat="addrt in want_travel track by addrt.id">
@@ -209,7 +206,7 @@
                     </div>
                 <i class="icon ion-ios-arrow-right cor52"></i>
             </ion-item>
-            <ion-item ng-if="userInfo.id > 9999" class="item-icon-right" ng-click="updateInfo('sports')">
+            <ion-item class="item-icon-right" ng-click="updateInfo('sports')">
                 <p><span class="cor4">喜欢的运动({{love_sport_count}})</span></p>
                     <div class="hob_sport clearfix">
                         <span class="hob_sport_flag" ng-repeat="addrt in love_sport track by addrt.id">
@@ -220,7 +217,7 @@
                 <i class="icon ion-ios-arrow-right cor52"></i>
             </ion-item>
 
-            <ion-item ng-if="userInfo.id > 9999" class="item-icon-right" ng-click="updateInfo('movie')">
+            <ion-item class="item-icon-right" ng-click="updateInfo('movie')">
                     <p><span class="cor4">喜欢的影视({{want_film_count}})</span></p>
                 <div class="hob_sport clearfix">
                         <span class="hob_tv_flag" ng-repeat="addrt in want_film track by addrt.id">
@@ -231,7 +228,7 @@
                 <i class="icon ion-ios-arrow-right cor52"></i>
             </ion-item>
 
-            <ion-item ng-if="userInfo.id > 9999" class="item-icon-right" ng-click="updateInfo('delicacy')">
+            <ion-item class="item-icon-right" ng-click="updateInfo('delicacy')">
                     <p><span class="cor4">喜欢的美食({{like_food_count}})</span></p>
                     <div class="hob_food clearfix">
                         <span class="hob_food_flag" ng-repeat="addrt in like_food track by addrt.id">
@@ -241,10 +238,10 @@
                     </div>
                 <i class="icon ion-ios-arrow-right cor52"></i>
             </ion-item>
-            <ion-item ng-if="userInfo.id > 9999" class="item-divider">
+            <ion-item class="item-divider">
                 详细资料
             </ion-item>
-            <ion-item ng-if="userInfo.id > 9999" class="item-icon-right" ng-click="updateInfo(userInfo.info.nation ? '' : 'nation')">
+            <ion-item class="item-icon-right" ng-click="updateInfo(userInfo.info.nation ? '' : 'nation')">
                 <p>
                     <span class="cor4">民族</span>
                     <span ng-if="!userInfo.info.nation" class="ml48 mr10 cor21">立即填写</span>
@@ -253,7 +250,7 @@
                 <i class="icon ion-ios-arrow-right cor52"></i>
             </ion-item>
 
-            <ion-item ng-if="userInfo.id > 9999" class="item-icon-right" ng-click="updateInfo('children')">
+            <ion-item class="item-icon-right" ng-click="updateInfo('children')">
                 <p>
                     <span class="cor4">子女状况</span>
                     <span ng-if="!userInfo.info.is_child" class="ml20 mr10 cor21">立即填写</span>
@@ -262,8 +259,7 @@
                 <i class="icon ion-ios-arrow-right cor52"></i>
             </ion-item>
 
-
-            <ion-item ng-if="userInfo.id > 9999" class="item-icon-right" ng-click="updateInfo('salary')">
+            <ion-item class="item-icon-right" ng-click="updateInfo('salary')">
                 <p>
                     <span class="cor4">年薪</span>
                     <span ng-if="!userInfo.info.year_income" class="ml48 mr10 cor21">立即填写</span>
@@ -272,7 +268,7 @@
                 </p>
                 <i class="icon ion-ios-arrow-right cor52"></i>
             </ion-item>
-            <ion-item ng-if="userInfo.id > 9999" class="item-icon-right" ng-click="updateInfo('house')">
+            <ion-item class="item-icon-right" ng-click="updateInfo('house')">
                 <p>
                     <span class="cor4">购房情况</span>
                     <span ng-if="!userInfo.info.is_purchase" class="ml20 mr10 cor21">立即填写</span>
@@ -281,7 +277,7 @@
                 </p>
                 <i class="icon ion-ios-arrow-right cor52"></i>
             </ion-item>
-            <ion-item ng-if="userInfo.id > 9999" class="item-icon-right" ng-click="updateInfo('car')">
+            <ion-item class="item-icon-right" ng-click="updateInfo('car')">
                 <p>
                     <span class="cor4">购车情况</span>
                     <span ng-if="!userInfo.info.is_car" class="ml20 mr10 cor21">立即填写</span>
@@ -289,7 +285,7 @@
                 </p>
                 <i class="icon ion-ios-arrow-right cor52"></i>
             </ion-item>
-            <ion-item ng-if="userInfo.id > 9999" class="item-icon-right" ng-click="updateInfo('blood')">
+            <ion-item class="item-icon-right" ng-click="updateInfo('blood')">
                 <p>
                     <span class="cor4">血型</span>
                     <span ng-if="!userInfo.info.blood" class="ml48 mr10 cor21">立即填写</span>
@@ -297,7 +293,7 @@
                 </p>
                 <i class="icon ion-ios-arrow-right cor52"></i>
             </ion-item>
-            <ion-item ng-if="userInfo.id > 9999" class="item-icon-right" ng-click="updateInfo('school')">
+            <ion-item class="item-icon-right" ng-click="updateInfo('school')">
                 <p>
                     <span class="cor4">毕业院校</span>
                     <span ng-if="!userInfo.info.school" class="ml20 mr10 cor21">立即填写</span>
@@ -305,7 +301,7 @@
                 </p>
                 <i class="icon ion-ios-arrow-right cor52"></i>
             </ion-item>
-            <ion-item ng-if="userInfo.id > 9999" class="item-icon-right" ng-click="updateInfo('work')">
+            <ion-item class="item-icon-right" ng-click="updateInfo('work')">
                 <p>
                     <span class="cor4">工作单位</span>
                     <span ng-if="!userInfo.info.work" class="ml20 mr10"><span class="cor21">立即填写</span> （保密 仅供红娘参考）</span>
@@ -313,10 +309,10 @@
                 </p>
                 <i class="icon ion-ios-arrow-right cor52"></i>
             </ion-item>
-            <ion-item ng-if="userInfo.id > 9999" class="item-divider">
+            <ion-item class="item-divider">
                 择偶标准
             </ion-item>
-            <ion-item ng-if="userInfo.id > 9999" class="item-icon-right" ng-click="updateInfo('zo_age')">
+            <ion-item class="item-icon-right" ng-click="updateInfo('zo_age')">
                 <p>
                     <span class="cor4">年龄要求</span>
                     <span ng-if="!userInfo.info.zo_age" class="ml20 mr10 cor21">不限</span>
@@ -324,7 +320,7 @@
                 </p>
                 <i class="icon ion-ios-arrow-right cor52"></i>
             </ion-item>
-            <ion-item ng-if="userInfo.id > 9999" class="item-icon-right" ng-click="updateInfo('zo_height')">
+            <ion-item class="item-icon-right" ng-click="updateInfo('zo_height')">
                 <p>
                     <span class="cor4">身高要求</span>
                     <span ng-if="!userInfo.info.zo_height" class="ml20 mr10 cor21">不限</span>
@@ -333,7 +329,7 @@
                 </p>
                 <i class="icon ion-ios-arrow-right cor52"></i>
             </ion-item>
-            <ion-item ng-if="userInfo.id > 9999" class="item-icon-right" ng-click="updateInfo('zo_education')">
+            <ion-item class="item-icon-right" ng-click="updateInfo('zo_education')">
                 <p>
                     <span class="cor4">学历要求</span>
                     <span ng-if="!userInfo.info.zo_education" class="ml20 mr10 cor21">不限</span>
@@ -341,7 +337,7 @@
                 </p>
                 <i class="icon ion-ios-arrow-right cor52"></i>
             </ion-item>
-            <ion-item ng-if="userInfo.id > 9999" class="item-icon-right" ng-click="updateInfo('zo_marriage')">
+            <ion-item class="item-icon-right" ng-click="updateInfo('zo_marriage')">
                 <p>
                     <span class="cor4">婚姻要求</span>
                     <span ng-if="!userInfo.info.zo_marriage" class="ml20 mr10 cor21">不限</span>
@@ -349,7 +345,7 @@
                 </p>
                 <i class="icon ion-ios-arrow-right cor52"></i>
             </ion-item>
-            <ion-item ng-if="userInfo.id > 9999" class="item-icon-right" ng-click="updateInfo('zo_children')">
+            <ion-item class="item-icon-right" ng-click="updateInfo('zo_children')">
                 <p>
                     <span class="cor4">子女要求</span>
                     <span ng-if="!userInfo.info.zo_children" class="ml20 mr10 cor21">不限</span>
@@ -357,7 +353,7 @@
                 </p>
                 <i class="icon ion-ios-arrow-right cor52"></i>
             </ion-item>
-            <ion-item ng-if="userInfo.id > 9999" class="item-icon-right" ng-click="updateInfo('zo_house')">
+            <ion-item class="item-icon-right" ng-click="updateInfo('zo_house')">
                 <p>
                     <span class="cor4">购房要求</span>
                     <span ng-if="!userInfo.info.zo_house" class="ml20 mr10 cor21">不限</span>
@@ -365,7 +361,7 @@
                 </p>
                 <i class="icon ion-ios-arrow-right cor52"></i>
             </ion-item>
-            <ion-item ng-if="userInfo.id > 9999" class="item-icon-right" ng-click="updateInfo('zo_car')">
+            <ion-item class="item-icon-right" ng-click="updateInfo('zo_car')">
                 <p>
                     <span class="cor4">购车要求</span>
                     <span ng-if="!userInfo.info.zo_car" class="ml20 mr10 cor21">不限</span>
@@ -373,7 +369,7 @@
                 </p>
                 <i class="icon ion-ios-arrow-right cor52"></i>
             </ion-item>
-            <ion-item ng-if="userInfo.id > 9999" class="item-icon-right" ng-click="updateInfo('zo_zodiac')">
+            <ion-item class="item-icon-right" ng-click="updateInfo('zo_zodiac')">
                 <p>
                     <span class="cor4">属相要求</span>
                     <span ng-if="!userInfo.info.zo_zodiac" class="ml20 mr10 cor21">不限</span>
@@ -382,7 +378,7 @@
                 </p>
                 <i class="icon ion-ios-arrow-right cor52"></i>
             </ion-item>
-            <ion-item ng-if="userInfo.id > 9999" class="item-icon-right" ng-click="updateInfo('zo_constellation')">
+            <ion-item class="item-icon-right" ng-click="updateInfo('zo_constellation')">
                 <p>
                     <span class="cor4">星座要求</span>
                     <span ng-if="!userInfo.info.zo_constellation" class="ml20 mr10 cor21">不限</span>
@@ -390,7 +386,7 @@
                 </p>
                 <i class="icon ion-ios-arrow-right cor52"></i>
             </ion-item>
-            <ion-item ng-if="userInfo.id > 9999" class="mb30 item-icon-right" ng-click="updateInfo('mate')">
+            <ion-item class="mb30 item-icon-right" ng-click="updateInfo('mate')">
                 <p>
                     <span class="cor4">心目中的TA</span>
                     <span ng-if="!userInfo.info.mate" class="ml20 mr10 cor21">立即填写</span>
