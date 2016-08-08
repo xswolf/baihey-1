@@ -11,8 +11,7 @@
                     <div class="bhy-gallery">
                         <a class="imgItem pr" ng-repeat="img in imgList | orderBy:['-is_head']" on-hold="moreImg($index)"  ng-href="{{img.thumb_path | picture}}" data-size="{{img.thumb_path.split('.')[0].split('_')[1] + 'x' + img.thumb_path.split('.')[0].split('_')[2]}}">
                             <img src="/wechat/web/images/img_loading.gif" lazyload="{{img.thumb_path}}">
-                            <div class="underReview" ng-if="img.is_check != 1"><span class="">审核中</span></div>
-                            <figure class="hide" ng-if="img.is_check == 1">轻触照片退出</figure>
+                            <div class="underReview" ng-if="img.is_check != 1"><span>审核中</span></div>
                         </a>
                     </div>
                     <div ng-if="imgList.length < 12 || !imgList" class="imgItem addItem" ng-click="addNewImg()">
