@@ -3,11 +3,6 @@
  */
 define(["app/module", 'app/service/serviceApi'],
     function (module) {
-        document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
-            WeixinJSBridge.call('hideToolbar');
-            WeixinJSBridge.call('hideOptionMenu');
-
-        });
         module.run(['$rootScope', '$state', '$timeout', 'app.serviceApi', '$ionicLoading', '$location', '$templateCache', function ($rootScope, $state, $timeout, api, $ionicLoading, $location, $templateCache) {
             var messageList = function () {
                 api.list('/wap/message/message-list', []).success(function (res) {
