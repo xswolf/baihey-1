@@ -195,15 +195,24 @@ define(['app/module', 'app/directive/directiveApi'
 
         // 修改信息弹窗modal
         $scope.updateInfo = function (fieldName) {
+            var userInfo = $scope.userInfo;
             if (!fieldName)  return false;
             $ionicModal.fromTemplateUrl('/wechat/web/templates/' + fieldName + '.html', {
                 scope: $scope,
                 animation: 'slide-in-right'
             }).then(function (modal) {
                 $scope.infoModal = modal;
-               if($scope.infoModal.show()){
+                if($scope.infoModal.show()){
                    ar.processData(fieldName,$scope,api,$ionicPopup,$filter,$ionicScrollDelegate);
-               }
+                }
+            });
+            $scope.saveClose = function () {
+                $scope.userInfo = userInfo;
+                $scope.infoModal.hide();
+            }
+
+            $scope.$on('modal.hidden', function() {
+                $scope.userInfo = userInfo;
             });
         }
 
