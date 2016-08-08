@@ -1,0 +1,87 @@
+<ion-view>
+    <link href="/wechat/web/css/member.css" rel="stylesheet">
+    <link href="/wechat/web/css/fontIcon.css" rel="stylesheet">
+    <ion-header-bar>
+        <title class="title">我的资料</title>
+    </ion-header-bar>
+    <ion-content class="bhy com_w_100 infomation bg5">
+        <ion-list>
+            <div class="imgList_con">
+                <div class="imgList_handle clearfix ">
+                    <div class="bhy-gallery">
+                        <a class="imgItem pr" ng-repeat="img in imgList | orderBy:['-is_head']" on-hold="moreImg($index)"  ng-href="{{img.thumb_path | picture}}" data-size="{{img.thumb_path.split('.')[0].split('_')[1] + 'x' + img.thumb_path.split('.')[0].split('_')[2]}}">
+                            <img src="/wechat/web/images/img_loading.gif" lazyload="{{img.thumb_path}}">
+                            <div class="underReview" ng-if="img.is_check != 1"><span>审核中</span></div>
+                            <figure class="hide" ng-if="img.is_check == 1">轻触照片退出</figure>
+                        </a>
+                    </div>
+                    <div ng-if="imgList.length < 12 || !imgList" class="imgItem addItem" ng-click="addNewImg()">
+                        <i class="ion-plus-round"></i>
+                    </div>
+                    <div class="tip fl w100">温馨提示：相册第一张为头像且不可更换，您最多可以上传12张照片。</div>
+                </div>
+            </div>
+            <input id="pic_fileInput" type="file" nv-file-select="" uploader="uploader"
+                   style="visibility: hidden; display: none;" accept="image/*">
+
+            <ion-item class="idt">
+                <p>
+                   <span class="identity phone">官方</span>
+                </p>
+            </ion-item>
+            <ion-item class="item-icon-right" ng-href="{{dynamicList.length > 0 ? '#/member/discovery' : '#/member/discovery_add'}}">
+                   <p>
+                    <span class="cor4">个人动态</span>
+                    <span class="ml20 cor4" ng-if="dynamicList.length < 1">发布我的第一条个人动态</span>
+                   </p>
+                    <ul class="dynamicImg clearfix mt10" ng-if="dynamicList.length > 0">
+                        <li ng-repeat="dynamic in dynamicList | limitTo:3" ng-if="dynamic.imgList.length > 0">
+                            <div class="dynamicImg-item">
+                                <img ng-src="{{dynamic.imgList[0].thumb_path}}" alt="." >
+                            </div>
+                        </li>
+                    </ul>
+                <i class="icon ion-ios-arrow-right cor52"></i>
+            </ion-item>
+            <ion-item class="mb10 item-icon-right" ng-click="updateInfo('signature')">
+                <div class="cor4 fl fs14 personalized_l">个人签名</div>
+                <div class="ml20 wn fl fs14 personalized_r cor21" ng-if="!userInfo.personalized">立即填写</div>
+                <div class="ml20 wn fl cor8 fs14 personalized_r" ng-if="userInfo.personalized">{{userInfo.personalized}}</div>
+                <i class="icon ion-ios-arrow-right cor52"></i>
+            </ion-item>
+            <ion-item class="item-icon-right" ng-click="updateInfo(userInfo.info.real_name ? '' : 'real_name')">
+                <p>
+                    <span class="cor4">真实姓名</span>
+                    <span ng-if="!userInfo.info.real_name" class="ml20 mr10 cor21">立即填写</span>
+                    <span ng-if="userInfo.info.real_name" class="ml20 mr10">{{userInfo.info.real_name}}</span>
+                </p>
+                <i ng-if="!userInfo.info.real_name" class="icon ion-ios-arrow-right cor52"></i>
+            </ion-item>
+            <ion-item class="item-icon-right" ng-click="updateInfo('wechat_number')">
+                <p>
+                    <span class="cor4">手机号码</span>
+                    <span ng-if="!userInfo.info.wechat" class="ml20 mr10 cor21">立即填写</span>
+                    <span ng-if="userInfo.info.wechat" class="ml20 mr10">{{userInfo.info.wechat}}（{{userInfo.privacy_wechat | privacy}}）</span>
+                </p>
+                <i class="icon ion-ios-arrow-right cor52"></i>
+            </ion-item>
+            <ion-item class="item-icon-right" ng-click="updateInfo('wechat_number')">
+                <p>
+                    <span class="cor4">微信号码</span>
+                    <span ng-if="!userInfo.info.wechat" class="ml20 mr10 cor21">立即填写</span>
+                    <span ng-if="userInfo.info.wechat" class="ml20 mr10">{{userInfo.info.wechat}}（{{userInfo.privacy_wechat | privacy}}）</span>
+                </p>
+                <i class="icon ion-ios-arrow-right cor52"></i>
+            </ion-item>
+            <ion-item class="item-icon-right" ng-click="updateInfo('qq_number')">
+                <p>
+                    <span class="cor4">Q Q号码</span>
+                    <span ng-if="!userInfo.info.qq" class="ml20 mr10 cor21">立即填写</span>
+                    <span ng-if="userInfo.info.qq" class="ml20 mr10">{{userInfo.info.qq}}（{{userInfo.privacy_qq | privacy}}）</span>
+                </p>
+                <i class="icon ion-ios-arrow-right cor52"></i>
+            </ion-item>
+        </ion-list>
+    </ion-content>
+
+</ion-view>

@@ -161,52 +161,23 @@ define(["app/module", 'app/service/serviceApi'],
                                 });
                             }
                         }
+                    })
+                    .state('adminInfo', {  // 查看官方号资料
+                        cache: false,
+                        url: "/admin_Info",
+                        templateUrl: "/wechat/views/site/admin_info.html",
+                        controller: "member.admin_info",
+                        resolve: {
+                            dataFilter: function ($http) {
+                                return $http({
+                                    method: 'POST',
+                                    url: '/wap/user/index-is-show-data',
+                                    params: {}
+                                });
+                            }
+                        }
 
                     })
-                    /*.state('main.message_chat', { // 聊天页面
-                     cache: false,
-                     url: "/chat",
-                     views: {
-                     'message-tab': {
-                     templateUrl: "/wechat/views/message/chat.html",
-                     controller: 'message.chat'
-                     }
-                     },
-
-                     onExit: function ($rootScope) {
-
-                     var messageList = ar.getStorage("messageList");
-                     if (messageList == null) messageList = [];
-                     var flag = true;
-                     var i = 0;
-
-                     if (messageList != undefined && messageList != '') {
-                     for (i in messageList) {
-                     if (messageList[i].receive_user_id == $rootScope.receiveUserInfo.id || messageList[i].send_user_id == $rootScope.receiveUserInfo.id) {
-                     if ($rootScope.historyListHide != undefined && $rootScope.historyListHide.length > 0) {
-
-                     messageList[i].message = $rootScope.historyListHide[$rootScope.historyListHide.length - 1].message
-                     }
-                     flag = false;
-                     }
-                     }
-                     }
-                     if (flag) {
-                     $rootScope.receiveUserInfo.info = JSON.parse($rootScope.receiveUserInfo.info);
-                     $rootScope.receiveUserInfo.auth = JSON.parse($rootScope.receiveUserInfo.auth);
-                     $rootScope.receiveUserInfo.receive_user_id = $rootScope.receiveUserInfo.id;
-                     $rootScope.receiveUserInfo.other = $rootScope.receiveUserInfo.id;
-                     $rootScope.receiveUserInfo.send_user_id = $rootScope.receiveUserInfo.send_user_id;
-                     if ($rootScope.historyListHide != undefined && $rootScope.historyListHide.length > 0) {
-                     $rootScope.receiveUserInfo.message = $rootScope.historyListHide[$rootScope.historyListHide.length - 1].message
-                     }
-
-                     messageList.push($rootScope.receiveUserInfo);
-                     }
-                     ar.setStorage('messageList', messageList);
-
-                     }
-                     })*/
                     .state('chat', { // 聊天页面
                         cache: false,
                         url: "/chat1",

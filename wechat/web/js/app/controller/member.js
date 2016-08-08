@@ -58,6 +58,7 @@ define(['app/module', 'app/directive/directiveApi'
                 $scope.honestyStatus = res.data[0].is_check;
             }
         });
+
         // 实例化上传图片插件
         var uploader = $scope.uploader = new FileUploader({
             url: '/wap/file/thumb-photo'
@@ -203,6 +204,313 @@ define(['app/module', 'app/directive/directiveApi'
                if($scope.infoModal.show()){
                    ar.processData(fieldName,$scope,api,$ionicPopup,$filter,$ionicScrollDelegate);
                }
+            });
+        }
+
+
+        $scope.settingsBirthday = {
+            theme: 'mobiscroll',
+            lang: 'zh',
+            controls: ['date']
+        };
+        $scope.formData.age = '年龄';
+        $scope.formData.zodiac = {id: 0, name: '生肖'};
+        $scope.formData.constellation = {id: 0, name: '星座'};
+        $scope.birthdayChange = function () {
+            $scope.userInfo.age = ar.getAgeByBirthday(ar.DateTimeToDate($scope.formData.birthday));
+            $scope.formData.age =  $scope.userInfo.age+ '岁';
+            $scope.formData.zodiac = ar.getZodicByBirthday(ar.DateTimeToDate($scope.formData.birthday));
+            $scope.formData.constellation = ar.getConstellationByBirthday(ar.DateTimeToDate($scope.formData.birthday));
+        }
+
+        var minAge = [], maxAge = [];
+        for (var i = 18; i <= 99; i++) {
+            maxAge.push(i);
+            if (i < 99) {
+                minAge.push(i);
+            }
+        }
+        $scope.settingsAge = {
+            theme: 'mobiscroll',
+            lang: 'zh',
+            rows: 5,
+            wheels: [
+                [{
+                    circular: false,
+                    data: minAge,
+                    label: '最低年龄'
+                }, {
+                    circular: false,
+                    data: maxAge,
+                    label: '最高年龄'
+                }]
+            ],
+            showLabel: true,
+            minWidth: 130,
+            cssClass: 'md-pricerange',
+            validate: function (event, inst) {
+                var i,
+                    values = event.values,
+                    disabledValues = [];
+
+                for (i = 0; i < maxAge.length; ++i) {
+                    if (maxAge[i] <= values[0]) {
+                        disabledValues.push(maxAge[i]);
+                    }
+                }
+                return {
+                    disabled: [
+                        [], disabledValues
+                    ]
+                }
+            },
+            formatValue: function (data) {
+                return data[0] + '-' + data[1];
+            },
+            parseValue: function (valueText) {
+                if (valueText) {
+                    return valueText.replace(/\s/gi, '').split('-');
+                }
+                return [18, 22];
+            }
+        };
+
+        // 身高范围
+        var minHeight = [], maxHeight = [];
+        for (var i = 140; i <= 260; i++) {
+            maxHeight.push(i);
+            if (i < 260) {
+                minHeight.push(i);
+            }
+        }
+        $scope.settingsHeight = {
+            theme: 'mobiscroll',
+            lang: 'zh',
+            rows: 5,
+            wheels: [
+                [{
+                    circular: false,
+                    data: minHeight,
+                    label: '最低身高(厘米)'
+                }, {
+                    circular: false,
+                    data: maxHeight,
+                    label: '最高身高(厘米)'
+                }]
+            ],
+            showLabel: true,
+            minWidth: 130,
+            cssClass: 'md-pricerange',
+            validate: function (event, inst) {
+                var i,
+                    values = event.values,
+                    disabledValues = [];
+
+                for (i = 0; i < maxHeight.length; ++i) {
+                    if (maxHeight[i] <= values[0]) {
+                        disabledValues.push(maxHeight[i]);
+                    }
+                }
+
+                return {
+                    disabled: [
+                        [], disabledValues
+                    ]
+                }
+            },
+            formatValue: function (data) {
+                return data[0] + '-' + data[1];
+            },
+            parseValue: function (valueText) {
+                if (valueText) {
+                    return valueText.replace(/\s/gi, '').split('-');
+                }
+                return [160, 180];
+            }
+        };
+
+        $rootScope.$on('$ionicView.beforeLeave',function(event,data){
+            if(data.stateParams && $scope.infoModal){
+                if($scope.infoModal.isShown()){
+                    $scope.closeModal();
+                }
+            }
+        })
+
+        // 保存数据
+        $scope.saveData = function (formData) {
+            ar.processParams($scope,formData);
+            api.save('/wap/member/save-data', $scope.userInfo).success(function (res) {
+                $scope.getUserPrivacyStorage('');
+            }).finally(function(){
+                $scope.closeModal();
+            })
+        }
+
+        // 关闭modal
+        $scope.closeModal = function () {
+            $scope.infoModal.hide();
+            $scope.infoModal.remove();
+        }
+
+
+    }
+    ]);
+
+    // 官方号-资料首页
+    module.controller("member.admin_information", ['app.serviceApi', '$scope', '$ionicPopup', 'FileUploader', '$ionicLoading', '$ionicActionSheet', '$ionicModal','$ionicScrollDelegate','$filter','$rootScope','$location', function (api, $scope, $ionicPopup, FileUploader, $ionicLoading, $ionicActionSheet, $ionicModal,$ionicScrollDelegate,$filter,$rootScope,$location) {
+
+        // 判断身份证是否认证通过
+        api.list('/wap/member/photo-list', {type: 2, pageSize: 2}).success(function (res) {
+            if (res.data.length) {
+                $scope.honestyStatus = res.data[0].is_check;
+            }
+        });
+        // 实例化上传图片插件
+        var uploader = $scope.uploader = new FileUploader({
+            url: '/wap/file/thumb-photo'
+        });
+
+        $scope.formData = {};
+        $scope.imgList = [];
+        api.list('/wap/member/photo-list', []).success(function (res) {
+            $scope.imgList = res.data;
+            ar.initPhotoSwipeFromDOM('.bhy-gallery');
+        });
+
+        $scope.addNewImg = function () {
+            var e = document.getElementById("pic_fileInput");
+            var ev = document.createEvent("MouseEvents");
+            ev.initEvent("click", true, true);
+            e.dispatchEvent(ev);
+
+            uploader.filters.push({
+                name: 'file-type-Res',
+                fn: function (item) {
+                    if (!ar.msg_file_res_img(item)) {   // 验证文件是否是图片格式
+                        ar.saveDataAlert($ionicPopup, '只能上传图片类型的文件！');
+                        return false;
+                    }
+                    return true;
+                }
+            });
+            uploader.filters.push({
+                name: 'file-size-Res',
+                fn: function (item) {
+                    if (item.size > 8388608) {
+                        ar.saveDataAlert($ionicPopup, '请选择小于8MB的图片！')
+                        return false;
+                    }
+                    return true;
+                }
+            });
+
+            uploader.onAfterAddingFile = function (fileItem) {  // 选择文件后
+                fileItem.upload();   // 上传
+            };
+            uploader.onProgressItem = function (fileItem, progress) {   //进度条
+                $scope.showLoading(progress);    // 显示loading
+            };
+            uploader.onSuccessItem = function (fileItem, response, status, headers) {  // 上传成功
+                if (response.status > 0) {
+                    if ($scope.imgList.length < 1) { // 第一张上传相片默认设为头像
+                        /*api.save('/wap/member/set-head', {
+                         id: response.id,
+                         thumb_path: response.thumb_path
+                         }).success(function (res) {*/
+                        $scope.imgList.push({id: response.id, thumb_path: response.thumb_path, is_head: 1});
+                        $scope.userInfo.info.head_pic = response.thumb_path;
+                        $scope.setUserStorage();
+                        //})
+                    } else {
+                        $scope.imgList.push({id: response.id, thumb_path: response.thumb_path, is_head: 0});
+                    }
+                } else {
+                    ar.saveDataAlert($ionicPopup, '上传图片失败！');
+                }
+            };
+            uploader.onErrorItem = function (fileItem, response, status, headers) {  // 上传出错
+                ar.saveDataAlert($ionicPopup, '上传图片出错！');
+                $scope.hideLoading();  // 隐藏loading
+            };
+            uploader.onCompleteItem = function (fileItem, response, status, headers) {  // 上传结束
+                $scope.hideLoading();  // 隐藏loading
+            };
+
+        }
+
+        // 点击img，功能
+        $scope.moreImg = function (index) {
+            var id = $scope.imgList[index].id;
+            var img = $scope.imgList[index].thumb_path;
+            var hideSheet = $ionicActionSheet.show({
+                buttons: [
+                    {text: '设为头像'}
+                ],
+                destructiveText: '删除',
+                titleText: '操作照片',
+                cancelText: '取消',
+                destructiveButtonClicked: function () {  // 点击删除
+                    var cpmform = ar.saveDataConfirm($ionicPopup, "是否确认删除该照片？")
+                    cpmform.then(function (res) {
+                        if (res) {
+                            // 删除操作
+                            api.save('/wap/member/del-photo', {'id': id}).success(function (res) {
+                                $scope.imgList.splice(index, 1);
+                                hideSheet();
+                            });
+
+                        } else {
+                            hideSheet();
+                        }
+                    })
+
+                },
+                buttonClicked: function (i) {
+                    // 设置头像
+                    api.save('/wap/member/set-head', {id: id, thumb_path: img}).success(function (res) {
+                        if (res.status < 1) {
+                            ar.saveDataAlert($ionicPopup, res.msg);
+                        } else {
+                            for (var i in $scope.imgList) {
+                                $scope.imgList[i].is_head = 0;
+                            }
+                            $scope.imgList[index].is_head = 1;
+                            $scope.userInfo.info.head_pic = img;
+                            $scope.setUserStorage();
+                        }
+                        hideSheet();
+                    });
+                    return true;
+                }
+
+            });
+
+        }
+        $scope.dynamicList = [];
+        api.list('/wap/member/get-dynamic-list', {user_id: $scope.userInfo.id, page: 0}).success(function (res) {
+            for (var i in res.data) {
+                res.data[i].imgList = JSON.parse(res.data[i].pic);
+                $scope.dynamicList.push(res.data[i]);
+            }
+        });
+        $scope.getTravel('went_travel', $scope.userInfo.went_travel);// 我去过的地方
+        $scope.getTravel('want_travel', $scope.userInfo.want_travel);// 我想去的地方
+        $scope.getConfig('love_sport', $scope.userInfo.love_sport);// 喜欢的运动
+        $scope.getConfig('want_film', $scope.userInfo.want_film);// 想看的电影
+        $scope.getConfig('like_food', $scope.userInfo.like_food);// 喜欢的食物
+
+        // 修改信息弹窗modal
+        $scope.updateInfo = function (fieldName) {
+            if (!fieldName)  return false;
+            $ionicModal.fromTemplateUrl('/wechat/web/templates/' + fieldName + '.html', {
+                scope: $scope,
+                animation: 'slide-in-right'
+            }).then(function (modal) {
+                $scope.infoModal = modal;
+                if($scope.infoModal.show()){
+                    ar.processData(fieldName,$scope,api,$ionicPopup,$filter,$ionicScrollDelegate);
+                }
             });
         }
 
@@ -598,6 +906,140 @@ define(['app/module', 'app/directive/directiveApi'
 
     // 查看用户资料
     module.controller("member.user_info", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$ionicModal', '$ionicActionSheet', '$ionicLoading', '$location', 'dataFilter', function (api, $scope, $timeout, $ionicPopup, $ionicModal, $ionicActionSheet, $ionicLoading, $location, dataFilter) {
+
+        $scope.formData = {};
+        var userInfo = ar.getStorage('userInfo');
+        if (userInfo != null) {
+            userInfo.info = JSON.parse(userInfo.info);
+            userInfo.auth = JSON.parse(userInfo.auth);
+        }
+        // 用于想去的地方，去过的地方等
+        var getTravel = function (name, serId) {
+            if (serId != null && serId) {
+                var arrSer = serId.split(',');
+                eval("$scope." + name + "_count = " + arrSer.length);
+                api.list('/wap/member/get-travel-list', {'area_id': serId}).success(function (res) {
+                    eval("$scope." + name + " = " + JSON.stringify(res.data));
+                });
+            } else {
+                eval("$scope." + name + "_count = " + 0);
+            }
+        }
+        var getConfig = function (name, serId) {
+            if (serId != null) {
+                var arrSer = serId.split(',');
+                eval("$scope." + name + "_count = " + arrSer.length);
+                api.list('/wap/member/get-config-list', {'config_id': serId}).success(function (res) {
+                    eval("$scope." + name + " = " + JSON.stringify(res.data));
+                });
+            } else {
+                eval("$scope." + name + "_count = " + 0);
+            }
+        }
+        // 权限判断
+        var is_privacy = function (val) {
+            switch (val) {
+                case '1':
+                    return true;
+                case '2':
+                    return $scope.formData.followed == 1 ? true : false;
+                case '3':
+                    return $scope.otherUserInfo.info.level > 0 ? true : false;
+                case '4':
+                    return false;
+                default :
+                    return false;
+            }
+        }
+
+        $scope.formData.userId = $location.$$search.userId;
+        $scope.otherUserInfo = [];
+        $scope.imgList = [];
+        $scope.dynamicList = [];
+        $scope.formData.isfollow = '2';
+
+        api.list("/wap/member/user-info-page-by-id", {'id': $scope.formData.userId}).success(function (res) {
+            if (res.status) {
+                // 用户信息
+                $scope.otherUserInfo = res.userInfo;
+                $scope.otherUserInfo.info = JSON.parse($scope.otherUserInfo.info);
+                $scope.otherUserInfo.auth = JSON.parse($scope.otherUserInfo.auth);
+                // 用户相册
+                $scope.imgList = res.userPhoto.length > 0 ? res.userPhoto : [];
+                ar.initPhotoSwipeFromDOM('.bhy-gallery');
+                // 用户动态
+                if (res.dynamic) {
+                    for (var i in res.dynamic) {
+                        res.dynamic[i].imgList = JSON.parse(res.dynamic[i].pic);
+                        $scope.dynamicList.push(res.dynamic[i]);
+                    }
+                }
+                $scope.formData.isfollow = res.followStatus;// 关注状态
+                $scope.formData.followed = res.followedStatus;// 被关注状态
+                $scope.qqAuth = is_privacy($scope.otherUserInfo.privacy_qq);// qq权限
+                $scope.perAuth = is_privacy($scope.otherUserInfo.privacy_per);// 个人动态权限
+                $scope.wxAuth = is_privacy($scope.otherUserInfo.privacy_wechat);// 微信权限
+                $scope.picAuth = is_privacy($scope.otherUserInfo.privacy_pic);// 相册权限
+                $scope.otherUserInfo.went_travel ? getTravel('went_travel', $scope.otherUserInfo.went_travel) : true;// 我去过的地方
+                $scope.otherUserInfo.want_travel ? getTravel('want_travel', $scope.otherUserInfo.want_travel) : true;// 我想去的地方
+                $scope.otherUserInfo.love_sport ? getConfig('love_sport', $scope.otherUserInfo.love_sport) : true;// 喜欢的运动
+                $scope.otherUserInfo.want_film ? getConfig('want_film', $scope.otherUserInfo.want_film) : true;// 想看的电影
+                $scope.otherUserInfo.like_food ? getConfig('like_food', $scope.otherUserInfo.like_food) : true;// 喜欢的食物
+            }
+
+        });
+
+
+        $scope.localChat = function () {
+            window.location.hash = "#/chat1?id=" + $scope.otherUserInfo.id + "&head_pic=" + $scope.otherUserInfo.info.head_pic + "&real_name=" + $scope.otherUserInfo.info.real_name + "&sex=" + $scope.otherUserInfo.sex + "&age=" + $scope.otherUserInfo.info.age;
+        }
+
+        var followData = {};
+        followData.user_id = ar.getCookie("bhy_user_id");
+        followData.follow_id = $scope.formData.userId;
+        // 未关注
+        /*$scope.formData.follow = false;
+         api.getStatus('/wap/follow/get-follow-status', followData).success(function (res) {
+         if (res.data) {
+         $scope.formData.follow = true;
+         }
+         });*/
+        // 取消关注
+        //$scope.cancelFollow = function () {
+        //    api.save('/wap/follow/del-follow', followData).success(function (res) {
+        //        if (res.data) {
+        //            $scope.formData.isfollow = '2';
+        //            // 成功，提示
+        //            ar.saveDataAlert($ionicPopup, '取消关注成功');
+        //        }
+        //    });
+        //}
+
+        // 关注
+        $scope.addFollow = function () {
+            if (followData.user_id == followData.follow_id) {
+                ar.saveDataAlert($ionicPopup, '您不能关注自己');
+                return;
+            }
+            if (dataFilter.data.blacked.indexOf(followData.follow_id) != -1) {
+                ar.saveDataAlert($ionicPopup, '您已被对方设置黑名单，关注失败');
+                return;
+            }
+            api.save('/wap/follow/add-follow', followData).success(function (res) {
+                if (res.data) {
+                    document.getElementsByClassName('transition')[0].style.transition = 'all 0.5s';
+                    document.getElementsByClassName('transition')[1].style.transition = 'all 0.5s';
+                    $scope.formData.isfollow = '1';
+                    // 成功，提示
+                    ar.saveDataAlert($ionicPopup, '关注成功');
+                }
+            });
+        }
+
+    }]);
+
+    // 查看官方号资料
+    module.controller("member.admin_info", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$ionicModal', '$ionicActionSheet', '$ionicLoading', '$location', 'dataFilter', function (api, $scope, $timeout, $ionicPopup, $ionicModal, $ionicActionSheet, $ionicLoading, $location, dataFilter) {
 
         $scope.formData = [];
         var userInfo = ar.getStorage('userInfo');

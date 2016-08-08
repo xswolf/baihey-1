@@ -1,0 +1,91 @@
+<ion-view hide-tabs="true">
+    <link href="/wechat/web/css/member.css" rel="stylesheet">
+    <link href="/wechat/web/css/plugin/photoswipe/photoswipe.css" rel="stylesheet">
+    <link href="/wechat/web/css/plugin/photoswipe/default-skin.css" rel="stylesheet">
+    <ion-header-bar>
+        <title class="title">{{otherUserInfo.info.real_name}}</title>
+        <a class="button button-icon icon icon-new-menu-user-settings" href="#/member/settings?userId={{formData.userId}}&userName={{otherUserInfo.info.real_name}}"></a>
+    </ion-header-bar>
+    <ion-content class="bhy com_w_100 infomation has-footer">
+        <ion-list>
+            <div class="imgList_con">
+                <div class="imgList_handle clearfix bhy-gallery">
+                    <a class="imgItem pr" ng-repeat="img in imgList" ng-href="{{img.thumb_path | picture}}" data-size="{{img.thumb_path.split('.')[0].split('_')[1] + 'x' + img.thumb_path.split('.')[0].split('_')[2]}}">
+                        <img src="/wechat/web/images/img_loading.gif" lazyload="{{img.thumb_path}}">
+                        <figure class="hide">轻触照片退出</figure>
+                    </a>
+                </div>
+            </div>
+            <ion-item class="idt mt10" ng-if="honesty(otherUserInfo.honesty_value) || otherUserInfo.phone != '' || otherUserInfo.info.level || otherUserInfo.info.zodiac || otherUserInfo.info.constellation">
+                <p class="mt0">
+                    <span class="identity phone">官方</span>
+                </p>
+            </ion-item>
+            <ion-item class="item-icon-right" ng-if="dynamicList.length > 0" href="#/index_discovery?userId={{otherUserInfo.id}}">
+                <p>
+                    <span class="cor4">个人动态</span>
+                </p>
+                <ul class="dynamicImg clearfix mt10" ng-if="dynamicList.length > 0">
+                    <li ng-repeat="dynamic in dynamicList | limitTo:3" ng-if="dynamic.imgList.length > 0">
+                        <div class="dynamicImg-item">
+                            <img ng-src="{{dynamic.imgList[0].thumb_path}}" alt="." >
+                        </div>
+                    </li>
+                </ul>
+                <i class="icon ion-ios-arrow-right cor52"></i>
+            </ion-item>
+            <ion-item>
+                <div class="cor4 fl fs14 personalized_l">个人签名</div>
+                <div class="ml20 wn fl cor8 fs14 personalized_r">{{otherUserInfo.personalized}}</div>
+            </ion-item>
+            <ion-item>
+                <p>
+                    <span class="cor4">座机号码</span>
+                    <span class="ml20">{{otherUserInfo.info.phone}}</span>
+                </p>
+            </ion-item>
+            <ion-item>
+                <p>
+                    <span class="cor4">手机号码</span>
+                    <span class="ml20">{{otherUserInfo.info.phone}}</span>
+                </p>
+            </ion-item>
+            <ion-item>
+                    <p>
+                        <span class="cor4">微信号码</span>
+                        <span class="ml20">{{otherUserInfo.info.wechat}}</span>
+                    </p>
+            </ion-item>
+            <ion-item>
+                    <p>
+                        <span class="cor4">Q Q号码</span>
+                        <span class="ml20">{{otherUserInfo.info.qq}}</span>
+                    </p>
+            </ion-item>
+            <ion-item class="mt10">
+                <p>
+                    <span class="cor4">公司全称</span>
+                    <span class="ml20">重庆嘉瑞婚介有限责任公司</span>
+                </p>
+            </ion-item>
+            <ion-item href="#/member/about">
+                <p class="tdn">
+                    <span class="cor4">公司简介</span>
+                    <span class="ml20">2008年10月，“嘉瑞百合缘”婚恋网成立于重庆，是一家集征婚、交友及婚姻、家庭、情感相关心理咨询为一体的大型服务机构，隶属于重庆嘉瑞婚介有限责任公司。</span>
+                </p>
+            </ion-item>
+        </ion-list>
+    </ion-content>
+    <ion-footer-bar align-title="left" class="bar-light">
+        <div class="buttons transition" ng-class="{'2':'w50','1':'w100',false:'w50',0:'w50'}[formData.isfollow]">
+            <a class="button w100" style="font-size: 16px; color:#e4007f;" href="#/chat1?id={{otherUserInfo.id}}&head_pic={{otherUserInfo.info.head_pic}}&real_name={{otherUserInfo.info.real_name}}&sex={{otherUserInfo.sex}}&age={{otherUserInfo.info.age}}"><i class="ion-chatbox-working cor21 mr5 vam fs22"></i>对话</a>
+        </div>
+        <div class="buttons w50" ng-if="formData.isfollow == '2' || !formData.isfollow || formData.isfollow == '0'">
+            <button class="button w100 transition"  style="font-size: 16px;" ng-click="addFollow()">
+                <i class="ion-plus-round mr5 vam fs22"></i>关注
+            </button>
+            <!--<button ng-if="formData.follow == 1" ng-click="cancelFollow()" class="button w100" style="font-size: 16px;">取消关注</button>-->
+        </div>
+    </ion-footer-bar>
+
+</ion-view>
