@@ -652,7 +652,7 @@ var ar = {
                         //    return false;
                         //}
                         captionEl.children[0].innerHTML = '轻触照片退出';
-                        captionEl.children[0].style = 'text-align:center';
+                        captionEl.children[0].style.cssText = 'text-align:center';
                         return true;
                     },
 
