@@ -488,7 +488,7 @@ var ar = {
         }
     },
 
-    initPhotoSwipeFromDOM: function (gallerySelector) {
+    initPhotoSwipeFromDOM: function (gallerySelector,$scope) {
         requirejs(['photoswipe', 'photoswipe_ui'], function (PhotoSwipe, PhotoSwipeUI_Default) {
             var parseThumbnailElements = function (el) {
 
@@ -749,6 +749,10 @@ var ar = {
                  });*/
 
                 gallery.init();
+
+                $scope.$on('$ionicView.beforeLeave',function(){
+                    gallery.close();
+                })
             };
 
             // select all gallery elements

@@ -202,7 +202,7 @@ define(['app/module', 'app/directive/directiveApi'
             $rootScope.historyListHide = list = list != null ? list.concat(data) : data;
             ar.setStorage('chat_messageHistory' + $scope.receiveId, list);
 
-            ar.initPhotoSwipeFromDOM('.bhy-gallery');   // 查看大图插件
+            ar.initPhotoSwipeFromDOM('.bhy-gallery',$scope);   // 查看大图插件
             $scope.doRefresh();
             $timeout(function () {
                 viewScroll.scrollBottom(true);
@@ -411,7 +411,7 @@ define(['app/module', 'app/directive/directiveApi'
                 $scope.uploader.onCompleteItem = function (fileItem, response, status, headers) {  // 上传结束
                     $scope.hideMultiOnKeyboard();
                     $scope.sendMessage(response.thumb_path, $scope.sendId, $scope.receiveId, 'pic', time);  // 真实发送
-                    ar.initPhotoSwipeFromDOM('.bhy-gallery');
+                    ar.initPhotoSwipeFromDOM('.bhy-gallery',$scope);
                 };
 
             }

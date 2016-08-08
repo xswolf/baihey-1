@@ -110,7 +110,7 @@ define(['app/module', 'app/directive/directiveApi'
                     res.data[i].age = res.data[i].age.replace(/\"/g, '');
                     $scope.discoveryList.push(res.data[i]);
                 }
-                ar.initPhotoSwipeFromDOM('.bhy-gallery');
+                ar.initPhotoSwipeFromDOM('.bhy-gallery',$scope);
             }).finally(function () {
                 $scope.$broadcast('scroll.infiniteScrollComplete');
             })
@@ -131,7 +131,7 @@ define(['app/module', 'app/directive/directiveApi'
                     res.data[i].age = res.data[i].age.replace(/\"/g, '');
                     $scope.discoveryList.push(res.data[i]);
                 }
-                ar.initPhotoSwipeFromDOM('.bhy-gallery');
+                ar.initPhotoSwipeFromDOM('.bhy-gallery',$scope);
             }).finally(function () {
                 $scope.$broadcast('scroll.refreshComplete');
             });
@@ -181,7 +181,7 @@ define(['app/module', 'app/directive/directiveApi'
             //$comment = ar.cleanQuotes(JSON.stringify(res.data.comment));
             //$scope.commentList = JSON.parse($comment);
             $scope.commentList = res.data.comment;
-            ar.initPhotoSwipeFromDOM('.bhy-gallery');
+            ar.initPhotoSwipeFromDOM('.bhy-gallery',$scope);
         })
 
         // 点赞
