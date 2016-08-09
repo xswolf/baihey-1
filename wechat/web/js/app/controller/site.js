@@ -161,8 +161,6 @@ define(['app/module', 'app/directive/directiveApi'
 
         // 加载更多
         $scope.loadMore = function () {
-            console.log($scope.userList);
-            console.log($scope.searchForm);
             $scope.dataLoading = true;
             api.list('/wap/site/user-list', $scope.searchForm).success(function (res) {
                 if (res.data.length < 6) {
