@@ -35,6 +35,7 @@
                 <div class="dis_gallery bhy-gallery clearfix">
                     <a ng-repeat="img in dis.imgList | limitTo:6" href="{{img.thumb_path | picture}}" data-size="{{img.thumb_path.split('.')[0].split('_')[1] + 'x' + img.thumb_path.split('.')[0].split('_')[2]}}">
                         <img class="w100" ng-src="{{img.thumb_path}}">
+                        <figure class="hide">轻触照片退出</figure>
                     </a>
                 </div>
                 <div class="clearfix mt10 pr">
@@ -73,7 +74,9 @@
             <p>消息</p>
         </a>
         <a class="menuBtn" href="/wap/site/main#/member">
-            <i class="icon-new-menu-user"></i>
+            <i class="icon-new-menu-user">
+                <span class="msg_number new"></span>
+            </i>
             <p>个人</p>
         </a>
         <a class="menuBtn cur" href="/wap/site/main#/discovery">

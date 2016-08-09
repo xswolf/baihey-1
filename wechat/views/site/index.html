@@ -57,7 +57,7 @@
                 </h2>
             </a>
 
-            <a class="item item-thumbnail-left" href="#/userInfo?userId={{user.user_id}}" ng-repeat="user in userList track by user.id | filter:indexFilter"
+            <a class="item item-thumbnail-left" href="#/userInfo?userId={{user.user_id}}" ng-repeat="user in userList | filter:indexFilter"
                ng-if="user.id > 9999">
                 <img class="rounded"
                      ng-src="{{user.info.head_pic | isNull}}"
@@ -296,7 +296,9 @@
             <p>消息</p>
         </a>
         <a class="menuBtn" href="/wap/site/main#/member">
-            <i class="icon-new-menu-user"></i>
+            <i class="icon-new-menu-user">
+                <span class="msg_number new"></span>
+            </i>
             <p>个人</p>
         </a>
         <a class="menuBtn" href="/wap/site/main#/discovery">

@@ -2,15 +2,15 @@
     <link href="/wechat/web/css/member.css" rel="stylesheet">
     <ion-header-bar class="com_w_100 bhy">
         <title class="title">关注的人</title>
-        <button class="button button-icon" ng-show="followType == 'follow'" ng-click="shouldShowDelete = !shouldShowDelete; shouldShowDelete ? delTitle='完成' : delTitle='删除';" ng-bind="delTitle"></button>
+        <button class="button button-icon" ng-show="followType == 'follow' && followList.length > 0" ng-click="shouldShowDelete = !shouldShowDelete; shouldShowDelete ? delTitle='完成' : delTitle='删除';" ng-bind="delTitle"></button>
     </ion-header-bar>
     <ion-content class="bhy com_w_100 follow">
         <div class="item tabs">
             <a class="tab-item" ng-class="{'follow':'cur'}[followType]" ng-click="switching('follow')">
-                我关注的人<span>({{followList.length}})</span>
+                我关注的人(<span>{{followList.length}}</span>)
             </a>
             <a class="tab-item" ng-class="{'followed':'cur'}[followType]" ng-click="switching('followed')">
-                关注我的人<span>({{followedList.length}})</span>
+                关注我的人(<span class="assertive">{{followedList.length}}</span>)
             </a>
         </div>
         <ion-list ng-if="followType == 'follow'" show-delete="shouldShowDelete">
@@ -46,13 +46,13 @@
             </ion-item>
         </ion-list>
         <div class="nullData has-header tac" ng-if="followType == 'followed' && followedList.length < 1">
-            <img src="/wechat/web/images/member/tip_01.png" width="70" class="vam">
+            <img src="/wechat/web/images/member/tip_01.png" height="150" class="vam">
             <p class="mt10 cor8">暂时没有人关注您</p>
         </div>
         <div class="nullData has-header tac" ng-if="followType == 'followed' && followedList.length > 0 && userInfo.info.level < 1">
-            <img src="{{userInfo.info.head_pic | isNull}}" onerror="this.src='/wechat/web/images/u_noimg.jpg'" height="150" class="vam">
-            <p><span class="fs16">Hi</span>，{{userInfo.info.real_name | sex:userInfo.sex :userInfo.info.age}}</p>
-            <p class="mt10">有 <span class="fs16 cor43">({{followedList.length}})</span> 人关注了您</p>
+            <img src="/wechat/web/images/member/tip_03.png" height="150" class="vam">
+            <p class="mt15"><span class="fs16">Hi</span>，{{userInfo.info.real_name | sex:userInfo.sex :userInfo.info.age}}</p>
+            <p class="mt10">有 <span class="fs18 cor43">{{followedList.length}}</span> 人关注了你，TA们都想和你约会！</p>
         </div>
     </ion-content>
     <div class="bar bar-footer bar-positive" ng-if="followType == 'followed' && userInfo.info.level < 1">

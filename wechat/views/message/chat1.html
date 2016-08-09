@@ -92,6 +92,7 @@
                             <span class="pic bhy-gallery">
                                 <a ng-href="{{vo.message | picture}}" data-size="{{vo.message.split('.')[0].split('_')[1] + 'x' + vo.message.split('.')[0].split('_')[2]}}">
                                     <img ng-if="vo.message != 'view'" ng-src="{{vo.message}}">
+                                    <figure class="hide">轻触照片退出</figure>
                                 </a>
                                 <div ng-if="vo.message == 'view'" ng-show="uploader.isHTML5"
                                      ng-thumb="{ file: uploader.queue, height: 100 }"></div>

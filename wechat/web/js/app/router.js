@@ -39,6 +39,8 @@ define(["app/module", 'app/service/serviceApi'],
                 }
             }
 
+
+
             var userId = ar.getCookie('bhy_user_id')
             if (userId > 0 ) {
                 messageList();
@@ -54,6 +56,9 @@ define(["app/module", 'app/service/serviceApi'],
 
                 })
             }
+
+            // 查询是否有新的用户关注自己   TODO
+
 
             $rootScope.$on('$stateChangeStart', function (evt, next) {
 

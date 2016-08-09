@@ -47,6 +47,15 @@ define(['app/module', 'app/directive/directiveApi'
             }
         });
 
+        // 查询关注自己的人数量
+        api.list('/wap/follow/follow-list', {type: 'followed'}).success(function (res) {
+            for (var i in res.data) {
+                res.data[i].info = JSON.parse(res.data[i].info);
+                res.data[i].auth = JSON.parse(res.data[i].auth);
+            }
+            $scope.followedNumber =res.data.length;
+        });
+
     }]);
 
     // 资料首页
@@ -424,31 +433,8 @@ define(['app/module', 'app/directive/directiveApi'
                 $scope.showLoading(progress);    // 显示loading
             };
             uploader.onSuccessItem = function (fileItem, response, status, headers) {  // 上传成功
-
                 if (response.status > 0) {
-                    $ionicModal.fromTemplateUrl('photoTitleModal.html', {
-                        scope: $scope,
-                        animation: 'slide-in-right'
-                    }).then(function (modal) {
-                        $scope.infoModal = modal;
-
-                    });
-
-                    if ($scope.imgList.length < 1) { // 第一张上传相片默认设为头像
-                        /*api.save('/wap/member/set-head', {
-                         id: response.id,
-                         thumb_path: response.thumb_path
-                         }).success(function (res) {*/
-                        $scope.imgList.push({id: response.id, thumb_path: response.thumb_path, is_head: 1});
-                        $scope.userInfo.info.head_pic = response.thumb_path;
-                        $scope.setUserStorage();
-                        //})
-                    } else {
-                        $scope.imgList.push({id: response.id, thumb_path: response.thumb_path, is_head: 0});
-                    }
-
-
-
+                    $scope.imgList.push({id: response.id, thumb_path: response.thumb_path, is_head: 0});
                 } else {
                     ar.saveDataAlert($ionicPopup, '上传图片失败！');
                 }
@@ -465,12 +451,12 @@ define(['app/module', 'app/directive/directiveApi'
 
         // 点击img，功能
         $scope.moreImg = function (index) {
+            if(index == 0){
+                return false;
+            }
             var id = $scope.imgList[index].id;
             var img = $scope.imgList[index].thumb_path;
             var hideSheet = $ionicActionSheet.show({
-                buttons: [
-                    {text: '设为头像'}
-                ],
                 destructiveText: '删除',
                 titleText: '操作照片',
                 cancelText: '取消',
@@ -491,20 +477,6 @@ define(['app/module', 'app/directive/directiveApi'
 
                 },
                 buttonClicked: function (i) {
-                    // 设置头像
-                    api.save('/wap/member/set-head', {id: id, thumb_path: img}).success(function (res) {
-                        if (res.status < 1) {
-                            ar.saveDataAlert($ionicPopup, res.msg);
-                        } else {
-                            for (var i in $scope.imgList) {
-                                $scope.imgList[i].is_head = 0;
-                            }
-                            $scope.imgList[index].is_head = 1;
-                            $scope.userInfo.info.head_pic = img;
-                            $scope.setUserStorage();
-                        }
-                        hideSheet();
-                    });
                     return true;
                 }
 
