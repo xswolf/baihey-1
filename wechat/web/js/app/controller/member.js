@@ -56,6 +56,11 @@ define(['app/module', 'app/directive/directiveApi'
             $scope.followedNumber =res.data.length;
         });
 
+        // 设置新关注的人已看
+        api.list('/wap/follow/set-checked',{user_id:$scope.userInfo.user_id}).success(function(res){
+            console.log(res);
+        })
+
     }]);
 
     // 资料首页
@@ -863,7 +868,9 @@ define(['app/module', 'app/directive/directiveApi'
         $scope.followType = 'follow';
         $scope.followList = [];
         $scope.followedList = [];
-
+        api.list('/wap/follow/set-checked',{user_id:$scope.userInfo.user_id}).success(function(res){
+            console.log(res);
+        })
         api.list('/wap/follow/follow-list', {type: 'follow'}).success(function (res) {
             for (var i in res.data) {
                 res.data[i].info = JSON.parse(res.data[i].info);

@@ -58,7 +58,10 @@ define(["app/module", 'app/service/serviceApi'],
             }
 
             // 查询是否有新的用户关注自己   TODO
-
+            $rootScope.newFollow = false;
+            api.get('/wap/follow/is-new-follow',{user_id:userId}).success(function(res){
+                $rootScope.newFollow = res.status;
+            })
 
             $rootScope.$on('$stateChangeStart', function (evt, next) {
 
@@ -293,6 +296,10 @@ define(["app/module", 'app/service/serviceApi'],
 
                 $rootScope.$on('msgNumber' , function () {
                     $scope.msgNumber = $rootScope.msgNumber;
+                })
+
+                $rootScope.$on('newFollow' , function () {
+                    $scope.newFollow = $rootScope.newFollow;
                 })
 
                 $scope.upUserStorage = function (name, value, type) {
