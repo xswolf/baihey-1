@@ -90,7 +90,7 @@ define(["app/module", 'app/service/serviceApi'],
                 $stateProvider
                     .state('index', {   // 首页
                         url: "/index",
-                        cache: false,
+                        cache: true,
                         templateUrl: "/wechat/views/site/index.html",
                         controller: 'site.index',
                         resolve: {
@@ -133,7 +133,7 @@ define(["app/module", 'app/service/serviceApi'],
                         }
                     })
                     .state('message', {  // 消息首页
-                        cache: false,
+                        cache: true,
                         url: "/message",
                         templateUrl: "/wechat/views/message/index.html",
                         controller: "message.index",
@@ -164,7 +164,7 @@ define(["app/module", 'app/service/serviceApi'],
                     })
                     .state('adminInfo', {  // 查看官方号资料
                         cache: false,
-                        url: "/admin_Info",
+                        url: "/admin_info",
                         templateUrl: "/wechat/views/site/admin_info.html",
                         controller: "member.admin_info",
                         resolve: {
@@ -179,7 +179,6 @@ define(["app/module", 'app/service/serviceApi'],
 
                     })
                     .state('chat', { // 聊天页面
-                        cache: false,
                         url: "/chat1",
                         templateUrl: "/wechat/views/message/chat1.html",
                         controller: 'message.chat1',
@@ -239,7 +238,6 @@ define(["app/module", 'app/service/serviceApi'],
                     })
 
                     .state('discovery', {       // 发现
-                        cache: false,
                         url: "/discovery",
                         templateUrl: "/wechat/views/discovery/index.html",
                         controller: 'discovery.index',

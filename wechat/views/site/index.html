@@ -12,7 +12,7 @@
                 on-refresh="doRefresh()">
         </ion-refresher>
         <div class="list">
-            <a class="item item-thumbnail-left" href="#/member/information" ng-if="userInfo.info">
+            <a class="item item-thumbnail-left" ng-href="{{userInfo.id > 9999 ? '#/member/information' : '#/member/admin_information'}}" ng-if="userInfo.info">
                 <img ng-src="{{userInfo.info.head_pic | isNull}}" onerror="this.src='/wechat/web/images/u_noimg.jpg'"
                      class="rounded">
                 <span ng-if="headpicStatus == 2" class="under">审核中</span>
@@ -57,40 +57,38 @@
                 </h2>
             </a>
 
-            <a class="item item-thumbnail-left" ng-repeat="user in userList track by user.id | filter:indexFilter" ng-if="user.id > 9999">
-                <img class="rounded" ng-click="jump('/userInfo?userId={{user.user_id}}')"
+            <a class="item item-thumbnail-left" href="#/userInfo?userId={{user.user_id}}" ng-repeat="user in userList track by user.id | filter:indexFilter"
+               ng-if="user.id > 9999">
+                <img class="rounded"
                      ng-src="{{user.info.head_pic | isNull}}"
                      onerror="this.src='/wechat/web/images/no_img.png'">
-                <div ng-click="jump('/chat1?id={{user.user_id}}&head_pic={{user.info.head_pic}}&real_name={{user.info.real_name}}&sex={{user.sex}}&age={{user.info.age}}')">
-                    <div class="clearfix">
-                        <h2 class="fl lh30 mb0">
-                            <span ng-if="user.info.real_name">{{user.info.real_name | sex:user.sex :user.info.age}}</span>
-                            <span ng-if="!user.info.real_name">会员ID:{{user.id}}</span>
-                            <span ng-if="user.info.age" class="cor19 fs12">{{user.age}}岁</span>
-                            <span ng-if="user.info.height" class="cor19 fs12">{{user.info.height}}cm</span>
+                <div class="clearfix">
+                    <h2 class="fl lh30 mb0">
+                        <span ng-if="user.info.real_name">{{user.info.real_name | sex:user.sex :user.info.age}}</span>
+                        <span ng-if="!user.info.real_name">会员ID:{{user.id}}</span>
+                        <span ng-if="user.info.age" class="cor19 fs12">{{user.age}}岁</span>
+                        <span ng-if="user.info.height" class="cor19 fs12">{{user.info.height}}cm</span>
                         <span ng-if="user.info.is_marriage"
                               class="cor19 fs12">{{user.info.is_marriage | marriage}}</span>
-                        </h2>
-                        <p class="fr local" ng-if="user.info.local">
-                            <i class="ion-android-pin positive"></i>
-                            {{user.info.local}}
-                        </p>
-                    </div>
-
-                    <p>
-                        <span ng-if="honesty(user.honesty_value)" class="identity id">身份证</span>
-                        <span ng-if="user.phone" class="identity phone">手机</span>
-                        <span ng-if="user.info.level == 1" class="identity vip">VIP</span>
-                        <span ng-if="user.info.level == 2" class="identity guest">贵宾</span>
-                        <span ng-if="user.info.level == 3" class="identity diamond">钻石</span>
-                        <span ng-if="user.report_flag == 1" class="identity assertive-bg">被多次举报</span>
+                    </h2>
+                    <p class="fr local" ng-if="user.info.local">
+                        <i class="ion-android-pin positive"></i>
+                        {{user.info.local}}
                     </p>
-                    <p class="signature mt5">{{user.personalized}}</p>
                 </div>
+
+                <p>
+                    <span ng-if="honesty(user.honesty_value)" class="identity id">身份证</span>
+                    <span ng-if="user.phone" class="identity phone">手机</span>
+                    <span ng-if="user.info.level == 1" class="identity vip">VIP</span>
+                    <span ng-if="user.info.level == 2" class="identity guest">贵宾</span>
+                    <span ng-if="user.info.level == 3" class="identity diamond">钻石</span>
+                    <span ng-if="user.report_flag == 1" class="identity assertive-bg">被多次举报</span>
+                </p>
+                <p class="signature mt5">{{user.personalized}}</p>
             </a>
 
         </div>
-
         <ion-infinite-scroll ng-if="moreDataCanBeLoaded()" on-infinite="loadMore()"></ion-infinite-scroll>
 
         <ion-list ng-if="userList.length <= 0  && !dataLoading">
@@ -148,15 +146,18 @@
                 <div class="row">
                     <div class="col-90 mr0a">
                         <div class="button-bar">
-                            <a class="button button-light" style="border-right: 1px solid #ddd;" ng-class="{1:'button-calm'}[whereForm.sex]" ng-click="sexChange(1)">男</a>
-                            <a class="button button-light" ng-class="{0:'button-calm'}[whereForm.sex]" ng-click="sexChange(0)">女</a>
+                            <a class="button button-light" style="border-right: 1px solid #ddd;"
+                               ng-class="{1:'button-calm'}[whereForm.sex]" ng-click="sexChange(1)">男</a>
+                            <a class="button button-light" ng-class="{0:'button-calm'}[whereForm.sex]"
+                               ng-click="sexChange(0)">女</a>
                         </div>
                         <div class="moreSearch_form_box mt10 clearfix">
                             <label class="item item-input item-select">
                                 <div class="input-label cor4">
                                     年龄
                                 </div>
-                                <input class="mobiscrollInput" ng-model="whereForm.age" mobiscroll-scroller="settingsAge"
+                                <input class="mobiscrollInput" ng-model="whereForm.age"
+                                       mobiscroll-scroller="settingsAge"
                                        mobiscroll-instance="demo"/>
                             </label>
                         </div>
@@ -165,7 +166,8 @@
                                 <div class="input-label cor4">
                                     身高
                                 </div>
-                                <input class="mobiscrollInput" ng-model="whereForm.height" mobiscroll-scroller="settingsHeight"
+                                <input class="mobiscrollInput" ng-model="whereForm.height"
+                                       mobiscroll-scroller="settingsHeight"
                                        mobiscroll-instance="demo"/>
                             </label>
                         </div>
@@ -240,7 +242,8 @@
                                 <div class="input-label cor4">
                                     职业
                                 </div>
-                                <select ng-model="whereForm.occupation" ng-options="o.id as o.name for o in occupations">
+                                <select ng-model="whereForm.occupation"
+                                        ng-options="o.id as o.name for o in occupations">
                                     <option value="">不限</option>
                                 </select>
                             </label>
@@ -260,7 +263,8 @@
                                 <div class="input-label cor4">
                                     星座
                                 </div>
-                                <select ng-model="whereForm.constellation" ng-options="c.id as c.name for c in constellation">
+                                <select ng-model="whereForm.constellation"
+                                        ng-options="c.id as c.name for c in constellation">
                                     <option value="">不限</option>
                                 </select>
                             </label>
@@ -299,9 +303,9 @@
             <i class="icon-new-menu-eye"></i>
             <p>发现</p>
         </a>
-       <!-- <a class="menuBtn" href="/wap/site/main#/rendezvous">
-            <i class="icon-new-menu-heart"></i>
-            <p>约会</p>
-        </a>-->
+        <!-- <a class="menuBtn" href="/wap/site/main#/rendezvous">
+             <i class="icon-new-menu-heart"></i>
+             <p>约会</p>
+         </a>-->
     </ion-footer-bar>
 </ion-view>

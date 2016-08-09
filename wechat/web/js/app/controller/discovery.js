@@ -29,15 +29,41 @@ define(['app/module', 'app/directive/directiveApi'
             return dataFilter.data.blacked.indexOf(dis.user_id) == -1 && $scope.display.indexOf(dis.id) == -1;
         }
 
-        $scope.jump = function (url) {
-            $location.url(url);
+        $scope.jump = function (disId, disUserId, type) {
+            if (type == 'userInfo') {
+                if (disUserId >= 10000) {
+                    if (disUserId == $scope.userInfo.user_id) {
+                        $location.url('/member/information');
+                    } else {
+                        $location.url('/userInfo?userId=' + disUserId);
+                    }
+                } else {
+                    if (disUserId == $scope.userInfo.user_id) {
+                        $location.url('/member/admin_information');
+                    } else {
+                        $location.url('/admin_info?userId=' + disUserId);
+                    }
+                }
+            }
+            if (type == 'single') {
+                $location.url('/discovery_single?id=' + disId);
+            }
+
+
         }
 
         $scope.more = function (isUser, dis, index) {
-            var btnList = [
-                {text: '举报'},
-                {text: '屏蔽'}
-            ];
+            if (dis.user_id >= 10000) {
+                var btnList = [
+                    {text: '举报'},
+                    {text: '屏蔽'}
+                ];
+            } else {
+                var btnList = [
+                    {text: '屏蔽'}
+                ];
+            }
+
             if (isUser) {   // 判断该条动态是否所属当前用户
                 btnList = [
                     {text: '删除'}
@@ -110,7 +136,7 @@ define(['app/module', 'app/directive/directiveApi'
                     res.data[i].age = res.data[i].age.replace(/\"/g, '');
                     $scope.discoveryList.push(res.data[i]);
                 }
-                ar.initPhotoSwipeFromDOM('.bhy-gallery',$scope);
+                ar.initPhotoSwipeFromDOM('.bhy-gallery', $scope);
             }).finally(function () {
                 $scope.$broadcast('scroll.infiniteScrollComplete');
             })
@@ -131,7 +157,7 @@ define(['app/module', 'app/directive/directiveApi'
                     res.data[i].age = res.data[i].age.replace(/\"/g, '');
                     $scope.discoveryList.push(res.data[i]);
                 }
-                ar.initPhotoSwipeFromDOM('.bhy-gallery',$scope);
+                ar.initPhotoSwipeFromDOM('.bhy-gallery', $scope);
             }).finally(function () {
                 $scope.$broadcast('scroll.refreshComplete');
             });
@@ -153,10 +179,18 @@ define(['app/module', 'app/directive/directiveApi'
         $scope.commentList = [];
         $scope.isShowCommentList = true;
         $scope.jump = function (id) {
-            if (id == $scope.userInfo.id) {
-                $location.url('/member/information');
+            if (id >= 10000) {
+                if (id == $scope.userInfo.id) {
+                    $location.url('/member/information');
+                } else {
+                    $location.url('/userInfo?userId=' + id);
+                }
             } else {
-                $location.url('/userInfo?userId=' + id);
+                if (id == $scope.userInfo.id) {
+                    $location.url('/member/admin_information');
+                } else {
+                    $location.url('/admin_info?userId=' + id);
+                }
             }
 
         }
@@ -181,7 +215,7 @@ define(['app/module', 'app/directive/directiveApi'
             //$comment = ar.cleanQuotes(JSON.stringify(res.data.comment));
             //$scope.commentList = JSON.parse($comment);
             $scope.commentList = res.data.comment;
-            ar.initPhotoSwipeFromDOM('.bhy-gallery',$scope);
+            ar.initPhotoSwipeFromDOM('.bhy-gallery', $scope);
         })
 
         // 点赞
@@ -218,8 +252,8 @@ define(['app/module', 'app/directive/directiveApi'
                         private: $scope.formData.private == 'true' ? 1 : 0,
                         create_time: res.data.create_time,
                         content: $scope.formData.content,
-                        age:$scope.userInfo.info.age,
-                        sex:$scope.userInfo.sex
+                        age: $scope.userInfo.info.age,
+                        sex: $scope.userInfo.sex
                     });
                     //console.log($scope.commentList);
                     $scope.dis.comment_num = parseInt($scope.dis.comment_num) + 1;
@@ -230,11 +264,18 @@ define(['app/module', 'app/directive/directiveApi'
             })
         }
 
-        $scope.more = function (isUser, id) {
-            var btnList = [
-                {text: '举报'},
-                {text: '屏蔽'}
-            ];
+        $scope.more = function (isUser, dis) {
+            if (dis.user_id >= 10000) {
+                var btnList = [
+                    {text: '举报'},
+                    {text: '屏蔽'}
+                ];
+            } else {
+                var btnList = [
+                    {text: '屏蔽'}
+                ];
+            }
+
             if (isUser) {   // 判断该条动态是否所属当前用户
                 btnList = [
                     {text: '删除'}
@@ -249,19 +290,19 @@ define(['app/module', 'app/directive/directiveApi'
                 },
                 buttonClicked: function (index, btnObj) {
                     if (btnObj.text == '屏蔽') {
-                        $scope.display.push(id);
+                        $scope.display.push(dis.id);
                         ar.setStorage('display', $scope.display);
                         $location.url('/discovery');
                         // 将参数ID存入localStorage：display
                     }
                     if (btnObj.text == '举报') {
-                        $location.url('/member/report?id=' + id + '&type=2&title=动态&tempUrl=' + $location.$$url);
+                        $location.url('/member/report?id=' + dis.id + '&type=2&title=动态&tempUrl=' + $location.$$url);
                     }
                     if (btnObj.text == '删除') {
-                        $scope.display.push(id);
+                        $scope.display.push(dis.id);
                         ar.setStorage('display', $scope.display);
                         // 改变状态 api.save
-                        api.save('/wap/member/delete-dynamic', {id: id}).success(function (res) {
+                        api.save('/wap/member/delete-dynamic', {id: dis.id}).success(function (res) {
                             $location.url('/discovery');
                         });
                     }

@@ -20,7 +20,7 @@
             <!-- 固定item -->
             <ion-item class="talk_item_u">
                 <div class="talk_user">
-                    <a ng-href="{{receiveId >= 10000 ? '#/userInfo?userId='+receiveId : ''}}">
+                    <a ng-href="{{receiveId >= 10000 ? '#/userInfo?userId='+receiveId : '#/admin_info?userId='+receiveId}}">
                         <img ng-src="{{receiveHeadPic | isNull}}" onerror="this.src='/wechat/web/images/no_img.png'">
                     </a>
                 </div>

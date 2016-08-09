@@ -6,6 +6,7 @@ define(['app/module', 'app/directive/directiveApi'
 ], function (module) {
 
     module.controller("site.index", ['app.serviceApi', '$rootScope', '$scope', '$timeout', '$ionicPopup', '$ionicModal', '$ionicActionSheet', '$ionicLoading', '$ionicBackdrop', '$ionicScrollDelegate', '$location', 'dataFilter', function (api, $rootScope, $scope, $timeout, $ionicPopup, $ionicModal, $ionicActionSheet, $ionicLoading, $ionicBackdrop, $ionicScrollDelegate, $location, dataFilter) {
+
         // 搜索条件
         $scope.searchForm = {age: '18-28', pageNum: 1, pageSize: 6, sex: 0};
         $scope.userId = ar.getCookie("bhy_user_id") ? ar.getCookie("bhy_user_id") : 0;
@@ -94,12 +95,6 @@ define(['app/module', 'app/directive/directiveApi'
             $scope.loadMore();
         };
 
-        $rootScope.$on('$stateChangeSuccess',
-            function (event, toState, toParams, fromState, fromParams) {
-                init();
-                //setSearchCondition($scope.searchForm, $scope.userId);
-            });
-
         //点击搜索
         $scope.search = function () {
 
@@ -145,6 +140,7 @@ define(['app/module', 'app/directive/directiveApi'
             });
         }
 
+
         $scope.doRefresh = function () {
             var refreshForm = $scope.searchForm;
             refreshForm.pageSize = $scope.userList.length;
@@ -165,6 +161,8 @@ define(['app/module', 'app/directive/directiveApi'
 
         // 加载更多
         $scope.loadMore = function () {
+            console.log($scope.userList);
+            console.log($scope.searchForm);
             $scope.dataLoading = true;
             api.list('/wap/site/user-list', $scope.searchForm).success(function (res) {
                 if (res.data.length < 6) {
@@ -188,12 +186,8 @@ define(['app/module', 'app/directive/directiveApi'
             return $scope.pageLast;
         }
 
-        $scope.jump = function (url) {
-            $location.url(url);
-        }
 
         /* 高级搜索 */
-
         // 年龄范围
         var minAge = [], maxAge = [];
         for (var i = 18; i <= 99; i++) {

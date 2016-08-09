@@ -13,14 +13,17 @@
         </ion-refresher>
         <div class="list">
             <div class="item item-thumbnail-left" ng-repeat="dis in discoveryList | filter:indexFilter" >
-                <img class="cp" ng-if="dis.head_status == 1" ng-src="{{dis.head_pic | isNull}}" ng-click="dis.user_id != userInfo.user_id ? jump('/userInfo?userId={{dis.user_id}}') : jump('/member/information')" onerror="this.src='/wechat/web/images/no_img.png'">
-                <img class="cp" ng-if="dis.head_status != 1" src="/wechat/web/images/no_img.png" ng-click="dis.user_id != userInfo.user_id ? jump('/userInfo?userId={{dis.user_id}}') : jump('/member/information')">
+                <img class="cp" ng-if="dis.head_status == 1" ng-src="{{dis.head_pic | isNull}}" ng-click="jump(dis.id,dis.user_id,'userInfo')" onerror="this.src='/wechat/web/images/no_img.png'">
+                <img class="cp" ng-if="dis.head_status != 1" src="/wechat/web/images/no_img.png" ng-click="jump(dis.id,dis.user_id,'userInfo')">
                 <h2>
                     <span class="fl" ng-if="dis.real_name">{{dis.real_name | sex:dis.sex:dis.age}}</span>
                     <span class="fl" ng-if="!dis.real_name">会员{{dis.user_id}}</span>
                     <span class="fr fs12 cor5">{{dis.create_time*1000 | date:'yyyy-MM-dd HH:mm'}}</span>
                 </h2>
-                <p>
+                <p ng-if="dis.user_id < 10000">
+                    <span class="identity phone">官方</span>
+                </p>
+                <p ng-if="dis.user_id >= 10000">
                     <span class="identity id" ng-if="sfzCheck == 1">身份证</span>
                     <span class="identity phone" ng-if="dis.phone != null">手机</span>
                     <span class="identity vip" ng-if="dis.level == '1'">vip</span>
@@ -39,7 +42,7 @@
                         <i class="ion-thumbsup fs20 vam"></i>
                         <span class="vam likeNumber dib">{{dis.like_num}}</span>
                     </span>
-                    <span class="fl ml10 cp cor53" ng-click="jump('/discovery_single?id={{dis.id}}')">
+                    <span class="fl ml10 cp cor53" ng-click="jump(dis.id,dis.user_id,'single')">
                         <i class="ion-chatbubble-working fs20 vam"></i>
                         <span class="vam">{{dis.comment_num}}</span>
                     </span>
