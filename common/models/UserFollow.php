@@ -176,4 +176,29 @@ class UserFollow extends Base
         return $follow->save(false);
     }
 
+    /**
+     * 获取新关注的用户
+     * @param $userId
+     * @return mixed
+     */
+    public function getNewFollow($userId){
+
+        return (new Query())->from($this->tablePrefix.'user_follow')
+            ->where(['follow_id' => $userId,'checked'=>0])
+            ->select("*")
+            ->one();
+    }
+
+    /**
+     * 设置关注已看
+     * @param $userId
+     * @return int
+     * @throws \yii\db\Exception
+     */
+    public function setFollowChecked($userId){
+
+        return \Yii::$app->db->createCommand()
+            ->update($this->tablePrefix.'user_follow' , ['checked' => 1] , ['follow_id'=>$userId])
+            ->execute();
+    }
 }

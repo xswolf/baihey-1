@@ -1,6 +1,7 @@
 <?php
 namespace wechat\controllers;
 
+use common\models\User;
 use common\util\Cookie;
 use common\models\UserFollow;
 use yii\db\Query;
@@ -126,5 +127,30 @@ class FollowController extends BaseController
         $data = UserFollow::getInstance()->delBlack($this->get);
 
         return $this->renderAjax(['status' => 1, 'data' => $data]);
+    }
+
+    /**
+     * 是否有新关注用户
+     * @return string|void
+     */
+    public function actionIsNewFollow(){
+
+        if (UserFollow::getInstance()->getNewFollow($this->get['user_id'])){
+            return $this->renderAjax(['status' => 1, 'message' => '有新关注用户']);
+        }
+        return $this->renderAjax(['status' => 0, 'message' => '无新关注用户']);
+
+    }
+
+    /**
+     * 设置已看状态
+     * @return string|void
+     */
+    public function actionSetChecked(){
+
+        if (UserFollow::getInstance()->setFollowChecked($this->get['user_id'])){
+            return $this->renderAjax(['status' => 1, 'message' => '设置成功']);
+        }
+        return $this->renderAjax(['status' => 0, 'message' => '设置失败']);
     }
 }
