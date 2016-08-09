@@ -27,6 +27,7 @@
                 <div class="dis_gallery bhy-gallery clearfix">
                     <a ng-repeat="img in dis.imgList | limitTo:6" ng-href="{{img.thumb_path | picture}}" data-size="{{img.thumb_path.split('.')[0].split('_')[1] + 'x' + img.thumb_path.split('.')[0].split('_')[2]}}">
                         <img class="w100" ng-src="{{img.thumb_path}}">
+                        <figure class="hide">轻触照片退出</figure>
                     </a>
                 </div>
                 <div class="clearfix mt10 pr">

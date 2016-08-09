@@ -11,6 +11,7 @@
                     <div class="bhy-gallery">
                         <a class="imgItem" ng-repeat="img in imgList" ng-href="{{img.thumb_path | picture}}" data-size="{{img.thumb_path.split('.')[0].split('_')[1] + 'x' + img.thumb_path.split('.')[0].split('_')[2]}}">
                             <img src="{{img.thumb_path}}">
+                            <figure class="hide">轻触照片退出</figure>
                         </a>
                     </div>
                     <div class="imgItem add" ng-click="addNewImg()" ng-if="imgList.length < 6">
