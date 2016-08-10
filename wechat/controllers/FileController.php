@@ -120,13 +120,15 @@ class FileController extends BaseController {
             $method = 'wbmp';
         }
 
-        $oldSource  = "imagecreatefrom".$method($oldName);
+        $createMethod = "imagecreatefrom".$method;
+        $imgMethod  = "image".$method;
+        $oldSource  = $createMethod($oldName);
         $oldRotate  = imagerotate($oldSource, $degrees, 0);
 
-        $source     = "imagecreatefrom".$method('/alidata/www/baihey'.$filename);
+        $source     = $createMethod($filename);
         $rotate     = imagerotate($source, $degrees, 0);
 
-        if ("image".$method($rotate,$filename) && "image".$method($oldRotate,$oldName)){
+        if ($imgMethod($rotate,$filename) && $imgMethod($oldRotate,$oldName)){
             return $this->renderAjax(['status'=>1 , 'message' => '成功']);
         }
         return $this->renderAjax(['status'=>0 , 'message' => '失败']);
