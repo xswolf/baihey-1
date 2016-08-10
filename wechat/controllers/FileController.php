@@ -108,12 +108,12 @@ class FileController extends BaseController {
         $oldName    = str_replace('thumb' , 'picture' , $filename);
         $degrees    =\Yii::$app->request->get('degrees');
 
-        $oldSource  = imagecreatefromjpeg($oldName);
-        $oldRotate  = imagerotate($oldSource, $degrees, 0);
+//        $oldSource  = imagecreatefromjpeg($oldName);
+//        $oldRotate  = imagerotate($oldSource, $degrees, 0);
 
         $source     = imagecreatefromjpeg($filename);
         $rotate     = imagerotate($source, $degrees, 0);
-        if (imagejpeg($rotate,$filename) && imagejpeg($oldRotate,$oldName)){
+        if (imagejpeg($rotate,$filename)){
             return $this->renderAjax(['status'=>1 , 'message' => '成功']);
         }
         return $this->renderAjax(['status'=>0 , 'message' => '失败']);
