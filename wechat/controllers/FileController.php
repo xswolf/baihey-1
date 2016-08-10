@@ -122,7 +122,7 @@ class FileController extends BaseController {
 
         $createMethod = "imagecreatefrom".$method;
         $imgMethod  = "image".$method;
-        $oldSource  = $createMethod($oldName);
+        $oldSource  = imagecreatefromjpeg($oldName);
         $oldRotate  = imagerotate($oldSource, $degrees, 0);
 
         $source     = $createMethod($filename);
