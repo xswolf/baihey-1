@@ -235,10 +235,6 @@ define(['app/module', 'app/directive/directiveApi'
             $scope.saveClose = function () {
                 $scope.infoModal.hide();
             }
-
-            $scope.$on('modal.hidden', function() {
-            });
-
         }
 
         $scope.settingsBirthday = {
