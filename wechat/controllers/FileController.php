@@ -113,7 +113,7 @@ class FileController extends BaseController {
 
         $source     = imagecreatefromjpeg('/alidata/www/baihey'.$filename);
         $rotate     = imagerotate($source, $degrees, 0);
-        if (imagejpeg($rotate,$filename)){
+        if (imagejpeg($rotate,'/alidata/www/baihey'.$filename)){
             return $this->renderAjax(['status'=>1 , 'message' => '成功']);
         }
         return $this->renderAjax(['status'=>0 , 'message' => '失败']);
