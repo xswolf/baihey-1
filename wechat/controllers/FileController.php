@@ -110,19 +110,19 @@ class FileController extends BaseController {
 
         $ext = strtolower(strrchr($filename,'.'));
         $method = 'jpeg';
-//        if ($ext == 'jpg' || $ext == 'jpeg'){
-//            $method = 'jpeg';
-//        }elseif ($ext == 'gif'){
-//            $method = 'gif';
-//        }elseif ($ext == 'png'){
-//            $method = 'png';
-//        }elseif ($ext == 'bmp'){
-//            $method = 'wbmp';
-//        }
+        if ($ext == 'jpg' || $ext == 'jpeg'){
+            $method = 'jpeg';
+        }elseif ($ext == 'gif'){
+            $method = 'gif';
+        }elseif ($ext == 'png'){
+            $method = 'png';
+        }elseif ($ext == 'bmp'){
+            $method = 'wbmp';
+        }
 
         $createMethod = "imagecreatefrom".$method;
         $imgMethod  = "image".$method;
-        $oldSource  = imagecreatefromjpeg($oldName);
+        $oldSource  = $createMethod($oldName);
         $oldRotate  = imagerotate($oldSource, $degrees, 0);
 
         $source     = $createMethod($filename);
