@@ -111,7 +111,7 @@ class FileController extends BaseController {
 //        $oldSource  = imagecreatefromjpeg($oldName);
 //        $oldRotate  = imagerotate($oldSource, $degrees, 0);
 
-        $source     = imagecreatefromjpeg('.'.$filename);
+        $source     = imagecreatefromjpeg($filename);
         $rotate     = imagerotate($source, $degrees, 0);
         if (imagejpeg($rotate,$filename)){
             return $this->renderAjax(['status'=>1 , 'message' => '成功']);
