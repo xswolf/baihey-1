@@ -105,7 +105,7 @@
                 btn.attr('disabled',true);
                 var img = $(this).siblings('img');
                 var angle = parseInt(img.attr('angle'));
-                img.attr('angle',angle=angle+90);
+                img.attr('angle',angle=angle-90);
                 img.rotate({
                     animateTo:angle,
                     callback:function(){
@@ -121,7 +121,6 @@
                                 setTimeout(function(){
                                     btn.attr('disabled',false);
                                 },1000)
-                                console.log(angle);
                             },
                             error: function (XMLHttpRequest, textStatus, errorThrown) {
                                 alert('保存图片失败,错误原因：' + XMLHttpRequest.responseText);
