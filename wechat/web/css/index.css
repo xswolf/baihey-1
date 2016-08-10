@@ -237,9 +237,10 @@ a.weibo {
 }
 .identity {
   font-size: 11px;
-  padding: 1px 5px;
+  padding: 2px;
   color: #fff;
   margin-right: 2px;
+  line-height: 1;
 }
 .identity.not {
   background-color: #f8f8f8 !important;
