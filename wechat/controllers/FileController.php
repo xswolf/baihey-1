@@ -109,6 +109,7 @@ class FileController extends BaseController {
         $degrees    = \Yii::$app->request->get('degrees');
 
         $ext = strtolower(strrchr($filename,'.'));
+        $method = 'jpeg';
         if ($ext == 'jpg' || $ext == 'jpeg'){
             $method = 'jpeg';
         }elseif ($ext == 'gif'){
