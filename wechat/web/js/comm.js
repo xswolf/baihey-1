@@ -1332,51 +1332,50 @@ var ar = {
 
     processParams: function ($scope,formData) {
         if(!formData) return true;
-        var form = formData;
-        if(form.birthday){
+        if(formData.birthday){
             //$scope.userInfo.info.age = this.dateToTimestamp(form.birbirthday);
-            $scope.userInfo.info.age = form.birthday.getTime()/1000;
-            $scope.userInfo.info.zodiac = form.zodiac.id;
-            $scope.userInfo.info.constellation = form.constellation.id;
+            $scope.userInfo.info.age = formData.birthday.getTime()/1000;
+            $scope.userInfo.info.zodiac = formData.zodiac.id;
+            $scope.userInfo.info.constellation = formData.constellation.id;
         }
-        if(form.went_travel){
-            $scope.userInfo.went_travel = form.went_travel.join(',');
+        if(formData.went_travel){
+            $scope.userInfo.went_travel = formData.went_travel.join(',');
         }
-        if(form.want_travel){
-            $scope.userInfo.want_travel = form.want_travel.join(',');
+        if(formData.want_travel){
+            $scope.userInfo.want_travel = formData.want_travel.join(',');
         }
-        if(form.love_sport){
-            $scope.userInfo.love_sport = form.love_sport.join(',');
+        if(formData.love_sport){
+            $scope.userInfo.love_sport = formData.love_sport.join(',');
         }
-        if(form.want_film){
-            $scope.userInfo.want_film = form.want_film.join(',');
+        if(formData.want_film){
+            $scope.userInfo.want_film = formData.want_film.join(',');
         }
-        if(form.like_food){
-            $scope.userInfo.like_food = form.like_food.join(',');
+        if(formData.like_food){
+            $scope.userInfo.like_food = formData.like_food.join(',');
         }
-        if(form.zo_marriage){
+        if(formData.zo_marriage){
             var zo_marriage = [];
-            for(var i in form.zo_marriage){
-                if(form.zo_marriage[i].checked){
-                    zo_marriage.push(form.zo_marriage[i].id);
+            for(var i in formData.zo_marriage){
+                if(formData.zo_marriage[i].checked){
+                    zo_marriage.push(formData.zo_marriage[i].id);
                 }
             }
             $scope.userInfo.info.zo_marriage = zo_marriage.join(',');
         }
-        if(form.zo_zodiac){
+        if(formData.zo_zodiac){
             var zo_zodiac = [];
-            for(var i in form.zo_zodiac){
-                if(form.zo_zodiac[i].checked){
-                    zo_zodiac.push(form.zo_zodiac[i].id);
+            for(var i in formData.zo_zodiac){
+                if(formData.zo_zodiac[i].checked){
+                    zo_zodiac.push(formData.zo_zodiac[i].id);
                 }
             }
             $scope.userInfo.info.zo_zodiac = zo_zodiac.join(',');
         }
-        if(form.zo_constellation){
+        if(formData.zo_constellation){
             var zo_constellation = [];
-            for(var i in form.zo_constellation){
-                if(form.zo_constellation[i].checked){
-                    zo_constellation.push(form.zo_constellation[i].id);
+            for(var i in formData.zo_constellation){
+                if(formData.zo_constellation[i].checked){
+                    zo_constellation.push(formData.zo_constellation[i].id);
                 }
             }
             $scope.userInfo.info.zo_constellation = zo_constellation.join(',');

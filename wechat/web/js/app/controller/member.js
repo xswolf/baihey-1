@@ -221,7 +221,6 @@ define(['app/module', 'app/directive/directiveApi'
 
         // 修改信息弹窗modal
         $scope.updateInfo = function (fieldName) {
-            ar.setStorage('tempData', $scope.userInfo);
             if (!fieldName)  return false;
             $ionicModal.fromTemplateUrl('/wechat/web/templates/' + fieldName + '.html', {
                 scope: $scope,
@@ -232,19 +231,15 @@ define(['app/module', 'app/directive/directiveApi'
                    ar.processData(fieldName,$scope,api,$ionicPopup,$filter,$ionicScrollDelegate);
                 }
             });
+
             $scope.saveClose = function () {
-                $scope.userInfo = ar.getStorage('tempData');
                 $scope.infoModal.hide();
             }
 
             $scope.$on('modal.hidden', function() {
-                $scope.userInfo = ar.getStorage('tempData');
             });
-            $scope.$on('$ionicView.beforeLeave', function() {
-                localStorage.removeItem('tempData');
-            });
-        }
 
+        }
 
         $scope.settingsBirthday = {
             theme: 'mobiscroll',

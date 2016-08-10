@@ -3,7 +3,7 @@
     <link href="/wechat/web/css/plugin/animate/animate.css" rel="stylesheet">
     <ion-content class="member com_w_100">
         <ion-list>
-            <ion-item class="member_hdr" ng-href="{{userInfo > 9999 ? '#/member/information' : '#/member/admin_information'}}">
+            <ion-item class="member_hdr" ng-href="{{userInfo.user_id > 9999 ? '#/member/information' : '#/member/admin_information'}}">
                 <div class="fl u_img">
                     <img class="rounded" src="{{userInfo.info.head_pic | isNull}}"
                          onerror="this.src='/wechat/web/images/u_noimg.jpg'">
