@@ -105,14 +105,14 @@
                 btn.attr('disabled',true);
                 var img = $(this).siblings('img');
                 var angle = parseInt(img.attr('angle'));
-                img.attr('angle',angle=angle-90);
+                img.attr('angle',angle=angle+90);
                 img.rotate({
                     animateTo:angle,
                     callback:function(){
                         $.ajax({
                             type: 'get',
                             url: '/wap/file/rotate',
-                            data: {filename:$(this).attr('src'),degrees:angle},
+                            data: {filename:$(this).attr('src'),degrees:-angle},
                             dataType: "json",
                             success: function(res){
                                 console.log(res);
