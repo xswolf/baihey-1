@@ -121,6 +121,7 @@
                                 setTimeout(function(){
                                     btn.attr('disabled',false);
                                 },1000)
+                                console.log(angle);
                             },
                             error: function (XMLHttpRequest, textStatus, errorThrown) {
                                 alert('保存图片失败,错误原因：' + XMLHttpRequest.responseText);
