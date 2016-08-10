@@ -1,9 +1,9 @@
-
 <div class="wrapper wrapper-content animated fadeInUp">
     <div class="ibox">
         <div class="ibox-title"><h5>照片</h5>
             <div class="ibox-tools rboor">
-                <button id="multiple-select" class="btn btn-green btn-xs p310"><i class="fa fa-check-square-o"></i> 批量审核</button>
+                <button id="multiple-select" class="btn btn-green btn-xs p310"><i class="fa fa-check-square-o"></i> 批量审核
+                </button>
             </div>
         </div>
 
@@ -13,13 +13,20 @@
                 <div class="col-lg-12 col-sm-12">
                     <div class="form-group">
                         <div class="col-lg-12 col-sm-12 input-group date">
-                            <a href="/admin/member/photo?is_check=1&type=1" class="btn {{if (\Yii::$app->request->get('is_check') == 1 and \Yii::$app->request->get('type') == 1)}} btn-success {{else}} btn-grey {{/if}}">已审核</a>
-                            <a href="/admin/member/photo?is_check=2&type=1" class="btn {{if (\Yii::$app->request->get('is_check') == 2 and \Yii::$app->request->get('type') == 1)}} btn-success {{else}} btn-grey {{/if}}">未审核</a>
-                            <a href="/admin/member/photo?is_check=0&type=1" class="btn {{if (\Yii::$app->request->get('is_check') == 0 and \Yii::$app->request->get('type') == 1)}} btn-success {{else}} btn-grey {{/if}}">审核未通过</a>
-                            <a href="/admin/member/photo?is_check=2&type=2" class="btn {{if (\Yii::$app->request->get('is_check') == 2 and \Yii::$app->request->get('type') == 2)}} btn-success {{else}} btn-grey {{/if}}">身份证</a>
-                            <a href="/admin/member/photo?is_check=2&type=3" class="btn {{if (\Yii::$app->request->get('is_check') == 2 and \Yii::$app->request->get('type') == 3)}} btn-success {{else}} btn-grey {{/if}}">学历</a>
-                            <a href="/admin/member/photo?is_check=2&type=4" class="btn {{if (\Yii::$app->request->get('is_check') == 2 and \Yii::$app->request->get('type') == 4)}} btn-success {{else}} btn-grey {{/if}}">离婚证</a>
-                            <a href="/admin/member/photo?is_check=2&type=5" class="btn {{if (\Yii::$app->request->get('is_check') == 2 and \Yii::$app->request->get('type') == 5)}} btn-success {{else}} btn-grey {{/if}}">房产证</a>
+                            <a href="/admin/member/photo?is_check=1&type=1"
+                               class="btn {{if (\Yii::$app->request->get('is_check') == 1 and \Yii::$app->request->get('type') == 1)}} btn-success {{else}} btn-grey {{/if}}">已审核</a>
+                            <a href="/admin/member/photo?is_check=2&type=1"
+                               class="btn {{if (\Yii::$app->request->get('is_check') == 2 and \Yii::$app->request->get('type') == 1)}} btn-success {{else}} btn-grey {{/if}}">未审核</a>
+                            <a href="/admin/member/photo?is_check=0&type=1"
+                               class="btn {{if (\Yii::$app->request->get('is_check') == 0 and \Yii::$app->request->get('type') == 1)}} btn-success {{else}} btn-grey {{/if}}">审核未通过</a>
+                            <a href="/admin/member/photo?is_check=2&type=2"
+                               class="btn {{if (\Yii::$app->request->get('is_check') == 2 and \Yii::$app->request->get('type') == 2)}} btn-success {{else}} btn-grey {{/if}}">身份证</a>
+                            <a href="/admin/member/photo?is_check=2&type=3"
+                               class="btn {{if (\Yii::$app->request->get('is_check') == 2 and \Yii::$app->request->get('type') == 3)}} btn-success {{else}} btn-grey {{/if}}">学历</a>
+                            <a href="/admin/member/photo?is_check=2&type=4"
+                               class="btn {{if (\Yii::$app->request->get('is_check') == 2 and \Yii::$app->request->get('type') == 4)}} btn-success {{else}} btn-grey {{/if}}">离婚证</a>
+                            <a href="/admin/member/photo?is_check=2&type=5"
+                               class="btn {{if (\Yii::$app->request->get('is_check') == 2 and \Yii::$app->request->get('type') == 5)}} btn-success {{else}} btn-grey {{/if}}">房产证</a>
                             <button class="btn" id="select-all">反选</button>
 
 
@@ -44,50 +51,99 @@
                 </thead>
                 <tbody>
                 {{foreach from=$list item=vo}}
-                    <tr data-id="{{$vo.id}}">
-                        <td class="tn">{{$vo.id}}</td>
-                        <td>{{$vo.user_id}}</td>
-                        <td><a href="/admin/member/edit?id={{$vo.user_id}}">{{getName($vo.real_name)}}</a></td>
-                        <td>
-                            {{if ($vo.type ==1)}}
-                                照片
-                            {{else if ($vo.type ==2 || $vo.type == 3)}}
-                                身份证
-                            {{else if ($vo.type ==4)}}
-                                学历
-                            {{else if ($vo.type ==5)}}
-                                离婚证
-                            {{else if ($vo.type ==6)}}
-                                房产证
-                            {{/if}}
-                        </td>
-                        <td><img width="100" height="100" src="{{$vo.thumb_path}}"></img></td>
-                        <td>{{date('Y-m-d H:i:s',$vo.create_time)}}</td>
-                        <td>
-                            <!--<div class="make-switch switch-small" data-on-label="已审核" data-off-label="未审核" data-on="success" data-off="danger">-->
-                                <!--<input type="checkbox" data-id="{{$vo.id}}" class="mySwitch" {{if ($vo.is_check == 1)}} checked {{/if}}>-->
-                                <select class="form-control mySwitch" data-id="{{$vo.id}}">
-                                    <option value="2" {{if $vo.is_check eq 2}} selected {{/if}}>未审核</option>
-                                    <option value="1" {{if $vo.is_check eq 1}} selected {{/if}}>审核通过</option>
-                                    <option value="0" {{if $vo.is_check eq 0}} selected {{/if}}>审核未通过</option>
-                                </select>
-                            <!--</div>-->
-                        </td>
-                    </tr>
+                <tr data-id="{{$vo.id}}">
+                    <td class="tn">{{$vo.id}}</td>
+                    <td>{{$vo.user_id}}</td>
+                    <td><a href="/admin/member/edit?id={{$vo.user_id}}">{{getName($vo.real_name)}}</a></td>
+                    <td>
+                        {{if ($vo.type ==1)}}
+                        照片
+                        {{else if ($vo.type ==2 || $vo.type == 3)}}
+                        身份证
+                        {{else if ($vo.type ==4)}}
+                        学历
+                        {{else if ($vo.type ==5)}}
+                        离婚证
+                        {{else if ($vo.type ==6)}}
+                        房产证
+                        {{/if}}
+                    </td>
+                    <td>
+                        <!--<img width="100" height="100" src="{{$vo.thumb_path}}">-->
+                        <img width="100" height="100" src="/wechat/web/images/test.jpg" angle="0">
+                        <button class="btn btn-info imgRotate" title="旋转图片">
+                            <i class="fa fa-rotate-right"></i>
+                        </button>
+                    </td>
+                    <td>{{date('Y-m-d H:i:s',$vo.create_time)}}</td>
+                    <td>
+                        <!--<div class="make-switch switch-small" data-on-label="已审核" data-off-label="未审核" data-on="success" data-off="danger">-->
+                        <!--<input type="checkbox" data-id="{{$vo.id}}" class="mySwitch" {{if ($vo.is_check == 1)}} checked {{/if}}>-->
+                        <select class="form-control mySwitch" data-id="{{$vo.id}}">
+                            <option value="2" {{if $vo.is_check eq 2}} selected {{/if}}>未审核</option>
+                            <option value="1" {{if $vo.is_check eq 1}} selected {{/if}}>审核通过</option>
+                            <option value="0" {{if $vo.is_check eq 0}} selected {{/if}}>审核未通过</option>
+                        </select>
+                        <!--</div>-->
+                    </td>
+                </tr>
                 {{/foreach}}
                 </tbody>
             </table>
         </div>
     </div>
 </div>
+<script src="/backend/web/CloudAdmin/js/jquery-rotate/jQueryRotate.js"></script>
 <script>
+
+    // 图片旋转
+    $(".imgRotate").rotate({
+        bind:
+        {
+            click: function(e){
+                e.stopPropagation();
+                var btn = $(this);
+                btn.attr('disabled',true);
+                var img = $(this).siblings('img');
+                var angle = parseInt(img.attr('angle'));
+                img.attr('angle',angle=angle+90);
+                img.rotate({
+                    animateTo:angle,
+                    callback:function(){
+                        $.ajax({
+                            type: 'get',
+                            url: '/wap/file/rotate',
+                            data: {filename:$(this).attr('src'),degrees:angle},
+                            dataType: "json",
+                            success: function(res){
+                                console.log(res);
+                            },
+                            complete: function () {
+                                setTimeout(function(){
+                                    btn.attr('disabled',false);
+                                },1000)
+                            },
+                            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                                alert('保存图片失败,错误原因：' + XMLHttpRequest.responseText);
+                            }
+                        })
+
+                    }
+                });
+
+            }
+        }
+
+    });
+
     jQuery(document).ready(function () {
+
         $('.mySwitch').on('change', function () {
 //            var status = $(this).is(':checked') == true ? 1 : 0;
             var status = $(this).val();
             var id = $(this).data('id');
             $.ajax({
-                url: "/admin/member/auth-photo", data: {id: id , status:status}, success: function (res) {
+                url: "/admin/member/auth-photo", data: {id: id, status: status}, success: function (res) {
 
                 }
             });
@@ -98,9 +154,9 @@
             $(".j-datatables tbody tr").toggleClass('selected');
         })
 
-        $('.j-datatables tbody').on( 'click', 'tr', function () {
+        $('.j-datatables tbody').on('click', 'tr', function () {
             $(this).toggleClass('selected');
-        } );
+        });
 
         $("#multiple-select").click(function () {
             var id = "";
@@ -110,34 +166,34 @@
                 }
             })
             id += "0";
-            if(id == "0"){
+            if (id == "0") {
                 layer.msg('请先选择要批量操作的数据');
                 return false;
             }
             layer.confirm('请选择操作', {
                 btn: ['通过', '不通过']
-            }, function(index, layero){
+            }, function (index, layero) {
                 $.ajax({
                     url: "/admin/member/auth-photo", data: {id: id, status: 1}, success: function (res) {
                         res = JSON.parse(res);
-                        if (res.status == 1){
-                            layer.msg('操作成功', function(){
+                        if (res.status == 1) {
+                            layer.msg('操作成功', function () {
                                 window.location.reload(true);
                             });
-                        }else{
+                        } else {
                             layer.msg('操作失败，请刷新重试');
                         }
                     }
                 });
-            }, function(index){
+            }, function (index) {
                 $.ajax({
                     url: "/admin/member/auth-photo", data: {id: id, status: 0}, success: function (res) {
                         res = JSON.parse(res);
-                        if (res.status == 1){
-                            layer.msg('操作成功', function(){
+                        if (res.status == 1) {
+                            layer.msg('操作成功', function () {
                                 window.location.reload(true);
                             });
-                        }else{
+                        } else {
                             layer.msg('操作失败，请刷新重试');
                         }
                     }

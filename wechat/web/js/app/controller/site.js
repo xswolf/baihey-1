@@ -133,7 +133,9 @@ define(['app/module', 'app/directive/directiveApi'
                         //setSearchCondition($scope.searchForm, $scope.userId);
                     }
                     if (index == 2) {   //高级搜索
-                        $scope.moreSearchModal.show();
+                        if($scope.moreSearchModal.show()){
+                            $ionicScrollDelegate.$getByHandle('searchScroll').scrollTop();
+                        }
                     }
                     hideSheet();
                 }
