@@ -98,4 +98,25 @@ class FileController extends BaseController {
         }
         $this->renderAjax($data);
     }
+
+    /**
+     * 图片旋转
+     */
+    public function actionRotate(){
+
+        $filename   = \Yii::$app->request->get('filename');
+        $oldName    = str_replace('thumb' , 'picture' , $filename);
+        $degrees    =\Yii::$app->request->get('degrees');
+
+        $oldSource  = imagecreatefromjpeg($oldName);
+        $oldRotate  = imagerotate($oldSource, $degrees, 0);
+
+        $source     = imagecreatefromjpeg($filename);
+        $rotate     = imagerotate($source, $degrees, 0);
+        if (imagejpeg($rotate,$filename) && imagejpeg($oldRotate,$oldName)){
+            return $this->renderAjax(['status'=>1 , 'message' => '成功']);
+        }
+        return $this->renderAjax(['status'=>0 , 'message' => '失败']);
+
+    }
 }
