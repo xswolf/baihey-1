@@ -104,16 +104,28 @@ class FileController extends BaseController {
      */
     public function actionRotate(){
 
-        $filename   = \Yii::$app->request->get('filename');
+        $filename   = '/alidata/www/baihey'.\Yii::$app->request->get('filename');
         $oldName    = str_replace('thumb' , 'picture' , $filename);
-        $degrees    =\Yii::$app->request->get('degrees');
+        $degrees    = \Yii::$app->request->get('degrees');
 
-//        $oldSource  = imagecreatefromjpeg($oldName);
-//        $oldRotate  = imagerotate($oldSource, $degrees, 0);
+        $ext = strtolower(strrchr($filename,'.'));
+        if ($ext == 'jpg' || $ext == 'jpeg'){
+            $method = 'jpeg';
+        }elseif ($ext == 'gif'){
+            $method = 'gif';
+        }elseif ($ext == 'png'){
+            $method = 'png';
+        }elseif ($ext == 'bmp'){
+            $method = 'wbmp';
+        }
 
-        $source     = imagecreatefromjpeg('/alidata/www/baihey'.$filename);
+        $oldSource  = "imagecreatefrom".$method($oldName);
+        $oldRotate  = imagerotate($oldSource, $degrees, 0);
+
+        $source     = "imagecreatefrom".$method('/alidata/www/baihey'.$filename);
         $rotate     = imagerotate($source, $degrees, 0);
-        if (imagejpeg($rotate,'/alidata/www/baihey'.$filename)){
+
+        if ("image".$method($rotate,$filename) && "image".$method($oldRotate,$oldName)){
             return $this->renderAjax(['status'=>1 , 'message' => '成功']);
         }
         return $this->renderAjax(['status'=>0 , 'message' => '失败']);
