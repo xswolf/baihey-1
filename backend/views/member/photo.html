@@ -112,7 +112,7 @@
                         $.ajax({
                             type: 'get',
                             url: '/wap/file/rotate',
-                            data: {filename:$(this).attr('src'),degrees:-angle},
+                            data: {filename:$(this).attr('src'),degrees:-90},
                             dataType: "json",
                             success: function(res){
                                 console.log(res);
