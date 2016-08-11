@@ -328,7 +328,6 @@ define(['app/module', 'app/directive/directiveApi'
             }
         }
 
-        alert(1)
         // remove欢迎图片
         if (document.getElementById('welcome')) {
             document.getElementById('welcome').className = 'animated fadeOut';
