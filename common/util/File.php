@@ -107,11 +107,13 @@ class File
         $image = new Image();
         $folder = __DIR__ . "/../..";
         $url = "/images/upload/thumb/" . $data['path'];
+        $fileInfo = getimagesize($folder . "/images/upload/picture/" . $data['path']);
+        $thumbInfo = $this->thumbRation($fileInfo[0], $fileInfo[1]);//缩略图尺寸
         $image->open($folder . "/images/upload/picture/" . $data['path']);
         //另存固定宽度是200的压缩图片
-        $image->thumb(200, 200, $image::IMAGE_THUMB_FIXED)->save($folder . $url);
-        $fileInfo = getimagesize($folder . "/images/upload/picture/" . $data['path']);
-        $picInfo = $this->pictureRatio($fileInfo[0], $fileInfo[1]);
+        $image->thumb($thumbInfo[0], $thumbInfo[1], $image::IMAGE_THUMB_FIXED)->save($folder . $url);
+        $image->thumb(200, 200, $image::IMAGE_THUMB_CENTER)->save($folder . $url);// 居中裁剪
+        $picInfo = $this->pictureRatio($fileInfo[0], $fileInfo[1]);//原图缩略尺寸
         $pic = new Image();
         $pic->open($folder . "/images/upload/picture/" . $data['path']);
         $pic->thumb($picInfo[0], $picInfo[1], $image::IMAGE_THUMB_FIXED)->save($folder . "/images/upload/picture/" . $data['path']);
@@ -136,11 +138,13 @@ class File
             $picInfo = $this->pictureRatio($fileInfo[0], $fileInfo[1]); //  等比例
             $picturePath = $imagePath . '_' . $picInfo[0] . '_' . $picInfo[1] . '.' . $extension;
             if (rename($targetFile, $picturePath)) {
+                $thumbInfo = $this->thumbRation($fileInfo[0], $fileInfo[1]);//缩略图尺寸
                 // 固定压缩图片长宽200
                 $image = new Image();
                 $thumbPath = str_replace('picture', 'thumb', $picturePath);
                 $image->open($picturePath);
-                $image->thumb(200, 200, $image::IMAGE_THUMB_FIXED)->save($thumbPath);
+                $image->thumb($thumbInfo[0], $thumbInfo[1], $image::IMAGE_THUMB_FIXED)->save($thumbPath);
+                $image->thumb(200, 200, $image::IMAGE_THUMB_CENTER)->save($thumbPath);// 居中裁剪
                 $pic = new Image();
                 $pic->open($picturePath);
                 $pic->thumb($picInfo[0], $picInfo[1], $image::IMAGE_THUMB_FIXED)->save($picturePath);
@@ -152,7 +156,7 @@ class File
     }
 
     /**
-     * 返回等比例压缩宽高
+     * 返回原图等比例压缩宽高（最大不超过）
      * @param $pic_width
      * @param $pic_height
      */
@@ -189,6 +193,45 @@ class File
         }
         if(!$resizewidth_tag && $resizeheight_tag) {
             $ratio = $heightratio;
+        }
+
+        $pic[0] = floor($ratio*$pic_width);
+        $pic[1] = floor($ratio*$pic_height);
+        return $pic;
+    }
+
+    /**
+     * 缩略图比例计算（最小不小于）
+     * @param $pic_width
+     * @param $pic_height
+     * @return mixed
+     */
+    public function thumbRation($pic_width, $pic_height)
+    {
+        $maxwidth = 210;
+        $maxheight = 210;
+        $resizewidth_tag = false;
+        $resizeheight_tag = false;
+        if($pic_width < $maxwidth || $pic_height < $maxheight) {
+            $pic[0] = $pic_width;
+            $pic[1] = $pic_height;
+            return $pic;
+        }
+        if($maxwidth && $pic_width > $maxwidth) {
+            $widthratio = $maxwidth/$pic_width;
+            $resizewidth_tag = true;
+        }
+        if($maxheight && $pic_height > $maxheight) {
+            $heightratio = $maxheight/$pic_height;
+            $resizeheight_tag = true;
+        }
+
+        if($resizewidth_tag && $resizeheight_tag) {
+            if($widthratio<$heightratio) {
+                $ratio = $heightratio;
+            } else {
+                $ratio = $widthratio;
+            }
         }
 
         $pic[0] = floor($ratio*$pic_width);
