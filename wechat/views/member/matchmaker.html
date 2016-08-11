@@ -4,7 +4,7 @@
     <ion-header-bar class="com_w_100 bhy maker_hdr">
         <p class="title">我的专属红娘</p>
     </ion-header-bar>
-    <ion-content class="bhy com_w_100 matchmaker">
+    <ion-content class="bhy com_w_100 matchmaker bg5 has-footer">
         <div class="list mb0">
             <div class="item item-thumbnail-left pr bor_b_n" >
                 <img src="{{matchmakerList[0].photo}}">
@@ -26,21 +26,19 @@
                 <p class="ti28 wsn">{{userName}}您好！ {{matchmakerList[0].introduction}}</p>
                 <p class="tar"><a href="javascript:;" ng-if="matchmakerList.length > 1" ng-click="getMatchmakerList()" class="fr">查看{{showTitle}} >></a></p>
             </ion-item>
-            <div class="introduction">
-                <img src="/wechat/web/images/member/maker1.png">
-                <p class="ti28 wsn mt10">嘉瑞百合缘红娘均接受过专业培训，并获得国家职业<span class="cor28">“婚姻家庭咨询师”</span>资格证书，具有优秀的观察判断沟通交流能力，为您提供细致贴心的个性化专属服务，帮您更快找到心仪对象。</p>
-            </div>
-            <div class="introduction">
-                <img src="/wechat/web/images/member/maker2.png">
-                <p class="ti28 wsn mt10">嘉瑞百合缘红娘<span class="cor28">不仅为您牵线搭桥，更贴心关注您的情感生活。</span>结合多年婚恋服务经验，为您的恋爱交往、婚姻经营提供最有效的建议和指导。</p>
-            </div>
-            <div class="introduction">
-                <img src="/wechat/web/images/member/maker3.png">
-                <p class="ti28 wsn bot">嘉瑞百合缘红娘与每位认证会员均有面谈或电话沟通记录，详细了解到您的综合素养及家庭背景，<span class="cor28">熟知您的征婚要求，精心为您筛选最佳人选并定制专属相亲方案，</span>大大提高您的婚恋成功率。</p>
-                <p class="tac fwb cor28">选择专属红娘服务是您幸福婚姻的有力保障！</p>
-            </div>
+            <div class="introduction mk1"></div>
+            <p class="ti28 wsn padding mt10 cor8">嘉瑞百合缘红娘均接受过专业培训，并获得国家职业<span class="cor28">“婚姻家庭咨询师”</span>资格证书，具有优秀的观察判断沟通交流能力，为您提供细致贴心的个性化专属服务，帮您更快找到心仪对象。</p>
+            <div class="line"></div>
+            <div class="introduction mk2"></div>
+            <p class="ti28 wsn padding mt10 cor8">嘉瑞百合缘红娘<span class="cor28">不仅为您牵线搭桥，更贴心关注您的情感生活。</span>结合多年婚恋服务经验，为您的恋爱交往、婚姻经营提供最有效的建议和指导。</p>
+            <div class="line"></div>
+            <div class="introduction mk3"></div>
+            <p class="ti28 wsn padding mt10 cor8">嘉瑞百合缘红娘与每位认证会员均有面谈或电话沟通记录，详细了解到您的综合素养及家庭背景，<span class="cor28">熟知您的征婚要求，精心为您筛选最佳人选并定制专属相亲方案，</span>大大提高您的婚恋成功率。</p>
+            <p class="tac fwb cor28 mt10">选择专属红娘服务是您幸福婚姻的有力保障！</p>
         </div>
-            <a href="#/member/matchmaker_service" class="button w100 maker_footer_btn">红娘服务四大优势<i class="ml10 ion-ios-arrow-right"></i><i class="ion-ios-arrow-right"></i></a>
     </ion-content>
+    <div class="bar bar-footer">
+        <a href="#/member/matchmaker_service" class="button w100 maker_footer_btn">红娘服务四大优势<i class="ml10 ion-ios-arrow-right"></i><i class="ion-ios-arrow-right"></i></a>
+    </div>
 
 </ion-view>

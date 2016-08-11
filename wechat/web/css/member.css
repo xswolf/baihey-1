@@ -711,14 +711,26 @@
 }
 .introduction {
   color: #666;
-  background-color: #f5f5f5;
   padding: 16px;
+  max-width: 100%;
+  margin-top: 30px;
+  position: relative;
 }
-.introduction img {
-  width: 100%;
+.line {
+  border-bottom: 1px dashed #ddd;
+  margin: 0 10px;
 }
-.introduction p.bot {
-  margin-top: -45%;
+.introduction.mk1 {
+  background: url("/wechat/web/images/member/maker1.png") no-repeat center top;
+  height: 178px;
+}
+.introduction.mk2 {
+  background: url("/wechat/web/images/member/maker2.png") no-repeat center top;
+  height: 211px;
+}
+.introduction.mk3 {
+  background: url("/wechat/web/images/member/maker3.png") no-repeat center top;
+  height: 168px;
 }
 .maker_footer_btn,
 .maker_footer_btn:hover,
