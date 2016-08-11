@@ -180,7 +180,7 @@ class User extends Base
             'real_name' => '',// 真实姓名
             'identity_id' => '',// 身份证号码
             'identity_address' => '',// 身份证地址
-            'is_marriage' => '1',// 婚姻状况 1
+            'is_marriage' => '',// 婚姻状况 1
             'is_child' => '',// 子女状况
             'education' => '',// 学历 1
             'year_income' => '',// 年收入

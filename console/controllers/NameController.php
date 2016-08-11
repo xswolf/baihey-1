@@ -222,7 +222,7 @@ class NameController extends Controller
             "zo_zodiac" => "",
             "occupation" => "",
             "identity_id" => "未知",
-            "is_marriage" => "1",
+            "is_marriage" => "",
             "is_purchase" => $this->getRand(90), //是否购房
             "year_income" => "未知",
             "zo_marriage" => "1",
