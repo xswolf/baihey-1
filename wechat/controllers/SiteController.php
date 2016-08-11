@@ -23,6 +23,16 @@ class SiteController extends BaseController
     }
 
     public function actionHref(){
+
+
+        $user = $this->weChatMember();
+        if($user['status'] > 2) {
+            Cookie::getInstance()->delLoginCookie();
+        }
+        if($user['wx_id']) {
+            setcookie('wx_login', 'out', time() + 3600 * 24 * 30, '/wap');
+        }
+
         echo '<script>';
         echo 'location.href="http://wechat.baihey.com/wap/site/main#/index"';
         echo '</script>';
