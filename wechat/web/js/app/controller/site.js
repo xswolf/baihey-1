@@ -101,7 +101,7 @@ define(['app/module', 'app/directive/directiveApi'
             $scope.buttonsItem = [
                 {text: '只看女'},
                 {text: '只看男'},
-                {text: '<b>高级搜索</b>'},
+                {text: '高级搜索'},
             ];
 
             var hideSheet = $ionicActionSheet.show({
