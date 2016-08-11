@@ -13,9 +13,6 @@
   position: relative;
   padding: 0;
 }
-.member .member_hdr .item-content {
-  padding-left: 8px !important;
-}
 .member_hdr .u_img {
   width: 75px;
   height: 75px;
@@ -35,7 +32,7 @@
   border: 1px solid #ddd;
   width: 56px;
   height: 36px;
-  line-height: 36px;
+  line-height: 34px;
   text-align: center;
   background: #f9f9f9;
   padding-left: 10px;

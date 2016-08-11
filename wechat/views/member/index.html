@@ -4,8 +4,8 @@
     <ion-content class="member com_w_100">
         <ion-list>
             <ion-item class="member_hdr" ng-href="{{userInfo.user_id > 9999 ? '#/member/information' : '#/member/admin_information'}}">
-                <div class="fl u_img">
-                    <img class="rounded" src="{{userInfo.info.head_pic | isNull}}"
+                <div class="fl u_img rounded pr o_h">
+                    <img src="{{userInfo.info.head_pic | isNull}}"
                          onerror="this.src='/wechat/web/images/u_noimg.jpg'">
                     <span ng-if="headpicStatus == 2" class="under">审核中</span>
                 </div>
@@ -44,7 +44,9 @@
                     <button class="button cor4 button-icon ion-ios-arrow-right vam"></button>
                 </div>
                 <div class="hdr_info fr">
-                    <button class="hdr_info_btn button-light rounded mt20">资料<i class="ml5 ion-ios-arrow-right vam"></i>
+                    <button class="hdr_info_btn button-light rounded mt20">
+                        <span class="vam">资料</span>
+                        <i class="ion-ios-arrow-right vam fs18"></i>
                     </button>
                 </div>
             </ion-item>
