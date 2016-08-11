@@ -165,9 +165,6 @@ define(['app/module', 'app/directive/directiveApi'
         $scope.loadMore = function () {
             $scope.dataLoading = true;
             api.list('/wap/site/user-list', $scope.searchForm).success(function (res) {
-                if($scope.searchForm.sex == 1) {
-                    alert(1);
-                }
                 if (res.data.length < 6) {
                     $scope.pageLast = false;
                 }
