@@ -36,7 +36,6 @@ class SiteController extends BaseController
      */
     public function actionMain()
     {
-        echo 12;
         if($user_id = Cookie::getInstance()->getCookie('bhy_id')) {
             $user = User::getInstance()->findOne(['id' => $user_id]);
         } else {
@@ -50,7 +49,6 @@ class SiteController extends BaseController
             }
         }
 
-        echo 1231;exit;
         return $this->render();
     }
 
