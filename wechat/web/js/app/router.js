@@ -41,7 +41,7 @@ define(["app/module", 'app/service/serviceApi'],
 
 
 
-            var userId = ar.getCookie('bhy_user_id')
+            var userId = ar.getCookie('bhy_user_id');
             if (userId > 0 ) {
                 messageList();
                 msgNumber(userId);
@@ -59,9 +59,11 @@ define(["app/module", 'app/service/serviceApi'],
 
             // 查询是否有新的用户关注自己   TODO
             $rootScope.newFollow = false;
-            api.get('/wap/follow/is-new-follow',{user_id:userId}).success(function(res){
-                $rootScope.newFollow = res.status;
-            })
+            if(userId != '') {
+                api.get('/wap/follow/is-new-follow', {user_id: userId}).success(function (res) {
+                    $rootScope.newFollow = res.status;
+                })
+            }
 
             $rootScope.$on('$stateChangeStart', function (evt, next) {
 
