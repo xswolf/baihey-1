@@ -22,6 +22,13 @@ class SiteController extends BaseController
         }
     }
 
+    public function actionHref(){
+        echo '<script>';
+        echo 'location.href="http://wechat.baihey.com/wap/site/main#/index"';
+        echo '</script>';
+        exit;
+    }
+
     /**
      * Displays homepage.
      *
@@ -29,7 +36,6 @@ class SiteController extends BaseController
      */
     public function actionMain()
     {
-
         if($user_id = Cookie::getInstance()->getCookie('bhy_id')) {
             $user = User::getInstance()->findOne(['id' => $user_id]);
         } else {
