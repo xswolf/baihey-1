@@ -36,7 +36,7 @@ class SiteController extends BaseController
 //            }
 //        }
         echo '<script>';
-        echo 'location.href="http://wechat.baihey.com/wap/site/main?#/index"';
+        echo 'location.href="/wap/site/main?#/index"';
         echo '</script>';
     }
 
