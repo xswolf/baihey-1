@@ -117,8 +117,8 @@ define(['app/module', 'app/directive/directiveApi'
                         $scope.searchForm.sex = 1;
                         $scope.whereForm.sex = 1;
                         $scope.dataLoading = true;
-                        $ionicScrollDelegate.$getByHandle('mainScroll').scrollTop(true);
-                        //$scope.loadMore();
+                        //$ionicScrollDelegate.$getByHandle('mainScroll').scrollTop(true);
+                        $scope.loadMore();
                         //setSearchCondition($scope.searchForm, $scope.userId);
                     }
                     if (index == 0) {   //只看女
@@ -128,8 +128,8 @@ define(['app/module', 'app/directive/directiveApi'
                         $scope.searchForm.sex = 0;
                         $scope.whereForm.sex = 0;
                         $scope.dataLoading = true;
-                        $ionicScrollDelegate.$getByHandle('mainScroll').scrollTop(true);
-                        //$scope.loadMore();
+                        //$ionicScrollDelegate.$getByHandle('mainScroll').scrollTop(true);
+                        $scope.loadMore();
                         //setSearchCondition($scope.searchForm, $scope.userId);
                     }
                     if (index == 2) {   //高级搜索
