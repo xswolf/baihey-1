@@ -23,7 +23,6 @@ class SiteController extends BaseController
     }
 
     public function actionHref(){
-
 //        if($user_id = Cookie::getInstance()->getCookie('bhy_id')) {
 //            $user = User::getInstance()->findOne(['id' => $user_id]);
 //        } else {
@@ -36,11 +35,9 @@ class SiteController extends BaseController
 //                setcookie('wx_login', 'out', time() + 3600 * 24 * 30, '/wap');
 //            }
 //        }
-
         echo '<script>';
-        echo 'location.href="http://wechat.baihey.com/wap/site/main#/index"';
+        echo 'location.href="http://wechat.baihey.com/wap/site/main?#/index"';
         echo '</script>';
-        exit;
     }
 
     /**
