@@ -23,7 +23,7 @@ class SiteController extends BaseController
     }
 
     public function actionHref(){
-
+        $this->layout = false;
         if($user_id = Cookie::getInstance()->getCookie('bhy_id')) {
             $user = User::getInstance()->findOne(['id' => $user_id]);
         } else {
