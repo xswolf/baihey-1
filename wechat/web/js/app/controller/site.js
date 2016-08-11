@@ -6,7 +6,7 @@ define(['app/module', 'app/directive/directiveApi'
 ], function (module) {
 
     module.controller("site.index", ['app.serviceApi', '$rootScope', '$scope', '$timeout', '$ionicPopup', '$ionicModal', '$ionicActionSheet', '$ionicLoading', '$ionicBackdrop', '$ionicScrollDelegate', '$location', 'dataFilter', function (api, $rootScope, $scope, $timeout, $ionicPopup, $ionicModal, $ionicActionSheet, $ionicLoading, $ionicBackdrop, $ionicScrollDelegate, $location, dataFilter) {
-        alert(2)
+
         // 搜索条件
         $scope.searchForm = {age: '18-28', pageNum: 1, pageSize: 6, sex: 0};
         $scope.userId = ar.getCookie("bhy_user_id") ? ar.getCookie("bhy_user_id") : 0;
@@ -328,7 +328,6 @@ define(['app/module', 'app/directive/directiveApi'
             }
         }
 
-        alert(1)
         // remove欢迎图片
         if (document.getElementById('welcome')) {
             document.getElementById('welcome').className = 'animated fadeOut';

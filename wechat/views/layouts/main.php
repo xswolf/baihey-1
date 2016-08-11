@@ -17,7 +17,6 @@
     <link href="/wechat/web/css/plugin/photoswipe/photoswipe.css" rel="stylesheet">
     <link href="/wechat/web/css/plugin/photoswipe/default-skin.css" rel="stylesheet">
     <script>
-        alert(3)
         function addElement() {
             if (location.hash == '#/index' || location.href.indexOf('/main?code=') != -1) {
                 var div = document.createElement("div");

@@ -4,6 +4,7 @@
 define(["app/module", 'app/service/serviceApi'],
     function (module) {
         module.run(['$rootScope', '$state', '$timeout', 'app.serviceApi', '$ionicLoading', '$location', '$templateCache', function ($rootScope, $state, $timeout, api, $ionicLoading, $location, $templateCache) {
+            alert(1)
             var messageList = function () {
                 api.list('/wap/message/message-list', []).success(function (res) {
                     $rootScope.messageList = ar.getStorage('messageList') ? ar.getStorage('messageList') : [];
@@ -94,6 +95,7 @@ define(["app/module", 'app/service/serviceApi'],
                         $ionicLoading.hide();
                         //$templateCache.removeAll();  // 清除模版缓存
                     });
+            alert(2)
         }]);
         return module.config(["$stateProvider", "$urlRouterProvider", "$ionicConfigProvider", "$controllerProvider", function ($stateProvider, $urlRouterProvider, $ionicConfigProvider, $controllerProvider) {
                 $ionicConfigProvider.templates.maxPrefetch(0);
@@ -295,7 +297,7 @@ define(["app/module", 'app/service/serviceApi'],
                 $urlRouterProvider.otherwise("/index");
             }])
             .controller('main', ['$scope', '$location', 'app.serviceApi', '$ionicLoading', '$ionicPopup','$rootScope', function ($scope, $location, api, $ionicLoading, $ionicPopup,$rootScope) {
-
+                alert(2)
                 $rootScope.$on('msgNumber' , function () {
                     $scope.msgNumber = $rootScope.msgNumber;
                 })
