@@ -1,6 +1,6 @@
 <ion-view ng-init="delTitle='删除';">
     <link href="/wechat/web/css/member.css" rel="stylesheet">
-    <ion-header-bar class="com_w_100 bhy">
+    <ion-header-bar align-title="center"  class="com_w_100 bhy">
         <title class="title">关注的人</title>
         <button class="button button-icon" ng-show="followType == 'follow' && followList.length > 0" ng-click="shouldShowDelete = !shouldShowDelete; shouldShowDelete ? delTitle='完成' : delTitle='删除';" ng-bind="delTitle"></button>
     </ion-header-bar>

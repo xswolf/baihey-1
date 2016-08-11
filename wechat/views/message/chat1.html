@@ -1,6 +1,6 @@
 <ion-view hide-tabs="true">
     <link href="/wechat/web/css/chat.css" rel="stylesheet">
-    <ion-header-bar class="bhy com_w_100">
+    <ion-header-bar align-title="center"  class="bhy com_w_100">
         <h1 class="title" receive-id="{{receiveId}}" real-name="{{real_name}}"  change-title="{{real_name | sex:sex:age}}"></h1>
         <button class="button button-icon" ng-click="addFollow()" ng-if="u_isFollow">关注</button>
     </ion-header-bar>
@@ -187,7 +187,7 @@
 
     <script id="bindPhonePopover.html" type="text/ng-template">
         <ion-popover-view>
-            <ion-header-bar>
+            <ion-header-bar align-title="center" >
                 <h1 class="title">绑定手机，免费畅聊</h1>
             </ion-header-bar>
             <ion-content>
@@ -227,7 +227,7 @@
 
     <script id="detaiOpenBriModal.html" type="text/ng-template">
         <ion-modal-view>
-            <ion-header-bar>
+            <ion-header-bar align-title="center" >
                 <button class="button button-icon ion-arrow-left-c" ng-click="detaiOpenBriModal.hide()"></button>
                 <title class="title">红包详情</title>
             </ion-header-bar>
@@ -265,7 +265,7 @@
 
     <script id="briberyModal.html" type="text/ng-template">
         <ion-modal-view>
-            <ion-header-bar>
+            <ion-header-bar align-title="center" >
                 <a href="javascript:;" ng-click="briPageHide()" class="button button-icon">关闭</a>
                 <title class="title">发红包</title>
             </ion-header-bar>

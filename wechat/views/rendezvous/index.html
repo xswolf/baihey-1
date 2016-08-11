@@ -1,7 +1,7 @@
 <ion-view>
     <link href="/wechat/web/css/rendezvous.css" rel="stylesheet">
     <link href="/wechat/web/css/plugin/bootstrap/css/font-awesome.min.css" rel="stylesheet">
-    <ion-header-bar>
+    <ion-header-bar align-title="center" >
         <button class="button button-icon" ng-click="showScreenModal()">筛选</button>
         <title class="title">约会</title>
         <a class="button button-icon icon ion-ios-plus-outline energized" href="#/rendezvous_add?userId=1&tempUrl=1"></a>
@@ -72,7 +72,7 @@
 
     <script id="screenModal.html" type="text/ng-template">
         <ion-modal-view>
-            <ion-header-bar>
+            <ion-header-bar align-title="center" >
                 <button class="button button-icon" ng-click="closeScreenModal()">关闭</button>
                 <h1 class="title">筛选</h1>
                 <button class="button button-icon cor21" ng-click="saveScreen()">确定</button>

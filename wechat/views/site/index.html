@@ -1,5 +1,5 @@
 <ion-view>
-    <ion-header-bar class="com_w_100">
+    <ion-header-bar align-title="center"  class="com_w_100">
         <!--<button class="button button-icon "><i class="fs16 ion-android-pin positive mr5"></i><span
                 ng-bind="cityName"></span></button>-->
         <button class="button button-icon"></button>
@@ -29,7 +29,7 @@
                 <p ng-if="userInfo.id < 10000" class="clearfix">
                     <span class="identity phone">官方</span>
                 </p>
-                <p class="clearfix" ng-if="userInfo.id > 9999">
+                <p class="clearfix lh24" ng-if="userInfo.id > 9999">
                     <span ng-class="{0:'not'}[honesty(sfzCheck)]" class="identity id">身份证</span>
                     <span ng-class="{true:'not'}[userInfo.phone == null || userInfo.phone == '']"
                           class="identity phone">手机</span>
@@ -38,17 +38,17 @@
                     <span ng-class="{false:'not'}[userInfo.info.level == '3']" class="identity diamond">钻石</span>
                     <span ng-if="userInfo.report_flag == 1" class="identity assertive-bg">被多次举报</span>
                 </p>
-                <p class="w100 mb0 mt5 lh28 assertive-bg" ng-if="sfzCheck === 0 && userInfo.id > 9999">
-                    <i class="cor0 ml5 ion-android-alert vam"></i>
-                    <span class="vam cor0">实名制婚恋，您的身份证未审核通过！</span>
+                <p class="w100 mb0 mt5 lh24 assertive-bg" ng-if="sfzCheck === 0 && userInfo.id > 9999">
+                    <i class="cor0 ml5 ion-android-alert fs12"></i>
+                    <span class="cor0">实名制婚恋，您的身份证未审核通过！</span>
                 </p>
-                <p class="w100 mb0 mt5 lh28 positive-bg" ng-if="sfzCheck === '' && userInfo.id > 9999">
-                    <i class="cor0 ml5 ion-android-alert vam"></i>
-                    <span class="vam cor0">实名制婚恋，立即上传身份证！</span>
+                <p class="w100 mb0 mt5 lh24 positive-bg" ng-if="sfzCheck === '' && userInfo.id > 9999">
+                    <i class="cor0 ml5 ion-android-alert fs12"></i>
+                    <span class="cor0">实名制婚恋，立即上传身份证！</span>
                 </p>
-                <p class="w100 mb0 mt5 lh28 energized-bg" ng-if="sfzCheck == 2 && userInfo.id > 9999">
-                    <i class="cor0 ml5 ion-ios-clock vam"></i>
-                    <span class="vam cor0">实名制婚恋，您的身份证审核中...</span>
+                <p class="w100 mb0 mt5 lh24 energized-bg" ng-if="sfzCheck == 2 && userInfo.id > 9999">
+                    <i class="cor0 ml5 ion-ios-clock fs12"></i>
+                    <span class="cor0">实名制婚恋，您的身份证审核中...</span>
                 </p>
                 <p class="lh24" ng-if="sfzCheck == 1 && userInfo.id > 9999">{{userInfo.personalized}}</p>
             </a>
@@ -74,7 +74,7 @@
                               class="cor19 fs12">{{user.info.is_marriage | marriage}}</span>
                     </h2>
                     <p class="fr local" ng-if="user.info.local">
-                        <i class="ion-android-pin positive"></i>
+                        <i class="ion-android-pin calm"></i>
                         {{user.info.local}}
                     </p>
                 </div>
@@ -101,7 +101,7 @@
     </ion-content>
     <!-- <script id="selCityModal.html" type="text/ng-template">  TODO 此功能暂时屏蔽
          <ion-modal-view>
-             <ion-header-bar>
+             <ion-header-bar align-title="center" >
                  <button href="javascript:;" ng-click="cityModal.hide()" class="button button-icon " ng-model="searchForm.data.age"><i
                          class="fs16 ion-android-pin positive mr5"></i>{{modalCityName}}<i
                          class="ml5 fs14 ion-android-arrow-dropup positive"></i></button>
@@ -132,7 +132,7 @@
     <script id="MoreSearchModal.html" type="text/ng-template">
         <ion-modal-view>
             <link href="/wechat/web/js/plugin/mobiscroll/mobiscroll.custom-3.0.0-beta.min.css" rel="stylesheet">
-            <ion-header-bar>
+            <ion-header-bar align-title="center" >
                 <a href="javascript:;" ng-click="moreSearchModal.hide()" class="button button-icon">取消</a>
                 <h1 class="title">高级搜索</h1>
                 <a href="javascript:;" ng-click="moreSearchOk()" class="button button-icon">确定</a>
