@@ -10,7 +10,7 @@
             <div class="item item-divider">
                 嘉瑞 ● 实名制婚恋网
             </div>
-            <div class="item item-text-wrap">
+            <div class="item item-text-wrap bor_b_n">
                 <label class="item item-input mb20">
                     <input type="text" placeholder="真实姓名一旦填写不可更改" ng-model="userInfo.info.real_name">
                 </label>
@@ -20,11 +20,11 @@
                 </label>
 
                 <!-- 男 -->
-                <div ng-if="userInfo.sex == 1" class="m_b_bg w100 mt20 ">
+                <div ng-if="userInfo.sex == '1'" class="m_b_bg w100 mt20 ">
                     <img src="/wechat/web/images/member/real_name_bg0.png">
                 </div>
                 <!-- 女 -->
-                <div ng-if="userInfo.sex == 0" class="m_b_bg w100 mt20 tal">
+                <div ng-if="userInfo.sex == '0'" class="m_b_bg w100 mt20 tal">
                     <img src="/wechat/web/images/member/real_name_bg1.png">
                 </div>
             </div>
