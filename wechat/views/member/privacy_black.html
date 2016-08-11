@@ -2,7 +2,7 @@
     <link href="/wechat/web/css/member.css" rel="stylesheet">
     <ion-header-bar class="com_w_100 bhy">
         <title class="title">黑名单</title>
-        <button class="button button-icon" ng-click="shouldShowDelete = !shouldShowDelete; shouldShowDelete ? delTitle='完成' : delTitle='解除';" ng-bind="delTitle"></button>
+        <button class="button button-icon" ng-if="followList.length > 0" ng-click="shouldShowDelete = !shouldShowDelete; shouldShowDelete ? delTitle='完成' : delTitle='解除';" ng-bind="delTitle"></button>
     </ion-header-bar>
     <ion-content class="bhy com_w_100 m_bg">
         <ion-list show-delete="shouldShowDelete">

@@ -1190,18 +1190,18 @@ define(['app/module', 'app/directive/directiveApi'
     }]);
 
     // 隐私设置-照片权限
-    module.controller("member.privacy_pic", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', function (api, $scope, $timeout, $ionicPopup) {
-        $scope.formData = [];
+    module.controller("member.privacy_pic", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup','$location', function (api, $scope, $timeout, $ionicPopup,$location) {
+        $scope.formData = {};
         $scope.formData.privacy_pic = $scope.userInfo.privacy_pic ? $scope.userInfo.privacy_pic : 1;
 
-        // 已经离开本页面
-        $scope.$on('$ionicView.afterLeave', function () {
-            // 保存数据
+        $scope.saveData = function(){
             api.save('/wap/member/save-data', $scope.formData).success(function (res) {
                 $scope.userInfo.privacy_pic = $scope.formData.privacy_pic;
                 $scope.getUserPrivacyStorage('');
+                $location.url('/member/privacy_pic');
             });
-        });
+        }
+
     }]);
 
     // 隐私设置-个人动态权限
