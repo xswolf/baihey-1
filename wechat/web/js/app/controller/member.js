@@ -1198,7 +1198,8 @@ define(['app/module', 'app/directive/directiveApi'
             $scope.userInfo.privacy_pic = $scope.formData.privacy_pic;
             api.save('/wap/member/save-data', $scope.userInfo).success(function (res) {
                 $scope.getUserPrivacyStorage('');
-                $location.url('/member/privacy');
+                ar.saveDataAlert($ionicPopup, '保存成功');
+                //$location.url('/member/privacy');
             });
         }
 
