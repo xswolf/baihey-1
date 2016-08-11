@@ -24,7 +24,11 @@ class SiteController extends BaseController
 
     public function actionHref(){
 
-        $user = $this->weChatMember();
+        if($user_id = Cookie::getInstance()->getCookie('bhy_id')) {
+            $user = User::getInstance()->findOne(['id' => $user_id]);
+        } else {
+            $user = $this->weChatMember();
+        }
 
         if($user['status'] > 2) {
             Cookie::getInstance()->delLoginCookie();
