@@ -16,7 +16,7 @@ define(['app/module', 'app/directive/directiveApi'
             $scope.searchForm = {};
             $scope.whereForm = {};
             $scope.searchForm.pageNum = 1; // 初始化页码
-            $scope.searchForm.pageSize = 6; // 初始化页码
+            //$scope.searchForm.pageSize = 6; // 初始化页码
             // 默认查询条件：年龄范围，页码，每页数量
             if ($scope.userId > 0 && $scope.userInfo.sex == 0) {
                 $scope.searchForm.sex = 1;
