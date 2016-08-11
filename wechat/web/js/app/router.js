@@ -59,7 +59,6 @@ define(["app/module", 'app/service/serviceApi'],
 
             // 查询是否有新的用户关注自己   TODO
             $rootScope.newFollow = false;
-            alert(userId)
             if(userId != null) {
                 api.get('/wap/follow/is-new-follow', {user_id: userId}).success(function (res) {
                     $rootScope.newFollow = res.status;
