@@ -42,7 +42,6 @@ define(['app/module', 'app/directive/directiveApi'
         $scope.honesty = function (val) {
             return val & 1;
         }
-        alert('site');
         $scope.cityName = '重庆';
         $scope.cityId = 2;
         $scope.searchForm.city = 2
@@ -327,7 +326,6 @@ define(['app/module', 'app/directive/directiveApi'
                 $scope.moreText = '展开';
             }
         }
-        alert('site1');
         // remove欢迎图片
         if (document.getElementById('welcome')) {
             document.getElementById('welcome').className = 'animated fadeOut';
