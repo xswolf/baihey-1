@@ -16,7 +16,7 @@ define(['app/module', 'app/directive/directiveApi'
             $scope.searchForm = {};
             $scope.whereForm = {};
             $scope.searchForm.pageNum = 1; // 初始化页码
-            $scope.searchForm.pageSize = 6; // 初始化页码
+            //$scope.searchForm.pageSize = 6; // 初始化页码
             // 默认查询条件：年龄范围，页码，每页数量
             if ($scope.userId > 0 && $scope.userInfo.sex == 0) {
                 $scope.searchForm.sex = 1;
@@ -117,8 +117,8 @@ define(['app/module', 'app/directive/directiveApi'
                         $scope.searchForm.sex = 1;
                         $scope.whereForm.sex = 1;
                         $scope.dataLoading = true;
-                        $ionicScrollDelegate.$getByHandle('mainScroll').scrollTop(true);
-                        //$scope.loadMore();
+                        //$ionicScrollDelegate.$getByHandle('mainScroll').scrollBottom(true);
+                        $scope.loadMore();
                         //setSearchCondition($scope.searchForm, $scope.userId);
                     }
                     if (index == 0) {   //只看女
@@ -128,8 +128,8 @@ define(['app/module', 'app/directive/directiveApi'
                         $scope.searchForm.sex = 0;
                         $scope.whereForm.sex = 0;
                         $scope.dataLoading = true;
-                        $ionicScrollDelegate.$getByHandle('mainScroll').scrollTop(true);
-                        //$scope.loadMore();
+                        //$ionicScrollDelegate.$getByHandle('mainScroll').scrollBottom(true);
+                        $scope.loadMore();
                         //setSearchCondition($scope.searchForm, $scope.userId);
                     }
                     if (index == 2) {   //高级搜索
