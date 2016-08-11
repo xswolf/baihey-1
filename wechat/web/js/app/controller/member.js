@@ -1523,20 +1523,14 @@ define(['app/module', 'app/directive/directiveApi'
 
     // 诚信认证
     module.controller("member.honesty", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', function (api, $scope, $timeout, $ionicPopup) {
-        if (ar.getCookie('bhy_user_id')) {
-            api.list("/wap/user/get-user-info", []).success(function (res) {
-                $scope.userInfo = res.data;
-                ar.setStorage('userInfo', res.data);
-                if ($scope.userInfo != null) {
-                    $scope.userInfo.info = JSON.parse($scope.userInfo.info);
-                    $scope.userInfo.auth = JSON.parse($scope.userInfo.auth);
-                }
-            });
-        }
+        // 身份证认证
+        api.list("/wap/member/honesty-photo", []).success(function (res) {
+            $scope.sfzCheck = res.sfz;
+            $scope.marrCheck = res.marr;
+            $scope.eduCheck = res.edu;
+            $scope.housingCheck = res.housing;
+        });
 
-        $scope.honesty = function (val) {
-            return $scope.userInfo.honesty_value & val;
-        }
     }]);
 
     // 诚信认证-身份认证
@@ -1594,6 +1588,7 @@ define(['app/module', 'app/directive/directiveApi'
                 $scope.userInfo.has_identify = 1;
                 api.save('/wap/member/save-data', $scope.userInfo).success(function (res) {
                     $scope.getUserPrivacyStorage('#/member/honesty');
+                    $scope.sfzCheck = 2;
                 });
             });
         }
@@ -1619,6 +1614,7 @@ define(['app/module', 'app/directive/directiveApi'
         $scope.$on('thumb_path', function (event, name, data) {
             !$scope.authList[0] ? $scope.authList[0] = data : $scope.authList[0].thumb_path = data.thumb_path;
             ar.initPhotoSwipeFromDOM('.bhy-gallery',$scope);
+            ar.saveDataAlert($ionicPopup, '上传成功');
         });
     }]);
 
@@ -1642,6 +1638,7 @@ define(['app/module', 'app/directive/directiveApi'
         $scope.$on('thumb_path', function (event, name, data) {
             !$scope.authList[0] ? $scope.authList[0] = data : $scope.authList[0].thumb_path = data.thumb_path;
             ar.initPhotoSwipeFromDOM('.bhy-gallery',$scope);
+            ar.saveDataAlert($ionicPopup, '上传成功');
         });
     }]);
 
@@ -1665,6 +1662,7 @@ define(['app/module', 'app/directive/directiveApi'
         $scope.$on('thumb_path', function (event, name, data) {
             !$scope.authList[0] ? $scope.authList[0] = data : $scope.authList[0].thumb_path = data.thumb_path;
             ar.initPhotoSwipeFromDOM('.bhy-gallery',$scope);
+            ar.saveDataAlert($ionicPopup, '上传成功');
         });
     }]);
 
