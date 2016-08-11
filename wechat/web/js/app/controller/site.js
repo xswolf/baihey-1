@@ -112,7 +112,6 @@ define(['app/module', 'app/directive/directiveApi'
                     $scope.pageLast = true;
                     if (index == 1) {   //只看男
                         $scope.userList = [];
-                        alert(1);
                         init();
                         $scope.whereForm = [];
                         $scope.searchForm.sex = 1;
@@ -125,7 +124,6 @@ define(['app/module', 'app/directive/directiveApi'
                     if (index == 0) {   //只看女
                         $scope.userList = [];
                         init();
-                        alert(0);
                         $scope.whereForm = [];
                         $scope.searchForm.sex = 0;
                         $scope.whereForm.sex = 0;
@@ -167,6 +165,9 @@ define(['app/module', 'app/directive/directiveApi'
         $scope.loadMore = function () {
             $scope.dataLoading = true;
             api.list('/wap/site/user-list', $scope.searchForm).success(function (res) {
+                if($scope.searchForm.sex = 1) {
+                    alert(1);
+                }
                 if (res.data.length < 6) {
                     $scope.pageLast = false;
                 }
