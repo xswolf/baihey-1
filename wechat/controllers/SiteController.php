@@ -23,6 +23,7 @@ class SiteController extends BaseController
     }
 
     public function actionHref(){
+        echo 123;exit;
         echo '<script>';
         echo 'location.href="http://wechat.baihey.com/wap/site/main#/index"';
         echo '</script>';
