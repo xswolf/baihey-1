@@ -112,6 +112,7 @@ define(['app/module', 'app/directive/directiveApi'
                     $scope.pageLast = true;
                     if (index == 1) {   //只看男
                         $scope.userList = [];
+                        alert(1);
                         init();
                         $scope.whereForm = [];
                         $scope.searchForm.sex = 1;
@@ -124,6 +125,7 @@ define(['app/module', 'app/directive/directiveApi'
                     if (index == 0) {   //只看女
                         $scope.userList = [];
                         init();
+                        alert(0);
                         $scope.whereForm = [];
                         $scope.searchForm.sex = 0;
                         $scope.whereForm.sex = 0;
