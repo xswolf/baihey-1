@@ -24,23 +24,22 @@ class SiteController extends BaseController
 
     public function actionHref(){
 //        $this->layout = false;
-//        if($user_id = Cookie::getInstance()->getCookie('bhy_id')) {
-//            $user = User::getInstance()->findOne(['id' => $user_id]);
-//        } else {
-//            $user = $this->weChatMember();
-//        }
-//
-//        if($user['status'] > 2) {
-//            Cookie::getInstance()->delLoginCookie();
-//            if($user['wx_id']) {
-//                setcookie('wx_login', 'out', time() + 3600 * 24 * 30, '/wap');
-//            }
-//        }
-        $code = \Yii::$app->request->get( 'code' );
+        if($user_id = Cookie::getInstance()->getCookie('bhy_id')) {
+            $user = User::getInstance()->findOne(['id' => $user_id]);
+        } else {
+            $user = $this->weChatMember();
+        }
+
+        if($user['status'] > 2) {
+            Cookie::getInstance()->delLoginCookie();
+            if($user['wx_id']) {
+                setcookie('wx_login', 'out', time() + 3600 * 24 * 30, '/wap');
+            }
+        }
         echo '<script>';
-        echo 'location.href="http://wechat.baihey.com/wap/site/main?code=' . $code . '#/index"';
+        echo 'location.href="http://wechat.baihey.com/wap/site/main?#/index"';
         echo '</script>';
-        exit;
+//        return $this->render();
     }
 
     /**
