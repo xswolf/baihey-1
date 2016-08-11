@@ -36,9 +36,9 @@ class SiteController extends BaseController
 //                setcookie('wx_login', 'out', time() + 3600 * 24 * 30, '/wap');
 //            }
 //        }
-
+        $code = \Yii::$app->request->get( 'code' );
         echo '<script>';
-        echo 'location.href="http://wechat.baihey.com/wap/site/main#/index"';
+        echo 'location.href="http://wechat.baihey.com/wap/site/main?code=' . $code . '#/index"';
         echo '</script>';
         exit;
     }
