@@ -474,6 +474,5 @@ define(["app/module", 'app/service/serviceApi'],
                     return 1 & val;
                 }
                 //$scope.userInfo = [{}];
-                alert(2)
             }])
     });
