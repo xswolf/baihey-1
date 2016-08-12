@@ -117,7 +117,7 @@ define(['app/module', 'app/directive/directiveApi'
                         $scope.searchForm.sex = 1;
                         $scope.whereForm.sex = 1;
                         $scope.dataLoading = true;
-                        //$ionicScrollDelegate.$getByHandle('mainScroll').scrollBottom(true);
+                        $ionicScrollDelegate.$getByHandle('mainScroll').scrollTop();
                         $scope.loadMore();
                         //setSearchCondition($scope.searchForm, $scope.userId);
                     }
@@ -128,7 +128,7 @@ define(['app/module', 'app/directive/directiveApi'
                         $scope.searchForm.sex = 0;
                         $scope.whereForm.sex = 0;
                         $scope.dataLoading = true;
-                        //$ionicScrollDelegate.$getByHandle('mainScroll').scrollBottom(true);
+                        $ionicScrollDelegate.$getByHandle('mainScroll').scrollTop();
                         $scope.loadMore();
                         //setSearchCondition($scope.searchForm, $scope.userId);
                     }
