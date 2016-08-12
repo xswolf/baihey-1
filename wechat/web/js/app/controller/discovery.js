@@ -22,6 +22,7 @@ define(['app/module', 'app/directive/directiveApi'
             if(display.indexOf(dis.id) != -1) {
                 return false;
             }
+
             if(dis.user_id == $scope.userInfo.user_id) {
                 return true;
             }
@@ -29,7 +30,7 @@ define(['app/module', 'app/directive/directiveApi'
                 return false;// 动态被举报
             }
             if (dis.auth == '2') {   // 用户设置该条动态为关注的人可见
-                return dataFilter.data.follow.indexOf(dis.user_id) != -1 && $scope.display.indexOf(dis.id) != -1;
+                return dataFilter.data.follow.indexOf(dis.user_id) != -1 && $scope.display.indexOf(dis.id) == -1;
             } else if (dis.auth == '3') {
                 return false;
             }

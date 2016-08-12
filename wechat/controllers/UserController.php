@@ -327,7 +327,7 @@ class UserController extends BaseController
     {
         if($user_id = Cookie::getInstance()->getCookie('bhy_id')) {
             $blacked = UserFollow::getInstance()->getFollowList('blacked', $user_id);
-            $follow = UserFollow::getInstance()->getFollowList('follow', $user_id);
+            $follow = UserFollow::getInstance()->getFollowList('followed', $user_id);
             $blackedList = [];
             $followList = [];
             foreach($blacked as $k => $v) {
