@@ -941,13 +941,13 @@ define(['app/module', 'app/directive/directiveApi'
         var is_privacy = function (val) {
             switch (val) {
                 case '1':
-                    return true;
+                    return 1;
                 case '2':
-                    return $scope.formData.followed == 1 ? true : false;
+                    return dataFilter.data.follow.indexOf($scope.formData.userId) != -1 ? 1 : 2;
                 case '3':
-                    return $scope.otherUserInfo.info.level > 0 ? true : false;
+                    return $scope.userInfo.info.level > 0 ? 1 : 3;
                 case '4':
-                    return false;
+                    return 4;
                 default :
                     return false;
             }

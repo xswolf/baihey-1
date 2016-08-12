@@ -408,7 +408,7 @@ define(['app/module', 'app/directive/directiveApi'
             }
             if (dis.auth == '2') {   // 用户设置该条动态为关注的人可见
                 return dataFilter.data.follow.indexOf(dis.user_id) != -1 && $scope.display.indexOf(dis.id) == -1;
-            } else if (dis.auth == '3') {
+            } else if (dis.auth == '4') {
                 return false;
             }
             return $scope.display.indexOf(dis.id) == -1;
