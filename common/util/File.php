@@ -108,11 +108,12 @@ class File
         $folder = __DIR__ . "/../..";
         $url = "/images/upload/thumb/" . $data['path'];
         $fileInfo = getimagesize($folder . "/images/upload/picture/" . $data['path']);
-        $thumbInfo = $this->thumbRation($fileInfo[0], $fileInfo[1]);//缩略图尺寸
+        //$thumbInfo = $this->thumbRation($fileInfo[0], $fileInfo[1]);//缩略图尺寸
+        $thumbInfo = $this->pictureRatio($fileInfo[0], $fileInfo[1], 200, 267);//缩略图尺寸
         $image->open($folder . "/images/upload/picture/" . $data['path']);
         //另存固定宽度是200的压缩图片
         $image->thumb($thumbInfo[0], $thumbInfo[1], $image::IMAGE_THUMB_FIXED)->save($folder . $url);
-        $image->thumb(200, 200, $image::IMAGE_THUMB_CENTER)->save($folder . $url);// 居中裁剪
+        //$image->thumb(200, 200, $image::IMAGE_THUMB_CENTER)->save($folder . $url);// 居中裁剪
         $picInfo = $this->pictureRatio($fileInfo[0], $fileInfo[1]);//原图缩略尺寸
         $pic = new Image();
         $pic->open($folder . "/images/upload/picture/" . $data['path']);
@@ -138,13 +139,14 @@ class File
             $picInfo = $this->pictureRatio($fileInfo[0], $fileInfo[1]); //  等比例
             $picturePath = $imagePath . '_' . $picInfo[0] . '_' . $picInfo[1] . '.' . $extension;
             if (rename($targetFile, $picturePath)) {
-                $thumbInfo = $this->thumbRation($fileInfo[0], $fileInfo[1]);//缩略图尺寸
+                //$thumbInfo = $this->thumbRation($fileInfo[0], $fileInfo[1]);//缩略图尺寸
+                $thumbInfo = $this->pictureRatio($fileInfo[0], $fileInfo[1], 200, 267);//缩略图尺寸
                 // 固定压缩图片长宽200
                 $image = new Image();
                 $thumbPath = str_replace('picture', 'thumb', $picturePath);
                 $image->open($picturePath);
                 $image->thumb($thumbInfo[0], $thumbInfo[1], $image::IMAGE_THUMB_FIXED)->save($thumbPath);
-                $image->thumb(200, 200, $image::IMAGE_THUMB_CENTER)->save($thumbPath);// 居中裁剪
+                //$image->thumb(200, 200, $image::IMAGE_THUMB_CENTER)->save($thumbPath);// 居中裁剪
                 $pic = new Image();
                 $pic->open($picturePath);
                 $pic->thumb($picInfo[0], $picInfo[1], $image::IMAGE_THUMB_FIXED)->save($picturePath);
@@ -159,11 +161,12 @@ class File
      * 返回原图等比例压缩宽高（最大不超过）
      * @param $pic_width
      * @param $pic_height
+     * @param int $maxwidth
+     * @param int $maxheight
+     * @return mixed
      */
-    public function pictureRatio($pic_width, $pic_height)
+    public function pictureRatio($pic_width, $pic_height, $maxwidth = 800, $maxheight = 600)
     {
-        $maxwidth = 800;
-        $maxheight = 600;
         $resizewidth_tag = false;
         $resizeheight_tag = false;
         if($pic_width < $maxwidth && $pic_height < $maxheight) {
