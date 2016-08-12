@@ -109,7 +109,7 @@ class File
         $url = "/images/upload/thumb/" . $data['path'];
         $fileInfo = getimagesize($folder . "/images/upload/picture/" . $data['path']);
         //$thumbInfo = $this->thumbRation($fileInfo[0], $fileInfo[1]);//缩略图尺寸
-        $thumbInfo = $this->pictureRatio($fileInfo[0], $fileInfo[1], 200, 267);//缩略图尺寸
+        $thumbInfo = $this->pictureRatio($fileInfo[0], $fileInfo[1], 267, 200);//缩略图尺寸
         $image->open($folder . "/images/upload/picture/" . $data['path']);
         //另存固定宽度是200的压缩图片
         $image->thumb($thumbInfo[0], $thumbInfo[1], $image::IMAGE_THUMB_FIXED)->save($folder . $url);
@@ -140,7 +140,7 @@ class File
             $picturePath = $imagePath . '_' . $picInfo[0] . '_' . $picInfo[1] . '.' . $extension;
             if (rename($targetFile, $picturePath)) {
                 //$thumbInfo = $this->thumbRation($fileInfo[0], $fileInfo[1]);//缩略图尺寸
-                $thumbInfo = $this->pictureRatio($fileInfo[0], $fileInfo[1], 200, 267);//缩略图尺寸
+                $thumbInfo = $this->pictureRatio($fileInfo[0], $fileInfo[1], 267, 200);//缩略图尺寸
                 // 固定压缩图片长宽200
                 $image = new Image();
                 $thumbPath = str_replace('picture', 'thumb', $picturePath);
