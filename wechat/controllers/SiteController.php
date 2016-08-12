@@ -41,6 +41,7 @@ class SiteController extends BaseController
         // 判断是否微信跳转过来
         if (isset($_SESSION['code'])){
             $_GET['code'] = $_SESSION['code'];
+            $_SESSION['code'] = null;
         }
 
         if($user_id = Cookie::getInstance()->getCookie('bhy_id')) {
