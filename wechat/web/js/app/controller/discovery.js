@@ -18,11 +18,6 @@ define(['app/module', 'app/directive/directiveApi'
 
         // 发现列表过滤条件：黑名单
         $scope.indexFilter = function (dis) {
-            var display = ar.getStorage('display') ? ar.getStorage('display') : [];
-            if(display.indexOf(dis.id) != -1) {
-                return false;
-            }
-
             if(dis.user_id == $scope.userInfo.user_id) {
                 return true;
             }
