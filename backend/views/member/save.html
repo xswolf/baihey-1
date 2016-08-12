@@ -1082,15 +1082,15 @@
         }
 
         $('#saveSubmit').click(function () {
+            if (!$('input[name="sex"]:checked').val()) {
+                layer.tips('请选择性别！', $('input[name="sex"]'));
+                $('input[name="sex"]').focus();
+                return false;
+            }
             var myreg = /^(((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1}))+\d{8})$/;
             if (!myreg.test($("#phone").val())) {
                 layer.tips('请输入有效的手机号码！', $('#phone'));
                 $('#phone').focus();
-                return false;
-            }
-            if (!$('input[name="sex"]').val()) {
-                layer.tips('请选择性别！', $('input[name="sex"]'));
-                $('input[name="sex"]').focus();
                 return false;
             }
             $.ajax({
