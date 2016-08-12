@@ -104,20 +104,21 @@ class File
      */
     public function thumbPhoto($data)
     {
-        $image = new Image();
+        //$image = new Image();
         $folder = __DIR__ . "/../..";
         $url = "/images/upload/thumb/" . $data['path'];
         $fileInfo = getimagesize($folder . "/images/upload/picture/" . $data['path']);
         //$thumbInfo = $this->thumbRation($fileInfo[0], $fileInfo[1]);//缩略图尺寸
-        $thumbInfo = $this->pictureRatio($fileInfo[0], $fileInfo[1], 267, 200);//缩略图尺寸
-        $image->open($folder . "/images/upload/picture/" . $data['path']);
+        //$thumbInfo = $this->pictureRatio($fileInfo[0], $fileInfo[1], 267, 200);//缩略图尺寸
+        //$image->open($folder . "/images/upload/picture/" . $data['path']);
         //另存固定宽度是200的压缩图片
-        $image->thumb($thumbInfo[0], $thumbInfo[1], $image::IMAGE_THUMB_FIXED)->save($folder . $url);
+        //$image->thumb($thumbInfo[0], $thumbInfo[1], $image::IMAGE_THUMB_FIXED)->save($folder . $url);
         //$image->thumb(200, 200, $image::IMAGE_THUMB_CENTER)->save($folder . $url);// 居中裁剪
         $picInfo = $this->pictureRatio($fileInfo[0], $fileInfo[1]);//原图缩略尺寸
         $pic = new Image();
         $pic->open($folder . "/images/upload/picture/" . $data['path']);
-        $pic->thumb($picInfo[0], $picInfo[1], $image::IMAGE_THUMB_FIXED)->save($folder . "/images/upload/picture/" . $data['path']);
+        $pic->thumb($picInfo[0], $picInfo[1], $pic::IMAGE_THUMB_FIXED)->save($folder . "/images/upload/picture/" . $data['path']);//原图压缩
+        $pic->thumb(200, 200, $pic::IMAGE_THUMB_FIXED)->save($folder . $url);// 居中裁剪
 
         return ['status' => 1, 'info' => '上传成功', 'pic_path' => "/images/upload/picture/" . $data['path'], 'thumb_path' => $url, 'time' => $data['time']];
     }
@@ -140,17 +141,17 @@ class File
             $picturePath = $imagePath . '_' . $picInfo[0] . '_' . $picInfo[1] . '.' . $extension;
             if (rename($targetFile, $picturePath)) {
                 //$thumbInfo = $this->thumbRation($fileInfo[0], $fileInfo[1]);//缩略图尺寸
-                $thumbInfo = $this->pictureRatio($fileInfo[0], $fileInfo[1], 267, 200);//缩略图尺寸
+                //$thumbInfo = $this->pictureRatio($fileInfo[0], $fileInfo[1], 267, 200);//缩略图尺寸
                 // 固定压缩图片长宽200
-                $image = new Image();
+                //$image = new Image();
                 $thumbPath = str_replace('picture', 'thumb', $picturePath);
-                $image->open($picturePath);
-                $image->thumb($thumbInfo[0], $thumbInfo[1], $image::IMAGE_THUMB_FIXED)->save($thumbPath);
+                //$image->open($picturePath);
+                //$image->thumb($thumbInfo[0], $thumbInfo[1], $image::IMAGE_THUMB_FIXED)->save($thumbPath);
                 //$image->thumb(200, 200, $image::IMAGE_THUMB_CENTER)->save($thumbPath);// 居中裁剪
                 $pic = new Image();
                 $pic->open($picturePath);
-                $pic->thumb($picInfo[0], $picInfo[1], $image::IMAGE_THUMB_FIXED)->save($picturePath);
-
+                $pic->thumb($picInfo[0], $picInfo[1], $pic::IMAGE_THUMB_FIXED)->save($picturePath);//原图压缩
+                $pic->thumb(200, 200, $pic::IMAGE_THUMB_FIXED)->save($thumbPath);// 居中裁剪
             }
         }
         $thumbArr = explode('/../..', $thumbPath);
@@ -161,17 +162,22 @@ class File
      * 返回原图等比例压缩宽高（最大不超过）
      * @param $pic_width
      * @param $pic_height
-     * @param int $maxwidth
-     * @param int $maxheight
+     * @param int $maxwidth 480
+     * @param int $maxheight 720
      * @return mixed
      */
-    public function pictureRatio($pic_width, $pic_height, $maxwidth = 800, $maxheight = 600)
+    public function pictureRatio($pic_width, $pic_height, $maxwidth = 480, $maxheight = 720)
     {
         $resizewidth_tag = false;
         $resizeheight_tag = false;
         if($pic_width < $maxwidth && $pic_height < $maxheight) {
             $pic[0] = $pic_width;
             $pic[1] = $pic_height;
+            if($pic_height > $pic_width) {
+                $pic[2] = $pic[0];
+            } else {
+                $pic[2] = $pic[1];
+            }
             return $pic;
         }
         if($maxwidth && $pic_width > $maxwidth) {
@@ -200,6 +206,11 @@ class File
 
         $pic[0] = floor($ratio*$pic_width);
         $pic[1] = floor($ratio*$pic_height);
+        if($pic_height > $pic_width) {
+            $pic[2] = $pic[0];
+        } else {
+            $pic[2] = $pic[1];
+        }
         return $pic;
     }
 
