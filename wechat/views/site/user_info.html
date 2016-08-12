@@ -69,13 +69,13 @@
                     <span class="ml48">{{otherUserInfo.province | address : otherUserInfo.city :otherUserInfo.area}}</span>
                 </p>
             </ion-item>
-            <ion-item ng-if="otherUserInfo.info.wechat && wxAuth">
+            <ion-item ng-if="otherUserInfo.info.wechat && wxAuth == 1">
                     <p>
                         <span class="cor4">微信号码</span>
                         <span class="ml20">{{otherUserInfo.info.wechat}}</span>
                     </p>
             </ion-item>
-            <ion-item ng-if="otherUserInfo.info.qq && qqAuth">
+            <ion-item ng-if="otherUserInfo.info.qq && qqAuth == 1">
                     <p>
                         <span class="cor4">Q Q号码</span>
                         <span class="ml20">{{otherUserInfo.info.qq}}</span>
