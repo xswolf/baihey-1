@@ -561,10 +561,18 @@ var ar = {
             var onThumbnailsClick = function (e) {
                 e = e || window.event;
                 e.preventDefault ? e.preventDefault() : e.returnValue = false;
-                //if(e.target.attributes.auth){
-                //    e.target.attributes.auth
-                //    return false;
-                //}
+                var auth = angular.element(e.target).attr('auth') ? angular.element(e.target).attr('auth') : 1;
+                if(auth == 2){
+                    alert('暂时无法查看大图，对方已设置关注可看。')
+                    return false;
+                }else if(auth == 3){
+                    alert('暂时无法查看大图，对方已设置VIP会员可看。')
+                    return false;
+                }else if(auth == 4){
+                    alert('暂时无法查看大图，对方已设置不公开相册。')
+                    return false;
+                }
+
 
                 var eTarget = e.target || e.srcElement;
 
