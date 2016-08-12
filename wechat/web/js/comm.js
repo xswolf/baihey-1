@@ -561,6 +561,10 @@ var ar = {
             var onThumbnailsClick = function (e) {
                 e = e || window.event;
                 e.preventDefault ? e.preventDefault() : e.returnValue = false;
+                //if(e.target.attributes.auth){
+                //    e.target.attributes.auth
+                //    return false;
+                //}
 
                 var eTarget = e.target || e.srcElement;
 

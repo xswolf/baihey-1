@@ -54,8 +54,7 @@
                                                                         value="1"> 男
                                     </label>
                                     <label class="radio-inline"> <input type="radio" name="sex"
-                                                                        value="0"
-                                                                        checked> 女 </label>
+                                                                        value="0"> 女 </label>
                                 </div>
                             </div>
 
@@ -1087,6 +1086,11 @@
             if (!myreg.test($("#phone").val())) {
                 layer.tips('请输入有效的手机号码！', $('#phone'));
                 $('#phone').focus();
+                return false;
+            }
+            if (!$('input[name="sex"]').val()) {
+                layer.tips('请选择性别！', $('input[name="sex"]'));
+                $('input[name="sex"]').focus();
                 return false;
             }
             $.ajax({

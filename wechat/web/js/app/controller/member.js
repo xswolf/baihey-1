@@ -47,14 +47,14 @@ define(['app/module', 'app/directive/directiveApi'
             }
         });
 
-        $scope.$on('$ionicView.beforeEnter',function(event,data){
+        $scope.$on('$ionicView.beforeEnter', function (event, data) {
             // 查询关注自己的人数量
             api.list('/wap/follow/follow-list', {type: 'followed'}).success(function (res) {
                 for (var i in res.data) {
                     res.data[i].info = JSON.parse(res.data[i].info);
                     res.data[i].auth = JSON.parse(res.data[i].auth);
                 }
-                $scope.followedNumber =res.data.length;
+                $scope.followedNumber = res.data.length;
             });
 
             // 查询我关注的人数量
@@ -63,20 +63,20 @@ define(['app/module', 'app/directive/directiveApi'
                     res.data[i].info = JSON.parse(res.data[i].info);
                     res.data[i].auth = JSON.parse(res.data[i].auth);
                 }
-                $scope.followNumber =res.data.length;
+                $scope.followNumber = res.data.length;
             });
         })
 
 
         // 设置新关注的人已看
-        api.list('/wap/follow/set-checked',{user_id:$scope.userInfo.user_id}).success(function(res){
+        api.list('/wap/follow/set-checked', {user_id: $scope.userInfo.user_id}).success(function (res) {
             console.log(res);
         })
 
     }]);
 
     // 资料首页
-    module.controller("member.information", ['app.serviceApi', '$scope', '$ionicPopup', 'FileUploader', '$ionicLoading', '$ionicActionSheet', '$ionicModal','$ionicScrollDelegate','$filter','$rootScope','$location', function (api, $scope, $ionicPopup, FileUploader, $ionicLoading, $ionicActionSheet, $ionicModal,$ionicScrollDelegate,$filter,$rootScope,$location) {
+    module.controller("member.information", ['app.serviceApi', '$scope', '$ionicPopup', 'FileUploader', '$ionicLoading', '$ionicActionSheet', '$ionicModal', '$ionicScrollDelegate', '$filter', '$rootScope', '$location', function (api, $scope, $ionicPopup, FileUploader, $ionicLoading, $ionicActionSheet, $ionicModal, $ionicScrollDelegate, $filter, $rootScope, $location) {
 
         // 判断身份证是否认证通过
         api.list('/wap/member/photo-list', {type: 2, pageSize: 2}).success(function (res) {
@@ -94,7 +94,7 @@ define(['app/module', 'app/directive/directiveApi'
         $scope.imgList = [];
         api.list('/wap/member/photo-list', []).success(function (res) {
             $scope.imgList = res.data;
-            ar.initPhotoSwipeFromDOM('.bhy-gallery',$scope);
+            ar.initPhotoSwipeFromDOM('.bhy-gallery', $scope);
         });
 
         $scope.addNewImg = function () {
@@ -125,22 +125,17 @@ define(['app/module', 'app/directive/directiveApi'
             });
 
             uploader.onAfterAddingFile = function (fileItem) {  // 选择文件后
-                fileItem.upload();   // 上传
-            };
-            uploader.onProgressItem = function (fileItem, progress) {   //进度条
-                $scope.showLoading(progress);    // 显示loading
-            };
+                fileItem.upload();
+            }
+            uploader.onProgressItem = function(item, progress){
+                $scope.showLoading(progress);
+            }
             uploader.onSuccessItem = function (fileItem, response, status, headers) {  // 上传成功
                 if (response.status > 0) {
                     if ($scope.imgList.length < 1) { // 第一张上传相片默认设为头像
-                        /*api.save('/wap/member/set-head', {
-                            id: response.id,
-                            thumb_path: response.thumb_path
-                        }).success(function (res) {*/
-                            $scope.imgList.push({id: response.id, thumb_path: response.thumb_path, is_head: 1});
-                            $scope.userInfo.info.head_pic = response.thumb_path;
-                            $scope.setUserStorage();
-                        //})
+                        $scope.imgList.push({id: response.id, thumb_path: response.thumb_path, is_head: 1});
+                        $scope.userInfo.info.head_pic = response.thumb_path;
+                        $scope.setUserStorage();
                     } else {
                         $scope.imgList.push({id: response.id, thumb_path: response.thumb_path, is_head: 0});
                     }
@@ -227,8 +222,8 @@ define(['app/module', 'app/directive/directiveApi'
                 animation: 'slide-in-right'
             }).then(function (modal) {
                 $scope.infoModal = modal;
-                if($scope.infoModal.show()){
-                   ar.processData(fieldName,$scope,api,$ionicPopup,$filter,$ionicScrollDelegate);
+                if ($scope.infoModal.show()) {
+                    ar.processData(fieldName, $scope, api, $ionicPopup, $filter, $ionicScrollDelegate);
                 }
             });
 
@@ -247,7 +242,7 @@ define(['app/module', 'app/directive/directiveApi'
         $scope.formData.constellation = {id: 0, name: '星座'};
         $scope.birthdayChange = function () {
             $scope.userInfo.age = ar.getAgeByBirthday(ar.DateTimeToDate($scope.formData.birthday));
-            $scope.formData.age =  $scope.userInfo.age+ '岁';
+            $scope.formData.age = $scope.userInfo.age + '岁';
             $scope.formData.zodiac = ar.getZodicByBirthday(ar.DateTimeToDate($scope.formData.birthday));
             $scope.formData.constellation = ar.getConstellationByBirthday(ar.DateTimeToDate($scope.formData.birthday));
         }
@@ -358,9 +353,9 @@ define(['app/module', 'app/directive/directiveApi'
             }
         };
 
-        $rootScope.$on('$ionicView.beforeLeave',function(event,data){
-            if(data.stateParams && $scope.infoModal){
-                if($scope.infoModal.isShown()){
+        $rootScope.$on('$ionicView.beforeLeave', function (event, data) {
+            if (data.stateParams && $scope.infoModal) {
+                if ($scope.infoModal.isShown()) {
                     $scope.closeModal();
                 }
             }
@@ -368,10 +363,10 @@ define(['app/module', 'app/directive/directiveApi'
 
         // 保存数据
         $scope.saveData = function (formData) {
-            ar.processParams($scope,formData);
+            ar.processParams($scope, formData);
             api.save('/wap/member/save-data', $scope.userInfo).success(function (res) {
                 $scope.getUserPrivacyStorage('');
-            }).finally(function(){
+            }).finally(function () {
                 $scope.closeModal();
             })
         }
@@ -387,7 +382,7 @@ define(['app/module', 'app/directive/directiveApi'
     ]);
 
     // 官方号-资料首页
-    module.controller("member.admin_information", ['app.serviceApi', '$scope', '$ionicPopup', 'FileUploader', '$ionicLoading', '$ionicActionSheet', '$ionicModal','$ionicScrollDelegate','$filter','$rootScope','$location', function (api, $scope, $ionicPopup, FileUploader, $ionicLoading, $ionicActionSheet, $ionicModal,$ionicScrollDelegate,$filter,$rootScope,$location) {
+    module.controller("member.admin_information", ['app.serviceApi', '$scope', '$ionicPopup', 'FileUploader', '$ionicLoading', '$ionicActionSheet', '$ionicModal', '$ionicScrollDelegate', '$filter', '$rootScope', '$location', function (api, $scope, $ionicPopup, FileUploader, $ionicLoading, $ionicActionSheet, $ionicModal, $ionicScrollDelegate, $filter, $rootScope, $location) {
 
         // 判断身份证是否认证通过
         api.list('/wap/member/photo-list', {type: 2, pageSize: 2}).success(function (res) {
@@ -404,7 +399,7 @@ define(['app/module', 'app/directive/directiveApi'
         $scope.imgList = [];
         api.list('/wap/member/photo-list', []).success(function (res) {
             $scope.imgList = res.data;
-            ar.initPhotoSwipeFromDOM('.bhy-gallery',$scope);
+            ar.initPhotoSwipeFromDOM('.bhy-gallery', $scope);
         });
 
         $scope.addNewImg = function () {
@@ -459,7 +454,7 @@ define(['app/module', 'app/directive/directiveApi'
 
         // 点击img，功能
         $scope.moreImg = function (index) {
-            if(index == 0){
+            if (index == 0) {
                 return false;
             }
             var id = $scope.imgList[index].id;
@@ -512,12 +507,11 @@ define(['app/module', 'app/directive/directiveApi'
                 animation: 'slide-in-right'
             }).then(function (modal) {
                 $scope.infoModal = modal;
-                if($scope.infoModal.show()){
-                    ar.processData(fieldName,$scope,api,$ionicPopup,$filter,$ionicScrollDelegate);
+                if ($scope.infoModal.show()) {
+                    ar.processData(fieldName, $scope, api, $ionicPopup, $filter, $ionicScrollDelegate);
                 }
             });
         }
-
 
 
         $scope.settingsBirthday = {
@@ -530,7 +524,7 @@ define(['app/module', 'app/directive/directiveApi'
         $scope.formData.constellation = {id: 0, name: '星座'};
         $scope.birthdayChange = function () {
             $scope.userInfo.age = ar.getAgeByBirthday(ar.DateTimeToDate($scope.formData.birthday));
-            $scope.formData.age =  $scope.userInfo.age+ '岁';
+            $scope.formData.age = $scope.userInfo.age + '岁';
             $scope.formData.zodiac = ar.getZodicByBirthday(ar.DateTimeToDate($scope.formData.birthday));
             $scope.formData.constellation = ar.getConstellationByBirthday(ar.DateTimeToDate($scope.formData.birthday));
         }
@@ -641,9 +635,9 @@ define(['app/module', 'app/directive/directiveApi'
             }
         };
 
-        $rootScope.$on('$ionicView.beforeLeave',function(event,data){
-            if(data.stateParams && $scope.infoModal){
-                if($scope.infoModal.isShown()){
+        $rootScope.$on('$ionicView.beforeLeave', function (event, data) {
+            if (data.stateParams && $scope.infoModal) {
+                if ($scope.infoModal.isShown()) {
                     $scope.closeModal();
                 }
             }
@@ -651,10 +645,10 @@ define(['app/module', 'app/directive/directiveApi'
 
         // 保存数据
         $scope.saveData = function (formData) {
-            ar.processParams($scope,formData);
+            ar.processParams($scope, formData);
             api.save('/wap/member/save-data', $scope.userInfo).success(function (res) {
                 $scope.getUserPrivacyStorage('');
-            }).finally(function(){
+            }).finally(function () {
                 $scope.closeModal();
             })
         }
@@ -691,7 +685,7 @@ define(['app/module', 'app/directive/directiveApi'
                 res.data[i].age = res.data[i].age.replace(/\"/g, '');
             }
             $scope.discoveryList = res.data;
-            ar.initPhotoSwipeFromDOM('.bhy-gallery',$scope);
+            ar.initPhotoSwipeFromDOM('.bhy-gallery', $scope);
         });
 
         //用户已屏蔽的动态id，从localStorage获取
@@ -824,7 +818,7 @@ define(['app/module', 'app/directive/directiveApi'
                 } else {
                     ar.saveDataAlert($ionicPopup, '上传图片失败！');
                 }
-                ar.initPhotoSwipeFromDOM('.bhy-gallery',$scope);
+                ar.initPhotoSwipeFromDOM('.bhy-gallery', $scope);
             };
             uploader.onErrorItem = function (fileItem, response, status, headers) {  // 上传出错
                 ar.saveDataAlert($ionicPopup, '上传图片出错！');
@@ -871,7 +865,7 @@ define(['app/module', 'app/directive/directiveApi'
         $scope.followType = 'follow';
         $scope.followList = [];
         $scope.followedList = [];
-        api.list('/wap/follow/set-checked',{user_id:$scope.userInfo.user_id}).success(function(res){
+        api.list('/wap/follow/set-checked', {user_id: $scope.userInfo.user_id}).success(function (res) {
             console.log(res);
         })
         api.list('/wap/follow/follow-list', {type: 'follow'}).success(function (res) {
@@ -973,7 +967,7 @@ define(['app/module', 'app/directive/directiveApi'
                 $scope.otherUserInfo.auth = JSON.parse($scope.otherUserInfo.auth);
                 // 用户相册
                 $scope.imgList = res.userPhoto.length > 0 ? res.userPhoto : [];
-                ar.initPhotoSwipeFromDOM('.bhy-gallery',$scope);
+                ar.initPhotoSwipeFromDOM('.bhy-gallery', $scope);
                 // 用户动态
                 if (res.dynamic) {
                     for (var i in res.dynamic) {
@@ -1108,7 +1102,7 @@ define(['app/module', 'app/directive/directiveApi'
                 $scope.otherUserInfo.auth = JSON.parse($scope.otherUserInfo.auth);
                 // 用户相册
                 $scope.imgList = res.userPhoto.length > 0 ? res.userPhoto : [];
-                ar.initPhotoSwipeFromDOM('.bhy-gallery',$scope);
+                ar.initPhotoSwipeFromDOM('.bhy-gallery', $scope);
                 // 用户动态
                 if (res.dynamic) {
                     for (var i in res.dynamic) {
@@ -1190,11 +1184,11 @@ define(['app/module', 'app/directive/directiveApi'
     }]);
 
     // 隐私设置-照片权限
-    module.controller("member.privacy_pic", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup','$location', function (api, $scope, $timeout, $ionicPopup,$location) {
+    module.controller("member.privacy_pic", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$location', function (api, $scope, $timeout, $ionicPopup, $location) {
         $scope.formData = {};
         $scope.formData.privacy_pic = $scope.userInfo.privacy_pic ? $scope.userInfo.privacy_pic : 1;
 
-        $scope.saveData = function(){
+        $scope.saveData = function () {
             $scope.userInfo.privacy_pic = $scope.formData.privacy_pic;
             api.save('/wap/member/save-data', $scope.userInfo).success(function (res) {
                 $scope.getUserPrivacyStorage('');
@@ -1545,13 +1539,13 @@ define(['app/module', 'app/directive/directiveApi'
             $scope.authList = res.data;
         });
         $scope.imgList = [];
-        ar.initPhotoSwipeFromDOM('.bhy-gallery',$scope);
+        ar.initPhotoSwipeFromDOM('.bhy-gallery', $scope);
 
         $scope.formData = [];
         $scope.formData.real_name = $scope.userInfo.info.real_name;
         $scope.addNewImg = function (name) {
             $scope.uploaderImage(uploader, name);
-            ar.initPhotoSwipeFromDOM('.bhy-gallery',$scope);
+            ar.initPhotoSwipeFromDOM('.bhy-gallery', $scope);
         }
         // 监听上传回传数据
         $scope.$on('thumb_path', function (event, name, data) {
@@ -1598,7 +1592,7 @@ define(['app/module', 'app/directive/directiveApi'
     module.controller("member.honesty_marr", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', 'FileUploader', function (api, $scope, $timeout, $ionicPopup, FileUploader) {
         api.list('/wap/member/photo-list', {type: 5, pageSize: 1}).success(function (res) {
             $scope.authList = res.data;
-            ar.initPhotoSwipeFromDOM('.bhy-gallery',$scope);
+            ar.initPhotoSwipeFromDOM('.bhy-gallery', $scope);
         });
         $scope.imgList = [];
         // 实例化上传图片插件
@@ -1608,12 +1602,12 @@ define(['app/module', 'app/directive/directiveApi'
 
         $scope.addNewImg = function (name) {
             $scope.uploaderImage(uploader, name);
-            ar.initPhotoSwipeFromDOM('.bhy-gallery',$scope);
+            ar.initPhotoSwipeFromDOM('.bhy-gallery', $scope);
         }
         // 监听上传回传数据
         $scope.$on('thumb_path', function (event, name, data) {
             !$scope.authList[0] ? $scope.authList[0] = data : $scope.authList[0].thumb_path = data.thumb_path;
-            ar.initPhotoSwipeFromDOM('.bhy-gallery',$scope);
+            ar.initPhotoSwipeFromDOM('.bhy-gallery', $scope);
             ar.saveDataAlert($ionicPopup, '上传成功');
         });
     }]);
@@ -1622,7 +1616,7 @@ define(['app/module', 'app/directive/directiveApi'
     module.controller("member.honesty_edu", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', 'FileUploader', function (api, $scope, $timeout, $ionicPopup, FileUploader) {
         api.list('/wap/member/photo-list', {type: 4, pageSize: 1}).success(function (res) {
             $scope.authList = res.data;
-            ar.initPhotoSwipeFromDOM('.bhy-gallery',$scope);
+            ar.initPhotoSwipeFromDOM('.bhy-gallery', $scope);
         });
         $scope.imgList = [];
 
@@ -1637,7 +1631,7 @@ define(['app/module', 'app/directive/directiveApi'
         // 监听上传回传数据
         $scope.$on('thumb_path', function (event, name, data) {
             !$scope.authList[0] ? $scope.authList[0] = data : $scope.authList[0].thumb_path = data.thumb_path;
-            ar.initPhotoSwipeFromDOM('.bhy-gallery',$scope);
+            ar.initPhotoSwipeFromDOM('.bhy-gallery', $scope);
             ar.saveDataAlert($ionicPopup, '上传成功');
         });
     }]);
@@ -1646,7 +1640,7 @@ define(['app/module', 'app/directive/directiveApi'
     module.controller("member.honesty_housing", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', 'FileUploader', function (api, $scope, $timeout, $ionicPopup, FileUploader) {
         api.list('/wap/member/photo-list', {type: 6, pageSize: 1}).success(function (res) {
             $scope.authList = res.data;
-            ar.initPhotoSwipeFromDOM('.bhy-gallery',$scope);
+            ar.initPhotoSwipeFromDOM('.bhy-gallery', $scope);
         });
         $scope.imgList = [];
 
@@ -1661,7 +1655,7 @@ define(['app/module', 'app/directive/directiveApi'
         // 监听上传回传数据
         $scope.$on('thumb_path', function (event, name, data) {
             !$scope.authList[0] ? $scope.authList[0] = data : $scope.authList[0].thumb_path = data.thumb_path;
-            ar.initPhotoSwipeFromDOM('.bhy-gallery',$scope);
+            ar.initPhotoSwipeFromDOM('.bhy-gallery', $scope);
             ar.saveDataAlert($ionicPopup, '上传成功');
         });
     }]);
@@ -1679,50 +1673,50 @@ define(['app/module', 'app/directive/directiveApi'
         });
 
         /*var tid = $interval(function () {
-            var totalSec = getTotalSecond($scope.formData.timer) - 1;
-            if (totalSec >= 0) {
-                $scope.formData.timer = getNewSyTime(totalSec);
-            } else {
-                $interval.cancel(tid);
-            }
+         var totalSec = getTotalSecond($scope.formData.timer) - 1;
+         if (totalSec >= 0) {
+         $scope.formData.timer = getNewSyTime(totalSec);
+         } else {
+         $interval.cancel(tid);
+         }
 
-        }, 1000);
+         }, 1000);
 
-        //根据剩余时间字符串计算出总秒数
-        function getTotalSecond(timestr) {
-            var reg = /\d+/g;
-            var timenums = new Array();
-            while ((r = reg.exec(timestr)) != null) {
-                timenums.push(parseInt(r));
-            }
-            var second = 0, i = 0;
-            if (timenums.length == 4) {
-                second += timenums[0] * 24 * 3600;
-                i = 1;
-            }
-            second += timenums[i] * 3600 + timenums[++i] * 60 + timenums[++i];
-            return second;
-        }
+         //根据剩余时间字符串计算出总秒数
+         function getTotalSecond(timestr) {
+         var reg = /\d+/g;
+         var timenums = new Array();
+         while ((r = reg.exec(timestr)) != null) {
+         timenums.push(parseInt(r));
+         }
+         var second = 0, i = 0;
+         if (timenums.length == 4) {
+         second += timenums[0] * 24 * 3600;
+         i = 1;
+         }
+         second += timenums[i] * 3600 + timenums[++i] * 60 + timenums[++i];
+         return second;
+         }
 
-        //根据剩余秒数生成时间格式
-        function getNewSyTime(sec) {
-            var s = sec % 60;
-            sec = (sec - s) / 60; //min
-            var m = sec % 60;
-            sec = (sec - m) / 60; //hour
-            var h = sec % 24;
-            var d = (sec - h) / 24;//day
-            var syTimeStr = "";
-            if (d > 0) {
-                syTimeStr += d.toString() + "天";
-            }
+         //根据剩余秒数生成时间格式
+         function getNewSyTime(sec) {
+         var s = sec % 60;
+         sec = (sec - s) / 60; //min
+         var m = sec % 60;
+         sec = (sec - m) / 60; //hour
+         var h = sec % 24;
+         var d = (sec - h) / 24;//day
+         var syTimeStr = "";
+         if (d > 0) {
+         syTimeStr += d.toString() + "天";
+         }
 
-            syTimeStr += ("0" + h.toString()).substr(-2) + "时"
-                + ("0" + m.toString()).substr(-2) + "分"
-                + ("0" + s.toString()).substr(-2) + "秒";
+         syTimeStr += ("0" + h.toString()).substr(-2) + "时"
+         + ("0" + m.toString()).substr(-2) + "分"
+         + ("0" + s.toString()).substr(-2) + "秒";
 
-            return syTimeStr;
-        }*/
+         return syTimeStr;
+         }*/
 
         // 生成订单并跳转支付
         $scope.createOrder = function (_goodsId) {
@@ -2811,7 +2805,7 @@ define(['app/module', 'app/directive/directiveApi'
     }]);
 
 // 用户资料-隐私设置
-    module.controller("member.settings", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$location', '$ionicActionSheet','$ionicModal', function (api, $scope, $timeout, $ionicPopup, $location, $ionicActionSheet,$ionicModal) {
+    module.controller("member.settings", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$location', '$ionicActionSheet', '$ionicModal', function (api, $scope, $timeout, $ionicPopup, $location, $ionicActionSheet, $ionicModal) {
         $scope.formData = {};
         var followData = [];
         followData.user_id = ar.getCookie("bhy_user_id");
@@ -2851,7 +2845,7 @@ define(['app/module', 'app/directive/directiveApi'
                     api.save('/wap/member/add-feedback', {
                         content: config_infoData.feedback[index],
                         feedback_id: followData.follow_id,
-                        feedback_name : $location.$$search.userName,
+                        feedback_name: $location.$$search.userName,
                         user_name: $scope.userInfo.info.real_name
                     }).success(function (res) {
                         hideSheet();
@@ -2911,13 +2905,13 @@ define(['app/module', 'app/directive/directiveApi'
         $ionicModal.fromTemplateUrl('reBackModal.html', {
             scope: $scope,
             animation: 'slide-in-right'
-        }).then(function(modal) {
+        }).then(function (modal) {
             $scope.modal = modal;
         });
-        $scope.openModal = function() {
+        $scope.openModal = function () {
             $scope.modal.show();
         };
-        $scope.closeModal = function() {
+        $scope.closeModal = function () {
             $scope.modal.hide();
         };
 
