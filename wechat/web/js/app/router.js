@@ -365,9 +365,16 @@ define(["app/module", 'app/service/serviceApi'],
                     });
                     $scope.userInfo = ar.getStorage('userInfo');
                     if ($scope.userInfo && $scope.userInfo.id == ar.getCookie('bhy_user_id')) {
-                        getUserStorage();
+                        //getUserStorage();
+
+                        api.list("/wap/user/get-user-info", {}).success(function (res) {
+                            $scope.userInfo = res.data;
+                            ar.setStorage('userInfo', res.data);
+                            getUserStorage();
+                        });
+
                     } else {
-                        api.list("/wap/user/get-user-info", []).success(function (res) {
+                        api.list("/wap/user/get-user-info", {}).success(function (res) {
                             $scope.userInfo = res.data;
                             ar.setStorage('userInfo', res.data);
                             getUserStorage();
