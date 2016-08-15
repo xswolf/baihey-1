@@ -47,7 +47,12 @@
                 </div>
 
             </ion-item>
+
         </ion-list>
+        <div ng-if="messageList.length < 1" class="tac mt20">
+            <img src="/wechat/web/images/member/tip_05.png" height="150" class="vam">
+            <p class="mt10 cor10">暂无消息，快去找其他人聊天吧</p>
+        </div>
     </ion-content>
     <ion-footer-bar class="bar-stable">
         <a class="menuBtn" href="/wap/site/main#/index">

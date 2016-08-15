@@ -92,7 +92,7 @@ define(['app/module', 'app/directive/directiveApi'
 
         $scope.formData = {};
         $scope.imgList = [];
-        api.list('/wap/member/photo-list', []).success(function (res) {
+        api.list('/wap/member/photo-list', {}).success(function (res) {
             $scope.imgList = res.data;
             ar.initPhotoSwipeFromDOM('.bhy-gallery', $scope);
         });
@@ -127,9 +127,11 @@ define(['app/module', 'app/directive/directiveApi'
             uploader.onAfterAddingFile = function (fileItem) {  // 选择文件后
                 fileItem.upload();
             }
+
             uploader.onProgressItem = function(item, progress){
                 $scope.showLoading(progress);
             }
+
             uploader.onSuccessItem = function (fileItem, response, status, headers) {  // 上传成功
                 if (response.status > 0) {
                     if ($scope.imgList.length < 1) { // 第一张上传相片默认设为头像
