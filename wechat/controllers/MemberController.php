@@ -233,6 +233,16 @@ class MemberController extends BaseController
     }
 
     /**
+     * 获取新点赞和评论数
+     */
+    public function actionClickAndComment()
+    {
+        $userId = Cookie::getInstance()->getCookie('bhy_id')->value;
+        $num    = UserDynamic::getInstance()->getClickAndCommentByUserId($userId);
+        $this->renderAjax(['status' => 1, 'data' => $num]);
+    }
+
+    /**
      * 设置点赞
      */
     public function actionSetClickLike()

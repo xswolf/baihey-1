@@ -94,4 +94,18 @@ class UserDynamic extends Base
         return $row;
     }
 
+    /**
+     * @param $userId
+     * 获取用户评论和点赞数目
+     * @return array
+     */
+    public function getClickAndCommentByUserId($userId){
+
+        $result =  (new Query())->from($this->tablePrefix.'user_dynamic')
+            ->where(['user_id'=>$userId])
+            ->select("sum(like_num) as like_num , sum(comment_num) as comment_num")
+            ->one();
+        return $result['like_num'] + $result['comment_num'];
+    }
+
 }
