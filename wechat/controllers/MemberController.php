@@ -252,7 +252,7 @@ class MemberController extends BaseController
         if ($list = UserDynamic::getInstance()->getComment($userId , $createTime)){
             return $this->renderAjax(['status' => 1, 'data' => $list , 'message'=>'成功']);
         }
-        $this->renderAjax(['status' => 0, 'data' => '' , 'message'=>'失败']);
+        return $this->renderAjax(['status' => 0, 'data' => '' , 'message'=>'失败']);
     }
 
     /**
