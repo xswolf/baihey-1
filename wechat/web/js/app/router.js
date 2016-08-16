@@ -67,13 +67,14 @@ define(["app/module", 'app/service/serviceApi'],
 
             $rootScope.$on('$stateChangeStart', function (evt, next) {
 
-                // 判断用户是否登陆
-                if ($location.$$url != '/index') { // 首页和欢迎页不判断
+                // 判断用户是否登陆 只判断一次，减少http请求
+                if ($location.$$url != '/index' && $rootScope.login_status != 1) { // 首页和欢迎页不判断
                     api.getLoginStatus().success(function (res) {
                         if (!res.status) {
                             location.href = '/wap/user/login';
                             return false;
                         }
+                        $rootScope.login_status = 1
                     })
                 }
 
