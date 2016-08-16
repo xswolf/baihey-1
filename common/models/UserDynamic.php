@@ -117,16 +117,18 @@ class UserDynamic extends Base
     public function getComment($userId , $createTime = ''){
 
         $where = ['d.user_id'=>$userId];
-        if ($createTime != '') {
-            $where['c.create_time'] = $createTime;
-        }
-        return (new Query())->from($this->tablePrefix.'user_dynamic d')
+
+        $handle = (new Query())->from($this->tablePrefix.'user_dynamic d')
             ->innerJoin($this->tablePrefix.'user_comment c' , 'd.id = c.dynamic_id')
             ->innerJoin($this->tablePrefix.'user_information i' , 'i.user_id=c.user_id' )
-            ->where($where)
-            ->select("d.id, i.info , d.pic , d.content , c.comment as comment")
-            ->orderBy('c.create_time')
-            ->all();
+            ->where($where);
+        if ($createTime != '') {
+            $handle->andWhere([">=", "c.create_time", $createTime]);
+        }
+
+        return $handle->select("d.id, i.info , d.pic , d.content , c.content as comment")
+        ->orderBy('c.create_time')
+        ->all();
     }
 
 }
