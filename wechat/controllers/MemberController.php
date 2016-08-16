@@ -233,13 +233,26 @@ class MemberController extends BaseController
     }
 
     /**
-     * 获取新点赞和评论数
+     * 获取评论数
      */
-    public function actionClickAndComment()
+    public function actionCommentNum()
     {
         $userId = Cookie::getInstance()->getCookie('bhy_id')->value;
-        $num    = UserDynamic::getInstance()->getClickAndCommentByUserId($userId);
+        $num    = UserDynamic::getInstance()->getCommentByUserId($userId);
         $this->renderAjax(['status' => 1, 'data' => $num]);
+    }
+
+    /**
+     * 获取评论列表
+     */
+    public function actionCommentList(){
+
+        $userId     = Cookie::getInstance()->getCookie('bhy_id')->value;
+        $createTime = \Yii::$app->request->get('create_time');
+        if ($list = UserDynamic::getInstance()->getComment($userId , $createTime)){
+            $this->renderAjax(['status' => 1, 'data' => $list , 'message'=>'成功']);
+        }
+        $this->renderAjax(['status' => 0, 'data' => '' , 'message'=>'失败']);
     }
 
     /**

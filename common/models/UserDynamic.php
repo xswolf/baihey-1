@@ -99,13 +99,34 @@ class UserDynamic extends Base
      * 获取用户评论和点赞数目
      * @return array
      */
-    public function getClickAndCommentByUserId($userId){
+    public function getCommentByUserId($userId){
 
         $result =  (new Query())->from($this->tablePrefix.'user_dynamic')
             ->where(['user_id'=>$userId])
             ->select("sum(like_num) as like_num , sum(comment_num) as comment_num")
             ->one();
-        return $result['like_num'] + $result['comment_num'];
+        return $result['comment_num'];
+    }
+
+    /**
+     * 获取评论列表
+     * @param $userId
+     * @param string $createTime
+     * @return array
+     */
+    public function getComment($userId , $createTime = ''){
+
+        $where = ['d.user_id'=>$userId];
+        if ($createTime != '') {
+            $where['c.create_time'] = $createTime;
+        }
+        return (new Query())->from($this->tablePrefix.'user_dynamic d')
+            ->innerJoin($this->tablePrefix.'user_comment c' , 'd.id = c.dynamic_id')
+            ->innerJoin($this->tablePrefix.'user_information i' , 'i.user_id=c.user_id' )
+            ->where($where)
+            ->select("*")
+            ->orderBy('c.create_time')
+            ->all();
     }
 
 }
