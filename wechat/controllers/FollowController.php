@@ -24,9 +24,14 @@ class FollowController extends BaseController
         $user_id = Cookie::getInstance()->getCookie('bhy_id')->value;
         $type = $this->get['type'];
         if (empty($type)) {
-            $type = 'follow';
+            $data1 = UserFollow::getInstance()->getFollowList("follow", $user_id, $this->get);
+            $data2 = UserFollow::getInstance()->getFollowList("followed", $user_id, $this->get);
+            return $this->renderAjax(['status' => 1, 'data' => count($data1) + count($data2)]);
+
+        }else{
+            $data = UserFollow::getInstance()->getFollowList($type, $user_id, $this->get);
         }
-        $data = UserFollow::getInstance()->getFollowList($type, $user_id, $this->get);
+
         return $this->renderAjax(['status' => 1, 'data' => $data]);
     }
 
