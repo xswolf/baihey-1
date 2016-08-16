@@ -51,19 +51,19 @@ define(['app/module', 'app/directive/directiveApi'
         $scope.$on('$ionicView.beforeEnter', function (event, data) {
             // 查询关注自己的人数量
             api.list('/wap/follow/follow-list', {type: 'followed'}).success(function (res) {
-                for (var i in res.data) {
-                    res.data[i].info = JSON.parse(res.data[i].info);
-                    res.data[i].auth = JSON.parse(res.data[i].auth);
-                }
+                //for (var i in res.data) {
+                //    res.data[i].info = JSON.parse(res.data[i].info);
+                //    res.data[i].auth = JSON.parse(res.data[i].auth);
+                //}
                 $scope.followedNumber = res.data.length;
             });
 
             // 查询我关注的人数量
             api.list('/wap/follow/follow-list', {type: 'follow'}).success(function (res) {
-                for (var i in res.data) {
-                    res.data[i].info = JSON.parse(res.data[i].info);
-                    res.data[i].auth = JSON.parse(res.data[i].auth);
-                }
+                //for (var i in res.data) {
+                //    res.data[i].info = JSON.parse(res.data[i].info);
+                //    res.data[i].auth = JSON.parse(res.data[i].auth);
+                //}
                 $scope.followNumber = res.data.length;
             });
         })

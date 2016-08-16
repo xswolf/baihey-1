@@ -185,7 +185,7 @@ class UserFollow extends Base
 
         return (new Query())->from($this->tablePrefix.'user_follow')
             ->where(['follow_id' => $userId,'checked'=>0])
-            ->select("*")
+            ->select("count(*) as num")
             ->one();
     }
 

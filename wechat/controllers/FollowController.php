@@ -134,11 +134,11 @@ class FollowController extends BaseController
      * @return string|void
      */
     public function actionIsNewFollow(){
-
-        if (UserFollow::getInstance()->getNewFollow($this->get['user_id'])){
-            return $this->renderAjax(['status' => 1, 'message' => '有新关注用户']);
+        $res = UserFollow::getInstance()->getNewFollow($this->get['user_id']);
+        if ($res['num'] > 0 ){
+            return $this->renderAjax(['status' => 1,'data'=>$res['num'], 'message' => '有新关注用户']);
         }
-        return $this->renderAjax(['status' => 0, 'message' => '无新关注用户']);
+        return $this->renderAjax(['status' => 0,'data'=>$res['num'], 'message' => '无新关注用户']);
 
     }
 
