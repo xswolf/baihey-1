@@ -218,6 +218,7 @@ define(["app/module", 'app/service/serviceApi'],
                                             messageList[i].message = $rootScope.historyListHide[$rootScope.historyListHide.length - 1].message
                                         }
                                         $rootScope.msgNumber = $rootScope.msgNumber - messageList[i].sumSend;
+                                        $rootScope.msgNumber = $rootScope.msgNumber >= 0 ? $rootScope.msgNumber : 0;
                                         messageList[i].sumSend = 0;
                                         messageList[i].status = 1;
 

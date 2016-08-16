@@ -99,7 +99,7 @@ SET age = IF ({$m} - DATE_FORMAT(DATE_ADD(FROM_UNIXTIME(0), INTERVAL json_extrac
                     ON cy.id = u.`nowcounty`  where mobile is not null";
 
         $oldDb  = $this->getDb('114.80.78.241', 'newbhy', 'bhy63797900');
-        $newDb  = $this->getDb('120.76.84.162', 'jrbaihe', 'jrbh*2016', 'baihey');
+        $newDb  = $this->getDb('120.76.84.162', 'jrbaihe', 'jrbh*2016', 'bhy');
         $result = $oldDb->createCommand($sql)->queryAll();
         foreach ($result as $k => $v) {
             if ($v['mobile'] == '' || $v['mobile'] == null || strlen($v['mobile']) != 11 ) continue;
