@@ -250,7 +250,7 @@ class MemberController extends BaseController
         $userId     = Cookie::getInstance()->getCookie('bhy_id')->value;
         $createTime = \Yii::$app->request->get('create_time');
         if ($list = UserDynamic::getInstance()->getComment($userId , $createTime)){
-            $this->renderAjax(['status' => 1, 'data' => $list , 'message'=>'成功']);
+            return $this->renderAjax(['status' => 1, 'data' => $list , 'message'=>'成功']);
         }
         $this->renderAjax(['status' => 0, 'data' => '' , 'message'=>'失败']);
     }
