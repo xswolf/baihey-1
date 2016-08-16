@@ -124,6 +124,8 @@ class UserDynamic extends Base
             ->where($where);
         if ($createTime != '') {
             $handle->andWhere([">=", "c.create_time", $createTime]);
+        }else{
+            $handle->andWhere([">=", "c.create_time", time()-3600*24*30]);
         }
 
         return $handle->select("d.id, i.info , d.pic , d.content , c.content as comment")
