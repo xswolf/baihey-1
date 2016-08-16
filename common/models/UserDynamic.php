@@ -124,7 +124,7 @@ class UserDynamic extends Base
             ->innerJoin($this->tablePrefix.'user_comment c' , 'd.id = c.dynamic_id')
             ->innerJoin($this->tablePrefix.'user_information i' , 'i.user_id=c.user_id' )
             ->where($where)
-            ->select("*")
+            ->select("d.id, i.info , d.pic , d.content , c.comment as comment")
             ->orderBy('c.create_time')
             ->all();
     }
