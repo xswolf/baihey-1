@@ -433,6 +433,29 @@ define(['app/module'], function (module) {
         };
     });
 
+    module.directive("getImgSize", function () {
+        return {
+            restrict: "EA",
+            link: function ($scope, element, attrs) {
+                var _src = attrs.getImgSize.replace('thumb', 'picture');
+                if (_src.split('.')[0].split('_')[2]) {
+                    element.attr('data-size',_src.split('.')[0].split('_')[1] + 'x' + _src.split('.')[0].split('_')[2]);
+                } else {
+                    var img = new Image()
+                    img.src = attrs.getImgSize;
+                    if (img.complete) {
+                        element.attr('data-size',img.width + 'x' + img.height);
+                    } else {
+                        img.onload = function () {
+                            element.attr('data-size',img.width + 'x' + img.height);
+                            img.onload = null; //避免重复加载
+                        }
+                    }
+                }
+            }
+        }
+    });
+
 })
 
 

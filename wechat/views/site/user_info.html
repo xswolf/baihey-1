@@ -10,7 +10,7 @@
         <ion-list>
             <div class="imgList_con">
                 <div class="imgList_handle clearfix bhy-gallery">
-                    <a class="imgItem pr" ng-repeat="img in imgList" ng-href="{{img.thumb_path | picture}}" data-size="{{getImgSize(img.thumb_path)}}">
+                    <a class="imgItem pr" ng-repeat="img in imgList" ng-href="{{img.thumb_path | picture}}" get-img-size="{{img.thumb_path}}">
                         <img src="/wechat/web/images/lazyload.png" auth="{{picAuth}}" lazyload="{{img.thumb_path}}">
                         <figure class="hide">轻触照片退出</figure>
                     </a>

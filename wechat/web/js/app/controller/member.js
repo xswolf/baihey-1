@@ -997,27 +997,6 @@ define(['app/module', 'app/directive/directiveApi'
 
         });
 
-        $scope.getImgSize = function (src) {
-            var _src = src.replace('thumb', 'picture');
-            if (_src.split('.')[0].split('_')[2]) {
-                return _src.split('.')[0].split('_')[1] + 'x' + _src.split('.')[0].split('_')[2];
-            } else {
-                var img = new Image()
-                img.src = src;
-                if (img.complete) {
-                    return img.width + 'x' + img.height;
-                } else {
-                    img.onload = function () {
-                        return img.width + 'x' + img.height;
-                        img.onload = null; //避免重复加载
-                    }
-                }
-                img.onerror = function () {
-                    return '800x600';
-                }
-            }
-        }
-
         $scope.localChat = function () {
             window.location.hash = "#/chat1?id=" + $scope.otherUserInfo.id + "&head_pic=" + $scope.otherUserInfo.info.head_pic + "&real_name=" + $scope.otherUserInfo.info.real_name + "&sex=" + $scope.otherUserInfo.sex + "&age=" + $scope.otherUserInfo.info.age;
         }
