@@ -997,6 +997,19 @@ define(['app/module', 'app/directive/directiveApi'
 
         });
 
+        $scope.rtd = function(src){
+            var img = new Image()
+            img.src = src;
+            if(img.complete){
+                return img.width + 'x' + img.height;
+            }else {
+                img.onload = function () {
+                    return img.width + 'x' + img.height;
+                    img.onload = null;//避免重复加载
+                }
+            }
+        }
+        // img.thumb_path.split('.')[0].split('_')[1] + 'x' + img.thumb_path.split('.')[0].split('_')[2]
 
         $scope.localChat = function () {
             window.location.hash = "#/chat1?id=" + $scope.otherUserInfo.id + "&head_pic=" + $scope.otherUserInfo.info.head_pic + "&real_name=" + $scope.otherUserInfo.info.real_name + "&sex=" + $scope.otherUserInfo.sex + "&age=" + $scope.otherUserInfo.info.age;
