@@ -163,21 +163,26 @@ define(['app/module', 'app/directive/directiveApi'
         $scope.loadMore = function (top) {
             $scope.dataLoading = true;
             api.list('/wap/site/user-list', $scope.searchForm).success(function (res) {
-                if (res.data.length < 6) {
-                    $scope.pageLast = false;
+                try {
+                    if (res.data.length < 6) {
+                        $scope.pageLast = false;
+                    }
+                    for (var i in res.data) {
+                        res.data[i].info = JSON.parse(res.data[i].info);
+                        res.data[i].auth = JSON.parse(res.data[i].auth);
+                    }
+                    $scope.userList = $scope.userList.concat(res.data);
+                    $scope.dataLoading = false;
+                    $scope.searchForm.pageNum += 1;
+                    //console.log($scope.userList);
+                    if (top) {
+                        $ionicScrollDelegate.$getByHandle('mainScroll').scrollTop();
+                    }
+                } catch (e) {
+                    console.log(e);
+                    $scope.$broadcast('scroll.infiniteScrollComplete');
                 }
-                for (var i in res.data) {
-                    res.data[i].info = JSON.parse(res.data[i].info);
-                    res.data[i].auth = JSON.parse(res.data[i].auth);
-                }
-                $scope.userList = $scope.userList.concat(res.data);
-                $scope.dataLoading = false;
-                $scope.searchForm.pageNum += 1;
-                //console.log($scope.userList);
-                if (top) {
-                    $ionicScrollDelegate.$getByHandle('mainScroll').scrollTop();
-                }
-            }).error(function(data,header,config,status){
+            }).error(function (data, header, config, status) {
                 //处理响应失败
                 alert(data);
             }).finally(function () {
