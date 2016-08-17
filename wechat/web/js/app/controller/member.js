@@ -1012,6 +1012,7 @@ define(['app/module', 'app/directive/directiveApi'
                         img.onload = null;//避免重复加载
                     }
                 }
+                return '800x600';
             }
         }
 
