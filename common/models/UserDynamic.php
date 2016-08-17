@@ -129,7 +129,7 @@ class UserDynamic extends Base
         }
 
         return $handle->select("d.id, i.info , d.pic , d.content , c.content as comment")
-        ->orderBy('c.create_time')
+        ->orderBy('c.create_time desc')
         ->all();
     }
 
