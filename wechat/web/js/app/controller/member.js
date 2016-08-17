@@ -1009,10 +1009,12 @@ define(['app/module', 'app/directive/directiveApi'
                 } else {
                     img.onload = function () {
                         return img.width + 'x' + img.height;
-                        img.onload = null;//避免重复加载
+                        img.onload = null; //避免重复加载
                     }
                 }
-                return '800x600';
+                img.onerror = function(){
+                    return '800x600';
+                }
             }
         }
 
