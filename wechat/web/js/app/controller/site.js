@@ -174,9 +174,9 @@ define(['app/module', 'app/directive/directiveApi'
                 $scope.dataLoading = false;
                 $scope.searchForm.pageNum += 1;
                 //console.log($scope.userList);
-                if (top) {
-                    $ionicScrollDelegate.$getByHandle('mainScroll').scrollTop();
-                }
+                //if (top) {
+                //    $ionicScrollDelegate.$getByHandle('mainScroll').scrollTop();
+                //}
             }).finally(function () {
                 $timeout(function(){
                     $scope.$broadcast('scroll.infiniteScrollComplete');
