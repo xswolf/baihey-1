@@ -92,7 +92,7 @@ define(['app/module', 'app/directive/directiveApi'
             $scope.searchForm = $scope.whereForm;
             $scope.searchForm.pageNum = 1;
             //setSearchCondition($scope.searchForm, $scope.userId);
-            $scope.loadMore(1);
+            $scope.loadMore('search');
         };
 
         //点击搜索
@@ -117,7 +117,7 @@ define(['app/module', 'app/directive/directiveApi'
                         $scope.searchForm.sex = 1;
                         $scope.whereForm.sex = 1;
                         $scope.dataLoading = true;
-                        $scope.loadMore(1);
+                        $scope.loadMore('search');
                         //setSearchCondition($scope.searchForm, $scope.userId);
                     }
                     if (index == 0) {   //只看女
@@ -127,7 +127,7 @@ define(['app/module', 'app/directive/directiveApi'
                         $scope.searchForm.sex = 0;
                         $scope.whereForm.sex = 0;
                         $scope.dataLoading = true;
-                        $scope.loadMore(1);
+                        $scope.loadMore('search');
                         //setSearchCondition($scope.searchForm, $scope.userId);
                     }
                     if (index == 2) {   //高级搜索
@@ -160,7 +160,7 @@ define(['app/module', 'app/directive/directiveApi'
         }
 
         // 加载更多
-        $scope.loadMore = function (top) {
+        $scope.loadMore = function (flag) {
             $scope.dataLoading = true;
             api.list('/wap/site/user-list', $scope.searchForm).success(function (res) {
                 if (res.data.length < 6) {
@@ -174,9 +174,9 @@ define(['app/module', 'app/directive/directiveApi'
                 $scope.dataLoading = false;
                 $scope.searchForm.pageNum += 1;
                 //console.log($scope.userList);
-                //if (top) {
-                //    $ionicScrollDelegate.$getByHandle('mainScroll').scrollTop();
-                //}
+                if (flag == 'search') {
+                    $ionicScrollDelegate.$getByHandle('mainScroll').scrollTop();
+                }
             }).finally(function () {
                 $timeout(function(){
                     $scope.$broadcast('scroll.infiniteScrollComplete');
