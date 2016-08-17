@@ -209,18 +209,23 @@
   overflow: hidden;
 }
 .imgList_con .imgList_handle {
-  padding: 2% 4%;
+  display: block;
+  padding: 10px;
 }
 .imgList_con .imgList_handle .imgItem {
-  width: 24%;
-  height: auto;
-  overflow: hidden;
-  float: left;
-  position: relative;
-  margin-right: 1%;
-  margin-bottom: 1%;
   border-radius: 10%;
   display: block;
+  float: left;
+  height: 120px;
+  margin-bottom: 10px;
+  margin-right: 10px;
+  overflow: hidden;
+  position: relative;
+  vertical-align: middle;
+  width: 23.7%;
+}
+.imgList_con .imgList_handle .imgItem:nth-child(4n+4) {
+  margin-right: 0;
 }
 .imgList_handle .addItem {
   display: table;
