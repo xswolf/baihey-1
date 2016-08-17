@@ -91,7 +91,7 @@
             </a>
 
         </div>
-        <ion-infinite-scroll ng-if="moreDataCanBeLoaded()" on-infinite="loadMore()"></ion-infinite-scroll>
+        <ion-infinite-scroll ng-if="moreDataCanBeLoaded()" on-infinite="loadMore()" immediate-check="true"></ion-infinite-scroll>
 
         <ion-list ng-if="userList.length <= 0  && !dataLoading">
             <ion-item>
