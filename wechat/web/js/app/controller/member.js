@@ -116,7 +116,7 @@ define(['app/module', 'app/directive/directiveApi'
                 fileItem.upload();
             }
 
-            uploader.onProgressItem = function(item, progress){
+            uploader.onProgressItem = function (item, progress) {
                 $scope.showLoading(progress);
             }
 
@@ -748,16 +748,16 @@ define(['app/module', 'app/directive/directiveApi'
         };
 
         // 获取评论总数
-        api.get('/wap/member/comment-num',{}).success(function(res){
+        api.get('/wap/member/comment-num', {}).success(function (res) {
             // 存入Storage
-            ar.setStorage('discoverySum',res.data);
+            ar.setStorage('discoverySum', res.data);
         })
 
 
     }]);
 
     // 发布动态
-    module.controller("member.discovery_add", ['app.serviceApi', '$scope','$rootScope', '$ionicPopup', '$location', '$ionicActionSheet', 'FileUploader', '$ionicLoading','$state', function (api, $scope,$rootScope, $ionicPopup, $location, $ionicActionSheet, FileUploader, $ionicLoading,$state) {
+    module.controller("member.discovery_add", ['app.serviceApi', '$scope', '$rootScope', '$ionicPopup', '$location', '$ionicActionSheet', 'FileUploader', '$ionicLoading', '$state', function (api, $scope, $rootScope, $ionicPopup, $location, $ionicActionSheet, FileUploader, $ionicLoading, $state) {
         var uploader = $scope.uploader = new FileUploader({  // 实例化上传图片插件
             url: '/wap/file/thumb'
         });
@@ -829,7 +829,7 @@ define(['app/module', 'app/directive/directiveApi'
         }
 
         // 删除照片
-        $scope.delImg = function(event,index){
+        $scope.delImg = function (event, index) {
             event.stopPropagation();
             event.preventDefault();
             $scope.imgList.splice(index, 1);
@@ -997,23 +997,23 @@ define(['app/module', 'app/directive/directiveApi'
 
         });
 
-        $scope.getImgSize = function(src){
-            try {
+        $scope.getImgSize = function (src) {
+            var _src = src.replace('thumb', 'picture');
+            if (_src.split('.')[0].split('_')[2]) {
+                return _src.split('.')[0].split('_')[1] + 'x' + _src.split('.')[0].split('_')[2];
+            } else {
                 var img = new Image()
-                img.src = src;
-                if(img.complete){
+                img.src = _src;
+                if (img.complete) {
                     return img.width + 'x' + img.height;
-                }else {
+                } else {
                     img.onload = function () {
                         return img.width + 'x' + img.height;
                         img.onload = null;//避免重复加载
                     }
                 }
-            }catch (e){
-                return '800x600';
             }
         }
-        // img.thumb_path.split('.')[0].split('_')[1] + 'x' + img.thumb_path.split('.')[0].split('_')[2]
 
         $scope.localChat = function () {
             window.location.hash = "#/chat1?id=" + $scope.otherUserInfo.id + "&head_pic=" + $scope.otherUserInfo.info.head_pic + "&real_name=" + $scope.otherUserInfo.info.real_name + "&sex=" + $scope.otherUserInfo.sex + "&age=" + $scope.otherUserInfo.info.age;
