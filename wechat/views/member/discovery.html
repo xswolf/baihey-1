@@ -7,6 +7,9 @@
 
     <ion-content class="com_w_100 bhy discovery bg5">
         <div class="list">
+            <div class="item tac bg5" ng-if="newDiscovery > 0">
+                <a class="newMsg" href="#/discovery_message">{{newDiscovery}}条新评论<i class="ion-ios-arrow-right ml5"></i><i class="ion-ios-arrow-right"></i></a>
+            </div>
             <div class="mt10 item item-thumbnail-left" ng-repeat="dis in discoveryList | filter:indexFilter | limitTo:pageSize">
                 <img class="cp" ng-src="{{dis.head_pic | isNull}}" onerror="this.src='/wechat/web/images/no_img.png'">
                 <h2>

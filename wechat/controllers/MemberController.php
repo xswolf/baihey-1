@@ -48,9 +48,9 @@ class MemberController extends BaseController
         $data = $this->get;
         $data['user'] = $data;
         $data['user_id'] = $user_id;
-        if($data['info']) {
+        if ($data['info']) {
             $data['info'] = json_decode($data['info']);
-            if(is_object($data['info'])) {
+            if (is_object($data['info'])) {
                 $data['info'] = get_object_vars($data['info']);
                 $data['info']['age'] = (int)$data['info']['age'];
             }
@@ -58,9 +58,9 @@ class MemberController extends BaseController
             $data['info'] = [];
         }
 
-        if(User::getInstance()->editUser($data)){
+        if (User::getInstance()->editUser($data)) {
             $this->renderAjax(['status' => 1, 'msg' => '修改成功']);
-        }else{
+        } else {
             $this->renderAjax(['status' => 0, 'msg' => '修改失败']);
         }
     }
@@ -94,14 +94,14 @@ class MemberController extends BaseController
     {
         $user_id = Cookie::getInstance()->getCookie('bhy_id')->value;
         $list = [];
-        foreach($this->get as $k => $v) {
+        foreach ($this->get as $k => $v) {
             $arr = json_decode($v);
             $thuArr = explode('/', $arr->thumb_path);
             $picArr = explode('/', $arr->pic_path);
             $data[$k]['type'] = $arr->type;
             $data[$k]['pic_path'] = str_replace('thumb', 'picture', $arr->thumb_path);
             $data[$k]['thumb_path'] = $arr->thumb_path;
-            if($thuArr[5] != $picArr[5]) {
+            if ($thuArr[5] != $picArr[5]) {
                 // 删除原有图片
                 $pic_path = __DIR__ . "/../.." . $arr->pic_path;
                 if (is_file($pic_path) && unlink($pic_path)) {
@@ -111,7 +111,7 @@ class MemberController extends BaseController
             }
             $list = UserPhoto::getInstance()->savePhoto($data, $user_id);
         }
-            $this->renderAjax(['status' => 1, 'data' => $list]);
+        $this->renderAjax(['status' => 1, 'data' => $list]);
     }
 
     /**
@@ -121,9 +121,9 @@ class MemberController extends BaseController
     {
         $user_id = Cookie::getInstance()->getCookie('bhy_id')->value;
         $list = UserPhoto::getInstance()->setHeadPic($user_id, $this->get);
-        if($list){
+        if ($list) {
             $this->renderAjax(['status' => 1, 'data' => $list]);
-        }else{
+        } else {
             $this->renderAjax(['status' => 0, 'msg' => '设置头像失败']);
         }
 
@@ -238,21 +238,22 @@ class MemberController extends BaseController
     public function actionCommentNum()
     {
         $userId = Cookie::getInstance()->getCookie('bhy_id')->value;
-        $num    = UserDynamic::getInstance()->getCommentByUserId($userId);
+        $num = UserDynamic::getInstance()->getCommentByUserId($userId);
         $this->renderAjax(['status' => 1, 'data' => $num]);
     }
 
     /**
      * 获取评论列表
      */
-    public function actionCommentList(){
+    public function actionCommentList()
+    {
 
-        $userId     = Cookie::getInstance()->getCookie('bhy_id')->value;
+        $userId = Cookie::getInstance()->getCookie('bhy_id')->value;
         $createTime = \Yii::$app->request->get('create_time');
-        if ($list = UserDynamic::getInstance()->getComment($userId , $createTime)){
-            return $this->renderAjax(['status' => 1, 'data' => $list , 'message'=>'成功']);
+        if ($list = UserDynamic::getInstance()->getComment($userId, $createTime)) {
+            return $this->renderAjax(['status' => 1, 'data' => $list, 'message' => '成功']);
         }
-        return $this->renderAjax(['status' => 0, 'data' => '' , 'message'=>'失败']);
+        return $this->renderAjax(['status' => 0, 'data' => '', 'message' => '失败']);
     }
 
     /**
@@ -277,7 +278,7 @@ class MemberController extends BaseController
     public function actionAddUserDynamic()
     {
         $user_id = Cookie::getInstance()->getCookie('bhy_id')->value;
-        if($did = UserDynamic::getInstance()->addDynamic($user_id, $this->get)) {
+        if ($did = UserDynamic::getInstance()->addDynamic($user_id, $this->get)) {
             $data = UserDynamic::getInstance()->getDynamicById($did);
             $this->renderAjax(['status' => 1, 'data' => $data, 'msg' => '发布成功']);
         } else {
@@ -294,7 +295,7 @@ class MemberController extends BaseController
 
         $data = UserDynamic::getInstance()->getDynamicById($this->get['id']);
         $data['comment'] = User::getInstance()->getCommentById($this->get['id']);
-        $this->renderAjax(['status' => 1, 'data' => $data]);
+        $this->renderAjax(['status' => 1, 'data' => $data, 'commentCount' => count($data['comment'])]);
     }
 
     // 删除动态
@@ -487,20 +488,20 @@ class MemberController extends BaseController
         $user_id = Cookie::getInstance()->getCookie('bhy_id')->value;
         $withdrawInfo = \common\models\User::getInstance()->getCashInfo(null, $user_id) ? \common\models\User::getInstance()->getCashInfo(null, $user_id) : [];
         $briberyInfoInfo = \common\models\User::getInstance()->getBriberyInfo($user_id) ? \common\models\User::getInstance()->getBriberyInfo($user_id) : [];
-        foreach($withdrawInfo as $v){
+        foreach ($withdrawInfo as $v) {
             array_unshift($v, "tx");
         }
 
         $newArr = ArrayHelper::merge($withdrawInfo, $briberyInfoInfo);
         $lastArr = [];
-            foreach ($newArr as $k => $v) {
-                $lastArr[date('Y年m月',$v['create_time'])]['date'] = date('Y年m月',$v['create_time']);
-                $lastArr[date('Y年m月',$v['create_time'])]['items'][] = $v;
-            }
-        if(count($lastArr) < 1){
-            $this->renderAjax(['status'=> 0, 'msg'=>'没有数据']);
-        }else{
-            $this->renderAjax(['status'=> 1, 'data'=>$lastArr]);
+        foreach ($newArr as $k => $v) {
+            $lastArr[date('Y年m月', $v['create_time'])]['date'] = date('Y年m月', $v['create_time']);
+            $lastArr[date('Y年m月', $v['create_time'])]['items'][] = $v;
+        }
+        if (count($lastArr) < 1) {
+            $this->renderAjax(['status' => 0, 'msg' => '没有数据']);
+        } else {
+            $this->renderAjax(['status' => 1, 'data' => $lastArr]);
         }
 
     }
@@ -540,15 +541,15 @@ class MemberController extends BaseController
     {
         $user_id = isset($this->get['user_id']) ? $this->get['user_id'] : Cookie::getInstance()->getCookie('bhy_id')->value;
         $userInfo = UserInformation::getInstance()->getUserField($user_id, ['honesty_value']);
-        if($userInfo['honesty_value'] & 1) {
+        if ($userInfo['honesty_value'] & 1) {
             $sfz = 1;
-        } else{
+        } else {
             $sfz = UserPhoto::getInstance()->getPhotoList($user_id, 23, 2);
-            if(count($sfz) == 2) {
-                if($sfz[0]['is_check'] == 1 && $sfz[1]['is_check'] == 1) {
+            if (count($sfz) == 2) {
+                if ($sfz[0]['is_check'] == 1 && $sfz[1]['is_check'] == 1) {
                     $sfz = 1;
                     UserInformation::getInstance()->updateUserInfo($user_id, ['honesty_value' => ($userInfo['honesty_value'] + 1)]);
-                } elseif($sfz[0]['is_check'] == 0 ||  $sfz[1]['is_check'] == 0) {
+                } elseif ($sfz[0]['is_check'] == 0 || $sfz[1]['is_check'] == 0) {
                     $sfz = 0;
                 } else {
                     $sfz = 2;
@@ -557,7 +558,7 @@ class MemberController extends BaseController
                 $sfz = '';
             }
         }
-        if(isset($this->get['user_id'])) {
+        if (isset($this->get['user_id'])) {
             $this->renderAjax(['status' => 1, 'sfz' => $sfz, 'msg' => '获取成功']);
         } else {
             $marr = $userInfo['honesty_value'] & 2 ? 1 : $this->checkPhoto($user_id, 5, $userInfo['honesty_value']);
@@ -569,13 +570,13 @@ class MemberController extends BaseController
 
     public function checkPhoto($user_id, $type, $honesty_value)
     {
-        if($data = UserPhoto::getInstance()->getPhotoList($user_id, $type, 1)) {
+        if ($data = UserPhoto::getInstance()->getPhotoList($user_id, $type, 1)) {
             if ($data[0]['is_check'] == 1) {
-                if($type == 5) {
+                if ($type == 5) {
                     $honesty_value = $honesty_value + 2;
-                } elseif($type == 4) {
+                } elseif ($type == 4) {
                     $honesty_value = $honesty_value + 4;
-                } elseif($type == 6) {
+                } elseif ($type == 6) {
                     $honesty_value = $honesty_value + 8;
                 }
                 UserInformation::getInstance()->updateUserInfo($user_id, ['honesty_value' => $honesty_value]);

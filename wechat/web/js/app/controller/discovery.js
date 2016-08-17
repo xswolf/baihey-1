@@ -187,7 +187,7 @@ define(['app/module', 'app/directive/directiveApi'
         $scope.formData = {};
         $scope.formData.private = false; // 私密评论默认未选中
         $scope.isMore = true;
-        $scope.pageSize = 5;
+        $scope.pageSize = 20;
         $scope.commentList = [];
         $scope.isShowCommentList = true;
         $scope.jump = function (id) {
@@ -208,6 +208,11 @@ define(['app/module', 'app/directive/directiveApi'
         }
         //用户已屏蔽的动态id，从localStorage获取
         $scope.display = ar.getStorage('display') ? ar.getStorage('display') : [];
+
+        $scope.showComment = function(){
+            $scope.isShowCommentList = !$scope.isShowCommentList;
+            $ionicScrollDelegate.$getByHandle('discoveryMain').resize();
+        }
 
         var userInfo = ar.getStorage('userInfo');
         var info = JSON.parse(userInfo.info);
@@ -325,11 +330,14 @@ define(['app/module', 'app/directive/directiveApi'
 
         // 加载更多
         $scope.loadMore = function () {
-            if ($scope.pageSize > $scope.commentList.length) {
-                $scope.isMore = false;
-            }
-            $scope.pageSize += 5;
-            $scope.$broadcast('scroll.infiniteScrollComplete');
+            api.list('/wap/member/get-dynamic', {id: $location.$$search.id}).success(function (res) {
+                if ($scope.pageSize > res.commentCount) {
+                    $scope.isMore = false;
+                }
+                $scope.pageSize += 20;
+            }).finally(function(){
+                $scope.$broadcast('scroll.infiniteScrollComplete');
+            })
         }
 
         //是否还有更多
@@ -363,6 +371,7 @@ define(['app/module', 'app/directive/directiveApi'
         ar.setStorage('discoveryTime',ar.timeStamp());
         // 获取评论总数
         api.get('/wap/member/comment-num',{}).success(function(res){
+            $scope.discoverySum = res.data;
             // 存入Storage
             ar.setStorage('discoverySum',res.data);
         })
