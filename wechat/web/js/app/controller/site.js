@@ -177,9 +177,13 @@ define(['app/module', 'app/directive/directiveApi'
                 if (top) {
                     $ionicScrollDelegate.$getByHandle('mainScroll').scrollTop();
                 }
+            }).error(function(data,header,config,status){
+                //处理响应失败
+                alert(data);
             }).finally(function () {
                 $scope.$broadcast('scroll.infiniteScrollComplete');
             });
+
         }
 
         // 是否还有更多
@@ -480,7 +484,7 @@ define(['app/module', 'app/directive/directiveApi'
                 }
                 $scope.pageSize += 5;
                 ar.initPhotoSwipeFromDOM('.bhy-gallery', $scope);
-            }).finally(function(){
+            }).finally(function () {
                 $scope.$broadcast('scroll.infiniteScrollComplete');
             })
         }
