@@ -1003,7 +1003,7 @@ define(['app/module', 'app/directive/directiveApi'
                 return _src.split('.')[0].split('_')[1] + 'x' + _src.split('.')[0].split('_')[2];
             } else {
                 var img = new Image()
-                img.src = _src;
+                img.src = src;
                 if (img.complete) {
                     return img.width + 'x' + img.height;
                 } else {
@@ -1012,7 +1012,7 @@ define(['app/module', 'app/directive/directiveApi'
                         img.onload = null; //避免重复加载
                     }
                 }
-                img.onerror = function(){
+                img.onerror = function () {
                     return '800x600';
                 }
             }
