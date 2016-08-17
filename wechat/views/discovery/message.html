@@ -5,7 +5,7 @@
     </ion-header-bar>
     <ion-content>
         <div class="list">
-            <a class="item item-avatar" ng-repeat="dis in disList" href="#">
+            <a class="item item-avatar" ng-repeat="dis in disList" href="#/discovery_single?id={{dis.id}}">
                 <img src="{{dis.info.head_pic}}" class="br0">
                 <div class="fl w45">
                     <p class="wsn">{{dis.comment}}</p>
@@ -17,8 +17,8 @@
                     </p>
                 </div>
             </a>
-            <ion-item class="tac" ng-click="loadData()">
-                <p>查看更早的消息</p>
+            <ion-item class="tac" ng-show="discoverySum > disList.length" ng-click="loadData()">
+                <p>查看30天内的评论</p>
             </ion-item>
         </div>
     </ion-content>

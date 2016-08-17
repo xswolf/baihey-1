@@ -6,7 +6,7 @@
             评论
         </title>
     </ion-header-bar>
-    <ion-content class="bhy com_w_100 discovery">
+    <ion-content class="bhy com_w_100 discovery" delegate-handle="discoveryMain">
         <div class="item item-thumbnail-left">
             <img class="cp" ng-if="dis.head_status == 1" ng-src="{{dis.head_pic | isNull}}" ng-click="jump(dis.user_id)" onerror="this.src='/wechat/web/images/no_img.png'">
             <img class="cp" ng-if="dis.head_status != 1" ng-src="/wechat/web/images/no_img.png" ng-click="jump(dis.user_id)">
@@ -36,7 +36,7 @@
                     <i class="ion-thumbsup fs20 vam"></i>
                     <span class="vam likeNumber dib">{{dis.like_num}}</span>
                 </span>
-                <span class="fl ml10 cp" ng-class="{true:'positive',false:'cor53'}[isShowCommentList]" ng-click="isShowCommentList = !isShowCommentList">
+                <span class="fl ml10 cp" ng-class="{true:'positive',false:'cor53'}[isShowCommentList]" ng-click="showComment()">
                     <i class="ion-chatbubble-working fs20 vam"></i>
                     <span class="vam">{{dis.comment_num}}</span>
                 </span>
