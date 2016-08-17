@@ -131,7 +131,7 @@ define(['app/module', 'app/directive/directiveApi'
                         //setSearchCondition($scope.searchForm, $scope.userId);
                     }
                     if (index == 2) {   //高级搜索
-                        if($scope.moreSearchModal.show()){
+                        if ($scope.moreSearchModal.show()) {
                             $ionicScrollDelegate.$getByHandle('searchScroll').scrollTop();
                         }
                     }
@@ -174,7 +174,9 @@ define(['app/module', 'app/directive/directiveApi'
                 $scope.dataLoading = false;
                 $scope.searchForm.pageNum += 1;
                 //console.log($scope.userList);
-                if(top) $ionicScrollDelegate.$getByHandle('mainScroll').scrollTop();
+                if (top) {
+                    $ionicScrollDelegate.$getByHandle('mainScroll').scrollTop();
+                }
             }).finally(function () {
                 $scope.$broadcast('scroll.infiniteScrollComplete');
             });
@@ -391,7 +393,7 @@ define(['app/module', 'app/directive/directiveApi'
             $scope.user.username = res.data[0].real_name;
             $scope.user.age = res.data[0].age;
             $scope.user.sex = res.data[0].sex;
-            ar.initPhotoSwipeFromDOM('.bhy-gallery',$scope);
+            ar.initPhotoSwipeFromDOM('.bhy-gallery', $scope);
         })
 
         $scope.jump = function (url) {
@@ -472,19 +474,21 @@ define(['app/module', 'app/directive/directiveApi'
 
         // 加载更多
         $scope.loadMore = function () {
-            if ($scope.pageSize > $scope.discoveryList.length) {
-                $scope.isMore = false;
-            }
-            $scope.pageSize += 5;
-            $scope.$broadcast('scroll.infiniteScrollComplete');
-            ar.initPhotoSwipeFromDOM('.bhy-gallery',$scope);
+            api.get('/wap/member/get-dynamic-list', {user_id: $scope.user_id, limit: 10000}).success(function (res) {
+                if ($scope.pageSize > res.data.length) {
+                    $scope.isMore = false;
+                }
+                $scope.pageSize += 5;
+                ar.initPhotoSwipeFromDOM('.bhy-gallery', $scope);
+            }).finally(function(){
+                $scope.$broadcast('scroll.infiniteScrollComplete');
+            })
         }
 
         // 是否还有更多
         $scope.moreDataCanBeLoaded = function () {
             return $scope.isMore;
         }
-
 
     }]);
 })
