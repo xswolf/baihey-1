@@ -242,7 +242,7 @@ class User extends \common\models\User
             ->where($condition)
             ->from($this->tablePrefix.'user' . ' u')
             ->innerJoin($joinTable . ' i', "u.id=i.user_id")
-            ->orderBy('u.id desc, u.last_login_time desc')
+            ->orderBy('u.last_login_time desc')
             ->limit($pageSize)
             ->offset($offset);
         if(!isset($where['where']['u.id'])) {
