@@ -46,7 +46,7 @@
                 </span>
             </div>
         </div>
-        <article class="am-comment padding" ng-show="isShowCommentList" ng-repeat="comment in commentList | limitTo:pageSize">
+        <article class="am-comment padding" ng-show="isShowCommentList" ng-repeat="comment in commentList | limitTo:pageSize | orderBy:'create_time':true">
             <a ng-click="jump({{comment.user_id}})">
                 <img ng-src="{{comment.headPic | isNull}}" onerror="this.src='/wechat/web/images/no_img.png'" alt="" class="am-comment-avatar" width="48" height="48"/>
             </a>

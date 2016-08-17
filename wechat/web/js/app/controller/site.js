@@ -92,7 +92,7 @@ define(['app/module', 'app/directive/directiveApi'
             $scope.searchForm = $scope.whereForm;
             $scope.searchForm.pageNum = 1;
             //setSearchCondition($scope.searchForm, $scope.userId);
-            $scope.loadMore(1);
+            $scope.loadMore('search');
         };
 
         //点击搜索
@@ -117,7 +117,7 @@ define(['app/module', 'app/directive/directiveApi'
                         $scope.searchForm.sex = 1;
                         $scope.whereForm.sex = 1;
                         $scope.dataLoading = true;
-                        $scope.loadMore(1);
+                        $scope.loadMore('search');
                         //setSearchCondition($scope.searchForm, $scope.userId);
                     }
                     if (index == 0) {   //只看女
@@ -127,11 +127,11 @@ define(['app/module', 'app/directive/directiveApi'
                         $scope.searchForm.sex = 0;
                         $scope.whereForm.sex = 0;
                         $scope.dataLoading = true;
-                        $scope.loadMore(1);
+                        $scope.loadMore('search');
                         //setSearchCondition($scope.searchForm, $scope.userId);
                     }
                     if (index == 2) {   //高级搜索
-                        if($scope.moreSearchModal.show()){
+                        if ($scope.moreSearchModal.show()) {
                             $ionicScrollDelegate.$getByHandle('searchScroll').scrollTop();
                         }
                     }
@@ -160,7 +160,7 @@ define(['app/module', 'app/directive/directiveApi'
         }
 
         // 加载更多
-        $scope.loadMore = function (top) {
+        $scope.loadMore = function (flag) {
             $scope.dataLoading = true;
             api.list('/wap/site/user-list', $scope.searchForm).success(function (res) {
                 if (res.data.length < 6) {
@@ -174,10 +174,15 @@ define(['app/module', 'app/directive/directiveApi'
                 $scope.dataLoading = false;
                 $scope.searchForm.pageNum += 1;
                 //console.log($scope.userList);
-                if(top) $ionicScrollDelegate.$getByHandle('mainScroll').scrollTop();
+                if (flag == 'search') {
+                    $ionicScrollDelegate.$getByHandle('mainScroll').scrollTop();
+                }
             }).finally(function () {
-                $scope.$broadcast('scroll.infiniteScrollComplete');
+                $timeout(function(){
+                    $scope.$broadcast('scroll.infiniteScrollComplete');
+                },800);
             });
+
         }
 
         // 是否还有更多
@@ -391,7 +396,7 @@ define(['app/module', 'app/directive/directiveApi'
             $scope.user.username = res.data[0].real_name;
             $scope.user.age = res.data[0].age;
             $scope.user.sex = res.data[0].sex;
-            ar.initPhotoSwipeFromDOM('.bhy-gallery',$scope);
+            ar.initPhotoSwipeFromDOM('.bhy-gallery', $scope);
         })
 
         $scope.jump = function (url) {
@@ -472,19 +477,21 @@ define(['app/module', 'app/directive/directiveApi'
 
         // 加载更多
         $scope.loadMore = function () {
-            if ($scope.pageSize > $scope.discoveryList.length) {
-                $scope.isMore = false;
-            }
-            $scope.pageSize += 5;
-            $scope.$broadcast('scroll.infiniteScrollComplete');
-            ar.initPhotoSwipeFromDOM('.bhy-gallery',$scope);
+            api.get('/wap/member/get-dynamic-list', {user_id: $scope.user_id, limit: 10000}).success(function (res) {
+                if ($scope.pageSize > res.data.length) {
+                    $scope.isMore = false;
+                }
+                $scope.pageSize += 5;
+                ar.initPhotoSwipeFromDOM('.bhy-gallery', $scope);
+            }).finally(function () {
+                $scope.$broadcast('scroll.infiniteScrollComplete');
+            })
         }
 
         // 是否还有更多
         $scope.moreDataCanBeLoaded = function () {
             return $scope.isMore;
         }
-
 
     }]);
 })
