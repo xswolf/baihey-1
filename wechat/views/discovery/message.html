@@ -1,0 +1,25 @@
+<ion-view>
+    <link href="/wechat/web/css/discovery.css" rel="stylesheet">
+    <ion-header-bar align-title="center" >
+        <h1 class="title">新消息</h1>
+    </ion-header-bar>
+    <ion-content>
+        <div class="list">
+            <a class="item item-avatar" ng-repeat="dis in disList" href="#">
+                <img src="{{dis.info.head_pic}}" class="br0">
+                <div class="fl w45">
+                    <p class="wsn">{{dis.comment}}</p>
+                </div>
+                <div class="fr w45">
+                    <p class="wsn txt">{{dis.content | cut:true:20:' ...'}}</p>
+                    <p class="wsn" ng-if="dis.pic.length > 0">
+                        <img ng-repeat="img in dis.pic" src="{{img.thumb_path}}" width="30">
+                    </p>
+                </div>
+            </a>
+            <ion-item class="tac" ng-click="loadData()">
+                <p>查看更早的消息</p>
+            </ion-item>
+        </div>
+    </ion-content>
+</ion-view>
