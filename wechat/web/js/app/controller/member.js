@@ -50,24 +50,11 @@ define(['app/module', 'app/directive/directiveApi'
 
         $scope.$on('$ionicView.beforeEnter', function (event, data) {
             // 查询关注自己的人数量
-            api.list('/wap/follow/follow-list', {type: 'followed'}).success(function (res) {
-                //for (var i in res.data) {
-                //    res.data[i].info = JSON.parse(res.data[i].info);
-                //    res.data[i].auth = JSON.parse(res.data[i].auth);
-                //}
-                $scope.followedNumber = res.data.length;
+            api.list('/wap/follow/follow-list', {type: ''}).success(function (res) {
+                $scope.followNumber = res.data;
             });
 
-            // 查询我关注的人数量
-            api.list('/wap/follow/follow-list', {type: 'follow'}).success(function (res) {
-                //for (var i in res.data) {
-                //    res.data[i].info = JSON.parse(res.data[i].info);
-                //    res.data[i].auth = JSON.parse(res.data[i].auth);
-                //}
-                $scope.followNumber = res.data.length;
-            });
         })
-
 
         // 设置新关注的人已看
         api.list('/wap/follow/set-checked', {user_id: $scope.userInfo.user_id}).success(function (res) {
@@ -760,11 +747,17 @@ define(['app/module', 'app/directive/directiveApi'
             return $scope.isMore;
         };
 
+        // 获取评论总数
+        api.get('/wap/member/comment-num',{}).success(function(res){
+            // 存入Storage
+            ar.setStorage('discoverySum',res.data);
+        })
+
 
     }]);
 
     // 发布动态
-    module.controller("member.discovery_add", ['app.serviceApi', '$scope', '$ionicPopup', '$location', '$ionicActionSheet', 'FileUploader', '$ionicLoading', function (api, $scope, $ionicPopup, $location, $ionicActionSheet, FileUploader, $ionicLoading) {
+    module.controller("member.discovery_add", ['app.serviceApi', '$scope','$rootScope', '$ionicPopup', '$location', '$ionicActionSheet', 'FileUploader', '$ionicLoading','$state', function (api, $scope,$rootScope, $ionicPopup, $location, $ionicActionSheet, FileUploader, $ionicLoading,$state) {
         var uploader = $scope.uploader = new FileUploader({  // 实例化上传图片插件
             url: '/wap/file/thumb'
         });
@@ -835,6 +828,12 @@ define(['app/module', 'app/directive/directiveApi'
             };
         }
 
+        // 删除照片
+        $scope.delImg = function(event,index){
+            event.stopPropagation();
+            event.preventDefault();
+            $scope.imgList.splice(index, 1);
+        }
         // 发布动态
         $scope.saveData = function () {
             if (!ar.trim($scope.formData.content)) {
@@ -850,10 +849,12 @@ define(['app/module', 'app/directive/directiveApi'
             api.save('/wap/member/add-user-dynamic', $scope.formData).success(function (res) {
                 ar.saveDataAlert($ionicPopup, res.msg);
                 if (res.status) {
-                    if ($location.$$search.tempUrl != '') {
+                    if ($location.$$search.tempUrl) {
                         $location.url($location.$$search.tempUrl);
+                        console.log($location.$$search.tempUrl);
                     } else {
                         $location.url('/discovery');
+                        $rootScope.$broadcast('reload', 1);
                     }
                 } else {
                     window.location.reload();

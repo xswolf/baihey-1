@@ -63,7 +63,8 @@
                 </div>
                 <div class="menu_arrow">
                     <span ng-if="discoveryNumber < 1" class="cor4 fs14 mr10">发布第一条个人动态</span>
-                    <i class="ion-ios-arrow-right vam"></i>
+                    <i ng-if="newDiscovery < 1" class="ion-ios-arrow-right vam"></i>
+                    <span ng-if="newDiscovery > 0" class="badge badge-assertive vam r15">{{newDiscovery}}</span>
                 </div>
             </ion-item>
             <ion-item class="follow_info" href="#/member/follow">
@@ -74,8 +75,8 @@
                     <p>关注的人</p>
                 </div>
                 <div class="menu_arrow">
-                    <span class="badge badge-assertive vam r15">{{followedNumber+followNumber}}</span>
-                    <!--<i class="ion-ios-arrow-right vam"></i>-->
+                    <span class="cor4 fs14 mr10">{{followNumber}}<span class="assertive" ng-if="newFollowNumber && newFollowNumber > 0">+{{newFollowNumber}}</span></span>
+                    <i class="ion-ios-arrow-right vam"></i>
                 </div>
             </ion-item>
             <!--<ion-item class="engagements_info" href="#/member/rendezvous">
@@ -199,7 +200,9 @@
             <p>个人</p>
         </a>
         <a class="menuBtn" href="/wap/site/main#/discovery">
-            <i class="icon-new-menu-eye"></i>
+            <i class="icon-new-menu-eye">
+                <span ng-if="newDiscovery > 0" class="msg_number new"></span>
+            </i>
             <p>发现</p>
         </a>
         <!--<a class="menuBtn" href="/wap/site/main#/rendezvous">

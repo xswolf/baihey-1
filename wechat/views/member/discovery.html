@@ -22,7 +22,7 @@
                     <span class="identity diamond" ng-if="dis.level == 3">钻石</span>
                     <span ng-if="dis.report_flag == 1" class="identity assertive-bg">被多次举报</span>
                 </p>
-                <p class="wsn">{{dis.content | textOverflow:300:'...'}}</p>
+                <p class="wsn">{{dis.content | cut:true:100:' ...'}}</p>
                 <div class="dis_gallery bhy-gallery clearfix">
                     <a ng-repeat="img in dis.imgList | limitTo:6" ng-href="{{img.thumb_path | picture}}" data-size="{{img.thumb_path.split('.')[0].split('_')[1] + 'x' + img.thumb_path.split('.')[0].split('_')[2]}}">
                         <img class="w100" ng-src="{{img.thumb_path}}">
@@ -39,8 +39,8 @@
                         <span class="vam">{{dis.comment_num}}</span>
                     </span>
                     <span ng-if="dis.auth != 1 && dis.user_id == userInfo.user_id" class="fl ml20 pt2 cp ion-locked fl" ng-class="{2:'energized',3:'assertive'}[dis.auth]"></span>
-                    <span class="fr cp cor53" ng-click="more(dis.id,$index)">
-                        <i class="ion-more fs20 vam"></i>
+                    <span class="fr cp" ng-click="more(dis.id,$index)">
+                        <i class="ion-more fs22 vam"></i>
                     </span>
                 </div>
                 <div class="disabled_tip" ng-if="dis.fid > 0">

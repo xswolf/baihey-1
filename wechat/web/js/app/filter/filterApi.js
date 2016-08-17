@@ -561,15 +561,24 @@ define(['app/module'], function (module) {
     /**
      * 文字内容超出指定字数时，超出部分用指定字符代替
      */
-    module.filter('textOverflow', function () {
-        return function (value, number, separator) {
-            if (value) {
-                if (value.toString().length > number) {
-                    return value.substring(0, Math.floor(number) - 1) + separator;
+    module.filter('cut', function () {
+        return function (value, wordwise, max, tail) {
+            if (!value) return '';
+
+            max = parseInt(max, 10);
+            if (!max) return value;
+            if (value.length <= max) return value;
+
+            value = value.substr(0, max);
+            if (wordwise) {
+                var lastspace = value.lastIndexOf(' ');
+                if (lastspace != -1) {
+                    value = value.substr(0, lastspace);
                 }
             }
-            return value;
-        }
+
+            return value + (tail || ' …');
+        };
     })
 
     /**

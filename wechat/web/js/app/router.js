@@ -40,9 +40,8 @@ define(["app/module", 'app/service/serviceApi'],
             }
 
 
-
             var userId = ar.getCookie('bhy_user_id');
-            if (userId > 0 ) {
+            if (userId > 0) {
                 messageList();
                 msgNumber(userId);
                 requirejs(['plugin/socket/socket.io.1.4.0'], function (socket) {
@@ -55,37 +54,39 @@ define(["app/module", 'app/service/serviceApi'],
                     })
 
                 })
+
             }
 
-            // 查询是否有新的用户关注自己   TODO
-            $rootScope.newFollow = false;
-            if(userId != null) {
-                api.get('/wap/follow/is-new-follow', {user_id: userId}).success(function (res) {
-                    $rootScope.newFollow = res.status;
-                })
-            }
 
-            $rootScope.$on('$stateChangeStart', function (evt, next) {
-
-                // 判断用户是否登陆 只判断一次，减少http请求
-                if ($location.$$url != '/index' && $rootScope.login_status != 1) { // 首页和欢迎页不判断
-                    api.getLoginStatus().success(function (res) {
-                        if (!res.status) {
-                            location.href = '/wap/user/login';
-                            return false;
-                        }
-                        $rootScope.login_status = 1
-                    })
-                }
-
-
-            });
             // 页面开始加载
             $rootScope
                 .$on('$stateChangeStart',
                     function (event, toState, toParams, fromState, fromParams) {
                         if (toState.url != '/index') {
                             $ionicLoading.show();
+                            api.getLoginStatus().success(function (res) {
+                                if (!res.status) {
+                                    location.href = '/wap/user/login';
+                                    return false;
+                                }
+                            })
+
+                            // 查询是否有新的用户关注自己
+                            $rootScope.newFollow = false;
+                            $rootScope.newFollowNumber = 0;
+                            api.get('/wap/follow/is-new-follow', {user_id: userId}).success(function (res) {
+                                $rootScope.newFollow = res.status;
+                                $rootScope.newFollowNumber = res.data;
+                            })
+
+                            // 获取评论总数
+                            $rootScope.newDiscovery = 0;
+                            api.get('/wap/member/comment-num', {}).success(function (res) {
+                                var discoverySum = ar.getStorage('discoverySum');
+                                if (res.data > discoverySum) {
+                                    $rootScope.newDiscovery = res.data - discoverySum;
+                                }
+                            })
                         }
                     });
             // 页面加载成功
@@ -251,6 +252,7 @@ define(["app/module", 'app/service/serviceApi'],
 
                     .state('discovery', {       // 发现
                         url: "/discovery",
+                        cache: true,
                         templateUrl: "/wechat/views/discovery/index.html",
                         controller: 'discovery.index',
                         resolve: {
@@ -262,6 +264,12 @@ define(["app/module", 'app/service/serviceApi'],
                                 });
                             }
                         }
+                    })
+                    .state('discovery_message', {       // 发现
+                        url: "/discovery_message",
+                        cache: true,
+                        templateUrl: "/wechat/views/discovery/message.html",
+                        controller: 'discovery.message'
                     })
                     .state('discovery_single', {       // 发现-评论
                         cache: false,
@@ -296,14 +304,22 @@ define(["app/module", 'app/service/serviceApi'],
                     });
                 $urlRouterProvider.otherwise("/index");
             }])
-            .controller('main', ['$scope', '$location', 'app.serviceApi', '$ionicLoading', '$ionicPopup','$rootScope', function ($scope, $location, api, $ionicLoading, $ionicPopup,$rootScope) {
+            .controller('main', ['$scope', '$location', 'app.serviceApi', '$ionicLoading', '$ionicPopup', '$rootScope', function ($scope, $location, api, $ionicLoading, $ionicPopup, $rootScope) {
 
-                $rootScope.$on('msgNumber' , function () {
+                $rootScope.$on('msgNumber', function () {
                     $scope.msgNumber = $rootScope.msgNumber;
                 })
 
-                $rootScope.$on('newFollow' , function () {
+                $rootScope.$on('newFollow', function () {
                     $scope.newFollow = $rootScope.newFollow;
+                })
+
+                $rootScope.$on('newFollowNumber', function () {
+                    $scope.newFollowNumber = $rootScope.newFollowNumber;
+                })
+
+                $rootScope.$on('newDiscovery', function () {
+                    $scope.newDiscovery = $rootScope.newDiscovery;
                 })
 
                 $scope.upUserStorage = function (name, value, type) {
@@ -333,14 +349,14 @@ define(["app/module", 'app/service/serviceApi'],
                 }
 
                 /*// 拉黑等信息
-                $scope.authDataFilter = authData() ? authData() : [];
-                function authData(){
-                    var data = [];
-                    api.list('/wap/user/index-is-show-data', []).success(function (res) {
-                        data = res.data;
-                    });
-                    return data;
-                }*/
+                 $scope.authDataFilter = authData() ? authData() : [];
+                 function authData(){
+                 var data = [];
+                 api.list('/wap/user/index-is-show-data', []).success(function (res) {
+                 data = res.data;
+                 });
+                 return data;
+                 }*/
 
 
                 // 设置用户信息跳转至资料页
@@ -357,7 +373,7 @@ define(["app/module", 'app/service/serviceApi'],
                     }
                 }
 
-                if(ar.getCookie('bhy_user_id')) {
+                if (ar.getCookie('bhy_user_id')) {
                     // 身份证认证
                     api.list("/wap/member/honesty-photo", []).success(function (res) {
                         $scope.sfzCheck = res.sfz;
@@ -383,7 +399,7 @@ define(["app/module", 'app/service/serviceApi'],
                         });
                     }
                 } else {
-                    if(ar.getCookie('wx_login') == 'out') {
+                    if (ar.getCookie('wx_login') == 'out') {
                         ar.saveDataAlert($ionicPopup, '您的账号异常，已经被限制登录！');
                         ar.delCookie('wx_login');
                     }
@@ -446,8 +462,8 @@ define(["app/module", 'app/service/serviceApi'],
                     uploader.filters.push({
                         name: 'file-size-Res',
                         fn: function (item) {
-                            if(item.size > 8388608){
-                                ar.saveDataAlert($ionicPopup,'请选择小于8MB的图片！')
+                            if (item.size > 8388608) {
+                                ar.saveDataAlert($ionicPopup, '请选择小于8MB的图片！')
                                 return false;
                             }
                             return true;

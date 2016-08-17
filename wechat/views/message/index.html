@@ -72,7 +72,9 @@
             <p>个人</p>
         </a>
         <a class="menuBtn" href="/wap/site/main#/discovery">
-            <i class="icon-new-menu-eye"></i>
+            <i class="icon-new-menu-eye">
+                <span ng-if="newDiscovery > 0" class="msg_number new"></span>
+            </i>
             <p>发现</p>
         </a>
         <!--<a class="menuBtn" href="/wap/site/main#/rendezvous">
