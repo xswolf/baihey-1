@@ -62,7 +62,7 @@
                 </header>
 
                 <div class="am-comment-bd">
-                    {{comment.private == 1 && comment.user_id != userInfo.user_id && dis.user_id  != userInfo.user_id ? '' : comment.content}}
+                    {{comment.private == 1 && comment.user_id != userInfo.user_id && dis.user_id  != userInfo.user_id ? '私密评论，请勿偷看' : comment.content}}
                 </div>
             </div>
         </article>
