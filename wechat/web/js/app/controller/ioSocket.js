@@ -374,6 +374,7 @@ define(['app/module', 'app/directive/directiveApi'
 
             // 发送图片
             $scope.send_pic = function () {
+                console.log(viewScroll.getScrollPosition());
                 var e = document.getElementById("pic_fileInput");
                 var ev = document.createEvent("MouseEvents");
                 ev.initEvent("click", true, true);
@@ -393,16 +394,20 @@ define(['app/module', 'app/directive/directiveApi'
                 var time = ar.timeStamp();
                 $scope.picLength = $scope.uploader.queue.length;
                 $scope.uploader.onAfterAddingFile = function (fileItem) {   // 上传之后
+
                     $scope.sendMessage('view', $scope.sendId, $scope.receiveId, 'pic', time); // 假发送，便于预览图片
                     fileItem.uploader.queue[$scope.picLength].upload();
-                    $scope.hideMultiOnKeyboard();
                     viewScroll.resize();
-                    viewScroll.scrollBottom(true);  // 滚动至底部
+                    viewScroll.scrollBottom(true);
                 };
 
                 $scope.uploader.onCompleteItem = function (fileItem, response, status, headers) {  // 上传结束
-                    $scope.hideMultiOnKeyboard();
                     $scope.sendMessage(response.thumb_path, $scope.sendId, $scope.receiveId, 'pic', time);  // 真实发送
+                    var img = new Image();
+                    img.src = response.thumb_path;
+                    if(img.complete){
+                        viewScroll.scrollBottom(true);
+                    }
                     ar.initPhotoSwipeFromDOM('.bhy-gallery', $scope);
                 };
 
