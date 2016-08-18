@@ -141,11 +141,15 @@ define(['app/module', 'app/directive/directiveApi'
                     res.data[i].age = res.data[i].age.replace(/\"/g, '');
                     $scope.discoveryList.push(res.data[i]);
                 }
+                $scope.page += 1;
                 ar.initPhotoSwipeFromDOM('.bhy-gallery', $scope);
             }).finally(function () {
-                $scope.$broadcast('scroll.infiniteScrollComplete');
+                $timeout(function(){
+                    $scope.$broadcast('scroll.infiniteScrollComplete');
+                },800);
+
             })
-            $scope.page += 1;
+
         };
 
         // 下拉刷新
@@ -164,7 +168,9 @@ define(['app/module', 'app/directive/directiveApi'
                 }
                 ar.initPhotoSwipeFromDOM('.bhy-gallery', $scope);
             }).finally(function () {
-                $scope.$broadcast('scroll.refreshComplete');
+                $timeout(function(){
+                    $scope.$broadcast('scroll.refreshComplete');
+                },800);
             });
         };
 
@@ -183,7 +189,7 @@ define(['app/module', 'app/directive/directiveApi'
     }]);
 
     // 发现-评论
-    module.controller("discovery.single", ['app.serviceApi', '$scope', '$location', '$ionicActionSheet', '$ionicModal', '$ionicPopup', '$ionicScrollDelegate', function (api, $scope, $location, $ionicActionSheet, $ionicModal, $ionicPopup, $ionicScrollDelegate) {
+    module.controller("discovery.single", ['app.serviceApi', '$scope', '$location', '$ionicActionSheet', '$ionicModal', '$ionicPopup', '$ionicScrollDelegate','$timeout', function (api, $scope, $location, $ionicActionSheet, $ionicModal, $ionicPopup, $ionicScrollDelegate,$timeout) {
         $scope.formData = {};
         $scope.formData.private = false; // 私密评论默认未选中
         $scope.isMore = true;
@@ -336,7 +342,10 @@ define(['app/module', 'app/directive/directiveApi'
                 }
                 $scope.pageSize += 20;
             }).finally(function(){
-                $scope.$broadcast('scroll.infiniteScrollComplete');
+                $timeout(function(){
+                    $scope.$broadcast('scroll.infiniteScrollComplete');
+                },800);
+
             })
         }
 
