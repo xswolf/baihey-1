@@ -7,7 +7,7 @@
              </p>
          </div>-->
         <h1 class="title">消息中心</h1>
-        <button class="button button-icon" ng-if="messageList.length > 0" ng-click="shouldShowDelete = !shouldShowDelete; shouldShowDelete ? delTitle='完成' : delTitle='删除';" ng-bind="delTitle"></button>
+        <button class="button button-icon" ng-show="messageList.length > 0" ng-click="shouldShowDelete = !shouldShowDelete; shouldShowDelete ? delTitle='完成' : delTitle='删除';" ng-bind="delTitle"></button>
         <!--<a href="javascript:;" ng-click="pop_toggle()" class="button button-icon "
            ng-class="{true:'red-point',false:''}[isFollow]">联系人<i
                 class="ml5 fs14"
