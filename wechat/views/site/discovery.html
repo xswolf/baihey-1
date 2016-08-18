@@ -3,7 +3,7 @@
     <link href="/wechat/web/css/plugin/photoswipe/photoswipe.css" rel="stylesheet">
     <link href="/wechat/web/css/plugin/photoswipe/default-skin.css" rel="stylesheet">
     <ion-header-bar align-title="center"  class="com_w_100 bhy">
-        <title class="title">{{user.username | sex:user.sex:user.age}}的动态</title>
+        <title class="title">{{user.username | sex:user.sex:user.age:dis.user_id}}的动态</title>
     </ion-header-bar>
     <ion-content class="com_w_100 bhy discovery bg5">
         <div class="list">
@@ -11,7 +11,7 @@
                 <img class="cp" ng-if="dis.head_status == 1" ng-src="{{dis.head_pic | isNull}}" ng-click="jump('/userInfo?userId={{dis.user_id}}')" onerror="this.src='/wechat/web/images/no_img.png'">
                 <img class="cp" ng-if="dis.head_status != 1" src="/wechat/web/images/no_img.png" ng-click="jump('/userInfo?userId={{dis.user_id}}')">
                 <h2>
-                    <span class="fl" ng-if="dis.real_name">{{dis.real_name | sex:dis.sex:dis.age}}</span>
+                    <span class="fl" ng-if="dis.real_name">{{dis.real_name | sex:dis.sex:dis.age:dis.user_id}}</span>
                     <span class="fl" ng-if="!dis.real_name">{{dis.user_id}}</span>
                     <span class="fr fs12 cor5">{{dis.create_time*1000 | date:'yyyy-MM-dd HH:mm'}}</span>
                 </h2>

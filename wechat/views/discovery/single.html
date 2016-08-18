@@ -11,7 +11,7 @@
             <img class="cp" ng-if="dis.head_status == 1" ng-src="{{dis.head_pic | isNull}}" ng-click="jump(dis.user_id)" onerror="this.src='/wechat/web/images/no_img.png'">
             <img class="cp" ng-if="dis.head_status != 1" ng-src="/wechat/web/images/no_img.png" ng-click="jump(dis.user_id)">
             <h2>
-                <span class="fl" ng-if="dis.real_name">{{dis.real_name | sex:dis.sex:dis.age}}</span>
+                <span class="fl" ng-if="dis.real_name">{{dis.real_name | sex:dis.sex:dis.age:dis.user_id}}</span>
                 <span class="fl" ng-if="!dis.real_name">会员{{dis.user_id}}</span>
                 <span class="fr fs12 cor5">{{dis.create_time*1000 | date:'yyyy-MM-dd HH:mm'}}</span>
             </h2>
@@ -54,7 +54,7 @@
                 <header class="am-comment-hd">
                     <!--<h3 class="am-comment-title">评论标题</h3>-->
                     <div class="am-comment-meta pr">
-                        <a ng-click="jump({{comment.user_id}})" class="am-comment-author">{{comment.name | sex:comment.sex:comment:age}}</a>
+                        <a ng-click="jump({{comment.user_id}})" class="am-comment-author">{{comment.name | sex:comment.sex:comment.age:comment.user_id}}</a>
                         评论于
                         <time>{{comment.create_time * 1000 | date:'yyyy-MM-dd HH:mm'}}</time>
                         <span ng-if="comment.report_flag == 1" class="am-badge am-badge-danger am-round">被多次举报</span>
@@ -63,7 +63,8 @@
                 </header>
 
                 <div class="am-comment-bd">
-                    {{comment.private == 1 && comment.user_id != userInfo.user_id && dis.user_id  != userInfo.user_id ? '私密评论' : comment.content}}
+                    <span class="cor5" ng-show="comment.private == 1 && comment.user_id != userInfo.user_id && dis.user_id  != userInfo.user_id">私密评论</span>
+                    <span ng-hide="comment.private == 1 && comment.user_id != userInfo.user_id && dis.user_id != userInfo.user_id">{{comment.content}}</span>
                 </div>
             </div>
         </article>

@@ -10,7 +10,7 @@
                 <ion-delete-button class="ion-minus-circled" ng-click="removeItem($index,f)"></ion-delete-button>
                 <img ng-src="{{f.info.head_pic | isNull}}" onerror="this.src='/wechat/web/images/no_img.png'">
                 <h2>
-                    <span ng-if="f.info.real_name">{{f.info.real_name | sex:f.sex :f.info.age}}</span>
+                    <span ng-if="f.info.real_name">{{f.info.real_name | sex:f.sex :f.info.age:f.other}}</span>
                     <span ng-if="!f.info.real_name">会员{{f.other}}</span>
                     <span ng-if="honesty(f.honesty_value)" class="identity id">身份证</span>
                     <span ng-if="f.phone" class="identity phone">手机</span>

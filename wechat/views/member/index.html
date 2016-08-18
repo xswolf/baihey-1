@@ -14,8 +14,7 @@
                         <strong class="fs14" ng-if="userInfo.info.real_name">{{userInfo.info.real_name}}</strong>
                     </p>
                     <p ng-if="userInfo.id > 9999">
-                        <strong class="fs14" ng-if="userInfo.info.real_name">{{userInfo.info.real_name |
-                            sex:userInfo.sex:userInfo.info.age}}</strong>
+                        <strong class="fs14" ng-if="userInfo.info.real_name">{{userInfo.info.real_name |sex:userInfo.sex:userInfo.info.age:userInfo.id}}</strong>
                         <strong class="fs14" ng-if="!userInfo.info.real_name">会员{{userInfo.id}}</strong>
                             <span class="ml5 cor22">
                                 <span ng-if="userInfo.info.age">{{userInfo.age}}岁 </span>
