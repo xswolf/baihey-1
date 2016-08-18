@@ -394,7 +394,6 @@ define(['app/module', 'app/directive/directiveApi'
                 var time = ar.timeStamp();
                 $scope.picLength = $scope.uploader.queue.length;
                 $scope.uploader.onAfterAddingFile = function (fileItem) {   // 上传之后
-
                     $scope.sendMessage('view', $scope.sendId, $scope.receiveId, 'pic', time); // 假发送，便于预览图片
                     fileItem.uploader.queue[$scope.picLength].upload();
                     viewScroll.resize();
@@ -405,8 +404,15 @@ define(['app/module', 'app/directive/directiveApi'
                     $scope.sendMessage(response.thumb_path, $scope.sendId, $scope.receiveId, 'pic', time);  // 真实发送
                     var img = new Image();
                     img.src = response.thumb_path;
-                    if(img.complete){
+                    if (img.complete) {
+                        viewScroll.resize();
                         viewScroll.scrollBottom(true);
+                    } else {
+                        img.onload = function () {
+                            viewScroll.resize();
+                            viewScroll.scrollBottom(true);
+                            img.onload = null; //避免重复加载
+                        }
                     }
                     ar.initPhotoSwipeFromDOM('.bhy-gallery', $scope);
                 };
@@ -443,6 +449,21 @@ define(['app/module', 'app/directive/directiveApi'
                     } else {
                         response.id = ar.getId($scope.historyList);
                         $scope.historyList.push(response);
+                        if(response.type = 'pic'){
+                            var img = new Image();
+                            img.src = response.message;
+                            if (img.complete) {
+                                viewScroll.resize();
+                                viewScroll.scrollBottom(true);
+                            } else {
+                                img.onload = function () {
+                                    viewScroll.resize();
+                                    viewScroll.scrollBottom(true);
+                                    img.onload = null; //避免重复加载
+                                }
+                            }
+                        }
+
                     }
                     $rootScope.historyList = $scope.historyList;
                     ar.setStorage('chat_messageHistory' + $scope.receiveId, $scope.historyList); // 每次发送消息后把消息放到浏览器端缓存
@@ -465,6 +486,7 @@ define(['app/module', 'app/directive/directiveApi'
 
                     default :
                         setMessage(response);
+                        viewScroll.resize();
                         viewScroll.scrollBottom(true);  // 滚动至底部
                         $scope.$apply();
                         break;

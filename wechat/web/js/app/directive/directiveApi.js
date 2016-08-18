@@ -390,7 +390,7 @@ define(['app/module'], function (module) {
     // 动态改变微信浏览器网页title - 聊天页
     module.directive('changeTitle', ['$timeout', function ($timeout) {
         return function (scope, element, attrs) {
-            if(attrs.receiveId >= 10000){
+            if(attrs.receiveId > 9999){
                 changeTitle(attrs.changeTitle);
             }else{
                 changeTitle(attrs.realName);
