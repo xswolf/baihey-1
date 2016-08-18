@@ -58,7 +58,7 @@
                         评论于
                         <time>{{comment.create_time * 1000 | date:'yyyy-MM-dd HH:mm'}}</time>
                         <span ng-if="comment.report_flag == 1" class="am-badge am-badge-danger am-round">被多次举报</span>
-                        <img ng-if="comment.private == 1 && comment.user_id != userInfo.user_id && dis.user_id  != userInfo.user_id" class="private" src="/wechat/web/images/dis_private.png" height="25">
+                        <img ng-if="comment.private == 1" class="private" src="/wechat/web/images/dis_private.png" height="25">
                     </div>
                 </header>
 
