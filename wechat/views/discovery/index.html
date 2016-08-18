@@ -52,9 +52,13 @@
                     </span>
                     <span ng-if="dis.auth != 1 && dis.user_id == userInfo.user_id" class="fl ml20 pt2 cp ion-locked fl" ng-class="{'2':'energized','4':'assertive'}[dis.auth]"></span>
 
-                    <span class="fr cp" ng-click="more(dis.user_id==userInfo.user_id,dis,$index)">
+                    <span ng-show="!dis.moreLoading" class="fr cp" ng-click="more(dis.user_id==userInfo.user_id,dis,$index)">
                         <i class="ion-more fs22 vam"></i>
                     </span>
+                    <span ng-show="dis.moreLoading" class="fr cp">
+                        <img src="/wechat/web/images/loading_5.gif">
+                    </span>
+
                 </div>
             </div>
         </div>

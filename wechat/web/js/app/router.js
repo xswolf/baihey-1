@@ -144,7 +144,7 @@ define(["app/module", 'app/service/serviceApi'],
                         }
                     })
                     .state('message', {  // 消息首页
-                        cache: true,
+                        cache: false,
                         url: "/message",
                         templateUrl: "/wechat/views/message/index.html",
                         controller: "message.index",

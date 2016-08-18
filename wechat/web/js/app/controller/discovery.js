@@ -80,22 +80,25 @@ define(['app/module', 'app/directive/directiveApi'
                 },
                 buttonClicked: function (i, btnObj) {
                     if (btnObj.text == '屏蔽') {
+                        dis.moreLoading = true;
                         $scope.display.push(dis.id);
                         ar.setStorage('display', $scope.display);
                         $scope.discoveryList.splice(index, 1);
+                        dis.moreLoading = false;
                         // 将参数ID存入localStorage：display
                     }
                     if (btnObj.text == '举报') {
                         $location.url('/member/report?id=' + dis.id + '&userName=' + dis.real_name + '&type=2&title=动态&tempUrl=' + $location.$$url);
                     }
                     if (btnObj.text == '删除') {
-                        $scope.display.push(dis.id);
-                        ar.setStorage('display', $scope.display);
-                        $scope.discoveryList.splice(index, 1);
-                        // 改变状态 api.save
+                        dis.moreLoading = true;
                         api.save('/wap/member/delete-dynamic', {id: dis.id}).success(function (res) {
-
+                            $scope.display.push(dis.id);
+                            ar.setStorage('display', $scope.display);
+                            $scope.discoveryList.splice(index, 1);
+                            dis.moreLoading = false;
                         });
+
                     }
                     return true;
                 }
