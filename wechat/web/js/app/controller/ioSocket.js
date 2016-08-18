@@ -5,7 +5,7 @@ define(['app/module', 'app/directive/directiveApi'
     , 'app/service/serviceApi', 'comm'
 ], function (module) {
 
-    module.controller("message.chat1", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$ionicModal', '$ionicActionSheet', '$ionicLoading', '$ionicScrollDelegate', 'FileUploader', '$http', '$location', '$rootScope', '$filter','$ionicPopover','$interval','dataFilter', function (api, $scope, $timeout, $ionicPopup, $ionicModal, $ionicActionSheet, $ionicLoading, $ionicScrollDelegate, FileUploader, $http, $location, $rootScope, $filter,$ionicPopover,$interval,dataFilter) {
+    module.controller("message.chat1", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$ionicModal', '$ionicActionSheet', '$ionicLoading', '$ionicScrollDelegate', 'FileUploader', '$http', '$location', '$rootScope', '$filter', '$ionicPopover', '$interval', 'dataFilter', function (api, $scope, $timeout, $ionicPopup, $ionicModal, $ionicActionSheet, $ionicLoading, $ionicScrollDelegate, FileUploader, $http, $location, $rootScope, $filter, $ionicPopover, $interval, dataFilter) {
         $scope.historyList = [];
         // 设置消息状态为已看
         $scope.setMessageStatus = function (list) {
@@ -17,7 +17,7 @@ define(['app/module', 'app/directive/directiveApi'
         $scope.sendId = ar.getCookie("bhy_user_id");
         $scope.receiveId = $location.search().id;
         // 身份证认证
-        api.list("/wap/member/honesty-photo", {user_id:$scope.receiveId}).success(function (res) {
+        api.list("/wap/member/honesty-photo", {user_id: $scope.receiveId}).success(function (res) {
             $scope.sfzCheck = res.sfz;
         });
 
@@ -80,7 +80,7 @@ define(['app/module', 'app/directive/directiveApi'
                 ar.saveDataAlert($ionicPopup, '您不能关注自己');
                 return;
             }
-            if(dataFilter.data.blacked.indexOf($scope.followData.follow_id) != -1) {
+            if (dataFilter.data.blacked.indexOf($scope.followData.follow_id) != -1) {
                 ar.saveDataAlert($ionicPopup, '对方设置，关注失败');
                 return;
             }
@@ -94,76 +94,76 @@ define(['app/module', 'app/directive/directiveApi'
         }
 
         /*// 发红包
-        $ionicModal.fromTemplateUrl('briberyModal.html', {
-            scope: $scope,
-            animation: 'slide-in-up'
-        }).then(function (modal) {
-            $scope.briberyModal = modal;
-            $scope.briPageHide = function () {
-                modal.hide();
-            }
-        });*/
+         $ionicModal.fromTemplateUrl('briberyModal.html', {
+         scope: $scope,
+         animation: 'slide-in-up'
+         }).then(function (modal) {
+         $scope.briberyModal = modal;
+         $scope.briPageHide = function () {
+         modal.hide();
+         }
+         });*/
 
         // 查看图片
         /*$scope.showPic = false;
-        $scope.detail_pic = function (img) {
-            $scope.showPicAdd = img;
-            $scope.showPic = true;
-        }
-        $scope.hidePicBox = function () {
-            $scope.showPic = false;
-        }*/
+         $scope.detail_pic = function (img) {
+         $scope.showPicAdd = img;
+         $scope.showPic = true;
+         }
+         $scope.hidePicBox = function () {
+         $scope.showPic = false;
+         }*/
 
         /*// 领取红包
-        $ionicModal.fromTemplateUrl('detailBriModal.html', {
-            scope: $scope,
-            animation: 'slide-in-up'
-        }).then(function (modal) {
-            $scope.detailBriModal = modal;
-        });
-        $scope.detail_bri = function (briMessage) {
-            briMessage = briMessage.replace(/&quot;/g, "\"");
-            var json = JSON.parse(briMessage);
-            json.money = json.money / 100; // 页面显示元
-            $scope.openBri = json;
-            // 判断红包是否被领取过
-            api.list('/wap/message/bribery-status', {bribery_id: json.id}).success(function (res) {
-                if ($scope.sendId == res.receive_user_id) {  // 别人发的红包才能领取，自己不能领取自己的
-                    if (res.status == 0) {
-                        $scope.detailBriModal.show();
-                    } else if (res.status == 1) {
-                        $scope.openBribery();
-                    } else {
-                        alert('红包已经失效')
-                    }
-                } else {
-                    alert('自己不能领取自己的红包')
-                }
+         $ionicModal.fromTemplateUrl('detailBriModal.html', {
+         scope: $scope,
+         animation: 'slide-in-up'
+         }).then(function (modal) {
+         $scope.detailBriModal = modal;
+         });
+         $scope.detail_bri = function (briMessage) {
+         briMessage = briMessage.replace(/&quot;/g, "\"");
+         var json = JSON.parse(briMessage);
+         json.money = json.money / 100; // 页面显示元
+         $scope.openBri = json;
+         // 判断红包是否被领取过
+         api.list('/wap/message/bribery-status', {bribery_id: json.id}).success(function (res) {
+         if ($scope.sendId == res.receive_user_id) {  // 别人发的红包才能领取，自己不能领取自己的
+         if (res.status == 0) {
+         $scope.detailBriModal.show();
+         } else if (res.status == 1) {
+         $scope.openBribery();
+         } else {
+         alert('红包已经失效')
+         }
+         } else {
+         alert('自己不能领取自己的红包')
+         }
 
-            })
+         })
 
-        }*/
+         }*/
 
         /*// 打开红包
-        $ionicModal.fromTemplateUrl('detaiOpenBriModal.html', {
-            scope: $scope,
-            animation: 'slide-in-up'
-        }).then(function (modal) {
-            $scope.detaiOpenBriModal = modal;
-        });
+         $ionicModal.fromTemplateUrl('detaiOpenBriModal.html', {
+         scope: $scope,
+         animation: 'slide-in-up'
+         }).then(function (modal) {
+         $scope.detaiOpenBriModal = modal;
+         });
 
-        $scope.openBribery = function () {
-            api.save('/wap/message/open-bribery', {bribery_id: $scope.openBri.id}).success(function (res) {
-                if (res.status == 1) {
-                    $scope.detaiOpenBriModal.show();
-                } else if (res.status == -1) {
-                    $scope.detaiOpenBriModal.show();
-                } else {
-                    alert('异常情况');
-                }
-                $scope.detailBriModal.hide();
-            })
-        }*/
+         $scope.openBribery = function () {
+         api.save('/wap/message/open-bribery', {bribery_id: $scope.openBri.id}).success(function (res) {
+         if (res.status == 1) {
+         $scope.detaiOpenBriModal.show();
+         } else if (res.status == -1) {
+         $scope.detaiOpenBriModal.show();
+         } else {
+         alert('异常情况');
+         }
+         $scope.detailBriModal.hide();
+         })
+         }*/
 
 
         // 用户身份是否验证 TODO 用户验证了之后localStorage是否能够得到更新
@@ -203,11 +203,11 @@ define(['app/module', 'app/directive/directiveApi'
             $rootScope.historyListHide = list = list != null ? list.concat(data) : data;
             ar.setStorage('chat_messageHistory' + $scope.receiveId, list);
 
-            ar.initPhotoSwipeFromDOM('.bhy-gallery',$scope);   // 查看大图插件
+            ar.initPhotoSwipeFromDOM('.bhy-gallery', $scope);   // 查看大图插件
             $scope.doRefresh();
             $timeout(function () {
                 viewScroll.scrollBottom(true);
-            },800);
+            }, 800);
 
         }).error(function () {
             console.log('页面message.js出现错误，代码：/wap/chat/message-history');
@@ -236,12 +236,12 @@ define(['app/module', 'app/directive/directiveApi'
             });
 
             /*// 播放语音
-            $scope.detail_record = function (id) {
-                wx.playVoice({
-                    localId: id // 需要播放的音频的本地ID，由stopRecord接口获得
-                });
+             $scope.detail_record = function (id) {
+             wx.playVoice({
+             localId: id // 需要播放的音频的本地ID，由stopRecord接口获得
+             });
 
-            }*/
+             }*/
 
             // 发送消息函数
             $scope.sendMessage = function (serverId, sendId, receiveID, type, flagTime) {
@@ -270,40 +270,40 @@ define(['app/module', 'app/directive/directiveApi'
 
             }
 
-           /* // 开始录音
-            $scope.start_record = function () {
-                wx.startRecord();
-            }
+            /* // 开始录音
+             $scope.start_record = function () {
+             wx.startRecord();
+             }
 
-            // 结束录音
-            $scope.send_record = function () {
-                console.log('end');
-                wx.send_record($scope.sendId, $scope.receiveId, function (serverId, sendId, toUser, type) {
-                    $scope.sendMessage(serverId, sendId, toUser, type);
-                });
-            }*/
+             // 结束录音
+             $scope.send_record = function () {
+             console.log('end');
+             wx.send_record($scope.sendId, $scope.receiveId, function (serverId, sendId, toUser, type) {
+             $scope.sendMessage(serverId, sendId, toUser, type);
+             });
+             }*/
 
             // 绑定手机弹窗
             $ionicPopover.fromTemplateUrl('bindPhonePopover.html', {
                 scope: $scope
-            }).then(function(popover) {
+            }).then(function (popover) {
                 $scope.popover = popover;
             });
-            $scope.openPopover = function() {
+            $scope.openPopover = function () {
                 $scope.popover.show(document.body);
             };
-            $scope.closePopover = function() {
+            $scope.closePopover = function () {
                 $scope.popover.hide();
             };
 
             $scope.phoneInfo = {};
             $scope.codeTitle = '获取验证码';
             // 获取验证码
-            $scope.getCode = function(){
+            $scope.getCode = function () {
                 api.getMobileIsExist($scope.phoneInfo.phone).success(function (data) {
                     if (!data.status) {
                         ar.saveDataAlert($ionicPopup, data.msg);
-                    }else {
+                    } else {
                         var timeTitle = 60;
                         var timer = $interval(function () {
                             $scope.codeTitle = '重新获取(' + timeTitle + ')';
@@ -311,7 +311,8 @@ define(['app/module', 'app/directive/directiveApi'
                         timer.then(function () {
                                 $scope.codeTitle = '获取验证码';
                                 $interval.cancel(timer);
-                            }, function () {},
+                            }, function () {
+                            },
                             function () {
                                 timeTitle -= 1;
                             });
@@ -325,15 +326,15 @@ define(['app/module', 'app/directive/directiveApi'
                 });
             }
             // 绑定手机号
-            $scope.bindPhone = function(){
+            $scope.bindPhone = function () {
                 api.getMobileIsExist($scope.phoneInfo.phone).success(function (data) {
                     if (!data.status) {
                         ar.saveDataAlert($ionicPopup, data.msg);
-                    }else {
+                    } else {
                         // 比对验证码
-                        api.validateCode($scope.phoneInfo.code).success(function(res){
-                            if(res.status){  // 验证码正确
-                                api.save('/wap/user/update-user-data',{phone:$scope.phoneInfo.phone}).success(function(res){
+                        api.validateCode($scope.phoneInfo.code).success(function (res) {
+                            if (res.status) {  // 验证码正确
+                                api.save('/wap/user/update-user-data', {phone: $scope.phoneInfo.phone}).success(function (res) {
                                     if (res.data) {
                                         ar.saveDataAlert($ionicPopup, '绑定手机成功');
                                         $scope.userInfo.phone = $scope.phoneInfo.phone;
@@ -343,8 +344,8 @@ define(['app/module', 'app/directive/directiveApi'
                                     }
                                     $scope.closePopover();
                                 });
-                            }else{
-                                ar.saveDataAlert($ionicPopup,'验证码错误');
+                            } else {
+                                ar.saveDataAlert($ionicPopup, '验证码错误');
                             }
                         })
                     }
@@ -353,12 +354,12 @@ define(['app/module', 'app/directive/directiveApi'
             // 发送文本消息调用接口
             $scope.send = function () {
                 if ($scope.send_content == '' || $scope.send_content == null || $scope.send_content == undefined) return;
-                if(!$scope.userInfo.phone){   // 用户未认证手机号码
+                if (!$scope.userInfo.phone) {   // 用户未认证手机号码
                     $scope.openPopover();
                     return;
                 }
-                if($scope.userInfo.id == $location.$$search.id){    // 不能与自己聊天  TODO
-                    ar.saveDataAlert($ionicPopup,'您不能与自己聊天！');
+                if ($scope.userInfo.id == $location.$$search.id) {    // 不能与自己聊天  TODO
+                    ar.saveDataAlert($ionicPopup, '您不能与自己聊天！');
                     return;
                 }
                 try {
@@ -381,8 +382,8 @@ define(['app/module', 'app/directive/directiveApi'
                 $scope.uploader.filters.push({
                     name: 'file-size-Res',
                     fn: function (item) {
-                        if(item.size > 8388608){
-                            ar.saveDataAlert($ionicPopup,'请选择小于8MB的图片！')
+                        if (item.size > 8388608) {
+                            ar.saveDataAlert($ionicPopup, '请选择小于8MB的图片！')
                             return false;
                         }
                         return true;
@@ -395,14 +396,19 @@ define(['app/module', 'app/directive/directiveApi'
                     $scope.sendMessage('view', $scope.sendId, $scope.receiveId, 'pic', time); // 假发送，便于预览图片
                     fileItem.uploader.queue[$scope.picLength].upload();
                     $scope.hideMultiOnKeyboard();
+                    viewScroll.resize();
                     viewScroll.scrollBottom(true);  // 滚动至底部
                 };
 
                 $scope.uploader.onCompleteItem = function (fileItem, response, status, headers) {  // 上传结束
                     $scope.hideMultiOnKeyboard();
                     $scope.sendMessage(response.thumb_path, $scope.sendId, $scope.receiveId, 'pic', time);  // 真实发送
-                    ar.initPhotoSwipeFromDOM('.bhy-gallery',$scope);
+                    ar.initPhotoSwipeFromDOM('.bhy-gallery', $scope);
                 };
+
+                $scope.uploader.onErrorItem = function (item, response, status, headers) {
+                    alert('发送图片出错，错误原因：' + response);
+                }
 
             }
 
@@ -442,14 +448,14 @@ define(['app/module', 'app/directive/directiveApi'
                 switch (response.type) {
                     case 'record': // 录音
                         /*wx.downloadVoice({
-                            serverId: response.message, // 需要下载的音频的服务器端ID，由uploadVoice接口获得
-                            success: function (res) {
-                                //response.message = res.localId;
-                                setMessage(response);
-                                viewScroll.scrollBottom(); // 滚动至底部
-                                $scope.$apply();
-                            }
-                        });*/
+                         serverId: response.message, // 需要下载的音频的服务器端ID，由uploadVoice接口获得
+                         success: function (res) {
+                         //response.message = res.localId;
+                         setMessage(response);
+                         viewScroll.scrollBottom(); // 滚动至底部
+                         $scope.$apply();
+                         }
+                         });*/
                         break;
 
                     default :
@@ -466,72 +472,72 @@ define(['app/module', 'app/directive/directiveApi'
 
     }]);
 
-   /* module.controller("message.childBriberyController", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$ionicModal', '$ionicActionSheet', function (api, $scope, $timeout, $ionicPopup, $ionicModal, $ionicActionSheet) {
-        $scope.bri_message = '恭喜发财，大吉大利';
+    /* module.controller("message.childBriberyController", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$ionicModal', '$ionicActionSheet', function (api, $scope, $timeout, $ionicPopup, $ionicModal, $ionicActionSheet) {
+     $scope.bri_message = '恭喜发财，大吉大利';
 
-        $scope.btnStatus = true;
-        $scope.money = 0;
-        $scope.valMoney = function (money) {
-            if (ar.validateMoney(money)) {
-                $scope.money = money;
-                if (money > 200) {
-                    $scope.btnStatus = true;
-                } else {
-                    $scope.btnStatus = false;
-                }
-            } else {
-                $scope.money = 0;
-                $scope.btnStatus = true;
-            }
-        }
+     $scope.btnStatus = true;
+     $scope.money = 0;
+     $scope.valMoney = function (money) {
+     if (ar.validateMoney(money)) {
+     $scope.money = money;
+     if (money > 200) {
+     $scope.btnStatus = true;
+     } else {
+     $scope.btnStatus = false;
+     }
+     } else {
+     $scope.money = 0;
+     $scope.btnStatus = true;
+     }
+     }
 
-        // 发红包
-        $scope.bri_submit = function () {
+     // 发红包
+     $scope.bri_submit = function () {
 
-            if ($scope.money == 0) {
-                ar.saveDataAlert($ionicPopup, '红包金额不合法');
-                return false;
-            }
-            $scope.briFormData = {
-                sendId: $scope.sendId,
-                receiveId: $scope.receiveId,
-                money: $scope.money,
-                bri_message: $scope.bri_message
-            };
+     if ($scope.money == 0) {
+     ar.saveDataAlert($ionicPopup, '红包金额不合法');
+     return false;
+     }
+     $scope.briFormData = {
+     sendId: $scope.sendId,
+     receiveId: $scope.receiveId,
+     money: $scope.money,
+     bri_message: $scope.bri_message
+     };
 
-            if ($scope.payType == 1) { // 余额支付
-                api.save("/wap/message/send-bribery", $scope.briFormData).success(function (res) {
+     if ($scope.payType == 1) { // 余额支付
+     api.save("/wap/message/send-bribery", $scope.briFormData).success(function (res) {
 
-                    if (res.status == 1) {
-                        //成功，隐藏窗口
-                        $scope.hideMultiOnKeyboard();
-                        $scope.briPageHide();
-                        $scope.sendMessage(res.message, $scope.sendId, $scope.receiveId, 'bribery');
-                    } else {
-                        alert(res.message);
-                        console.log($scope.briFormData);
-                    }
+     if (res.status == 1) {
+     //成功，隐藏窗口
+     $scope.hideMultiOnKeyboard();
+     $scope.briPageHide();
+     $scope.sendMessage(res.message, $scope.sendId, $scope.receiveId, 'bribery');
+     } else {
+     alert(res.message);
+     console.log($scope.briFormData);
+     }
 
-                });
-            } else if ($scope.payType == 2) {// 微信支付
-                api.list('/wap/charge/produce-order', {flag_h: 1, money: $scope.money}).success(function (res) {
-                    if (res.status == 1) {
-                        window.location.href = '/wap/charge/pay?orderId=' + res.data;
-                    }
-                    //requirejs(["jquery"] , function ($) {
-                    //    ar.weiXinPayCallBack($, param , orderId);
-                    //})
-                })
+     });
+     } else if ($scope.payType == 2) {// 微信支付
+     api.list('/wap/charge/produce-order', {flag_h: 1, money: $scope.money}).success(function (res) {
+     if (res.status == 1) {
+     window.location.href = '/wap/charge/pay?orderId=' + res.data;
+     }
+     //requirejs(["jquery"] , function ($) {
+     //    ar.weiXinPayCallBack($, param , orderId);
+     //})
+     })
 
-            }
+     }
 
 
-        }
+     }
 
-    }]);
+     }]);
 
-    // 领取红包
-    module.controller("message.childDetailBriController", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$ionicModal', function (api, $scope, $timeout, $ionicPopup, $ionicModal) {
+     // 领取红包
+     module.controller("message.childDetailBriController", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$ionicModal', function (api, $scope, $timeout, $ionicPopup, $ionicModal) {
 
-    }]);*/
+     }]);*/
 })
