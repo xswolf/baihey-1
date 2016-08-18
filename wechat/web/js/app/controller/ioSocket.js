@@ -378,18 +378,6 @@ define(['app/module', 'app/directive/directiveApi'
                 ev.initEvent("click", true, true);
                 e.dispatchEvent(ev);
 
-                // 过滤器，限制用户只能上传图片
-                $scope.uploader.filters.push({
-                    name: 'file-type-Res',
-                    fn: function (item) {
-
-                        if (!ar.msg_file_res_img(item)) {   // 验证文件是否是图片格式
-                            ar.saveDataAlert($ionicPopup, '只能发送图片类型的文件！');
-                            return false;
-                        }
-                        return true;
-                    }
-                });
                 $scope.uploader.filters.push({
                     name: 'file-size-Res',
                     fn: function (item) {
@@ -406,7 +394,6 @@ define(['app/module', 'app/directive/directiveApi'
                 $scope.uploader.onAfterAddingFile = function (fileItem) {   // 上传之后
                     $scope.sendMessage('view', $scope.sendId, $scope.receiveId, 'pic', time); // 假发送，便于预览图片
                     fileItem.uploader.queue[$scope.picLength].upload();
-
                 };
 
                 $scope.uploader.onCompleteItem = function (fileItem, response, status, headers) {  // 上传结束
