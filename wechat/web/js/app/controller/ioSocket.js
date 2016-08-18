@@ -395,6 +395,7 @@ define(['app/module', 'app/directive/directiveApi'
                     $scope.sendMessage('view', $scope.sendId, $scope.receiveId, 'pic', time); // 假发送，便于预览图片
                     fileItem.uploader.queue[$scope.picLength].upload();
                     $scope.hideMultiOnKeyboard();
+                    viewScroll.scrollBottom(true);  // 滚动至底部
                 };
 
                 $scope.uploader.onCompleteItem = function (fileItem, response, status, headers) {  // 上传结束
