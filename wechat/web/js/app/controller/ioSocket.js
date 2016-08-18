@@ -374,7 +374,6 @@ define(['app/module', 'app/directive/directiveApi'
 
             // 发送图片
             $scope.send_pic = function () {
-                console.log(viewScroll.getScrollPosition());
                 var e = document.getElementById("pic_fileInput");
                 var ev = document.createEvent("MouseEvents");
                 ev.initEvent("click", true, true);
@@ -449,7 +448,8 @@ define(['app/module', 'app/directive/directiveApi'
                     } else {
                         response.id = ar.getId($scope.historyList);
                         $scope.historyList.push(response);
-                        if(response.type = 'pic'){
+                        console.log(response);
+                        if(response.type == 'pic'){
                             var img = new Image();
                             img.src = response.message;
                             if (img.complete) {
