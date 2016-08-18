@@ -246,10 +246,10 @@
         </ion-list>
     </ion-content>
     <ion-footer-bar align-title="left" class="bar-light">
-        <div class="buttons transition" ng-class="{'2':'w50','1':'w100',false:'w50',0:'w50'}[formData.isfollow]">
+        <div class="buttons transition" ng-class="{true:'w100',false:'w50'}[formData.isfollow == 1]">
             <a class="button w100" style="font-size: 16px; color:#e4007f;" href="#/chat1?id={{otherUserInfo.id}}&head_pic={{otherUserInfo.info.head_pic}}&real_name={{otherUserInfo.info.real_name}}&sex={{otherUserInfo.sex}}&age={{otherUserInfo.info.age}}"><i class="ion-chatbox-working cor21 mr5 vam fs22"></i>对话</a>
         </div>
-        <div class="buttons w50" ng-if="formData.isfollow == '2' || !formData.isfollow || formData.isfollow == '0'">
+        <div class="buttons w50" ng-if="formData.isfollow != 1">
             <button class="button w100 transition"  style="font-size: 16px;" ng-click="addFollow()">
                 <i class="ion-plus-round mr5 vam fs22"></i>关注
             </button>

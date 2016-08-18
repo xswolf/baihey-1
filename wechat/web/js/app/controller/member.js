@@ -993,6 +993,8 @@ define(['app/module', 'app/directive/directiveApi'
                 $scope.otherUserInfo.love_sport ? getConfig('love_sport', $scope.otherUserInfo.love_sport) : true;// 喜欢的运动
                 $scope.otherUserInfo.want_film ? getConfig('want_film', $scope.otherUserInfo.want_film) : true;// 想看的电影
                 $scope.otherUserInfo.like_food ? getConfig('like_food', $scope.otherUserInfo.like_food) : true;// 喜欢的食物
+
+                console.info('isfollow:',res.followStatus,'followedStatus:',res.followedStatus);
             }
 
         });
@@ -1036,7 +1038,7 @@ define(['app/module', 'app/directive/directiveApi'
                 if (res.data) {
                     document.getElementsByClassName('transition')[0].style.transition = 'all 0.5s';
                     document.getElementsByClassName('transition')[1].style.transition = 'all 0.5s';
-                    $scope.formData.isfollow = '1';
+                    $scope.formData.isfollow = 1;
                     // 成功，提示
                     ar.saveDataAlert($ionicPopup, '关注成功');
                 }
