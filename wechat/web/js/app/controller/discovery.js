@@ -147,9 +147,7 @@ define(['app/module', 'app/directive/directiveApi'
                 $timeout(function(){
                     $scope.$broadcast('scroll.infiniteScrollComplete');
                 },800);
-
             })
-
         };
 
         // 下拉刷新
