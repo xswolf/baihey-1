@@ -76,7 +76,7 @@
     </ion-content>
     <ion-footer-bar class="bar-light">
         <div class="text">
-            <input type="text" multiple id="txt_input" ng-model="formData.content" placeholder="说点什么吧！">
+            <input type="text" id="txt_input" ng-model="formData.content" maxlength="50" placeholder="说点什么吧！">
             <label class="private" ng-click="checkPrivate()">
                 <i class="cor24"
                    ng-class="{true:'ion-android-checkbox-outline',false:'ion-android-checkbox-outline-blank'}[formData.private]"></i>

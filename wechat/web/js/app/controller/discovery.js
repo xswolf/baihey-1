@@ -13,8 +13,6 @@ define(['app/module', 'app/directive/directiveApi'
         $scope.formData.auth = 1;
         $scope.discoveryList = [];
 
-
-
         //用户已屏蔽的动态id，从localStorage获取
         $scope.display = ar.getStorage('display') ? ar.getStorage('display') : [];
 
@@ -53,7 +51,6 @@ define(['app/module', 'app/directive/directiveApi'
             if (type == 'single') {
                 $location.url('/discovery_single?id=' + disId);
             }
-
 
         }
 
@@ -141,6 +138,7 @@ define(['app/module', 'app/directive/directiveApi'
                     res.data[i].age = res.data[i].age.replace(/\"/g, '');
                     $scope.discoveryList.push(res.data[i]);
                 }
+                console.log($scope.discoveryList);
                 $scope.page += 1;
                 ar.initPhotoSwipeFromDOM('.bhy-gallery', $scope);
             }).finally(function () {

@@ -7,10 +7,10 @@
 
     <ion-content class="com_w_100 bhy discovery bg5">
         <div class="list">
-            <div class="item tac bg5" ng-if="newDiscovery > 0">
+            <div class="item tac" ng-if="newDiscovery > 0">
                 <a class="newMsg" href="#/discovery_message">{{newDiscovery}}条新评论<i class="ion-ios-arrow-right ml5"></i><i class="ion-ios-arrow-right"></i></a>
             </div>
-            <div class="mt10 item item-thumbnail-left" ng-repeat="dis in discoveryList | filter:indexFilter | limitTo:pageSize">
+            <div class="item item-thumbnail-left" ng-repeat="dis in discoveryList | filter:indexFilter | limitTo:pageSize">
                 <img class="cp" ng-src="{{dis.head_pic | isNull}}" onerror="this.src='/wechat/web/images/no_img.png'">
                 <h2>
                     <span class="fl" ng-if="dis.real_name">{{dis.real_name | sex:dis.sex:dis.age:dis.user_id}}</span>
@@ -39,9 +39,9 @@
                     </span>
                     <span class="fl ml10 cp cor53" ng-click="jump('/discovery_single?id={{dis.id}}')">
                         <i class="ion-chatbubble-working fs20 vam"></i>
-                        <span class="vam">{{dis.comment_num}}</span>
+                        <span class="vam">{{dis.comment_num}} </span>
                     </span>
-                    <span ng-if="dis.auth != 1 && dis.user_id == userInfo.user_id" class="fl ml20 pt2 cp ion-locked fl" ng-class="{2:'energized',3:'assertive'}[dis.auth]"></span>
+                    <span ng-if="dis.auth != 1 && dis.user_id == userInfo.user_id" class="fl ml20 pt2 cp ion-locked fl" ng-class="{'2':'energized','4':'assertive'}[dis.auth]"></span>
                     <span class="fr cp" ng-click="more(dis.id,$index)">
                         <i class="ion-more fs22 vam"></i>
                     </span>

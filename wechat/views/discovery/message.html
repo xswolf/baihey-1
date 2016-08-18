@@ -13,7 +13,7 @@
                 <div class="fr w45">
                     <p class="wsn txt">{{dis.content | cut:true:20:' ...'}}</p>
                     <p class="wsn" ng-if="dis.pic.length > 0">
-                        <img ng-repeat="img in dis.pic" src="{{img.thumb_path}}" width="30">
+                        <img ng-repeat="img in dis.pic" class="mr5 mb5" src="{{img.thumb_path}}" width="30">
                     </p>
                 </div>
             </a>
