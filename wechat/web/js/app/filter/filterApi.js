@@ -47,15 +47,19 @@ define(['app/module'], function (module) {
 
     // 由姓名，性别，年龄返回尊称
     module.filter('sex', function () {
-        return function (input, sex, age) {
-            if (typeof(input) != 'undefined' && input != '') {
-                age = getAge(age);
-                if (sex == 1) {
-                    return input.substr(0, 1) + '先生';
-                } else if (age >= 35) {
-                    return input.substr(0, 1) + '女士';
-                } else {
-                    return input.substr(0, 1) + '小姐';
+        return function (name, sex, age, id) {
+            if (name) {
+                if (id && id > 9999) {
+                    age = getAge(age);
+                    if (sex == 1) {
+                        return name.substr(0, 1) + '先生';
+                    } else if (age >= 35) {
+                        return name.substr(0, 1) + '女士';
+                    } else {
+                        return name.substr(0, 1) + '小姐';
+                    }
+                }else {
+                    return name;
                 }
             }
         }
@@ -174,7 +178,7 @@ define(['app/module'], function (module) {
                         break;
                     }
                 }
-                if(children){
+                if (children) {
                     var childrenData = config_infoData.children_occupation;
                     for (var i in childrenData) {
                         if (childrenData[i].id == children) {
@@ -194,13 +198,13 @@ define(['app/module'], function (module) {
         return function (province, city, areaId) {
             var title = '';
             if (province && province != '0') {
-                title += getAddress(provines,province);
-                if(city && city != '0'){
+                title += getAddress(provines, province);
+                if (city && city != '0') {
                     title += '-';
-                    title += getAddress(citys,city);
-                    if(areaId && areaId != '0'){
+                    title += getAddress(citys, city);
+                    if (areaId && areaId != '0') {
                         title += '-';
-                        title += getAddress(area,areaId);
+                        title += getAddress(area, areaId);
                     }
                 }
             }

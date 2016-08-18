@@ -130,3 +130,9 @@ button.send {
   margin-right: 5px;
   margin-bottom: 5px;
 }
+.am-comment .private {
+  position: absolute;
+  right: 5px;
+  top: 5px;
+  z-index: 5;
+}

@@ -18,11 +18,8 @@
                      class="rounded">
                 <span ng-if="headpicStatus == 2" class="under">审核中</span>
 
-                <h2 class="fs16" ng-if="userInfo.id < 10000">
-                    <span>{{userInfo.info.real_name}}，您好！</span>
-                </h2>
-                <h2 class="fs16" ng-if="userInfo.id > 9999">
-                    <span ng-if="userInfo.info.real_name">{{userInfo.info.real_name | sex:userInfo.sex:userInfo.age}}，您好！</span>
+                <h2 class="fs16">
+                    <span ng-if="userInfo.info.real_name">{{userInfo.info.real_name | sex:userInfo.sex:userInfo.age:userInfo.id}}，您好！</span>
                     <span ng-if="!userInfo.info.real_name">会员{{userInfo.id}}，您好！</span>
                 </h2>
                 <span class="cor20 user_id">ID:{{userInfo.id}}</span>

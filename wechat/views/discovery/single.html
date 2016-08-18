@@ -53,16 +53,17 @@
             <div class="am-comment-main ">
                 <header class="am-comment-hd">
                     <!--<h3 class="am-comment-title">评论标题</h3>-->
-                    <div class="am-comment-meta">
+                    <div class="am-comment-meta pr">
                         <a ng-click="jump({{comment.user_id}})" class="am-comment-author">{{comment.name | sex:comment.sex:comment:age}}</a>
                         评论于
                         <time>{{comment.create_time * 1000 | date:'yyyy-MM-dd HH:mm'}}</time>
                         <span ng-if="comment.report_flag == 1" class="am-badge am-badge-danger am-round">被多次举报</span>
+                        <img ng-if="comment.private == 1 && comment.user_id != userInfo.user_id && dis.user_id  != userInfo.user_id" class="private" src="/wechat/web/images/dis_private.png" height="25">
                     </div>
                 </header>
 
                 <div class="am-comment-bd">
-                    {{comment.private == 1 && comment.user_id != userInfo.user_id && dis.user_id  != userInfo.user_id ? '私密评论，请勿偷看' : comment.content}}
+                    {{comment.private == 1 && comment.user_id != userInfo.user_id && dis.user_id  != userInfo.user_id ? '私密评论' : comment.content}}
                 </div>
             </div>
         </article>
