@@ -448,7 +448,6 @@ define(['app/module', 'app/directive/directiveApi'
                     } else {
                         response.id = ar.getId($scope.historyList);
                         $scope.historyList.push(response);
-                        console.log(response);
                         if(response.type == 'pic'){
                             var img = new Image();
                             img.src = response.message;
