@@ -34,7 +34,7 @@
                     <span class="identity diamond" ng-if="dis.level == 3">钻石</span>
                     <span ng-if="dis.report_flag == 1" class="identity assertive-bg">被多次举报</span>
                 </p>
-                <p class="wsn">{{dis.content}}</p>
+                <p class="wsn" ng-click="jump(dis.id,dis.user_id,'single')">{{dis.content | cut:true:150:' ...'}}</p>
                 <div class="dis_gallery bhy-gallery clearfix">
                     <a ng-repeat="img in dis.imgList | limitTo:6" href="{{img.thumb_path | picture}}" data-size="{{img.thumb_path.split('.')[0].split('_')[1] + 'x' + img.thumb_path.split('.')[0].split('_')[2]}}">
                         <img class="w100" src="/wechat/web/images/lazyload.png" lazyload="{{img.thumb_path}}">
