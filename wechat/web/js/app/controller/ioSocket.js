@@ -10,7 +10,9 @@ define(['app/module', 'app/directive/directiveApi'
         // 设置消息状态为已看
         $scope.setMessageStatus = function (list) {
             for (var i in list) {
-                list[i].status = 1;
+                if (list[i].status != 4) {
+                    list[i].status = 1;
+                }
             }
             return list;
         }
@@ -198,7 +200,6 @@ define(['app/module', 'app/directive/directiveApi'
 
         api.list("/wap/message/message-history", {id: $scope.receiveId}).success(function (res) {
             var data = res.data.messageList;
-            console.log(res.data);
             if (data.length > 0 || res.data.status == 0) { // 如果有新消息，所有消息状态为已看
                 list = $scope.setMessageStatus(list);
             }
@@ -262,6 +263,13 @@ define(['app/module', 'app/directive/directiveApi'
                 };
 
 
+                if (dataFilter.data.blacked.indexOf(receiveID) > -1){  //黑名单，不能发消息
+                    message.refuse  = -1;
+                    message.status  = 4;
+                    $scope.historyList.push(message);
+                    ar.setStorage('chat_messageHistory' + receiveID, $scope.historyList); // 每次发送消息后把消息放到浏览器端缓存
+                    return ;
+                }
 
                 // 图片上传发送消息回调时不写localStorage,因为上传的时候已经写过了
                 if (!(serverId != 'view' && type == 'pic')) {
@@ -272,12 +280,7 @@ define(['app/module', 'app/directive/directiveApi'
                     return;
                 }
 
-                console.log(dataFilter.data.blacked , receiveID, message.message);
-                if (dataFilter.data.blacked.indexOf(receiveID) > -1){  //黑名单，不能发消息
-                    message.refuse  = -1;
-                    message.status  = 4;
-                    return ;
-                }
+
 
                 socket.emit('chat message', message);
 
