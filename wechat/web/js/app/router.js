@@ -39,7 +39,6 @@ define(["app/module", 'app/service/serviceApi'],
                 }
             }
 
-
             var userId = ar.getCookie('bhy_user_id');
             if (userId > 0) {
                 messageList();
@@ -57,6 +56,7 @@ define(["app/module", 'app/service/serviceApi'],
 
             }
 
+            mainIntercept();
 
             // 页面开始加载
             $rootScope
@@ -70,24 +70,8 @@ define(["app/module", 'app/service/serviceApi'],
                                     return false;
                                 }
                             })
-
-                            // 查询是否有新的用户关注自己
-                            $rootScope.newFollow = false;
-                            $rootScope.newFollowNumber = 0;
-                            api.get('/wap/follow/is-new-follow', {user_id: userId}).success(function (res) {
-                                $rootScope.newFollow = res.status;
-                                $rootScope.newFollowNumber = res.data;
-                            })
-
-                            // 获取评论总数
-                            $rootScope.newDiscovery = 0;
-                            api.get('/wap/member/comment-num', {}).success(function (res) {
-                                var discoverySum = ar.getStorage('discoverySum');
-                                if (res.data > discoverySum) {
-                                    $rootScope.newDiscovery = res.data - discoverySum;
-                                }
-                            })
                         }
+                        mainIntercept();
                     });
             // 页面加载成功
             $rootScope
@@ -96,6 +80,27 @@ define(["app/module", 'app/service/serviceApi'],
                         $ionicLoading.hide();
                         //$templateCache.removeAll();  // 清除模版缓存
                     });
+
+            // 相关监听
+            function mainIntercept() {
+
+                // 查询是否有新的用户关注自己
+                $rootScope.newFollow = false;
+                $rootScope.newFollowNumber = 0;
+                api.get('/wap/follow/is-new-follow', {user_id: userId}).success(function (res) {
+                    $rootScope.newFollow = res.status;
+                    $rootScope.newFollowNumber = res.data;
+                })
+
+                // 获取评论总数
+                $rootScope.newDiscovery = 0;
+                api.get('/wap/member/comment-num', {}).success(function (res) {
+                    var discoverySum = ar.getStorage('discoverySum');
+                    if (res.data > discoverySum) {
+                        $rootScope.newDiscovery = res.data - discoverySum;
+                    }
+                })
+            }
         }]);
         return module.config(["$stateProvider", "$urlRouterProvider", "$ionicConfigProvider", "$controllerProvider", function ($stateProvider, $urlRouterProvider, $ionicConfigProvider, $controllerProvider) {
                 $ionicConfigProvider.templates.maxPrefetch(0);
