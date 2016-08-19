@@ -41,6 +41,12 @@ class Message extends Base {
         return $list;
     }
 
+    public function getMessageStatus($sendId , $receiveId ){
+        return (new Query())->from($this->tablePrefix . 'user_message')
+            ->where(['receive_user_id'=>$receiveId , 'send_user_id'=>$sendId ,'status'=>2])
+            ->count();
+    }
+
     public function getMessageList( $sendId , $receiveId ){
         return (new Query())->from($this->tablePrefix."user_message")
             ->where(["receive_user_id" => $sendId , "send_user_id" =>$receiveId])

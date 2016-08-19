@@ -47,7 +47,9 @@ class MessageController extends BaseController
     {
         $sendId = \common\util\Cookie::getInstance()->getCookie('bhy_id')->value;
         $list   = Message::getInstance()->getMessageHistory($sendId, \Yii::$app->request->get('id'));
-        $this->renderAjax($list);
+        $status = Message::getInstance()->getMessageStatus($sendId, \Yii::$app->request->get('id'));
+
+        $this->renderAjax(['status'=>1 , 'data'=>['status'=> $status , 'messageList'=>$list]]);
     }
 
     /**

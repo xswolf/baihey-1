@@ -195,9 +195,10 @@ define(['app/module', 'app/directive/directiveApi'
             $rootScope.receiveUserInfo = res.data;
         });
 
-        api.list("/wap/message/message-history", {id: $scope.receiveId}).success(function (data) {
-
-            if (data.length > 0) { // 如果有新消息，所有消息状态为已看
+        api.list("/wap/message/message-history", {id: $scope.receiveId}).success(function (res) {
+            var data = res.data.messageList;
+            console.log(res.data);
+            if (data.length > 0 || res.data.status == 0) { // 如果有新消息，所有消息状态为已看
                 list = $scope.setMessageStatus(list);
             }
             $rootScope.historyListHide = list = list != null ? list.concat(data) : data;
