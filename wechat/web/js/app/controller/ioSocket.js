@@ -248,11 +248,6 @@ define(['app/module', 'app/directive/directiveApi'
             // 发送消息函数
             $scope.sendMessage = function (serverId, sendId, receiveID, type, flagTime) {
 
-                if (dataFilter.data.blacked.indexOf(sendId) > -1){  //黑名单，不能发消息
-
-                    return false;
-                }
-
                 flagTime != undefined ? '' : flagTime = ar.timeStamp();
                 var id = ar.getId($scope.historyList);
                 var message = {
@@ -265,6 +260,10 @@ define(['app/module', 'app/directive/directiveApi'
                     time: flagTime,
                     create_time: flagTime
                 };
+
+                if (dataFilter.data.blacked.indexOf(sendId) > -1){  //黑名单，不能发消息
+                    message.type = -1;
+                }
 
                 // 图片上传发送消息回调时不写localStorage,因为上传的时候已经写过了
                 if (!(serverId != 'view' && type == 'pic')) {

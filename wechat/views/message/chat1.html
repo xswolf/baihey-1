@@ -70,7 +70,7 @@
 
                 <!-- 消息内容 -->
                 <div class="talk_r">
-                    <div class="talk_con clearfix">
+                    <div class="talk_con">
                         <!-- 文本 -->
                         <div class="content normal" ng-if="vo.type=='send' || vo.message_type==1">
                             <p>{{vo.message}}</p>
@@ -110,12 +110,12 @@
                         </div>-->
 
                         <!-- 已读 -->
-                        <div class="status" ng-if="vo.status==1 && sendId == vo.send_user_id">
+                        <div class="status" ng-if="vo.status==1 && sendId == vo.send_user_id && vo.type != -1">
                             <span class="delivered">已读</span>
                         </div>
 
                         <!-- 未读 自己发送的消息显示 或别人发的语言显示-->
-                        <div class="status" ng-if="vo.status==2 && (sendId == vo.send_user_id || vo.message_type==2)">
+                        <div class="status" ng-if="vo.status==2 && (sendId == vo.send_user_id || vo.message_type==2) && vo.type != -1">
                             <span class="read">未读</span>
                         </div>
 
@@ -125,12 +125,17 @@
                         </div>
 
                         <!-- 发送失败 -->
-                        <div class="status" ng-if="vo.status==4 && sendId == vo.send_user_id">
+                        <div class="status" ng-if="vo.status==4 && sendId == vo.send_user_id && vo.type == -1">
                             <span class="lost ion ion-alert "></span>
                         </div>
 
                     </div>
                 </div>
+
+                <div class="msg_refuse" ng-if="vo.type == -1">
+                    <p>对方拒绝接收您的消息。</p>
+                </div>
+
             </ion-item>
 
         </ion-list>

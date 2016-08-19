@@ -606,3 +606,19 @@
     position: absolute;
     top: 4px;
 }
+.msg_refuse{
+    float: left;
+    margin-top: 10px;
+    position: relative;
+    width: 100%;
+}
+.msg_refuse>p{
+    background-color: #ccc;
+    border-radius: 5px;
+    color: #fff;
+    display: block;
+    font-size: 14px;
+    margin: 0 auto;
+    padding: 2px 5px;
+    width: 170px;
+}
