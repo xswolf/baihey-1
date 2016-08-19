@@ -261,9 +261,7 @@ define(['app/module', 'app/directive/directiveApi'
                     create_time: flagTime
                 };
 
-                if (dataFilter.data.blacked.indexOf(sendId) > -1){  //黑名单，不能发消息
-                    message.type = -1;
-                }
+
 
                 // 图片上传发送消息回调时不写localStorage,因为上传的时候已经写过了
                 if (!(serverId != 'view' && type == 'pic')) {
@@ -273,6 +271,14 @@ define(['app/module', 'app/directive/directiveApi'
                 if (type == 'pic' && serverId == 'view') {
                     return;
                 }
+
+                console.log(dataFilter.data.blacked , receiveID, message.message);
+                if (dataFilter.data.blacked.indexOf(receiveID) > -1){  //黑名单，不能发消息
+                    message.refuse  = -1;
+                    message.status  = 4;
+                    return ;
+                }
+
                 socket.emit('chat message', message);
 
             }
