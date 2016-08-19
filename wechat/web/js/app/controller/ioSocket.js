@@ -256,7 +256,8 @@ define(['app/module', 'app/directive/directiveApi'
                     receive_user_id: receiveID,
                     type: type,
                     status: 3,
-                    time: flagTime
+                    time: flagTime,
+                    create_time: flagTime
                 };
 
                 // 图片上传发送消息回调时不写localStorage,因为上传的时候已经写过了
