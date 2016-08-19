@@ -889,7 +889,6 @@ define(['app/module', 'app/directive/directiveApi'
                 res.data[i].auth = JSON.parse(res.data[i].auth);
             }
             $scope.followList = res.data;
-            console.log($scope.followList);
         });
 
         api.list('/wap/follow/follow-list', {type: 'followed'}).success(function (res) {
