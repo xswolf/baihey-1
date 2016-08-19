@@ -15,7 +15,7 @@
             <div class="item tac" ng-if="newDiscovery > 0">
                 <a class="newMsg" href="#/discovery_message">{{newDiscovery}}条新评论<i class="ion-ios-arrow-right ml5"></i><i class="ion-ios-arrow-right"></i></a>
             </div>
-            <div class="item item-thumbnail-left" ng-repeat="dis in discoveryList | filter:indexFilter" >
+            <div class="item item-thumbnail-left item-remove-animate" ng-repeat="dis in discoveryList | filter:indexFilter" >
                 <img class="cp" ng-if="dis.head_status == 1" ng-src="{{dis.head_pic | isNull}}" ng-click="jump(dis.id,dis.user_id,'userInfo')" onerror="this.src='/wechat/web/images/no_img.png'">
                 <img class="cp" ng-if="dis.head_status != 1" src="/wechat/web/images/no_img.png" ng-click="jump(dis.id,dis.user_id,'userInfo')">
                 <h2>

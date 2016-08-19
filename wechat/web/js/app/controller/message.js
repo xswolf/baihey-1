@@ -24,7 +24,6 @@ define(['app/module', 'app/directive/directiveApi'
         $scope.userInfo = {};
         // 获取页面数据
 
-
         $rootScope.$on('messageList' , function () {
             $scope.messageList = $rootScope.messageList;
         })
@@ -52,7 +51,8 @@ define(['app/module', 'app/directive/directiveApi'
         }*/
 
         // 删除操作
-        $scope.removeItem = function (item) {
+        $scope.removeItem = function (item,event) {
+            angular.element(event.target).parent().parent().addClass('item-remove-animate');
             var message = ar.getStorage('messageList');
             for (var i in message) {
                 //console.log(message[i].other , item)
@@ -67,7 +67,7 @@ define(['app/module', 'app/directive/directiveApi'
             ar.setStorage('messageList', $scope.messageList);
             api.setMsgDisplay(item.other).success(function (res) {
             });
-            //$ionicListDelegate.closeOptionButtons();
+
             return true;
         }
 

@@ -15,10 +15,10 @@
         </a>-->
     </ion-header-bar>
     <ion-content class="has-header bhy-has-footer message">
-        <ion-list show-delete="shouldShowDelete" ng-cloak>
+        <ion-list show-delete="shouldShowDelete">
             <!--  href="#/chat1?id={{messageInfo.other}}&head_pic={{messageInfo.info.head_pic}}&real_name={{messageInfo.info.real_name}}&sex={{messageInfo.sex}}&age={{messageInfo.info.age}}" -->
             <ion-item ng-if="indexFilter(messageInfo.other)"  ng-repeat="messageInfo in messageList  | orderBy:'order_time':true" href="#/chat1?id={{messageInfo.other}}&head_pic={{messageInfo.info.head_pic}}&real_name={{messageInfo.info.real_name}}&sex={{messageInfo.sex}}&age={{messageInfo.info.age}}&report_flag={{messageInfo.report_flag}}">
-                <ion-delete-button class="ion-minus-circled" ng-click="removeItem(messageInfo)"></ion-delete-button>
+                <ion-delete-button class="ion-minus-circled" ng-click="removeItem(messageInfo,$event)"></ion-delete-button>
                 <div class="row">
                     <div class="msg_u_img mr20 pr fl">
                         <img class="item_uimg rounded" ng-src="{{messageInfo.info.head_pic | isNull}}" width="56" height="56"
@@ -26,7 +26,7 @@
                         <i class="info_nb"
                            ng-if="messageInfo.receive_user_id == userInfo.id && messageInfo.sumSend > 0">{{messageInfo.sumSend}}</i>
                     </div>
-                    <p style="width: 65%;" class="">
+                    <p style="width: 65%;">
                         <span class="fwb fs14 mr10 lh28" ng-if="messageInfo.info.real_name && messageInfo.other > 9999">{{messageInfo.info.real_name | sex:messageInfo.sex :messageInfo.info.age:messageInfo.other}}</span>
                         <span class="fwb fs14 mr10 lh28" ng-if="!messageInfo.info.real_name && messageInfo.other > 9999">会员{{messageInfo.other}}</span>
                         <span class="fwb fs14 mr10 lh28" ng-if="messageInfo.other < 10000">{{messageInfo.info.real_name}}</span>

@@ -6,7 +6,7 @@
     </ion-header-bar>
     <ion-content class="bhy com_w_100 m_bg">
         <ion-list show-delete="shouldShowDelete">
-            <ion-item class="item-avatar" href="#/userInfo?userId={{f.other}}" ng-repeat="f in followList">
+            <ion-item class="item-avatar item-remove-animate" href="#/userInfo?userId={{f.other}}" ng-repeat="f in followList">
                 <ion-delete-button class="ion-minus-circled" ng-click="removeItem($index,f)"></ion-delete-button>
                 <img ng-src="{{f.info.head_pic | isNull}}" onerror="this.src='/wechat/web/images/no_img.png'">
                 <h2>

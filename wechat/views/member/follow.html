@@ -17,13 +17,14 @@
             <ion-item class="item-avatar"
                       ng-href="{{f.other >= 10000 ? '#/userInfo?userId='+f.other : '#/admin_info?userId='+f.other}}"
                       ng-repeat="f in followList">
-                <ion-delete-button class="ion-minus-circled" ng-click="delFollow(f,$index)"></ion-delete-button>
+                <ion-delete-button class="ion-minus-circled" ng-click="delFollow(f,$index,$event)"></ion-delete-button>
                 <img class="br0" ng-src="{{f.info.head_pic | isNull}}" onerror="this.src='/wechat/web/images/no_img.png'">
                 <h2 class="clearfix">
                     <span ng-if="f.info.real_name" class="fl">{{f.info.real_name | sex:f.sex :f.info.age:f.other}}</span>
                     <span ng-if="!f.info.real_name" class="fl">会员{{f.other}}</span>
                 </h2>
-                <p>{{f.info.age | timeToAge}} {{f.info.height}} {{f.info.is_marriage | marriage}}
+                <span ng-if="f.other < 10000" class="identity phone">官方</span>
+                <p ng-if="f.other > 9999">{{f.info.age | timeToAge}} {{f.info.height}} {{f.info.is_marriage | marriage}}
                     {{f.info.is_purchase | purchase}} {{f.info.is_car | car}}</p>
             </ion-item>
         </ion-list>
@@ -41,7 +42,8 @@
                     <span ng-if="f.info.real_name" class="fl">{{f.info.real_name | sex:f.sex :f.info.age:f.other}}</span>
                     <span ng-if="!f.info.real_name" class="fl">会员{{f.other}}</span>
                 </h2>
-                <p>{{f.info.age | timeToAge}} {{f.info.height}} {{f.info.is_marriage | marriage}}
+                <span ng-if="f.other < 10000" class="identity phone">官方</span>
+                <p ng-if="f.other > 9999">{{f.info.age | timeToAge}} {{f.info.height}} {{f.info.is_marriage | marriage}}
                     {{f.info.is_purchase | purchase}} {{f.info.is_car | car}}</p>
             </ion-item>
         </ion-list>

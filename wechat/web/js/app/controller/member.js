@@ -892,7 +892,8 @@ define(['app/module', 'app/directive/directiveApi'
         });
 
         // 取消关注
-        $scope.delFollow = function (item, $index) {
+        $scope.delFollow = function (item, $index,event){
+            angular.element(event.target).parent().parent().addClass('item-remove-animate');
             api.get('/wap/follow/del-follow', {
                 user_id: ar.getCookie("bhy_user_id"),
                 follow_id: item.user_id
