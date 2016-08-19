@@ -49,7 +49,7 @@ class UserFollow extends Base
             ->from($this->tablePrefix.'user_follow' . ' f')
             ->innerJoin($infoTable . ' i', $join)
             ->innerJoin($userTable . ' u', 'i.user_id = u.id')
-            ->orderBy('create_time desc')
+            ->orderBy('update_time desc')
             ->limit($pageSize)
             ->offset($offset);
 

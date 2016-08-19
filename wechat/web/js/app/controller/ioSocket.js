@@ -56,6 +56,7 @@ define(['app/module', 'app/directive/directiveApi'
             viewScroll.scrollBottom(true);
         });
 
+
         // 显示时间函数
         $scope.isLongTime = function (time, index) {
             if(index < 1) return true;
@@ -494,9 +495,7 @@ define(['app/module', 'app/directive/directiveApi'
                 }
             })
 
-
         })
-
 
     }]);
 
@@ -568,4 +567,6 @@ define(['app/module', 'app/directive/directiveApi'
      module.controller("message.childDetailBriController", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$ionicModal', function (api, $scope, $timeout, $ionicPopup, $ionicModal) {
 
      }]);*/
+
+
 })
