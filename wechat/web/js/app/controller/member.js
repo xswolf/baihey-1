@@ -8,7 +8,9 @@ define(['app/module', 'app/directive/directiveApi'
 
     // 我
     module.controller("member.index", ['app.serviceApi', '$scope', '$ionicPopup', function (api, $scope, $ionicPopup) {
-
+        $scope.userInfo = ar.getStorage('userInfo');
+        $scope.userInfo.info = JSON.parse($scope.userInfo.info);
+        $scope.userInfo.auth = JSON.parse($scope.userInfo.auth);
         // 退出登录
         $scope.loginOut = function () {
             api.save('/wap/member/login-out', {}).success(function (res) {
@@ -65,6 +67,10 @@ define(['app/module', 'app/directive/directiveApi'
 
     // 资料首页
     module.controller("member.information", ['app.serviceApi', '$scope', '$ionicPopup', 'FileUploader', '$ionicLoading', '$ionicActionSheet', '$ionicModal', '$ionicScrollDelegate', '$filter', '$rootScope', '$location', function (api, $scope, $ionicPopup, FileUploader, $ionicLoading, $ionicActionSheet, $ionicModal, $ionicScrollDelegate, $filter, $rootScope, $location) {
+
+        $scope.userInfo = ar.getStorage('userInfo');
+        $scope.userInfo.info = JSON.parse($scope.userInfo.info);
+        $scope.userInfo.auth = JSON.parse($scope.userInfo.auth);
 
         // 判断身份证是否认证通过
         api.list('/wap/member/photo-list', {type: 2, pageSize: 2}).success(function (res) {
@@ -377,6 +383,10 @@ define(['app/module', 'app/directive/directiveApi'
     // 官方号-资料首页
     module.controller("member.admin_information", ['app.serviceApi', '$scope', '$ionicPopup', 'FileUploader', '$ionicLoading', '$ionicActionSheet', '$ionicModal', '$ionicScrollDelegate', '$filter', '$rootScope', '$location', function (api, $scope, $ionicPopup, FileUploader, $ionicLoading, $ionicActionSheet, $ionicModal, $ionicScrollDelegate, $filter, $rootScope, $location) {
 
+        $scope.userInfo = ar.getStorage('userInfo');
+        $scope.userInfo.info = JSON.parse($scope.userInfo.info);
+        $scope.userInfo.auth = JSON.parse($scope.userInfo.auth);
+
         // 判断身份证是否认证通过
         api.list('/wap/member/photo-list', {type: 2, pageSize: 2}).success(function (res) {
             if (res.data.length) {
@@ -651,8 +661,6 @@ define(['app/module', 'app/directive/directiveApi'
             $scope.infoModal.hide();
             $scope.infoModal.remove();
         }
-
-
     }
     ]);
 
@@ -881,6 +889,7 @@ define(['app/module', 'app/directive/directiveApi'
                 res.data[i].auth = JSON.parse(res.data[i].auth);
             }
             $scope.followList = res.data;
+            console.log($scope.followList);
         });
 
         api.list('/wap/follow/follow-list', {type: 'followed'}).success(function (res) {

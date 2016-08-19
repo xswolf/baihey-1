@@ -133,6 +133,7 @@ define(["app/module", 'app/service/serviceApi'],
                         }
                     })
                     .state('member', {   // 我
+                        cache:false,
                         url: "/member",
                         templateUrl: "/wechat/views/member/index.html",
                         controller: 'member.index'
@@ -194,6 +195,7 @@ define(["app/module", 'app/service/serviceApi'],
 
                     })
                     .state('chat', { // 聊天页面
+                        cache:false,
                         url: "/chat1",
                         templateUrl: "/wechat/views/message/chat1.html",
                         controller: 'message.chat1',
@@ -255,7 +257,6 @@ define(["app/module", 'app/service/serviceApi'],
 
                     .state('discovery', {       // 发现
                         url: "/discovery",
-                        cache: true,
                         templateUrl: "/wechat/views/discovery/index.html",
                         controller: 'discovery.index',
                         resolve: {
@@ -270,7 +271,6 @@ define(["app/module", 'app/service/serviceApi'],
                     })
                     .state('discovery_message', {       // 发现
                         url: "/discovery_message",
-                        cache: true,
                         templateUrl: "/wechat/views/discovery/message.html",
                         controller: 'discovery.message'
                     })
@@ -296,11 +296,13 @@ define(["app/module", 'app/service/serviceApi'],
                         controller: 'rendezvous.ask'
                     })
                     .state('charge_order', {     // 支付-订单信息
+                        cache:false,
                         url: "/charge_order",
                         templateUrl: "/wechat/views/charge/order.html",
                         controller: 'charge.order'
                     })
                     .state('charge', {     // 充值
+                        cache:false,
                         url: "/charge_index",
                         templateUrl: "/wechat/views/charge/index.html",
                         controller: 'charge.index'
@@ -384,7 +386,9 @@ define(["app/module", 'app/service/serviceApi'],
                         $scope.eduCheck = res.edu;
                         $scope.housingCheck = res.housing;
                     });
+
                     $scope.userInfo = ar.getStorage('userInfo');
+
                     if ($scope.userInfo && $scope.userInfo.id == ar.getCookie('bhy_user_id')) {
                         //getUserStorage();
 

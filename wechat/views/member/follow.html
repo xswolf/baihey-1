@@ -16,7 +16,7 @@
         <ion-list ng-if="followType == 'follow'" show-delete="shouldShowDelete">
             <ion-item class="item-avatar"
                       ng-href="{{f.other >= 10000 ? '#/userInfo?userId='+f.other : '#/admin_info?userId='+f.other}}"
-                      ng-repeat="f in followList">
+                      ng-repeat="f in followList | orderBy:'create_time':true">
                 <ion-delete-button class="ion-minus-circled" ng-click="delFollow(f,$index,$event)"></ion-delete-button>
                 <img class="br0" ng-src="{{f.info.head_pic | isNull}}" onerror="this.src='/wechat/web/images/no_img.png'">
                 <h2 class="clearfix">
@@ -36,7 +36,7 @@
         <ion-list ng-if="followType == 'followed' && userInfo.info.level >= 1">
             <ion-item class="item-avatar"
                       ng-href="{{f.other >= 10000 ? '#/userInfo?userId='+f.other : '#/admin_info?userId='+f.other}}"
-                      ng-repeat="f in followedList">
+                      ng-repeat="f in followedList | orderBy:'create_time':true">
                 <img class="br0" ng-src="{{f.info.head_pic | isNull}}" onerror="this.src='/wechat/web/images/no_img.png'">
                 <h2 class="clearfix">
                     <span ng-if="f.info.real_name" class="fl">{{f.info.real_name | sex:f.sex :f.info.age:f.other}}</span>
