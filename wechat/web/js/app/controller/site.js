@@ -28,6 +28,7 @@ define(['app/module', 'app/directive/directiveApi'
         }
         init();
 
+
         // 用户列表
         $scope.userList = [];
 
