@@ -60,7 +60,7 @@ define(['app/module', 'app/directive/directiveApi'
         $scope.isLongTime = function (time, index) {
             if(index < 1) return true;
             if (!time) return false;
-            return (time - $scope.historyList[index - 1].time) > 10;
+            return (time - $scope.historyList[index - 1].create_time) > 10;
         }
 
         $scope.followData = {};
