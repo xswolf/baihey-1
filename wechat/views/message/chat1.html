@@ -125,7 +125,7 @@
                         </div>
 
                         <!-- 发送失败 -->
-                        <div class="status" ng-if="vo.status==4 && (sendId == vo.send_user_id || vo.refuse == -1)">
+                        <div class="status" ng-if="( vo.status==4 && sendId == vo.send_user_id )|| vo.refuse == -1)">
                             <span class="lost ion ion-alert "></span>
                         </div>
 
