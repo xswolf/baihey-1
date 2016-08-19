@@ -336,16 +336,16 @@ define(["app/module", 'app/service/serviceApi'],
                 }
 
                 // 以下为用户信息处理
-                $scope.userInfo = [];
+                $scope.userInfo = {};
 
                 var getUserStorage = function () {
-                    if ($scope.userInfo != null) {
+                    if ($scope.userInfo) {
                         $scope.userInfo.info = JSON.parse($scope.userInfo.info);
                         $scope.userInfo.auth = JSON.parse($scope.userInfo.auth);
                     }
                 }
                 var setUserInfoStorage = function () {
-                    if ($scope.userInfo != null) {
+                    if ($scope.userInfo) {
                         $scope.userInfo.info = JSON.stringify($scope.userInfo.info);
                         $scope.userInfo.auth = JSON.stringify($scope.userInfo.auth);
                     }
