@@ -364,7 +364,9 @@ define(['app/module', 'app/directive/directiveApi'
         $scope.saveData = function (formData) {
             ar.processParams($scope, formData);
             api.save('/wap/member/save-data', $scope.userInfo).success(function (res) {
-                $scope.getUserPrivacyStorage('');
+                console.log($scope.userInfo);
+                ar.setStorage("userInfo",$scope.userInfo);
+                //$scope.getUserPrivacyStorage('');
             }).finally(function () {
                 $scope.closeModal();
             })
