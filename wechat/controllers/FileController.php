@@ -9,36 +9,38 @@
 namespace wechat\controllers;
 
 
-use common\models\UserInformation;
 use common\models\UserPhoto;
 use common\util\Cookie;
 use common\util\File;
 
-class FileController extends BaseController {
+class FileController extends BaseController
+{
 
     /**
      * 文件上传
      */
-    public function actionUpload() {
+    public function actionUpload()
+    {
         $file = new File();
-        $res  = $file->upload(__DIR__."/../../images/");
+        $res  = $file->upload(__DIR__ . "/../../images/");
         $this->renderAjax($res);
     }
 
     /**
      * 相册上传+缩略图
      */
-    public function actionThumbPhoto() {
+    public function actionThumbPhoto()
+    {
         $user_id = Cookie::getInstance()->getCookie('bhy_id')->value;
-        $data = $this->thumb();
+        $data    = $this->thumb();
         // 保存数据
-        if(1 == $data['status']) {
-            isset($this->get['type']) ? $photo['type'] = $this->get['type'] :true;
-            $photo['is_check'] = $user_id < 10000 ? 1 : 2;
+        if (1 == $data['status']) {
+            isset($this->get['type']) ? $photo['type'] = $this->get['type'] : true;
+            $photo['is_check']   = $user_id < 10000 ? 1 : 2;
             $photo['thumb_path'] = $data['thumb_path'];
             $photo['pic_path']   = $data['pic_path'];
             $photo['time']       = $data['time'];
-            if($id = UserPhoto::getInstance()->addPhoto($user_id, $photo)) {
+            if ($id = UserPhoto::getInstance()->addPhoto($user_id, $photo)) {
                 $data['id'] = $id;
             } else {
                 $data = ['status' => -1, 'info' => '保存失败!~'];
@@ -47,16 +49,44 @@ class FileController extends BaseController {
         $this->renderAjax($data);
     }
 
-    public function thumb(){
-        $file    = new File();
-        $res     = $file->upload(__DIR__."/../../images/");// 原图上传
+    public function thumb()
+    {
+        $file = new File();
+        $res  = $file->upload(__DIR__ . "/../../images/");// 原图上传
         return (1 == $res['status']) ? $file->thumbPhoto($res) : $res;// 原图压缩
+    }
+
+    public function actionClientThumb()
+    {
+        $input     = file_get_contents("php://input");
+        $post      = json_decode($input, true);
+        $img       = base64_decode($post['base64']);
+        $file      = new File();
+//        $imagePath = $file->getImagePath(__DIR__ . "/../../images/");
+//        $imagePath = __DIR__."../../images/upload/picture/".date('Ymd').'/';
+        $imagePath = '';
+
+        $time      = time();
+        $fileName  = $imagePath . $time . rand(1, 100000000) . ".jpg";
+        file_put_contents($fileName, $img);
+
+
+        $fileInfo = getimagesize($fileName);
+        $picInfo  = $file->pictureRatio($fileInfo[0], $fileInfo[1]);
+
+        if (rename($fileName, $imagePath. '_' . $picInfo[0] . '_' . $picInfo[1] . '.jpg')) {
+            $res = array('status' => 1, 'info' => '上传成功', 'path' => $imagePath. '_' . $picInfo[0] . '_' . $picInfo[1] . '.jpg', 'extension' => 'jpg', 'time' => $time);
+            $file->thumbPhoto($res);
+        }
+
+        $this->renderAjax(['status' => 1]);
     }
 
     /**
      * 相册上传+缩略图
      */
-    public function actionThumb() {
+    public function actionThumb()
+    {
 
         $data = $this->thumb();
 
@@ -70,24 +100,24 @@ class FileController extends BaseController {
     public function actionAuthPictures()
     {
         $user_id = Cookie::getInstance()->getCookie('bhy_id')->value;
-        $data = $this->thumb();
+        $data    = $this->thumb();
         // 保存数据
-        if(1 == $data['status']) {
+        if (1 == $data['status']) {
             //删除旧图片
-            if($photo = UserPhoto::getInstance()->getPhotoList($user_id, $this->get['type'])) {
+            if ($photo = UserPhoto::getInstance()->getPhotoList($user_id, $this->get['type'])) {
                 $thumb_path = __DIR__ . "/../.." . $photo[0]['thumb_path'];
                 if (is_file($thumb_path) && unlink($thumb_path)) {
                     $pic_path = str_replace('thumb', 'picture', $thumb_path);
                     unlink($pic_path);
                 }
-                $photo[0]['thumb_path'] = $data['thumb_path'];
-                $photo[0]['pic_path'] = $data['pic_path'];
+                $photo[0]['thumb_path']  = $data['thumb_path'];
+                $photo[0]['pic_path']    = $data['pic_path'];
                 $photo[0]['update_time'] = $data['time'];
                 if (!UserPhoto::getInstance()->savePhoto($photo, $user_id)) {
                     $data = ['status' => -1, 'info' => '保存失败!~'];
                 }
             } else {
-                $photo['type'] = $this->get['type'];
+                $photo['type']       = $this->get['type'];
                 $photo['thumb_path'] = $data['thumb_path'];
                 $photo['pic_path']   = $data['pic_path'];
                 $photo['time']       = $data['time'];
@@ -102,36 +132,37 @@ class FileController extends BaseController {
     /**
      * 图片旋转
      */
-    public function actionRotate(){
+    public function actionRotate()
+    {
 
-        $filename   = '/alidata/www/baihey'.\Yii::$app->request->get('filename');
-        $oldName    = str_replace('thumb' , 'picture' , $filename);
-        $degrees    = \Yii::$app->request->get('degrees');
+        $filename = '/alidata/www/baihey' . \Yii::$app->request->get('filename');
+        $oldName  = str_replace('thumb', 'picture', $filename);
+        $degrees  = \Yii::$app->request->get('degrees');
 
-        $ext = strtolower(strrchr($filename,'.'));
+        $ext    = strtolower(strrchr($filename, '.'));
         $method = 'jpeg';
-        if ($ext == 'jpg' || $ext == 'jpeg'){
+        if ($ext == 'jpg' || $ext == 'jpeg') {
             $method = 'jpeg';
-        }elseif ($ext == 'gif'){
+        } elseif ($ext == 'gif') {
             $method = 'gif';
-        }elseif ($ext == 'png'){
+        } elseif ($ext == 'png') {
             $method = 'png';
-        }elseif ($ext == 'bmp'){
+        } elseif ($ext == 'bmp') {
             $method = 'wbmp';
         }
 
-        $createMethod = "imagecreatefrom".$method;
-        $imgMethod  = "image".$method;
-        $oldSource  = $createMethod($oldName);
-        $oldRotate  = imagerotate($oldSource, $degrees, 0);
+        $createMethod = "imagecreatefrom" . $method;
+        $imgMethod    = "image" . $method;
+        $oldSource    = $createMethod($oldName);
+        $oldRotate    = imagerotate($oldSource, $degrees, 0);
 
-        $source     = $createMethod($filename);
-        $rotate     = imagerotate($source, $degrees, 0);
+        $source = $createMethod($filename);
+        $rotate = imagerotate($source, $degrees, 0);
 
-        if ($imgMethod($rotate,$filename) && $imgMethod($oldRotate,$oldName)){
-            return $this->renderAjax(['status'=>1 , 'message' => '成功']);
+        if ($imgMethod($rotate, $filename) && $imgMethod($oldRotate, $oldName)) {
+            return $this->renderAjax(['status' => 1, 'message' => '成功']);
         }
-        return $this->renderAjax(['status'=>0 , 'message' => '失败']);
+        return $this->renderAjax(['status' => 0, 'message' => '失败']);
 
     }
 }

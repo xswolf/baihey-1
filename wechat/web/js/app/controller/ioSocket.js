@@ -248,6 +248,11 @@ define(['app/module', 'app/directive/directiveApi'
             // 发送消息函数
             $scope.sendMessage = function (serverId, sendId, receiveID, type, flagTime) {
 
+                if (dataFilter.data.blacked.indexOf(sendId) > -1){  //黑名单，不能发消息
+
+                    return false;
+                }
+
                 flagTime != undefined ? '' : flagTime = ar.timeStamp();
                 var id = ar.getId($scope.historyList);
                 var message = {
@@ -381,6 +386,64 @@ define(['app/module', 'app/directive/directiveApi'
                 var ev = document.createEvent("MouseEvents");
                 ev.initEvent("click", true, true);
                 e.dispatchEvent(ev);
+
+
+                //-----------------图片压缩------------------
+                //var input = document.querySelector('#pic_fileInput');
+                //
+                //input.onchange = function () {
+                //    $scope.sendMessage('view', $scope.sendId, $scope.receiveId, 'pic', time); // 假发送，便于预览图片
+                //    var _this = this;
+                //
+                //    require(['plugin/angular/lrz.bundle'] , function () {
+                //        function clacImgZoomParam( maxWidth, maxHeight, width, height ){
+                //            var param = {top:0, left:0, width:width, height:height};
+                //            if( width>maxWidth || height>maxHeight )
+                //            {
+                //                rateWidth = width / maxWidth;
+                //                rateHeight = height / maxHeight;
+                //
+                //                if( rateWidth > rateHeight )
+                //                {
+                //                    param.width =  maxWidth;
+                //                    param.height = Math.round(height / rateWidth);
+                //                }else
+                //                {
+                //                    param.width = Math.round(width / rateHeight);
+                //                    param.height = maxHeight;
+                //                }
+                //            }
+                //
+                //            param.left = Math.round((maxWidth - param.width) / 2);
+                //            param.top = Math.round((maxHeight - param.height) / 2);
+                //            return param;
+                //        }
+                //
+                //        var img = new Image();
+                //        img.onload = function(){
+                //            var rect = clacImgZoomParam(860, 1280, img.offsetWidth, img.offsetHeight);
+                //            img.width  =  rect.width;
+                //            img.height =  rect.height;
+                //            img.style.marginTop = rect.top+'px';
+                //            console.log(img);
+                //        }
+                //        var reader = new FileReader();
+                //        reader.onload = function(evt){img.src = evt.target.result;}
+                //        reader.readAsDataURL(_this.files[0]);
+                //
+                //        lrz(_this.files[0], {width: 820}).then(function (rst) {
+                //            $http.post('/wap/file/client-thumb' , rst).success(function () {
+                //                $scope.sendMessage(response.thumb_path, $scope.sendId, $scope.receiveId, 'pic', time);  // 真实发送
+                //            });
+                //            return rst;
+                //        });
+                //
+                //    })
+                //
+                //
+                //}
+                //return ;
+                //-----------------------------------
 
                 $scope.uploader.filters.push({
                     name: 'file-size-Res',
