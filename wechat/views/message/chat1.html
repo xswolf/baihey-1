@@ -92,7 +92,7 @@
                                     <div ng-if="vo.message == 'view' && uploader.queue.length > 0" ng-repeat="item in uploader.queue">
                                         <div ng-show="uploader.isHTML5" ng-thumb="{file: item._file,thumb_path:vo.message}"></div>
                                     </div>
-                                    <img ng-if="vo.message != 'view'" src="{{vo.message}}">
+                                    <img ng-if="vo.message != 'view' && uploader.queue.length < 1" src="{{vo.message}}">
                                     <figure class="hide">轻触照片退出</figure>
                                 </a>
 
