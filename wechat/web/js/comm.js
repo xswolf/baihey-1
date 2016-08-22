@@ -488,7 +488,7 @@ var ar = {
         }
     },
 
-    initPhotoSwipeFromDOM: function (gallerySelector, $scope) {
+    initPhotoSwipeFromDOM: function (gallerySelector, $scope,$ionicPopup) {
         requirejs(['photoswipe', 'photoswipe_ui'], function (PhotoSwipe, PhotoSwipeUI_Default) {
             var parseThumbnailElements = function (el) {
 
@@ -510,6 +510,7 @@ var ar = {
                     }
 
                     childElements = el.children;
+                    console.log(el);
                     size = el.getAttribute('data-size').split('x');
 
                     // create slide object
@@ -563,13 +564,13 @@ var ar = {
                 e.preventDefault ? e.preventDefault() : e.returnValue = false;
                 var auth = angular.element(e.target).attr('auth') ? angular.element(e.target).attr('auth') : 1;
                 if (auth == 2) {
-                    alert('暂时无法查看大图，对方已设置关注可看。')
+                    ar.saveDataAlert($ionicPopup,'暂时无法查看大图，对方已设置关注可看。')
                     return false;
                 } else if (auth == 3) {
-                    alert('暂时无法查看大图，对方已设置VIP会员可看。')
+                    ar.saveDataAlert($ionicPopup,'暂时无法查看大图，对方已设置VIP会员可看。')
                     return false;
                 } else if (auth == 4) {
-                    alert('暂时无法查看大图，对方已设置不公开相册。')
+                    ar.saveDataAlert($ionicPopup,'暂时无法查看大图，对方已设置不公开相册。')
                     return false;
                 }
 

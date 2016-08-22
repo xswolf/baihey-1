@@ -205,7 +205,7 @@ define(['app/module', 'app/directive/directiveApi'
             $rootScope.historyListHide = list = list != null ? list.concat(data) : data;
             ar.setStorage('chat_messageHistory' + $scope.receiveId, list);
 
-            ar.initPhotoSwipeFromDOM('.bhy-gallery', $scope);   // 查看大图插件
+            ar.initPhotoSwipeFromDOM('.bhy-gallery', $scope, $ionicPopup);   // 查看大图插件
             $scope.doRefresh();
             $timeout(function () {
                 viewScroll.scrollBottom(true);
@@ -493,7 +493,7 @@ define(['app/module', 'app/directive/directiveApi'
                             img.onload = null; //避免重复加载
                         }
                     }
-                    ar.initPhotoSwipeFromDOM('.bhy-gallery', $scope);
+                    ar.initPhotoSwipeFromDOM('.bhy-gallery', $scope, $ionicPopup);
                 };
 
                 $scope.uploader.onErrorItem = function (item, response, status, headers) {

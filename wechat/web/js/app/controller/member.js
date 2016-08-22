@@ -88,7 +88,7 @@ define(['app/module', 'app/directive/directiveApi'
         $scope.imgList = [];
         api.list('/wap/member/photo-list', {}).success(function (res) {
             $scope.imgList = res.data;
-            ar.initPhotoSwipeFromDOM('.bhy-gallery', $scope);
+            ar.initPhotoSwipeFromDOM('.bhy-gallery', $scope, $ionicPopup);
         });
 
         $scope.addNewImg = function () {
@@ -410,7 +410,7 @@ define(['app/module', 'app/directive/directiveApi'
         $scope.imgList = [];
         api.list('/wap/member/photo-list', []).success(function (res) {
             $scope.imgList = res.data;
-            ar.initPhotoSwipeFromDOM('.bhy-gallery', $scope);
+            ar.initPhotoSwipeFromDOM('.bhy-gallery', $scope, $ionicPopup);
         });
 
         $scope.addNewImg = function () {
@@ -694,7 +694,7 @@ define(['app/module', 'app/directive/directiveApi'
                 res.data[i].age = res.data[i].age.replace(/\"/g, '');
             }
             $scope.discoveryList = res.data;
-            ar.initPhotoSwipeFromDOM('.bhy-gallery', $scope);
+            ar.initPhotoSwipeFromDOM('.bhy-gallery', $scope, $ionicPopup);
         });
 
         //用户已屏蔽的动态id，从localStorage获取
@@ -833,7 +833,7 @@ define(['app/module', 'app/directive/directiveApi'
                 } else {
                     ar.saveDataAlert($ionicPopup, '上传图片失败！');
                 }
-                ar.initPhotoSwipeFromDOM('.bhy-gallery', $scope);
+                ar.initPhotoSwipeFromDOM('.bhy-gallery', $scope, $ionicPopup);
             };
             uploader.onErrorItem = function (fileItem, response, status, headers) {  // 上传出错
                 ar.saveDataAlert($ionicPopup, '上传图片出错！');
@@ -991,7 +991,7 @@ define(['app/module', 'app/directive/directiveApi'
                 $scope.otherUserInfo.auth = JSON.parse($scope.otherUserInfo.auth);
                 // 用户相册
                 $scope.imgList = res.userPhoto.length > 0 ? res.userPhoto : [];
-                ar.initPhotoSwipeFromDOM('.bhy-gallery', $scope);
+                ar.initPhotoSwipeFromDOM('.bhy-gallery', $scope,$ionicPopup);
                 // 用户动态
                 if (res.dynamic) {
                     for (var i in res.dynamic) {
@@ -1127,7 +1127,7 @@ define(['app/module', 'app/directive/directiveApi'
                 $scope.otherUserInfo.auth = JSON.parse($scope.otherUserInfo.auth);
                 // 用户相册
                 $scope.imgList = res.userPhoto.length > 0 ? res.userPhoto : [];
-                ar.initPhotoSwipeFromDOM('.bhy-gallery', $scope);
+                ar.initPhotoSwipeFromDOM('.bhy-gallery', $scope,$ionicPopup);
                 // 用户动态
                 if (res.dynamic) {
                     for (var i in res.dynamic) {
@@ -1564,13 +1564,13 @@ define(['app/module', 'app/directive/directiveApi'
             $scope.authList = res.data;
         });
         $scope.imgList = [];
-        ar.initPhotoSwipeFromDOM('.bhy-gallery', $scope);
+        ar.initPhotoSwipeFromDOM('.bhy-gallery', $scope,$ionicPopup);
 
         $scope.formData = [];
         $scope.formData.real_name = $scope.userInfo.info.real_name;
         $scope.addNewImg = function (name) {
             $scope.uploaderImage(uploader, name);
-            ar.initPhotoSwipeFromDOM('.bhy-gallery', $scope);
+            ar.initPhotoSwipeFromDOM('.bhy-gallery', $scope, $ionicPopup);
         }
         // 监听上传回传数据
         $scope.$on('thumb_path', function (event, name, data) {
@@ -1617,7 +1617,7 @@ define(['app/module', 'app/directive/directiveApi'
     module.controller("member.honesty_marr", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', 'FileUploader', function (api, $scope, $timeout, $ionicPopup, FileUploader) {
         api.list('/wap/member/photo-list', {type: 5, pageSize: 1}).success(function (res) {
             $scope.authList = res.data;
-            ar.initPhotoSwipeFromDOM('.bhy-gallery', $scope);
+            ar.initPhotoSwipeFromDOM('.bhy-gallery', $scope, $ionicPopup);
         });
         $scope.imgList = [];
         // 实例化上传图片插件
@@ -1627,12 +1627,12 @@ define(['app/module', 'app/directive/directiveApi'
 
         $scope.addNewImg = function (name) {
             $scope.uploaderImage(uploader, name);
-            ar.initPhotoSwipeFromDOM('.bhy-gallery', $scope);
+            ar.initPhotoSwipeFromDOM('.bhy-gallery', $scope, $ionicPopup);
         }
         // 监听上传回传数据
         $scope.$on('thumb_path', function (event, name, data) {
             !$scope.authList[0] ? $scope.authList[0] = data : $scope.authList[0].thumb_path = data.thumb_path;
-            ar.initPhotoSwipeFromDOM('.bhy-gallery', $scope);
+            ar.initPhotoSwipeFromDOM('.bhy-gallery', $scope, $ionicPopup);
             ar.saveDataAlert($ionicPopup, '上传成功');
         });
     }]);
@@ -1641,7 +1641,7 @@ define(['app/module', 'app/directive/directiveApi'
     module.controller("member.honesty_edu", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', 'FileUploader', function (api, $scope, $timeout, $ionicPopup, FileUploader) {
         api.list('/wap/member/photo-list', {type: 4, pageSize: 1}).success(function (res) {
             $scope.authList = res.data;
-            ar.initPhotoSwipeFromDOM('.bhy-gallery', $scope);
+            ar.initPhotoSwipeFromDOM('.bhy-gallery', $scope, $ionicPopup);
         });
         $scope.imgList = [];
 
@@ -1656,7 +1656,7 @@ define(['app/module', 'app/directive/directiveApi'
         // 监听上传回传数据
         $scope.$on('thumb_path', function (event, name, data) {
             !$scope.authList[0] ? $scope.authList[0] = data : $scope.authList[0].thumb_path = data.thumb_path;
-            ar.initPhotoSwipeFromDOM('.bhy-gallery', $scope);
+            ar.initPhotoSwipeFromDOM('.bhy-gallery', $scope, $ionicPopup);
             ar.saveDataAlert($ionicPopup, '上传成功');
         });
     }]);
@@ -1665,7 +1665,7 @@ define(['app/module', 'app/directive/directiveApi'
     module.controller("member.honesty_housing", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', 'FileUploader', function (api, $scope, $timeout, $ionicPopup, FileUploader) {
         api.list('/wap/member/photo-list', {type: 6, pageSize: 1}).success(function (res) {
             $scope.authList = res.data;
-            ar.initPhotoSwipeFromDOM('.bhy-gallery', $scope);
+            ar.initPhotoSwipeFromDOM('.bhy-gallery', $scope, $ionicPopup);
         });
         $scope.imgList = [];
 
@@ -1680,7 +1680,7 @@ define(['app/module', 'app/directive/directiveApi'
         // 监听上传回传数据
         $scope.$on('thumb_path', function (event, name, data) {
             !$scope.authList[0] ? $scope.authList[0] = data : $scope.authList[0].thumb_path = data.thumb_path;
-            ar.initPhotoSwipeFromDOM('.bhy-gallery', $scope);
+            ar.initPhotoSwipeFromDOM('.bhy-gallery', $scope, $ionicPopup);
             ar.saveDataAlert($ionicPopup, '上传成功');
         });
     }]);

@@ -397,7 +397,7 @@ define(['app/module', 'app/directive/directiveApi'
             $scope.user.username = res.data[0].real_name;
             $scope.user.age = res.data[0].age;
             $scope.user.sex = res.data[0].sex;
-            ar.initPhotoSwipeFromDOM('.bhy-gallery', $scope);
+            ar.initPhotoSwipeFromDOM('.bhy-gallery', $scope, $ionicPopup);
         })
 
         $scope.jump = function (url) {
@@ -483,7 +483,7 @@ define(['app/module', 'app/directive/directiveApi'
                     $scope.isMore = false;
                 }
                 $scope.pageSize += 5;
-                ar.initPhotoSwipeFromDOM('.bhy-gallery', $scope);
+                ar.initPhotoSwipeFromDOM('.bhy-gallery', $scope, $ionicPopup);
             }).finally(function () {
                 $scope.$broadcast('scroll.infiniteScrollComplete');
             })

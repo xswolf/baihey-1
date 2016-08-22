@@ -710,7 +710,7 @@ input[type="number"]{-moz-appearance:textfield;}
 }
 .bhy-gallery a.col{
     overflow: hidden;
-    max-height: 120px;
+    max-height: 200px;
 }
 .row.warp{
     flex-wrap: wrap;
