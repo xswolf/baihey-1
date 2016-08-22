@@ -510,7 +510,6 @@ var ar = {
                     }
 
                     childElements = el.children;
-                    console.log(el);
                     size = el.getAttribute('data-size').split('x');
 
                     // create slide object
