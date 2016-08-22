@@ -61,6 +61,7 @@ class MemberController extends BaseController
             }else if ($k=='age2'){
                 $andWhere[] = ['<=' , 'age' , $v];
             }else if (in_array($k,['constellation','zodiac','level','is_car','is_purchase','occupation','is_child','is_marriage','year_income','height','education'])){
+                if($k == 'level' && $v=="0") $v = '';
                 $andWhere[] = [">=", "json_extract(info,'$.{$k}')", $v];
             }else{
                 $andWhere[] = ["=", $k, $v];
