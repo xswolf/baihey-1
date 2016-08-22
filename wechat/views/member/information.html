@@ -16,7 +16,7 @@
                                 <div class="underReview no" ng-if="img.is_check == 0"><span>审核未通过</span></div>
                                 <figure class="hide" ng-if="img.is_check == 1 || img.is_check == 0">轻触照片退出</figure>
                             </a>
-                            <a ng-if="imgList.length < 12 || !imgList" class="col col-25" ng-click="addNewImg()" data-size="200x200">
+                            <a ng-if="imgList.length < 12 || !imgList" class="col col-25" ng-click="addNewImg($event)" data-size="200x200">
                                 <img src="/wechat/web/images/addPic.png">
                             </a>
                         </div>

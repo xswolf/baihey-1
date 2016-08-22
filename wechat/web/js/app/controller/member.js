@@ -91,7 +91,9 @@ define(['app/module', 'app/directive/directiveApi'
             ar.initPhotoSwipeFromDOM('.bhy-gallery', $scope, $ionicPopup);
         });
 
-        $scope.addNewImg = function () {
+        $scope.addNewImg = function (event) {
+            event.stopPropagation();
+            event.preventDefault();
             var e = document.getElementById("pic_fileInput");
             var ev = document.createEvent("MouseEvents");
             ev.initEvent("click", true, true);
