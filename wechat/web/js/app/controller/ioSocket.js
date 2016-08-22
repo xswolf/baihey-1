@@ -168,7 +168,6 @@ define(['app/module', 'app/directive/directiveApi'
          })
          }*/
 
-
         // 用户身份是否验证 TODO 用户验证了之后localStorage是否能够得到更新
         var userInfoList = ar.getStorage('messageList');
         for (var i in userInfoList) {
@@ -279,8 +278,6 @@ define(['app/module', 'app/directive/directiveApi'
                 if (type == 'pic' && serverId == 'view') {
                     return;
                 }
-
-
 
                 socket.emit('chat message', message);
 
@@ -466,9 +463,9 @@ define(['app/module', 'app/directive/directiveApi'
 
                 var time = ar.timeStamp();
                 $scope.picLength = $scope.uploader.queue.length;
-                $scope.uploader.onAfterAddingFile = function (fileItem) {   // 上传之后
+                $scope.uploader.onAfterAddingFile = function (fileItem) {   // 选择文件之后
                     $scope.sendMessage('view', $scope.sendId, $scope.receiveId, 'pic', time); // 假发送，便于预览图片
-                    fileItem.uploader.queue[$scope.picLength].upload();
+                    fileItem.upload();
                     viewScroll.resize();
                     viewScroll.scrollBottom(true);
                 };
@@ -641,3 +638,4 @@ define(['app/module', 'app/directive/directiveApi'
 
 
 })
+

@@ -2694,7 +2694,7 @@ define(['app/module', 'app/directive/directiveApi'
 
     }]);
 
-// 我的专属红娘
+    // 我的专属红娘
     module.controller("member.matchmaker", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$location', '$filter', function (api, $scope, $timeout, $ionicPopup, $location, $filter) {
 
         $scope.matchmakerList = [];
