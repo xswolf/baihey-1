@@ -62,20 +62,21 @@ class FileController extends BaseController
         $post      = json_decode($input, true);
         $img       = base64_decode($post['base64']);
         $file      = new File();
-//        $imagePath = $file->getImagePath(__DIR__ . "/../../images/");
-//        $imagePath = __DIR__."../../images/upload/picture/".date('Ymd').'/';
-        $imagePath = '';
+        $imagePath = $file->getImagePath(__DIR__ . "/../../images/");
 
         $time      = time();
-        $fileName  = $imagePath . $time . rand(1, 100000000) . ".jpg";
+        $fileName  = $imagePath . ".jpg";
+        ob_start();
         file_put_contents($fileName, $img);
-
+        ob_flush();
 
         $fileInfo = getimagesize($fileName);
         $picInfo  = $file->pictureRatio($fileInfo[0], $fileInfo[1]);
 
+        $path     = substr($imagePath , strpos($imagePath , "picture/") + 8);
         if (rename($fileName, $imagePath. '_' . $picInfo[0] . '_' . $picInfo[1] . '.jpg')) {
-            $res = array('status' => 1, 'info' => '上传成功', 'path' => $imagePath. '_' . $picInfo[0] . '_' . $picInfo[1] . '.jpg', 'extension' => 'jpg', 'time' => $time);
+            $res = array('status' => 1, 'info' => '上传成功', 'path' => $path . '_' . $picInfo[0] . '_' . $picInfo[1] . '.jpg' , 'extension' => 'jpg', 'time' => $time);
+            ob_flush();
             $file->thumbPhoto($res);
         }
 
