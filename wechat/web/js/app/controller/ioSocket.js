@@ -61,7 +61,7 @@ define(['app/module', 'app/directive/directiveApi'
 
         // 显示时间函数
         $scope.isLongTime = function (time, index) {
-            if(index < 1) return true;
+            if (index < 1) return true;
             if (!time) return false;
             return (time - $scope.historyList[index - 1].create_time) > 300;
         }
@@ -246,7 +246,7 @@ define(['app/module', 'app/directive/directiveApi'
              }*/
 
             // 发送消息函数
-            $scope.sendMessage = function (serverId, sendId, receiveID, type, flagTime) {
+            $scope.sendMessage = function (serverId, sendId, receiveID, type, flagTime, isSend) {
 
                 flagTime != undefined ? '' : flagTime = ar.timeStamp();
                 var id = ar.getId($scope.historyList);
@@ -262,20 +262,21 @@ define(['app/module', 'app/directive/directiveApi'
                 };
 
 
-                if (dataFilter.data.blacked.indexOf(receiveID) > -1){  //黑名单，不能发消息
-                    message.refuse  = -1;
-                    message.status  = 4;
+                if (dataFilter.data.blacked.indexOf(receiveID) > -1) {  //黑名单，不能发消息
+                    message.refuse = -1;
+                    message.status = 4;
                     $scope.historyList.push(message);
                     ar.setStorage('chat_messageHistory' + receiveID, $scope.historyList); // 每次发送消息后把消息放到浏览器端缓存
-                    return ;
+                    return;
                 }
 
                 // 图片上传发送消息回调时不写localStorage,因为上传的时候已经写过了
-                if (!(serverId != 'view' && type == 'pic')) {
+                if ((isSend && type != 'pic') || (type == 'pic' && !isSend)) {
                     $scope.historyList.push(message);
                     ar.setStorage('chat_messageHistory' + receiveID, $scope.historyList); // 每次发送消息后把消息放到浏览器端缓存
                 }
-                if (type == 'pic' && serverId == 'view') {
+
+                if(!isSend && type == 'pic'){
                     return;
                 }
 
@@ -376,7 +377,7 @@ define(['app/module', 'app/directive/directiveApi'
                     return;
                 }
                 try {
-                    $scope.sendMessage($scope.send_content, $scope.sendId, $scope.receiveId, 'send');
+                    $scope.sendMessage($scope.send_content, $scope.sendId, $scope.receiveId, 'send', true);
                 } catch (e) {
 
                 } finally {
@@ -464,14 +465,23 @@ define(['app/module', 'app/directive/directiveApi'
                 var time = ar.timeStamp();
                 $scope.picLength = $scope.uploader.queue.length;
                 $scope.uploader.onAfterAddingFile = function (fileItem) {   // 选择文件之后
-                    $scope.sendMessage('view', $scope.sendId, $scope.receiveId, 'pic', time); // 假发送，便于预览图片
-                    fileItem.upload();
+                    if (FileReader != 'undefiend') {
+                        var reader = new FileReader();
+                        reader.readAsDataURL(fileItem._file);
+                        reader.onload = function (event) {
+                            $scope.sendMessage(event.target.result, $scope.sendId, $scope.receiveId, 'pic', time, false); // 假发送，便于预览图片
+                        };
+                    } else {
+                        $scope.sendMessage('', $scope.sendId, $scope.receiveId, 'pic', time, true); // 假发送，便于预览图片
+                    }
+                    fileItem.upload();   // 上传
                     viewScroll.resize();
                     viewScroll.scrollBottom(true);
                 };
 
                 $scope.uploader.onCompleteItem = function (fileItem, response, status, headers) {  // 上传结束
-                    $scope.sendMessage(response.thumb_path, $scope.sendId, $scope.receiveId, 'pic', time);  // 真实发送
+                    $scope.sendMessage(response.thumb_path, $scope.sendId, $scope.receiveId, 'pic', time, true);  // 真实发送
+                    console.log(response.thumb_path);
                     var img = new Image();
                     img.src = response.thumb_path;
                     if (img.complete) {
@@ -519,7 +529,7 @@ define(['app/module', 'app/directive/directiveApi'
                     } else {
                         response.id = ar.getId($scope.historyList);
                         $scope.historyList.push(response);
-                        if(response.type == 'pic'){
+                        if (response.type == 'pic') {
                             var img = new Image();
                             img.src = response.message;
                             if (img.complete) {
