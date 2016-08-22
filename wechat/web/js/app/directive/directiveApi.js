@@ -488,17 +488,15 @@ define(['app/module'], function (module) {
 
                 function onLoadFile(event) {
                     var img = new Image();
-                    img.onload = onLoadImage;
                     img.src = event.target.result;
-                }
-
-                function onLoadImage() {
-                    imgEle.attr('src',event.target.result);
-
-                    //var width = params.width || this.width / this.height * params.height;
-                    //var height = params.height || this.height / this.width * params.width;
-                    //canvas.attr({ width: width, height: height });
-                    //canvas[0].getContext('2d').drawImage(this, 0, 0, width, height);
+                    if (img.complete) {
+                        imgEle.attr('src',event.target.result);
+                    } else {
+                        img.onload = function () {
+                            imgEle.attr('src',event.target.result);
+                            img.onload = null; //避免重复加载
+                        }
+                    }
                 }
             }
         };
