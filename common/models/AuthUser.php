@@ -26,7 +26,7 @@ class AuthUser extends Base
             $arr = explode('-', $where['matchmaker']);
             $condition = ['in', 'id', $arr];
         } else {
-            $condition = ['type' => 3];
+            $condition = ['duty' => 1];
         }
         $row = (new Query())->select(['real_name', 'id as job', 'phone', 'landline', 'qq', 'wechat', 'email', 'introduction', 'photo', 'address'])
             ->from($this->tablePrefix.'auth_user')
