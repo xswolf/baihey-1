@@ -89,11 +89,15 @@
                              ng-if="vo.type=='pic' || vo.message_type==3">
                             <span class="pic bhy-gallery">
                                 <a ng-href="{{vo.message | picture}}" data-size="{{vo.message.split('.')[0].split('_')[1] + 'x' + vo.message.split('.')[0].split('_')[2]}}">
+                                    <div ng-if="uploader.queue.length > 0 && vo.message == 'view'" ng-repeat="item in uploader.queue">
+                                        <div ng-show="uploader.isHTML5" ng-thumb="{ file: item._file, width:60}"></div>
+                                    </div>
                                     <img ng-if="vo.message != 'view'" ng-src="{{vo.message}}">
                                     <figure class="hide">轻触照片退出</figure>
                                 </a>
-                                <div ng-if="vo.message == 'view'" ng-show="uploader.isHTML5"
-                                     ng-thumb="{ file: uploader.queue, height: 100 }"></div>
+
+
+
                             </span>
                         </div>
 

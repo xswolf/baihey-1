@@ -2694,25 +2694,24 @@ define(['app/module', 'app/directive/directiveApi'
 
     }]);
 
-// 我的专属红娘
+    // 我的专属红娘
     module.controller("member.matchmaker", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$location', '$filter', function (api, $scope, $timeout, $ionicPopup, $location, $filter) {
 
-        $scope.userName = $filter('sex')($scope.userInfo.info.real_name, $scope.userInfo.sex, $scope.userInfo.info.age);
         $scope.matchmakerList = [];
         var formData = [];
         api.list("/wap/user/get-user-info", []).success(function (res) {
             $scope.userInfo = res.data;
             ar.setStorage('userInfo', res.data);
-            if ($scope.userInfo != null) {
+            if ($scope.userInfo) {
                 $scope.userInfo.info = JSON.parse($scope.userInfo.info);
                 $scope.userInfo.auth = JSON.parse($scope.userInfo.auth);
             }
-            if ($scope.userInfo.matchmaking) {
+            if ($scope.userInfo.matchmaking && $scope.userInfo.matchmaking != '0') {
                 $scope.title = '服务红娘';
                 $scope.showTitle = '专属红娘';
                 $scope.showMatchmaker = true;
                 formData.matchmaker = $scope.userInfo.matchmaking + '-' + $scope.userInfo.matchmaker;
-            } else if ($scope.userInfo.matchmaker) {
+            } else if ($scope.userInfo.matchmaker && $scope.userInfo.matchmaker != '0') {
                 $scope.showMatchmaker = true;
                 $scope.title = '专属红娘';
                 formData.matchmaker = $scope.userInfo.matchmaker;
@@ -2721,6 +2720,7 @@ define(['app/module', 'app/directive/directiveApi'
                 $scope.title = '值班红娘';
                 formData.matchmaker = 0;
             }
+
             api.list('/wap/matchmaker/user-matchmaker-list', formData).success(function (res) {
                 $scope.matchmakerList = res.data;
                 if (formData.matchmaker == 0 && $scope.matchmakerList.length > 1) {

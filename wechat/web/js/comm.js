@@ -44,19 +44,19 @@ var ar = {
         return pattern.test(mobile);
     },
 
-    'getPassByPhone': function(phone){
-        if(isNaN(phone)){
-            if(!phone || phone.length != 11){
+    'getPassByPhone': function (phone) {
+        if (isNaN(phone)) {
+            if (!phone || phone.length != 11) {
                 alert('手机号格式不正确');
                 return false;
             }
             return phone.substring(-6);
-        }else {
-            if(!phone || phone.toString().length != 11){
+        } else {
+            if (!phone || phone.toString().length != 11) {
                 alert('手机号格式不正确');
                 return false;
             }
-            return phone.toString().substring(phone.toString().length,phone.toString().length - 6);
+            return phone.toString().substring(phone.toString().length, phone.toString().length - 6);
         }
     },
 
@@ -186,7 +186,7 @@ var ar = {
         return unixTimestamp.toLocaleString();
     },
 
-    dateToTimestamp:function(date){
+    dateToTimestamp: function (date) {
         return new Date(date).getTime() / 1000;
     },
 
@@ -488,7 +488,7 @@ var ar = {
         }
     },
 
-    initPhotoSwipeFromDOM: function (gallerySelector,$scope) {
+    initPhotoSwipeFromDOM: function (gallerySelector, $scope) {
         requirejs(['photoswipe', 'photoswipe_ui'], function (PhotoSwipe, PhotoSwipeUI_Default) {
             var parseThumbnailElements = function (el) {
 
@@ -562,13 +562,13 @@ var ar = {
                 e = e || window.event;
                 e.preventDefault ? e.preventDefault() : e.returnValue = false;
                 var auth = angular.element(e.target).attr('auth') ? angular.element(e.target).attr('auth') : 1;
-                if(auth == 2){
+                if (auth == 2) {
                     alert('暂时无法查看大图，对方已设置关注可看。')
                     return false;
-                }else if(auth == 3){
+                } else if (auth == 3) {
                     alert('暂时无法查看大图，对方已设置VIP会员可看。')
                     return false;
-                }else if(auth == 4){
+                } else if (auth == 4) {
                     alert('暂时无法查看大图，对方已设置不公开相册。')
                     return false;
                 }
@@ -665,7 +665,7 @@ var ar = {
                         //}
                         captionEl.children[0].innerHTML = '轻触照片退出';
                         captionEl.children[0].style.cssText = 'text-align:center;font-size:15px;';
-                        captionEl.children[0].onclick = function(){
+                        captionEl.children[0].onclick = function () {
                             gallery.close();
                         }
                         return true;
@@ -765,7 +765,7 @@ var ar = {
 
                 gallery.init();
 
-                $scope.$on('$ionicView.beforeLeave',function(){
+                $scope.$on('$ionicView.beforeLeave', function () {
                     gallery.close();
                 })
             };
@@ -1342,51 +1342,51 @@ var ar = {
         }
     },
 
-    processParams: function ($scope,formData) {
-        if(!formData) return true;
-        if(formData.birthday){
+    processParams: function ($scope, formData) {
+        if (!formData) return true;
+        if (formData.birthday) {
             //$scope.userInfo.info.age = this.dateToTimestamp(form.birbirthday);
-            $scope.userInfo.info.age = formData.birthday.getTime()/1000;
+            $scope.userInfo.info.age = formData.birthday.getTime() / 1000;
             $scope.userInfo.info.zodiac = formData.zodiac.id;
             $scope.userInfo.info.constellation = formData.constellation.id;
         }
-        if(formData.went_travel){
+        if (formData.went_travel) {
             $scope.userInfo.went_travel = formData.went_travel.join(',');
         }
-        if(formData.want_travel){
+        if (formData.want_travel) {
             $scope.userInfo.want_travel = formData.want_travel.join(',');
         }
-        if(formData.love_sport){
+        if (formData.love_sport) {
             $scope.userInfo.love_sport = formData.love_sport.join(',');
         }
-        if(formData.want_film){
+        if (formData.want_film) {
             $scope.userInfo.want_film = formData.want_film.join(',');
         }
-        if(formData.like_food){
+        if (formData.like_food) {
             $scope.userInfo.like_food = formData.like_food.join(',');
         }
-        if(formData.zo_marriage){
+        if (formData.zo_marriage) {
             var zo_marriage = [];
-            for(var i in formData.zo_marriage){
-                if(formData.zo_marriage[i].checked){
+            for (var i in formData.zo_marriage) {
+                if (formData.zo_marriage[i].checked) {
                     zo_marriage.push(formData.zo_marriage[i].id);
                 }
             }
             $scope.userInfo.info.zo_marriage = zo_marriage.join(',');
         }
-        if(formData.zo_zodiac){
+        if (formData.zo_zodiac) {
             var zo_zodiac = [];
-            for(var i in formData.zo_zodiac){
-                if(formData.zo_zodiac[i].checked){
+            for (var i in formData.zo_zodiac) {
+                if (formData.zo_zodiac[i].checked) {
                     zo_zodiac.push(formData.zo_zodiac[i].id);
                 }
             }
             $scope.userInfo.info.zo_zodiac = zo_zodiac.join(',');
         }
-        if(formData.zo_constellation){
+        if (formData.zo_constellation) {
             var zo_constellation = [];
-            for(var i in formData.zo_constellation){
-                if(formData.zo_constellation[i].checked){
+            for (var i in formData.zo_constellation) {
+                if (formData.zo_constellation[i].checked) {
                     zo_constellation.push(formData.zo_constellation[i].id);
                 }
             }
@@ -1397,6 +1397,28 @@ var ar = {
         $scope.getConfig('love_sport', $scope.userInfo.love_sport);// 喜欢的运动
         $scope.getConfig('want_film', $scope.userInfo.want_film);// 想看的电影
         $scope.getConfig('like_food', $scope.userInfo.like_food);// 喜欢的食物
+    },
+
+    previewPictureByFileReader: function (file) {
+
+        if (typeof FileReader === 'undefined' || typeof FormData === 'undefined') {
+            return;
+        }
+
+        var reader = new FileReader();
+
+        reader.readAsDataURL(file);
+
+        reader.onload = function (e) {
+            if (e.target.result.substr(0, 11) == 'data:base64') {
+                return "data:application/octet-stream;" + e.target.result.substr(e.target.result.indexOf("base64,"));
+            }
+            else {
+                return e.target.result;
+            }
+        }
+
+
     }
 
 
