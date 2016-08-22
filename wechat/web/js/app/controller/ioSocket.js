@@ -261,7 +261,6 @@ define(['app/module', 'app/directive/directiveApi'
                     create_time: flagTime
                 };
 
-
                 if (dataFilter.data.blacked.indexOf(receiveID) > -1) {  //黑名单，不能发消息
                     message.refuse = -1;
                     message.status = 4;

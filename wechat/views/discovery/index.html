@@ -35,11 +35,13 @@
                     <span ng-if="dis.report_flag == 1" class="identity assertive-bg">被多次举报</span>
                 </p>
                 <p class="wsn" ng-click="jump(dis.id,dis.user_id,'single')">{{dis.content | cut:true:150:' ...'}}</p>
-                <div class="dis_gallery bhy-gallery clearfix">
-                    <a ng-repeat="img in dis.imgList | limitTo:6" href="{{img.thumb_path | picture}}" data-size="{{img.thumb_path.split('.')[0].split('_')[1] + 'x' + img.thumb_path.split('.')[0].split('_')[2]}}">
-                        <img class="w100" src="/wechat/web/images/lazyload.png" lazyload="{{img.thumb_path}}">
-                        <figure class="hide">轻触照片退出</figure>
-                    </a>
+                <div class="bhy-gallery clearfix">
+                    <div class="row warp">
+                        <a class="col col-33"  ng-repeat="img in dis.imgList | limitTo:6" href="{{img.thumb_path | picture}}" data-size="{{img.thumb_path.split('.')[0].split('_')[1] + 'x' + img.thumb_path.split('.')[0].split('_')[2]}}">
+                            <img src="/wechat/web/images/lazyload.png" lazyload="{{img.thumb_path}}">
+                            <figure class="hide">轻触照片退出</figure>
+                        </a>
+                    </div>
                 </div>
                 <div class="clearfix mt10 pr">
                     <span class="fl cp" ng-class="{true:'cor21',false:'cor53'}[dis.cid > 0]" click-like ng-click="clickLike(dis)">

@@ -9,15 +9,19 @@
             <div class="imgList_con">
                 <div class="imgList_handle clearfix">
                     <div class="bhy-gallery">
-                        <a class="imgItem pr" ng-repeat="img in imgList | orderBy:['-is_head']" on-hold="moreImg($index)" ng-href="{{img.thumb_path | picture}}" get-img-size="{{img.thumb_path}}">
-                            <img src="/wechat/web/images/lazyload.png" lazyload="{{img.thumb_path}}">
-                            <div class="underReview" ng-if="img.is_check != 1"><span>审核中</span></div>
-                            <figure class="hide" ng-if="img.is_check == 1">轻触照片退出</figure>
-                        </a>
+                        <div class="row warp">
+                            <a class="col col-25" ng-repeat="img in imgList | orderBy:['-is_head']" on-hold="moreImg($index)" ng-href="{{img.thumb_path | picture}}" get-img-size="{{img.thumb_path}}">
+                                <img src="/wechat/web/images/lazyload.png" lazyload="{{img.thumb_path}}">
+                                <div class="underReview" ng-if="img.is_check == 2"><span>审核中</span></div>
+                                <div class="underReview no" ng-if="img.is_check == 0"><span>审核未通过</span></div>
+                                <figure class="hide" ng-if="img.is_check == 1 || img.is_check == 0">轻触照片退出</figure>
+                            </a>
+                            <a ng-if="imgList.length < 12 || !imgList" class="col col-25" ng-click="addNewImg()">
+                                <img src="/wechat/web/images/addPic.png">
+                            </a>
+                        </div>
                     </div>
-                    <div ng-if="imgList.length < 12 || !imgList" class="imgItem addItem" ng-click="addNewImg()">
-                        <i class="ion-plus-round"></i>
-                    </div>
+
                     <div class="tip fl w100">温馨提示：默认相册第一张为头像，长按照片可设置头像，您最多可以上传12张照片。</div>
                 </div>
             </div>

@@ -10,12 +10,15 @@
         <ion-list>
             <div class="imgList_con">
                 <div class="imgList_handle clearfix bhy-gallery">
-                    <a class="imgItem pr" ng-repeat="img in imgList" ng-href="{{img.thumb_path | picture}}" get-img-size="{{img.thumb_path}}">
-                        <img src="/wechat/web/images/lazyload.png" auth="{{picAuth}}" lazyload="{{img.thumb_path}}">
-                        <figure class="hide">轻触照片退出</figure>
-                    </a>
+                    <div class="row warp">
+                        <a class="col col-25" ng-repeat="img in imgList" ng-href="{{img.thumb_path | picture}}" get-img-size="{{img.thumb_path}}">
+                            <img src="/wechat/web/images/lazyload.png" auth="{{picAuth}}" lazyload="{{img.thumb_path}}">
+                            <figure class="hide">轻触照片退出</figure>
+                        </a>
+                    </div>
                 </div>
             </div>
+
             <ion-item class="idt mt10" ng-if="honesty(otherUserInfo.honesty_value) || otherUserInfo.phone != '' || otherUserInfo.info.level || otherUserInfo.info.zodiac || otherUserInfo.info.constellation">
                 <p><span class="cor4 mr15">ID:{{otherUserInfo.user_id}}</span>{{otherUserInfo.info.age | timeToAge}} {{otherUserInfo.info.height | height}} {{otherUserInfo.info.is_marriage | marriage}}</p>
                 <p class="mt0">
