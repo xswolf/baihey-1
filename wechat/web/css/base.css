@@ -708,6 +708,10 @@ input[type="number"]{-moz-appearance:textfield;}
 .bhy-gallery img{
     width: 100%;
 }
+.bhy-gallery a.col{
+    overflow: hidden;
+    max-height: 120px;
+}
 .row.warp{
     flex-wrap: wrap;
     -ms-flex-wrap: wrap;
