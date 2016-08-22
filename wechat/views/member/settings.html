@@ -17,7 +17,7 @@
                 意见反馈
                 <i class="icon ion-ios-arrow-right cor4"></i>
             </ion-item>
-            <ion-toggle ng-model="formData.pullBlack" toggle-class="toggle-positive" ng-click="pullTheBlack()"  ng-if="userInfo.user_id > 9999">
+            <ion-toggle ng-model="formData.pullBlack" toggle-class="toggle-positive" ng-change="pullTheBlack()"  ng-if="userInfo.user_id > 9999">
                 拉黑
             </ion-toggle>
             <button ng-if="formData.follow && !formData.pullBlack" class="button button-assertive button-block mt10 stable" ng-click="delFollow()">取消关注</button>
