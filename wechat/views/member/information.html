@@ -5,7 +5,7 @@
         <title class="title">我的资料</title>
     </ion-header-bar>
     <ion-content class="bhy com_w_100 infomation bg5">
-        <div class="noHeadPic_tips" ng-if="imgList.length > 0 && !userInfo.info.head_pic">您还没有设置头像，请长按照片设置头像</div>
+        <div class="noHeadPic_tips" ng-if="isCheckNumber > 0 && !userInfo.info.head_pic && imgList.length > 0">您还没有设置头像，请长按照片设置头像</div>
         <ion-list>
             <div class="imgList_con">
                 <div class="imgList_handle clearfix">
@@ -22,7 +22,7 @@
                             </a>
                         </div>
                     </div>
-                    <div class="tip fl w100 padding">温馨提示：长按照片可设置头像，最多可以上传12张照片。</div>
+                    <div class="tip fl w100 padding">温馨提示：照片审核通过后长按可设置头像，最多可以上传12张照片。</div>
                 </div>
             </div>
             <input id="pic_fileInput" type="file" nv-file-select uploader="uploader"
