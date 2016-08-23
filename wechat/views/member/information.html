@@ -17,7 +17,7 @@
                                 <p class="underReview no" ng-if="img.is_check == 0"><span>审核未通过</span></p>
                                 <figure class="hide" ng-if="img.is_check == 1 || img.is_check == 0">轻触照片退出</figure>
                             </a>
-                            <span ng-if="imgList.length < 12 || !imgList" class="col col-25 addNewImg" ng-click="addNewImg($event)"></>
+                            <div ng-if="imgList.length < 12 || !imgList" class="col col-25 addNewImg" ng-click="addNewImg($event)"></div>
                         </div>
                     </div>
                     <div class="tip fl w100 padding">温馨提示：照片审核通过后长按可设置头像，最多可以上传12张照片。</div>
