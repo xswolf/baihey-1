@@ -146,11 +146,14 @@
 //            var status = $(this).is(':checked') == true ? 1 : 0;
             var status = $(this).val();
             var id = $(this).data('id');
-            $.ajax({
-                url: "/admin/member/auth-photo", data: {id: id, status: status}, success: function (res) {
-
+            var _this = this;
+            bhyFunc.ajaxRequest("/admin/member/auth-photo" , {id: id, status: status} , function (res) {
+                if (res.status == 1){
+                    $(_this).parent().parent().remove();
+                }else{
+                    alert('操作失败')
                 }
-            });
+            },'get');
         });
 
         // 全选
