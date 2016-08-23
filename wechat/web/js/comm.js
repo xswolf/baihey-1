@@ -510,6 +510,9 @@ var ar = {
                     }
 
                     childElements = el.children;
+                    if(childElements.length == 0){
+                        continue;
+                    }
                     size = el.getAttribute('data-size').split('x');
 
                     // create slide object
