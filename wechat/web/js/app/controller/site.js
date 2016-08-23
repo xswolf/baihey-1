@@ -7,6 +7,14 @@ define(['app/module', 'app/directive/directiveApi'
 
     module.controller("site.index", ['app.serviceApi', '$rootScope', '$scope', '$timeout', '$ionicPopup', '$ionicModal', '$ionicActionSheet', '$ionicLoading', '$ionicBackdrop', '$ionicScrollDelegate', '$location', 'dataFilter', function (api, $rootScope, $scope, $timeout, $ionicPopup, $ionicModal, $ionicActionSheet, $ionicLoading, $ionicBackdrop, $ionicScrollDelegate, $location, dataFilter) {
 
+        $scope.$on('$ionicView.beforeEnter',function(){
+            if(ar.getStorage('userInfo') && ar.getStorage('userInfo').user_id == ar.getCookie('bhy_user_id')){
+                $scope.userInfo = ar.getStorage('userInfo');
+                $scope.userInfo.info = JSON.parse($scope.userInfo.info);
+                $scope.userInfo.auth = JSON.parse($scope.userInfo.auth);
+            }
+        })
+
         // 搜索条件
         $scope.searchForm = {age: '18-28', pageNum: 1, pageSize: 6, sex: 0};
         $scope.userId = ar.getCookie("bhy_user_id") ? ar.getCookie("bhy_user_id") : 0;

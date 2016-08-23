@@ -16,7 +16,6 @@
 
                 <img ng-src="{{userInfo.info.head_pic | isNull}}" onerror="this.src='/wechat/web/images/u_noimg.jpg'"
                      class="rounded">
-                <span ng-if="headpicStatus == 2" class="under">审核中</span>
 
                 <h2 class="fs16">
                     <span ng-if="userInfo.info.real_name">{{userInfo.info.real_name | sex:userInfo.sex:userInfo.age:userInfo.id}}，您好！</span>

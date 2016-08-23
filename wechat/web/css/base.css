@@ -254,8 +254,8 @@ p.wsn{white-space: normal;}
 p.white{ color: #fff !important;}
 .white{ color: #fff;}
 .white .item-content{background: inherit;}
-.underReview{ position: absolute; bottom: 0; left: 0; width: 100%;z-index: 99; opacity: 0.65; background-color: #000; text-align: center;}
-.underReview>span{ color: #fff;}
+.underReview{ position: absolute; bottom: 0; left: 0; width: 100%;z-index: 99; text-align: center; margin: 0 auto; display: block;}
+.underReview>span{ background: rgba(0, 0, 0, 0.65);  color: #fff;  display: block;  margin: 0 5px 5px; font-size: 12px;}
 .underReview.no>span{ color: red;}
 
 

@@ -22,7 +22,7 @@ class FileController extends BaseController
     public function actionUpload()
     {
         $file = new File();
-        $res  = $file->upload(__DIR__ . "/../../images/");
+        $res = $file->upload(__DIR__ . "/../../images/");
         $this->renderAjax($res);
     }
 
@@ -32,14 +32,14 @@ class FileController extends BaseController
     public function actionThumbPhoto()
     {
         $user_id = Cookie::getInstance()->getCookie('bhy_id')->value;
-        $data    = $this->thumb();
+        $data = $this->thumb();
         // 保存数据
         if (1 == $data['status']) {
             isset($this->get['type']) ? $photo['type'] = $this->get['type'] : true;
-            $photo['is_check']   = $user_id < 10000 ? 1 : 2;
+            $photo['is_check'] = $user_id < 10000 ? 1 : 2;
             $photo['thumb_path'] = $data['thumb_path'];
-            $photo['pic_path']   = $data['pic_path'];
-            $photo['time']       = $data['time'];
+            $photo['pic_path'] = $data['pic_path'];
+            $photo['time'] = $data['time'];
             if ($id = UserPhoto::getInstance()->addPhoto($user_id, $photo)) {
                 $data['id'] = $id;
             } else {
@@ -52,30 +52,30 @@ class FileController extends BaseController
     public function thumb()
     {
         $file = new File();
-        $res  = $file->upload(__DIR__ . "/../../images/");// 原图上传
+        $res = $file->upload(__DIR__ . "/../../images/");// 原图上传
         return (1 == $res['status']) ? $file->thumbPhoto($res) : $res;// 原图压缩
     }
 
     public function actionClientThumb()
     {
-        $input     = file_get_contents("php://input");
-        $post      = json_decode($input, true);
-        $img       = base64_decode($post['base64']);
-        $file      = new File();
+        $input = file_get_contents("php://input");
+        $post = json_decode($input, true);
+        $img = base64_decode($post['base64']);
+        $file = new File();
         $imagePath = $file->getImagePath(__DIR__ . "/../../images/");
 
-        $time      = time();
-        $fileName  = $imagePath . ".jpg";
+        $time = time();
+        $fileName = $imagePath . ".jpg";
         ob_start();
         file_put_contents($fileName, $img);
         ob_flush();
 
         $fileInfo = getimagesize($fileName);
-        $picInfo  = $file->pictureRatio($fileInfo[0], $fileInfo[1]);
+        $picInfo = $file->pictureRatio($fileInfo[0], $fileInfo[1]);
 
-        $path     = substr($imagePath , strpos($imagePath , "picture/") + 8);
-        if (rename($fileName, $imagePath. '_' . $picInfo[0] . '_' . $picInfo[1] . '.jpg')) {
-            $res = array('status' => 1, 'info' => '上传成功', 'path' => $path . '_' . $picInfo[0] . '_' . $picInfo[1] . '.jpg' , 'extension' => 'jpg', 'time' => $time);
+        $path = substr($imagePath, strpos($imagePath, "picture/") + 8);
+        if (rename($fileName, $imagePath . '_' . $picInfo[0] . '_' . $picInfo[1] . '.jpg')) {
+            $res = array('status' => 1, 'info' => '上传成功', 'path' => $path . '_' . $picInfo[0] . '_' . $picInfo[1] . '.jpg', 'extension' => 'jpg', 'time' => $time);
             ob_flush();
             $file->thumbPhoto($res);
         }
@@ -101,7 +101,7 @@ class FileController extends BaseController
     public function actionAuthPictures()
     {
         $user_id = Cookie::getInstance()->getCookie('bhy_id')->value;
-        $data    = $this->thumb();
+        $data = $this->thumb();
         // 保存数据
         if (1 == $data['status']) {
             //删除旧图片
@@ -111,17 +111,17 @@ class FileController extends BaseController
                     $pic_path = str_replace('thumb', 'picture', $thumb_path);
                     unlink($pic_path);
                 }
-                $photo[0]['thumb_path']  = $data['thumb_path'];
-                $photo[0]['pic_path']    = $data['pic_path'];
+                $photo[0]['thumb_path'] = $data['thumb_path'];
+                $photo[0]['pic_path'] = $data['pic_path'];
                 $photo[0]['update_time'] = $data['time'];
                 if (!UserPhoto::getInstance()->savePhoto($photo, $user_id)) {
                     $data = ['status' => -1, 'info' => '保存失败!~'];
                 }
             } else {
-                $photo['type']       = $this->get['type'];
+                $photo['type'] = $this->get['type'];
                 $photo['thumb_path'] = $data['thumb_path'];
-                $photo['pic_path']   = $data['pic_path'];
-                $photo['time']       = $data['time'];
+                $photo['pic_path'] = $data['pic_path'];
+                $photo['time'] = $data['time'];
                 if (!UserPhoto::getInstance()->addPhoto($user_id, $photo)) {
                     $data = ['status' => -1, 'info' => '保存失败!~'];
                 }
@@ -137,10 +137,10 @@ class FileController extends BaseController
     {
 
         $filename = '/alidata/www/baihey' . \Yii::$app->request->get('filename');
-        $oldName  = str_replace('thumb', 'picture', $filename);
-        $degrees  = \Yii::$app->request->get('degrees');
+        $oldName = str_replace('thumb', 'picture', $filename);
+        $degrees = \Yii::$app->request->get('degrees');
 
-        $ext    = strtolower(strrchr($filename, '.'));
+        $ext = strtolower(strrchr($filename, '.'));
         $method = 'jpeg';
         if ($ext == 'jpg' || $ext == 'jpeg') {
             $method = 'jpeg';
@@ -153,9 +153,9 @@ class FileController extends BaseController
         }
 
         $createMethod = "imagecreatefrom" . $method;
-        $imgMethod    = "image" . $method;
-        $oldSource    = $createMethod($oldName);
-        $oldRotate    = imagerotate($oldSource, $degrees, 0);
+        $imgMethod = "image" . $method;
+        $oldSource = $createMethod($oldName);
+        $oldRotate = imagerotate($oldSource, $degrees, 0);
 
         $source = $createMethod($filename);
         $rotate = imagerotate($source, $degrees, 0);
@@ -165,5 +165,49 @@ class FileController extends BaseController
         }
         return $this->renderAjax(['status' => 0, 'message' => '失败']);
 
+    }
+
+    /**
+     * @param $dst_path
+     * @param string $src_path
+     */
+    public function imageWatermark($dst_path,$src_path = 'watermark.png')
+    {
+        $dst_path = 'dst.jpg';
+        $src_path = 'src.jpg';
+
+        //创建图片的实例
+        $dst = imagecreatefromstring(file_get_contents($dst_path));
+        $src = imagecreatefromstring(file_get_contents($src_path));
+
+        //获取水印图片的宽高
+        list($src_w, $src_h) = getimagesize($src_path);
+
+        //将水印图片复制到目标图片上，最后个参数50是设置透明度，这里实现半透明效果
+        //imagecopymerge($dst, $src, 10, 10, 0, 0, $src_w, $src_h, 50);
+        //如果水印图片本身带透明色，则使用imagecopy方法
+        imagecopy($dst, $src, 10, 10, 0, 0, $src_w, $src_h);
+
+        //输出图片
+        list($dst_w, $dst_h, $dst_type) = getimagesize($dst_path);
+        switch ($dst_type) {
+            case 1://GIF
+                header('Content-Type: image/gif');
+                imagegif($dst);
+                break;
+            case 2://JPG
+                header('Content-Type: image/jpeg');
+                imagejpeg($dst);
+                break;
+            case 3://PNG
+                header('Content-Type: image/png');
+                imagepng($dst);
+                break;
+            default:
+                break;
+        }
+
+        imagedestroy($dst);
+        imagedestroy($src);
     }
 }

@@ -109,6 +109,7 @@ define(['app/module', 'app/directive/directiveApi'
                     return true;
                 }
             });
+
             uploader.filters.push({
                 name: 'file-size-Res',
                 fn: function (item) {
@@ -130,13 +131,7 @@ define(['app/module', 'app/directive/directiveApi'
 
             uploader.onSuccessItem = function (fileItem, response, status, headers) {  // 上传成功
                 if (response.status > 0) {
-                    if ($scope.imgList.length < 1) { // 第一张上传相片默认设为头像
-                        $scope.imgList.push({id: response.id, thumb_path: response.thumb_path, is_head: 1});
-                        $scope.userInfo.info.head_pic = response.thumb_path;
-                        $scope.setUserStorage();
-                    } else {
-                        $scope.imgList.push({id: response.id, thumb_path: response.thumb_path, is_head: 0});
-                    }
+                    $scope.imgList.push({id: response.id, thumb_path: response.thumb_path, is_head: 0, is_check:2});
                 } else {
                     ar.saveDataAlert($ionicPopup, '上传图片失败！');
                 }
@@ -152,13 +147,11 @@ define(['app/module', 'app/directive/directiveApi'
         }
 
         // 点击img，功能
-        $scope.moreImg = function (index) {
+        $scope.moreImg = function (index,isCheck,isHead) {
             var id = $scope.imgList[index].id;
             var img = $scope.imgList[index].thumb_path;
             var hideSheet = $ionicActionSheet.show({
-                buttons: [
-                    {text: '设为头像'}
-                ],
+                buttons: isCheck == 1 && isHead == 0 ? [{text: '设为头像'}] : [],
                 destructiveText: '删除',
                 titleText: '操作照片',
                 cancelText: '取消',
@@ -168,6 +161,14 @@ define(['app/module', 'app/directive/directiveApi'
                         if (res) {
                             // 删除操作
                             api.save('/wap/member/del-photo', {'id': id}).success(function (res) {
+                                if($scope.imgList[index].is_head == 1){
+                                    $scope.userInfo.info.head_pic = '';
+                                    ar.setStorage("userInfo", $scope.userInfo);
+                                    var userInfo = ar.getStorage("userInfo");
+                                    userInfo.info = JSON.stringify(userInfo.info);
+                                    userInfo.auth = JSON.stringify(userInfo.auth);
+                                    ar.setStorage("userInfo", userInfo);
+                                }
                                 $scope.imgList.splice(index, 1);
                                 hideSheet();
                             });
@@ -189,15 +190,17 @@ define(['app/module', 'app/directive/directiveApi'
                             }
                             $scope.imgList[index].is_head = 1;
                             $scope.userInfo.info.head_pic = img;
-                            $scope.setUserStorage();
+                            ar.setStorage("userInfo", $scope.userInfo);
+                            var userInfo = ar.getStorage("userInfo");
+                            userInfo.info = JSON.stringify(userInfo.info);
+                            userInfo.auth = JSON.stringify(userInfo.auth);
+                            ar.setStorage("userInfo", userInfo);
                         }
                         hideSheet();
                     });
                     return true;
                 }
-
             });
-
         }
         $scope.dynamicList = [];
         api.list('/wap/member/get-dynamic-list', {user_id: $scope.userInfo.id, page: 0}).success(function (res) {
@@ -367,13 +370,13 @@ define(['app/module', 'app/directive/directiveApi'
             ar.processParams($scope, formData);
             api.save('/wap/member/save-data', $scope.userInfo).success(function (res) {
 
-                ar.setStorage("userInfo",$scope.userInfo);
+                ar.setStorage("userInfo", $scope.userInfo);
 
                 var userInfo = ar.getStorage("userInfo");
                 userInfo.info = JSON.stringify(userInfo.info);
                 userInfo.auth = JSON.stringify(userInfo.auth);
 
-                ar.setStorage("userInfo",userInfo);
+                ar.setStorage("userInfo", userInfo);
                 //$scope.getUserPrivacyStorage('');
             }).finally(function () {
                 $scope.closeModal();
@@ -910,7 +913,7 @@ define(['app/module', 'app/directive/directiveApi'
         });
 
         // 取消关注
-        $scope.delFollow = function (item, $index,event){
+        $scope.delFollow = function (item, $index, event) {
             angular.element(event.target).parent().parent().addClass('item-remove-animate');
             api.get('/wap/follow/del-follow', {
                 user_id: ar.getCookie("bhy_user_id"),
@@ -993,7 +996,7 @@ define(['app/module', 'app/directive/directiveApi'
                 $scope.otherUserInfo.auth = JSON.parse($scope.otherUserInfo.auth);
                 // 用户相册
                 $scope.imgList = res.userPhoto.length > 0 ? res.userPhoto : [];
-                ar.initPhotoSwipeFromDOM('.bhy-gallery', $scope,$ionicPopup);
+                ar.initPhotoSwipeFromDOM('.bhy-gallery', $scope, $ionicPopup);
                 // 用户动态
                 if (res.dynamic) {
                     for (var i in res.dynamic) {
@@ -1013,7 +1016,7 @@ define(['app/module', 'app/directive/directiveApi'
                 $scope.otherUserInfo.want_film ? getConfig('want_film', $scope.otherUserInfo.want_film) : true;// 想看的电影
                 $scope.otherUserInfo.like_food ? getConfig('like_food', $scope.otherUserInfo.like_food) : true;// 喜欢的食物
 
-                console.info('isfollow:',res.followStatus,'followedStatus:',res.followedStatus);
+                console.info('isfollow:', res.followStatus, 'followedStatus:', res.followedStatus);
             }
 
         });
@@ -1129,7 +1132,7 @@ define(['app/module', 'app/directive/directiveApi'
                 $scope.otherUserInfo.auth = JSON.parse($scope.otherUserInfo.auth);
                 // 用户相册
                 $scope.imgList = res.userPhoto.length > 0 ? res.userPhoto : [];
-                ar.initPhotoSwipeFromDOM('.bhy-gallery', $scope,$ionicPopup);
+                ar.initPhotoSwipeFromDOM('.bhy-gallery', $scope, $ionicPopup);
                 // 用户动态
                 if (res.dynamic) {
                     for (var i in res.dynamic) {
@@ -1566,7 +1569,7 @@ define(['app/module', 'app/directive/directiveApi'
             $scope.authList = res.data;
         });
         $scope.imgList = [];
-        ar.initPhotoSwipeFromDOM('.bhy-gallery', $scope,$ionicPopup);
+        ar.initPhotoSwipeFromDOM('.bhy-gallery', $scope, $ionicPopup);
 
         $scope.formData = [];
         $scope.formData.real_name = $scope.userInfo.info.real_name;

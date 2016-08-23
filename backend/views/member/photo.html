@@ -46,9 +46,7 @@
                     <th>图片类型</th>
                     <th>图片</th>
                     <th>上传时间</th>
-                    {{if \Yii::$app->request->get('type') == 1}}
                     <th>是否审核</th>
-                    {{/if}}
                 </tr>
                 </thead>
                 <tbody>
@@ -80,13 +78,11 @@
                     <td>
                         <!--<div class="make-switch switch-small" data-on-label="已审核" data-off-label="未审核" data-on="success" data-off="danger">-->
                         <!--<input type="checkbox" data-id="{{$vo.id}}" class="mySwitch" {{if ($vo.is_check == 1)}} checked {{/if}}>-->
-                        {{if \Yii::$app->request->get('type') == 1}}
                         <select class="form-control mySwitch" data-id="{{$vo.id}}">
                             <option value="2" {{if $vo.is_check eq 2}} selected {{/if}}>未审核</option>
                             <option value="1" {{if $vo.is_check eq 1}} selected {{/if}}>审核通过</option>
                             <option value="0" {{if $vo.is_check eq 0}} selected {{/if}}>审核未通过</option>
                         </select>
-                        {{/if}}
                         <!--</div>-->
                     </td>
                 </tr>
@@ -146,20 +142,11 @@
 //            var status = $(this).is(':checked') == true ? 1 : 0;
             var status = $(this).val();
             var id = $(this).data('id');
-            var _this = this;
-            bhyFunc.ajaxRequest("/admin/member/auth-photo" , {id: id, status: status} , function (res) {
-                if (res.status == 1){
-                    $(_this).parent().parent().remove();
-                }else{
-                    alert('操作失败')
-                }
-            },'get');
+            $.ajax({
+                url: "/admin/member/auth-photo", data: {id: id, status: status}, success: function (res) {
 
-//            $.ajax({
-//                url: "/admin/member/auth-photo", data: {id: id, status: status}, success: function (res) {
-//
-//                }
-//            });
+                }
+            });
         });
 
         // 全选

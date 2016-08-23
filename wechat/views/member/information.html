@@ -1,19 +1,20 @@
 <ion-view>
     <link href="/wechat/web/css/member.css" rel="stylesheet">
     <link href="/wechat/web/css/fontIcon.css" rel="stylesheet">
-    <ion-header-bar align-title="center" >
+    <ion-header-bar align-title="center" class="bhy com_w_100">
         <title class="title">我的资料</title>
     </ion-header-bar>
     <ion-content class="bhy com_w_100 infomation bg5">
+        <div class="noHeadPic_tips" ng-if="imgList.length > 0 && !userInfo.info.head_pic">您还没有设置头像，请长按照片设置头像</div>
         <ion-list>
             <div class="imgList_con">
                 <div class="imgList_handle clearfix">
                     <div class="bhy-gallery">
                         <div class="row warp">
-                            <a class="col col-25" ng-repeat="img in imgList | orderBy:['-is_head']" on-hold="moreImg($index)" ng-href="{{img.thumb_path | picture}}" get-img-size="{{img.thumb_path}}">
+                            <a class="col col-25 pr" ng-repeat="img in imgList | orderBy:['-is_head']" on-hold="moreImg($index,img.is_check,img.is_head)" ng-href="{{img.thumb_path | picture}}" get-img-size="{{img.thumb_path}}">
                                 <img src="/wechat/web/images/lazyload.png" lazyload="{{img.thumb_path}}">
-                                <div class="underReview" ng-if="img.is_check == 2"><span>审核中</span></div>
-                                <div class="underReview no" ng-if="img.is_check == 0"><span>审核未通过</span></div>
+                                <p class="underReview" ng-if="img.is_check == 2"><span>审核中</span></p>
+                                <p class="underReview no" ng-if="img.is_check == 0"><span>审核未通过</span></p>
                                 <figure class="hide" ng-if="img.is_check == 1 || img.is_check == 0">轻触照片退出</figure>
                             </a>
                             <a ng-if="imgList.length < 12 || !imgList" class="col col-25" ng-click="addNewImg($event)" data-size="200x200">
@@ -21,8 +22,7 @@
                             </a>
                         </div>
                     </div>
-
-                    <div class="tip fl w100">温馨提示：默认相册第一张为头像，长按照片可设置头像，您最多可以上传12张照片。</div>
+                    <div class="tip fl w100 padding">温馨提示：长按照片可设置头像，最多可以上传12张照片。</div>
                 </div>
             </div>
             <input id="pic_fileInput" type="file" nv-file-select uploader="uploader"

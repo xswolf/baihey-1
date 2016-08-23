@@ -7,7 +7,6 @@
                 <div class="fl u_img rounded pr o_h">
                     <img src="{{userInfo.info.head_pic | isNull}}"
                          onerror="this.src='/wechat/web/images/u_noimg.jpg'">
-                    <span ng-if="headpicStatus == 2" class="under">审核中</span>
                 </div>
                 <div class="fl u_info ml10">
                     <p ng-if="userInfo.id < 10000">
