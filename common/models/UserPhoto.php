@@ -146,7 +146,7 @@ class UserPhoto extends Base
         // 删除数据
         $_user_information_table = $this->tablePrefix.'user_information';
         if ($photo->is_head == 1) {
-            $sql = "UPDATE {$_user_information_table} SET info = JSON_REPLACE(info,'$.head_pic',''), WHERE user_id={$userId}";
+            $sql = "UPDATE {$_user_information_table} SET info = JSON_REPLACE(info,'$.head_pic','') WHERE user_id={$userId}";
             $this->getDb()->createCommand($sql)->execute();
         }
         $row = $this->deleteAll(['id' => $where['id']]);
