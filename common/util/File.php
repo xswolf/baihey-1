@@ -118,8 +118,9 @@ class File
         $pic = new Image();
         $pic->open($folder . "/images/upload/picture/" . $data['path']);
         $pic->thumb($picInfo[0], $picInfo[1], $pic::IMAGE_THUMB_FIXED)->save($folder . "/images/upload/picture/" . $data['path']);//原图压缩
+        $pic->water(__DIR__."/../../wechat/web/images/logo_water.png")->save($folder . "/images/upload/picture/" . $data['path']);
         $pic->thumb(200, 200, $pic::IMAGE_THUMB_FIXED)->save($folder . $url);// 居中裁剪
-
+        $pic->water(__DIR__."/../../wechat/web/images/logo_water.png")->save($folder . $url);
         return ['status' => 1, 'info' => '上传成功', 'pic_path' => "/images/upload/picture/" . $data['path'], 'thumb_path' => $url, 'time' => $data['time']];
     }
 
@@ -151,7 +152,10 @@ class File
                 $pic = new Image();
                 $pic->open($picturePath);
                 $pic->thumb($picInfo[0], $picInfo[1], $pic::IMAGE_THUMB_FIXED)->save($picturePath);//原图压缩
+                $pic->water(__DIR__."/../../wechat/web/images/logo_water.png")->save($picturePath);
                 $pic->thumb(200, 200, $pic::IMAGE_THUMB_FIXED)->save($thumbPath);// 居中裁剪
+                $pic->water(__DIR__."/../../wechat/web/images/logo_water.png")->save($thumbPath);
+
             }
         }
         $thumbArr = explode('/../..', $thumbPath);
