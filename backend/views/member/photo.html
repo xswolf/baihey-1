@@ -46,14 +46,16 @@
                     <th>图片类型</th>
                     <th>图片</th>
                     <th>上传时间</th>
+                    {{if \Yii::$app->request->get('type') == 1 && \Yii::$app->request->get('is_check')==2}}
                     <th>是否审核</th>
+                    {{/if}}
                 </tr>
                 </thead>
                 <tbody>
                 {{foreach from=$list item=vo}}
                 <tr data-id="{{$vo.id}}">
                     <td class="tn">{{$vo.id}}</td>
-                    <td>{{$vo.user_id}}</td>
+                    <td><a href="/admin/member/edit?id={{$vo.user_id}}">{{$vo.user_id}}</a></td></td>
                     <td><a href="/admin/member/edit?id={{$vo.user_id}}">{{getName($vo.real_name)}}</a></td>
                     <td>
                         {{if ($vo.type ==1)}}
@@ -78,11 +80,13 @@
                     <td>
                         <!--<div class="make-switch switch-small" data-on-label="已审核" data-off-label="未审核" data-on="success" data-off="danger">-->
                         <!--<input type="checkbox" data-id="{{$vo.id}}" class="mySwitch" {{if ($vo.is_check == 1)}} checked {{/if}}>-->
+                        {{if \Yii::$app->request->get('type') == 1 && \Yii::$app->request->get('is_check')==2}}
                         <select class="form-control mySwitch" data-id="{{$vo.id}}">
                             <option value="2" {{if $vo.is_check eq 2}} selected {{/if}}>未审核</option>
                             <option value="1" {{if $vo.is_check eq 1}} selected {{/if}}>审核通过</option>
                             <option value="0" {{if $vo.is_check eq 0}} selected {{/if}}>审核未通过</option>
                         </select>
+                        {{/if}}
                         <!--</div>-->
                     </td>
                 </tr>
