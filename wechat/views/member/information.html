@@ -11,7 +11,7 @@
                 <div class="imgList_handle clearfix">
                     <div class="bhy-gallery">
                         <div class="row warp">
-                            <a class="col col-25 pr" ng-repeat="img in imgList | orderBy:['-is_head']" on-hold="moreImg($index,img)" ng-href="{{img.thumb_path | picture}}" get-img-size="{{img.thumb_path}}">
+                            <a class="col col-25 pr" ng-repeat="img in imgList | orderBy:['-is_head']" on-hold="moreImg(img)" ng-href="{{img.thumb_path | picture}}" get-img-size="{{img.thumb_path}}">
                                 <img src="/wechat/web/images/lazyload.png" lazyload="{{img.thumb_path}}">
                                 <p class="underReview" ng-if="img.is_check == 2"><span>审核中</span></p>
                                 <p class="underReview no" ng-if="img.is_check == 0"><span>审核未通过</span></p>
