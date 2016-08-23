@@ -88,6 +88,8 @@ define(['app/module', 'app/directive/directiveApi'
         $scope.imgList = [];
         api.list('/wap/member/photo-list', {}).success(function (res) {
             $scope.imgList = res.data;
+            var imgList_isCheck = $filter('filter')($scope.imgList, {is_check: 1});
+            $scope.isCheckNumber = imgList_isCheck.length;
             ar.initPhotoSwipeFromDOM('.bhy-gallery', $scope, $ionicPopup);
         });
 
