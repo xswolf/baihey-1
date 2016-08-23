@@ -53,7 +53,7 @@
                 {{foreach from=$list item=vo}}
                 <tr data-id="{{$vo.id}}">
                     <td class="tn">{{$vo.id}}</td>
-                    <td>{{$vo.user_id}}</td>
+                    <td><a href="/admin/member/edit?id={{$vo.user_id}}">{{$vo.user_id}}</a></td></td>
                     <td><a href="/admin/member/edit?id={{$vo.user_id}}">{{getName($vo.real_name)}}</a></td>
                     <td>
                         {{if ($vo.type ==1)}}
