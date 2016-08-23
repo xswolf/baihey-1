@@ -11,7 +11,8 @@ define([
     'app/controller/member',
     'app/controller/discovery',
     'app/controller/rendezvous',
-    'app/controller/charge'
+    'app/controller/charge',
+    'app/controller/fictitious',
 ], function () {
 
 })

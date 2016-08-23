@@ -61,7 +61,7 @@ define(["app/module", 'app/service/serviceApi'],
             $rootScope
                 .$on('$stateChangeStart',
                     function (event, toState, toParams, fromState, fromParams) {
-                        if (toState.url != '/index') {
+                        if (toState.url != '/index' && toState.url != '/fictitious') {
                             $ionicLoading.show();
                             api.getLoginStatus().success(function (res) {
                                 if (!res.status) {
@@ -255,6 +255,66 @@ define(["app/module", 'app/service/serviceApi'],
                         }
                     })
 
+                    .state('fictitious', { // 聊天页面
+                        cache:false,
+                        url: "/fictitious",
+                        templateUrl: "/wechat/views/message/fictitious.html",
+                        controller: 'message.fictitious',
+                        resolve: {
+                            dataFilter: function ($http) {
+                                return $http({
+                                    method: 'POST',
+                                    url: '/wap/user/index-is-show-data',
+                                    params: {}
+                                });
+                            }
+                        },
+                        onExit: function ($rootScope) {
+
+                            var messageList = ar.getStorage("messageList");
+                            if (messageList == null) messageList = [];
+                            var flag = true;
+                            var i = 0;
+
+                            if (messageList != undefined && messageList != '') {
+                                for (i in messageList) {
+                                    if (messageList[i].receive_user_id == $rootScope.receiveUserInfo.id || messageList[i].send_user_id == $rootScope.receiveUserInfo.id) {
+                                        if ($rootScope.historyListHide != undefined && $rootScope.historyListHide.length > 0) {
+                                            if (messageList[i].message != $rootScope.historyListHide[$rootScope.historyListHide.length - 1].message) {
+                                                messageList[i].order_time = ar.timeStamp();
+                                            }
+                                            messageList[i].message = $rootScope.historyListHide[$rootScope.historyListHide.length - 1].message
+                                        }
+                                        $rootScope.msgNumber = $rootScope.msgNumber - messageList[i].sumSend;
+                                        $rootScope.msgNumber = $rootScope.msgNumber >= 0 ? $rootScope.msgNumber : 0;
+                                        messageList[i].sumSend = 0;
+                                        messageList[i].status = 1;
+
+                                        flag = false;
+                                    }
+                                }
+                            }
+
+
+                            if (flag && $rootScope.historyListHide.length > 0) { // 有聊天信息，且没有加入storage
+                                $rootScope.receiveUserInfo.info = JSON.parse($rootScope.receiveUserInfo.info);
+                                $rootScope.receiveUserInfo.auth = JSON.parse($rootScope.receiveUserInfo.auth);
+                                $rootScope.receiveUserInfo.receive_user_id = $rootScope.receiveUserInfo.id;
+                                $rootScope.receiveUserInfo.other = $rootScope.receiveUserInfo.id;
+                                $rootScope.receiveUserInfo.order_time = ar.timeStamp();
+                                $rootScope.receiveUserInfo.send_user_id = $rootScope.receiveUserInfo.id
+                                if ($rootScope.historyListHide != undefined && $rootScope.historyListHide.length > 0) {
+                                    $rootScope.receiveUserInfo.message = $rootScope.historyListHide[$rootScope.historyListHide.length - 1].message
+                                }
+
+                                messageList.push($rootScope.receiveUserInfo);
+                            }
+                            $rootScope.messageList = messageList;
+
+                            ar.setStorage('messageList', messageList);
+
+                        }
+                    })
                     .state('discovery', {       // 发现
                         url: "/discovery",
                         templateUrl: "/wechat/views/discovery/index.html",
@@ -307,7 +367,7 @@ define(["app/module", 'app/service/serviceApi'],
                         templateUrl: "/wechat/views/charge/index.html",
                         controller: 'charge.index'
                     });
-                $urlRouterProvider.otherwise("/index");
+                //$urlRouterProvider.otherwise("/index");
             }])
             .controller('main', ['$scope', '$location', 'app.serviceApi', '$ionicLoading', '$ionicPopup', '$rootScope', function ($scope, $location, api, $ionicLoading, $ionicPopup, $rootScope) {
 
