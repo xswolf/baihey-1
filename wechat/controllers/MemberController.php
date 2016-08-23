@@ -83,7 +83,7 @@ class MemberController extends BaseController
      */
     public function actionDelPhoto()
     {
-        $list = UserPhoto::getInstance()->delPhoto($this->get);
+        $list = UserPhoto::getInstance()->delPhoto($this->get , Cookie::getInstance()->getCookie('bhy_id')->value);
         $this->renderAjax(['status' => 1, 'data' => $list]);
     }
 
