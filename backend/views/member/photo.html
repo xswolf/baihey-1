@@ -13,8 +13,8 @@
                 <div class="col-lg-12 col-sm-12">
                     <div class="form-group">
                         <div class="col-lg-12 col-sm-12 input-group date">
-                            <a href="/admin/member/photo?is_check=1&type=1"
-                               class="btn {{if (\Yii::$app->request->get('is_check') == 1 and \Yii::$app->request->get('type') == 1)}} btn-success {{else}} btn-grey {{/if}}">已审核</a>
+                            <!--<a href="/admin/member/photo?is_check=1&type=1"-->
+                               <!--class="btn {{if (\Yii::$app->request->get('is_check') == 1 and \Yii::$app->request->get('type') == 1)}} btn-success {{else}} btn-grey {{/if}}">已审核</a>-->
                             <a href="/admin/member/photo?is_check=2&type=1"
                                class="btn {{if (\Yii::$app->request->get('is_check') == 2 and \Yii::$app->request->get('type') == 1)}} btn-success {{else}} btn-grey {{/if}}">未审核</a>
                             <a href="/admin/member/photo?is_check=0&type=1"
@@ -22,11 +22,11 @@
                             <a href="/admin/member/photo?is_check=2&type=2"
                                class="btn {{if (\Yii::$app->request->get('is_check') == 2 and \Yii::$app->request->get('type') == 2)}} btn-success {{else}} btn-grey {{/if}}">身份证</a>
                             <a href="/admin/member/photo?is_check=2&type=3"
-                               class="btn {{if (\Yii::$app->request->get('is_check') == 2 and \Yii::$app->request->get('type') == 3)}} btn-success {{else}} btn-grey {{/if}}">学历</a>
+                               class="btn {{if (\Yii::$app->request->get('is_check') == 2 and \Yii::$app->request->get('type') == 4)}} btn-success {{else}} btn-grey {{/if}}">学历</a>
                             <a href="/admin/member/photo?is_check=2&type=4"
-                               class="btn {{if (\Yii::$app->request->get('is_check') == 2 and \Yii::$app->request->get('type') == 4)}} btn-success {{else}} btn-grey {{/if}}">离婚证</a>
+                               class="btn {{if (\Yii::$app->request->get('is_check') == 2 and \Yii::$app->request->get('type') == 5)}} btn-success {{else}} btn-grey {{/if}}">离婚证</a>
                             <a href="/admin/member/photo?is_check=2&type=5"
-                               class="btn {{if (\Yii::$app->request->get('is_check') == 2 and \Yii::$app->request->get('type') == 5)}} btn-success {{else}} btn-grey {{/if}}">房产证</a>
+                               class="btn {{if (\Yii::$app->request->get('is_check') == 2 and \Yii::$app->request->get('type') == 6)}} btn-success {{else}} btn-grey {{/if}}">房产证</a>
                             <button class="btn" id="select-all">反选</button>
 
 
@@ -46,7 +46,9 @@
                     <th>图片类型</th>
                     <th>图片</th>
                     <th>上传时间</th>
+                    {{if \Yii::$app->request->get('type') == 1}}
                     <th>是否审核</th>
+                    {{/if}}
                 </tr>
                 </thead>
                 <tbody>
@@ -78,11 +80,13 @@
                     <td>
                         <!--<div class="make-switch switch-small" data-on-label="已审核" data-off-label="未审核" data-on="success" data-off="danger">-->
                         <!--<input type="checkbox" data-id="{{$vo.id}}" class="mySwitch" {{if ($vo.is_check == 1)}} checked {{/if}}>-->
+                        {{if \Yii::$app->request->get('type') == 1}}
                         <select class="form-control mySwitch" data-id="{{$vo.id}}">
                             <option value="2" {{if $vo.is_check eq 2}} selected {{/if}}>未审核</option>
                             <option value="1" {{if $vo.is_check eq 1}} selected {{/if}}>审核通过</option>
                             <option value="0" {{if $vo.is_check eq 0}} selected {{/if}}>审核未通过</option>
                         </select>
+                        {{/if}}
                         <!--</div>-->
                     </td>
                 </tr>
@@ -142,11 +146,20 @@
 //            var status = $(this).is(':checked') == true ? 1 : 0;
             var status = $(this).val();
             var id = $(this).data('id');
-            $.ajax({
-                url: "/admin/member/auth-photo", data: {id: id, status: status}, success: function (res) {
-
+            var _this = this;
+            bhyFunc.ajaxRequest("/admin/member/auth-photo" , {id: id, status: status} , function (res) {
+                if (res.status == 1){
+                    $(_this).parent().parent().remove();
+                }else{
+                    alert('操作失败')
                 }
-            });
+            },'get');
+
+//            $.ajax({
+//                url: "/admin/member/auth-photo", data: {id: id, status: status}, success: function (res) {
+//
+//                }
+//            });
         });
 
         // 全选
