@@ -149,7 +149,7 @@ define(['app/module', 'app/directive/directiveApi'
         }
 
         // 点击img，功能
-        $scope.moreImg = function (index,img) {
+        $scope.moreImg = function (img) {
             var hideSheet = $ionicActionSheet.show({
                 buttons: img.is_check == 1 && img.is_head == 0 ? [{text: '设为头像'}] : [],
                 destructiveText: '删除',
@@ -161,7 +161,7 @@ define(['app/module', 'app/directive/directiveApi'
                         if (res) {
                             // 删除操作
                             api.save('/wap/member/del-photo', {'id': img.id}).success(function (res) {
-                                if($scope.imgList[index].is_head == 1){
+                                if(img.is_head == 1){
                                     $scope.userInfo.info.head_pic = '';
                                     ar.setStorage("userInfo", $scope.userInfo);
                                     var userInfo = ar.getStorage("userInfo");
@@ -169,7 +169,11 @@ define(['app/module', 'app/directive/directiveApi'
                                     userInfo.auth = JSON.stringify(userInfo.auth);
                                     ar.setStorage("userInfo", userInfo);
                                 }
-                                $scope.imgList.splice(index, 1);
+                                for (var i in $scope.imgList) {
+                                    if(img.id ==  $scope.imgList[i].id){
+                                        $scope.imgList.splice(i,1);
+                                    }
+                                }
                                 hideSheet();
                             });
 
@@ -187,8 +191,10 @@ define(['app/module', 'app/directive/directiveApi'
                         } else {
                             for (var i in $scope.imgList) {
                                 $scope.imgList[i].is_head = 0;
+                                if(img.id ==  $scope.imgList[i].id){
+                                    $scope.imgList[i].is_head = 1;
+                                }
                             }
-                            $scope.imgList[index].is_head = 1;
                             $scope.userInfo.info.head_pic = img.thumb_path;
                             ar.setStorage("userInfo", $scope.userInfo);
                             var userInfo = ar.getStorage("userInfo");
