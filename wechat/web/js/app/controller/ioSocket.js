@@ -465,8 +465,8 @@ define(['app/module', 'app/directive/directiveApi'
                 $scope.uploader.onAfterAddingFile = function (fileItem) {   // 选择文件之后
                     if (window.File && window.FileList && window.FileReader && window.Blob) {
                         var reader = new FileReader();
-                        reader.onloadstart = function(event){  // 开始读取
-                            $scope.sendMessage(event.target.result, $scope.sendId, $scope.receiveId, 'pic', time, false); // 假发送，便于预览图片
+                        reader.onprogress = function(progress){
+                            $scope.sendMessage(progress.target.result, $scope.sendId, $scope.receiveId, 'pic', time, false); // 假发送，便于预览图片
                             viewScroll.resize();
                             viewScroll.scrollBottom(true);
                         }
