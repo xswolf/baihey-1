@@ -126,14 +126,16 @@ define(['app/module', 'app/directive/directiveApi'
 
             if (!$scope.validateFrom()) return;
             $ionicLoading.show({template: '登录中...'});
-            api.save('/wap/user/login', $scope.User).success(function (data) {
+            api.save('/wap/user/login', $scope.User).success(function (res) {
                 $ionicLoading.hide();
-                if (data.status) {
+                if (res.status) {
                     // 存储userInfo
-                    ar.setStorage('userInfo', data.data);
+                    res.data.info = JSON.stringify(res.data.info);
+                    res.data.auth = JSON.stringify(res.data.auth);
+                    ar.setStorage('userInfo', res.data);
                     top.location.href = '/wap/site/main#/index';
                 } else {
-                    ar.saveDataAlert($ionicPopup, data.msg);
+                    ar.saveDataAlert($ionicPopup, res.msg);
                 }
 
             }).error(function () {
