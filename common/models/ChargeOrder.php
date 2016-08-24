@@ -3,6 +3,8 @@ namespace common\models;
 
 use common\models\User;
 use Yii;
+use yii\base\ErrorException;
+use yii\base\Exception;
 use yii\db\Query;
 
 /**
@@ -89,9 +91,10 @@ class ChargeOrder extends Base
      */
     public function weiXinPay($orderId){
         //①、获取用户openid
-        $tools = new \JsApiPay();
-        $openId = $tools->GetOpenid();
-        if(!$openId){
+        try{
+            $tools = new \JsApiPay();
+            $openId = $tools->GetOpenid();
+        }catch(Exception $e){
             return false;
         }
         //②、统一下单
