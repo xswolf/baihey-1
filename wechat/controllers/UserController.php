@@ -41,7 +41,9 @@ class UserController extends BaseController
     public function actionGetUserInfo()
     {
         if ($this->isLogin()) {
-            $userInfo = User::getInstance()->getUserById(\common\util\Cookie::getInstance()->getCookie('bhy_id')->value);
+            $id = (int)\Yii::$app->request->get('id');
+            $id == "" ? $id = \common\util\Cookie::getInstance()->getCookie('bhy_id')->value : '';
+            $userInfo = User::getInstance()->getUserById($id);
             return $this->renderAjax(['status' => 1, 'msg' => '成功', 'data' => $userInfo]);
         } else {
             return $this->renderAjax(['status' => 0, 'msg' => '失败']);
