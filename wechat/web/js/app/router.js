@@ -11,7 +11,7 @@ define(["app/module", 'app/service/serviceApi'],
                     for (var i in list) {
                         list[i].info = JSON.parse(list[i].info);
                         list[i].auth = JSON.parse(list[i].auth);
-                        list[i].order_time = ar.timeStamp();  // 消息时间
+                        list[i].order_time = list[i].create_time; // ar.timeStamp();  // 消息时间
                         var flag = true;
                         for (var j in $rootScope.messageList) {  // 相同消息合并
                             if ($rootScope.messageList[j].send_user_id == list[i].send_user_id) {
