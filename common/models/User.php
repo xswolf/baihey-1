@@ -251,7 +251,8 @@ class User extends Base
     {
         $time = time();
         $this->getDb()->createCommand()
-            ->update($this->tablePrefix.'user', ['last_login_time' =>$time] , ['id' => $user_id]);
+            ->update($this->tablePrefix.'user', ['last_login_time' =>$time] , ['id' => $user_id])
+            ->execute();
         $log['user_id'] = $user_id;
         $log['type'] = 1;
         $log['create_time'] = $time;
