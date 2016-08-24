@@ -896,7 +896,9 @@ define(['app/module', 'app/directive/directiveApi'
 
     // 关注的人
     module.controller("member.follow", ['app.serviceApi', '$scope', '$ionicPopup', '$ionicLoading', '$location', '$ionicActionSheet', function (api, $scope, $ionicPopup, $ionicLoading, $location, $ionicActionSheet) {
-        $scope.followType = 'follow';
+
+        $scope.followType = ar.getCookie('follow') == undefined ? 'follow' : ar.getCookie('follow');
+
         $scope.followList = [];
         $scope.followedList = [];
         api.list('/wap/follow/set-checked', {user_id: $scope.userInfo.user_id}).success(function (res) {
@@ -936,6 +938,7 @@ define(['app/module', 'app/directive/directiveApi'
         // 切换，我关注的人，关注我的人
         $scope.switching = function (value) {
             $scope.followType = value;
+            ar.setCookie('follow' , value);
         };
 
     }]);
