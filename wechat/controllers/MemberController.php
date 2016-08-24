@@ -52,7 +52,7 @@ class MemberController extends BaseController
             $data['info'] = json_decode($data['info']);
             if (is_object($data['info'])) {
                 $data['info'] = get_object_vars($data['info']);
-                $data['info']['age'] = (int)$data['info']['age'];
+                $data['info']['age'] = $data['info']['age'];
             }
         } else {
             $data['info'] = [];
