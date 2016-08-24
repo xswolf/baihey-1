@@ -409,10 +409,7 @@ define(["app/module", 'app/service/serviceApi'],
                     }
                 }
                 var setUserInfoStorage = function () {
-                    if ($scope.userInfo) {
-                        $scope.userInfo.info = JSON.stringify($scope.userInfo.info);
-                        $scope.userInfo.auth = JSON.stringify($scope.userInfo.auth);
-                    }
+
                     ar.setStorage('userInfo', $scope.userInfo);
                     getUserStorage();
                 }

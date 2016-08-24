@@ -130,9 +130,6 @@ define(['app/module', 'app/directive/directiveApi'
                 $ionicLoading.hide();
                 if (res.status) {
                     // 存储userInfo
-                    res.data.info = JSON.stringify(res.data.info);
-                    res.data.auth = JSON.stringify(res.data.auth);
-                    ar.setStorage('userInfo', res.data);
                     top.location.href = '/wap/site/main#/index';
                 } else {
                     ar.saveDataAlert($ionicPopup, res.msg);
