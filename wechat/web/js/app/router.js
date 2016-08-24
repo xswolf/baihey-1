@@ -449,21 +449,13 @@ define(["app/module", 'app/service/serviceApi'],
 
                     $scope.userInfo = ar.getStorage('userInfo');
 
-                    if ($scope.userInfo && $scope.userInfo.id == ar.getCookie('bhy_user_id')) {
-                        //getUserStorage();
+                    if ($scope.userInfo && $scope.userInfo.id != ar.getCookie('bhy_user_id')) {
 
                         api.list("/wap/user/get-user-info", {}).success(function (res) {
                             $scope.userInfo = res.data;
-                            ar.setStorage('userInfo', res.data);
-                            getUserStorage();
+                            setUserInfoStorage();
                         });
 
-                    } else {
-                        api.list("/wap/user/get-user-info", {}).success(function (res) {
-                            $scope.userInfo = res.data;
-                            ar.setStorage('userInfo', res.data);
-                            getUserStorage();
-                        });
                     }
                 } else {
                     if (ar.getCookie('wx_login') == 'out') {

@@ -31,12 +31,18 @@ class User extends \common\models\User
     public function login($userName, $password)
     {
         $condition = [
-            'username' => $userName,
             'password' => md5(md5($password)),
         ];
-        $user = $this->findOne($condition) ? $this->findOne($condition) : $this->findOne(['id' => $userName, 'password' => md5(md5($password))]);
 
-        return $user;
+        if (strlen($userName . '') == 11) {
+            $condition['phone'] = $userName;
+        } else {
+            $condition['id'] = $userName;
+        }
+
+        return (new Query())->from($this->tablePrefix.'user')
+            ->where($condition)
+            ->one();
     }
 
     /**

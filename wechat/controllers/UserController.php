@@ -41,15 +41,7 @@ class UserController extends BaseController
     public function actionGetUserInfo()
     {
         if ($this->isLogin()) {
-            $id = (int)\Yii::$app->request->get('id');
-            $userName = Cookie::getInstance()->getCookie('bhy_u_name');
-            if (isset($id) && $id > 0) {
-                $userInfo = User::getInstance()->getUserById($id);
-
-            } else {
-                $userInfo = User::getInstance()->getUserByName($userName);
-
-            }
+            $userInfo = User::getInstance()->getUserById(\common\util\Cookie::getInstance()->getCookie('bhy_id')->value);
             return $this->renderAjax(['status' => 1, 'msg' => '成功', 'data' => $userInfo]);
         } else {
             return $this->renderAjax(['status' => 0, 'msg' => '失败']);
@@ -83,7 +75,8 @@ class UserController extends BaseController
 
         //判断是否点击提交
         if (\Yii::$app->request->get('username') && \Yii::$app->request->get('password')) {
-            if ($user = User::getInstance()->login($this->get['username'], $this->get['password'])) {
+            if ($user = User::getInstance()->login($this->get['username'] , $this->get['password'])) {
+
                 if ($user['status'] < 3) {
                     $data = \common\models\User::getInstance()->getUserById($user['id']);
                     // 用户登录日志
