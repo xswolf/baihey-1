@@ -52,7 +52,6 @@ define(["app/module", 'app/service/serviceApi'],
                         msgNumber(userId);
                     })
                 })
-                mainIntercept();
             }
 
 
