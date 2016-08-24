@@ -447,16 +447,11 @@ define(["app/module", 'app/service/serviceApi'],
                         $scope.housingCheck = res.housing;
                     });
 
-                    $scope.userInfo = ar.getStorage('userInfo');
-
-                    if ($scope.userInfo && $scope.userInfo.id != ar.getCookie('bhy_user_id')) {
-
-                        api.list("/wap/user/get-user-info", {}).success(function (res) {
+                    api.list("/wap/user/get-user-info", {}).success(function (res) {
                             $scope.userInfo = res.data;
                             setUserInfoStorage();
-                        });
+                    });
 
-                    }
                 } else {
                     if (ar.getCookie('wx_login') == 'out') {
                         ar.saveDataAlert($ionicPopup, '您的账号异常，已经被限制登录！');
