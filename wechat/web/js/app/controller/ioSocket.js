@@ -465,10 +465,12 @@ define(['app/module', 'app/directive/directiveApi'
                 $scope.picLength = $scope.uploader.queue.length;
                 $scope.uploader.onAfterAddingFile = function (fileItem) {   // 选择文件之后
                     if (FileReader != undefined) {
+
                         var reader = new FileReader();
                         reader.readAsDataURL(fileItem._file);
                         reader.onload = function (event) {
                             $scope.sendMessage(event.target.result, $scope.sendId, $scope.receiveId, 'pic', time, false); // 假发送，便于预览图片
+
                         };
                     } else {
                         $scope.sendMessage('', $scope.sendId, $scope.receiveId, 'pic', time, true); // 假发送，便于预览图片
