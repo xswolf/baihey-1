@@ -45,7 +45,7 @@ class SiteController extends BaseController
         }
 
         if($user_id = Cookie::getInstance()->getCookie('bhy_id')) {
-            $user = User::getInstance()->findOne(['id' => $user_id]);
+            $user = User::getInstance()->getUserById($user_id);
         } else {
             $user = $this->weChatMember();
         }
@@ -56,7 +56,6 @@ class SiteController extends BaseController
                 setcookie('wx_login', 'out', time() + 3600 * 24 * 30, '/wap');
             }
         }
-//        echo Cookie::getInstance()->getCookie('bhy_id');exit;
         return $this->render();
     }
 

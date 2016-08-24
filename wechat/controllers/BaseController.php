@@ -147,7 +147,7 @@ class BaseController extends Controller {
             $log['type']        = 2;
             $log['create_time'] = time();
             \common\models\User::getInstance()->userLog($log);
-            $user     = User::getInstance()->findOne( [ 'id' => $userInfo['id'] ] );
+            $user     = User::getInstance()->getUserById( $userInfo['id'] );
         }
 
         // 登录日志
