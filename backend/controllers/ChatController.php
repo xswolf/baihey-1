@@ -25,7 +25,7 @@ class ChatController extends BaseController
         $list = (new Query())->from($tablePre . "user_message m")
             ->innerJoin($tablePre . 'user u' , 'u.id = m .receive_user_id')
             ->innerJoin($tablePre . 'user_information i' , 'i.user_id=m.receive_user_id')
-            ->where(['status' => 2])
+            ->where(['u.status' => 2])
             ->andWhere(['>' , 'receive_user_id' , 1])
             ->andWhere(['<=' , 'receive_user_id' , 15063])
             ->select("m.*,u.sex,i.info")
