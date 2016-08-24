@@ -464,7 +464,7 @@ define(['app/module', 'app/directive/directiveApi'
                 var time = ar.timeStamp();
                 $scope.picLength = $scope.uploader.queue.length;
                 $scope.uploader.onAfterAddingFile = function (fileItem) {   // 选择文件之后
-                    if (FileReader != 'undefiend') {
+                    if (FileReader != undefined) {
                         var reader = new FileReader();
                         reader.readAsDataURL(fileItem._file);
                         reader.onload = function (event) {
