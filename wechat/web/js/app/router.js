@@ -41,8 +41,6 @@ define(["app/module", 'app/service/serviceApi'],
 
             var userId = ar.getCookie('bhy_user_id');
             if (userId > 0) {
-                messageList();
-                msgNumber(userId);
                 requirejs(['plugin/socket/socket.io.1.4.0'], function (socket) {
 
                     var skt = socket.connect("http://120.76.84.162:8088");
@@ -69,7 +67,14 @@ define(["app/module", 'app/service/serviceApi'],
                                 }
                             })
                         }
-                        $timeout(mainIntercept,10000);
+
+                        var together = function () {
+                            messageList();
+                            msgNumber(userId);
+                            mainIntercept();
+                        }
+
+                        $timeout(together,10000);
                     });
             // 页面加载成功
             $rootScope
