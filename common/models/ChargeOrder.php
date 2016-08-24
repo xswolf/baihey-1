@@ -54,7 +54,7 @@ class ChargeOrder extends Base
      * @param $data
      * @return mixed
      */
-    public function createOrder($user_id,$data)
+    public function createOrder($user_id, $data)
     {
 
         $order = $this->getInstance();
@@ -89,12 +89,12 @@ class ChargeOrder extends Base
      * @return array
      * @throws \WxPayException
      */
-    public function weiXinPay($orderId){
+    public function weiXinPay($orderId)
+    {
         //①、获取用户openid
-        try{
-            $tools = new \JsApiPay();
-            $openId = $tools->GetOpenid();
-        }catch(\WxPayException $e){
+        $tools = new \JsApiPay();
+        $openId = $tools->GetOpenid();
+        if($openId == -1){
             return false;
         }
         //②、统一下单
@@ -112,7 +112,7 @@ class ChargeOrder extends Base
         $input->SetOpenid($openId);
         $order = \WxPayApi::unifiedOrder($input);
         $jsApiParameters = $tools->GetJsApiParameters($order);
-        return ['orderInfo'=>$orderInfo , 'jsApiParameters' => $jsApiParameters];
+        return ['orderInfo' => $orderInfo, 'jsApiParameters' => $jsApiParameters];
     }
 
     /**
@@ -176,7 +176,7 @@ class ChargeOrder extends Base
             ->innerJoin($this->tablePrefix . 'user_information i', 'o.user_id = i.user_id')
             ->innerJoin($this->tablePrefix . 'charge_type t', 'o.charge_type_id = t.id')
             //->where($where)
-            ->select(["o.order_id", "i.user_id", "json_extract(i.info , '$.real_name') AS real_name", "g.name AS goodsName", "o.money", "t.name AS typeName", "o.authorid", "o.create_time AS time", "o.status","g.value"])
+            ->select(["o.order_id", "i.user_id", "json_extract(i.info , '$.real_name') AS real_name", "g.name AS goodsName", "o.money", "t.name AS typeName", "o.authorid", "o.create_time AS time", "o.status", "g.value"])
             ->orderBy("time desc");
         if (count($where) > 0) {
             foreach ($where as $v) {
