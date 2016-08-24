@@ -35,7 +35,7 @@ class User extends \common\models\User
         ];
 
         if (strlen($userName . '') == 11) {
-            $condition['username'] = $userName;
+            $condition['phone'] = $userName;
         } else {
             $condition['id'] = $userName;
         }
