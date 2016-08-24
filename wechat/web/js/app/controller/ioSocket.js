@@ -275,7 +275,7 @@ define(['app/module', 'app/directive/directiveApi'
                     ar.setStorage('chat_messageHistory' + receiveID, $scope.historyList); // 每次发送消息后把消息放到浏览器端缓存
                 }
 
-                if(!isSend && type == 'pic'){
+                if (!isSend && type == 'pic') {
                     return;
                 }
 
@@ -376,7 +376,7 @@ define(['app/module', 'app/directive/directiveApi'
                     return;
                 }
                 try {
-                    $scope.sendMessage($scope.send_content, $scope.sendId, $scope.receiveId, 'send',undefined, true);
+                    $scope.sendMessage($scope.send_content, $scope.sendId, $scope.receiveId, 'send', undefined, true);
                 } catch (e) {
 
                 } finally {
@@ -462,18 +462,20 @@ define(['app/module', 'app/directive/directiveApi'
                 });
 
                 var time = ar.timeStamp();
-                $scope.picLength = $scope.uploader.queue.length;
                 $scope.uploader.onAfterAddingFile = function (fileItem) {   // 选择文件之后
-                    if (FileReader != undefined) {
-
+                    if (window.File && window.FileList && window.FileReader && window.Blob) {
                         var reader = new FileReader();
-                        reader.readAsDataURL(fileItem._file);
-                        reader.onload = function (event) {
+                        reader.onloadstart = function(event){  // 开始读取
                             $scope.sendMessage(event.target.result, $scope.sendId, $scope.receiveId, 'pic', time, false); // 假发送，便于预览图片
+                            viewScroll.resize();
+                            viewScroll.scrollBottom(true);
+                        }
+                        reader.onload = function () {   // 读取成功
                             fileItem.upload();   // 上传
                             viewScroll.resize();
                             viewScroll.scrollBottom(true);
                         };
+                        reader.readAsDataURL(fileItem._file);
                     } else {
                         $scope.sendMessage('', $scope.sendId, $scope.receiveId, 'pic', time, true); // 假发送，便于预览图片
                         fileItem.upload();   // 上传
@@ -483,26 +485,30 @@ define(['app/module', 'app/directive/directiveApi'
 
                 };
 
-                $scope.uploader.onCompleteItem = function (fileItem, response, status, headers) {  // 上传结束
+                $scope.uploader.onSuccessItem = function (fileItem, response, status, headers) {  // 上传成功
                     $scope.sendMessage(response.thumb_path, $scope.sendId, $scope.receiveId, 'pic', time, true);  // 真实发送
-                    console.log(response.thumb_path);
-                    var img = new Image();
-                    img.src = response.thumb_path;
-                    if (img.complete) {
-                        viewScroll.resize();
-                        viewScroll.scrollBottom(true);
-                    } else {
-                        img.onload = function () {
+                }
+
+                $scope.uploader.onCompleteItem = function (fileItem, response, status, headers) {  // 上传结束
+                    if (response.thumb_path) {
+                        var img = new Image();
+                        img.src = response.thumb_path;
+                        if (img.complete) {
                             viewScroll.resize();
                             viewScroll.scrollBottom(true);
-                            img.onload = null; //避免重复加载
+                        } else {
+                            img.onload = function () {
+                                viewScroll.resize();
+                                viewScroll.scrollBottom(true);
+                                img.onload = null; //避免重复加载
+                            }
                         }
+                        ar.initPhotoSwipeFromDOM('.bhy-gallery', $scope, $ionicPopup);
                     }
-                    ar.initPhotoSwipeFromDOM('.bhy-gallery', $scope, $ionicPopup);
                 };
 
                 $scope.uploader.onErrorItem = function (item, response, status, headers) {
-                    alert('发送图片出错，错误原因：' + response);
+                    ar.saveDataAlert($ionicPopup,'发送图片出错，错误原因：' + response);
                 }
 
             }
