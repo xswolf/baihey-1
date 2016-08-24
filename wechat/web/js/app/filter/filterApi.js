@@ -599,4 +599,19 @@ define(['app/module'], function (module) {
         }
     })
 
+    module.filter('level', function () {
+        return function (value) {
+            if (value == 1) {
+                return 'VIP'
+            }
+            if (value == 2) {
+                return '贵宾'
+            }
+            if (value == 3) {
+                return '钻石'
+            }
+            return value;
+        }
+    })
+
 })

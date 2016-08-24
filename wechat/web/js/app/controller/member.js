@@ -1700,9 +1700,6 @@ define(['app/module', 'app/directive/directiveApi'
     module.controller("member.vip", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$interval', '$location', function (api, $scope, $timeout, $ionicPopup, $interval, $location) {
         $scope.formData = [];
 
-        // 用户的ID
-        $scope.userId = 1;
-
         // 商品列表
         api.save('/wap/charge/get-charge-goods-list', {type: 1}).success(function (res) {
             $scope.goodsList = res;
@@ -1771,7 +1768,7 @@ define(['app/module', 'app/directive/directiveApi'
     }]);
 
 
-// 我的账户
+    // 我的账户
     module.controller("member.account", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', function (api, $scope, $timeout, $ionicPopup) {
 
         $scope.find = true;
@@ -1786,12 +1783,13 @@ define(['app/module', 'app/directive/directiveApi'
             }, 800)
         }
 
-        $scope.timestamp = new Date().getTime();  // 当前时间戳
+        $scope.timestamp = ar.timeStamp();  // 当前时间戳
 
         // 正在使用的服务(未到期)
         api.get('/wap/member/get-user-service-info', {}).success(function (res) {
             $scope.serviceInfo = res.data;
             $scope.serviceInfo.level = ar.cleanQuotes($scope.serviceInfo.level);
+            console.log($scope.serviceInfo);
         })
 
     }]);
@@ -1840,7 +1838,8 @@ define(['app/module', 'app/directive/directiveApi'
             })
         }
     }]);
-// 我的账户-消费记录
+
+    // 我的账户-消费记录
     module.controller("member.account_record", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$location', function (api, $scope, $timeout, $ionicPopup, $location) {
 
         $scope.recordList = [];

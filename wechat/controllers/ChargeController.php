@@ -58,6 +58,10 @@ class ChargeController extends BaseController
     public function actionPay()
     {
         $data = ChargeOrder::getInstance()->weiXinPay($this->get['orderId']);
+        if(!$data){
+            $this->redirect('http://wechat.baihey.com/wap/site/main#/member/vip');
+            return;
+        }
         $this->assign('param', $data['jsApiParameters']);
         $this->assign('orderId', $data['orderInfo']['order_id']);
         return $this->render();

@@ -182,7 +182,6 @@ define(['app/module', 'app/directive/directiveApi'
                 $scope.userList = $scope.userList.concat(res.data);
                 $scope.dataLoading = false;
                 $scope.searchForm.pageNum += 1;
-                //console.log($scope.userList);
                 if (flag == 'search') {
                     $ionicScrollDelegate.$getByHandle('mainScroll').scrollTop();
                 }

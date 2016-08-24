@@ -21,8 +21,8 @@
                 我正在使用的服务
             </div>
             <div class="item bor_t_n">
-                 <span ng-if="serviceInfo.level && serviceInfo.mature_time > timestamp" class="cor33 fl fwb">{{serviceInfo.level}}</span>
-                <span class="cor33 fr" ng-if="serviceInfo.level && serviceInfo.mature_time > timestamp">到期时间：{{serviceInfo.mature_time * 1000 | date:'yyyy-mm-dd HH:mm:ss'}}</span>
+                 <span ng-if="serviceInfo.level && serviceInfo.mature_time > timestamp" class="cor33 fl fwb">{{serviceInfo.level | level}}</span>
+                <span class="cor33 fr" ng-if="serviceInfo.level && serviceInfo.mature_time > timestamp">到期时间：{{serviceInfo.mature_time * 1000 | date:'yyyy-MM-dd H:m:s'}}</span>
                 <span ng-if="!serviceInfo.level || serviceInfo.mature_time < timestamp || !serviceInfo.mature_time">暂无您正在使用的服务记录</span>
             </div>
             <a class="item item-icon-left item-icon-right mt20" href="#/member/account_record">

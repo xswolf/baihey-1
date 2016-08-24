@@ -91,6 +91,9 @@ class ChargeOrder extends Base
         //①、获取用户openid
         $tools = new \JsApiPay();
         $openId = $tools->GetOpenid();
+        if(!$openId){
+            return false;
+        }
         //②、统一下单
         $orderInfo = ChargeOrder::getInstance()->getOne($orderId);
         $goods = ChargeGoods::getInstance()->getOne($orderInfo['charge_goods_id']);
