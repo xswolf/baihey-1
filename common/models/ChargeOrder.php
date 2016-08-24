@@ -94,7 +94,7 @@ class ChargeOrder extends Base
         try{
             $tools = new \JsApiPay();
             $openId = $tools->GetOpenid();
-        }catch(Exception $e){
+        }catch(\WxPayException $e){
             return false;
         }
         //②、统一下单
