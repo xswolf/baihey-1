@@ -44,7 +44,7 @@ class SiteController extends BaseController
             $_SESSION['code'] = null;
         }
 
-        if($user_id = Cookie::getInstance()->getCookie('bhy_id')) {
+        if($user_id = Cookie::getInstance()->getCookie('bhy_id') && !isset($_GET['code'])) {
             $user = User::getInstance()->getUserById($user_id);
         } else {
             $user = $this->weChatMember();
