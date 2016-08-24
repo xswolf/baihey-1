@@ -463,25 +463,25 @@ define(['app/module', 'app/directive/directiveApi'
 
                 var time = ar.timeStamp();
                 $scope.uploader.onAfterAddingFile = function (fileItem) {   // 选择文件之后
-                    if (window.File && window.FileList && window.FileReader && window.Blob) {
-                        var reader = new FileReader();
-                        reader.onprogress = function(progress){
-                            $scope.sendMessage(progress.target.result, $scope.sendId, $scope.receiveId, 'pic', time, false); // 假发送，便于预览图片
-                            viewScroll.resize();
-                            viewScroll.scrollBottom(true);
-                        }
-                        reader.onload = function () {   // 读取成功
-                            fileItem.upload();   // 上传
-                            viewScroll.resize();
-                            viewScroll.scrollBottom(true);
-                        };
-                        reader.readAsDataURL(fileItem._file);
-                    } else {
-                        $scope.sendMessage('', $scope.sendId, $scope.receiveId, 'pic', time, true); // 假发送，便于预览图片
+                    //if (window.File && window.FileList && window.FileReader && window.Blob) {
+                    //    var reader = new FileReader();
+                    //    reader.onprogress = function(progress){
+                    //        $scope.sendMessage(progress.target.result, $scope.sendId, $scope.receiveId, 'pic', time, false); // 假发送，便于预览图片
+                    //        viewScroll.resize();
+                    //        viewScroll.scrollBottom(true);
+                    //    }
+                    //    reader.onload = function () {   // 读取成功
+                    //        fileItem.upload();   // 上传
+                    //        viewScroll.resize();
+                    //        viewScroll.scrollBottom(true);
+                    //    };
+                    //    reader.readAsDataURL(fileItem._file);
+                    //} else {
+                        $scope.sendMessage('', $scope.sendId, $scope.receiveId, 'pic', time, false); // 假发送，便于预览图片
                         fileItem.upload();   // 上传
                         viewScroll.resize();
                         viewScroll.scrollBottom(true);
-                    }
+                    //}
 
                 };
 
