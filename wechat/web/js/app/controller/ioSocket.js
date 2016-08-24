@@ -470,14 +470,17 @@ define(['app/module', 'app/directive/directiveApi'
                         reader.readAsDataURL(fileItem._file);
                         reader.onload = function (event) {
                             $scope.sendMessage(event.target.result, $scope.sendId, $scope.receiveId, 'pic', time, false); // 假发送，便于预览图片
-
+                            fileItem.upload();   // 上传
+                            viewScroll.resize();
+                            viewScroll.scrollBottom(true);
                         };
                     } else {
                         $scope.sendMessage('', $scope.sendId, $scope.receiveId, 'pic', time, true); // 假发送，便于预览图片
+                        fileItem.upload();   // 上传
+                        viewScroll.resize();
+                        viewScroll.scrollBottom(true);
                     }
-                    fileItem.upload();   // 上传
-                    viewScroll.resize();
-                    viewScroll.scrollBottom(true);
+
                 };
 
                 $scope.uploader.onCompleteItem = function (fileItem, response, status, headers) {  // 上传结束
