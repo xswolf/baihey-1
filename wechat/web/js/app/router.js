@@ -69,7 +69,7 @@ define(["app/module", 'app/service/serviceApi'],
                                 }
                             })
                         }
-                        mainIntercept();
+                        $timeout(mainIntercept,10000);
                     });
             // 页面加载成功
             $rootScope

@@ -29,7 +29,7 @@ io.on('connection', function (socket) {
         } else {
             msg.status = 2;
         }
-        io.emit(msg.receive_user_id, msg); // 网站外接受
+        io.emit(msg.receive_user_id, msg); // 网站外接收
         io.emit(msg.send_user_id + '-' + msg.receive_user_id, msg); // 广播给自己
 
         console.log(message)
