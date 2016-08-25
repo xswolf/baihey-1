@@ -500,7 +500,13 @@ define(['app/module', 'app/directive/directiveApi'
                     if (response.status == 1){
                         $scope.sendMessage(response.thumb_path, $scope.sendId, $scope.receiveId, 'pic', time, true);  // 真实发送
                     }else{
-                        $scope.historyList[$scope.historyList.length-1].status = 4;
+                        for (var i = $scope.historyList.length-1 ; i>=0 ; i++){
+                            if ($scope.historyList[i].type == 'pic' && $scope.historyList[i].status == 3){
+                                $scope.historyList[i].status = 4;
+                                break;
+                            }
+                        }
+
                     }
 
                 }
@@ -524,8 +530,13 @@ define(['app/module', 'app/directive/directiveApi'
                 };
 
                 $scope.uploader.onErrorItem = function (item, response, status, headers) {
-                    ar.saveDataAlert($ionicPopup,'发送图片出错，错误原因：' + response);
-                    $scope.historyList[$scope.historyList.length-1].status = 4;
+                    ar.saveDataAlert($ionicPopup,'发送图片出错，错误原因未知');
+                    for (var i = $scope.historyList.length-1 ; i>=0 ; i++){
+                        if ($scope.historyList[i].type == 'pic' && $scope.historyList[i].status == 3){
+                            $scope.historyList[i].status = 4;
+                            break;
+                        }
+                    }
                 }
 
             }
