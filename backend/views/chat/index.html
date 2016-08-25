@@ -11,6 +11,7 @@
     <link rel="stylesheet" type="text/css" href="/backend/web/CloudAdmin/css/cloud-admin.css" >
     <link rel="stylesheet" type="text/css"  href="/backend/web/CloudAdmin/css/themes/default.css" id="skin-switcher" >
     <link rel="stylesheet" type="text/css"  href="/backend/web/CloudAdmin/css/responsive.css" >
+    <link rel="stylesheet" type="text/css"  href="/backend/web/css/site.css" >
 
     <link href="/backend/web/CloudAdmin/font-awesome/css/font-awesome.min.css" rel="stylesheet">
     <!-- DATE RANGE PICKER -->
@@ -24,17 +25,88 @@
 <!-- PAGE -->
 <section id="page">
     <!-- SIDEBAR -->
-    <div id="sidebar" class="sidebar">
-        <div class="sidebar-menu nav-collapse">
-            <ul>
-                <li>
-                    <a>
-                        <i class="fa fa-tachometer fa-fw"></i> <span class="menu-text">大范甘迪发</span>
-                        <span class="selected"></span>
-                    </a>
-                </li>
-            </ul>
-            <!-- /SIDEBAR MENU -->
+    <div id="sidebar" class="sidebar chatListScroll">
+        <div class="chatList">
+            <a class="item item-thumbnail-left">
+                <img src="/wechat/web/images/test.jpg">
+                <h2>张三丰</h2>
+                <p>23岁，未婚，本科</p>
+            </a>
+            <a class="item item-thumbnail-left">
+                <img src="/wechat/web/images/test.jpg">
+                <h2>张三丰</h2>
+                <p>23岁，未婚，本科</p>
+            </a>
+            <a class="item item-thumbnail-left">
+                <img src="/wechat/web/images/test.jpg">
+                <h2>张三丰</h2>
+                <p>23岁，未婚，本科</p>
+            </a>
+            <a class="item item-thumbnail-left">
+                <img src="/wechat/web/images/test.jpg">
+                <h2>张三丰</h2>
+                <p>23岁，未婚，本科</p>
+            </a>
+            <a class="item item-thumbnail-left">
+                <img src="/wechat/web/images/test.jpg">
+                <h2>张三丰</h2>
+                <p>23岁，未婚，本科</p>
+            </a>
+            <a class="item item-thumbnail-left">
+                <img src="/wechat/web/images/test.jpg">
+                <h2>张三丰</h2>
+                <p>23岁，未婚，本科</p>
+            </a>
+            <a class="item item-thumbnail-left">
+                <img src="/wechat/web/images/test.jpg">
+                <h2>张三丰</h2>
+                <p>23岁，未婚，本科</p>
+            </a>
+            <a class="item item-thumbnail-left">
+                <img src="/wechat/web/images/test.jpg">
+                <h2>张三丰</h2>
+                <p>23岁，未婚，本科</p>
+            </a>
+            <a class="item item-thumbnail-left">
+                <img src="/wechat/web/images/test.jpg">
+                <h2>张三丰</h2>
+                <p>23岁，未婚，本科</p>
+            </a>
+            <a class="item item-thumbnail-left">
+                <img src="/wechat/web/images/test.jpg">
+                <h2>张三丰</h2>
+                <p>23岁，未婚，本科</p>
+            </a>
+            <a class="item item-thumbnail-left">
+                <img src="/wechat/web/images/test.jpg">
+                <h2>张三丰</h2>
+                <p>23岁，未婚，本科</p>
+            </a>
+            <a class="item item-thumbnail-left">
+                <img src="/wechat/web/images/test.jpg">
+                <h2>张三丰</h2>
+                <p>23岁，未婚，本科</p>
+            </a>
+            <a class="item item-thumbnail-left">
+                <img src="/wechat/web/images/test.jpg">
+                <h2>张三丰</h2>
+                <p>23岁，未婚，本科</p>
+            </a>
+            <a class="item item-thumbnail-left">
+                <img src="/wechat/web/images/test.jpg">
+                <h2>张三丰</h2>
+                <p>23岁，未婚，本科</p>
+            </a>
+            <a class="item item-thumbnail-left">
+                <img src="/wechat/web/images/test.jpg">
+                <h2>张三丰</h2>
+                <p>23岁，未婚，本科</p>
+            </a>
+            <a class="item item-thumbnail-left">
+                <img src="/wechat/web/images/test.jpg">
+                <h2>张三丰</h2>
+                <p>23岁，未婚，本科</p>
+            </a>
         </div>
     </div>
     <!-- /SIDEBAR -->
@@ -64,11 +136,11 @@
 
                     <!-- CHAT -->
                     <div class="row">
-                        <div class="col-md-8 col-md-offset-2">
+                        <div class="col-md-8">
                             <!-- BOX -->
                             <div class="box border green chat-window">
                                 <div class="box-title">
-                                    <h4><i class="fa fa-comments"></i>Chat Window</h4>
+                                    <h4><i class="fa fa-comments"></i>张三丰</h4>
                                     <div class="tools">
                                         <a href="#box-config" data-toggle="modal" class="config">
                                             <i class="fa fa-cog"></i>
@@ -88,18 +160,16 @@
                                     <div class="scroller" data-height="450px" data-always-visible="1" data-rail-visible="1">
                                         <ul class="media-list chat-list">
 
-                                            {{foreach from=$chatList item=vo}}
                                                 <li class="media">
                                                     <a class="pull-left pull-right" href="#">
                                                         <img class="media-object" alt="" class="pic1" >
                                                     </a>
                                                     <div class="media-body chat-pop">
-                                                        <h4 class="media-heading"><span class="name1"></span> <span class="pull-right"><i class="fa fa-clock-o"></i> <abbr class="timeago"  >{{date('Y-m-d  H:m:s',$vo.create_time)}}</abbr> </span></h4>
-                                                        <p>{{$vo.message}}</p>
+                                                        <h4 class="media-heading"><span class="name1"></span> <span class="pull-right"><i class="fa fa-clock-o"></i> <abbr class="timeago">sdddds</abbr> </span></h4>
+                                                        <p>ds</p>
 
                                                     </div>
                                                 </li>
-                                            {{/foreach}}
                                         </ul>
                                     </div>
                                     <div class="divide-20"></div>
@@ -112,6 +182,105 @@
                                 </div>
                             </div>
                             <!-- /BOX -->
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="chat-widget">
+                            <div class="col-md-12">
+                                <!-- BOX -->
+                                <div class="box border red">
+                                    <div class="box-title">
+                                        <h4><i class="fa fa-comment"></i>Chat Widget</h4>
+                                        <div class="tools">
+                                            <a href="javascript:;" class="expand">
+                                                <i class="fa fa-chevron-down"></i>
+                                            </a>
+                                            <a href="javascript:;" class="remove">
+                                                <i class="fa fa-times"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="box-body" style="display:none">
+                                        <div class="scroller" data-height="350px" data-always-visible="1" data-rail-visible="1">
+                                            <ul class="media-list chat-list">
+                                                <li class="media">
+                                                    <a class="pull-left" href="#">
+                                                        <img class="media-object" alt="Generic placeholder image" src="img/chat/headshot1.jpg">
+                                                    </a>
+                                                    <div class="media-body chat-pop">
+                                                        <h4 class="media-heading">John Doe <span class="pull-right"><i class="fa fa-clock-o"></i> <abbr class="timeago" title="Oct 9, 2013" >Oct 9, 2013</abbr> </span></h4>
+                                                        <p>Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis.</p>
+
+                                                    </div>
+                                                </li>
+                                                <li class="media">
+                                                    <a class="pull-right" href="#">
+                                                        <img class="media-object"  alt="Generic placeholder image" src="img/chat/headshot2.jpg">
+                                                    </a>
+                                                    <div class="pull-right media-body chat-pop mod">
+                                                        <h4 class="media-heading">You <span class="pull-left"><abbr class="timeago" title="Oct 10, 2013" >Oct 10, 2013</abbr> <i class="fa fa-clock-o"></i></span></h4></h4>
+                                                        Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis.
+                                                    </div>
+                                                </li>
+                                                <li class="media">
+                                                    <a class="pull-left" href="#">
+                                                        <img class="media-object"  alt="Generic placeholder image" src="img/chat/headshot3.jpg">
+                                                    </a>
+                                                    <div class="media-body chat-pop">
+                                                        <h4 class="media-heading">Tim Row <span class="pull-right"><i class="fa fa-clock-o"></i> <abbr class="timeago" title="Oct 10, 2013" >Oct 10, 2013</abbr> </span></h4></h4>
+                                                        <p>Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis.</p>
+                                                    </div>
+                                                </li>
+                                                <li class="media">
+                                                    <a class="pull-left" href="#">
+                                                        <img class="media-object"  alt="Generic placeholder image" src="img/chat/headshot1.jpg">
+                                                    </a>
+                                                    <div class="media-body chat-pop">
+                                                        <h4 class="media-heading">John Doe <span class="pull-right"><i class="fa fa-clock-o"></i> <abbr class="timeago" title="Oct 10, 2013" >Oct 10, 2013</abbr> </span></h4></h4>
+                                                        <p>Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis.</p>
+                                                    </div>
+                                                </li>
+                                                <li class="media">
+                                                    <a class="pull-right" href="#">
+                                                        <img class="media-object"  alt="Generic placeholder image" src="img/chat/headshot2.jpg">
+                                                    </a>
+                                                    <div class="pull-right media-body chat-pop mod">
+                                                        <h4 class="media-heading">You <span class="pull-left"><abbr class="timeago" title="Oct 11, 2013" >Oct 11, 2013</abbr> <i class="fa fa-clock-o"></i></span></h4></h4>
+                                                        Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis.
+                                                    </div>
+                                                </li>
+                                                <li class="media">
+                                                    <a class="pull-left" href="#">
+                                                        <img class="media-object"  alt="Generic placeholder image" src="img/chat/headshot4.jpg">
+                                                    </a>
+                                                    <div class="media-body chat-pop">
+                                                        <h4 class="media-heading">Jess Doe <span class="pull-right"><i class="fa fa-clock-o"></i> <abbr class="timeago" title="Oct 12, 2013" >Oct 12, 2013</abbr> </span></h4></h4>
+                                                        <p>Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis.</p>
+                                                    </div>
+                                                </li>
+                                                <li class="media">
+                                                    <a class="pull-right" href="#">
+                                                        <img class="media-object"  alt="Generic placeholder image" src="img/chat/headshot2.jpg">
+                                                    </a>
+                                                    <div class="pull-right media-body chat-pop mod">
+                                                        <h4 class="media-heading">You <span class="pull-left"><abbr class="timeago" title="Oct 12, 2013" >Oct 12, 2013</abbr> <i class="fa fa-clock-o"></i></span></h4></h4>
+                                                        Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis.
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        <div class="divide-20"></div>
+                                        <div class="chat-form">
+                                            <div class="input-group">
+                                                <input type="text" class="form-control">
+                                                <span class="input-group-btn"> <button class="btn btn-primary" type="button"><i class="fa fa-check"></i></button> </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- /BOX -->
+                            </div>
                         </div>
                     </div>
                     <!-- /CHAT -->
@@ -149,65 +318,9 @@
 <script>
     jQuery(document).ready(function() {
         App.setPage("chats");  //Set current page
-        var handleChat = function (elem) {
-            var append = function () {
-                //Check if chat is empty
-                var input = $('.' + elem + ' .chat-form input');
-                var text = input.val();
-                if (text.length == 0) {
-                    return;
-                }
-
-                //Get time
-                var curr_time = moment().format('YYYY-MM-DD HH:mm:ss');
-
-                var msg = '';
-                msg += '<li class="animated fadeInLeft media">';
-                msg += '<a class="pull-right" href="#">';
-                msg += '<img class="media-object" alt="" src="img/chat/headshot2.jpg">';
-                msg += '</a>';
-                msg += '<div class="pull-right media-body chat-pop mod">';
-                msg += '<h4 class="media-heading">自己 <span class="pull-left">' + curr_time + '</abbr> <i class="fa fa-clock-o"></i></span></h4>';
-                msg += text;
-                msg += '</div>';
-                msg += '</li>';
-
-                var list = $('.' + elem + ' .chat-list');
-                list.append(msg);
-                jQuery("abbr.timeago").timeago();
-                input.val("");
-                $('.' + elem + ' .scroller').slimScroll({
-                    scrollTo: list.height()
-                });
-            }
-            //If button is pressed
-            $('.' + elem + ' .chat-form .btn').click(function (e) {
-                e.preventDefault();
-                append();
-            });
-
-            var input = $('.' + elem + ' .chat-form input');
-            //If Enter is pressed
-            input.keypress(function (e) {
-                if (e.which == 13) {
-                    append();
-                    return false;
-                }
-            });
-        }
-
-        handleChat("chat-window");
+        App.init();
     });
 
-    function getChatMessage(sid , rid , name , pic){
-        $.ajax({
-            url: "/admin/chat/msg", data: {sid: sid , rid : rid}, success: function (res) {
-
-                $(".name1").text(name)
-                $(".pic1").attr("src" , pic);
-            }
-        });
-    }
 </script>
 <!-- /JAVASCRIPTS -->
 </body>
