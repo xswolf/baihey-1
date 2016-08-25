@@ -473,6 +473,7 @@ define(['app/module', 'app/directive/directiveApi'
                 });
 
 
+                var time = ar.timeStamp();
                 $scope.uploader.onAfterAddingFile = function (fileItem) {   // 选择文件之后
                     //if (window.File && window.FileList && window.FileReader && window.Blob) {
                     //    var reader = new FileReader();
@@ -488,16 +489,23 @@ define(['app/module', 'app/directive/directiveApi'
                     //    };
                     //    reader.readAsDataURL(fileItem._file);
                     //} else {
-                    var time = ar.timeStamp();
-                    $scope.sendMessage('图片发送中', $scope.sendId, $scope.receiveId, 'pic', time, false); // 假发送，便于预览图片
+
+                    console.log(fileItem)
+                    $scope.sendMessage(fileItem.file.name, $scope.sendId, $scope.receiveId, 'pic', time, false); // 假发送，便于预览图片
                     fileItem.upload();   // 上传
                     viewScroll.resize();
                     viewScroll.scrollBottom(true);
 
 
                     $scope.uploader.onSuccessItem = function (fileItem, response, status, headers) {  // 上传成功
+
                         if (response.status == 1){
-                            $scope.sendMessage(response.thumb_path, $scope.sendId, $scope.receiveId, 'pic', time, true);  // 真实发送
+                            for (var i in $scope.historyList){
+                                if ($scope.historyList[i].message == fileItem.file.name){
+                                    $scope.sendMessage(response.thumb_path, $scope.sendId, $scope.receiveId, 'pic', $scope.historyList[i].time, true);  // 真实发送
+                                }
+                            }
+
                         }else{
                             for (var i = $scope.historyList.length-1 ; i>=0 ; i++){
                                 if ($scope.historyList[i].type == 'pic' && $scope.historyList[i].status == 3){
