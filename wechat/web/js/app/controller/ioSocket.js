@@ -472,6 +472,7 @@ define(['app/module', 'app/directive/directiveApi'
                     }
                 });
 
+
                 var time = ar.timeStamp();
                 $scope.uploader.onAfterAddingFile = function (fileItem) {   // 选择文件之后
                     //if (window.File && window.FileList && window.FileReader && window.Blob) {
@@ -488,22 +489,39 @@ define(['app/module', 'app/directive/directiveApi'
                     //    };
                     //    reader.readAsDataURL(fileItem._file);
                     //} else {
-                        $scope.sendMessage('图片发送中', $scope.sendId, $scope.receiveId, 'pic', time, false); // 假发送，便于预览图片
-                        fileItem.upload();   // 上传
-                        viewScroll.resize();
-                        viewScroll.scrollBottom(true);
+
+                    console.log(fileItem)
+                    $scope.sendMessage(fileItem.file.name, $scope.sendId, $scope.receiveId, 'pic', time, false); // 假发送，便于预览图片
+                    fileItem.upload();   // 上传
+                    viewScroll.resize();
+                    viewScroll.scrollBottom(true);
+
+
+                    $scope.uploader.onSuccessItem = function (fileItem, response, status, headers) {  // 上传成功
+
+                        if (response.status == 1){
+                            for (var i in $scope.historyList){
+                                if ($scope.historyList[i].message == fileItem.file.name){
+                                    $scope.sendMessage(response.thumb_path, $scope.sendId, $scope.receiveId, 'pic', $scope.historyList[i].time, true);  // 真实发送
+                                }
+                            }
+
+                        }else{
+                            for (var i = $scope.historyList.length-1 ; i>=0 ; i++){
+                                if ($scope.historyList[i].type == 'pic' && $scope.historyList[i].status == 3){
+                                    $scope.historyList[i].status = 4;
+                                    break;
+                                }
+                            }
+
+                        }
+
+                    }
                     //}
 
                 };
 
-                $scope.uploader.onSuccessItem = function (fileItem, response, status, headers) {  // 上传成功
-                    if (response.status == 1){
-                        $scope.sendMessage(response.thumb_path, $scope.sendId, $scope.receiveId, 'pic', time, true);  // 真实发送
-                    }else{
-                        $scope.historyList[$scope.historyList.length-1].status = 4;
-                    }
 
-                }
 
                 $scope.uploader.onCompleteItem = function (fileItem, response, status, headers) {  // 上传结束
                     if (response.thumb_path) {
@@ -524,8 +542,13 @@ define(['app/module', 'app/directive/directiveApi'
                 };
 
                 $scope.uploader.onErrorItem = function (item, response, status, headers) {
-                    ar.saveDataAlert($ionicPopup,'发送图片出错，错误原因：' + response);
-                    $scope.historyList[$scope.historyList.length-1].status = 4;
+                    ar.saveDataAlert($ionicPopup,'发送图片出错，错误原因未知');
+                    for (var i = $scope.historyList.length-1 ; i>=0 ; i++){
+                        if ($scope.historyList[i].type == 'pic' && $scope.historyList[i].status == 3){
+                            $scope.historyList[i].status = 4;
+                            break;
+                        }
+                    }
                 }
 
             }
@@ -541,12 +564,11 @@ define(['app/module', 'app/directive/directiveApi'
                 var setMessage = function (response) {
                     if (response.type == 'madd' || response.type == 'remove' || response.type == 'add') return;
                     response.message = response.message.replace(/&quot;/g, "\"");
-
                     if ($scope.sendId == response.send_user_id) {  // 响应自己发送的消息
                         for (var i in $scope.historyList) {
-                            if (response.status == 1) { // 如果对方在线，所有消息均设置已读
-                                $scope.historyList[i].status = 1;
-                            }
+                            //if (response.status == 1 && $scope.historyList[i].status != 4) { // 如果对方在线，所有消息均设置已读
+                            //    $scope.historyList[i].status = 1;
+                            //}
                             if (response.time == $scope.historyList[i].time &&
                                 (response.message == $scope.historyList[i].message ||
                                 response.type == 'pic')) {
