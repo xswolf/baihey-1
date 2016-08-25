@@ -23,13 +23,13 @@ class UserDynamic extends Base
     {
         $data['user_id'] = $user_id;
         $data['pic'] = isset($data['pic']) ? $data['pic'] : '';
-        if(!isset($data['content'])) {
+        if (!isset($data['content'])) {
             return false;
         }
         $data['address'] = isset($data['address']) ? $data['address'] : '';
         $data['create_time'] = time();
         $row = $this->getDb()->createCommand()
-            ->insert($this->tablePrefix.'user_dynamic', $data)
+            ->insert($this->tablePrefix . 'user_dynamic', $data)
             ->execute();
 
         return $this->getDb()->lastInsertID;
@@ -42,11 +42,11 @@ class UserDynamic extends Base
      * @param $page
      * @return array
      */
-    public function getDynamicList($uid, $page = 0, $limit = 5 , $loginUserId = -1)
+    public function getDynamicList($uid, $page = 0, $limit = 5, $loginUserId = -1)
     {
         $loginUserId = $loginUserId == -1 ? \common\util\Cookie::getInstance()->getCookie('bhy_id')->value : $loginUserId;
-        $offset      = $page * $limit;
-        $obj         = (new Query())
+        $offset = $page * $limit;
+        $obj = (new Query())
             ->from($this->tablePrefix . "user_dynamic d")
             ->innerJoin($this->tablePrefix . 'user_information i', 'd.user_id=i.user_id')
             ->innerJoin($this->tablePrefix . 'user u', 'd.user_id=u.id')
@@ -56,7 +56,7 @@ class UserDynamic extends Base
             ->where(['c.user_id' => $loginUserId])
             ->limit($limit)
             ->offset($offset)
-            ->select(["d.*", "u.phone", "i.honesty_value", "i.report_flag", "json_extract(i.info , '$.level') AS level", "json_extract(i.info , '$.head_pic') AS head_pic", "json_extract(i.info , '$.real_name') AS real_name", "json_extract(i.info , '$.age') AS age",'u.sex', 'p.thumb_path AS thumb_path', 'p.is_check AS head_status', "c.id as cid", "f.id as fid"])
+            ->select(["d.*", "u.phone", "i.honesty_value", "i.report_flag", "json_extract(i.info , '$.level') AS level", "json_extract(i.info , '$.head_pic') AS head_pic", "json_extract(i.info , '$.real_name') AS real_name", "json_extract(i.info , '$.age') AS age", 'u.sex', 'p.thumb_path AS thumb_path', 'p.is_check AS head_status', "c.id as cid", "f.id as fid"])
             ->orderBy("f.id desc ,d.create_time desc");
         if ($uid > 0) {
             return $obj->where(['u.id' => $uid, 'd.status' => 1])->all();
@@ -80,7 +80,7 @@ class UserDynamic extends Base
             ->leftJoin($this->tablePrefix . 'user_click c', 'c.dynamic_id = d.id AND c.user_id=' . $loginUserId)
             ->leftJoin($this->tablePrefix . 'user_photo p', 'p.user_id = d.user_id AND p.is_head = 1 AND p.user_id =' . $loginUserId)
             ->where(['d.id' => $id])
-            ->select(["d.*", "u.phone", "i.honesty_value", "i.report_flag", "json_extract(i.info , '$.level') AS level", "json_extract(i.info , '$.head_pic') AS head_pic", "json_extract(i.info , '$.real_name') AS real_name", "json_extract(i.info , '$.age') AS age",'u.sex', 'p.thumb_path AS thumb_path', 'p.is_check AS head_status', "c.id as cid"])
+            ->select(["d.*", "u.phone", "i.honesty_value", "i.report_flag", "json_extract(i.info , '$.level') AS level", "json_extract(i.info , '$.head_pic') AS head_pic", "json_extract(i.info , '$.real_name') AS real_name", "json_extract(i.info , '$.age') AS age", 'u.sex', 'p.thumb_path AS thumb_path', 'p.is_check AS head_status', "c.id as cid"])
             ->orderBy("d.create_time desc")
             ->one();
     }
@@ -89,7 +89,7 @@ class UserDynamic extends Base
     {
         $data['user_id'] = $user_id;
         $row = $this->getDb()->createCommand()
-            ->update($this->tablePrefix.'user_dynamic', $data, ['id' => $id, 'user_id' => $user_id])
+            ->update($this->tablePrefix . 'user_dynamic', $data, ['id' => $id, 'user_id' => $user_id])
             ->execute();
 
         return $row;
@@ -100,10 +100,11 @@ class UserDynamic extends Base
      * 获取用户评论和点赞数目
      * @return array
      */
-    public function getCommentByUserId($userId){
+    public function getCommentByUserId($userId)
+    {
 
-        $result =  (new Query())->from($this->tablePrefix.'user_dynamic')
-            ->where(['user_id'=>$userId])
+        $result = (new Query())->from($this->tablePrefix . 'user_dynamic')
+            ->where(['user_id' => $userId, 'status' => 1])
             ->select("sum(like_num) as like_num , sum(comment_num) as comment_num")
             ->one();
         return $result['comment_num'];
@@ -115,23 +116,24 @@ class UserDynamic extends Base
      * @param string $createTime
      * @return array
      */
-    public function getComment($userId , $createTime = ''){
+    public function getComment($userId, $createTime = '')
+    {
 
-        $where = ['d.user_id'=>$userId];
+        $where = ['d.user_id' => $userId];
 
-        $handle = (new Query())->from($this->tablePrefix.'user_dynamic d')
-            ->innerJoin($this->tablePrefix.'user_comment c' , 'd.id = c.dynamic_id')
-            ->innerJoin($this->tablePrefix.'user_information i' , 'i.user_id=c.user_id' )
+        $handle = (new Query())->from($this->tablePrefix . 'user_dynamic d')
+            ->innerJoin($this->tablePrefix . 'user_comment c', 'd.id = c.dynamic_id')
+            ->innerJoin($this->tablePrefix . 'user_information i', 'i.user_id=c.user_id')
             ->where($where);
         if ($createTime != '') {
             $handle->andWhere([">=", "c.create_time", $createTime]);
-        }else{
-            $handle->andWhere([">=", "c.create_time", time()-3600*24*30]);
+        } else {
+            $handle->andWhere([">=", "c.create_time", time() - 3600 * 24 * 30]);
         }
 
         return $handle->select("d.id, i.info , d.pic , d.content , c.content as comment")
-        ->orderBy('c.create_time desc')
-        ->all();
+            ->orderBy('c.create_time desc')
+            ->all();
     }
 
 }
