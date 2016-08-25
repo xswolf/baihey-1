@@ -11,7 +11,7 @@
             <div class="imgList_con">
                 <div class="imgList_handle clearfix bhy-gallery">
                     <div class="row warp">
-                        <a class="col col-25" ng-repeat="img in imgList" ng-href="{{img.thumb_path | picture}}" get-img-size="{{img.thumb_path}}">
+                        <a class="col col-25" ng-repeat="img in imgList | filter:{is_check:1}" ng-href="{{img.thumb_path | picture}}" get-img-size="{{img.thumb_path}}">
                             <img src="/wechat/web/images/lazyload.png" auth="{{picAuth}}" lazyload="{{img.thumb_path}}">
                             <figure class="hide">轻触照片退出</figure>
                         </a>
