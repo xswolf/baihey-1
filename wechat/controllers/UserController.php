@@ -65,7 +65,7 @@ class UserController extends BaseController
 //            if ($user = User::getInstance()->getUserByPhone($id)){
             if ($user = User::getInstance()->getUserById($id)){
                 Cookie::getInstance()->setLoginCookie($user);
-                return $this->redirect('/wap/site/main#/fictitious?id='.\Yii::$app->request->get('receive_user_id'));
+                return $this->redirect('/wap/site/main#/message');
             }
         }
 
