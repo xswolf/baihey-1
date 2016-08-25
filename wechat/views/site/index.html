@@ -18,7 +18,7 @@
                      class="rounded">
 
                 <h2 class="fs16">
-                    <span ng-if="userInfo.info.real_name">{{userInfo.info.real_name | sex:userInfo.sex:userInfo.age:userInfo.id}}，您好！</span>
+                    <span ng-if="userInfo.info.real_name">{{userInfo.info.real_name | sex:userInfo.sex:userInfo.info.age:userInfo.id}}，您好！</span>
                     <span ng-if="!userInfo.info.real_name">会员{{userInfo.id}}，您好！</span>
                 </h2>
                 <span class="cor20 user_id">ID:{{userInfo.id}}</span>
