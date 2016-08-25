@@ -497,7 +497,10 @@ define(['app/module', 'app/directive/directiveApi'
                 };
 
                 $scope.uploader.onSuccessItem = function (fileItem, response, status, headers) {  // 上传成功
-                    $scope.sendMessage(response.thumb_path, $scope.sendId, $scope.receiveId, 'pic', time, true);  // 真实发送
+                    if (response.status == 1){
+                        $scope.sendMessage(response.thumb_path, $scope.sendId, $scope.receiveId, 'pic', time, true);  // 真实发送
+                    }
+
                 }
 
                 $scope.uploader.onCompleteItem = function (fileItem, response, status, headers) {  // 上传结束
@@ -535,16 +538,18 @@ define(['app/module', 'app/directive/directiveApi'
                 var setMessage = function (response) {
                     if (response.type == 'madd' || response.type == 'remove' || response.type == 'add') return;
                     response.message = response.message.replace(/&quot;/g, "\"");
+                    console.log(response);
+                    console.log($scope.historyList);
                     if ($scope.sendId == response.send_user_id) {  // 响应自己发送的消息
                         for (var i in $scope.historyList) {
                             if (response.status == 1) { // 如果对方在线，所有消息均设置已读
                                 $scope.historyList[i].status = 1;
                             }
-                            if (response.time == $scope.historyList[i].time &&
-                                (response.message == $scope.historyList[i].message ||
-                                response.type == 'pic')) {
+                            //if (response.time == $scope.historyList[i].time &&
+                            //    (response.message == $scope.historyList[i].message ||
+                            //    response.type == 'pic')) {
+                            if (response.id == $scope.historyList[i].id){
                                 $scope.historyList[i].message = response.message;
-                                $scope.historyList[i].status = response.status;
                             }
                         }
                     } else {
