@@ -392,7 +392,6 @@ define(['app/module', 'app/directive/directiveApi'
             $scope.infoModal.remove();
         }
 
-
     }
     ]);
 

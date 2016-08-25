@@ -20,7 +20,10 @@
             <!-- 固定item -->
             <ion-item class="talk_item_u">
                 <div class="talk_user">
-                    <a ng-href="{{receiveId >= 10000 ? '#/userInfo?userId='+receiveId : '#/admin_info?userId='+receiveId}}">
+                    <a ng-show="!blackList" ng-href="{{receiveId >= 10000 ? '#/userInfo?userId='+receiveId : '#/admin_info?userId='+receiveId}}">
+                        <img ng-src="{{receiveHeadPic | isNull}}" onerror="this.src='/wechat/web/images/no_img.png'">
+                    </a>
+                    <a ng-show="blackList" href="javascript:;" ng-click="blackListAlert()">
                         <img ng-src="{{receiveHeadPic | isNull}}" onerror="this.src='/wechat/web/images/no_img.png'">
                     </a>
                 </div>

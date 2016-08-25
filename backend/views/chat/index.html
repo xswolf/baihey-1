@@ -26,17 +26,13 @@
     <!-- SIDEBAR -->
     <div id="sidebar" class="sidebar">
         <div class="sidebar-menu nav-collapse">
-
             <ul>
-                {{foreach from=$chatList item=vo}}
-                {{$info = json_decode($vo.info)}}
                 <li>
-                    <a href="javascript:getChatMessage({{$vo.send_user_id}} , {{$vo.receive_user_id}} , '{{getName($info->real_name)}}','{{getName($info->head_pic)}}')">
-                        <i class="fa fa-tachometer fa-fw"></i> <span class="menu-text">{{getName($info->real_name)}}</span>
+                    <a>
+                        <i class="fa fa-tachometer fa-fw"></i> <span class="menu-text">大范甘迪发</span>
                         <span class="selected"></span>
                     </a>
                 </li>
-                {{/foreach}}
             </ul>
             <!-- /SIDEBAR MENU -->
         </div>
@@ -145,6 +141,9 @@
 <script type="text/javascript" src="/backend/web/CloudAdmin/js/timeago/jquery.timeago.min.js"></script>
 <!-- COOKIE -->
 <script type="text/javascript" src="/backend/web/CloudAdmin/js/jQuery-Cookie/jquery.cookie.min.js"></script>
+
+<script src="/wechat/web/js/plugin/angular/angular.min.js"></script>
+
 <!-- CUSTOM SCRIPT -->
 <script src="/backend/web/CloudAdmin/js/script.js"></script>
 <script>

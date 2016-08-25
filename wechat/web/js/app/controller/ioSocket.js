@@ -7,6 +7,7 @@ define(['app/module', 'app/directive/directiveApi'
 
     module.controller("message.chat1", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$ionicModal', '$ionicActionSheet', '$ionicLoading', '$ionicScrollDelegate', 'FileUploader', '$http', '$location', '$rootScope', '$filter', '$ionicPopover', '$interval', 'dataFilter', function (api, $scope, $timeout, $ionicPopup, $ionicModal, $ionicActionSheet, $ionicLoading, $ionicScrollDelegate, FileUploader, $http, $location, $rootScope, $filter, $ionicPopover, $interval, dataFilter) {
         $scope.historyList = [];
+        $scope.blackList = false;
         // 设置消息状态为已看
         $scope.setMessageStatus = function (list) {
             for (var i in list) {
@@ -18,6 +19,12 @@ define(['app/module', 'app/directive/directiveApi'
         }
         $scope.sendId = ar.getCookie("bhy_user_id");
         $scope.receiveId = $location.search().id;
+        if(dataFilter.data.blacked.indexOf($scope.receiveId) > -1){   // 已被对方拉黑，不可查看对方资料
+            $scope.blackList = true;
+        }
+        $scope.blackListAlert = function(){
+            ar.saveDataAlert($ionicPopup,'您已被对方拉黑，不可查看对方资料。')
+        }
         // 身份证认证
         api.list("/wap/member/honesty-photo", {user_id: $scope.receiveId}).success(function (res) {
             $scope.sfzCheck = res.sfz;
