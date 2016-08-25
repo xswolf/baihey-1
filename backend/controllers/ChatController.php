@@ -54,11 +54,23 @@ class ChatController extends BaseController
 
     public function actionIndex(){
         $this->layout = false;
-
-        $chatList = $this->getChatList();
-
-
-        $this->assign('chatList' , $chatList);
+//        $chatList = $this->getChatList();
+//        $this->assign('chatList' , $chatList);
         return $this->render();
+    }
+
+    /**
+     * 获取虚拟会员列表
+     * @return string|void
+     */
+    public function actionFictitiousList(){
+
+        $list = (new Query())->from(\Yii::$app->db->tablePrefix.'bhy_information')
+            ->andWhere(">=" , "user_id" , 10000)
+            ->andWhere("<=" , "user_id" , 12493)
+            ->offset(0)
+            ->limit(500)
+            ->all();
+        return $this->renderAjax(['status'=>1 , 'data'=>$list]);
     }
 }
