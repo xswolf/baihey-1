@@ -172,7 +172,7 @@ class File
      */
     public function pictureRatio($pic_width, $pic_height, $maxwidth = 480, $maxheight = 720)
     {
-//        $ratio            = 1;
+        $ratio            = 1;
         $resizewidth_tag  = false;
         $resizeheight_tag = false;
         if($pic_width < $maxwidth && $pic_height < $maxheight) {
