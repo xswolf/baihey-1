@@ -538,6 +538,8 @@ define(['app/module', 'app/directive/directiveApi'
                 var setMessage = function (response) {
                     if (response.type == 'madd' || response.type == 'remove' || response.type == 'add') return;
                     response.message = response.message.replace(/&quot;/g, "\"");
+                    console.log(response);
+                    console.log($scope.historyList);
                     if ($scope.sendId == response.send_user_id) {  // 响应自己发送的消息
                         for (var i in $scope.historyList) {
                             if (response.status == 1) { // 如果对方在线，所有消息均设置已读
@@ -547,9 +549,7 @@ define(['app/module', 'app/directive/directiveApi'
                             //    (response.message == $scope.historyList[i].message ||
                             //    response.type == 'pic')) {
                             if (response.id == $scope.historyList[i].id){
-                                alert(response.id +"---" + $scope.historyList[i].id)
                                 $scope.historyList[i].message = response.message;
-                                $scope.historyList[i].status = response.status;
                             }
                         }
                     } else {
