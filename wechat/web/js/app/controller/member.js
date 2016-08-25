@@ -133,7 +133,7 @@ define(['app/module', 'app/directive/directiveApi'
 
             uploader.onSuccessItem = function (fileItem, response, status, headers) {  // 上传成功
                 if (response.status > 0) {
-                    $scope.imgList.push({id: response.id, thumb_path: response.thumb_path, is_head: 0, is_check:2});
+                    $scope.imgList.push({id: response.id, thumb_path: response.thumb_path, is_head: 0, is_check: 2});
                 } else {
                     ar.saveDataAlert($ionicPopup, '上传图片失败！');
                 }
@@ -161,7 +161,7 @@ define(['app/module', 'app/directive/directiveApi'
                         if (res) {
                             // 删除操作
                             api.save('/wap/member/del-photo', {'id': img.id}).success(function (res) {
-                                if(img.is_head == 1){
+                                if (img.is_head == 1) {
                                     $scope.userInfo.info.head_pic = '';
                                     ar.setStorage("userInfo", $scope.userInfo);
                                     var userInfo = ar.getStorage("userInfo");
@@ -170,8 +170,8 @@ define(['app/module', 'app/directive/directiveApi'
                                     ar.setStorage("userInfo", userInfo);
                                 }
                                 for (var i in $scope.imgList) {
-                                    if(img.id ==  $scope.imgList[i].id){
-                                        $scope.imgList.splice(i,1);
+                                    if (img.id == $scope.imgList[i].id) {
+                                        $scope.imgList.splice(i, 1);
                                     }
                                 }
                                 hideSheet();
@@ -191,7 +191,7 @@ define(['app/module', 'app/directive/directiveApi'
                         } else {
                             for (var i in $scope.imgList) {
                                 $scope.imgList[i].is_head = 0;
-                                if(img.id ==  $scope.imgList[i].id){
+                                if (img.id == $scope.imgList[i].id) {
                                     $scope.imgList[i].is_head = 1;
                                 }
                             }
@@ -375,13 +375,10 @@ define(['app/module', 'app/directive/directiveApi'
         $scope.saveData = function (formData) {
             ar.processParams($scope, formData);
             api.save('/wap/member/save-data', $scope.userInfo).success(function (res) {
-
                 ar.setStorage("userInfo", $scope.userInfo);
-
                 var userInfo = ar.getStorage("userInfo");
                 userInfo.info = JSON.stringify(userInfo.info);
                 userInfo.auth = JSON.stringify(userInfo.auth);
-
                 ar.setStorage("userInfo", userInfo);
                 //$scope.getUserPrivacyStorage('');
             }).finally(function () {
@@ -669,7 +666,11 @@ define(['app/module', 'app/directive/directiveApi'
         $scope.saveData = function (formData) {
             ar.processParams($scope, formData);
             api.save('/wap/member/save-data', $scope.userInfo).success(function (res) {
-                $scope.getUserPrivacyStorage('');
+                ar.setStorage("userInfo", $scope.userInfo);
+                var userInfo = ar.getStorage("userInfo");
+                userInfo.info = JSON.stringify(userInfo.info);
+                userInfo.auth = JSON.stringify(userInfo.auth);
+                ar.setStorage("userInfo", userInfo);
             }).finally(function () {
                 $scope.closeModal();
             })
@@ -938,7 +939,7 @@ define(['app/module', 'app/directive/directiveApi'
         // 切换，我关注的人，关注我的人
         $scope.switching = function (value) {
             $scope.followType = value;
-            ar.setCookie('follow' , value);
+            ar.setCookie('follow', value);
         };
 
     }]);
@@ -1230,9 +1231,13 @@ define(['app/module', 'app/directive/directiveApi'
         $scope.saveData = function () {
             $scope.userInfo.privacy_pic = $scope.formData.privacy_pic;
             api.save('/wap/member/save-data', $scope.userInfo).success(function (res) {
-                $scope.getUserPrivacyStorage('');
+                ar.setStorage("userInfo", $scope.userInfo);
+                var userInfo = ar.getStorage("userInfo");
+                userInfo.info = JSON.stringify(userInfo.info);
+                userInfo.auth = JSON.stringify(userInfo.auth);
+                ar.setStorage("userInfo", userInfo);
                 ar.saveDataAlert($ionicPopup, '保存成功');
-                //$location.url('/member/privacy');
+                $location.url('/member/privacy');
             });
         }
 
@@ -1248,7 +1253,11 @@ define(['app/module', 'app/directive/directiveApi'
             // 保存数据
             api.save('/wap/member/save-data', $scope.formData).success(function (res) {
                 $scope.userInfo.privacy_per = $scope.formData.privacy_per;
-                $scope.getUserPrivacyStorage('');
+                ar.setStorage("userInfo", $scope.userInfo);
+                var userInfo = ar.getStorage("userInfo");
+                userInfo.info = JSON.stringify(userInfo.info);
+                userInfo.auth = JSON.stringify(userInfo.auth);
+                ar.setStorage("userInfo", userInfo);
             });
         });
     }]);
@@ -1263,7 +1272,11 @@ define(['app/module', 'app/directive/directiveApi'
             // 保存数据
             api.save('/wap/member/save-data', $scope.formData).success(function (res) {
                 $scope.userInfo.privacy_wechat = $scope.formData.privacy_wechat;
-                $scope.getUserPrivacyStorage('');
+                ar.setStorage("userInfo", $scope.userInfo);
+                var userInfo = ar.getStorage("userInfo");
+                userInfo.info = JSON.stringify(userInfo.info);
+                userInfo.auth = JSON.stringify(userInfo.auth);
+                ar.setStorage("userInfo", userInfo);
             });
         });
     }]);
@@ -1278,7 +1291,11 @@ define(['app/module', 'app/directive/directiveApi'
             // 保存数据
             api.save('/wap/member/save-data', $scope.formData).success(function (res) {
                 $scope.userInfo.privacy_qq = $scope.formData.privacy_qq;
-                $scope.getUserPrivacyStorage('');
+                ar.setStorage("userInfo", $scope.userInfo);
+                var userInfo = ar.getStorage("userInfo");
+                userInfo.info = JSON.stringify(userInfo.info);
+                userInfo.auth = JSON.stringify(userInfo.auth);
+                ar.setStorage("userInfo", userInfo);
             });
         });
     }]);
@@ -1300,6 +1317,12 @@ define(['app/module', 'app/directive/directiveApi'
                 $scope.followList.splice($index, 1);
             });
         }
+        $scope.delTitle = '解除';
+        $scope.shouldShowDelete = false;
+        $scope.showDeleteBtn = function () {
+            $scope.shouldShowDelete = !$scope.shouldShowDelete;
+            $scope.shouldShowDelete ? $scope.delTitle = '完成' : $scope.delTitle = '解除';
+        }
     }]);
 
     // 账户安全
@@ -1310,7 +1333,7 @@ define(['app/module', 'app/directive/directiveApi'
     }]);
 
     // 账户安全-密码修改
-    module.controller("member.security_pass", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', function (api, $scope, $timeout, $ionicPopup) {
+    module.controller("member.security_pass", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup','$location', function (api, $scope, $timeout, $ionicPopup,$location) {
 
         $scope.formData = [];
         // 保存
@@ -1332,7 +1355,12 @@ define(['app/module', 'app/directive/directiveApi'
                 if (res.data) {
                     ar.saveDataAlert($ionicPopup, '密码修改成功');
                     $scope.userInfo.reset_pass_time = parseInt(res.data);
-                    $scope.getUserPrivacyStorage('#/member/security');
+                    ar.setStorage("userInfo", $scope.userInfo);
+                    var userInfo = ar.getStorage("userInfo");
+                    userInfo.info = JSON.stringify(userInfo.info);
+                    userInfo.auth = JSON.stringify(userInfo.auth);
+                    ar.setStorage("userInfo", userInfo);
+                    $location.url('/member/security');
                 } else {
                     ar.saveDataAlert($ionicPopup, '密码修改失败');
                 }
@@ -1343,7 +1371,7 @@ define(['app/module', 'app/directive/directiveApi'
     }]);
 
     // 账户安全-手机绑定
-    module.controller("member.security_phone", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$interval', function (api, $scope, $timeout, $ionicPopup, $interval) {
+    module.controller("member.security_phone", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$interval','$location', function (api, $scope, $timeout, $ionicPopup, $interval,$location) {
 
         $scope.formData = {};
         $scope.codeTitle = '获取验证码';
@@ -1390,7 +1418,12 @@ define(['app/module', 'app/directive/directiveApi'
                                 if (res.data) {
                                     ar.saveDataAlert($ionicPopup, '手机绑定成功');
                                     $scope.userInfo.phone = $scope.formData.phone;
-                                    $scope.getUserPrivacyStorage('#/member/security');
+                                    ar.setStorage("userInfo", $scope.userInfo);
+                                    var userInfo = ar.getStorage("userInfo");
+                                    userInfo.info = JSON.stringify(userInfo.info);
+                                    userInfo.auth = JSON.stringify(userInfo.auth);
+                                    ar.setStorage("userInfo", userInfo);
+                                    $location.url('/member/security');
                                 } else {
                                     ar.saveDataAlert($ionicPopup, '手机绑定失败');
                                 }
@@ -1497,7 +1530,12 @@ define(['app/module', 'app/directive/directiveApi'
                                 if (res.data) {
                                     ar.saveDataAlert($ionicPopup, '绑定成功');
                                     $scope.userInfo.phone = $scope.formData.phone;
-                                    $scope.getUserPrivacyStorage('#/member/security');
+                                    ar.setStorage("userInfo", $scope.userInfo);
+                                    var userInfo = ar.getStorage("userInfo");
+                                    userInfo.info = JSON.stringify(userInfo.info);
+                                    userInfo.auth = JSON.stringify(userInfo.auth);
+                                    ar.setStorage("userInfo", userInfo);
+                                    $location.url('/member/security');
                                 } else {
                                     ar.saveDataAlert($ionicPopup, '绑定失败');
                                 }
@@ -1527,7 +1565,12 @@ define(['app/module', 'app/directive/directiveApi'
                 api.save('/wap/member/save-data', $scope.formData).success(function (res) {
                     // 保存
                     $scope.userInfo.info.wechat = $scope.formData.wechat;
-                    $scope.getUserPrivacyStorage('#/member/security');
+                    ar.setStorage("userInfo", $scope.userInfo);
+                    var userInfo = ar.getStorage("userInfo");
+                    userInfo.info = JSON.stringify(userInfo.info);
+                    userInfo.auth = JSON.stringify(userInfo.auth);
+                    ar.setStorage("userInfo", userInfo);
+                    $location.url('/member/security');
                 })
             }
         }
@@ -1548,7 +1591,12 @@ define(['app/module', 'app/directive/directiveApi'
                 api.save('/wap/member/save-data', $scope.formData).success(function (res) {
                     // 保存
                     $scope.userInfo.info.qq = $scope.formData.qq;
-                    $scope.getUserPrivacyStorage('#/member/security');
+                    ar.setStorage("userInfo", $scope.userInfo);
+                    var userInfo = ar.getStorage("userInfo");
+                    userInfo.info = JSON.stringify(userInfo.info);
+                    userInfo.auth = JSON.stringify(userInfo.auth);
+                    ar.setStorage("userInfo", userInfo);
+                    $location.url('/member/security');
                 })
             }
         }
@@ -1620,7 +1668,12 @@ define(['app/module', 'app/directive/directiveApi'
                 $scope.userInfo.info.real_name = $scope.formData.real_name;
                 $scope.userInfo.has_identify = 1;
                 api.save('/wap/member/save-data', $scope.userInfo).success(function (res) {
-                    $scope.getUserPrivacyStorage('#/member/honesty');
+                    ar.setStorage("userInfo", $scope.userInfo);
+                    var userInfo = ar.getStorage("userInfo");
+                    userInfo.info = JSON.stringify(userInfo.info);
+                    userInfo.auth = JSON.stringify(userInfo.auth);
+                    ar.setStorage("userInfo", userInfo);
+                    $location.url('/member/honesty');
                     $scope.sfzCheck = 2;
                 });
             });

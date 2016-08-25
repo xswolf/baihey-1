@@ -351,7 +351,11 @@ define(['app/module', 'app/directive/directiveApi'
                                     if (res.data) {
                                         ar.saveDataAlert($ionicPopup, '绑定手机成功');
                                         $scope.userInfo.phone = $scope.phoneInfo.phone;
-                                        $scope.getUserPrivacyStorage();
+                                        ar.setStorage("userInfo", $scope.userInfo);
+                                        var userInfo = ar.getStorage("userInfo");
+                                        userInfo.info = JSON.stringify(userInfo.info);
+                                        userInfo.auth = JSON.stringify(userInfo.auth);
+                                        ar.setStorage("userInfo", userInfo);
                                     } else {
                                         ar.saveDataAlert($ionicPopup, '绑定手机失败');
                                     }
