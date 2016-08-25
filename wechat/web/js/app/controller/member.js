@@ -867,6 +867,15 @@ define(['app/module', 'app/directive/directiveApi'
                 ar.saveDataAlert($ionicPopup, '说点什么吧！可不要为难小的哦！');
                 return false;
             }
+            if(!$scope.userInfo.info.head_pic){
+                $ionicPopup.alert({
+                    template: '没有头像不可以发布动态哦，点击确定去设置头像！',
+                    okText: '确定'
+                }).then(function(){
+                    $location.url('/member/information');
+                })
+                return false;
+            }
             $ionicLoading.show({
                 template: '发布中...'
             });
