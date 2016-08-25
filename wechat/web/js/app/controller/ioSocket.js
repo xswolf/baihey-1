@@ -552,9 +552,14 @@ define(['app/module', 'app/directive/directiveApi'
                 var setMessage = function (response) {
                     if (response.type == 'madd' || response.type == 'remove' || response.type == 'add') return;
                     response.message = response.message.replace(/&quot;/g, "\"");
-
                     if ($scope.sendId == response.send_user_id) {  // 响应自己发送的消息
                         for (var i in $scope.historyList) {
+
+                            if (response.type == 'pic' && $scope.historyList[i].status == 3){
+                                $scope.historyList[i].message = response.message;
+                                $scope.historyList[i].status = response.status;
+                            }
+
                             if (response.status == 1) { // 如果对方在线，所有消息均设置已读
                                 $scope.historyList[i].status = 1;
                             }
@@ -565,10 +570,7 @@ define(['app/module', 'app/directive/directiveApi'
                                 $scope.historyList[i].status = response.status;
                             }
 
-                            if (response.type == 'pic' && $scope.historyList[i].status == 3){
-                                $scope.historyList[i].message = response.message;
-                                $scope.historyList[i].status = response.status;
-                            }
+
                         }
                     } else {
                         response.id = ar.getId($scope.historyList);
