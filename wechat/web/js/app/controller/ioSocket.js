@@ -491,6 +491,7 @@ define(['app/module', 'app/directive/directiveApi'
                     var time = ar.timeStamp();
                     $scope.sendMessage('图片发送中', $scope.sendId, $scope.receiveId, 'pic', time, false); // 假发送，便于预览图片
                     fileItem.upload();   // 上传
+                    alert(1)
                     viewScroll.resize();
                     viewScroll.scrollBottom(true);
 
