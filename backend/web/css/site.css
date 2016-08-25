@@ -514,6 +514,10 @@ table .user_img:hover {
     cursor: pointer;
     margin-right: 15px;
     margin-bottom: 15px;
+    max-width: 200px;
+}
+.imgBox img{
+    max-width: 100%;
 }
 
 .imgBox .del, .imgBox .del:hover {

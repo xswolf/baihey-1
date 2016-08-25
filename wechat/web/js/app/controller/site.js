@@ -52,9 +52,9 @@ define(['app/module', 'app/directive/directiveApi'
             return val & 1;
         }
 
-        $scope.cityName = '重庆';
-        $scope.cityId = 2;
-        $scope.searchForm.city = 2
+        //$scope.cityName = '重庆';
+        //$scope.cityId = 2;
+        //$scope.searchForm.city = 2
         //getSearchCondition($scope.userId);
 
         // 默认还有更多
