@@ -559,8 +559,13 @@ define(['app/module', 'app/directive/directiveApi'
                                 $scope.historyList[i].status = 1;
                             }
                             if (response.time == $scope.historyList[i].time &&
-                                (response.message == $scope.historyList[i].message ||
-                                response.type == 'pic')) {
+                                response.message == $scope.historyList[i].message
+                                ) {
+                                $scope.historyList[i].message = response.message;
+                                $scope.historyList[i].status = response.status;
+                            }
+
+                            if (response.type == 'pic' && $scope.historyList[i].status == 3){
                                 $scope.historyList[i].message = response.message;
                                 $scope.historyList[i].status = response.status;
                             }
