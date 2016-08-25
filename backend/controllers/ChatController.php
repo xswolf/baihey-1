@@ -54,8 +54,8 @@ class ChatController extends BaseController
 
     public function actionIndex(){
         $this->layout = false;
-//        $chatList = $this->getChatList();
-//        $this->assign('chatList' , $chatList);
+        $chatList = $this->getChatList();
+        $this->assign('chatList' , $chatList);
         return $this->render();
     }
 
