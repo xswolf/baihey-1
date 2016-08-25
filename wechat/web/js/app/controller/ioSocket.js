@@ -545,10 +545,10 @@ define(['app/module', 'app/directive/directiveApi'
                             if (response.status == 1) { // 如果对方在线，所有消息均设置已读
                                 $scope.historyList[i].status = 1;
                             }
-                            //if (response.time == $scope.historyList[i].time &&
-                            //    (response.message == $scope.historyList[i].message ||
-                            //    response.type == 'pic')) {
-                            if (response.id == $scope.historyList[i].id){
+                            if (response.time == $scope.historyList[i].time &&
+                                (response.message == $scope.historyList[i].message ||
+                                response.type == 'pic')) {
+                            //if (response.id == $scope.historyList[i].id){
                                 $scope.historyList[i].message = response.message;
                             }
                         }
