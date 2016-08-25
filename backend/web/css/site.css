@@ -623,3 +623,10 @@ table .user_img:hover {
     max-height:100%;
     overflow-x:hidden;
 }
+
+.cardImg{
+    max-width: 200px;
+}
+.cardImg img{
+    width: 100%;
+}
