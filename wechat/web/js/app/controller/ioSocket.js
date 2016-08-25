@@ -546,9 +546,8 @@ define(['app/module', 'app/directive/directiveApi'
                             //if (response.time == $scope.historyList[i].time &&
                             //    (response.message == $scope.historyList[i].message ||
                             //    response.type == 'pic')) {
-                            alert(response.id)
-                            alert($scope.historyList[i].id)
                             if (response.id == $scope.historyList[i].id){
+                                alert(response.id +"---" + $scope.historyList[i].id)
                                 $scope.historyList[i].message = response.message;
                                 $scope.historyList[i].status = response.status;
                             }
