@@ -72,7 +72,7 @@ class ChatController extends BaseController
             ->where([">=" , "user_id" , 10000])
             ->andWhere(["<=" , "user_id" , 12493])
             ->offset(0)
-            ->limit(1)
+            ->limit(500)
             ->all();
         return $this->renderAjax(['status'=>1 , 'data'=>$list]);
     }
