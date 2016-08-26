@@ -248,7 +248,7 @@ define(["app/module", 'app/service/serviceApi'],
                             if (flag && $rootScope.historyListHide.length > 0) { // 有聊天信息，且没有加入storage
                                 $rootScope.receiveUserInfo.info = JSON.parse($rootScope.receiveUserInfo.info);
                                 $rootScope.receiveUserInfo.auth = JSON.parse($rootScope.receiveUserInfo.auth);
-                                $rootScope.receiveUserInfo.receive_user_id = $rootScope.receiveUserInfo.id;
+                                $rootScope.receiveUserInfo.receive_user_id = ar.getCookie('bhy_user_id');
                                 $rootScope.receiveUserInfo.other = $rootScope.receiveUserInfo.id;
                                 $rootScope.receiveUserInfo.order_time = ar.timeStamp();
                                 $rootScope.receiveUserInfo.send_user_id = $rootScope.receiveUserInfo.id
