@@ -58,7 +58,7 @@
 
                 <!-- 时间 -->
                 <div class="s_date mb10">
-                    <p class="line" ng-if="isLongTime(vo.create_time,$index)">{{vo.create_time*1000|date:'yyyy-MM-dd HH:mm:ss'}}</p>
+                    <p class="date_line" ng-if="isLongTime(vo.create_time,$index)">{{vo.create_time*1000|date:'yyyy-MM-dd HH:mm:ss'}}</p>
                 </div>
 
                 <!-- 头像 -->
@@ -67,8 +67,10 @@
                        href="#/userInfo?userId={{receiveId}}">
                         <img ng-src="{{receiveHeadPic | isNull}}" onerror="this.src='/wechat/web/images/no_img.png'">
                     </a>
-                    <img ng-if="sendId == vo.send_user_id" ng-src="{{sendHeadPic | isNull}}"
+                    <a ng-if="sendId == vo.send_user_id" href="#/member">
+                    <img ng-src="{{sendHeadPic | isNull}}"
                          onerror="this.src='/wechat/web/images/no_img.png'">
+                    </a>
                 </div>
 
                 <!-- 消息内容 -->
