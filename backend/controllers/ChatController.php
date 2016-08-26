@@ -67,11 +67,12 @@ class ChatController extends BaseController
      */
     public function actionFictitiousList(){
 
-        $list = (new Query())->from(\Yii::$app->db->tablePrefix.'user_information')
+        $list = (new Query())->from(\Yii::$app->db->tablePrefix.'user_information i')
+            ->innerJoin(\Yii::$app->db->tablePrefix.'user u' , 'i.user_id=u.id')
             ->where([">=" , "user_id" , 10000])
             ->andWhere(["<=" , "user_id" , 12493])
             ->offset(0)
-            ->limit(500)
+            ->limit(1)
             ->all();
         return $this->renderAjax(['status'=>1 , 'data'=>$list]);
     }
