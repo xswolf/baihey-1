@@ -224,7 +224,7 @@ define(['app/module', 'app/directive/directiveApi'
 
         // 实例化上传图片插件
         $scope.uploader = new FileUploader({url: '/wap/file/thumb'});
-
+        $filter("orderBy")();
         // socket聊天
         requirejs(['chat/wechatInterface', 'plugin/socket/socket.io.1.4.0'], function (wx, socket) {
 
