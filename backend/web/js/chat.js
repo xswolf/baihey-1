@@ -3,7 +3,7 @@
  */
 
 var module = angular.module('chatApp', []);
-module.controller('chat', function ($scope, $http, $interval) {
+module.controller('chat', function ($scope, $http, $interval, $timeout) {
 
     $http({url: '/admin/chat/fictitious-list'}).success(function (res, header, config, status) {
         for (var i in res.data) {
@@ -14,8 +14,9 @@ module.controller('chat', function ($scope, $http, $interval) {
             res.data[i].msg_status = 0;
         }
         $scope.userInfoList = res.data;
+        $timeout(chatFilter,800);
     }).error(function (data, header, config, status) {
-        alert(data);
+        alert('错误：' + data);
     }).finally(function () {
 
     });
