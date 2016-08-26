@@ -247,9 +247,9 @@ define(['app/module', 'app/directive/directiveApi'
             lang: 'zh',
             controls: ['date']
         };
-        $scope.formData.age = '年龄';
-        $scope.formData.zodiac = {id: 0, name: '生肖'};
-        $scope.formData.constellation = {id: 0, name: '星座'};
+        $scope.formData.age = ' ';
+        $scope.formData.zodiac = {id: 0, name: ' '};
+        $scope.formData.constellation = {id: 0, name: ' '};
         $scope.birthdayChange = function () {
             $scope.userInfo.age = ar.getAgeByBirthday(ar.DateTimeToDate($scope.formData.birthday));
             $scope.formData.age = $scope.userInfo.age + '岁';
