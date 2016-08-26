@@ -80,7 +80,7 @@ define(["app/module", 'app/service/serviceApi'],
                             mainIntercept();
                         }
 
-                        $timeout(together,3000);
+                        $timeout(together,500);
                     });
             // 页面加载成功
             $rootScope
