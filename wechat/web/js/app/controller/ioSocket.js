@@ -305,7 +305,8 @@ define(['app/module', 'app/directive/directiveApi'
 
             // 绑定手机弹窗
             $ionicPopover.fromTemplateUrl('bindPhonePopover.html', {
-                scope: $scope
+                scope: $scope,
+                focusFirstInput:true
             }).then(function (popover) {
                 $scope.popover = popover;
             });
@@ -378,7 +379,7 @@ define(['app/module', 'app/directive/directiveApi'
             // 发送文本消息调用接口
             $scope.send = function () {
                 if ($scope.send_content == '' || $scope.send_content == null || $scope.send_content == undefined) return;
-                if (!$scope.userInfo.phone) {   // 用户未认证手机号码
+                if (!$scope.userInfo.phone || $scope.userInfo.phone == '0') {   // 用户未认证手机号码  $scope.userInfo.phone
                     $scope.openPopover();
                     return;
                 }
