@@ -31,7 +31,7 @@ class ChatController extends BaseController
             ->select("m.*,u.sex,i.info")
             ->groupBy("receive_user_id")
             ->all();
-        return $list;
+        return $this->renderAjax(['status'=>1 , 'data'=>$list]);
     }
 
     public function actionMsg(){
