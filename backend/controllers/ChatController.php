@@ -53,6 +53,8 @@ class ChatController extends BaseController
     }
 
     public function actionIndex(){
+        \Yii::$app->view->renderers['html']['options']['left_delimiter']  ="{!";
+        \Yii::$app->view->renderers['html']['options']['right_delimiter'] = "}";
         $this->layout = false;
         $chatList = $this->getChatList();
         $this->assign('chatList' , $chatList);
