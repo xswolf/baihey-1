@@ -19,7 +19,7 @@
             <!--  href="#/chat1?id={{messageInfo.other}}&head_pic={{messageInfo.info.head_pic}}&real_name={{messageInfo.info.real_name}}&sex={{messageInfo.sex}}&age={{messageInfo.info.age}}" -->
             <ion-item ng-repeat="messageInfo in messageList  | orderBy:'order_time':true" href="#/chat1?id={{messageInfo.other}}&head_pic={{messageInfo.info.head_pic}}&real_name={{messageInfo.info.real_name}}&sex={{messageInfo.sex}}&age={{messageInfo.info.age}}&report_flag={{messageInfo.report_flag}}">
                 <ion-delete-button class="ion-minus-circled" ng-click="removeItem(messageInfo,$event)"></ion-delete-button>
-                <div class="row" ng-if="messageInfo.receive_user_id == userInfo.id || messageInfo.send_user_id == userInfo.id">
+                <div class="row">
                     <div class="msg_u_img mr20 pr fl">
                         <img class="item_uimg rounded" ng-src="{{messageInfo.info.head_pic | isNull}}" width="56" height="56"
                              onerror="this.src='/wechat/web/images/no_img.png'">
