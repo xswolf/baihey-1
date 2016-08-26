@@ -575,6 +575,9 @@ table .user_img:hover {
     color: inherit;
     text-decoration: none;
 }
+.chatList a:hover{
+    background: #f1f1f1;
+}
 .chatList .item {
     background-color: #fff;
     border: 1px solid #ddd;
