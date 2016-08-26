@@ -19,7 +19,7 @@ class ChatController extends BaseController
     /**
      * 获取跟托聊天的人
      */
-    protected function getChatList(){
+    public function actionChatList(){
 
         $tablePre = \Yii::$app->db->tablePrefix;
         $list = (new Query())->from($tablePre . "user_message m")
@@ -56,8 +56,6 @@ class ChatController extends BaseController
         \Yii::$app->view->renderers['html']['options']['left_delimiter']  ="{!";
         \Yii::$app->view->renderers['html']['options']['right_delimiter'] = "}";
         $this->layout = false;
-        $chatList = $this->getChatList();
-        $this->assign('chatList' , $chatList);
         return $this->render();
     }
 
