@@ -325,10 +325,10 @@ define(['app/module', 'app/directive/directiveApi'
                     if (!data.status) {
                         ar.saveDataAlert($ionicPopup, data.msg);
                     } else {
-                        var timeTitle = 60;
+                        var timeTitle = 90;
                         var timer = $interval(function () {
                             $scope.codeTitle = '重新获取(' + timeTitle + ')';
-                        }, 1000, 60);
+                        }, 1000, 90);
                         timer.then(function () {
                                 $scope.codeTitle = '获取验证码';
                                 $interval.cancel(timer);
