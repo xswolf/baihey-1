@@ -67,9 +67,9 @@ class ChatController extends BaseController
      */
     public function actionFictitiousList(){
 
-        $list = (new Query())->from(\Yii::$app->db->tablePrefix.'bhy_information')
-            ->andWhere(">=" , "user_id" , 10000)
-            ->andWhere("<=" , "user_id" , 12493)
+        $list = (new Query())->from(\Yii::$app->db->tablePrefix.'user_information')
+            ->where([">=" , "user_id" , 10000])
+            ->andWhere(["<=" , "user_id" , 12493])
             ->offset(0)
             ->limit(500)
             ->all();
