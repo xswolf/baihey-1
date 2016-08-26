@@ -6,26 +6,27 @@ define(["app/module", 'app/service/serviceApi'],
         module.run(['$rootScope', '$state', '$timeout', 'app.serviceApi', '$ionicLoading', '$location', '$templateCache', function ($rootScope, $state, $timeout, api, $ionicLoading, $location, $templateCache) {
             var messageList = function () {
                 api.list('/wap/message/message-list', []).success(function (res) {
-                    $rootScope.messageList = ar.getStorage('messageList') ? ar.getStorage('messageList') : [];
+                    var storageList = ar.getStorage('messageList') ? ar.getStorage('messageList') : [];
                     var list = res.data;
                     for (var i in list) {
                         list[i].info = JSON.parse(list[i].info);
                         list[i].auth = JSON.parse(list[i].auth);
-                        list[i].order_time = list[i].create_time; // ar.timeStamp();  // 消息时间
+                        list[i].order_time = parseInt(list[i].create_time); // ar.timeStamp();  // 消息时间
                         var flag = true;
-                        for (var j in $rootScope.messageList) {  // 相同消息合并
-                            if ($rootScope.messageList[j].send_user_id == list[i].send_user_id) {
-                                $rootScope.messageList[j] = list[i];
+                        for (var j in storageList) {  // 相同消息合并
+                            if (storageList[j].send_user_id == list[i].send_user_id) {
+                                storageList[j] = list[i];
                                 flag = false;
                                 break;
                             }
                         }
                         if (flag) {
-                            $rootScope.messageList.push(list[i]);
+                            storageList.push(list[i]);
                         }
                     }
+                    $rootScope.messageList = storageList;
                     //console.log($rootScope.messageList)
-                    ar.setStorage('messageList', $rootScope.messageList)
+                    ar.setStorage('messageList', storageList)
                 });
             }
 
@@ -259,66 +260,6 @@ define(["app/module", 'app/service/serviceApi'],
                         }
                     })
 
-                    .state('fictitious', { // 聊天页面
-                        cache:false,
-                        url: "/fictitious",
-                        templateUrl: "/wechat/views/message/fictitious.html",
-                        controller: 'message.fictitious',
-                        resolve: {
-                            dataFilter: function ($http) {
-                                return $http({
-                                    method: 'POST',
-                                    url: '/wap/user/index-is-show-data',
-                                    params: {}
-                                });
-                            }
-                        },
-                        onExit: function ($rootScope) {
-
-                            var messageList = ar.getStorage("messageList");
-                            if (messageList == null) messageList = [];
-                            var flag = true;
-                            var i = 0;
-
-                            if (messageList != undefined && messageList != '') {
-                                for (i in messageList) {
-                                    if (messageList[i].receive_user_id == $rootScope.receiveUserInfo.id || messageList[i].send_user_id == $rootScope.receiveUserInfo.id) {
-                                        if ($rootScope.historyListHide != undefined && $rootScope.historyListHide.length > 0) {
-                                            if (messageList[i].message != $rootScope.historyListHide[$rootScope.historyListHide.length - 1].message) {
-                                                messageList[i].order_time = ar.timeStamp();
-                                            }
-                                            messageList[i].message = $rootScope.historyListHide[$rootScope.historyListHide.length - 1].message
-                                        }
-                                        $rootScope.msgNumber = $rootScope.msgNumber - messageList[i].sumSend;
-                                        $rootScope.msgNumber = $rootScope.msgNumber >= 0 ? $rootScope.msgNumber : 0;
-                                        messageList[i].sumSend = 0;
-                                        messageList[i].status = 1;
-
-                                        flag = false;
-                                    }
-                                }
-                            }
-
-
-                            if (flag && $rootScope.historyListHide.length > 0) { // 有聊天信息，且没有加入storage
-                                $rootScope.receiveUserInfo.info = JSON.parse($rootScope.receiveUserInfo.info);
-                                $rootScope.receiveUserInfo.auth = JSON.parse($rootScope.receiveUserInfo.auth);
-                                $rootScope.receiveUserInfo.receive_user_id = $rootScope.receiveUserInfo.id;
-                                $rootScope.receiveUserInfo.other = $rootScope.receiveUserInfo.id;
-                                $rootScope.receiveUserInfo.order_time = ar.timeStamp();
-                                $rootScope.receiveUserInfo.send_user_id = $rootScope.receiveUserInfo.id
-                                if ($rootScope.historyListHide != undefined && $rootScope.historyListHide.length > 0) {
-                                    $rootScope.receiveUserInfo.message = $rootScope.historyListHide[$rootScope.historyListHide.length - 1].message
-                                }
-
-                                messageList.push($rootScope.receiveUserInfo);
-                            }
-                            $rootScope.messageList = messageList;
-
-                            ar.setStorage('messageList', messageList);
-
-                        }
-                    })
                     .state('discovery', {       // 发现
                         url: "/discovery",
                         templateUrl: "/wechat/views/discovery/index.html",

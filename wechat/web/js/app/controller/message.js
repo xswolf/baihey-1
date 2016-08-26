@@ -24,7 +24,7 @@ define(['app/module', 'app/directive/directiveApi'
         $scope.userInfo = {};
         // 获取页面数据
 
-        $rootScope.$on('messageList' , function () {
+        $rootScope.$watch('messageList' , function () {
             $scope.messageList = $rootScope.messageList;
         })
 
