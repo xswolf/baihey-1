@@ -1,0 +1,48 @@
+/**
+ * Created by NSK. on 2016/8/26/0026.
+ */
+
+var module = angular.module('chatApp', []);
+module.controller('chat', function ($scope, $http, $interval) {
+
+    $http({url: '/admin/chat/fictitious-list'}).success(function (res, header, config, status) {
+        for (var i in res.data) {
+            res.data[i].time = Date.parse(new Date()) / 1000;
+            res.data[i].token = $.md5(res.data[i].user_id + 'jzBhY2016-jr' + '' + Date.parse(new Date()) / 1000);
+            res.data[i].info = JSON.parse(res.data[i].info);
+            res.data[i].auth = JSON.parse(res.data[i].auth);
+            res.data[i].msg_status = 0;
+        }
+        $scope.userInfoList = res.data;
+    }).error(function (data, header, config, status) {
+        alert(data);
+    }).finally(function () {
+
+    });
+
+    function chatFilter(){
+        $http({url: '/admin/chat/chat-list'}).success(function (res, header, config, status) {
+            for(var i in res.data){
+                res.data[i].info = JSON.parse(res.data[i].info);
+                for(var u in $scope.userInfoList){
+                    if($scope.userInfoList[u].user_id == res.data[i].receive_user_id){
+                        $scope.userInfoList[u].msg_status = 1;
+                    }
+                }
+            }
+            $scope.chatUserList = res.data;
+        });
+
+    }
+
+    $interval(chatFilter,10000);
+
+
+
+    $scope.chatList = [
+        {id: 1, name: '李四'},
+        {id: 2, name: '张三'},
+        {id: 3, name: '王武'},
+        {id: 4, name: '孙松'}
+    ];
+});
