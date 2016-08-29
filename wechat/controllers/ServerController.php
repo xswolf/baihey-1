@@ -89,4 +89,8 @@ class ServerController extends BaseController {
         var_dump($result);
     }
 
+    public function actionMaterialList(){
+        \Yii::$app->wechat->materialList();
+    }
+
 }
