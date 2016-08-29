@@ -41,17 +41,21 @@ class ServerController extends BaseController {
             $fromUsername = trim($fromUsername);
             $toUsername   = $postObj->ToUserName;
 
-            $resultStr = \Yii::$app->wechat->responseNews($fromUsername , $toUsername);
+            if('subscribe' != $postObj->Event){
+                echo '';exit;
+            }
+
+            $resultStr = \Yii::$app->wechat->responseText($fromUsername , $toUsername);
 
             $userInfo = \Yii::$app->wechat->getMemberInfo($fromUsername);
             if(is_array($userInfo) && count($userInfo) > 0){
-                file_put_contents('./log.txt' , $fromUsername."\n" ,FILE_APPEND);
+//                file_put_contents('./log.txt' , $fromUsername."\n" ,FILE_APPEND);
             }else{
                 file_put_contents('./log.txt' ,"chuxiancuowu\n" ,FILE_APPEND);
             }
             echo $resultStr;
             file_put_contents('./log.txt' , $resultStr."\n" ,FILE_APPEND);
-            \Yii::$app->wechat->sendMaterial($fromUsername , "TtSb9HO50njLDfRLrBEM_NKXrzVpIgfX9DYtwftdrGQ");
+            //\Yii::$app->wechat->sendMaterial($fromUsername , "TtSb9HO50njLDfRLrBEM_NKXrzVpIgfX9DYtwftdrGQ");
 
             exit;
         } else {
