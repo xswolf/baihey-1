@@ -63,7 +63,7 @@ class ServerController extends BaseController {
 //            }
 
             file_put_contents('./log.txt' , $resultStr."\n" ,FILE_APPEND);
-            echo $resultStr;
+//            echo $resultStr;
             exit;
 
         } else {
