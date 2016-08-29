@@ -19,12 +19,13 @@
                     <p class="ti24">本站绝不会在未获得您授权的情况下公布您的真实姓名，只是将其作为依据来验证您的真实身份，请如实填写！</p>
                 </label>
 
-                <!-- 男 -->
-                <div ng-if="userInfo.sex == '1'" class="m_b_bg w100 mt20 ">
+                <!-- 女 -->
+                <div ng-if="userInfo.sex == 0" class="m_b_bg w100 mt20 ">
                     <img src="/wechat/web/images/member/real_name_bg0.png">
                 </div>
-                <!-- 女 -->
-                <div ng-if="userInfo.sex == '0'" class="m_b_bg w100 mt20 tal">
+
+                <!-- 男 -->
+                <div ng-if="userInfo.sex == 1" class="m_b_bg w100 mt20 tal">
                     <img src="/wechat/web/images/member/real_name_bg1.png">
                 </div>
             </div>

@@ -870,11 +870,11 @@ define(['app/module', 'app/directive/directiveApi'
             var userInfo = ar.getStorage('userInfo');
             userInfo.info = JSON.parse(userInfo.info)
             userInfo.auth = JSON.parse(userInfo.auth);
-            if(!userInfo.info.head_pic){
+            if (!userInfo.info.head_pic) {
                 $ionicPopup.alert({
                     template: '没有头像不可以发布动态哦，点击确定去设置头像！',
                     okText: '确定'
-                }).then(function(){
+                }).then(function () {
                     $location.url('/member/information');
                 })
                 return false;
@@ -1344,7 +1344,7 @@ define(['app/module', 'app/directive/directiveApi'
     }]);
 
     // 账户安全-密码修改
-    module.controller("member.security_pass", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup','$location', function (api, $scope, $timeout, $ionicPopup,$location) {
+    module.controller("member.security_pass", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$location', function (api, $scope, $timeout, $ionicPopup, $location) {
 
         $scope.formData = [];
         // 保存
@@ -1382,7 +1382,7 @@ define(['app/module', 'app/directive/directiveApi'
     }]);
 
     // 账户安全-手机绑定
-    module.controller("member.security_phone", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$interval','$location', function (api, $scope, $timeout, $ionicPopup, $interval,$location) {
+    module.controller("member.security_phone", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$interval', '$location', function (api, $scope, $timeout, $ionicPopup, $interval, $location) {
 
         $scope.formData = {};
         $scope.codeTitle = '获取验证码';
@@ -2826,7 +2826,7 @@ define(['app/module', 'app/directive/directiveApi'
 
     }]);
 
-// 专属红娘资料
+    // 专属红娘资料
     module.controller("member.matchmaker_info", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$location', function (api, $scope, $timeout, $ionicPopup, $location) {
 
         $scope.matchmakerList = [];
@@ -3016,6 +3016,88 @@ define(['app/module', 'app/directive/directiveApi'
         $scope.closeModal = function () {
             $scope.modal.hide();
         };
+
+    }]);
+
+    // 绑定手机
+    module.controller("member.bindPhone", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$location', '$interval', function (api, $scope, $timeout, $ionicPopup, $location, $interval) {
+        $scope.formData = {};
+        $scope.getCodeTitle = '获取验证码';
+        // 倒计时
+        $scope.getCode = function () {
+            if(!ar.trim($scope.formData.phone)){
+                ar.saveDataAlert($ionicPopup,'请输入您的手机号码');
+                return false;
+            }
+            if (!ar.validateMobile($scope.formData.phone)) {
+                ar.saveDataAlert($ionicPopup, '手机号码格式不正确');
+                return false;
+            }
+            api.getMobileIsExist($scope.formData.phone).success(function (res) {
+                if (res.status < 1) {
+                    ar.saveDataAlert($ionicPopup, '该手机号码已存在');
+                    return false;
+                } else {
+                    var timeTitle = 60;
+                    var timer = $interval(function () {
+                        $scope.getCodeTitle = '重新获取(' + timeTitle + ')';
+                    }, 1000, 60);
+                    timer.then(function () {
+                        $scope.getCodeTitle = '获取验证码';
+                        $interval.cancel(timer);
+                    }, function () {
+                        ar.saveDataAlert($ionicPopup, '倒计时出错');
+                    }, function () {
+                        timeTitle -= 1;
+                    });
+
+                    api.sendCodeMsg($scope.formData.phone).success(function (res) {
+                        if (res.status < 1) {
+                            $interval.cancel(timer);
+                            ar.saveDataAlert($ionicPopup, res.msg);
+                            return false;
+                        }
+                    });
+                }
+            })
+        }
+
+        // 立即绑定
+        $scope.bindNow = function() {
+            if (!ar.validateMobile($scope.formData.phone)) {
+                ar.saveDataAlert($ionicPopup, '手机号码格式不正确');
+                return false;
+            }
+            api.getMobileIsExist($scope.formData.phone).success(function (res) {
+                if (res.status < 1) {
+                    ar.saveDataAlert($ionicPopup, '该手机号码已存在');
+                    return false;
+                } else {
+                    api.get('/wap/user/check-code', {verify_code: $scope.formData.code}).success(function (res) {
+                        if (!res) {
+                            ar.saveDataAlert($ionicPopup, '验证码不正确');
+                            return false;
+                        }else {
+                            api.save('/wap/user/update-user-data', {phone: $scope.formData.phone}).success(function (res) {
+                                if (res.data) {
+                                    ar.saveDataAlert($ionicPopup, '手机绑定成功');
+                                    $scope.userInfo.phone = $scope.formData.phone;
+                                    ar.setStorage("userInfo", $scope.userInfo);
+                                    var userInfo = ar.getStorage("userInfo");
+                                    userInfo.info = JSON.stringify(userInfo.info);
+                                    userInfo.auth = JSON.stringify(userInfo.auth);
+                                    ar.setStorage("userInfo", userInfo);
+                                    // 返回上一个页面
+                                    window.history.back();
+                                } else {
+                                    ar.saveDataAlert($ionicPopup, '手机绑定失败');
+                                }
+                            })
+                        }
+                    })
+                }
+            })
+        }
 
     }]);
 

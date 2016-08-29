@@ -1,0 +1,23 @@
+<ion-view>
+    <link href="/wechat/web/css/member.css" rel="stylesheet">
+    <ion-header-bar align-title="center" class="com_w_100 bhy">
+        <title class="title">绑定手机，免费畅聊</title>
+    </ion-header-bar>
+    <ion-content class="bhy com_w_100 m_bg">
+        <div class="list">
+            <label class="item item-input padding">
+                <input type="text" placeholder="请输入您本人真实有效手机号码" ng-model="formData.phone">
+            </label>
+            <div class="item item-input padding">
+                <input type="text" placeholder="请输入验证码" ng-model="formData.code">
+                <button class="button button-calm button-small" ng-disabled="getCodeTitle != '获取验证码'" ng-click="getCode()">{{getCodeTitle}}</button>
+            </div>
+            <label class="item item-input padding">
+                <button class="button button-block button-positive" ng-disabled="!formData.phone || !formData.code" ng-click="bindNow()">
+                    立即绑定
+                </button>
+            </label>
+
+        </div>
+    </ion-content>
+</ion-view>

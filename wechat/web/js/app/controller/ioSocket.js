@@ -19,11 +19,11 @@ define(['app/module', 'app/directive/directiveApi'
         }
         $scope.sendId = ar.getCookie("bhy_user_id");
         $scope.receiveId = $location.search().id;
-        if(dataFilter.data.blacked.indexOf($scope.receiveId) > -1){   // 已被对方拉黑，不可查看对方资料
+        if (dataFilter.data.blacked.indexOf($scope.receiveId) > -1) {   // 已被对方拉黑，不可查看对方资料
             $scope.blackList = true;
         }
-        $scope.blackListAlert = function(){
-            ar.saveDataAlert($ionicPopup,'您已被对方拉黑，不可查看对方资料。')
+        $scope.blackListAlert = function () {
+            ar.saveDataAlert($ionicPopup, '您已被对方拉黑，不可查看对方资料。')
         }
         // 身份证认证
         api.list("/wap/member/honesty-photo", {user_id: $scope.receiveId}).success(function (res) {
@@ -303,90 +303,24 @@ define(['app/module', 'app/directive/directiveApi'
              });
              }*/
 
-            // 绑定手机弹窗
-            $ionicPopover.fromTemplateUrl('bindPhonePopover.html', {
-                scope: $scope,
-                focusFirstInput:true
-            }).then(function (popover) {
-                $scope.popover = popover;
-            });
-            $scope.openPopover = function () {
-                $scope.popover.show(document.body);
-            };
-            $scope.closePopover = function () {
-                $scope.popover.hide();
-            };
-
-            $scope.phoneInfo = {};
-            $scope.codeTitle = '获取验证码';
-            // 获取验证码
-            $scope.getCode = function () {
-                api.getMobileIsExist($scope.phoneInfo.phone).success(function (data) {
-                    if (!data.status) {
-                        ar.saveDataAlert($ionicPopup, data.msg);
-                    } else {
-                        var timeTitle = 90;
-                        var timer = $interval(function () {
-                            $scope.codeTitle = '重新获取(' + timeTitle + ')';
-                        }, 1000, 90);
-                        timer.then(function () {
-                                $scope.codeTitle = '获取验证码';
-                                $interval.cancel(timer);
-                            }, function () {
-                            },
-                            function () {
-                                timeTitle -= 1;
-                            });
-                        // 发送验证码
-                        api.sendCodeMsg($scope.phoneInfo.phone).success(function (res) {
-                            if (res.status < 1) {
-                                ar.saveDataAlert($ionicPopup, res.msg);
-                            }
-                        });
-                    }
-                });
-            }
-            // 绑定手机号
-            $scope.bindPhone = function () {
-                api.getMobileIsExist($scope.phoneInfo.phone).success(function (data) {
-                    if (!data.status) {
-                        ar.saveDataAlert($ionicPopup, data.msg);
-                    } else {
-                        // 比对验证码
-                        api.validateCode($scope.phoneInfo.code).success(function (res) {
-                            if (res.status) {  // 验证码正确
-                                api.save('/wap/user/update-user-data', {phone: $scope.phoneInfo.phone}).success(function (res) {
-                                    if (res.data) {
-                                        ar.saveDataAlert($ionicPopup, '绑定手机成功');
-                                        $scope.userInfo.phone = $scope.phoneInfo.phone;
-                                        ar.setStorage("userInfo", $scope.userInfo);
-                                        var userInfo = ar.getStorage("userInfo");
-                                        userInfo.info = JSON.stringify(userInfo.info);
-                                        userInfo.auth = JSON.stringify(userInfo.auth);
-                                        ar.setStorage("userInfo", userInfo);
-                                    } else {
-                                        ar.saveDataAlert($ionicPopup, '绑定手机失败');
-                                    }
-                                    $scope.closePopover();
-                                });
-                            } else {
-                                ar.saveDataAlert($ionicPopup, '验证码错误');
-                            }
-                        })
-                    }
-                })
-            }
             // 发送文本消息调用接口
             $scope.send = function () {
                 if ($scope.send_content == '' || $scope.send_content == null || $scope.send_content == undefined) return;
                 if (!$scope.userInfo.phone || $scope.userInfo.phone == '0') {   // 用户未认证手机号码  $scope.userInfo.phone
-                    $scope.openPopover();
+                    var alertPopup = $ionicPopup.alert({
+                        template: '绑定手机，免费畅聊',
+                        okText: '现在去绑定'
+                    });
+                    alertPopup.then(function (res) {
+                        $location.url('/member/bindPhone');
+                    });
                     return;
                 }
                 if ($scope.userInfo.id == $location.$$search.id) {    // 不能与自己聊天  TODO
                     ar.saveDataAlert($ionicPopup, '您不能与自己聊天！');
                     return;
                 }
+
                 try {
                     $scope.sendMessage($scope.send_content, $scope.sendId, $scope.receiveId, 'send', undefined, true);
                 } catch (e) {
@@ -394,8 +328,8 @@ define(['app/module', 'app/directive/directiveApi'
                 } finally {
                     $scope.send_content = '';
                 }
-            }
 
+            }
 
             // 发送图片
             $scope.send_pic = function () {
@@ -473,7 +407,6 @@ define(['app/module', 'app/directive/directiveApi'
                     }
                 });
 
-
                 var time = ar.timeStamp();
                 $scope.uploader.onAfterAddingFile = function (fileItem) {   // 选择文件之后
                     //if (window.File && window.FileList && window.FileReader && window.Blob) {
@@ -500,16 +433,16 @@ define(['app/module', 'app/directive/directiveApi'
 
                     $scope.uploader.onSuccessItem = function (fileItem, response, status, headers) {  // 上传成功
 
-                        if (response.status == 1){
-                            for (var i in $scope.historyList){
-                                if ($scope.historyList[i].message == fileItem.file.name){
+                        if (response.status == 1) {
+                            for (var i in $scope.historyList) {
+                                if ($scope.historyList[i].message == fileItem.file.name) {
                                     $scope.sendMessage(response.thumb_path, $scope.sendId, $scope.receiveId, 'pic', $scope.historyList[i].time, true);  // 真实发送
                                 }
                             }
 
-                        }else{
-                            for (var i = $scope.historyList.length-1 ; i>=0 ; i++){
-                                if ($scope.historyList[i].type == 'pic' && $scope.historyList[i].status == 3){
+                        } else {
+                            for (var i = $scope.historyList.length - 1; i >= 0; i++) {
+                                if ($scope.historyList[i].type == 'pic' && $scope.historyList[i].status == 3) {
                                     $scope.historyList[i].status = 4;
                                     break;
                                 }
@@ -521,7 +454,6 @@ define(['app/module', 'app/directive/directiveApi'
                     //}
 
                 };
-
 
 
                 $scope.uploader.onCompleteItem = function (fileItem, response, status, headers) {  // 上传结束
@@ -543,9 +475,9 @@ define(['app/module', 'app/directive/directiveApi'
                 };
 
                 $scope.uploader.onErrorItem = function (item, response, status, headers) {
-                    ar.saveDataAlert($ionicPopup,'发送图片出错，错误原因未知');
-                    for (var i = $scope.historyList.length-1 ; i>=0 ; i++){
-                        if ($scope.historyList[i].type == 'pic' && $scope.historyList[i].status == 3){
+                    ar.saveDataAlert($ionicPopup, '发送图片出错，错误原因未知');
+                    for (var i = $scope.historyList.length - 1; i >= 0; i++) {
+                        if ($scope.historyList[i].type == 'pic' && $scope.historyList[i].status == 3) {
                             $scope.historyList[i].status = 4;
                             break;
                         }
