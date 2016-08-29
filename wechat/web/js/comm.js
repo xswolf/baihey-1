@@ -1248,6 +1248,15 @@ var ar = {
                     }
                 }
             }
+
+            $scope.maxLength = function(event,da){
+                var list = $filter('filter')($scope.constellationList, {checked: true});
+                if (list.length > 3) {
+                    da.checked = false;
+                    ar.saveDataAlert($ionicPopup, '您最多能选择3项！');
+                    return;
+                }
+            }
         }
 
         function zoMarriage() {
@@ -1279,6 +1288,15 @@ var ar = {
                     } else {
                         $scope.zodiacList[i].checked = false;
                     }
+                }
+            }
+
+            $scope.maxLength = function(event,da){
+                var list = $filter('filter')($scope.zodiacList, {checked: true});
+                if (list.length > 6) {
+                    da.checked = false;
+                    ar.saveDataAlert($ionicPopup, '您最多能选择6项！');
+                    return;
                 }
             }
         }

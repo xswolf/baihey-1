@@ -7,7 +7,7 @@
     </ion-header-bar>
     <ion-content class="bhy com_w_100">
         <ion-list>
-            <ion-checkbox ng-model="zodiac.checked" ng-repeat="zodiac in zodiacList">{{zodiac.name}}</ion-checkbox>
+            <ion-checkbox ng-model="zodiac.checked" ng-click="maxLength($event,zodiac)" ng-repeat="zodiac in zodiacList">{{zodiac.name}}</ion-checkbox>
         </ion-list>
     </ion-content>
 </ion-modal-view>

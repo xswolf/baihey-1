@@ -7,7 +7,7 @@
     </ion-header-bar>
     <ion-content class="bhy com_w_100">
         <ion-list>
-            <ion-checkbox ng-model="constellation.checked" ng-repeat="constellation in constellationList">{{constellation.name}}</ion-checkbox>
+            <ion-checkbox ng-model="constellation.checked" ng-click="maxLength($event,constellation)" ng-repeat="constellation in constellationList">{{constellation.name}}</ion-checkbox>
         </ion-list>
     </ion-content>
 </ion-modal-view>
