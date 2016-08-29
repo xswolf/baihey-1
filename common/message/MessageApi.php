@@ -36,7 +36,7 @@ class MessageApi extends Component{
      */
     public function sendCode($phone){
         $code = rand(100000,999999);
-        $nr = '您好，本次验证码为：'.$code.'。【嘉瑞百合缘】';
+        $nr = '验证码为：'.$code.'，实名认证婚恋网【嘉瑞百合缘】';
         \Yii::$app->session->set('reg_code',$code);
         $nr = mb_convert_encoding($nr, "GB2312", "UTF-8");
         $ch = curl_init();

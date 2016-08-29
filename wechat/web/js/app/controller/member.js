@@ -3038,10 +3038,10 @@ define(['app/module', 'app/directive/directiveApi'
                     ar.saveDataAlert($ionicPopup, '该手机号码已存在');
                     return false;
                 } else {
-                    var timeTitle = 60;
+                    var timeTitle = 90;
                     var timer = $interval(function () {
                         $scope.getCodeTitle = '重新获取(' + timeTitle + ')';
-                    }, 1000, 60);
+                    }, 1000, 90);
                     timer.then(function () {
                         $scope.getCodeTitle = '获取验证码';
                         $interval.cancel(timer);
@@ -3073,8 +3073,8 @@ define(['app/module', 'app/directive/directiveApi'
                     ar.saveDataAlert($ionicPopup, '该手机号码已存在');
                     return false;
                 } else {
-                    api.get('/wap/user/check-code', {verify_code: $scope.formData.code}).success(function (res) {
-                        if (!res) {
+                    api.validateCode($scope.formData.code).success(function (res) {
+                        if (!res.status) {
                             ar.saveDataAlert($ionicPopup, '验证码不正确');
                             return false;
                         }else {
