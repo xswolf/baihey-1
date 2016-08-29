@@ -41,7 +41,7 @@ class ServerController extends BaseController {
             $fromUsername = trim($fromUsername);
             $toUsername   = $postObj->ToUserName;
 
-            if('subscribe' == $postObj->Event){
+            if('subscribe' != $postObj->Event){
                 echo '';exit;
             }
 
