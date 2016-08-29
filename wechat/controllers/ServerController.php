@@ -41,7 +41,7 @@ class ServerController extends BaseController {
             $fromUsername = trim($fromUsername);
             $toUsername   = $postObj->ToUserName;
 
-            $resultStr = \Yii::$app->wechat->responseNews($fromUsername , $toUsername);
+            $resultStr = \Yii::$app->wechat->responseText($fromUsername , $toUsername);
 
             $userInfo = \Yii::$app->wechat->getMemberInfo($fromUsername);
             if(is_array($userInfo) && count($userInfo) > 0){
