@@ -55,22 +55,40 @@ class WeChat extends \callmez\wechat\sdk\Wechat {
     }
 
     public function responseNews( $fromUserName,$toUserName ) {
+
+        $tpl = "<xml>
+						<ToUserName><![CDATA[%s]]></ToUserName>
+						<FromUserName><![CDATA[%s]]></FromUserName>
+						<CreateTime>%s</CreateTime>
+						<MsgType><![CDATA[%s]]></MsgType>
+						<ArticleCount>1</ArticleCount>
+						<Articles>
+								<item>
+								<Title><![CDATA[%s]]></Title>
+								<Description><![CDATA[%s]]></Description>
+								<PicUrl><![CDATA[%s]]></PicUrl>
+								<Url><![CDATA[%s]]></Url>
+								</item>
+						</Articles>
+						</xml> ";
+        $msgType = 'news';
+        $resultStr = sprintf($tpl, $fromUserName, $toUserName, time(), $msgType , 'test', 'test1', '', '');
+
+        return $resultStr;
+    }
+
+    public function responseImage($toUserName,$fromUserName){
         $newTpl = "<xml>
-                    <ToUserName><![CDATA[%s]]></ToUserName>
-                    <FromUserName><![CDATA[%s]]></FromUserName>
-                    <CreateTime>%s</CreateTime>
-                    <MsgType><![CDATA[news]]></MsgType>
-                    <ArticleCount>1</ArticleCount>
-                    <Articles>
-                    <item>
-                    <Title><![CDATA[%s]]></Title>
-                    <Description><![CDATA[%s]]></Description>
-                    <PicUrl><![CDATA[%s]]></PicUrl>
-                    <Url><![CDATA[%s]]></Url>
-                    </item>
-                    </Articles>
-                   </xml>";
-        $resultStr = sprintf($newTpl,$toUserName,$fromUserName,time(),'wel','join','....','....');
+        <ToUserName><![CDATA[%s]]></ToUserName>
+        <FromUserName><![CDATA[%s]]></FromUserName>
+        <CreateTime>%s</CreateTime>
+        <MsgType><![CDATA[image]]></MsgType>
+        <Image>
+        <MediaId><![CDATA[%s]]></MediaId>
+        </Image>
+        <FuncFlag>0</FuncFlag>
+        </xml>";
+        $resultStr = sprintf($newTpl,$toUserName,$fromUserName,time(),'UcYjTEWj_yXuX86RCsA1JXIwJ25RHX6I28PW7u73chs');
         return $resultStr;
     }
 
