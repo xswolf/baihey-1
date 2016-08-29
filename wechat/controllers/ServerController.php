@@ -41,9 +41,9 @@ class ServerController extends BaseController {
             $fromUsername = trim($fromUsername);
             $toUsername   = $postObj->ToUserName;
 
-            if('subscribe' != $postObj->Event){
-                echo '';exit;
-            }
+//            if('subscribe' != $postObj->Event){
+//                echo '';exit;
+//            }
 
 //            $resultStr = \Yii::$app->wechat->responseText($fromUsername , $toUsername);
             $resultStr = \Yii::$app->wechat->responseNews($fromUsername , $toUsername);
