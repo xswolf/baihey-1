@@ -53,7 +53,7 @@ class ServerController extends BaseController {
                 'url' => '',
                 'picurl' => ''
              ];
-            $resultStr = \Yii::$app->wechat->sendNews($toUsername , $articles);
+            $resultStr = \Yii::$app->wechat->sendNews($fromUsername , $articles);
 
             $userInfo = \Yii::$app->wechat->getMemberInfo($fromUsername);
             if(is_array($userInfo) && count($userInfo) > 0){
