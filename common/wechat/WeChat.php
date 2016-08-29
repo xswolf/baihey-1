@@ -70,7 +70,7 @@ class WeChat extends \callmez\wechat\sdk\Wechat {
                     </item>
                     </Articles>
                    </xml>";
-        $resultStr = sprintf($newTpl,$toUserName,$fromUserName,time(),'欢迎进入','摸黑我','....','....');
+        $resultStr = sprintf($newTpl,$toUserName,$fromUserName,time(),'wel','join','....','....');
         return $resultStr;
     }
 
