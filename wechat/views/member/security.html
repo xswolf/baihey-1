@@ -5,7 +5,7 @@
     </ion-header-bar>
     <ion-content class="bhy com_w_100 m_bg security">
         <ion-list>
-            <ion-item class="item" href="#/member/security_pass">
+            <ion-item class="item" ng-href="{{userInfo.phone == 0 ? '#/member/security_phone' : '#/member/security_pass'}}">
                 <div class="security_menu_i rounded pass">
                     <i class="ion-ios-locked"></i>
                 </div>
@@ -13,11 +13,12 @@
                     <p>密码修改</p>
                 </div>
                 <div class="menu_arrow">
-                    <span class="cor5 fs14 mr15 vam">上次修改 {{userInfo.reset_pass_time * 1000 | date:'yyyy-MM-dd HH:mm:ss'}}</span>
+                    <span class="cor21 fs14 mr15 vam" ng-if="userInfo.reset_pass_time == 0 && userInfo.phone == 0">请先绑定手机号码</span>
+                    <span class="cor5 fs14 mr15 vam" ng-if="userInfo.reset_pass_time != 0 && userInfo.phone != 0">上次修改 {{userInfo.reset_pass_time | date:'yyyy-MM-dd HH:mm:ss'}}</span>
                     <i class="ion-ios-arrow-right vam"></i>
                 </div>
             </ion-item>
-            <ion-item class="item" ng-href="{{userInfo.phone ? '#/member/edit_phone' : '#/member/security_phone'}}">
+            <ion-item class="item" ng-href="{{userInfo.phone != 0 ? '#/member/edit_phone' : '#/member/security_phone'}}">
                 <div class="security_menu_i rounded phone">
                     <i class="ion-android-phone-portrait"></i>
                 </div>
@@ -25,8 +26,8 @@
                     <p>手机绑定</p>
                 </div>
                 <div class="menu_arrow">
-                    <span class="cor5 fs14 mr15 vam" ng-if="!userInfo.phone">立即绑定</span>
-                    <span class="cor5 fs14 mr15 vam" ng-if="userInfo.phone">已绑定 {{userInfo.phone | cut: true:3:'********'}}，点击更换绑定</span>
+                    <span class="cor21 fs14 mr15 vam" ng-if="userInfo.phone == 0">立即绑定</span>
+                    <span class="cor5 fs14 mr15 vam" ng-if="userInfo.phone != 0">已绑定 {{userInfo.phone | cut: true:3:'********'}}，点击更换绑定</span>
                     <i class="ion-ios-arrow-right vam"></i>
                 </div>
             </ion-item>

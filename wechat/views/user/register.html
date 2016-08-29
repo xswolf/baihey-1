@@ -44,7 +44,7 @@
                 <div class="form-group clearfix">
                     <div class="item item-input">
                         <i class="ion-key mr16 fs18 cor50"></i>
-                        <input type="text" class="login_input pass" ng-model="User.code" style="padding-right: 5px;" placeholder="短信验证码">
+                        <input type="text" class="login_input pass" maxlength="6" ng-model="User.code" style="padding-right: 5px;" placeholder="短信验证码">
                         <button type="button" class="button button-calm button-small" ng-click="getCode()" ng-disabled="codeTitle != '获取验证码' || !User.mobile || User.mobile.length != 11" style="min-width: 75px;">{{codeTitle}}</button>
                     </div>
                 </div>
