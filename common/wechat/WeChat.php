@@ -65,12 +65,10 @@ class WeChat extends \callmez\wechat\sdk\Wechat {
                     <item>
                     <Title><![CDATA[%s]]></Title>
                     <Description><![CDATA[%s]]></Description>
-                    <PicUrl><![CDATA[%s]]></PicUrl>
-                    <Url><![CDATA[%s]]></Url>
                     </item>
                     </Articles>
                    </xml>";
-        $resultStr = sprintf($newTpl,$toUserName,$fromUserName,time(),'wel','join','','');
+        $resultStr = sprintf($newTpl,$toUserName,$fromUserName,time(),'wel','join');
         return $resultStr;
     }
 
