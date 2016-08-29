@@ -83,9 +83,7 @@ class WeChat extends \callmez\wechat\sdk\Wechat {
                         <Content><![CDATA[%s]]></Content>
                         <FuncFlag>0</FuncFlag>
                         </xml>";
-
-        $msgType    = "text";
-        $content = "<a href='http://wechat.baihey.com/wap/chat/chat?name=1&sendName=12'>well come to jia rui</a>";
+        $content = "<a href='http://wechat.baihey.com/wap/site/main#/index'>欢迎进入嘉瑞</a>";
         $resultStr  = sprintf( $textTpl , $fromUsername , $toUsername , time() , $content );
         return $resultStr;
     }
