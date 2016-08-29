@@ -861,9 +861,13 @@ define(['app/module', 'app/directive/directiveApi'
             event.preventDefault();
             $scope.imgList.splice(index, 1);
         }
+
+        $scope.contentChange = function(){
+            $scope.formData.content = ar.utf16toEntities($scope.formData.content);
+        }
+
         // 发布动态
         $scope.saveData = function () {
-            $scope.formData.content = ar.utf16toEntities($scope.formData.content);
             var userInfo = ar.getStorage('userInfo');
             userInfo.info = JSON.parse(userInfo.info)
             userInfo.auth = JSON.parse(userInfo.auth);
