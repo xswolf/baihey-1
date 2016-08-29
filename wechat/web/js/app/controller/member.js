@@ -868,46 +868,42 @@ define(['app/module', 'app/directive/directiveApi'
 
         // 发布动态
         $scope.saveData = function () {
-            try {
-                var userInfo = ar.getStorage('userInfo');
-                userInfo.info = JSON.parse(userInfo.info)
-                userInfo.auth = JSON.parse(userInfo.auth);
-                if (!userInfo.info.head_pic) {
-                    $ionicPopup.alert({
-                        template: '没有头像不可以发布动态哦，点击确定去设置头像！',
-                        okText: '确定'
-                    }).then(function () {
-                        $location.url('/member/information');
-                    })
-                    return false;
-                }
-                $ionicLoading.show({
-                    template: '发布中...'
-                });
-                var userInfo = ar.getStorage('userInfo');
-                $scope.formData.name = JSON.parse(userInfo.info).real_name;
-                $scope.formData.pic = JSON.stringify($scope.imgList);
-                api.save('/wap/member/add-user-dynamic', $scope.formData).success(function (res) {
-                    ar.saveDataAlert($ionicPopup, res.msg);
-                    if (res.status) {
-                        if ($location.$$search.tempUrl) {
-                            $location.url($location.$$search.tempUrl);
-                            console.log($location.$$search.tempUrl);
-                        } else {
-                            $location.url('/discovery');
-                            $rootScope.$broadcast('reload', 1);
-                        }
-                    } else {
-                        window.location.reload();
-                    }
-                }).finally(function () {
-                    $ionicLoading.hide();
+            var userInfo = ar.getStorage('userInfo');
+            userInfo.info = JSON.parse(userInfo.info)
+            userInfo.auth = JSON.parse(userInfo.auth);
+            if (!userInfo.info.head_pic) {
+                $ionicPopup.alert({
+                    template: '没有头像不可以发布动态哦，点击确定去设置头像！',
+                    okText: '确定'
+                }).then(function () {
+                    $location.url('/member/information');
                 })
+                return false;
             }
-            catch
-                (err) {
-                alert(err.description);
-            }
+            $ionicLoading.show({
+                template: '发布中...'
+            });
+            var userInfo = ar.getStorage('userInfo');
+            $scope.formData.name = JSON.parse(userInfo.info).real_name;
+            $scope.formData.pic = JSON.stringify($scope.imgList);
+            api.save('/wap/member/add-user-dynamic', $scope.formData).success(function (res) {
+                ar.saveDataAlert($ionicPopup, res.msg);
+                if (res.status) {
+                    if ($location.$$search.tempUrl) {
+                        $location.url($location.$$search.tempUrl);
+                        console.log($location.$$search.tempUrl);
+                    } else {
+                        $location.url('/discovery');
+                        $rootScope.$broadcast('reload', 1);
+                    }
+                } else {
+                    window.location.reload();
+                }
+            }).error(function (res) {
+                alert(res);
+            }).finally(function () {
+                $ionicLoading.hide();
+            })
         }
     }]);
 
