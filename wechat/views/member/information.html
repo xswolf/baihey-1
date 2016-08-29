@@ -192,7 +192,7 @@
                 </div>
             </div>
             <ion-item class="item-icon-right" ng-click="updateInfo('been_address')">
-                <p><span class="cor4">我去过的地方({{went_travel_count}})</span></p>
+                <p><span class="cor4">我去过的地方({{went_travel.length}})</span></p>
                 <div class="hob_addr clearfix">
                         <span class="hob_addr_flag" ng-repeat="addrt in went_travel track by addrt.id">
                             <i class="ion-location hob_addr_icon"></i>
@@ -202,7 +202,7 @@
                 <i class="icon ion-ios-arrow-right cor52"></i>
             </ion-item>
             <ion-item class="item-icon-right" ng-click="updateInfo('want_address')">
-                    <p><span class="cor4">想去的地方({{want_travel_count}})</span></p>
+                    <p><span class="cor4">想去的地方({{want_travel.length}})</span></p>
                     <div class="hob_addr clearfix">
                             <span class="hob_addr_flag f2" ng-repeat="addrt in want_travel track by addrt.id">
                                 <i class="ion-location hob_addr_icon"></i>
@@ -212,7 +212,7 @@
                 <i class="icon ion-ios-arrow-right cor52"></i>
             </ion-item>
             <ion-item class="item-icon-right" ng-click="updateInfo('sports')">
-                <p><span class="cor4">喜欢的运动({{love_sport_count}})</span></p>
+                <p><span class="cor4">喜欢的运动({{love_sport.length}})</span></p>
                     <div class="hob_sport clearfix">
                         <span class="hob_sport_flag" ng-repeat="addrt in love_sport track by addrt.id">
                             <i class="icon-sport-{{addrt.pic_path}} hob_sport_icon"></i>
@@ -223,7 +223,7 @@
             </ion-item>
 
             <ion-item class="item-icon-right" ng-click="updateInfo('movie')">
-                    <p><span class="cor4">喜欢的影视({{want_film_count}})</span></p>
+                    <p><span class="cor4">喜欢的影视({{want_film.length}})</span></p>
                 <div class="hob_sport clearfix">
                         <span class="hob_tv_flag" ng-repeat="addrt in want_film track by addrt.id">
                             <i class="ion-ios-play mr5"></i>
@@ -234,7 +234,7 @@
             </ion-item>
 
             <ion-item class="item-icon-right" ng-click="updateInfo('delicacy')">
-                    <p><span class="cor4">喜欢的美食({{like_food_count}})</span></p>
+                    <p><span class="cor4">喜欢的美食({{like_food.length}})</span></p>
                     <div class="hob_food clearfix">
                         <span class="hob_food_flag" ng-repeat="addrt in like_food track by addrt.id">
                             <i class="icon-food hob_food_icon"></i>
@@ -287,14 +287,6 @@
                     <span class="cor4">购车情况</span>
                     <span ng-if="!userInfo.info.is_car" class="ml20 mr10 cor21">立即填写</span>
                     <span ng-if="userInfo.info.is_car" class="ml20 mr10">{{userInfo.info.is_car | car}}</span>
-                </p>
-                <i class="icon ion-ios-arrow-right cor52"></i>
-            </ion-item>
-            <ion-item class="item-icon-right" ng-click="updateInfo('blood')">
-                <p>
-                    <span class="cor4">血型</span>
-                    <span ng-if="!userInfo.info.blood" class="ml48 mr10 cor21">立即填写</span>
-                    <span ng-if="userInfo.info.blood" class="ml48 mr10">{{userInfo.info.blood | blood}}</span>
                 </p>
                 <i class="icon ion-ios-arrow-right cor52"></i>
             </ion-item>
@@ -375,7 +367,7 @@
                 <i class="icon ion-ios-arrow-right cor52"></i>
             </ion-item>
             <ion-item class="item-icon-right" ng-click="updateInfo('zo_zodiac')">
-                <p>
+                <p class="wsn">
                     <span class="cor4">属相要求</span>
                     <span ng-if="!userInfo.info.zo_zodiac" class="ml20 mr10 cor21">不限</span>
                     <span ng-if="userInfo.info.zo_zodiac"
@@ -384,7 +376,7 @@
                 <i class="icon ion-ios-arrow-right cor52"></i>
             </ion-item>
             <ion-item class="item-icon-right" ng-click="updateInfo('zo_constellation')">
-                <p>
+                <p class="wsn">
                     <span class="cor4">星座要求</span>
                     <span ng-if="!userInfo.info.zo_constellation" class="ml20 mr10 cor21">不限</span>
                     <span ng-if="userInfo.info.zo_constellation" class="ml20 mr10">{{userInfo.info.zo_constellation | zo_constellation}}</span>
