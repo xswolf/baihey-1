@@ -9,7 +9,7 @@
                 <input type="text" placeholder="请输入您本人真实有效手机号码" ng-model="formData.phone">
             </label>
             <div class="item item-input padding">
-                <input type="text" placeholder="请输入验证码" ng-model="formData.code">
+                <input type="text" placeholder="请输入验证码" maxlength="6" ng-model="formData.code">
                 <button class="button button-calm button-small" ng-disabled="getCodeTitle != '获取验证码'" ng-click="getCode()">{{getCodeTitle}}</button>
             </div>
             <label class="item item-input padding">
