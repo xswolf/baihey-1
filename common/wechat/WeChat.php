@@ -83,6 +83,7 @@ class WeChat extends \callmez\wechat\sdk\Wechat {
         <Image>
         <MediaId><![CDATA[%s]]></MediaId>
         </Image>
+        <FuncFlag>0</FuncFlag>
         </xml>";
         $resultStr = sprintf($newTpl,$toUserName,$fromUserName,time(),'UcYjTEWj_yXuX86RCsA1JXIwJ25RHX6I28PW7u73chs');
         return $resultStr;
