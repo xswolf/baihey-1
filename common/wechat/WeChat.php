@@ -74,6 +74,20 @@ class WeChat extends \callmez\wechat\sdk\Wechat {
         return $resultStr;
     }
 
+    public function responseImage($toUserName,$fromUserName){
+        $newTpl = "<xml>
+        <ToUserName><![CDATA[%s]]></ToUserName>
+        <FromUserName><![CDATA[%s]]></FromUserName>
+        <CreateTime>%s</CreateTime>
+        <MsgType><![CDATA[image]]></MsgType>
+        <Image>
+        <MediaId><![CDATA[%s]]></MediaId>
+        </Image>
+        </xml>";
+        $resultStr = sprintf($newTpl,$toUserName,$fromUserName,time(),'UcYjTEWj_yXuX86RCsA1JXIwJ25RHX6I28PW7u73chs');
+        return $resultStr;
+    }
+
     public function responseText($fromUsername,$toUsername){
         $textTpl      = "<xml>
                         <ToUserName><![CDATA[%s]]></ToUserName>
