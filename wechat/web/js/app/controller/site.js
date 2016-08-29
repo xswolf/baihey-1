@@ -7,8 +7,8 @@ define(['app/module', 'app/directive/directiveApi'
 
     module.controller("site.index", ['app.serviceApi', '$rootScope', '$scope', '$timeout', '$ionicPopup', '$ionicModal', '$ionicActionSheet', '$ionicLoading', '$ionicBackdrop', '$ionicScrollDelegate', '$location', 'dataFilter', function (api, $rootScope, $scope, $timeout, $ionicPopup, $ionicModal, $ionicActionSheet, $ionicLoading, $ionicBackdrop, $ionicScrollDelegate, $location, dataFilter) {
 
-        $scope.$on('$ionicView.beforeEnter',function(){
-            if(ar.getStorage('userInfo') && ar.getStorage('userInfo').user_id == ar.getCookie('bhy_user_id')){
+        $scope.$on('$ionicView.beforeEnter', function () {
+            if (ar.getStorage('userInfo') && ar.getStorage('userInfo').user_id == ar.getCookie('bhy_user_id')) {
                 $scope.userInfo = ar.getStorage('userInfo');
                 $scope.userInfo.info = JSON.parse($scope.userInfo.info);
                 $scope.userInfo.auth = JSON.parse($scope.userInfo.auth);
@@ -186,9 +186,9 @@ define(['app/module', 'app/directive/directiveApi'
                     $ionicScrollDelegate.$getByHandle('mainScroll').scrollTop();
                 }
             }).finally(function () {
-                $timeout(function(){
+                $timeout(function () {
                     $scope.$broadcast('scroll.infiniteScrollComplete');
-                },800);
+                }, 800);
             });
 
         }
@@ -500,6 +500,11 @@ define(['app/module', 'app/directive/directiveApi'
         $scope.moreDataCanBeLoaded = function () {
             return $scope.isMore;
         }
+
+    }]);
+
+    // 404页面
+    module.controller("site.error", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$ionicModal', '$location', function (api, $scope, $timeout, $ionicPopup, $ionicModal, $location) {
 
     }]);
 })
