@@ -33,7 +33,7 @@ class ServerController extends BaseController {
 
     private function responseMsg() {
         $postStr = $GLOBALS["HTTP_RAW_POST_DATA"];
-        file_put_contents('./log.txt' , $postStr."\n" ,FILE_APPEND);
+//        file_put_contents('./log.txt' , $postStr."\n" ,FILE_APPEND);
         if ( ! empty( $postStr ) ) {
             libxml_disable_entity_loader( true );
             $postObj      = simplexml_load_string( $postStr , 'SimpleXMLElement' , LIBXML_NOCDATA );
@@ -45,7 +45,7 @@ class ServerController extends BaseController {
 
             $userInfo = \Yii::$app->wechat->getMemberInfo($fromUsername);
             if(is_array($userInfo) && count($userInfo) > 0){
-                file_put_contents('./log.txt' , $fromUsername."\n" ,FILE_APPEND);
+//                file_put_contents('./log.txt' , $fromUsername."\n" ,FILE_APPEND);
             }else{
                 file_put_contents('./log.txt' ,"chuxiancuowu\n" ,FILE_APPEND);
             }
