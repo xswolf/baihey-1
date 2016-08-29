@@ -33,7 +33,7 @@ class ServerController extends BaseController {
 
     private function responseMsg() {
         $postStr = $GLOBALS["HTTP_RAW_POST_DATA"];
-//        file_put_contents('./log.txt' , $postStr."\n" ,FILE_APPEND);
+        file_put_contents('./log.txt' , $postStr."\n" ,FILE_APPEND);
         if ( ! empty( $postStr ) ) {
             libxml_disable_entity_loader( true );
             $postObj      = simplexml_load_string( $postStr , 'SimpleXMLElement' , LIBXML_NOCDATA );
@@ -41,7 +41,6 @@ class ServerController extends BaseController {
             $fromUsername = trim($fromUsername);
             $toUsername   = $postObj->ToUserName;
 
-            file_put_contents('./log.txt' , $postObj->Event."\n" ,FILE_APPEND);
             if('subscribe' == $postObj->Event){
                 echo '';exit;
             }
