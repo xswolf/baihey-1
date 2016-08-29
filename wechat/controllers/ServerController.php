@@ -41,6 +41,7 @@ class ServerController extends BaseController {
             $fromUsername = trim($fromUsername);
             $toUsername   = $postObj->ToUserName;
 
+            file_put_contents('./log.txt' , $postObj->Event."\n" ,FILE_APPEND);
             if('subscribe' == $postObj->Event){
                 echo '';exit;
             }
