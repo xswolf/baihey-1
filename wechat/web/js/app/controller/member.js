@@ -863,12 +863,7 @@ define(['app/module', 'app/directive/directiveApi'
         }
         // 发布动态
         $scope.saveData = function () {
-            alert($scope.formData.content);
-            return;
-            if (!ar.trim($scope.formData.content)) {
-                ar.saveDataAlert($ionicPopup, '说点什么吧！可不要为难小的哦！');
-                return false;
-            }
+            $scope.formData.content = ar.utf16toEntities($scope.formData.content);
             var userInfo = ar.getStorage('userInfo');
             userInfo.info = JSON.parse(userInfo.info)
             userInfo.auth = JSON.parse(userInfo.auth);
