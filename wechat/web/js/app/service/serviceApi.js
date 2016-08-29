@@ -81,6 +81,11 @@ define(['app/module'], function (module, config) {
          * @returns {*}
          */
         api.save = function (url, formData) {
+            for (var i in formData) {
+                if (angular.isString(formData[i])) {
+                    formData[i] = ar.utf16toEntities(formData[i]);
+                }
+            }
             return $http({
                 method: 'POST',
                 url: url,
@@ -159,7 +164,7 @@ define(['app/module'], function (module, config) {
             return $http.get('/wap/follow/get-sum-follow');
         }
 
-        var dataURItoBlob = function(dataURI) {
+        var dataURItoBlob = function (dataURI) {
             // convert base64/URLEncoded data component to raw binary data held in a string
             var byteString;
             if (dataURI.split(',')[0].indexOf('base64') >= 0)
@@ -181,12 +186,12 @@ define(['app/module'], function (module, config) {
             });
         };
 
-        api.resizeFile = function(file) {
+        api.resizeFile = function (file) {
             var deferred = $q.defer();
             var img = document.createElement("img");
             try {
                 var reader = new FileReader();
-                reader.onload = function(e) {
+                reader.onload = function (e) {
                     img.src = e.target.result;
 
                     //resize the image using canvas
