@@ -2911,6 +2911,10 @@ define(['app/module', 'app/directive/directiveApi'
 
     }]);
 
+    module.controller("member.help_rule", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$location', function (api, $scope, $timeout, $ionicPopup, $location) {
+
+    }]);
+
     // 举报
     module.controller("member.report", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$location', function (api, $scope, $timeout, $ionicPopup, $location) {
 
