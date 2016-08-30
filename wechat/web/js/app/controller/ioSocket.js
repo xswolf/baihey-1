@@ -41,10 +41,9 @@ define(['app/module', 'app/directive/directiveApi'
         var list = ar.getStorage('chat_messageHistory' + $scope.receiveId);
         // 状态发送中的全部改为发送失败
         for (var i in list) {
-            if (list[i].send_user_id != userId && list[i].receive_user_id != userId ){
+            if (list[i].send_user_id != $scope.userId && list[i].receive_user_id != $scope.userId ){
                 list.splice(i,1);
-            }
-            if (list[i].status == 3) {
+            }else if (list[i].status == 3) {
                 list[i].status = 4;
             }
         }
