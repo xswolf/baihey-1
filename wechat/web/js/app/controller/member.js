@@ -59,9 +59,11 @@ define(['app/module', 'app/directive/directiveApi'
         })
 
         // 设置新关注的人已看
-        api.list('/wap/follow/set-checked', {user_id: $scope.userInfo.user_id}).success(function (res) {
-            console.log(res);
-        })
+        if ($scope.followNumber>0) {
+            api.list('/wap/follow/set-checked', {user_id: $scope.userInfo.user_id}).success(function (res) {
+                console.log(res);
+            })
+        }
 
     }]);
 
