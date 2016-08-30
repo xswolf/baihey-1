@@ -66,6 +66,22 @@ class ServerController extends BaseController {
         }
     }
 
+    public function actionTest(){
+        $articles = [
+            'title' => 'Happy Day',
+            'description' => 'Is Really A Happy Day',
+            'url' => '',
+            'picurl' => ''
+         ];
+
+        if(\Yii::$app->wechat->sendNews("gh_d9ad4f5baba3" , $articles)){
+            echo "--";
+        }else{
+            echo "==";
+        }
+
+    }
+
     public function actionMaterial(){
         $result_1 = \Yii::$app->wechat->deleteMenu();
 
