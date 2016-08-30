@@ -45,6 +45,10 @@ module.controller('chat', function ($scope, $http, $interval, $timeout) {
     $scope.moreLoading = false;
     $scope.isMore = true;
     $scope.loadMore = function(){
+        if($scope.userInfoList.length <= $scope.pageSize){
+            $scope.isMore = false;
+            return;
+        }
         $scope.moreLoading = true;
         $timeout(function(){
             $scope.pageSize += 20;
