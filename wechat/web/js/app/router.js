@@ -73,17 +73,17 @@ define(["app/module", 'app/service/serviceApi'],
                                 location.href = '/wap/user/login';
                                 return false;
                             }
-                        }else {
-                            if (sessionStorage.flag === undefined) {
-                                var together = function () {
-                                    messageList();
-                                    msgNumber(userId);
-                                    mainIntercept();
-                                }
-                                $timeout(together, 500);
-                                sessionStorage.flag = true;
-                            }
                         }
+
+                        //if (sessionStorage.flag === undefined) {
+                            var together = function () {
+                                messageList();
+                                msgNumber(userId);
+                                mainIntercept();
+                            }
+                            $timeout(together, 500);
+                            sessionStorage.flag = true;
+                        //}
                     });
             // 页面加载成功
             $rootScope
