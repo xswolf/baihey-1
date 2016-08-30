@@ -72,7 +72,7 @@ class WeChat extends \callmez\wechat\sdk\Wechat {
 						</Articles>
 						</xml> ";
         $msgType = 'news';
-        $resultStr = sprintf($tpl, $fromUserName, $toUserName, time(), $msgType , 'test', 'test1', '', '');
+        $resultStr = sprintf($tpl, $fromUserName, $toUserName, time(), $msgType , '关于嘉瑞百合缘', '重庆嘉瑞婚介有限责任公司是一家实名制相亲平台，有严格的身份审核程序，所有会员均需进行身份证认证。', 'https://mmbiz.qlogo.cn/mmbiz_jpg/hD1GpvgKwC6Vbw35ibCXgac9fMdFdjkq9VpmJvYIVG315UEEQhuCAJGHlHVwVHjYEmSDhrAhWribAXibMibyicNOicRw/0?wx_fmt=jpeg', 'http://mp.weixin.qq.com/s?__biz=MzAxMDI2NzY2NQ==&mid=2451958352&idx=1&sn=e855c5a3a52799be378dc25f7d3963cc&scene=0#wechat_redirect');
 
         return $resultStr;
     }
