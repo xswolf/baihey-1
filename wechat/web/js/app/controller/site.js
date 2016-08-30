@@ -170,26 +170,39 @@ define(['app/module', 'app/directive/directiveApi'
 
         // 加载更多
         $scope.loadMore = function (flag) {
-            $scope.dataLoading = true;
-            api.list('/wap/site/user-list', $scope.searchForm).success(function (res) {
-                if (res.data.length < 6) {
-                    $scope.pageLast = false;
-                }
-                for (var i in res.data) {
-                    res.data[i].info = JSON.parse(res.data[i].info);
-                    res.data[i].auth = JSON.parse(res.data[i].auth);
-                }
-                $scope.userList = $scope.userList.concat(res.data);
-                $scope.dataLoading = false;
-                $scope.searchForm.pageNum += 1;
-                if (flag == 'search') {
-                    $ionicScrollDelegate.$getByHandle('mainScroll').scrollTop();
-                }
-            }).finally(function () {
+            try {
+
+
+                $scope.dataLoading = true;
+                api.list('/wap/site/user-list', $scope.searchForm).success(function (res) {
+                    if (res.data.length < 6) {
+                        $scope.pageLast = false;
+                    }
+                    for (var i in res.data) {
+                        res.data[i].info = JSON.parse(res.data[i].info);
+                        res.data[i].auth = JSON.parse(res.data[i].auth);
+                    }
+                    $scope.userList = $scope.userList.concat(res.data);
+                    $scope.dataLoading = false;
+                    $scope.searchForm.pageNum += 1;
+                    if (flag == 'search') {
+                        $ionicScrollDelegate.$getByHandle('mainScroll').scrollTop();
+                    }
+                }).error(function () {
+                    $timeout(function () {
+                        $scope.$broadcast('scroll.infiniteScrollComplete');
+                    }, 800);
+                }).finally(function () {
+                    $timeout(function () {
+                        $scope.$broadcast('scroll.infiniteScrollComplete');
+                    }, 800);
+                });
+
+            } catch (e) {
                 $timeout(function () {
                     $scope.$broadcast('scroll.infiniteScrollComplete');
                 }, 800);
-            });
+            }
 
         }
 
