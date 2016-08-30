@@ -59,7 +59,7 @@ define(["app/module", 'app/service/serviceApi'],
             $rootScope
                 .$on('$stateChangeStart',
                     function (event, toState, toParams, fromState, fromParams) {
-                        if (toState.url != '/index' && toState.url != '/fictitious') {
+                        if (toState.url != '/index') {
                             $ionicLoading.show();
                             api.getLoginStatus().success(function (res) {
                                 if (!res.status) {
@@ -67,15 +67,14 @@ define(["app/module", 'app/service/serviceApi'],
                                     return false;
                                 }
                             })
+                        }else {
+                            var together = function () {
+                                messageList();
+                                msgNumber(userId);
+                                mainIntercept();
+                            }
+                            $timeout(together, 500);
                         }
-
-                        var together = function () {
-                            messageList();
-                            msgNumber(userId);
-                            mainIntercept();
-                        }
-
-                        $timeout(together,500);
                     });
             // 页面加载成功
             $rootScope
