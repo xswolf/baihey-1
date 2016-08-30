@@ -61,19 +61,28 @@ define(["app/module", 'app/service/serviceApi'],
                     function (event, toState, toParams, fromState, fromParams) {
                         if (toState.url != '/index') {
                             $ionicLoading.show();
-                            api.getLoginStatus().success(function (res) {
-                                if (!res.status) {
-                                    location.href = '/wap/user/login';
-                                    return false;
-                                }
-                            })
-                        }else {
-                            var together = function () {
-                                messageList();
-                                msgNumber(userId);
-                                mainIntercept();
+                            if (sessionStorage.loginStatus === undefined) {
+                                api.getLoginStatus().success(function (res) {
+                                    sessionStorage.loginStatus = res.status;
+                                    if (!res.status) {
+                                        location.href = '/wap/user/login';
+                                        return false;
+                                    }
+                                })
+                            }else if(!sessionStorage.loginStatus) {
+                                location.href = '/wap/user/login';
+                                return false;
                             }
-                            $timeout(together, 500);
+                        }else {
+                            if (sessionStorage.flag === undefined) {
+                                var together = function () {
+                                    messageList();
+                                    msgNumber(userId);
+                                    mainIntercept();
+                                }
+                                $timeout(together, 500);
+                                sessionStorage.flag = true;
+                            }
                         }
                     });
             // 页面加载成功
