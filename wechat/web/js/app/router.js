@@ -16,11 +16,6 @@ define(["app/module", 'app/service/serviceApi'],
                         var flag = true;
 
                         for (var j in storageList) {  // 相同消息合并
-                            if (userId != storageList[j].receive_user_id  && userId != storageList[j].send_user_id){
-                                storageList.splice(j,1);
-                                continue;
-                            }
-
                             if (storageList[j].send_user_id == list[i].send_user_id) {
                                 storageList[j] = list[i];
                                 flag = false;
