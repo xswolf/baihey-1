@@ -74,7 +74,7 @@ class ServerController extends BaseController {
             'picurl' => ''
          ];
 
-        if(\Yii::$app->wechat->sendNews("gh_d9ad4f5baba3" , $articles)){
+        if(\Yii::$app->wechat->sendNews("oEQpts_I-K1D4Iz5Irp5v5r1yU_o" , $articles)){
             echo "--";
         }else{
             echo "==";
