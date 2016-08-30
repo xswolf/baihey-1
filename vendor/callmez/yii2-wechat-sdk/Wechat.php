@@ -978,7 +978,6 @@ class Wechat extends Component
     protected function sendCustomMessage(array $data)
     {
         $result = $this->httpRaw(self::WECHAT_CUSTOM_MESSAGE_SEND_URL . 'access_token=' . $this->getAccessToken(), $data);
-        var_dump($result);
         return isset($result['errmsg']) && $result['errmsg'] == 'ok';
     }
 
@@ -2483,6 +2482,7 @@ class Wechat extends Component
     public function httpRaw($url, $params = null)
     {
         is_array($params) && $params = json_encode($params, JSON_UNESCAPED_UNICODE);
+        var_dump($params);
         return $this->parseHttpResult($url, $params, 'raw');
     }
 

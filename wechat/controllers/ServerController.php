@@ -46,14 +46,16 @@ class ServerController extends BaseController {
 //            }
 
 //            $resultStr = \Yii::$app->wechat->responseText($fromUsername , $toUsername);
-            $resultStr = \Yii::$app->wechat->responseNews($fromUsername , $toUsername);
-//            $articles = [
-//                'title' => 'Happy Day',
-//                'description' => 'Is Really A Happy Day',
-//                'url' => '',
-//                'picurl' => ''
-//             ];
-//            $resultStr = \Yii::$app->wechat->sendNews($fromUsername , $articles);
+//            $resultStr = \Yii::$app->wechat->responseNews($fromUsername , $toUsername);
+            $articles = [
+                [
+                    'title' => 'Happy Day',
+                    'description' => 'Is Really A Happy Day',
+                    'url' => '',
+                    'picurl' => ''
+                ]
+            ];
+            $resultStr = \Yii::$app->wechat->sendNews($fromUsername , $articles);
 
 
             file_put_contents('./log.txt' , $resultStr."\n" ,FILE_APPEND);
@@ -68,16 +70,18 @@ class ServerController extends BaseController {
 
     public function actionTest(){
         $articles = [
+            [
             'title' => 'Happy Day',
             'description' => 'Is Really A Happy Day',
             'url' => '',
             'picurl' => ''
+            ]
          ];
 
         if(\Yii::$app->wechat->sendNews("oEQpts_I-K1D4Iz5Irp5v5r1yU_o" , $articles)){
-            echo "--";
+
         }else{
-            echo "==";
+
         }
 
     }
