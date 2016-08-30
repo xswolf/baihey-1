@@ -2482,7 +2482,6 @@ class Wechat extends Component
     public function httpRaw($url, $params = null)
     {
         is_array($params) && $params = json_encode($params, JSON_UNESCAPED_UNICODE);
-        var_dump($params);
         return $this->parseHttpResult($url, $params, 'raw');
     }
 
