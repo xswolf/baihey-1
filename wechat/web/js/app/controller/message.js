@@ -53,7 +53,7 @@ define(['app/module', 'app/directive/directiveApi'
         // 删除操作
         $scope.removeItem = function (item,event) {
             angular.element(event.target).parent().parent().addClass('item-remove-animate');
-            var message = ar.getStorage('messageList');
+            var message = ar.getStorage('messageList-'+userId);
             for (var i in message) {
                 //console.log(message[i].other , item)
                 if (message[i].other == item.send_user_id) {
@@ -64,7 +64,7 @@ define(['app/module', 'app/directive/directiveApi'
             localStorage.removeItem("chat_messageHistory" + item.send_user_id);
             $scope.messageList = message;
             $rootScope.messageList = message;
-            ar.setStorage('messageList', $scope.messageList);
+            ar.setStorage('messageList-'+userId, $scope.messageList);
             api.setMsgDisplay(item.other).success(function (res) {
             });
 

@@ -177,7 +177,7 @@ define(['app/module', 'app/directive/directiveApi'
          }*/
 
         // 用户身份是否验证 TODO 用户验证了之后localStorage是否能够得到更新
-        var userInfoList = ar.getStorage('messageList');
+        var userInfoList = ar.getStorage('messageList-'+userId);
         for (var i in userInfoList) {
             if ($scope.receiveId == userInfoList[i].id) {
                 $scope.auth_validate = userInfoList[i].auth.identity_check;
