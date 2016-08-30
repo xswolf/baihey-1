@@ -7,13 +7,14 @@ define(["app/module", 'app/service/serviceApi'],
             var userId = ar.getCookie('bhy_user_id');
             var messageList = function () {
                 api.list('/wap/message/message-list', []).success(function (res) {
-                    var storageList = ar.getStorage('messageList') ? ar.getStorage('messageList') : [];
+                    var storageList = ar.getStorage('messageList-'+userId) ? ar.getStorage('messageList-'+userId) : [];
                     var list = res.data;
                     for (var i in list) {
                         list[i].info = JSON.parse(list[i].info);
                         list[i].auth = JSON.parse(list[i].auth);
                         list[i].order_time = parseInt(list[i].create_time); // ar.timeStamp();  // 消息时间
                         var flag = true;
+
                         for (var j in storageList) {  // 相同消息合并
                             if (userId != storageList[j].receive_user_id  && userId != storageList[j].send_user_id){
                                 storageList.splice(j,1);
@@ -31,8 +32,7 @@ define(["app/module", 'app/service/serviceApi'],
                         }
                     }
                     $rootScope.messageList = storageList;
-                    //console.log($rootScope.messageList)
-                    ar.setStorage('messageList', storageList)
+                    ar.setStorage('messageList-'+userId, storageList)
                 });
             }
 
@@ -265,7 +265,7 @@ define(["app/module", 'app/service/serviceApi'],
                             }
                             $rootScope.messageList = messageList;
 
-                            ar.setStorage('messageList', messageList);
+                            ar.setStorage('messageList-' + ar.getCookie('bhy_user_id'), messageList);
 
                         }
                     })
