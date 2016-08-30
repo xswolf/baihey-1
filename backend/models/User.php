@@ -268,8 +268,8 @@ class User extends Model
         $member['phone'] = $data['phone'];
         $member['personalized'] = $data['introduction'];
         $member['info']['real_name'] = $data['name'];
-        $member['info']['qq'] = empty($data['qq']) ? $data['qq'] : '';
-        $member['info']['wechat'] = empty($data['wechat']) ? $data['wechat'] : '';
+        $member['info']['qq'] = isset($data['qq']) && !empty($data['qq']) ? $data['qq'] : '';
+        $member['info']['wechat'] = isset($data['wechat']) && !empty($data['wechat']) ? $data['wechat'] : '';
         $member['password'] = $data['password'];
         $member['sex'] = !empty($data['sex']) ? $data['sex'] : 1;
         if(\common\models\User::getInstance()->addUser($member) && !empty($data['photo'])) {

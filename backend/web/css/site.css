@@ -37,6 +37,9 @@ body {
 .fs24 {
     font-size: 24px;
 }
+.cor_p{
+    color: #333 !important;
+}
 .cp{
     cursor: pointer;
 }
@@ -44,7 +47,9 @@ body {
 .fwb {
     font-weight: bold;
 }
-
+.tac{
+    text-align: center;
+}
 .wrap {
     min-height: 100%;
     height: auto;

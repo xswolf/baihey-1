@@ -5,6 +5,8 @@
 var module = angular.module('chatApp', []);
 module.controller('chat', function ($scope, $http, $interval, $timeout) {
 
+
+
     $http({url: '/admin/chat/fictitious-list'}).success(function (res, header, config, status) {
         for (var i in res.data) {
             res.data[i].time = Date.parse(new Date()) / 1000;
@@ -39,11 +41,16 @@ module.controller('chat', function ($scope, $http, $interval, $timeout) {
     $interval(chatFilter,10000);
 
 
+    $scope.pageSize = 20;
+    $scope.moreLoading = false;
+    $scope.isMore = true;
+    $scope.loadMore = function(){
+        $scope.moreLoading = true;
+        $timeout(function(){
+            $scope.pageSize += 20;
+            $scope.moreLoading = false;
+        },1000)
 
-    $scope.chatList = [
-        {id: 1, name: '李四'},
-        {id: 2, name: '张三'},
-        {id: 3, name: '王武'},
-        {id: 4, name: '孙松'}
-    ];
+    }
+
 });
