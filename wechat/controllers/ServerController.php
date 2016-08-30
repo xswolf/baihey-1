@@ -47,6 +47,8 @@ class ServerController extends BaseController {
 
 //            $resultStr = \Yii::$app->wechat->responseText($fromUsername , $toUsername);
 //            $resultStr = \Yii::$app->wechat->responseNews($fromUsername , $toUsername);
+
+            /***********************客服消息****************************/
             $articles = [
                 [
                     'title' => 'Happy Day',
@@ -56,7 +58,7 @@ class ServerController extends BaseController {
                 ]
             ];
             $resultStr = \Yii::$app->wechat->sendNews($fromUsername , $articles);
-
+            /***********************客服消息****************************/
 
             file_put_contents('./log.txt' , $resultStr."\n" ,FILE_APPEND);
             echo $resultStr;
