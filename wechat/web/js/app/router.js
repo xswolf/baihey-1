@@ -220,7 +220,7 @@ define(["app/module", 'app/service/serviceApi'],
                         },
                         onExit: function ($rootScope) {
 
-                            var messageList = ar.getStorage("messageList");
+                            var messageList = ar.getStorage('messageList-' + ar.getCookie('bhy_user_id'));
                             if (messageList == null) messageList = [];
                             var flag = true;
                             var i = 0;
