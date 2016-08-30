@@ -6,6 +6,7 @@ define(['app/module', 'app/directive/directiveApi'
 ], function (module) {
 
     module.controller("message.chat1", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$ionicModal', '$ionicActionSheet', '$ionicLoading', '$ionicScrollDelegate', 'FileUploader', '$http', '$location', '$rootScope', '$filter', '$ionicPopover', '$interval', 'dataFilter', function (api, $scope, $timeout, $ionicPopup, $ionicModal, $ionicActionSheet, $ionicLoading, $ionicScrollDelegate, FileUploader, $http, $location, $rootScope, $filter, $ionicPopover, $interval, dataFilter) {
+        var userId = ar.getCookie('bhy_user_id');
         $scope.historyList = [];
         $scope.blackList = false;
         // 设置消息状态为已看
@@ -38,12 +39,9 @@ define(['app/module', 'app/directive/directiveApi'
         var viewScroll = $ionicScrollDelegate.$getByHandle('messageDetailsScroll');
 
         $scope.messageNum = 0;
-        var list = ar.getStorage('chat_messageHistory' + $scope.receiveId);
+        var list = ar.getStorage('chat_messageHistory-' + $scope.receiveId + '-' + userId);
         // 状态发送中的全部改为发送失败
         for (var i in list) {
-            if (list[i].send_user_id != userId && list[i].receive_user_id != userId ){
-                list.splice(i,1);
-            }
             if (list[i].status == 3) {
                 list[i].status = 4;
             }
@@ -213,7 +211,7 @@ define(['app/module', 'app/directive/directiveApi'
                 list = $scope.setMessageStatus(list);
             }
             $rootScope.historyListHide = list = list != null ? list.concat(data) : data;
-            ar.setStorage('chat_messageHistory' + $scope.receiveId, list);
+            ar.setStorage('chat_messageHistory-' + $scope.receiveId + '-' + userId, list);
 
             ar.initPhotoSwipeFromDOM('.bhy-gallery', $scope, $ionicPopup);   // 查看大图插件
             $scope.doRefresh();
@@ -275,14 +273,14 @@ define(['app/module', 'app/directive/directiveApi'
                     message.refuse = -1;
                     message.status = 4;
                     $scope.historyList.push(message);
-                    ar.setStorage('chat_messageHistory' + receiveID, $scope.historyList); // 每次发送消息后把消息放到浏览器端缓存
+                    ar.setStorage('chat_messageHistory-' + receiveID + '-' + userId, $scope.historyList); // 每次发送消息后把消息放到浏览器端缓存
                     return;
                 }
 
                 // 图片上传发送消息回调时不写localStorage,因为上传的时候已经写过了
                 if ((isSend && type != 'pic') || (type == 'pic' && !isSend)) {
                     $scope.historyList.push(message);
-                    ar.setStorage('chat_messageHistory' + receiveID, $scope.historyList); // 每次发送消息后把消息放到浏览器端缓存
+                    ar.setStorage('chat_messageHistory-' + receiveID + '-' + userId, $scope.historyList); // 每次发送消息后把消息放到浏览器端缓存
                 }
 
                 if (!isSend && type == 'pic') {
@@ -493,7 +491,7 @@ define(['app/module', 'app/directive/directiveApi'
             socket.on($scope.sendId + '-' + $scope.receiveId, function (response) {
                 if (response == "10086") {
                     $scope.historyList = $scope.setMessageStatus($scope.historyList);
-                    ar.setStorage('chat_messageHistory' + $scope.receiveId, $scope.historyList); // 每次发送消息后把消息放到浏览器端缓存
+                    ar.setStorage('chat_messageHistory-' + $scope.receiveId + '-' + userId, $scope.historyList); // 每次发送消息后把消息放到浏览器端缓存
                     $scope.$apply();
                     return;
                 }
@@ -532,7 +530,7 @@ define(['app/module', 'app/directive/directiveApi'
 
                     }
                     $rootScope.historyList = $scope.historyList;
-                    ar.setStorage('chat_messageHistory' + $scope.receiveId, $scope.historyList); // 每次发送消息后把消息放到浏览器端缓存
+                    ar.setStorage('chat_messageHistory-' + $scope.receiveId + '-' + userId, $scope.historyList); // 每次发送消息后把消息放到浏览器端缓存
                     $rootScope.historyListHide = $scope.historyList;
                     list = $scope.historyList;
                 }

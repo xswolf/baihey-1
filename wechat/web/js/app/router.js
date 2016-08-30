@@ -14,12 +14,11 @@ define(["app/module", 'app/service/serviceApi'],
                         list[i].auth = JSON.parse(list[i].auth);
                         list[i].order_time = parseInt(list[i].create_time); // ar.timeStamp();  // 消息时间
                         var flag = true;
+                        if (userId != storageList[i].receive_user_id  && userId != storageList[i].send_user_id){
+                            storageList.splice(i,1);
+                            continue;
+                        }
                         for (var j in storageList) {  // 相同消息合并
-                            if (userId != storageList[i].receive_user_id  && userId != storageList[i].send_user_id){
-                                storageList.splice(j,1);
-                                continue;
-                            }
-
                             if (storageList[j].send_user_id == list[i].send_user_id) {
                                 storageList[j] = list[i];
                                 flag = false;
