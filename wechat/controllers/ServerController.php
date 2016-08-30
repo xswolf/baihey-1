@@ -49,15 +49,16 @@ class ServerController extends BaseController {
 //            $resultStr = \Yii::$app->wechat->responseNews($fromUsername , $toUsername);
 
             /***********************客服消息****************************/
-            $articles = [
+            /*$articles = [
                 [
                     'title' => 'Happy Day',
                     'description' => 'Is Really A Happy Day',
                     'url' => '',
                     'picurl' => ''
                 ]
-            ];
-            $resultStr = \Yii::$app->wechat->sendNews($fromUsername , $articles);
+            ];*/
+//            $resultStr = \Yii::$app->wechat->sendNews($fromUsername , $articles);
+            $resultStr = \Yii::$app->wechat->sendText($fromUsername , '感谢您关注嘉瑞百合缘，请点击下方按钮“进入嘉瑞”，开启您的交友征婚之旅！');
             /***********************客服消息****************************/
 
             file_put_contents('./log.txt' , $resultStr."\n" ,FILE_APPEND);
