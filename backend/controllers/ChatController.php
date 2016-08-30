@@ -71,9 +71,9 @@ class ChatController extends BaseController
         }else if($this->user->getUser()['id'] == 2){
             $offset = 0;
         }else if($this->user->getUser()['id'] == 3){
-            $offset = 800;
+            $offset = 831;
         }else if($this->user->getUser()['id'] == 4){
-            $offset = 1600;
+            $offset = 1662;
         }else{
             return $this->renderAjax(['status'=>0 , 'data'=>[]]);
         }
@@ -82,7 +82,7 @@ class ChatController extends BaseController
             ->where([">=" , "user_id" , 10000])
             ->andWhere(["<=" , "user_id" , 12493])
             ->offset($offset)
-            ->limit(800)
+            ->limit(831)
             ->all();
         return $this->renderAjax(['status'=>1 , 'data'=>$list]);
     }
