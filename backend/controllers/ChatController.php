@@ -22,6 +22,8 @@ class ChatController extends BaseController
     public function actionChatList(){
 
         $tablePre = \Yii::$app->db->tablePrefix;
+        var_dump($this->user);
+        exit();
         $list = (new Query())->from($tablePre . "user_message m")
             ->innerJoin($tablePre . 'user u' , 'u.id = m .receive_user_id')
             ->innerJoin($tablePre . 'user_information i' , 'i.user_id=m.receive_user_id')
@@ -63,13 +65,24 @@ class ChatController extends BaseController
      * @return string|void
      */
     public function actionFictitiousList(){
-
+        $offset = 0;
+        if($this->user->getUser()['id'] == 1){
+            $offset = 0;
+        }else if($this->user->getUser()['id'] == 2){
+            $offset = 0;
+        }else if($this->user->getUser()['id'] == 3){
+            $offset = 800;
+        }else if($this->user->getUser()['id'] == 4){
+            $offset = 1600;
+        }else{
+            return $this->renderAjax(['status'=>0 , 'data'=>[]]);
+        }
         $list = (new Query())->from(\Yii::$app->db->tablePrefix.'user_information i')
             ->innerJoin(\Yii::$app->db->tablePrefix.'user u' , 'i.user_id=u.id')
             ->where([">=" , "user_id" , 10000])
             ->andWhere(["<=" , "user_id" , 12493])
-            ->offset(0)
-            ->limit(500)
+            ->offset($offset)
+            ->limit(800)
             ->all();
         return $this->renderAjax(['status'=>1 , 'data'=>$list]);
     }
