@@ -1263,7 +1263,7 @@ define(['app/module', 'app/directive/directiveApi'
 
         $scope.loading = false;
 
-        $scope.infoSafe = function (value) {
+        $scope.infoSafe = function () {
             if ($scope.userInfo.info.level < 1) {
                 var alertPopup = $ionicPopup.alert({
                     template: '开通VIP，立即享受资料保护',
@@ -1274,7 +1274,7 @@ define(['app/module', 'app/directive/directiveApi'
                 })
                 return false;
             }
-            if(value == 0){
+            if($scope.userInfo.is_show == 1){
                 var confirmPopup = $ionicPopup.confirm({
                     title: '重要提示',
                     template: '您确定要开启资料保护吗？开启后在您未主动联系其他会员时，他人均不可搜索及浏览您的资料。',
@@ -1284,7 +1284,7 @@ define(['app/module', 'app/directive/directiveApi'
                 confirmPopup.then(function (res) {
                     if (res) {
                         $scope.loading = true;
-                        $scope.userInfo.is_show = value;
+                        $scope.userInfo.is_show = '0';
                         api.save('/wap/member/save-data', $scope.userInfo).success(function (res) {
                             $scope.loading = false;
                             if (res.status < 1) {
@@ -1304,7 +1304,7 @@ define(['app/module', 'app/directive/directiveApi'
                 });
             }else{
                 $scope.loading = true;
-                $scope.userInfo.is_show = value;
+                $scope.userInfo.is_show = '1';
                 api.save('/wap/member/save-data', $scope.userInfo).success(function (res) {
                     $scope.loading = false;
                     if (res.status < 1) {
@@ -1319,8 +1319,6 @@ define(['app/module', 'app/directive/directiveApi'
                     ar.setStorage("userInfo", userInfo);
                 })
             }
-
-
         }
 
     }]);

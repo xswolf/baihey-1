@@ -94,12 +94,9 @@
   background: #eb4f38;
   border-radius: 3px;
   color: #fff;
-  font-size: 10px;
-  left: 73px;
-  line-height: 14px;
+  font-size: 12px;
+  overflow: hidden;
   padding: 0 2px;
-  position: absolute;
-  top: 5px;
 }
 .privacy_menu_i.info {
   background: #e4007f;
