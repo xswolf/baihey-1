@@ -35,6 +35,6 @@
         </div>
     </ion-content>
     <ion-footer-bar align-title="center" class="pd0 bor_0 cp" ng-class="{true:'bar-positive',false:'bar-stable'}[userInfo.is_show == 1]" ng-click="infoSafe()">
-        <span class="title">立即开启资料保护</span>
+        <span class="title">{{userInfo.is_show == '1' ? '立即开启资料保护' : '我要关闭资料保护'}}</span>
     </ion-footer-bar>
 </ion-view>
