@@ -1288,6 +1288,7 @@ define(['app/module', 'app/directive/directiveApi'
                         api.save('/wap/member/save-data', $scope.userInfo).success(function (res) {
                             $scope.loading = false;
                             if (res.status < 1) {
+                                $scope.userInfo.is_show = '1';
                                 ar.saveDataAlert($ionicPopup, res.msg);
                                 return false;
                             }
@@ -1308,6 +1309,7 @@ define(['app/module', 'app/directive/directiveApi'
                     $scope.loading = false;
                     if (res.status < 1) {
                         ar.saveDataAlert($ionicPopup, res.msg);
+                        $scope.userInfo.is_show = '0';
                         return false;
                     }
                     ar.setStorage("userInfo", $scope.userInfo);
