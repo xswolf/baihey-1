@@ -12,7 +12,7 @@
                 on-refresh="doRefresh()">
         </ion-refresher>
         <div class="list">
-            <a class="item item-thumbnail-left" ng-href="{{userInfo.id > 9999 ? '#/member/information' : '#/member/admin_information'}}" ng-if="userInfo.info">
+            <a class="item item-thumbnail-left" href="#/member/index" ng-if="userInfo.info">
 
                 <img ng-src="{{userInfo.info.head_pic | isNull}}" onerror="this.src='/wechat/web/images/u_noimg.jpg'"
                      class="rounded">
