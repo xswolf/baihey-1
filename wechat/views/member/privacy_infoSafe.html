@@ -1,0 +1,41 @@
+<ion-view>
+    <link href="/wechat/web/css/member.css" rel="stylesheet">
+    <ion-header-bar align-title="center" class="com_w_100 bhy">
+        <title class="title">资料保护</title>
+    </ion-header-bar>
+    <ion-content class="bhy com_w_100 info_safe">
+        <div class="list">
+            <div class="item pd0 bor_0">
+                <img src="/wechat/web/images/infoSafe_head.png" class="w100">
+            </div>
+            <div class="item bor_0">
+                <div class="head fl">
+                    <img src="/wechat/web/images/logo/200-200_logo.png" width="50">
+                </div>
+                <div class="ml20 mt20 msg_con fl">
+                    <div class="msg fl pr">
+                        <span class="msg_i fl"></span>
+                        <p class="msg_t">亲爱的用户</p>
+                        <p class="msg_c wsn">开启资料保护后，在您未主动联系其他会员时，他人均不可搜索及浏览您的资料，有效保护了您的个人隐私。</p>
+                    </div>
+                </div>
+            </div>
+            <div class="item bor_0">
+                <div class="head fl">
+                    <img src="/wechat/web/images/logo/200-200_logo.png" width="50">
+                </div>
+                <div class="ml20 mt20 msg_con fl">
+                    <div class="msg fl pr">
+                        <span class="msg_i fl"></span>
+                        <p class="msg_t">亲爱的用户</p>
+                        <p class="msg_c wsn">让您手握绝对主动权，淡定与心仪对象悄悄联络。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </ion-content>
+    <ion-footer-bar class="pd0">
+        <button class="button button-positive button-block bra0" ng-show="userInfo.is_show != 0" ng-disabled="loading" ng-click="infoSafe('0')">立即开启资料保护</button>
+        <button class="button button-stable button-block bra0" ng-show="userInfo.is_show == 0" ng-disabled="loading" ng-click="infoSafe('1')">我要关闭资料保护</button>
+    </ion-footer-bar>
+</ion-view>

@@ -59,7 +59,7 @@ define(['app/module', 'app/directive/directiveApi'
         })
 
         // 设置新关注的人已看
-        if ($scope.followNumber>0) {
+        if ($scope.followNumber > 0) {
             api.list('/wap/follow/set-checked', {user_id: $scope.userInfo.user_id}).success(function (res) {
                 console.log(res);
             })
@@ -1030,7 +1030,6 @@ define(['app/module', 'app/directive/directiveApi'
                 $scope.formData.isfollow = res.followStatus;// 关注状态
                 $scope.formData.followed = res.followedStatus;// 被关注状态
                 $scope.qqAuth = is_privacy($scope.otherUserInfo.privacy_qq);// qq权限
-                $scope.perAuth = is_privacy($scope.otherUserInfo.privacy_per);// 个人动态权限
                 $scope.wxAuth = is_privacy($scope.otherUserInfo.privacy_wechat);// 微信权限
                 $scope.picAuth = is_privacy($scope.otherUserInfo.privacy_pic);// 相册权限
                 $scope.otherUserInfo.went_travel ? getTravel('went_travel', $scope.otherUserInfo.went_travel) : true;// 我去过的地方
@@ -1166,7 +1165,6 @@ define(['app/module', 'app/directive/directiveApi'
                 $scope.formData.isfollow = res.followStatus;// 关注状态
                 $scope.formData.followed = res.followedStatus;// 被关注状态
                 $scope.qqAuth = is_privacy($scope.otherUserInfo.privacy_qq);// qq权限
-                $scope.perAuth = is_privacy($scope.otherUserInfo.privacy_per);// 个人动态权限
                 $scope.wxAuth = is_privacy($scope.otherUserInfo.privacy_wechat);// 微信权限
                 $scope.picAuth = is_privacy($scope.otherUserInfo.privacy_pic);// 相册权限
                 $scope.otherUserInfo.went_travel ? getTravel('went_travel', $scope.otherUserInfo.went_travel) : true;// 我去过的地方
@@ -1234,6 +1232,10 @@ define(['app/module', 'app/directive/directiveApi'
                 $scope.blackSum = res.data;
             });
         });
+        $scope.userInfo = ar.getStorage("userInfo");
+        $scope.userInfo.info = JSON.stringify($scope.userInfo.info);
+        $scope.userInfo.auth = JSON.stringify($scope.userInfo.auth);
+
     }]);
 
     // 隐私设置-照片权限
@@ -1256,23 +1258,69 @@ define(['app/module', 'app/directive/directiveApi'
 
     }]);
 
-    // 隐私设置-个人动态权限
-    module.controller("member.privacy_per", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', function (api, $scope, $timeout, $ionicPopup) {
-        $scope.formData = [];
-        $scope.formData.privacy_per = $scope.userInfo.privacy_per ? $scope.userInfo.privacy_per : 1;
+    // 隐私设置-资料保护
+    module.controller("member.privacy_infoSafe", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$location', function (api, $scope, $timeout, $ionicPopup, $location) {
 
-        // 已经离开本页面
-        $scope.$on('$ionicView.afterLeave', function () {
-            // 保存数据
-            api.save('/wap/member/save-data', $scope.formData).success(function (res) {
-                $scope.userInfo.privacy_per = $scope.formData.privacy_per;
-                ar.setStorage("userInfo", $scope.userInfo);
-                var userInfo = ar.getStorage("userInfo");
-                userInfo.info = JSON.stringify(userInfo.info);
-                userInfo.auth = JSON.stringify(userInfo.auth);
-                ar.setStorage("userInfo", userInfo);
-            });
-        });
+        $scope.loading = false;
+
+        $scope.infoSafe = function (value) {
+            if ($scope.userInfo.info.level < 1) {
+                var alertPopup = $ionicPopup.alert({
+                    template: '开通VIP，立即享受资料保护',
+                    okText: '现在去开通'
+                });
+                alertPopup.then(function () {
+                    $location.url('/member/vip');
+                })
+                return false;
+            }
+            if(value == 0){
+                var confirmPopup = $ionicPopup.confirm({
+                    title: '重要提示',
+                    template: '您确定要开启资料保护吗？开启后在您未主动联系其他会员时，他人均不可搜索及浏览您的资料。',
+                    okText: '我确定',
+                    cancelText: '再考虑一下'
+                });
+                confirmPopup.then(function (res) {
+                    if (res) {
+                        $scope.loading = true;
+                        $scope.userInfo.is_show = value;
+                        api.save('/wap/member/save-data', $scope.userInfo).success(function (res) {
+                            $scope.loading = false;
+                            if (res.status < 1) {
+                                ar.saveDataAlert($ionicPopup, res.msg);
+                                return false;
+                            }
+                            ar.setStorage("userInfo", $scope.userInfo);
+                            var userInfo = ar.getStorage("userInfo");
+                            userInfo.info = JSON.stringify(userInfo.info);
+                            userInfo.auth = JSON.stringify(userInfo.auth);
+                            ar.setStorage("userInfo", userInfo);
+                        })
+                    } else {
+                        return;
+                    }
+                });
+            }else{
+                $scope.loading = true;
+                $scope.userInfo.is_show = value;
+                api.save('/wap/member/save-data', $scope.userInfo).success(function (res) {
+                    $scope.loading = false;
+                    if (res.status < 1) {
+                        ar.saveDataAlert($ionicPopup, res.msg);
+                        return false;
+                    }
+                    ar.setStorage("userInfo", $scope.userInfo);
+                    var userInfo = ar.getStorage("userInfo");
+                    userInfo.info = JSON.stringify(userInfo.info);
+                    userInfo.auth = JSON.stringify(userInfo.auth);
+                    ar.setStorage("userInfo", userInfo);
+                })
+            }
+
+
+        }
+
     }]);
 
     // 隐私设置-微信显示权限
