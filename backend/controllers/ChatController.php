@@ -22,8 +22,6 @@ class ChatController extends BaseController
     public function actionChatList(){
 
         $tablePre = \Yii::$app->db->tablePrefix;
-        var_dump($this->user);
-        exit();
         $list = (new Query())->from($tablePre . "user_message m")
             ->innerJoin($tablePre . 'user u' , 'u.id = m .receive_user_id')
             ->innerJoin($tablePre . 'user_information i' , 'i.user_id=m.receive_user_id')
