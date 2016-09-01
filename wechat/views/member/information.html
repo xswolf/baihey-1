@@ -91,7 +91,7 @@
                 </p>
                 <i ng-if="!userInfo.info.real_name" class="icon ion-ios-arrow-right cor52"></i>
             </ion-item>
-            <ion-item class="item-icon-right" ng-click="updateInfo(userInfo.age && userInfo.age != 0 ? '' : 'age')">
+            <ion-item class="item-icon-right" ng-click="updateInfo(userInfo.age && userInfo.age != 0  ? '' : 'age')">
                 <p>
                     <span class="cor4">年龄</span>
                     <span ng-if="!userInfo.age || userInfo.age == 0" class="ml48 mr10 cor21">立即填写</span>
