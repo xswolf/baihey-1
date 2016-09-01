@@ -28,7 +28,7 @@ class AuthUser extends Base
         } else {
             $condition = ['duty' => 1];
         }
-        $row = (new Query())->select(['real_name', 'id as job', 'phone', 'landline', 'qq', 'wechat', 'email', 'introduction', 'photo', 'address'])
+        $row = (new Query())->select(['name', 'id as job', 'phone', 'landline', 'qq', 'wechat', 'email', 'introduction', 'photo', 'address'])
             ->from($this->tablePrefix.'auth_user')
             ->where($condition)
             ->andWhere(['status' => 1])
