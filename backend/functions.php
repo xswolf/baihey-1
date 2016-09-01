@@ -707,3 +707,12 @@ function showPhoneByUserLevel($matchmaker, $matchmaking, $level){
             return 0;
     }
 }
+
+function thumbToPicture($thumb){
+    if($thumb){
+        if(str_replace('thumb','picture',$thumb)){
+            return str_replace('thumb','picture',$thumb);
+        }
+    }
+    return $thumb;
+}
