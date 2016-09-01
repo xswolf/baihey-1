@@ -60,8 +60,7 @@
 
                 <!-- 头像 -->
                 <div class="talk_user">
-                    <a ng-if="sendId != vo.send_user_id"
-                       href="#/userInfo?userId={{receiveId}}">
+                    <a ng-if="sendId != vo.send_user_id" ng-click="blackListAlert()">
                         <img ng-src="{{receiveHeadPic | isNull}}" onerror="this.src='/wechat/web/images/no_img.png'">
                     </a>
                     <a ng-if="sendId == vo.send_user_id" href="#/member">
