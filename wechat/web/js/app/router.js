@@ -213,8 +213,8 @@ define(["app/module", 'app/service/serviceApi'],
 
                     })
                     .state('chat', { // 聊天页面
-                        cache:false,
-                        url: "/chat1",
+                        cache:true,
+                        url: "/chat1/:id",
                         templateUrl: "/wechat/views/message/chat1.html",
                         controller: 'message.chat1',
                         resolve: {

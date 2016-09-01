@@ -67,7 +67,7 @@ define(['app/module', 'app/directive/directiveApi'
             }, 1000);
 
         };
-
+        $scope.doRefresh();
         window.addEventListener("native.keyboardshow", function (e) {
             viewScroll.scrollBottom(true);
         });
@@ -213,11 +213,15 @@ define(['app/module', 'app/directive/directiveApi'
 
         api.list("/wap/message/message-history", {id: $scope.receiveId}).success(function (res) {
             var data = res.data.messageList;
-            if (data.length > 0 || res.data.status == 0) { // 如果有新消息，所有消息状态为已看
-                list = $scope.setMessageStatus(list);
-            }
+
             $rootScope.historyListHide = list = list != null ? list.concat(data) : data;
             ar.setStorage('chat_messageHistory-' + $scope.receiveId + '-' + userId, list);
+
+            if (data.length > 0 || res.data.status == 0) { // 如果有新消息，所有消息状态为已看
+                list = $scope.setMessageStatus(list);
+            }else{
+                return ;
+            }
 
             ar.initPhotoSwipeFromDOM('.bhy-gallery', $scope, $ionicPopup);   // 查看大图插件
             $scope.doRefresh();
