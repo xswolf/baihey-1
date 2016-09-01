@@ -1,6 +1,6 @@
 <!DOCTYPE html>
-<html lang="zh-CN" manifest="/wechat/web/appcache">
-<!--<html lang="zh-CN">-->
+<!--<html lang="zh-CN" manifest="/wechat/web/appcache">-->
+<html lang="zh-CN">
 
 <head>
     <meta charset="utf-8">
