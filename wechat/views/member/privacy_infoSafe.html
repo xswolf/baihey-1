@@ -1,7 +1,7 @@
 <ion-view>
     <link href="/wechat/web/css/member.css" rel="stylesheet">
     <ion-header-bar align-title="center" class="com_w_100 bhy">
-        <title class="title">资料保护</title>
+        <title class="title">资料隐身</title>
     </ion-header-bar>
     <ion-content class="bhy com_w_100 info_safe">
         <div class="list">
@@ -16,7 +16,7 @@
                     <div class="msg fl pr">
                         <span class="msg_i fl"></span>
                         <p class="msg_t">亲爱的用户</p>
-                        <p class="msg_c wsn">开启资料保护后，在您未主动联系其他会员时，他人均不可搜索及浏览您的资料，有效保护了您的个人隐私。</p>
+                        <p class="msg_c wsn">开启资料隐身后，在您未主动联系其他会员时，他人均不可搜索及浏览您的资料，有效保护了您的个人隐私。</p>
                     </div>
                 </div>
             </div>
@@ -35,6 +35,6 @@
         </div>
     </ion-content>
     <ion-footer-bar align-title="center" class="pd0 bor_0 cp" ng-class="{true:'bar-positive',false:'bar-stable'}[userInfo.is_show == 1]" ng-click="infoSafe()">
-        <span class="title">{{userInfo.is_show == '1' ? '立即开启资料保护' : '我要关闭资料保护'}}</span>
+        <span class="title">{{userInfo.is_show == '1' ? '立即开启资料隐身' : '我要关闭资料隐身'}}</span>
     </ion-footer-bar>
 </ion-view>

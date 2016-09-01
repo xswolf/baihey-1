@@ -20,11 +20,17 @@ define(['app/module', 'app/directive/directiveApi'
         }
         $scope.sendId = ar.getCookie("bhy_user_id");
         $scope.receiveId = $location.search().id;
-        if (dataFilter.data.blacked.indexOf($scope.receiveId) > -1) {   // 已被对方拉黑，不可查看对方资料
-            $scope.blackList = true;
-        }
+
         $scope.blackListAlert = function () {
-            ar.saveDataAlert($ionicPopup, '您已被对方拉黑，不可查看对方资料。')
+            if (dataFilter.data.blacked.indexOf($scope.receiveId) > -1) {   // 已被对方拉黑，不可查看对方资料
+                ar.saveDataAlert($ionicPopup, '您已被对方拉黑，不可查看对方资料。')
+                return;
+            }
+            if ($scope.receiveId >= 10000) {
+                $location.url('/userInfo?userId=' + $scope.receiveId);
+            } else {
+                $location.url('/admin_info?userId=' + $scope.receiveId)
+            }
         }
         // 身份证认证
         api.list("/wap/member/honesty-photo", {user_id: $scope.receiveId}).success(function (res) {
@@ -177,7 +183,7 @@ define(['app/module', 'app/directive/directiveApi'
          }*/
 
         // 用户身份是否验证 TODO 用户验证了之后localStorage是否能够得到更新
-        var userInfoList = ar.getStorage('messageList-'+userId);
+        var userInfoList = ar.getStorage('messageList-' + userId);
         for (var i in userInfoList) {
             if ($scope.receiveId == userInfoList[i].id) {
                 $scope.auth_validate = userInfoList[i].auth.identity_check;
