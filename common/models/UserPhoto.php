@@ -89,11 +89,11 @@ class UserPhoto extends Base
      * @return bool
      * @throws \yii\db\Exception
      */
-    public function savePhoto($where, $user_id)
+    public function savePhoto($where, $user_id,$photoType,$headPic='')
     {
         // 删除原有身份证
         $del = $this->getDb()->createCommand()
-            ->delete($this->tablePrefix.'user_photo', ['user_id' => $user_id, 'type' => $where[0]['type']])
+            ->delete($this->tablePrefix.'user_photo', ['user_id' => $user_id, 'type' => $photoType])
             ->execute();
         $time = time();
         $ist = false;
@@ -111,7 +111,7 @@ class UserPhoto extends Base
             if(isset($v['is_check'])) {
                 $data['is_check'] = $v['is_check'];
             }
-            if($v['type'] == 1 && $k == 0) {
+            if(!empty($headPic) && $headPic == $data['thumb_path']) {
                 $data['is_head'] = 1;
                 UserInformation::getInstance()->updateUserInfo($user_id, ['head_pic' => $data['thumb_path']]);
             }
