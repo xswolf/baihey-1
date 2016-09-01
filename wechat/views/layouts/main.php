@@ -14,6 +14,7 @@
     <link href="/wechat/web/css/android.css" rel="stylesheet">
     <link href="/wechat/web/css/plugin/animate/animate.css" rel="stylesheet">
     <link href="/wechat/web/css/newFontIcon160613.css" rel="stylesheet">
+    <link href="/wechat/web/css/newFontIcon160901.css" rel="stylesheet">
     <link href="/wechat/web/css/plugin/photoswipe/photoswipe.css" rel="stylesheet">
     <link href="/wechat/web/css/plugin/photoswipe/default-skin.css" rel="stylesheet">
     <script>
