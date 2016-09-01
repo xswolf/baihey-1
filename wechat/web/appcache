@@ -10,6 +10,7 @@ CACHE:
 /wechat/web/css/plugin/ionic/ionic.min.css
 /wechat/web/css/base.css
 /wechat/web/css/index.less
+/wechat/web/css/index.css
 /wechat/web/css/android.css
 /wechat/web/js/plugin/requirejs/require.js
 /wechat/web/fonts/ionicons.ttf?v=2.0.1
