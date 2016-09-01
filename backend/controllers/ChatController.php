@@ -8,9 +8,6 @@
 
 namespace backend\controllers;
 
-
-
-use common\models\Message;
 use yii\db\Query;
 
 class ChatController extends BaseController
