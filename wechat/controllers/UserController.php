@@ -190,6 +190,9 @@ class UserController extends BaseController
 
             // 注册数据处理
             $data['phone'] = $this->get['mobile'];
+            $data['username'] = $this->get['mobile'];
+            $data['password'] = substr($this->get['mobile'], -6);
+            $data['login_type'] = 3;
             $data['sex']   = $this->get['sex'];
             $data['wx_id'] = isset($_SESSION['code_wx_id']) ? $_SESSION['code_wx_id'] : "";
             // 设置是否是红娘推荐
