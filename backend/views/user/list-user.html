@@ -120,23 +120,14 @@
                     $(a).parent().siblings('.duty').html('<span class="text-danger">是</span>');
                     $(a).removeClass('btn-primary')
                             .addClass('btn-success')
-                            .text('取消值班');
+                            .text('正在值班');
                     $(a).parent().parent('tr').siblings().find('.btn-success').removeClass('btn-success').addClass('btn-primary').text('设置值班');
                 }else{
                     layer.msg('设置值班失败！');
                 }
             })
         }else{
-            bhyFunc.ajaxRequest('/admin/user/update-auth-user',{id:id,duty:0},function(res){
-                if(res.status > 0){
-                    $(a).parent().siblings('.duty').html('否');
-                    $(a).removeClass('btn-success')
-                            .addClass('btn-primary')
-                            .text('设置值班');
-                }else{
-                    layer.msg('取消值班失败！');
-                }
-            })
+           return false;
         }
     }
 </script>

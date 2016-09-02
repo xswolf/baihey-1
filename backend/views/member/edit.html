@@ -602,8 +602,8 @@
 
         if (photoList[i]['type'] == 1) {
             if(photoList[i]['is_head'] == 1) {
-                var imgHtml = '<div class="pr imgBox"><a href="' + _data + '" rel="group1"><img src="' + data + '" ></a><i class="del fa fa-times-circle-o text-danger" onclick="delImg(this,1)"></i><p class="center mt5"><span class="text-danger">头像</span></p></div>';
-                $('#headPic').val(data);
+                var imgHtml = '<div class="pr imgBox"><a href="' + _data + '" rel="group1"><img src="' + data + '" ></a><i class="del fa fa-times-circle-o text-danger" onclick="delImg(this,1,1)"></i><p class="center mt5"><span class="text-danger">头像</span></p></div>';
+                $('#headPic').val(photoList[i]);
             } else {
                 var imgHtml = '<div class="pr imgBox"><a href="' + _data + '" rel="group1"><img src="' + data + '" ></a><i class="del fa fa-times-circle-o text-danger" onclick="delImg(this,1)"></i><p class="center mt5"><a data-src="' + data + '" onclick="setHeadPic(this)">设置头像</a></p></div>';
             }
@@ -641,8 +641,7 @@
     }
 
     // 删除照片
-    function delImg(a, type) {
-
+    function delImg(a, type, head) {
         if (type == 1) {  //删除照片
             var src = $(a).prev().find('img').attr('src');
             if (photoArr.indexOf(src) == -1) {
@@ -651,6 +650,9 @@
             } else {
                 photoArr.splice($.inArray(src, photoArr), 1);
                 $('#photosList').val(photoArr);
+                if(head){
+                    $('#headPic').val('');
+                }
             }
         }
         if (type == 4) {  //删除离婚证
@@ -691,11 +693,12 @@
         var src = $(a).data('src');
         $('#headPic').val(src);
         $('.imgBox').each(function () {
-            console.log($(this).find('p').find('span'));
             if ($(this).find('p').find('span')) {
+                $(this).find('i').replaceWith('<i class="del fa fa-times-circle-o text-danger" onclick="delImg(this,1)"></i>')
                 $(this).find('p').find('span').replaceWith('<a data-src="' + src + '" onclick="setHeadPic(this)">设置头像</a>');
             }
         })
+        $(a).parent().siblings('i').replaceWith('<i class="del fa fa-times-circle-o text-danger" onclick="delImg(this,1,1)"></i>')
         $(a).replaceWith('<span class="text-danger">头像</span>');
     }
 
@@ -718,12 +721,7 @@
                 console.log(data);
                 console.log($('#photos div').length);
                 var _data = data.replace('thumb', 'picture');
-                if ($('#photos div').length == 0) {
-                    var imgHtml = '<div class="pr imgBox"><a href="' + _data + '" rel="group1"><img src="' + data + '" ></a><i class="del fa fa-times-circle-o text-danger" onclick="delImg(this,1)"></i><p class="center mt5"><span class="text-danger">头像</span></p></div>';
-                    $('#headPic').val(data);
-                } else {
-                    var imgHtml = '<div class="pr imgBox"><a href="' + _data + '" rel="group1"><img src="' + data + '" ></a><i class="del fa fa-times-circle-o text-danger" onclick="delImg(this,1)"></i><p class="center mt5"><a data-src="' + data + '" onclick="setHeadPic(this)">设置头像</a></p></div>';
-                }
+                var imgHtml = '<div class="pr imgBox"><a href="' + _data + '" rel="group1"><img src="' + data + '" ></a><i class="del fa fa-times-circle-o text-danger" onclick="delImg(this,1)"></i><p class="center mt5"><a data-src="' + data + '" onclick="setHeadPic(this)">设置头像</a></p></div>';
                 $('#photos').append(imgHtml);
                 photoArr.push(data);
                 $('#photosList').val(photoArr);
