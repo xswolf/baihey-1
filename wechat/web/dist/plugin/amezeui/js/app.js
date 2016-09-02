@@ -1,1 +1,0 @@
-!function(n){"use strict";n(function(){var e=n(".admin-fullText");n("#admin-fullscreen").on("click",function(){n.AMUI.fullscreen.toggle()}),n(document).on(n.AMUI.fullscreen.raw.fullscreenchange,function(){e.text(n.AMUI.fullscreen.isFullscreen?"退出全屏":"开启全屏")})})}(jQuery);
