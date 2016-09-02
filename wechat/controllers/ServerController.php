@@ -52,7 +52,7 @@ class ServerController extends BaseController {
            $articles = [
                 [
                     'title' => '嘉瑞百合缘微站上线啦！',
-                    'description' => '全新界面，简易操作，实名认证，安全放心，点击立即体验',
+                    'description' => '全新界面，简易操作，实名认证，安全放心！',
                     'url' => 'http://wechat.baihey.com/wap',
                     'picurl' => 'https://mmbiz.qlogo.cn/mmbiz_jpg/hD1GpvgKwC7odZymQsyZ6MsxkBEB0X0s16k5ApWOYfHCXXUlsda4DwmicuuFEH6iaZCia5ZKnwet0vdUoxZ89I5Wg/0?wx_fmt=jpeg'
                 ]
