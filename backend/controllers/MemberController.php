@@ -66,6 +66,7 @@ class MemberController extends BaseController
             }else{
                 if ($k == 'status' && $v == 5){
                     $andWhere[] = [">", 'id', 12493];
+                    $v = 2;
                 }
                 $andWhere[] = ["=", $k, $v];
             }
