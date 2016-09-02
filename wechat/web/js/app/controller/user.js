@@ -74,29 +74,15 @@ define(['app/module', 'app/directive/directiveApi'
 
         }
 
-        //$scope.getVerify = function (event) {
-        //    event.target.src = '/wap/user/get-verify?time=' + ar.timeStamp();
-        //}
-
         //注册提交
         $scope.register = function () {
             if (!validateFrom()) return false;
-            //api.getMobileIsExist($scope.User.mobile).success(function (res) {
-            //    if (res.status < 1) {
-            //        ar.saveDataAlert($ionicPopup, '该手机号码已存在');
-            //        return false;
-            //    } else {
-            //        if (!$scope.User.code) {
-            //            ar.saveDataAlert($ionicPopup, '请输入验证码');
-            //            return false;
-            //        }
-                    api.validateCode($scope.User.code).success(function (res) {
-                        if (!res.status) {
-                            ar.saveDataAlert($ionicPopup, '验证码不正确');
-                            //angular.element(document.querySelectorAll('#verify')[0]).attr('src', '/wap/user/get-verify?time=' + ar.timeStamp())
-                            return false;
-                        } else {
-                            delete $scope.User.code;
+                    //api.validateCode($scope.User.code).success(function (res) {
+                    //    if (!res.status) {
+                    //        ar.saveDataAlert($ionicPopup, '验证码不正确');
+                    //        return false;
+                    //    } else {
+                    //        delete $scope.User.code;
                             $ionicLoading.show({template: '注册中...'});
                             var result = api.save('/wap/user/register', $scope.User);
                             result.success(function (data) {
@@ -119,11 +105,8 @@ define(['app/module', 'app/directive/directiveApi'
                                 ar.saveDataAlert($ionicPopup, '网络连接错误，请重试！');
                             })
                         }
-                    });
-                }
-        //    })
-        //
-        //}
+                //    });
+                //}
 
     }])
 

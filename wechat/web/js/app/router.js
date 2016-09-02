@@ -52,9 +52,6 @@ define(["app/module", 'app/service/serviceApi'],
                     })
                 })
             }
-
-
-
             // 页面开始加载
             $rootScope
                 .$on('$stateChangeStart',
