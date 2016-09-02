@@ -1,1 +1,512 @@
-define(["app/module","app/service/serviceApi"],function(module){return module.run(["$rootScope","$state","$timeout","app.serviceApi","$ionicLoading","$location","$templateCache",function(e,r,o,t,s,i,n){function a(){e.newFollow=!1,e.newFollowNumber=0,t.get("/wap/follow/is-new-follow",{user_id:c}).success(function(r){e.newFollow=r.status,e.newFollowNumber=r.data}),e.newDiscovery=0,t.get("/wap/member/comment-num",{}).success(function(r){var o=ar.getStorage("discoverySum");r.data>o&&(e.newDiscovery=r.data-o)})}var c=ar.getCookie("bhy_user_id"),l=function(){t.list("/wap/message/message-list",[]).success(function(r){var o=ar.getStorage("messageList-"+c)?ar.getStorage("messageList-"+c):[],t=r.data;for(var s in t){t[s].info=JSON.parse(t[s].info),t[s].auth=JSON.parse(t[s].auth),t[s].order_time=parseInt(t[s].create_time);var i=!0;for(var n in o)if(o[n].send_user_id==t[s].send_user_id){o[n]=t[s],i=!1;break}i&&o.push(t[s])}e.messageList=o,ar.setStorage("messageList-"+c,o)})},u=function(r){r>0?t.getMessageNumber().success(function(r){e.msgNumber=parseInt(r.data)}):e.msgNumber=0};c>0&&requirejs(["plugin/socket/socket.io.1.4.0"],function(e){var r=e.connect("http://120.76.84.162:8088");r.on(c,function(e){l(),u(c)})}),e.$on("$stateChangeStart",function(e,r,i,n,d){if("/index"!=r.url)if(s.show(),void 0===sessionStorage.loginStatus)t.getLoginStatus().success(function(e){return sessionStorage.loginStatus=e.status,e.status?void 0:(location.href="/wap/user/login",!1)});else if(!sessionStorage.loginStatus)return location.href="/wap/user/login",!1;var m=function(){l(),u(c),a()};o(m,500),sessionStorage.flag=!0}),e.$on("$stateChangeSuccess",function(e,r,o,t,i){s.hide()})}]),module.config(["$stateProvider","$urlRouterProvider","$ionicConfigProvider","$controllerProvider",function(e,r,o,t){e.state("index",{url:"/index",templateUrl:"/wechat/views/site/index.html",controller:"site.index",resolve:{dataFilter:function(e){return e({method:"POST",url:"/wap/user/index-is-show-data",params:{}})}}}).state("index_discovery",{url:"/index_discovery",templateUrl:"/wechat/views/site/discovery.html",controller:"site.discovery",resolve:{dataFilter:function(e){return e({method:"POST",url:"/wap/user/index-is-show-data",params:{}})}}}).state("error",{url:"/error",templateUrl:"/wechat/views/site/error.html",controller:"site.error"}).state("member",{cache:!1,url:"/member",templateUrl:"/wechat/views/member/index.html",controller:"member.index"}).state("member_children",{cache:!1,url:"/member/:tempName",templateUrl:function(e){return"/wechat/views/member/"+e.tempName+".html"},controllerProvider:function(e){return"member."+e.tempName}}).state("message",{cache:!1,url:"/message",templateUrl:"/wechat/views/message/index.html",controller:"message.index",resolve:{dataFilter:function(e){return e({method:"POST",url:"/wap/user/index-is-show-data",params:{}})}}}).state("userInfo",{cache:!1,url:"/userInfo",templateUrl:"/wechat/views/site/user_info.html",controller:"member.user_info",resolve:{dataFilter:function(e){return e({method:"POST",url:"/wap/user/index-is-show-data",params:{}})}}}).state("adminInfo",{cache:!1,url:"/admin_info",templateUrl:"/wechat/views/site/admin_info.html",controller:"member.admin_info",resolve:{dataFilter:function(e){return e({method:"POST",url:"/wap/user/index-is-show-data",params:{}})}}}).state("chat",{cache:!0,url:"/chat1/:id",templateUrl:"/wechat/views/message/chat1.html",controller:"message.chat1",resolve:{dataFilter:function(e){return e({method:"POST",url:"/wap/user/index-is-show-data",params:{}})}},onExit:function(e){var r=ar.getStorage("messageList-"+ar.getCookie("bhy_user_id"));null==r&&(r=[]);var o=!0,t=0;if(void 0!=r&&""!=r)for(t in r)(r[t].receive_user_id==e.receiveUserInfo.id||r[t].send_user_id==e.receiveUserInfo.id)&&(void 0!=e.historyListHide&&e.historyListHide.length>0&&(r[t].message!=e.historyListHide[e.historyListHide.length-1].message&&(r[t].order_time=ar.timeStamp()),r[t].message=e.historyListHide[e.historyListHide.length-1].message),e.msgNumber=e.msgNumber-r[t].sumSend,e.msgNumber=e.msgNumber>=0?e.msgNumber:0,r[t].sumSend=0,r[t].status=1,o=!1);o&&e.historyListHide.length>0&&(e.receiveUserInfo.info=JSON.parse(e.receiveUserInfo.info),e.receiveUserInfo.auth=JSON.parse(e.receiveUserInfo.auth),e.receiveUserInfo.receive_user_id=ar.getCookie("bhy_user_id"),e.receiveUserInfo.other=e.receiveUserInfo.id,e.receiveUserInfo.order_time=ar.timeStamp(),e.receiveUserInfo.send_user_id=e.receiveUserInfo.id,void 0!=e.historyListHide&&e.historyListHide.length>0&&(e.receiveUserInfo.message=e.historyListHide[e.historyListHide.length-1].message),r.push(e.receiveUserInfo)),e.messageList=r,ar.setStorage("messageList-"+ar.getCookie("bhy_user_id"),r)}}).state("discovery",{url:"/discovery",templateUrl:"/wechat/views/discovery/index.html",controller:"discovery.index",resolve:{dataFilter:function(e){return e({method:"POST",url:"/wap/user/index-is-show-data",params:{}})}}}).state("discovery_message",{url:"/discovery_message",templateUrl:"/wechat/views/discovery/message.html",controller:"discovery.message"}).state("discovery_single",{cache:!1,url:"/discovery_single",templateUrl:"/wechat/views/discovery/single.html",controller:"discovery.single"}).state("rendezvous",{url:"/rendezvous",templateUrl:"/wechat/views/rendezvous/index.html",controller:"rendezvous.index"}).state("rendezvous_add",{url:"/rendezvous_add",templateUrl:"/wechat/views/member/rendezvous_add.html",controller:"member.rendezvous_add"}).state("rendezvous_ask",{url:"/rendezvous_ask",templateUrl:"/wechat/views/rendezvous/ask.html",controller:"rendezvous.ask"}).state("charge_order",{cache:!1,url:"/charge_order",templateUrl:"/wechat/views/charge/order.html",controller:"charge.order"}).state("charge",{cache:!1,url:"/charge_index",templateUrl:"/wechat/views/charge/index.html",controller:"charge.index"}),r.otherwise("/error")}]).controller("main",["$scope","$location","app.serviceApi","$ionicLoading","$ionicPopup","$rootScope",function($scope,$location,api,$ionicLoading,$ionicPopup,$rootScope){$rootScope.$on("msgNumber",function(){$scope.msgNumber=$rootScope.msgNumber}),$rootScope.$on("newFollow",function(){$scope.newFollow=$rootScope.newFollow}),$rootScope.$on("newFollowNumber",function(){$scope.newFollowNumber=$rootScope.newFollowNumber}),$rootScope.$on("newDiscovery",function(){$scope.newDiscovery=$rootScope.newDiscovery}),$scope.upUserStorage=function(name,value,type){"wu"==type?eval("$scope.userInfo."+name+" = "+value):eval("$scope.userInfo."+type+"."+name+" = "+value)},$scope.userInfo={};var getUserStorage=function(){$scope.userInfo&&($scope.userInfo.info=JSON.parse($scope.userInfo.info),$scope.userInfo.auth=JSON.parse($scope.userInfo.auth))},setUserInfoStorage=function(){ar.setStorage("userInfo",$scope.userInfo),getUserStorage()};$scope.setUserStorage=function(){setUserInfoStorage(),window.location.hash="#/member/information"},$scope.getUserPrivacyStorage=function(e){setUserInfoStorage(),""!=e&&void 0!=typeof e&&(window.location.hash=e)},ar.getCookie("bhy_user_id")?(api.list("/wap/member/honesty-photo",[]).success(function(e){$scope.sfzCheck=e.sfz,$scope.marrCheck=e.marr,$scope.eduCheck=e.edu,$scope.housingCheck=e.housing}),api.list("/wap/user/get-user-info",{}).success(function(e){$scope.userInfo=e.data,setUserInfoStorage()})):("out"==ar.getCookie("wx_login")&&(ar.saveDataAlert($ionicPopup,"您的账号异常，已经被限制登录！"),ar.delCookie("wx_login")),ar.setStorage("userInfo",null),$location.url("/index")),$scope.getTravel=function(name,serId){if(null!=serId){var arrSer=serId.split(",");eval("$scope."+name+"_count = "+arrSer.length),api.list("/wap/member/get-travel-list",{area_id:serId}).success(function(res){eval("$scope."+name+" = "+JSON.stringify(res.data))})}else eval("$scope."+name+"_count = 0")},$scope.getConfig=function(name,serId){if(null!=serId){var arrSer=serId.split(",");eval("$scope."+name+"_count = "+arrSer.length),api.list("/wap/member/get-config-list",{config_id:serId}).success(function(res){eval("$scope."+name+" = "+JSON.stringify(res.data))})}else eval("$scope."+name+"_count = 0")},$scope.showLoading=function(e){$ionicLoading.show({template:'<p class="tac">上传中...</p><p class="tac">'+e+"%</p>"})},$scope.hideLoading=function(){$ionicLoading.hide()},$scope.uploaderImage=function(e,r){var o=document.getElementById(r),t=document.createEvent("MouseEvents");t.initEvent("click",!0,!0),o.dispatchEvent(t),e.filters.push({name:"file-type-Res",fn:function(e){return ar.msg_file_res_img(e)?!0:(ar.saveDataAlert($ionicPopup,"只能上传图片类型的文件！"),!1)}}),e.filters.push({name:"file-size-Res",fn:function(e){return e.size>8388608?(ar.saveDataAlert($ionicPopup,"请选择小于8MB的图片！"),!1):!0}}),e.onAfterAddingFile=function(e){e.upload()},e.onProgressItem=function(e,r){$scope.showLoading(r)},e.onSuccessItem=function(e,o,t,s){o.status>0?$scope.$broadcast("thumb_path",r,o):ar.saveDataAlert($ionicPopup,o.info)},e.onErrorItem=function(e,r,o,t){ar.saveDataAlert($ionicPopup,"上传图片出错！"),$scope.hideLoading()},e.onCompleteItem=function(e,r,o,t){$scope.hideLoading()}},$scope.honesty=function(e){return 1&e}}])});
+/**
+ * Created by Administrator on 2016/3/22.
+ */
+define(["app/module", 'app/service/serviceApi'],
+    function (module) {
+        module.run(['$rootScope', '$state', '$timeout', 'app.serviceApi', '$ionicLoading', '$location', '$templateCache', function ($rootScope, $state, $timeout, api, $ionicLoading, $location, $templateCache) {
+            var userId = ar.getCookie('bhy_user_id');
+            var messageList = function () {
+                api.list('/wap/message/message-list', []).success(function (res) {
+                    var storageList = ar.getStorage('messageList-'+userId) ? ar.getStorage('messageList-'+userId) : [];
+                    var list = res.data;
+                    for (var i in list) {
+                        list[i].info = JSON.parse(list[i].info);
+                        list[i].auth = JSON.parse(list[i].auth);
+                        list[i].order_time = parseInt(list[i].create_time); // ar.timeStamp();  // 消息时间
+                        var flag = true;
+
+                        for (var j in storageList) {  // 相同消息合并
+                            if (storageList[j].send_user_id == list[i].send_user_id) {
+                                storageList[j] = list[i];
+                                flag = false;
+                                break;
+                            }
+                        }
+                        if (flag) {
+                            storageList.push(list[i]);
+                        }
+                    }
+                    $rootScope.messageList = storageList;
+                    ar.setStorage('messageList-'+userId, storageList)
+                });
+            }
+
+            var msgNumber = function (userId) {
+                if (userId > 0) {
+                    api.getMessageNumber().success(function (res) {
+                        $rootScope.msgNumber = parseInt(res.data);
+                    });
+                } else {
+                    $rootScope.msgNumber = 0;
+                }
+            }
+
+            if (userId > 0) {
+                requirejs(['plugin/socket/socket.io.1.4.0'], function (socket) {
+
+                    var skt = socket.connect("http://120.76.84.162:8088");
+
+                    skt.on(userId, function (response) {
+                        messageList();
+                        msgNumber(userId);
+                    })
+                })
+            }
+
+
+
+            // 页面开始加载
+            $rootScope
+                .$on('$stateChangeStart',
+                    function (event, toState, toParams, fromState, fromParams) {
+                        if (toState.url != '/index') {
+                            $ionicLoading.show();
+                            if (sessionStorage.loginStatus === undefined) {
+                                api.getLoginStatus().success(function (res) {
+                                    sessionStorage.loginStatus = res.status;
+                                    if (!res.status) {
+                                        location.href = '/wap/user/login';
+                                        return false;
+                                    }
+                                })
+                            }else if(!sessionStorage.loginStatus) {
+                                location.href = '/wap/user/login';
+                                return false;
+                            }
+                        }
+
+                        //if (sessionStorage.flag === undefined) {
+                            var together = function () {
+                                messageList();
+                                msgNumber(userId);
+                                mainIntercept();
+                            }
+                            $timeout(together, 500);
+                            sessionStorage.flag = true;
+                        //}
+                    });
+            // 页面加载成功
+            $rootScope
+                .$on('$stateChangeSuccess',
+                    function (event, toState, toParams, fromState, fromParams) {
+                        $ionicLoading.hide();
+                        //$templateCache.removeAll();  // 清除模版缓存
+                    });
+
+            // 相关监听
+            function mainIntercept() {
+
+                // 查询是否有新的用户关注自己
+                $rootScope.newFollow = false;
+                $rootScope.newFollowNumber = 0;
+                api.get('/wap/follow/is-new-follow', {user_id: userId}).success(function (res) {
+                    $rootScope.newFollow = res.status;
+                    $rootScope.newFollowNumber = res.data;
+                })
+
+                // 获取评论总数
+                $rootScope.newDiscovery = 0;
+                api.get('/wap/member/comment-num', {}).success(function (res) {
+                    var discoverySum = ar.getStorage('discoverySum');
+                    if (res.data > discoverySum) {
+                        $rootScope.newDiscovery = res.data - discoverySum;
+                    }
+                })
+            }
+        }]);
+        return module.config(["$stateProvider", "$urlRouterProvider", "$ionicConfigProvider", "$controllerProvider", function ($stateProvider, $urlRouterProvider, $ionicConfigProvider, $controllerProvider) {
+                //$ionicConfigProvider.templates.maxPrefetch(0);
+                $stateProvider
+                    .state('index', {   // 首页
+                        url: "/index",
+                        templateUrl: "/wechat/views/site/index.html",
+                        controller: 'site.index',
+                        resolve: {
+                            dataFilter: function ($http) {
+                                return $http({
+                                    method: 'POST',
+                                    url: '/wap/user/index-is-show-data',
+                                    params: {}
+                                });
+                            }
+                        }
+                    })
+                    .state('index_discovery', {   // 查看他人动态
+                        url: "/index_discovery",
+                        templateUrl: "/wechat/views/site/discovery.html",
+                        controller: 'site.discovery',
+                        resolve: {
+                            dataFilter: function ($http) {
+                                return $http({
+                                    method: 'POST',
+                                    url: '/wap/user/index-is-show-data',
+                                    params: {}
+                                });
+                            }
+                        }
+                    })
+                    .state('error', {   // 首页
+                        url: "/error",
+                        templateUrl: "/wechat/views/site/error.html",
+                        controller: 'site.error'
+                    })
+                    .state('member', {   // 我
+                        cache:false,
+                        url: "/member",
+                        templateUrl: "/wechat/views/member/index.html",
+                        controller: 'member.index'
+                    })
+                    .state('member_children', {   // 我-子页
+                        cache: false,
+                        url: '/member/:tempName',
+                        templateUrl: function ($stateParams) {
+                            return "/wechat/views/member/" + $stateParams.tempName + ".html";
+                        },
+                        controllerProvider: function ($stateParams) {
+                            return 'member.' + $stateParams.tempName;
+                        }
+                    })
+                    .state('message', {  // 消息首页
+                        cache: false,
+                        url: "/message",
+                        templateUrl: "/wechat/views/message/index.html",
+                        controller: "message.index",
+                        resolve: {
+                            dataFilter: function ($http) {
+                                return $http({
+                                    method: 'POST',
+                                    url: '/wap/user/index-is-show-data',
+                                    params: {}
+                                });
+                            }
+                        }
+                    })
+                    .state('userInfo', {  // 查看用户资料
+                        cache: false,
+                        url: "/userInfo",
+                        templateUrl: "/wechat/views/site/user_info.html",
+                        controller: "member.user_info",
+                        resolve: {
+                            dataFilter: function ($http) {
+                                return $http({
+                                    method: 'POST',
+                                    url: '/wap/user/index-is-show-data',
+                                    params: {}
+                                });
+                            }
+                        }
+                    })
+                    .state('adminInfo', {  // 查看官方号资料
+                        cache: false,
+                        url: "/admin_info",
+                        templateUrl: "/wechat/views/site/admin_info.html",
+                        controller: "member.admin_info",
+                        resolve: {
+                            dataFilter: function ($http) {
+                                return $http({
+                                    method: 'POST',
+                                    url: '/wap/user/index-is-show-data',
+                                    params: {}
+                                });
+                            }
+                        }
+
+                    })
+                    .state('chat', { // 聊天页面
+                        cache:true,
+                        url: "/chat1/:id",
+                        templateUrl: "/wechat/views/message/chat1.html",
+                        controller: 'message.chat1',
+                        resolve: {
+                            dataFilter: function ($http) {
+                                return $http({
+                                    method: 'POST',
+                                    url: '/wap/user/index-is-show-data',
+                                    params: {}
+                                });
+                            }
+                        },
+                        onExit: function ($rootScope) {
+
+                            var messageList = ar.getStorage('messageList-' + ar.getCookie('bhy_user_id'));
+                            if (messageList == null) messageList = [];
+                            var flag = true;
+                            var i = 0;
+
+                            if (messageList != undefined && messageList != '') {
+                                for (i in messageList) {
+                                    if (messageList[i].receive_user_id == $rootScope.receiveUserInfo.id || messageList[i].send_user_id == $rootScope.receiveUserInfo.id) {
+                                        if ($rootScope.historyListHide != undefined && $rootScope.historyListHide.length > 0) {
+                                            if (messageList[i].message != $rootScope.historyListHide[$rootScope.historyListHide.length - 1].message) {
+                                                messageList[i].order_time = ar.timeStamp();
+                                            }
+                                            messageList[i].message = $rootScope.historyListHide[$rootScope.historyListHide.length - 1].message
+                                        }
+                                        $rootScope.msgNumber = $rootScope.msgNumber - messageList[i].sumSend;
+                                        $rootScope.msgNumber = $rootScope.msgNumber >= 0 ? $rootScope.msgNumber : 0;
+                                        messageList[i].sumSend = 0;
+                                        messageList[i].status = 1;
+
+                                        flag = false;
+                                    }
+                                }
+                            }
+
+
+                            if (flag && $rootScope.historyListHide.length > 0) { // 有聊天信息，且没有加入storage
+                                $rootScope.receiveUserInfo.info = JSON.parse($rootScope.receiveUserInfo.info);
+                                $rootScope.receiveUserInfo.auth = JSON.parse($rootScope.receiveUserInfo.auth);
+                                $rootScope.receiveUserInfo.receive_user_id = ar.getCookie('bhy_user_id');
+                                $rootScope.receiveUserInfo.other = $rootScope.receiveUserInfo.id;
+                                $rootScope.receiveUserInfo.order_time = ar.timeStamp();
+                                $rootScope.receiveUserInfo.send_user_id = $rootScope.receiveUserInfo.id
+                                if ($rootScope.historyListHide != undefined && $rootScope.historyListHide.length > 0) {
+                                    $rootScope.receiveUserInfo.message = $rootScope.historyListHide[$rootScope.historyListHide.length - 1].message
+                                }
+
+                                messageList.push($rootScope.receiveUserInfo);
+                            }
+                            $rootScope.messageList = messageList;
+
+                            ar.setStorage('messageList-' + ar.getCookie('bhy_user_id'), messageList);
+
+                        }
+                    })
+
+                    .state('discovery', {       // 发现
+                        url: "/discovery",
+                        templateUrl: "/wechat/views/discovery/index.html",
+                        controller: 'discovery.index',
+                        resolve: {
+                            dataFilter: function ($http) {
+                                return $http({
+                                    method: 'POST',
+                                    url: '/wap/user/index-is-show-data',
+                                    params: {}
+                                });
+                            }
+                        }
+                    })
+                    .state('discovery_message', {       // 发现
+                        url: "/discovery_message",
+                        templateUrl: "/wechat/views/discovery/message.html",
+                        controller: 'discovery.message'
+                    })
+                    .state('discovery_single', {       // 发现-评论
+                        cache: false,
+                        url: "/discovery_single",
+                        templateUrl: "/wechat/views/discovery/single.html",
+                        controller: 'discovery.single'
+                    })
+                    .state('rendezvous', {     // 约会
+                        url: "/rendezvous",
+                        templateUrl: "/wechat/views/rendezvous/index.html",
+                        controller: 'rendezvous.index'
+                    })
+                    .state('rendezvous_add', {     // 约会-发布约会
+                        url: "/rendezvous_add",
+                        templateUrl: "/wechat/views/member/rendezvous_add.html",
+                        controller: 'member.rendezvous_add'
+                    })
+                    .state('rendezvous_ask', {     // 约会-约TA
+                        url: "/rendezvous_ask",
+                        templateUrl: "/wechat/views/rendezvous/ask.html",
+                        controller: 'rendezvous.ask'
+                    })
+                    .state('charge_order', {     // 支付-订单信息
+                        cache:false,
+                        url: "/charge_order",
+                        templateUrl: "/wechat/views/charge/order.html",
+                        controller: 'charge.order'
+                    })
+                    .state('charge', {     // 充值
+                        cache:false,
+                        url: "/charge_index",
+                        templateUrl: "/wechat/views/charge/index.html",
+                        controller: 'charge.index'
+                    });
+                $urlRouterProvider.otherwise("/error");
+            }])
+            .controller('main', ['$scope', '$location', 'app.serviceApi', '$ionicLoading', '$ionicPopup', '$rootScope', function ($scope, $location, api, $ionicLoading, $ionicPopup, $rootScope) {
+
+                $rootScope.$on('msgNumber', function () {
+                    $scope.msgNumber = $rootScope.msgNumber;
+                })
+
+                $rootScope.$on('newFollow', function () {
+                    $scope.newFollow = $rootScope.newFollow;
+                })
+
+                $rootScope.$on('newFollowNumber', function () {
+                    $scope.newFollowNumber = $rootScope.newFollowNumber;
+                })
+
+                $rootScope.$on('newDiscovery', function () {
+                    $scope.newDiscovery = $rootScope.newDiscovery;
+                })
+
+                $scope.upUserStorage = function (name, value, type) {
+                    if (type == 'wu') {
+                        eval('$scope.userInfo.' + name + ' = ' + value);
+                    } else {
+                        eval('$scope.userInfo.' + type + '.' + name + ' = ' + value);
+                    }
+                }
+
+                // 以下为用户信息处理
+                $scope.userInfo = {};
+
+                var getUserStorage = function () {
+                    if ($scope.userInfo) {
+                        $scope.userInfo.info = JSON.parse($scope.userInfo.info);
+                        $scope.userInfo.auth = JSON.parse($scope.userInfo.auth);
+                    }
+                }
+                var setUserInfoStorage = function () {
+
+                    ar.setStorage('userInfo', $scope.userInfo);
+                    getUserStorage();
+                }
+
+                /*// 拉黑等信息
+                 $scope.authDataFilter = authData() ? authData() : [];
+                 function authData(){
+                 var data = [];
+                 api.list('/wap/user/index-is-show-data', []).success(function (res) {
+                 data = res.data;
+                 });
+                 return data;
+                 }*/
+
+
+                // 设置用户信息跳转至资料页
+                $scope.setUserStorage = function () {
+                    setUserInfoStorage();
+                    window.location.hash = '#/member/information';
+                }
+
+                // 设置用户信息不跳转
+                $scope.getUserPrivacyStorage = function (url) {
+                    setUserInfoStorage();
+                    if (url != '' && typeof(url) != undefined) {
+                        window.location.hash = url;
+                    }
+                }
+
+                if (ar.getCookie('bhy_user_id')) {
+                    // 身份证认证
+                    api.list("/wap/member/honesty-photo", []).success(function (res) {
+                        $scope.sfzCheck = res.sfz;
+                        $scope.marrCheck = res.marr;
+                        $scope.eduCheck = res.edu;
+                        $scope.housingCheck = res.housing;
+                    });
+
+                    api.list("/wap/user/get-user-info", {}).success(function (res) {
+                            $scope.userInfo = res.data;
+                            setUserInfoStorage();
+                    });
+
+                } else {
+                    if (ar.getCookie('wx_login') == 'out') {
+                        ar.saveDataAlert($ionicPopup, '您的账号异常，已经被限制登录！');
+                        ar.delCookie('wx_login');
+                    }
+                    ar.setStorage('userInfo', null);
+                    $location.url('/index');
+                    //location.href = '/wap/user/login';
+                }
+
+                // 用于想去的地方，去过的地方等
+                $scope.getTravel = function (name, serId) {
+                    if (serId != null) {
+                        var arrSer = serId.split(',');
+                        eval("$scope." + name + "_count = " + arrSer.length);
+                        api.list('/wap/member/get-travel-list', {'area_id': serId}).success(function (res) {
+                            eval("$scope." + name + " = " + JSON.stringify(res.data));
+                        });
+                    } else {
+                        eval("$scope." + name + "_count = " + 0);
+                    }
+                }
+                $scope.getConfig = function (name, serId) {
+                    if (serId != null) {
+                        var arrSer = serId.split(',');
+                        eval("$scope." + name + "_count = " + arrSer.length);
+                        api.list('/wap/member/get-config-list', {'config_id': serId}).success(function (res) {
+                            eval("$scope." + name + " = " + JSON.stringify(res.data));
+                        });
+                    } else {
+                        eval("$scope." + name + "_count = " + 0);
+                    }
+                }
+
+                $scope.showLoading = function (progress) {
+                    $ionicLoading.show({
+                        template: '<p class="tac">上传中...</p><p class="tac">' + progress + '%</p>'
+                    });
+                };
+                $scope.hideLoading = function () {
+                    $ionicLoading.hide();
+                }
+
+                // 图片上传目前用于诚信认证（obj，str）
+                $scope.uploaderImage = function (uploader, name) {
+                    var e = document.getElementById(name);
+                    var ev = document.createEvent("MouseEvents");
+                    ev.initEvent("click", true, true);
+                    e.dispatchEvent(ev);
+
+                    uploader.filters.push({
+                        name: 'file-type-Res',
+                        fn: function (item) {
+                            if (!ar.msg_file_res_img(item)) {   // 验证文件是否是图片格式
+                                ar.saveDataAlert($ionicPopup, '只能上传图片类型的文件！');
+                                return false;
+                            }
+                            return true;
+                        }
+                    });
+
+                    uploader.filters.push({
+                        name: 'file-size-Res',
+                        fn: function (item) {
+                            if (item.size > 8388608) {
+                                ar.saveDataAlert($ionicPopup, '请选择小于8MB的图片！')
+                                return false;
+                            }
+                            return true;
+                        }
+                    });
+
+                    uploader.onAfterAddingFile = function (fileItem) {  // 选择文件后
+                        fileItem.upload();   // 上传
+                    };
+                    uploader.onProgressItem = function (fileItem, progress) {   //进度条
+                        $scope.showLoading(progress);    // 显示loading
+                    };
+                    uploader.onSuccessItem = function (fileItem, response, status, headers) {  // 上传成功
+                        if (response.status > 0) {
+                            // 将返回数据广播至 子member.js
+                            $scope.$broadcast('thumb_path', name, response);
+                        } else {
+                            ar.saveDataAlert($ionicPopup, response.info);
+                        }
+                    };
+                    uploader.onErrorItem = function (fileItem, response, status, headers) {  // 上传出错
+                        ar.saveDataAlert($ionicPopup, '上传图片出错！');
+                        $scope.hideLoading();  // 隐藏loading
+                    };
+                    uploader.onCompleteItem = function (fileItem, response, status, headers) {  // 上传结束
+                        $scope.hideLoading();  // 隐藏loading
+
+                    };
+                }
+
+                // 身份证认证判断
+                $scope.honesty = function (val) {
+                    return 1 & val;
+                }
+                //$scope.userInfo = [{}];
+            }])
+    });
