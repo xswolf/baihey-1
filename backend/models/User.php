@@ -129,11 +129,14 @@ class User extends Model
      * @throws \yii\base\Exception
      * 新增用户
      */
-    public function addUser($data) {
+    public function addUser($data, $createToWeb = true) {
         $auth = \Yii::$app->authManager;
         $time = time();
         if(isset($data['file_upload'])) {
             unset($data['file_upload']);
+        }
+        if(isset($data['createToWeb'])) {
+            unset($data['createToWeb']);
         }
         $data['created_at'] = $time;
         $data['updated_at'] = $time;
@@ -149,7 +152,10 @@ class User extends Model
             ->execute();
         $id = $this->db->getLastInsertID();
         // 添加管理员前端用户
-        $this->addAdminUser($id, $data);
+        if($createToWeb){
+            $this->addAdminUser($id, $data);
+        }
+
         // 角色处理
         if($id && $role) {
             foreach($role as $vo) {
@@ -279,7 +285,10 @@ class User extends Model
             $photo['time']       = time();
             $photo['is_check']   = 1;
             UserPhoto::getInstance()->addPhoto($id, $photo);
+        }else{
+            return false;
         }
+        return true;
 
     }
 

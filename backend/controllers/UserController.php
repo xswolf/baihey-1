@@ -19,12 +19,13 @@ class UserController extends BaseController
      * @return string
      * 用户列表
      */
-    public function actionListUser() {
+    public function actionListUser()
+    {
         $user = new User();
         $auth = \Yii::$app->authManager;
         $group = $auth->getRoles();
         $where = [];
-        if($get = $this->get) {
+        if ($get = $this->get) {
             $get['group'] != '' ? $where['group'] = $get['group'] : true;
             $get['duty'] != '' ? $where['duty'] = $get['duty'] : true;
         } else {
@@ -32,9 +33,9 @@ class UserController extends BaseController
         }
         $list = $user->getList($where);
         //var_dump($group);exit;
-        $this->assign('get',$get);
-        $this->assign('group',$group);
-        $this->assign('list',$list);
+        $this->assign('get', $get);
+        $this->assign('group', $group);
+        $this->assign('list', $list);
         return $this->render();
     }
 
@@ -42,7 +43,8 @@ class UserController extends BaseController
      * @return string
      * 添加用户
      */
-    public function actionCreateUser() {
+    public function actionCreateUser()
+    {
         $auth = \Yii::$app->authManager;
         $list = $auth->getRoles();
 
@@ -51,14 +53,35 @@ class UserController extends BaseController
             $request = \Yii::$app->request;
             $userModel = new User();
             //判断用户名是否存在并添加用户分配角色
-            if(!$userModel->getFindUser(['name'=>$request->post('name')]) && $userModel->addUser($request->post())) {
-                $this->__success('添加成功', 'list-user');
+            if ($userModel->getFindUser(['name' => $request->post('name')])) {
+                $this->__error('添加失败，用户名已存在');
             } else {
-                $this->__error('添加失败');
+                $post = $request->post();
+                if (isset($post['createToWeb']) && !empty($post['createToWeb'])) {   // 已勾选在前台添加相应用户
+
+                    $user = new \wechat\models\User();
+
+                    if ($user->mobileIsExist($post['phone'])) {
+                        $this->__error('添加失败，手机号已存在');
+                    } else {
+                        if ($userModel->addUser($request->post())) {
+                            $this->__success('添加成功', 'list-user');
+                        } else {
+                            $this->__error('添加失败');
+                        }
+                    }
+                } else {    // 未勾选在前台添加相应用户
+                    if ($userModel->addUser($request->post(), false)) {
+                        $this->__success('添加成功', 'list-user');
+                    } else {
+                        $this->__error('添加失败');
+                    }
+                }
+
             }
         }
 
-        $this->assign('list',$list);
+        $this->assign('list', $list);
         return $this->render();
     }
 
@@ -66,7 +89,8 @@ class UserController extends BaseController
      * @return string
      * 编辑用户
      */
-    public function actionEditUser() {
+    public function actionEditUser()
+    {
         $auth = \Yii::$app->authManager;
         $request = \Yii::$app->request;
         $userModel = new User();
@@ -76,15 +100,15 @@ class UserController extends BaseController
 
         //用户已有角色处理
         $list = array();
-        foreach($roleList as $key => $val) {
-            if(!empty($userRole) && array_key_exists($key,$userRole)) {
+        foreach ($roleList as $key => $val) {
+            if (!empty($userRole) && array_key_exists($key, $userRole)) {
                 $list[$key] = 1;
             } else {
                 $list[$key] = 0;
             }
         }
 
-        if($request->post()) {
+        if ($request->post()) {
             if ($userModel->editUser($request->post())) {
                 $this->__success('更新成功', 'list-user');
             } else {
@@ -92,8 +116,8 @@ class UserController extends BaseController
             }
         }
 
-        $this->assign('user',$user);
-        $this->assign('list',$list);
+        $this->assign('user', $user);
+        $this->assign('list', $list);
         return $this->render();
     }
 
@@ -101,9 +125,10 @@ class UserController extends BaseController
      * @param null $id
      * 删除用户
      */
-    public function actionDeleteUser($id = null) {
+    public function actionDeleteUser($id = null)
+    {
         $userModel = new User();
-        if($userModel->delUser($id)) {
+        if ($userModel->delUser($id)) {
             $this->__success('删除成功', 'list-user');
         } else {
             $this->__error('删除失败');
@@ -117,7 +142,7 @@ class UserController extends BaseController
     {
         $user_id = $this->get['user_id'];
         unset($this->get['user_id']);
-        if($data = \common\models\User::getInstance()->editUserTableInfo($user_id, $this->get)) {
+        if ($data = \common\models\User::getInstance()->editUserTableInfo($user_id, $this->get)) {
             return $this->renderAjax(['status' => 1, 'data' => $data, 'message' => '修改成功']);
         } else {
             return $this->renderAjax(['status' => 0, 'data' => [], 'message' => '修改失败']);
