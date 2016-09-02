@@ -291,7 +291,7 @@ class UserController extends BaseController
     public function actionValidateCode()
     {
 
-        return $this->renderAjax(['status' => 1]); // TODO 测试
+//        return $this->renderAjax(['status' => 1]); // TODO 测试
         if (\Yii::$app->request->isGet) {
 
             $data = \Yii::$app->request->get();
