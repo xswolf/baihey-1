@@ -284,6 +284,16 @@ class User extends Base
         return $this->findOne(['phone' => $phone]);
     }
 
+    /**
+     * 验证微信是否注册
+     * @param $wx
+     * @return null|static
+     */
+    public function wxIsExist($wx)
+    {
+        return $this->findOne(['wx_id' => $wx]);
+    }
+
     public function editUser($data)
     {
         $user = $data['user'];

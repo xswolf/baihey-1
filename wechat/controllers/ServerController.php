@@ -113,6 +113,14 @@ class ServerController extends BaseController {
         var_dump($result);
     }
 
+    public function actionReq(){
+        $appId = \Yii::$app->wechat->appId;
+        $redirectUri = urlencode("http://wechat.baihey.com/wap/user/register?qdid=10000");
+
+        $url = "https://open.weixin.qq.com/connect/oauth2/authorize?appid={$appId}&redirect_uri={$redirectUri}&response_type=code&scope=snsapi_userinfo&state=tes#wechat_redirect";
+        echo $url;
+    }
+
     public function actionMaterialList(){
         \Yii::$app->wechat->materialList();
     }
