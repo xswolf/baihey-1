@@ -66,7 +66,7 @@ class ChatController extends BaseController
         $offset = 0;
         if($this->user->getUser()['id'] == 1){
             $offset = 0;
-        }else if($this->user->getUser()['id'] == 2){
+        }else if($this->user->getUser()['id'] == 6){
             $offset = 0;
         }else if($this->user->getUser()['id'] == 3){
             $offset = 831;
