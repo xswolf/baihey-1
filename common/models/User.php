@@ -84,6 +84,9 @@ class User extends Base
             $dataUser['username'] = $data['username'];
             $dataUser['password'] = md5(md5($data['password']));
             $dataUser['login_type'] = $data['login_type'];
+            if(isset($data['phone'])){
+                $dataUser['phone'] = $data['phone'];
+            }
         } else {
             if (isset($data['id'])) {
                 $dataUser['id'] = $data['id'];
@@ -124,7 +127,9 @@ class User extends Base
         if (!isset($data['matchmaker'])) {
             $auth_user = new \backend\models\User();
             $admin = $auth_user->getFindUser(['duty' => 1]);
-            $data['matchmaker'] = $admin['id'];
+            $infoData['matchmaker'] = $admin['id'];
+        }else{
+            $infoData['matchmaker'] = $data['matchmaker'];
         }
         // info
         $userInfo = $this->getDefaultInfo();
