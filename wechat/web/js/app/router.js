@@ -56,7 +56,7 @@ define(["app/module", 'app/service/serviceApi'],
             $rootScope
                 .$on('$stateChangeStart',
                     function (event, toState, toParams, fromState, fromParams) {
-                        if (toState.url != '/index') {
+                        if (toState.url != '/index' || toState.url != '/error') {
                             $ionicLoading.show();
                             if (sessionStorage.loginStatus === undefined) {
                                 api.getLoginStatus().success(function (res) {
