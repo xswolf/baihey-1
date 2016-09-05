@@ -94,7 +94,7 @@ class UserPhoto extends Base
         // 删除原有身份证
         if ($photoType == 23) {
             $del = $this->getDb()->createCommand()
-                ->delete($this->tablePrefix . 'user_photo', ['user_id' => $user_id, ['or', 'type' => 2, 'type' => 3]])
+                ->delete($this->tablePrefix . 'user_photo', ['user_id' => $user_id, ['or', 'type=2', 'type=3']])
                 ->execute();
         } else {
             $del = $this->getDb()->createCommand()
