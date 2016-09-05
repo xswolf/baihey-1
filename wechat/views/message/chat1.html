@@ -90,7 +90,7 @@
                              ng-if="vo.type=='pic' || vo.message_type==3">
                             <span class="pic bhy-gallery">
                                 <a ng-href="{{vo.message | picture}}" data-size="{{vo.message.split('.')[0].split('_')[1] + 'x' + vo.message.split('.')[0].split('_')[2]}}">
-                                    <img src="{{vo.message}}">
+                                    <img src="{{vo.message}}" height="60">
                                     <figure class="hide">轻触照片退出</figure>
                                 </a>
                             </span>
