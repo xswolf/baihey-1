@@ -217,15 +217,13 @@ define(['app/module', 'app/directive/directiveApi'
             $rootScope.historyListHide = list = list != null ? list.concat(data) : data;
             ar.setStorage('chat_messageHistory-' + $scope.receiveId + '-' + userId, list);
 
-            if (data.length > 0 || res.data.status == 0) { // 如果有新消息，所有消息状态为已看
+            if (data.length > 0 || res.data.status == 0) { // 如果有新消息，所有消息状态为已看 res.data.status == 0 对方已看
                 list = $scope.setMessageStatus(list);
+                if(data.length > 0){
+                    $scope.doRefresh();
+                    ar.initPhotoSwipeFromDOM('.bhy-gallery', $scope, $ionicPopup);   // 查看大图插件
+                }
             }
-
-            ar.initPhotoSwipeFromDOM('.bhy-gallery', $scope, $ionicPopup);   // 查看大图插件
-            $scope.doRefresh();
-            $timeout(function () {
-                viewScroll.scrollBottom(true);
-            }, 800);
 
         }).error(function () {
             console.log('页面message.js出现错误，代码：/wap/chat/message-history');
