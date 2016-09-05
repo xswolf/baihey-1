@@ -62,12 +62,12 @@ define(["app/module", 'app/service/serviceApi'],
                                 api.getLoginStatus().success(function (res) {
                                     sessionStorage.loginStatus = res.status;
                                     if (!res.status) {
-                                        //location.href = '/wap/user/login';
+                                        location.href = '/wap/user/login';
                                         return false;
                                     }
                                 })
                             }else if(!sessionStorage.loginStatus) {
-                                //location.href = '/wap/user/login';
+                                location.href = '/wap/user/login';
                                 return false;
                             }
                         }
