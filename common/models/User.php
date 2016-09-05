@@ -121,7 +121,7 @@ class User extends Base
         $dataUser['sex'] = $data['sex'];
         // userinformation表 数据处理
         // 值班红娘销售红娘
-        if (isset($data['matchmaker'])) {
+        if (!isset($data['matchmaker'])) {
             $auth_user = new \backend\models\User();
             $admin = $auth_user->getFindUser(['duty' => 1]);
             $data['matchmaker'] = $admin['id'];
