@@ -262,10 +262,11 @@ class UserController extends BaseController
         if (\Yii::$app->request->isGet) {
             // 通过手机号查询用户信息
             if (User::getInstance()->mobileIsExist($this->get['mobile'])) {
-
                 $this->renderAjax(['status' => 0, 'msg' => '该手机号码已存在']);
             } else {
-
+                if (isset($_SESSION['code_wx_id']) && \common\models\User::getInstance()->wxIsExist($_SESSION['code_wx_id'])) {
+                    return $this->renderAjax(['status' => 0, 'msg' => '微信已存在', 'data' => []]);
+                }
                 $this->renderAjax(['status' => 1, 'msg' => '该手机号可以注册']);
             }
         }
