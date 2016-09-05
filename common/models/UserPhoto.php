@@ -93,13 +93,12 @@ class UserPhoto extends Base
     {
         // 删除原有身份证
         if ($photoType == 23) {
-            $del = $this->getDb()->createCommand()
-                ->delete($this->tablePrefix . 'user_photo', ['user_id' => $user_id, ['or', 'type=2', 'type=3']])
-                ->execute();
+            $this->getDb()->createCommand("delete from {$this->tablePrefix}user_photo where user_id={$user_id} and (type=2 or type=3)")
+                 ->execute();
         } else {
-            $del = $this->getDb()->createCommand()
-                ->delete($this->tablePrefix . 'user_photo', ['user_id' => $user_id, 'type' => $photoType])
-                ->execute();
+            $this->getDb()->createCommand()
+                 ->delete($this->tablePrefix . 'user_photo', ['user_id' => $user_id, 'type' => $photoType])
+                 ->execute();
         }
         $time = time();
         $ist = false;
