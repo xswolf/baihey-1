@@ -222,6 +222,7 @@ define(['app/module', 'app/directive/directiveApi'
                 if(data.length > 0){
                     $scope.doRefresh();
                     ar.initPhotoSwipeFromDOM('.bhy-gallery', $scope, $ionicPopup);   // 查看大图插件
+                    viewScroll.scrollBottom(true);
                 }
             }
 
