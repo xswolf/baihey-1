@@ -200,11 +200,11 @@ class UserController extends BaseController
 
             // 验证手机号是否存在
             if (\common\models\User::getInstance()->mobileIsExist($data['phone'])) {
-                 $this->renderAjax(['status' => 0, 'msg' => '手机号已存在！~', 'data' => []]);
+                return $this->renderAjax(['status' => 0, 'msg' => '手机号已存在！~', 'data' => []]);
             }
 
             if (isset($_SESSION['code_wx_id']) && \common\models\User::getInstance()->wxIsExist($_SESSION['code_wx_id'])) {
-                 $this->renderAjax(['status' => 0, 'msg' => '微信已存在', 'data' => []]);
+                return $this->renderAjax(['status' => 0, 'msg' => '微信已存在', 'data' => []]);
             }
 
             // 添加用户
