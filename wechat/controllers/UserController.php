@@ -265,7 +265,7 @@ class UserController extends BaseController
                 $this->renderAjax(['status' => 0, 'msg' => '该手机号码已存在']);
             } else {
                 if (isset($_SESSION['code_wx_id']) && \common\models\User::getInstance()->wxIsExist($_SESSION['code_wx_id'])) {
-                    return $this->renderAjax(['status' => 0, 'msg' => '微信已存在', 'data' => []]);
+                    return $this->renderAjax(['status' => 0, 'msg' => '该微信已注册', 'data' => []]);
                 }
                 $this->renderAjax(['status' => 1, 'msg' => '该手机号可以注册']);
             }
