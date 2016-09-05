@@ -37,11 +37,11 @@ class UserPhoto extends Base
 //                UserInformation::getInstance()->updateUserInfo($user_id, ['head_pic' => $data['thumb_path']]);
 //            }
             $this->getDb()->createCommand()
-                ->insert($this->tablePrefix.'user_photo', $data)
+                ->insert($this->tablePrefix . 'user_photo', $data)
                 ->execute();
-            if(isset($data['type']) && ($data['type'] == 2 || $data['type'] == 3)) {
+            if (isset($data['type']) && ($data['type'] == 2 || $data['type'] == 3)) {
                 $this->getDb()->createCommand()
-                    ->update($this->tablePrefix.'user_information', ['has_identify' => 1], ['user_id' => $user_id])
+                    ->update($this->tablePrefix . 'user_information', ['has_identify' => 1], ['user_id' => $user_id])
                     ->execute();
             }
 
@@ -65,18 +65,18 @@ class UserPhoto extends Base
      * @param int $pageSize
      * @return $this|array
      */
-    public function getPhotoList($user_id, $type = 1, $pageSize = 12 , $check = '')
+    public function getPhotoList($user_id, $type = 1, $pageSize = 12, $check = '')
     {
         if ($type == 23) {
-            $where = ['and', 'user_id='.$user_id, ['in', 'type', [2, 3]]];
-        } elseif($type == 0) {
+            $where = ['and', 'user_id=' . $user_id, ['in', 'type', [2, 3]]];
+        } elseif ($type == 0) {
             $where = ['user_id' => $user_id];
         } else {
             $where = ['user_id' => $user_id, 'type' => $type];
         }
         $result = (new Query())->select(['*'])
             ->where($where)
-            ->from($this->tablePrefix.'user_photo')
+            ->from($this->tablePrefix . 'user_photo')
             ->orderBy('is_head desc, update_time asc')
             ->limit($pageSize);
         $result = $result->all();
@@ -85,43 +85,48 @@ class UserPhoto extends Base
 
     /**
      * 保存图片(目前用于诚信认证)
-     * @param $where|array二维数组
+     * @param $where |array二维数组
      * @return bool
      * @throws \yii\db\Exception
      */
-    public function savePhoto($where, $user_id,$photoType,$headPic='')
+    public function savePhoto($where, $user_id, $photoType, $headPic = '')
     {
         // 删除原有身份证
-        $del = $this->getDb()->createCommand()
-            ->delete($this->tablePrefix.'user_photo', ['user_id' => $user_id, 'type' => $photoType])
-            ->execute();
+        if ($photoType == 23) {
+            $this->getDb()->createCommand("delete from {$this->tablePrefix}user_photo where user_id={$user_id} and (type=2 or type=3)")
+                 ->execute();
+        } else {
+            $this->getDb()->createCommand()
+                 ->delete($this->tablePrefix . 'user_photo', ['user_id' => $user_id, 'type' => $photoType])
+                 ->execute();
+        }
         $time = time();
         $ist = false;
         foreach ($where as $k => $v) {
             // 新增
             $data = [
-                'user_id'       => $user_id,
-                'pic_path'      => $v['pic_path'],
-                'thumb_path'    => $v['thumb_path'],
-                'create_time'   => $time,
-                'update_time'   => $time,
-                'is_head'       => 0,
-                'type'          => $v['type']
+                'user_id' => $user_id,
+                'pic_path' => $v['pic_path'],
+                'thumb_path' => $v['thumb_path'],
+                'create_time' => $time,
+                'update_time' => $time,
+                'is_head' => 0,
+                'type' => $v['type']
             ];
-            if(isset($v['is_check'])) {
+            if (isset($v['is_check'])) {
                 $data['is_check'] = $v['is_check'];
             }
-            if(!empty($headPic) && $headPic == $data['thumb_path']) {
+            if (!empty($headPic) && $headPic == $data['thumb_path']) {
                 $data['is_head'] = 1;
                 UserInformation::getInstance()->updateUserInfo($user_id, ['head_pic' => $data['thumb_path']]);
             }
-            if($v['type'] == 2 || $v['type'] == 3) {
+            if ($v['type'] == 2 || $v['type'] == 3) {
                 $this->getDb()->createCommand()
-                    ->update($this->tablePrefix.'user_information', ['has_identify' => 1], ['user_id' => $user_id])
+                    ->update($this->tablePrefix . 'user_information', ['has_identify' => 1], ['user_id' => $user_id])
                     ->execute();
             }
             $ist = $this->getDb()->createCommand()
-                ->insert($this->tablePrefix.'user_photo', $data)
+                ->insert($this->tablePrefix . 'user_photo', $data)
                 ->execute();
         }
         return $ist;
@@ -133,7 +138,7 @@ class UserPhoto extends Base
      * @param $userId
      * @return int
      */
-    public function delPhoto($where,$userId)
+    public function delPhoto($where, $userId)
     {
         $photo = $this->findOne($where);
         // 删除旧图片
@@ -144,7 +149,7 @@ class UserPhoto extends Base
         }
 
         // 删除数据
-        $_user_information_table = $this->tablePrefix.'user_information';
+        $_user_information_table = $this->tablePrefix . 'user_information';
         if ($photo->is_head == 1) {
             $sql = "UPDATE {$_user_information_table} SET info = JSON_REPLACE(info,'$.head_pic','') WHERE user_id={$userId}";
             $this->getDb()->createCommand($sql)->execute();
@@ -179,7 +184,7 @@ class UserPhoto extends Base
      */
     public function lists($isCheck = 2, $type = 1)
     {
-        $type = $type == 2 ? [2,3] : $type;
+        $type = $type == 2 ? [2, 3] : $type;
         $handle = (new Query())->from($this->tablePrefix . 'user_photo u')
             ->innerJoin($this->tablePrefix . 'user_information i', 'u.user_id=i.user_id')
             ->where(['is_check' => $isCheck, 'type' => $type])
@@ -214,7 +219,7 @@ class UserPhoto extends Base
     {
         $result = (new Query())
             ->select('*')
-            ->from($this->tablePrefix.'user_photo')
+            ->from($this->tablePrefix . 'user_photo')
             ->where(['user_id' => $user_id, 'is_head' => 1, 'type' => 1])
             ->one();
         return $result;

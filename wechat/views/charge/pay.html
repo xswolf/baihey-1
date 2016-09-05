@@ -1,8 +1,9 @@
 <ion-content>
   正在跳转支付...
 </ion-content>
-<script src="/wechat/web/js/plugin/jquery/jquery_1.8.3.min.js"></script>
+<script src="/wechat/web/js/plugin/jquery-1.8.3.min.js"></script>
 <script type="text/javascript">
+
     function onBridgeReady() {
         WeixinJSBridge.invoke(
                 'getBrandWCPayRequest', {!$param},

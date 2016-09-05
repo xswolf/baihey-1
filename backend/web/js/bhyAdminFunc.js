@@ -93,10 +93,10 @@ var bhyFunc = {
             var cause = '';
             layer.prompt({
                 formType: 2,
-                value: '图片模糊不清',
-                title: '请填写审核不通过原因'
+                value: '您好，您上传的身份证照片未审核通过，原因：图片模糊不清。',
+                title: '请填写原因'
             }, function (value, index, elem) {
-                cause = value ? value : '图片模糊不清';
+                cause = value ? value : '您好，您上传的身份证照片未审核通过，原因：未知。';
                 $this.ajaxRequest('/admin/member/sys-msg', {
                     user_id: $this.user_id,
                     type: '2,3',
