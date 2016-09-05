@@ -118,8 +118,6 @@ class WeChat extends \callmez\wechat\sdk\Wechat {
         if (isset($result['openid'])){
             $member = \Yii::$app->wechat->getMemberInfo($result['openid']);
         }else{
-            var_dump($result);
-            echo "<br>".$code;
             exit;
         }
 
