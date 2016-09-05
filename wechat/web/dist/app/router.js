@@ -52,9 +52,6 @@ define(["app/module", 'app/service/serviceApi'],
                     })
                 })
             }
-
-
-
             // 页面开始加载
             $rootScope
                 .$on('$stateChangeStart',
@@ -115,7 +112,7 @@ define(["app/module", 'app/service/serviceApi'],
             }
         }]);
         return module.config(["$stateProvider", "$urlRouterProvider", "$ionicConfigProvider", "$controllerProvider", function ($stateProvider, $urlRouterProvider, $ionicConfigProvider, $controllerProvider) {
-                //$ionicConfigProvider.templates.maxPrefetch(0);
+                $ionicConfigProvider.templates.maxPrefetch(0);
                 $stateProvider
                     .state('index', {   // 首页
                         url: "/index",
@@ -210,7 +207,6 @@ define(["app/module", 'app/service/serviceApi'],
                                 });
                             }
                         }
-
                     })
                     .state('chat', { // 聊天页面
                         cache:true,
