@@ -46,7 +46,7 @@ class AuthUser extends Base
         return (new Query())->from($this->tablePrefix.'auth_assignment a')
             ->innerJoin($this->tablePrefix.'auth_user u' , 'a.user_id=u.id')
             ->where(['status'=>1])
-            ->andWhere(["like", "item_name", $role])
+            ->andWhere(["in", "item_name", $role])
             ->select("u.id,u.name")
             ->all();
     }
