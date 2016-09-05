@@ -221,10 +221,10 @@ define(['app/module', 'app/directive/directiveApi'
                 list = $scope.setMessageStatus(list);
                 if(data.length > 0){
                     $scope.doRefresh();
-                    ar.initPhotoSwipeFromDOM('.bhy-gallery', $scope, $ionicPopup);   // 查看大图插件
                     viewScroll.scrollBottom(true);
                 }
             }
+            ar.initPhotoSwipeFromDOM('.bhy-gallery', $scope, $ionicPopup);   // 查看大图插件
 
         }).error(function () {
             console.log('页面message.js出现错误，代码：/wap/chat/message-history');
