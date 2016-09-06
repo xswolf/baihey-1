@@ -32,7 +32,6 @@ class UserController extends BaseController
             $get = ['group' => '', 'duty' => ''];
         }
         $list = $user->getList($where);
-        //var_dump($group);exit;
         $this->assign('get', $get);
         $this->assign('group', $group);
         $this->assign('list', $list);

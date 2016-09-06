@@ -84,7 +84,7 @@ class User extends Base
             $dataUser['username'] = $data['username'];
             $dataUser['password'] = md5(md5($data['password']));
             $dataUser['login_type'] = $data['login_type'];
-            if(isset($data['phone'])){
+            if (isset($data['phone'])) {
                 $dataUser['phone'] = $data['phone'];
             }
         } else {
@@ -128,7 +128,7 @@ class User extends Base
             $auth_user = new \backend\models\User();
             $admin = $auth_user->getFindUser(['duty' => 1]);
             $infoData['matchmaker'] = $admin['id'];
-        }else{
+        } else {
             $infoData['matchmaker'] = $data['matchmaker'];
         }
         // info
@@ -870,7 +870,7 @@ class User extends Base
         }
         // 上传照片
         $photoType = count($arr) == 0 ? 1 : $arr[0]['type'];
-        UserPhoto::getInstance()->savePhoto($arr, $user_id, $photoType,$headPic);
+        UserPhoto::getInstance()->savePhoto($arr, $user_id, $photoType, $headPic);
         if ($type != 1) {
             $user = (new Query())->select('*')->from($this->tablePrefix . 'user_information')->where(['user_id' => $user_id])->one();
 
@@ -937,12 +937,18 @@ class User extends Base
         }
         $data['honesty_value'] = $honesty_value;
         $tran = \Yii::$app->db->beginTransaction();
+
         $flag1 = \Yii::$app->db->createCommand()
             ->update($this->tablePrefix . 'user_information', $data, ['user_id' => $data['user_id']])
             ->execute();
+
         $flag2 = $this->editPhoto($type, $data);
 
-        if ($flag1 > 0 && $flag2 > 0) {
+        $flag3 = \Yii::$app->db->createCommand()
+            ->update($this->tablePrefix . 'user', ['status' => 2], ['id' => $data['user_id']])
+            ->execute();
+
+        if ($flag1 > 0 && $flag2 > 0 && $flag3 > 0) {
             $tran->commit();
             return 1;
         } else {
