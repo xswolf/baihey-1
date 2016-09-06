@@ -220,7 +220,8 @@ define(['app/module', 'app/directive/directiveApi'
             if (data.length > 0 || res.data.status == 0) { // 如果有新消息，所有消息状态为已看 res.data.status == 0 对方已看
                 list = $scope.setMessageStatus(list);
                 if(data.length > 0){
-                    $scope.doRefresh();
+                    //$scope.doRefresh();
+                    $scope.historyList.concat(data);
                     viewScroll.scrollBottom(true);
                 }
             }
