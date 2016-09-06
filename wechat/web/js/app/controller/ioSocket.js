@@ -221,6 +221,7 @@ define(['app/module', 'app/directive/directiveApi'
                 list = $scope.setMessageStatus(list);
                 if(data.length > 0){
                     //$scope.doRefresh();
+                    alert(1)
                     $scope.historyList.concat(data);
                     viewScroll.scrollBottom(true);
                 }
