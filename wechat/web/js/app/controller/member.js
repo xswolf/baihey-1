@@ -531,6 +531,13 @@ define(['app/module', 'app/directive/directiveApi'
                     ar.processData(fieldName, $scope, api, $ionicPopup, $filter, $ionicScrollDelegate);
                 }
             });
+
+            $scope.saveClose = function () {
+                $scope.userInfo = ar.getStorage('userInfo');
+                $scope.userInfo.info = JSON.parse($scope.userInfo.info);
+                $scope.userInfo.auth = JSON.parse($scope.userInfo.auth);
+                $scope.infoModal.hide();
+            }
         }
 
 
