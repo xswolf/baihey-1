@@ -1,23 +1,25 @@
 <ion-view>
     <link href="/wechat/web/css/member.css" rel="stylesheet">
     <link href="/wechat/web/css/fontIcon.css" rel="stylesheet">
-    <ion-header-bar align-title="center" >
+    <ion-header-bar align-title="center" class="bhy com_w_100">
         <title class="title">我的资料</title>
     </ion-header-bar>
     <ion-content class="bhy com_w_100 infomation bg5">
         <ion-list>
             <div class="imgList_con">
-                <div class="imgList_handle clearfix ">
+                <div class="imgList_handle clearfix">
                     <div class="bhy-gallery">
-                        <a class="imgItem pr" ng-repeat="img in imgList | orderBy:['-is_head']" on-hold="moreImg($index)"  ng-href="{{img.thumb_path | picture}}" data-size="{{img.thumb_path.split('.')[0].split('_')[1] + 'x' + img.thumb_path.split('.')[0].split('_')[2]}}">
-                            <img src="/wechat/web/images/lazyload.png" lazyload="{{img.thumb_path}}">
-                            <figure class="hide" ng-if="img.is_check == 1">轻触照片退出</figure>
-                        </a>
+                        <div class="row warp">
+                            <a class="col col-25 pr" ng-repeat="img in imgList | orderBy:['-is_head']" on-hold="moreImg($index)" ng-href="{{img.thumb_path | picture}}" get-img-size="{{img.thumb_path}}">
+                                <img src="/wechat/web/images/lazyload.png" lazyload="{{img.thumb_path}}">
+                                <figure class="hide">轻触照片退出</figure>
+                            </a>
+                            <div ng-if="imgList.length < 12 || !imgList" class="col col-25" ng-click="addNewImg($event)">
+                                <img src="/wechat/web/images/addPic.png">
+                            </div>
+                        </div>
                     </div>
-                    <div ng-if="imgList.length < 12 || !imgList" class="imgItem addItem" ng-click="addNewImg()">
-                        <i class="ion-plus-round"></i>
-                    </div>
-                    <div class="tip fl w100">温馨提示：相册第一张为头像且不可更换，您最多可以上传12张照片。</div>
+                    <div class="tip fl w100 padding">温馨提示：相册第一张为头像且不可更换，最多可以上传12张照片。</div>
                 </div>
             </div>
             <input id="pic_fileInput" type="file" nv-file-select="" uploader="uploader"
