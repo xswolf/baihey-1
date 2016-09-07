@@ -222,6 +222,7 @@ define(['app/module', 'app/directive/directiveApi'
                 if(data.length > 0){
                     //$scope.doRefresh();
                     $scope.historyList = $scope.historyList.concat(data);
+                    viewScroll.resize();
                     viewScroll.scrollBottom(true);
                 }
             }
