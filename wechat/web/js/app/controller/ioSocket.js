@@ -215,6 +215,7 @@ define(['app/module', 'app/directive/directiveApi'
             var data = res.data.messageList;
 
             list = list != null ? list.concat(data) : data;
+            alert(list.length);
             if (list.length > 50){ //最多只能保存50条数据
                 list.splice(0, list.length-50);
             }
