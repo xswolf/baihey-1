@@ -6,6 +6,7 @@
     baseUrl:"./",
     dir:"../dist",
     removeCombined:true,
+    findNestedDependencies: true,
     paths: {
         angular: 'plugin/angular/angular.min',
         angular_animate: 'plugin/angular/angular-animate.min',
@@ -39,14 +40,14 @@
                 'mobiscroll',
                 'photoswipe',
                 'photoswipe_ui',
-                'info_data',
+                //'info_data',
                 'ionic_gallery',
 
 
-                'config/city',
+                //'config/city',
                 'config/occupation',
                 'config/area',
-                'comm',
+                //'comm',
                 'app/router',
 
             ]
