@@ -60,7 +60,7 @@ define(['app/module', 'app/directive/directiveApi'
                     break;
                 }
             }
-            localStorage.removeItem("chat_messageHistory" + item.send_user_id);
+            localStorage.removeItem("chat_messageHistory-" + item.send_user_id+'-'+item.receive_user_id);
             $scope.messageList = message;
             $rootScope.messageList = message;
             ar.setStorage('messageList-'+ ar.getCookie('bhy_user_id'), $scope.messageList);
