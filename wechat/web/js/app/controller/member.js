@@ -887,7 +887,7 @@ define(['app/module', 'app/directive/directiveApi'
                 return false;
             }
 
-            if ($scope.formData.content.length < 1 || !$scope.formData.content) {
+            if (!$scope.formData.content) {
                 ar.saveDataAlert($ionicPopup, '说点什么吧，不要为难小的哦。')
                 return false;
             }
@@ -906,7 +906,7 @@ define(['app/module', 'app/directive/directiveApi'
                     okText: '确定'
                 });
 
-                if (alert) {
+                alert.then(function(){
                     if (res.status) {
                         if ($location.$$search.tempUrl) {
                             $location.url($location.$$search.tempUrl);
@@ -917,7 +917,7 @@ define(['app/module', 'app/directive/directiveApi'
                     } else {
                         window.location.reload();
                     }
-                }
+                })
 
             }).error(function (res) {
                 alert(res.msg);
