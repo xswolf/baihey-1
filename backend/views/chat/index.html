@@ -9,7 +9,7 @@
             <h2>{{userInfo.user_id}}  <span ng-if="userInfo.msg_status" class="label label-danger" id="jello">新消息</span></h2>
             <p>{{userInfo.info.real_name || userInfo.user_id}} {{userInfo.sex == '1' ? '男' : '女'}} {{userInfo.age || '0'}}岁</p>
         </a>
-        <a class="item tac" ng-click="loadMore()">
+        <a class="item tac cp" ng-click="loadMore()">
             <p class="cor_p" ng-if="!moreLoading && isMore">点击加载更多</p>
             <img ng-if="moreLoading" src="/wechat/web/images/loading.gif">
         </a>
