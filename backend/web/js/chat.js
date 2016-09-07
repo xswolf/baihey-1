@@ -40,7 +40,7 @@ module.controller('chat', function ($scope, $http, $interval, $timeout) {
 
     }
 
-    $interval(chatFilter,10000);
+    $interval(chatFilter,300000);
 
 
     $scope.pageSize = 20;
