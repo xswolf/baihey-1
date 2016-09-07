@@ -873,6 +873,7 @@ define(['app/module', 'app/directive/directiveApi'
 
         // 发布动态
         $scope.saveData = function () {
+
             var userInfo = ar.getStorage('userInfo');
             userInfo.info = JSON.parse(userInfo.info)
             userInfo.auth = JSON.parse(userInfo.auth);
@@ -886,8 +887,8 @@ define(['app/module', 'app/directive/directiveApi'
                 return false;
             }
 
-            if($scope.formData.content.length < 1 || !$scope.formData.content){
-                ar.saveDataAlert($ionicPopup,'说点什么吧，不要为难小的哦。')
+            if ($scope.formData.content.length < 1 || !$scope.formData.content) {
+                ar.saveDataAlert($ionicPopup, '说点什么吧，不要为难小的哦。')
                 return false;
             }
 
@@ -899,24 +900,32 @@ define(['app/module', 'app/directive/directiveApi'
             $scope.formData.name = JSON.parse(userInfo.info).real_name;
             $scope.formData.pic = JSON.stringify($scope.imgList);
             api.save('/wap/member/add-user-dynamic', $scope.formData).success(function (res) {
-                ar.saveDataAlert($ionicPopup, res.msg);
-                if (res.status) {
-                    if ($location.$$search.tempUrl) {
-                        $location.url($location.$$search.tempUrl);
-                        console.log($location.$$search.tempUrl);
+
+                var alert = $ionicPopup.alert({
+                    template: res.msg,
+                    okText: '确定'
+                });
+
+                if (alert) {
+                    if (res.status) {
+                        if ($location.$$search.tempUrl) {
+                            $location.url($location.$$search.tempUrl);
+                        } else {
+                            $location.url('/discovery');
+                            $rootScope.$broadcast('reload', 1);
+                        }
                     } else {
-                        $location.url('/discovery');
-                        $rootScope.$broadcast('reload', 1);
+                        window.location.reload();
                     }
-                } else {
-                    window.location.reload();
                 }
+
             }).error(function (res) {
-                alert(res);
+                alert(res.msg);
             }).finally(function () {
                 $ionicLoading.hide();
             })
         }
+
     }]);
 
 
@@ -1286,7 +1295,7 @@ define(['app/module', 'app/directive/directiveApi'
                 })
                 return false;
             }
-            if($scope.userInfo.is_show == 1){
+            if ($scope.userInfo.is_show == 1) {
                 var confirmPopup = $ionicPopup.confirm({
                     title: '重要提示',
                     template: '您确定要开启资料保护吗？开启后在您未主动联系其他会员时，他人均不可搜索及浏览您的资料。',
@@ -1314,7 +1323,7 @@ define(['app/module', 'app/directive/directiveApi'
                         return;
                     }
                 });
-            }else{
+            } else {
                 $scope.loading = true;
                 $scope.userInfo.is_show = '1';
                 api.save('/wap/member/save-data', $scope.userInfo).success(function (res) {
