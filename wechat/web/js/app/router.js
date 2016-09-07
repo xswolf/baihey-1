@@ -4,15 +4,6 @@
 define(["app/module", 'app/service/serviceApi'],
     function (module) {
         module.run(['$rootScope', '$state', '$timeout', 'app.serviceApi', '$ionicLoading', '$location', '$templateCache', function ($rootScope, $state, $timeout, api, $ionicLoading, $location, $templateCache) {
-
-            if(window.localStorage)
-            {
-                var 剩余空间 = 1024 * 1024 * 5 - unescape(encodeURIComponent(JSON.stringify(localStorage))).length;
-
-                alert(剩余空间);
-            }
-
-
             var userId = ar.getCookie('bhy_user_id');
             var messageList = function () {
                 api.list('/wap/message/message-list', []).success(function (res) {
