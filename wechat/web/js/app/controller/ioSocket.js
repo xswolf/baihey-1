@@ -214,7 +214,13 @@ define(['app/module', 'app/directive/directiveApi'
         api.list("/wap/message/message-history", {id: $scope.receiveId}).success(function (res) {
             var data = res.data.messageList;
 
-            $rootScope.historyListHide = list = list != null ? list.concat(data) : data;
+            list = list != null ? list.concat(data) : data;
+            alert(list.length);
+            if (list.length > 50){ //最多只能保存50条数据
+                list.splice(0, list.length-50);
+            }
+            $rootScope.historyListHide =  list;
+
             ar.setStorage('chat_messageHistory-' + $scope.receiveId + '-' + userId, list);
 
             if (data.length > 0 || res.data.status == 0) { // 如果有新消息，所有消息状态为已看 res.data.status == 0 对方已看
