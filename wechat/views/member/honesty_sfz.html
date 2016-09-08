@@ -18,14 +18,18 @@
                 <ul class="clearfix mb10 bhy-gallery">
                     <li>
                         <img ng-if="!authList[0].thumb_path" class="face" src="/wechat/web/images/member/card-face.png">
-                        <a ng-if="authList[0].thumb_path" href="{{authList[0].thumb_path | picture}}" data-size="{{authList[0].thumb_path.split('.')[0].split('_')[1] + 'x' + authList[0].thumb_path.split('.')[0].split('_')[2]}}">
+                        <a class="pr dib" ng-if="authList[0].thumb_path" href="{{authList[0].thumb_path | picture}}" data-size="{{authList[0].thumb_path.split('.')[0].split('_')[1] + 'x' + authList[0].thumb_path.split('.')[0].split('_')[2]}}">
                             <img class="face" src="{{authList[0].thumb_path}}">
+                            <span class="review" ng-if="authList[0].is_check == 2">审核中</span>
+                            <span class="review no" ng-if="authList[0].is_check == 0">审核未通过</span>
                         </a>
                     </li>
                     <li>
                         <img ng-if="!authList[1].thumb_path" class="back" src="/wechat/web/images/member/card-back.png">
-                        <a ng-if="authList[1].thumb_path" ng-href="{{authList[1].thumb_path | picture}}" data-size="{{authList[1].thumb_path.split('.')[0].split('_')[1] + 'x' + authList[1].thumb_path.split('.')[0].split('_')[2]}}">
+                        <a class="pr dib" ng-if="authList[1].thumb_path" ng-href="{{authList[1].thumb_path | picture}}" data-size="{{authList[1].thumb_path.split('.')[0].split('_')[1] + 'x' + authList[1].thumb_path.split('.')[0].split('_')[2]}}">
                             <img class="back" src="{{authList[1].thumb_path}}">
+                            <span class="review" ng-if="authList[1].is_check == 2">审核中</span>
+                            <span class="review no" ng-if="authList[1].is_check == 0">审核未通过</span>
                         </a>
                     </li>
                 </ul>
