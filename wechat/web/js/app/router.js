@@ -28,17 +28,15 @@ define(["app/module", 'app/service/serviceApi'],
                     }
                     $rootScope.messageList = storageList;
                     ar.setStorage('messageList-'+userId, storageList)
+                    // 计算总共有多少条消息
+                    var num = 0;
+                    for(var i in storageList){
+                        if (parseInt(storageList[i].sumSend) > 0){
+                            num += parseInt(storageList[i].sumSend);
+                        }
+                    }
+                    $rootScope.msgNumber = num;
                 });
-            }
-
-            var msgNumber = function (userId) {
-                if (userId > 0) {
-                    api.getMessageNumber().success(function (res) {
-                        $rootScope.msgNumber = parseInt(res.data);
-                    });
-                } else {
-                    $rootScope.msgNumber = 0;
-                }
             }
 
             if (userId > 0) {
@@ -48,7 +46,6 @@ define(["app/module", 'app/service/serviceApi'],
 
                     skt.on(userId, function (response) {
                         messageList();
-                        msgNumber(userId);
                     })
                 })
             }
@@ -75,7 +72,6 @@ define(["app/module", 'app/service/serviceApi'],
                         //if (sessionStorage.flag === undefined) {
                             var together = function () {
                                 messageList();
-                                msgNumber(userId);
                                 mainIntercept();
                             }
                             $timeout(together, 500);
@@ -238,8 +234,6 @@ define(["app/module", 'app/service/serviceApi'],
                                             }
                                             messageList[i].message = $rootScope.historyListHide[$rootScope.historyListHide.length - 1].message
                                         }
-                                        $rootScope.msgNumber = $rootScope.msgNumber - messageList[i].sumSend;
-                                        $rootScope.msgNumber = $rootScope.msgNumber >= 0 ? $rootScope.msgNumber : 0;
                                         messageList[i].sumSend = 0;
                                         messageList[i].status = 1;
 
