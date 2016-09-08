@@ -7,7 +7,6 @@ function Message() {
     this.add = function (msg, callback) {
         var sql = 'insert into bhy_user_message (send_user_id , receive_user_id,message,message_type,create_time,status) values(?,?,?,?,?,?)';
         var time = Date.parse(new Date()) / 1000;
-        //var sql = 'insert into bhy_message set send_user_id = ? ,receive_user_id=?, message=?,message_type=?,create_time=?,status=?';
 
         conn.query(sql , [msg.send_user_id,msg.receive_user_id,msg.message,this.getMessageType(msg.type),time,msg.status] , function (err ,res) {
             if(err) {

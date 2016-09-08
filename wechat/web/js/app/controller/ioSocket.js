@@ -331,9 +331,7 @@ define(['app/module', 'app/directive/directiveApi'
                     response.message = response.message.replace(/&quot;/g, "\"");
                     if ($scope.sendId == response.send_user_id) {  // 响应自己发送的消息
                         for (var i in $scope.historyList) {
-                            //if (response.status == 1 && $scope.historyList[i].status != 4) { // 如果对方在线，所有消息均设置已读
-                            //    $scope.historyList[i].status = 1;
-                            //}
+
                             if (response.time == $scope.historyList[i].time &&
                                 (response.message == $scope.historyList[i].message ||
                                 response.type == 'pic')) {
@@ -360,10 +358,9 @@ define(['app/module', 'app/directive/directiveApi'
                         }
 
                     }
-                    $rootScope.historyList = $scope.historyList;
+                    list = $rootScope.historyListHide = $rootScope.historyList = $scope.historyList;
                     ar.setStorage('chat_messageHistory-' + $scope.receiveId + '-' + userId, $scope.historyList); // 每次发送消息后把消息放到浏览器端缓存
-                    $rootScope.historyListHide = $scope.historyList;
-                    list = $scope.historyList;
+
                 }
 
                 switch (response.type) {
