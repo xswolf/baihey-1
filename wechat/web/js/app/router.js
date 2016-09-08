@@ -223,10 +223,9 @@ define(["app/module", 'app/service/serviceApi'],
                             var messageList = ar.getStorage('messageList-' + ar.getCookie('bhy_user_id'));
                             if (messageList == null) messageList = [];
                             var flag = true;
-                            var i = 0;
 
                             if (messageList != undefined && messageList != '') {
-                                for (i in messageList) {
+                                for (var i in messageList) {
                                     if (messageList[i].receive_user_id == $rootScope.receiveUserInfo.id || messageList[i].send_user_id == $rootScope.receiveUserInfo.id) {
                                         if ($rootScope.historyListHide != undefined && $rootScope.historyListHide.length > 0) {
                                             if (messageList[i].message != $rootScope.historyListHide[$rootScope.historyListHide.length - 1].message) {
@@ -238,6 +237,7 @@ define(["app/module", 'app/service/serviceApi'],
                                         messageList[i].status = 1;
 
                                         flag = false;
+                                        break;
                                     }
                                 }
                             }
