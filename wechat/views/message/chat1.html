@@ -10,7 +10,7 @@
                        pulling-icon="ion-arrow-down-c"></ion-refresher>
         <ion-list>
             <!-- 举报提示 -->
-            <div ng-if="report_flag == 1" class="r_warning report">
+            <div ng-if="report_flag == 1 && receiveId > 9999" class="r_warning report">
                 <p class="mb0">
                     <i class="ion-alert-circled assertive fs14 warning_ico vam"></i>
                     <span class="vam assertive">对方被举报多次，须谨慎交流！</span>
@@ -35,7 +35,7 @@
             <!-- 固定item/ -->
 
             <!-- 身份认证提示 -->
-            <div class="r_warning" ng-if="sfzCheck !== 1">
+            <div class="r_warning" ng-if="sfzCheck !== 1 && receiveId > 9999">
                 <p class="mb0">
                     <i class="ion-alert-circled assertive fs14 warning_ico vam"></i>
                     <span class="vam">对方身份未在本站验证，须谨慎交流！</span>
