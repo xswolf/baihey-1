@@ -227,13 +227,8 @@ define(['app/module', 'app/directive/directiveApi'
                     return;
                 }
 
-                try {
-                    $scope.sendMessage($scope.send_content, $scope.sendId, $scope.receiveId, 'send', undefined, true);
-                } catch (e) {
-
-                } finally {
-                    $scope.send_content = '';
-                }
+                $scope.sendMessage($scope.send_content, $scope.sendId, $scope.receiveId, 'send', undefined, true);
+                $scope.send_content = '';
 
             }
 
