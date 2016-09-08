@@ -45,7 +45,9 @@ define(["app/module", 'app/service/serviceApi'],
                     var skt = socket.connect("http://120.76.84.162:8088");
 
                     skt.on(userId, function (response) {
-                        messageList();
+                        if(!($state.current.url == '/chat1/:id' &&　$state.params.id == response.send_user_id )){
+                            messageList();
+                        }
                     })
                 })
             }
