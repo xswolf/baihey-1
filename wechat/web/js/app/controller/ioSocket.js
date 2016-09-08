@@ -277,7 +277,7 @@ define(['app/module', 'app/directive/directiveApi'
                             }
 
                         } else {
-                            for (var i = $scope.historyList.length - 1; i >= 0; i++) {
+                            for (var i = $scope.historyList.length - 1; i >= 0; i--) {
                                 if ($scope.historyList[i].type == 'pic' && $scope.historyList[i].status == 3) {
                                     $scope.historyList[i].status = 4;
                                     break;
