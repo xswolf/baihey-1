@@ -75,15 +75,12 @@ define(["app/module", 'app/service/serviceApi'],
                             }
                         }
 
-                        //if (sessionStorage.flag === undefined) {
-                            var together = function () {
-                                messageList();
-                                msgNumber(userId);
-                                mainIntercept();
-                            }
-                            $timeout(together, 500);
-                            sessionStorage.flag = true;
-                        //}
+                        var together = function () {
+                            messageList();
+                            msgNumber(userId);
+                            mainIntercept();
+                        }
+                        $timeout(together, 500);
                     });
             // 页面加载成功
             $rootScope
