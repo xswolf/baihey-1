@@ -372,10 +372,11 @@ table.dataTable thead .sorting_asc:after {
     position: relative;
     text-decoration: none;
 }
-
-table .user_img {
+table .user_img{
     width: 30px;
     height: 30px;
+}
+table .user_img,table .user_img_100 {
     display: block;
     vertical-align: middle;
     cursor: pointer;
@@ -383,6 +384,7 @@ table .user_img {
     -webkit-transition:All 0.4s ease-in-out;
     -moz-transition:All 0.4s ease-in-out;
     -o-transition:All 0.4s ease-in-out;
+    z-index: 9;
 }
 
 table .user_img:hover {
@@ -391,6 +393,14 @@ table .user_img:hover {
     -moz-transform: scale(5);
     -o-transform: scale(5);
     -ms-transform: scale(5);
+}
+
+table .user_img_100:hover {
+    transform: scale(3);
+    -webkit-transform: scale(3);
+    -moz-transform: scale(3);
+    -o-transform: scale(3);
+    -ms-transform: scale(3);
 }
 
 .pd0 {
