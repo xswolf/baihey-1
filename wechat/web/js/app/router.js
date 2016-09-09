@@ -73,7 +73,6 @@ define(["app/module", 'app/service/serviceApi'],
 
                         var together = function () {
                             messageList();
-                            msgNumber(userId);
                             mainIntercept();
                         }
                         $timeout(together, 500);
