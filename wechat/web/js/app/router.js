@@ -199,15 +199,7 @@ define(["app/module", 'app/service/serviceApi'],
                         url: "/chat1/:id",
                         templateUrl: "/wechat/views/message/chat1.html",
                         controller: 'message.chat1',
-                        resolve: {
-                            dataFilter: function ($http) {
-                                return $http({
-                                    method: 'POST',
-                                    url: '/wap/user/index-is-show-data',
-                                    params: {}
-                                });
-                            }
-                        },
+
                         onExit: function ($rootScope) {
 
                             var messageList = ar.getStorage('messageList-' + ar.getCookie('bhy_user_id'));

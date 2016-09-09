@@ -5,7 +5,7 @@ define(['app/module', 'app/directive/directiveApi'
     , 'app/service/serviceApi', 'comm'
 ], function (module) {
 
-    module.controller("message.chat1", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$ionicModal', '$ionicActionSheet', '$ionicLoading', '$ionicScrollDelegate', 'FileUploader', '$http', '$location', '$rootScope', '$filter', '$ionicPopover', '$interval', 'dataFilter', function (api, $scope, $timeout, $ionicPopup, $ionicModal, $ionicActionSheet, $ionicLoading, $ionicScrollDelegate, FileUploader, $http, $location, $rootScope, $filter, $ionicPopover, $interval, dataFilter) {
+    module.controller("message.chat1", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$ionicModal', '$ionicActionSheet', '$ionicLoading', '$ionicScrollDelegate', 'FileUploader', '$http', '$location', '$rootScope', '$filter', '$ionicPopover', '$interval', function (api, $scope, $timeout, $ionicPopup, $ionicModal, $ionicActionSheet, $ionicLoading, $ionicScrollDelegate, FileUploader, $http, $location, $rootScope, $filter, $ionicPopover, $interval) {
         var userId = ar.getCookie('bhy_user_id');
         $scope.historyList = [];
         $scope.blackList = false;
@@ -21,8 +21,9 @@ define(['app/module', 'app/directive/directiveApi'
         $scope.sendId = ar.getCookie("bhy_user_id");
         $scope.receiveId = $location.search().id;
 
+        var dataFilter = $rootScope.dataFilter;
         $scope.blackListAlert = function () {
-            if (dataFilter.data.blacked.indexOf($scope.receiveId) > -1) {   // 已被对方拉黑，不可查看对方资料
+            if (dataFilter.blacked.indexOf($scope.receiveId) > -1) {   // 已被对方拉黑，不可查看对方资料
                 ar.saveDataAlert($ionicPopup, '您已被对方拉黑，不可查看对方资料。')
                 return;
             }
@@ -97,7 +98,7 @@ define(['app/module', 'app/directive/directiveApi'
                 ar.saveDataAlert($ionicPopup, '您不能关注自己');
                 return;
             }
-            if (dataFilter.data.blacked.indexOf($scope.followData.follow_id) != -1) {
+            if (dataFilter.blacked.indexOf($scope.followData.follow_id) != -1) {
                 ar.saveDataAlert($ionicPopup, '对方设置，关注失败');
                 return;
             }
@@ -187,7 +188,7 @@ define(['app/module', 'app/directive/directiveApi'
                     create_time: flagTime
                 };
 
-                if (dataFilter.data.blacked.indexOf(receiveID) > -1) {  //黑名单，不能发消息
+                if (dataFilter.blacked.indexOf(receiveID) > -1) {  //黑名单，不能发消息
                     message.refuse = -1;
                     message.status = 4;
                     $scope.historyList.push(message);

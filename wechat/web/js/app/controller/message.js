@@ -6,8 +6,8 @@ define(['app/module', 'app/directive/directiveApi'
 ], function (module) {
 
     module.controller("message.index", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$ionicModal', '$ionicActionSheet', '$ionicLoading', '$location','$ionicListDelegate','$interval','$rootScope', function (api, $scope, $timeout, $ionicPopup, $ionicModal, $ionicActionSheet, $ionicLoading, $location,$ionicListDelegate,$interval, $rootScope) {
-        $timeout($scope.sumSend);
 
+        var dataFilter = $rootScope.dataFilter;
         // 发现列表过滤条件：黑名单
         $scope.indexFilter = function (user_id) {
             return dataFilter.blacked.indexOf(user_id) == -1
