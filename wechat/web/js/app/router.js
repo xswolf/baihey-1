@@ -190,7 +190,7 @@ define(["app/module", 'app/service/serviceApi'],
                     });
                 $urlRouterProvider.otherwise("/error");
             }])
-            .controller('main', ['$scope', '$location', 'app.serviceApi', '$ionicLoading', '$ionicPopup', '$timeout',  function ($scope, $location, api, $ionicLoading, $ionicPopup,$timeout) {
+            .controller('main', ['$scope', '$location', 'app.serviceApi', '$ionicLoading', '$ionicPopup', '$timeout', '$state', function ($scope, $location, api, $ionicLoading, $ionicPopup,$timeout,$state) {
 
                 $scope.upUserStorage = function (name, value, type) {
                     if (type == 'wu') {
