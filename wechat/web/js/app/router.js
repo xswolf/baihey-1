@@ -340,16 +340,6 @@ define(["app/module", 'app/service/serviceApi'],
                     getUserStorage();
                 }
 
-                /*// 拉黑等信息
-                 $scope.authDataFilter = authData() ? authData() : [];
-                 function authData(){
-                 var data = [];
-                 api.list('/wap/user/index-is-show-data', []).success(function (res) {
-                 data = res.data;
-                 });
-                 return data;
-                 }*/
-
 
                 // 设置用户信息跳转至资料页
                 $scope.setUserStorage = function () {
@@ -479,6 +469,5 @@ define(["app/module", 'app/service/serviceApi'],
                 $scope.honesty = function (val) {
                     return 1 & val;
                 }
-                //$scope.userInfo = [{}];
             }])
     });
