@@ -87,7 +87,7 @@ define(["app/module", 'app/service/serviceApi'],
                 .$on('$stateChangeSuccess',
                     function (event, toState, toParams, fromState, fromParams) {
                         $ionicLoading.hide();
-                        //$templateCache.removeAll(); // test清除模版缓存
+                        //$templateCache.removeAll(); // test1清除模版缓存
                     });
 
             // 相关监听
