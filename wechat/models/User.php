@@ -1,7 +1,8 @@
 <?php
 namespace wechat\models;
 
-use common\util\Cookie;
+use common\models\UserFollow;
+use common\models\UserPhoto;
 use yii\db\Query;
 
 /**
@@ -433,5 +434,26 @@ class User extends \common\models\User
         } else {
             return false;
         }
+    }
+
+    public function indexIsShowData($user_id){
+        if ($user_id) {
+            $blacked     = UserFollow::getInstance()->getFollowList('blacked', $user_id);
+            $follow      = UserFollow::getInstance()->getFollowList('followed', $user_id);
+            $blackedList = [];
+            $followList  = [];
+            foreach ($blacked as $k => $v) {
+                $blackedList[] = $v['user_id'];
+            }
+            foreach ($follow as $k => $v) {
+                $followList[] = $v['user_id'];
+            }
+            $honestyStatus = UserPhoto::getInstance()->getPhotoList($user_id, 2, 2);
+            $headpicStatus = UserPhoto::getInstance()->userHeadpic($user_id);
+            return ['status' => 1, 'blacked' => $blackedList, 'follow' => $followList, 'honestyStatus' => $honestyStatus, 'headpicStatus' => $headpicStatus];
+        } else {
+            return ['status' => 1, 'blacked' => [], 'follow' => [], 'honestyStatus' => [], 'headpicStatus' => []];
+        }
+
     }
 }

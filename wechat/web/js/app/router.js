@@ -3,7 +3,7 @@
  */
 define(["app/module", 'app/service/serviceApi'],
     function (module) {
-        module.run(['$rootScope', '$state', '$timeout', 'app.serviceApi', '$ionicLoading', '$location', '$templateCache', function ($rootScope, $state, $timeout, api, $ionicLoading, $location, $templateCache) {
+        module.run(['$rootScope', '$state', '$timeout', 'app.serviceApi', '$ionicLoading', function ($rootScope, $state, $timeout, api, $ionicLoading) {
             var userId = ar.getCookie('bhy_user_id');
             var messageList = function () {
                 api.list('/wap/message/message-list', []).success(function (res) {
@@ -38,16 +38,24 @@ define(["app/module", 'app/service/serviceApi'],
                     $rootScope.msgNumber = num;
                 });
             }
+            $rootScope.dataFilter = JSON.parse(ar.getCookie("indexIsShowData"));
 
             if (userId > 0) {
                 requirejs(['plugin/socket/socket.io.1.4.0'], function (socket) {
 
+                    var indexIsShowData = function () {
+                        api.list("/wap/user/index-is-show-data",{}).success(function (res) {
+                            $rootScope.dataFilter = res;
+                        });
+                    }
                     var skt = socket.connect("http://120.76.84.162:8088");
 
                     skt.on(userId, function (response) {
+                        // 两人对聊时不需要执行messageList
                         if(!($state.current.url == '/chat1/:id' &&　$state.params.id == response.send_user_id )){
                             messageList();
                         }
+                        indexIsShowData();
                     })
                 })
             }
@@ -113,16 +121,7 @@ define(["app/module", 'app/service/serviceApi'],
                     .state('index', {   // 首页
                         url: "/index",
                         templateUrl: "/wechat/views/site/index.html",
-                        controller: 'site.index',
-                        resolve: {
-                            dataFilter: function ($http) {
-                                return $http({
-                                    method: 'POST',
-                                    url: '/wap/user/index-is-show-data',
-                                    params: {}
-                                });
-                            }
-                        }
+                        controller: 'site.index'
                     })
                     .state('index_discovery', {   // 查看他人动态
                         url: "/index_discovery",
@@ -163,16 +162,7 @@ define(["app/module", 'app/service/serviceApi'],
                         cache: true,
                         url: "/message",
                         templateUrl: "/wechat/views/message/index.html",
-                        controller: "message.index",
-                        resolve: {
-                            dataFilter: function ($http) {
-                                return $http({
-                                    method: 'POST',
-                                    url: '/wap/user/index-is-show-data',
-                                    params: {}
-                                });
-                            }
-                        }
+                        controller: "message.index"
                     })
                     .state('userInfo', {  // 查看用户资料
                         cache: false,

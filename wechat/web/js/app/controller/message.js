@@ -5,19 +5,12 @@ define(['app/module', 'app/directive/directiveApi'
     , 'app/service/serviceApi', 'comm'
 ], function (module) {
 
-    module.controller("message.index", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$ionicModal', '$ionicActionSheet', '$ionicLoading', '$location','$ionicListDelegate','dataFilter','$interval','$rootScope', function (api, $scope, $timeout, $ionicPopup, $ionicModal, $ionicActionSheet, $ionicLoading, $location,$ionicListDelegate,dataFilter,$interval, $rootScope) {
+    module.controller("message.index", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$ionicModal', '$ionicActionSheet', '$ionicLoading', '$location','$ionicListDelegate','$interval','$rootScope', function (api, $scope, $timeout, $ionicPopup, $ionicModal, $ionicActionSheet, $ionicLoading, $location,$ionicListDelegate,$interval, $rootScope) {
         $timeout($scope.sumSend);
-        // 判断是否登录
-        /*api.getLoginStatus().success(function(res) {
-         if(!res.status) {
-         location.href = '/wap/user/login';
-         return false;
-         }
-         });*/
 
         // 发现列表过滤条件：黑名单
         $scope.indexFilter = function (user_id) {
-            return dataFilter.data.blacked.indexOf(user_id) == -1
+            return dataFilter.blacked.indexOf(user_id) == -1
         }
 
         $scope.userInfo = {};
@@ -30,24 +23,6 @@ define(['app/module', 'app/directive/directiveApi'
         //console.log($scope.messageList)
 
         $scope.userInfo.id = ar.getCookie('bhy_user_id');
-
-       /* // 是否有谁关注了我，有则显示小红点
-        $scope.isFollow = true;
-        api.getSumFollow().success(function (res) {
-            if (res.status) {
-                var sumFollow = ar.getStorage('sumFollow') ? ar.getStorage('sumFollow') : 0;
-                if (sumFollow >= res.data.sumFollow) {
-                    $scope.isFollow = false;
-                }
-                ar.setStorage('NewSumFollow', res.data.sumFollow);
-            }
-        });*/
-
-       /* // 联系人pop窗口
-        $scope.popShow = false;
-        $scope.pop_toggle = function () {
-            $scope.popShow = !$scope.popShow;
-        }*/
 
         // 删除操作
         $scope.removeItem = function (item,event) {

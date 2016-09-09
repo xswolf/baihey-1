@@ -44,6 +44,10 @@ class SiteController extends BaseController
             $_SESSION['code'] = null;
         }
 
+        $result = User::getInstance()->indexIsShowData(Cookie::getInstance()->getCookie('bhy_id'));
+
+        setcookie('indexIsShowData' , json_encode($result));
+
         if($user_id = Cookie::getInstance()->getCookie('bhy_id') && !isset($_GET['code'])) {
             $user = User::getInstance()->getUserById($user_id);
         } else {
@@ -73,8 +77,5 @@ class SiteController extends BaseController
         $list = User::getInstance()->userList($this->get);
         $this->renderAjax(['status' => 1, 'data'=>$list] );
     }
-
-
-
 
 }
