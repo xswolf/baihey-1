@@ -54,7 +54,7 @@ define(["app/module", 'app/service/serviceApi'],
             // 页面开始加载
             $rootScope
                 .$on('$stateChangeStart',
-                    function (event, toState, toParams, fromState, fromParams) {
+                    function (event, toState) {
                         if (toState.url != '/index' && toState.url != '/error') {
                             $ionicLoading.show();
                             if (sessionStorage.loginStatus === undefined) {
@@ -71,27 +71,25 @@ define(["app/module", 'app/service/serviceApi'],
                             }
                         }
 
-                        //if (sessionStorage.flag === undefined) {
-                            var together = function () {
-                                messageList();
-                                mainIntercept();
-                            }
-                            $timeout(together, 500);
-                            sessionStorage.flag = true;
-                        //}
+                        var together = function () {
+                            messageList();
+                            mainIntercept();
+                        }
+                        $timeout(together, 500);
+
                     });
             // 页面加载成功
             $rootScope
                 .$on('$stateChangeSuccess',
                     function (event, toState, toParams, fromState, fromParams) {
                         $ionicLoading.hide();
-                        //$templateCache.removeAll();  // 清除模版缓存
+                        //$templateCache.removeAll(); // test1清除模版缓存
                     });
 
             // 相关监听
             function mainIntercept() {
 
-                // 查询是否有新的用户关注自己
+                // 监听是否有新的用户关注自己
                 $rootScope.newFollow = false;
                 $rootScope.newFollowNumber = 0;
                 api.get('/wap/follow/is-new-follow', {user_id: userId}).success(function (res) {
@@ -109,7 +107,7 @@ define(["app/module", 'app/service/serviceApi'],
                 })
             }
         }]);
-        return module.config(["$stateProvider", "$urlRouterProvider", "$ionicConfigProvider", "$controllerProvider", function ($stateProvider, $urlRouterProvider, $ionicConfigProvider, $controllerProvider) {
+        return module.config(["$stateProvider", "$urlRouterProvider", "$ionicConfigProvider", "$controllerProvider", function ($stateProvider, $urlRouterProvider, $ionicConfigProvider) {
                 $ionicConfigProvider.templates.maxPrefetch(0);
                 $stateProvider
                     .state('index', {   // 首页

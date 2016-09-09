@@ -39,6 +39,12 @@ io.on('connection', function (socket) {
         console.log('send:' + msg.send_user_id + '   ' + 'receive: ' + msg.receive_user_id, msg);
     });
 
+    // 通知接口
+    socket.on('note' , function (msg) {
+
+        io.emit(msg.receive_user_id, msg);
+    });
+
     // 告诉服务器你加入了聊天
     socket.on('tell name', function (msg) {
         socket.username = msg.send_user_id + '-' + msg.receive_user_id;
