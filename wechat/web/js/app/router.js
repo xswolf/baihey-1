@@ -38,6 +38,7 @@ define(["app/module", 'app/service/serviceApi'],
                     $rootScope.msgNumber = num;
                 });
             }
+
             $rootScope.dataFilter = JSON.parse(ar.getCookie("indexIsShowData"));
 
             if (userId > 0) {
@@ -48,9 +49,9 @@ define(["app/module", 'app/service/serviceApi'],
                             $rootScope.dataFilter = res;
                         });
                     }
-                    var skt = socket.connect("http://120.76.84.162:8088");
+                    $rootScope.skt = socket.connect("http://120.76.84.162:8088");
 
-                    skt.on(userId, function (response) {
+                    $rootScope.on(userId, function (response) {
                         // 两人对聊时不需要执行messageList
                         if(!($state.current.url == '/chat1/:id' &&　$state.params.id == response.send_user_id )){
                             messageList();
@@ -63,6 +64,7 @@ define(["app/module", 'app/service/serviceApi'],
             $rootScope
                 .$on('$stateChangeStart',
                     function (event, toState) {
+                        // 判断是否登陆
                         if (toState.url != '/index' && toState.url != '/error') {
                             $ionicLoading.show();
                             if (sessionStorage.loginStatus === undefined) {
@@ -87,12 +89,9 @@ define(["app/module", 'app/service/serviceApi'],
 
                     });
             // 页面加载成功
-            $rootScope
-                .$on('$stateChangeSuccess',
-                    function (event, toState, toParams, fromState, fromParams) {
-                        $ionicLoading.hide();
-                        //$templateCache.removeAll(); // test1清除模版缓存
-                    });
+            $rootScope.$on('$stateChangeSuccess',function () {
+                $ionicLoading.hide();
+            });
 
             // 相关监听
             function mainIntercept() {
@@ -114,6 +113,7 @@ define(["app/module", 'app/service/serviceApi'],
                     }
                 })
             }
+
         }]);
         return module.config(["$stateProvider", "$urlRouterProvider", "$ionicConfigProvider", "$controllerProvider", function ($stateProvider, $urlRouterProvider, $ionicConfigProvider) {
                 $ionicConfigProvider.templates.maxPrefetch(0);
