@@ -25,7 +25,6 @@ define(['app/module', 'app/directive/directiveApi'
             }
             localStorage.removeItem("chat_messageHistory-" + item.send_user_id+'-'+item.receive_user_id);
             $scope.messageList = message;
-            $rootScope.messageList = message;
             ar.setStorage('messageList-'+ ar.getCookie('bhy_user_id'), $scope.messageList);
             api.setMsgDisplay(item.other).success(function (res) {
             });
@@ -34,4 +33,5 @@ define(['app/module', 'app/directive/directiveApi'
         }
 
     }]);
+
 })
