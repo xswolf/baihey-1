@@ -414,6 +414,7 @@ define(['app/module', 'app/directive/directiveApi'
                 res.data[i].age = res.data[i].age.replace(/\"/g, '');
             }
             $scope.discoveryList = res.data;
+            $scope.user.user_id = res.data[0].user_id;
             $scope.user.username = res.data[0].real_name;
             $scope.user.age = res.data[0].age;
             $scope.user.sex = res.data[0].sex;

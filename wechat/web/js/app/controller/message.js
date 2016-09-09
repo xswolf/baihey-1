@@ -6,7 +6,6 @@ define(['app/module', 'app/directive/directiveApi'
 ], function (module) {
 
     module.controller("message.index", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$ionicModal', '$ionicActionSheet', '$ionicLoading', '$location','$ionicListDelegate','dataFilter','$interval','$rootScope', function (api, $scope, $timeout, $ionicPopup, $ionicModal, $ionicActionSheet, $ionicLoading, $location,$ionicListDelegate,dataFilter,$interval, $rootScope) {
-
         $timeout($scope.sumSend);
         // 判断是否登录
         /*api.getLoginStatus().success(function(res) {
@@ -53,7 +52,7 @@ define(['app/module', 'app/directive/directiveApi'
         // 删除操作
         $scope.removeItem = function (item,event) {
             angular.element(event.target).parent().parent().addClass('item-remove-animate');
-            var message = ar.getStorage('messageList-'+userId);
+            var message = ar.getStorage('messageList-'+$scope.userInfo.id);
             for (var i in message) {
                 //console.log(message[i].other , item)
                 if (message[i].other == item.send_user_id) {
@@ -61,10 +60,10 @@ define(['app/module', 'app/directive/directiveApi'
                     break;
                 }
             }
-            localStorage.removeItem("chat_messageHistory" + item.send_user_id);
+            localStorage.removeItem("chat_messageHistory-" + item.send_user_id+'-'+item.receive_user_id);
             $scope.messageList = message;
             $rootScope.messageList = message;
-            ar.setStorage('messageList-'+userId, $scope.messageList);
+            ar.setStorage('messageList-'+ ar.getCookie('bhy_user_id'), $scope.messageList);
             api.setMsgDisplay(item.other).success(function (res) {
             });
 

@@ -1,6 +1,6 @@
 <!DOCTYPE html>
-<html lang="zh-CN" manifest="/wechat/web/appcache">
-<!--<html lang="zh-CN">-->
+<!--<html lang="zh-CN" manifest="/wechat/web/appcache">-->
+<html lang="zh-CN">
 
 <head>
     <meta charset="utf-8">
@@ -14,6 +14,7 @@
     <link href="/wechat/web/css/android.css" rel="stylesheet">
     <link href="/wechat/web/css/plugin/animate/animate.css" rel="stylesheet">
     <link href="/wechat/web/css/newFontIcon160613.css" rel="stylesheet">
+    <link href="/wechat/web/css/newFontIcon160901.css" rel="stylesheet">
     <link href="/wechat/web/css/plugin/photoswipe/photoswipe.css" rel="stylesheet">
     <link href="/wechat/web/css/plugin/photoswipe/default-skin.css" rel="stylesheet">
     <script>
@@ -33,7 +34,7 @@
 </head>
 
 <!--<script src="//cdn.bootcss.com/ionic/1.2.4/js/ionic.bundle.min.js"></script>-->
-<script data-main="/wechat/web/js/app" src="/wechat/web/js/plugin/requirejs/require.js"></script>
+<script data-main="/wechat/web/dist/app" src="/wechat/web/js/plugin/requirejs/require.js"></script>
 <!--<script data-main="/wechat/web/js/build" src="/wechat/web/js/plugin/requirejs/require.js"></script>-->
 <body onload="addElement();" ng-controller="main">
 <?= $content ?>

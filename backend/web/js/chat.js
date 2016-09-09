@@ -5,7 +5,9 @@
 var module = angular.module('chatApp', []);
 module.controller('chat', function ($scope, $http, $interval, $timeout) {
 
-
+    $scope.changeStatus = function(item){
+        item.msg_status = 0;
+    }
 
     $http({url: '/admin/chat/fictitious-list'}).success(function (res, header, config, status) {
         for (var i in res.data) {
@@ -38,7 +40,7 @@ module.controller('chat', function ($scope, $http, $interval, $timeout) {
 
     }
 
-    $interval(chatFilter,10000);
+    $interval(chatFilter,300000);
 
 
     $scope.pageSize = 20;

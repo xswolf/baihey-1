@@ -1,23 +1,25 @@
 <ion-view>
     <link href="/wechat/web/css/member.css" rel="stylesheet">
     <link href="/wechat/web/css/fontIcon.css" rel="stylesheet">
-    <ion-header-bar align-title="center" >
+    <ion-header-bar align-title="center" class="bhy com_w_100">
         <title class="title">我的资料</title>
     </ion-header-bar>
     <ion-content class="bhy com_w_100 infomation bg5">
         <ion-list>
             <div class="imgList_con">
-                <div class="imgList_handle clearfix ">
+                <div class="imgList_handle clearfix">
                     <div class="bhy-gallery">
-                        <a class="imgItem pr" ng-repeat="img in imgList | orderBy:['-is_head']" on-hold="moreImg($index)"  ng-href="{{img.thumb_path | picture}}" data-size="{{img.thumb_path.split('.')[0].split('_')[1] + 'x' + img.thumb_path.split('.')[0].split('_')[2]}}">
-                            <img src="/wechat/web/images/lazyload.png" lazyload="{{img.thumb_path}}">
-                            <figure class="hide" ng-if="img.is_check == 1">轻触照片退出</figure>
-                        </a>
+                        <div class="row warp">
+                            <a class="col col-25 pr" ng-repeat="img in imgList | orderBy:['-is_head']" on-hold="moreImg($index)" ng-href="{{img.thumb_path | picture}}" get-img-size="{{img.thumb_path}}">
+                                <img src="/wechat/web/images/lazyload.png" lazyload="{{img.thumb_path}}">
+                                <figure class="hide">轻触照片退出</figure>
+                            </a>
+                            <div ng-if="imgList.length < 12 || !imgList" class="col col-25" ng-click="addNewImg($event)">
+                                <img src="/wechat/web/images/addPic.png">
+                            </div>
+                        </div>
                     </div>
-                    <div ng-if="imgList.length < 12 || !imgList" class="imgItem addItem" ng-click="addNewImg()">
-                        <i class="ion-plus-round"></i>
-                    </div>
-                    <div class="tip fl w100">温馨提示：相册第一张为头像且不可更换，您最多可以上传12张照片。</div>
+                    <div class="tip fl w100 padding">温馨提示：相册第一张为头像且不可更换，最多可以上传12张照片。</div>
                 </div>
             </div>
             <input id="pic_fileInput" type="file" nv-file-select="" uploader="uploader"
@@ -56,13 +58,11 @@
                 </p>
                 <i ng-if="!userInfo.info.real_name" class="icon ion-ios-arrow-right cor52"></i>
             </ion-item>
-            <ion-item class="item-icon-right" ng-click="updateInfo('wechat_number')">
+            <ion-item class="item-icon-right">
                 <p>
                     <span class="cor4">手机号码</span>
-                    <span ng-if="!userInfo.info.wechat" class="ml20 mr10 cor21">立即填写</span>
-                    <span ng-if="userInfo.info.wechat" class="ml20 mr10">{{userInfo.info.wechat}}（{{userInfo.privacy_wechat | privacy}}）</span>
+                    <span ng-if="userInfo.phone" class="ml20 mr10">{{userInfo.phone}}</span>
                 </p>
-                <i class="icon ion-ios-arrow-right cor52"></i>
             </ion-item>
             <ion-item class="item-icon-right" ng-click="updateInfo('wechat_number')">
                 <p>
@@ -83,14 +83,4 @@
         </ion-list>
     </ion-content>
 
-    <script id="photoTitleModal.html" type="text/ng-template">
-        <ion-modal-view>
-            <ion-header-bar align-title="center" >
-                <h1 class="title">My Modal title</h1>
-            </ion-header-bar>
-            <ion-content>
-                Hello!
-            </ion-content>
-        </ion-modal-view>
-    </script>
 </ion-view>

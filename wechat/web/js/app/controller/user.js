@@ -74,60 +74,44 @@ define(['app/module', 'app/directive/directiveApi'
 
         }
 
-        //$scope.getVerify = function (event) {
-        //    event.target.src = '/wap/user/get-verify?time=' + ar.timeStamp();
-        //}
-
         //注册提交
         $scope.register = function () {
             if (!validateFrom()) return false;
-            api.getMobileIsExist($scope.User.mobile).success(function (res) {
-                if (res.status < 1) {
-                    ar.saveDataAlert($ionicPopup, '该手机号码已存在');
+            api.validateCode($scope.User.code).success(function (res) {
+                if (!res.status) {
+                    ar.saveDataAlert($ionicPopup, '验证码不正确');
                     return false;
                 } else {
-                    if (!$scope.User.code) {
-                        ar.saveDataAlert($ionicPopup, '请输入验证码');
-                        return false;
-                    }
-                    api.validateCode($scope.User.code).success(function (res) {
-                        if (!res.status) {
-                            ar.saveDataAlert($ionicPopup, '验证码不正确');
-                            //angular.element(document.querySelectorAll('#verify')[0]).attr('src', '/wap/user/get-verify?time=' + ar.timeStamp())
-                            return false;
+                    delete $scope.User.code;
+                    $ionicLoading.show({template: '注册中...'});
+                    var result = api.save('/wap/user/register', $scope.User);
+                    result.success(function (data) {
+                        $ionicLoading.hide();
+                        if (data.status == 1) {
+                            ar.setStorage('userInfo', data.data);
+                            var alertPopup = $ionicPopup.alert({
+                                title: '重要提示',
+                                template: '您的初始密码为：' + ar.getPassByPhone($scope.User.mobile) + '，请及时前往个人中心修改您的密码。'
+                            });
+                            alertPopup.then(function (res) {
+                                top.location.href = '/wap/site/main#/index';
+                            });
+
                         } else {
-                            $ionicLoading.show({template: '注册中...'});
-                            var result = api.save('/wap/user/register', $scope.User);
-                            result.success(function (data) {
-                                $ionicLoading.hide();
-                                if (data.status == 1) {
-                                    ar.setStorage('userInfo', data.data);
-                                    var alertPopup = $ionicPopup.alert({
-                                        title: '重要提示',
-                                        template: '您的初始密码为：'+ar.getPassByPhone($scope.User.mobile) + '，请及时前往个人中心修改您的密码。'
-                                    });
-                                    alertPopup.then(function(res) {
-                                        top.location.href = '/wap/site/main#/index';
-                                    });
-
-                                } else {
-                                    ar.saveDataAlert($ionicPopup, data.msg);
-                                }
-                            }).error(function () {
-                                $ionicLoading.hide();
-                                ar.saveDataAlert($ionicPopup, '网络连接错误，请重试！');
-                            })
+                            ar.saveDataAlert($ionicPopup, data.msg);
                         }
-                    });
+                    }).error(function () {
+                        $ionicLoading.hide();
+                        ar.saveDataAlert($ionicPopup, '网络连接错误，请重试！');
+                    })
                 }
-            })
-
+            });
         }
 
     }])
 
     // 登录
-    module.controller("User.login", ['app.serviceApi', '$scope', '$ionicPopup', '$location','$ionicLoading', function (api, $scope, $ionicPopup, $location,$ionicLoading) {
+    module.controller("User.login", ['app.serviceApi', '$scope', '$ionicPopup', '$location', '$ionicLoading', function (api, $scope, $ionicPopup, $location, $ionicLoading) {
 
         $scope.User = {};
 

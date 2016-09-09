@@ -28,17 +28,15 @@ define(["app/module", 'app/service/serviceApi'],
                     }
                     $rootScope.messageList = storageList;
                     ar.setStorage('messageList-'+userId, storageList)
+                    // 计算总共有多少条消息
+                    var num = 0;
+                    for(var i in storageList){
+                        if (parseInt(storageList[i].sumSend) > 0){
+                            num += parseInt(storageList[i].sumSend);
+                        }
+                    }
+                    $rootScope.msgNumber = num;
                 });
-            }
-
-            var msgNumber = function (userId) {
-                if (userId > 0) {
-                    api.getMessageNumber().success(function (res) {
-                        $rootScope.msgNumber = parseInt(res.data);
-                    });
-                } else {
-                    $rootScope.msgNumber = 0;
-                }
             }
 
             if (userId > 0) {
@@ -47,19 +45,17 @@ define(["app/module", 'app/service/serviceApi'],
                     var skt = socket.connect("http://120.76.84.162:8088");
 
                     skt.on(userId, function (response) {
-                        messageList();
-                        msgNumber(userId);
+                        if(!($state.current.url == '/chat1/:id' &&　$state.params.id == response.send_user_id )){
+                            messageList();
+                        }
                     })
                 })
             }
-
-
-
             // 页面开始加载
             $rootScope
                 .$on('$stateChangeStart',
                     function (event, toState, toParams, fromState, fromParams) {
-                        if (toState.url != '/index') {
+                        if (toState.url != '/index' && toState.url != '/error') {
                             $ionicLoading.show();
                             if (sessionStorage.loginStatus === undefined) {
                                 api.getLoginStatus().success(function (res) {
@@ -81,6 +77,7 @@ define(["app/module", 'app/service/serviceApi'],
                             mainIntercept();
                         }
                         $timeout(together, 500);
+
                     });
             // 页面加载成功
             $rootScope
@@ -111,7 +108,7 @@ define(["app/module", 'app/service/serviceApi'],
                 })
             }
         }]);
-        return module.config(["$stateProvider", "$urlRouterProvider", "$ionicConfigProvider", "$controllerProvider", function ($stateProvider, $urlRouterProvider, $ionicConfigProvider, $controllerProvider) {
+        return module.config(["$stateProvider", "$urlRouterProvider", "$ionicConfigProvider", "$controllerProvider", function ($stateProvider, $urlRouterProvider, $ionicConfigProvider) {
                 $ionicConfigProvider.templates.maxPrefetch(0);
                 $stateProvider
                     .state('index', {   // 首页
@@ -164,7 +161,7 @@ define(["app/module", 'app/service/serviceApi'],
                         }
                     })
                     .state('message', {  // 消息首页
-                        cache: false,
+                        cache: true,
                         url: "/message",
                         templateUrl: "/wechat/views/message/index.html",
                         controller: "message.index",
@@ -207,11 +204,10 @@ define(["app/module", 'app/service/serviceApi'],
                                 });
                             }
                         }
-
                     })
                     .state('chat', { // 聊天页面
-                        cache:false,
-                        url: "/chat1",
+                        cache:true,
+                        url: "/chat1/:id",
                         templateUrl: "/wechat/views/message/chat1.html",
                         controller: 'message.chat1',
                         resolve: {
@@ -228,10 +224,9 @@ define(["app/module", 'app/service/serviceApi'],
                             var messageList = ar.getStorage('messageList-' + ar.getCookie('bhy_user_id'));
                             if (messageList == null) messageList = [];
                             var flag = true;
-                            var i = 0;
 
                             if (messageList != undefined && messageList != '') {
-                                for (i in messageList) {
+                                for (var i in messageList) {
                                     if (messageList[i].receive_user_id == $rootScope.receiveUserInfo.id || messageList[i].send_user_id == $rootScope.receiveUserInfo.id) {
                                         if ($rootScope.historyListHide != undefined && $rootScope.historyListHide.length > 0) {
                                             if (messageList[i].message != $rootScope.historyListHide[$rootScope.historyListHide.length - 1].message) {
@@ -239,12 +234,11 @@ define(["app/module", 'app/service/serviceApi'],
                                             }
                                             messageList[i].message = $rootScope.historyListHide[$rootScope.historyListHide.length - 1].message
                                         }
-                                        $rootScope.msgNumber = $rootScope.msgNumber - messageList[i].sumSend;
-                                        $rootScope.msgNumber = $rootScope.msgNumber >= 0 ? $rootScope.msgNumber : 0;
                                         messageList[i].sumSend = 0;
                                         messageList[i].status = 1;
 
                                         flag = false;
+                                        break;
                                     }
                                 }
                             }

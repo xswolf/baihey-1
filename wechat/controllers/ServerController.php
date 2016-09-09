@@ -49,16 +49,16 @@ class ServerController extends BaseController {
 //            $resultStr = \Yii::$app->wechat->responseNews($fromUsername , $toUsername);
 
             /***********************客服消息****************************/
-            /*$articles = [
+           $articles = [
                 [
-                    'title' => 'Happy Day',
-                    'description' => 'Is Really A Happy Day',
-                    'url' => '',
-                    'picurl' => ''
+                    'title' => '嘉瑞百合缘微站上线啦！',
+                    'description' => '全新界面，简易操作，实名认证，安全放心！',
+                    'url' => 'http://wechat.baihey.com/wap',
+                    'picurl' => 'https://mmbiz.qlogo.cn/mmbiz_jpg/hD1GpvgKwC7odZymQsyZ6MsxkBEB0X0s16k5ApWOYfHCXXUlsda4DwmicuuFEH6iaZCia5ZKnwet0vdUoxZ89I5Wg/0?wx_fmt=jpeg'
                 ]
-            ];*/
-//            $resultStr = \Yii::$app->wechat->sendNews($fromUsername , $articles);
-            $resultStr = \Yii::$app->wechat->sendText($fromUsername , '感谢您关注嘉瑞百合缘，请点击下方按钮“进入嘉瑞”，体验最真实的交友征婚！');
+            ];
+            $resultStr = \Yii::$app->wechat->sendNews($fromUsername , $articles);
+//            $resultStr = \Yii::$app->wechat->sendText($fromUsername , '感谢您关注嘉瑞百合缘，请点击下方按钮“进入嘉瑞”，体验最真实的交友征婚！');
             /***********************客服消息****************************/
 
             file_put_contents('./log.txt' , $resultStr."\n" ,FILE_APPEND);
@@ -111,6 +111,14 @@ class ServerController extends BaseController {
         var_dump($result_1);
 
         var_dump($result);
+    }
+
+    public function actionReq(){
+        $appId = \Yii::$app->wechat->appId;
+        $redirectUri = urlencode("http://wechat.baihey.com/wap/user/register?qdid=10000");
+
+        $url = "https://open.weixin.qq.com/connect/oauth2/authorize?appid={$appId}&redirect_uri={$redirectUri}&response_type=code&scope=snsapi_userinfo&state=tes#wechat_redirect";
+        echo $url;
     }
 
     public function actionMaterialList(){

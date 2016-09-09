@@ -45,7 +45,7 @@ class User extends Base
 
     public function getUserById($id)
     {
-        $userTable            = $this->tablePrefix.'user';
+        $userTable = $this->tablePrefix . 'user';
         $userInformationTable = $this->tablePrefix . 'user_information';
         return (new Query)
             ->select('*')
@@ -55,10 +55,11 @@ class User extends Base
             ->one();
     }
 
-    public function getUser($where){
+    public function getUser($where)
+    {
 
-        $user = (new Query())->from($this->tablePrefix.'user u')
-            ->innerJoin($this->tablePrefix . 'user_information i' , 'u.id=i.user_id')
+        $user = (new Query())->from($this->tablePrefix . 'user u')
+            ->innerJoin($this->tablePrefix . 'user_information i', 'u.id=i.user_id')
             ->where($where)
             ->select("*")
             ->one();
@@ -75,16 +76,19 @@ class User extends Base
      */
     public function addUser($data)
     {
-        $db          = $this->getDb();
+        $db = $this->getDb();
         $transaction = $db->beginTransaction();// 启动事务
         // user表 数据处理
         if (isset($data['wx_id'])) {
-            $dataUser['wx_id']      = $data['wx_id'];
-            $dataUser['username']   = $data['username'];
-            $dataUser['password']   = md5(md5($data['password']));
+            $dataUser['wx_id'] = $data['wx_id'];
+            $dataUser['username'] = $data['username'];
+            $dataUser['password'] = md5(md5($data['password']));
             $dataUser['login_type'] = $data['login_type'];
+            if (isset($data['phone'])) {
+                $dataUser['phone'] = $data['phone'];
+            }
         } else {
-            if(isset($data['id'])) {
+            if (isset($data['id'])) {
                 $dataUser['id'] = $data['id'];
                 $dataUser['password'] = $data['password'];
             } else {
@@ -92,10 +96,10 @@ class User extends Base
                 $dataUser['password'] = md5(md5($data['password']));
             }
             $dataUser['username'] = $data['phone'];
-            $dataUser['phone']    = $data['phone'];
+            $dataUser['phone'] = $data['phone'];
 
-            if(isset($data['info']['age']) && !empty($data['info']['age'])) {
-                $infoData['age'] = floor((time() - $data['info']['age'])/ 365 / 24 / 3600);
+            if (isset($data['info']['age']) && !empty($data['info']['age'])) {
+                $infoData['age'] = floor((time() - $data['info']['age']) / 365 / 24 / 3600);
             }
             isset($data['province']) ? $infoData['province'] = $data['province'] : true;
             isset($data['city']) ? $infoData['city'] = $data['city'] : true;
@@ -113,17 +117,19 @@ class User extends Base
 
             isset($data['username']) ? $dataUser['username'] = $data['username'] : true;
         }
-        $time                        = YII_BEGIN_TIME;
-        $dataUser['reg_time']        = $time;
+        $time = YII_BEGIN_TIME;
+        $dataUser['reg_time'] = $time;
         $dataUser['last_login_time'] = $time;
         $dataUser['reset_pass_time'] = $time;
-        $dataUser['sex']             = $data['sex'];
+        $dataUser['sex'] = $data['sex'];
         // userinformation表 数据处理
         // 值班红娘销售红娘
-        if(isset($data['matchmaker'])) {
+        if (!isset($data['matchmaker'])) {
             $auth_user = new \backend\models\User();
             $admin = $auth_user->getFindUser(['duty' => 1]);
-            $data['matchmaker'] = $admin['id'];
+            $infoData['matchmaker'] = $admin['id'];
+        } else {
+            $infoData['matchmaker'] = $data['matchmaker'];
         }
         // info
         $userInfo = $this->getDefaultInfo();
@@ -251,7 +257,7 @@ class User extends Base
     {
         $time = time();
         $this->getDb()->createCommand()
-            ->update($this->tablePrefix.'user', ['last_login_time' =>$time] , ['id' => $user_id])
+            ->update($this->tablePrefix . 'user', ['last_login_time' => $time], ['id' => $user_id])
             ->execute();
         $log['user_id'] = $user_id;
         $log['type'] = 1;
@@ -265,11 +271,11 @@ class User extends Base
     public function userLog($log)
     {
 
-        $userLog              = \common\models\Base::getInstance('user_log');
-        $userLog->user_id     = $log['user_id'];
-        $userLog->type        = $log['type'];
+        $userLog = \common\models\Base::getInstance('user_log');
+        $userLog->user_id = $log['user_id'];
+        $userLog->type = $log['type'];
         $userLog->create_time = $log['create_time'];
-        $userLog->ip          = ip2long($_SERVER["REMOTE_ADDR"]);
+        $userLog->ip = ip2long($_SERVER["REMOTE_ADDR"]);
         return $userLog->insert(false);
     }
 
@@ -283,21 +289,31 @@ class User extends Base
         return $this->findOne(['phone' => $phone]);
     }
 
+    /**
+     * 验证微信是否注册
+     * @param $wx
+     * @return null|static
+     */
+    public function wxIsExist($wx)
+    {
+        return $this->findOne(['wx_id' => $wx]);
+    }
+
     public function editUser($data)
     {
-        $user       = $data['user'];
+        $user = $data['user'];
         $user['id'] = $data['user_id'];
         unset($data['user']);
         $userInfo = $data;
-        if(isset($userInfo['info']['age']) && !empty($data['info']['age'])) {
-            $userInfo['age'] = floor((time() - $userInfo['info']['age'])/ 365 / 24 / 3600);
+        if (isset($userInfo['info']['age']) && !empty($data['info']['age'])) {
+            $userInfo['age'] = floor((time() - $userInfo['info']['age']) / 365 / 24 / 3600);
         }
-        if(isset($userInfo['info']['real_name']) && !empty($data['info']['real_name'])) {
+        if (isset($userInfo['info']['real_name']) && !empty($data['info']['real_name'])) {
             $userInfo['info']['real_name'] = trim($userInfo['info']['real_name']);
         }
         $oldUser = $this->getUserById($data['user_id']);
         $defaultInfo = json_decode($oldUser['info']);
-        if(is_object($defaultInfo)) {
+        if (is_object($defaultInfo)) {
             $defaultInfo = (array)$defaultInfo;
         }
         //var_dump($defaultInfo);exit;
@@ -305,15 +321,16 @@ class User extends Base
         $this->getDb()->createCommand()->update($this->tablePrefix . "user_information", $userInfo, ['user_id' => $data['user_id']])->execute();
         $this->getDb()->createCommand()->update($this->tablePrefix . "user", $user, ['id' => $data['user_id']])->execute();
         // 添加图片
-        if(isset($data['cardFace_List'])) {
+        if (isset($data['cardFace_List'])) {
             User::getInstance()->insertUserPhoto($user['id'], $data);
         }
         return $user;
     }
 
-    public function editUser1($data){
+    public function editUser1($data)
+    {
         return \Yii::$app->db->createCommand()
-            ->update($this->tablePrefix . "user" , $data , ['id' => $data['id']])
+            ->update($this->tablePrefix . "user", $data, ['id' => $data['id']])
             ->execute();
     }
 
@@ -327,14 +344,14 @@ class User extends Base
     public function setClickLike($dynamicId, $userId, $add)
     {
 
-        $tran               = \Yii::$app->db->beginTransaction();
-        $click              = \common\models\Base::getInstance('user_click');
-        $click->user_id     = $userId;
-        $click->dynamic_id  = $dynamicId;
+        $tran = \Yii::$app->db->beginTransaction();
+        $click = \common\models\Base::getInstance('user_click');
+        $click->user_id = $userId;
+        $click->dynamic_id = $dynamicId;
         $click->create_time = time();
-        $clickFlag          = $click->save();
-        $dynamic            = \common\models\Base::getInstance("user_dynamic")->findOne($dynamicId);
-        $dynamic->like_num  = $dynamic->like_num + $add;
+        $clickFlag = $click->save();
+        $dynamic = \common\models\Base::getInstance("user_dynamic")->findOne($dynamicId);
+        $dynamic->like_num = $dynamic->like_num + $add;
 
         if ($clickFlag && $dynamic->save()) {
             $tran->commit();
@@ -355,10 +372,10 @@ class User extends Base
     public function cancelClickLike($dynamicId, $userId, $add)
     {
 
-        $tran              = \Yii::$app->db->beginTransaction();
-        $click             = \common\models\Base::getInstance('user_click')->findOne(['user_id' => $userId, 'dynamic_id' => $dynamicId]);
-        $clickFlag         = $click->delete();
-        $dynamic           = \common\models\Base::getInstance("user_dynamic")->findOne($dynamicId);
+        $tran = \Yii::$app->db->beginTransaction();
+        $click = \common\models\Base::getInstance('user_click')->findOne(['user_id' => $userId, 'dynamic_id' => $dynamicId]);
+        $clickFlag = $click->delete();
+        $dynamic = \common\models\Base::getInstance("user_dynamic")->findOne($dynamicId);
         $dynamic->like_num = $dynamic->like_num + $add;
         if ($clickFlag && $dynamic->save()) {
             $tran->commit();
@@ -395,17 +412,17 @@ class User extends Base
     public function addComment($data)
     {
 
-        $tran                 = \Yii::$app->db->beginTransaction();
-        $comment              = \common\models\Base::getInstance("user_comment");
-        $comment->user_id     = \common\util\Cookie::getInstance()->getCookie('bhy_id')->value;
-        $comment->content     = $data['content'];
-        $comment->dynamic_id  = $data['dynamicId'];
-        $comment->private     = $data['private'];
+        $tran = \Yii::$app->db->beginTransaction();
+        $comment = \common\models\Base::getInstance("user_comment");
+        $comment->user_id = \common\util\Cookie::getInstance()->getCookie('bhy_id')->value;
+        $comment->content = $data['content'];
+        $comment->dynamic_id = $data['dynamicId'];
+        $comment->private = $data['private'];
         $comment->create_time = $data['create_time'];
 
-        $flag                 = $comment->save();
-        $id                   = Yii::$app->db->lastInsertID;
-        $dynamic              = \common\models\Base::getInstance("user_dynamic")->findOne($data['dynamicId']);
+        $flag = $comment->save();
+        $id = Yii::$app->db->lastInsertID;
+        $dynamic = \common\models\Base::getInstance("user_dynamic")->findOne($data['dynamicId']);
         $dynamic->comment_num = $dynamic->comment_num + 1;
         if ($flag && $dynamic->save()) {
             $tran->commit();
@@ -458,16 +475,16 @@ class User extends Base
     public function getBriberyList($userId, $flag = true, $page = 0, $year = 0, $limit = 10000)
     {
         $joinOnField = $flag == true ? 'receive_user_id' : 'send_user_id';
-        $whereField  = $flag == true ? 'receive_user_id' : 'send_user_id';
-        $flagd       = $flag == true ? 1 : 2;
-        $offset      = $page * $limit;
-        $handle      = (new Query())
+        $whereField = $flag == true ? 'receive_user_id' : 'send_user_id';
+        $flagd = $flag == true ? 1 : 2;
+        $offset = $page * $limit;
+        $handle = (new Query())
             ->from($this->tablePrefix . "user_bribery  b")
             ->innerJoin($this->tablePrefix . "user_information i", "b.{$joinOnField} = i.user_id")
             ->select(["b.*", "json_extract(i.info , '$.real_name') as realName, '$flagd' as flag , FROM_UNIXTIME(b.create_time , '%Y') as year"])
             ->limit($limit)
             ->offset($offset);
-        $where       = ["b.{$whereField}" => $userId, 'status' => 1];
+        $where = ["b.{$whereField}" => $userId, 'status' => 1];
         $handle->where($where);
         if ($year > 1) {
             $handle->andWhere([">=", "create_time", strtotime($year . "-01-01")]);
@@ -486,12 +503,12 @@ class User extends Base
      */
     public function changeBalance($user_id, $money)
     {
-        $money               = intval($money);
-        $userInfo            = $this->getUserById($user_id);
+        $money = intval($money);
+        $userInfo = $this->getUserById($user_id);
         $userInfo['balance'] = $userInfo['balance'] - $money;
-        $db                  = $this->getDb();
-        $balance             = $db->createCommand()
-            ->update($this->tablePrefix.'user', ['balance' => $userInfo['balance']], ['id' => $user_id])
+        $db = $this->getDb();
+        $balance = $db->createCommand()
+            ->update($this->tablePrefix . 'user', ['balance' => $userInfo['balance']], ['id' => $user_id])
             ->execute();
         return $balance;
     }
@@ -506,13 +523,13 @@ class User extends Base
      */
     public function changeMatureTime($user_id, $goods_id, $level = 0)
     {
-        $goods    = ArrayHelper::toArray(ChargeGoods::getInstance()->findOne($goods_id));
+        $goods = ArrayHelper::toArray(ChargeGoods::getInstance()->findOne($goods_id));
         $userInfo = $this->getUserById($user_id);
         //  金额是否大于余额
         if ($goods['price'] > $userInfo['balance']) {
             return false;
         }
-        $db          = $this->getDb();
+        $db = $this->getDb();
         $transaction = $db->beginTransaction();// 启动事务
 
         // 计算时间
@@ -528,18 +545,18 @@ class User extends Base
         $_user_information_table = $this->tablePrefix . 'user_information';// 表名
         $userInfo['mature_time'] = YII_BEGIN_TIME > $userInfo['mature_time'] ? YII_BEGIN_TIME + $time : $userInfo['mature_time'] + $time;
         $level = $goods['level'];
-        if($level != 0) {
+        if ($level != 0) {
             $sql = "UPDATE {$_user_information_table} SET info = JSON_REPLACE(info,'$.level','" . $level . "'), mature_time = " . $userInfo['mature_time'] . " WHERE user_id={$user_id}";
         } else {
             $sql = "UPDATE {$_user_information_table} SET mature_time = " . $userInfo['mature_time'] . " WHERE user_id={$user_id}";
         }
-        $info                    = $db->createCommand($sql)->execute();
+        $info = $db->createCommand($sql)->execute();
 
         if ($user && $info) {
             $transaction->commit();
             // 写入用户消费日志表
             $goods['receive_name'] = '嘉瑞百合缘';
-            $goods['type']         = 1;
+            $goods['type'] = 1;
             ConsumptionLog::getInstance()->addConsumptionLog($user_id, $goods);
             return true;
         } else {
@@ -556,7 +573,7 @@ class User extends Base
     public function getCashCardList($user_id)
     {
         $_cash_card_table = $this->tablePrefix . 'cash_card';
-        $result           = (new Query())
+        $result = (new Query())
             ->from($_cash_card_table)
             ->select('*')
             ->where(['user_id' => $user_id])
@@ -568,7 +585,7 @@ class User extends Base
     public function getCashCardById($user_id, $id)
     {
         $_cash_card_table = $this->tablePrefix . 'cash_card';
-        $result           = (new Query())
+        $result = (new Query())
             ->from($_cash_card_table)
             ->select('*')
             ->where(['user_id' => $user_id, 'id' => $id])
@@ -578,10 +595,10 @@ class User extends Base
 
     public function addCashCard($user_id, $data)
     {
-        $_cash_card_table    = $this->tablePrefix . 'cash_card';
+        $_cash_card_table = $this->tablePrefix . 'cash_card';
         $data['create_time'] = time();
-        $data['user_id']     = $user_id;
-        $_cash_card          = $this->getInstance('cash_card');
+        $data['user_id'] = $user_id;
+        $_cash_card = $this->getInstance('cash_card');
         if ($_cash_card->findOne(['user_id' => $user_id, 'card_no' => $data['card_no']])) {
             return false;
         }
@@ -594,9 +611,9 @@ class User extends Base
     public function delCard($user_id, $id)
     {
         $_cash_card_table = $this->tablePrefix . 'cash_card';
-        $_cash_card       = $this->getInstance($_cash_card_table);
-        $card             = $_cash_card->findOne(['user_id' => $user_id, 'id' => $id]);
-        $row              = false;
+        $_cash_card = $this->getInstance($_cash_card_table);
+        $card = $_cash_card->findOne(['user_id' => $user_id, 'id' => $id]);
+        $row = false;
         if ($card) {
             $row = $_cash_card->deleteAll(['id' => $id]);
         }
@@ -612,12 +629,12 @@ class User extends Base
      */
     public function addCashInfo($user_id, $data)
     {
-        $_cash_card_table    = $this->tablePrefix . 'cash';
+        $_cash_card_table = $this->tablePrefix . 'cash';
         $data['create_time'] = time();
-        $data['status']      = 2;
-        $data['user_id']     = $user_id;
+        $data['status'] = 2;
+        $data['user_id'] = $user_id;
 
-        $db          = $this->getDb();
+        $db = $this->getDb();
         $transaction = $db->beginTransaction();// 启动事务
 
         // 减少余额
@@ -627,7 +644,7 @@ class User extends Base
         $row = $this->getDb()->createCommand()
             ->insert($_cash_card_table, $data)
             ->execute();
-        $id  = \Yii::$app->db->lastInsertID;
+        $id = \Yii::$app->db->lastInsertID;
 
         if ($balance && $row) {
             $transaction->commit();
@@ -646,7 +663,7 @@ class User extends Base
      */
     public function getCashInfo($id, $user_id = null)
     {
-        $cashTable     = $this->tablePrefix . 'cash';
+        $cashTable = $this->tablePrefix . 'cash';
         $cashCardTable = $this->tablePrefix . 'cash_card';
         if (isset($id)) {         // 根据提现记录ID查询单条记录
             $row = (new Query)
@@ -659,10 +676,10 @@ class User extends Base
         } else {
             if (!empty($user_id)) {      // 根据user_id查询所属用户全部提现记录
                 $row = (new Query)
-                    ->select(['cash.money','concat_ws(\'-\',card.name,card.card_no) as name','cash.create_time','cash.status','concat(\'提现\') as type'])
-                    ->from($cashTable.' cash')
+                    ->select(['cash.money', 'concat_ws(\'-\',card.name,card.card_no) as name', 'cash.create_time', 'cash.status', 'concat(\'提现\') as type'])
+                    ->from($cashTable . ' cash')
                     ->leftJoin($cashCardTable . ' card', 'cash.cash_card_id = card.id')
-                    ->where(['cash.user_id' => $user_id])   //TODO cash.status = 1
+                    ->where(['cash.user_id' => $user_id])//TODO cash.status = 1
                     ->all();
                 return $row;
             } else {
@@ -678,14 +695,14 @@ class User extends Base
      */
     public function getBriberyInfo($user_id)
     {
-        $briberyTable     = $this->tablePrefix . 'user_bribery';
+        $briberyTable = $this->tablePrefix . 'user_bribery';
         $informationTable = $this->tablePrefix . 'user_information';
         if (isset($user_id)) {
             $row = (new Query)
-                ->select(['b.money','json_extract (i.info, \'$.real_name\') AS name','b.create_time','b.status','concat(\'嘉瑞红包\') as type'])
-                ->from($briberyTable.' b')
+                ->select(['b.money', 'json_extract (i.info, \'$.real_name\') AS name', 'b.create_time', 'b.status', 'concat(\'嘉瑞红包\') as type'])
+                ->from($briberyTable . ' b')
                 ->leftJoin($informationTable . ' i', 'b.receive_user_id = i.user_id')
-                ->where(['b.send_user_id' => $user_id])   //TODO b.status = 1
+                ->where(['b.send_user_id' => $user_id])//TODO b.status = 1
                 ->all();
 //            ->createCommand()->getRawSql();
             return $row;
@@ -713,7 +730,7 @@ class User extends Base
      */
     public function getUserPropertyValue($user_id, $propertyKey)
     {
-        $userTable            = $this->tablePrefix.'user';
+        $userTable = $this->tablePrefix . 'user';
         $userInformationTable = $this->tablePrefix . 'user_information';
         $row = (new Query)
             ->select($propertyKey)
@@ -735,7 +752,7 @@ class User extends Base
      */
     public function getUserByPhone($phone)
     {
-        return (new Query())->from($this->tablePrefix.'user')->select('*')->where(['phone' => $phone])->one();
+        return (new Query())->from($this->tablePrefix . 'user')->select('*')->where(['phone' => $phone])->one();
     }
 
     /**
@@ -747,7 +764,7 @@ class User extends Base
      */
     public function editUserTableInfo($user_id, $data)
     {
-        $_user_table = $this->tablePrefix.'user';
+        $_user_table = $this->tablePrefix . 'user';
         $row = $this->getDb()->createCommand()
             ->update($_user_table, $data, ['id' => $user_id])
             ->execute();
@@ -759,8 +776,9 @@ class User extends Base
      * @param $userId
      * @return int|string
      */
-    public function getLoginTimes($userId){
-       return (new Query())->from($this->tablePrefix.'user_log')->where(['user_id'=>$userId])->count();
+    public function getLoginTimes($userId)
+    {
+        return (new Query())->from($this->tablePrefix . 'user_log')->where(['user_id' => $userId])->count();
     }
 
     /**
@@ -768,8 +786,9 @@ class User extends Base
      * @param $userId
      * @return mixed
      */
-    public function getPayAll($userId){
-        return (new Query())->from($this->tablePrefix.'charge_order')->where(['user_id'=>$userId])->sum("money");
+    public function getPayAll($userId)
+    {
+        return (new Query())->from($this->tablePrefix . 'charge_order')->where(['user_id' => $userId])->sum("money");
     }
 
     /**
@@ -778,9 +797,10 @@ class User extends Base
      * @param $status
      * @return bool
      */
-    public function delUser($id , $status = 4){
+    public function delUser($id, $status = 4)
+    {
         return \Yii::$app->db->createCommand()
-            ->update($this->tablePrefix.'user' , ['status'=>$status] , ['id'=>$id])
+            ->update($this->tablePrefix . 'user', ['status' => $status], ['id' => $id])
             ->execute();
     }
 
@@ -822,20 +842,21 @@ class User extends Base
         // 上传婚姻证明
         !empty($data['marrList']) ? $this->upPhoto($user_id, 5, $data['marrList']) : true;
         // 上传照片
-        if(!empty($data['headPic']) && !empty($data['photosList'])) {
-            $photo = explode(',', $data['photosList']);
+        $photo = $data['photosList'] == '' ? [] : explode(',', $data['photosList']);
+        if (!empty($data['headPic'])) {
             $photo = array_merge([$data['headPic']], $photo);
-            $photo = array_unique($photo);
-            $this->upPhoto($user_id, 1, $photo);
         }
+        $photo = array_unique($photo);
+        $this->upPhoto($user_id, 1, $photo, $data['headPic']);
         //exit;
     }
 
     // 图片上传
-    public function upPhoto($user_id, $type, $data)
+    public function upPhoto($user_id, $type, $data, $headPic = '')
     {
         $photo = $type == 1 ? $data : explode(',', $data);
-        foreach($photo as $k => $v) {
+        $arr = [];
+        foreach ($photo as $k => $v) {
             $arr[$k]['pic_path'] = str_replace('thumb', 'picture', $v);
             $arr[$k]['thumb_path'] = $v;
             $arr[$k]['is_check'] = 1;
@@ -848,35 +869,36 @@ class User extends Base
             }*/
         }
         // 上传照片
-        UserPhoto::getInstance()->savePhoto($arr, $user_id);
-        if($type != 1) {
-            $user = (new Query())->select('*')->from($this->tablePrefix.'user_information')->where(['user_id' => $user_id])->one();
+        $photoType = count($arr) == 0 ? 1 : $arr[0]['type'];
+        UserPhoto::getInstance()->savePhoto($arr, $user_id, $photoType, $headPic);
+        if ($type != 1) {
+            $user = (new Query())->select('*')->from($this->tablePrefix . 'user_information')->where(['user_id' => $user_id])->one();
 
             // 修改用户认证值
             if (($type == 2 || $type == 3) && $card = UserPhoto::getInstance()->getPhotoList($user_id, 23)) {
-                if(count($card) == 2 && !($user['honesty_value'] & 1)) {
+                if (count($card) == 2 && !($user['honesty_value'] & 1)) {
                     $user['honesty_value'] = $user['honesty_value'] + 1;
-                } elseif($user['honesty_value'] & 1) {
+                } elseif ($user['honesty_value'] & 1) {
                     $user['honesty_value'] = $user['honesty_value'] - 1;
                 }
                 $userInfo['has_identify'] = 1;
             } elseif ($type == 4) {
-                if(!($user['honesty_value'] & 4)) {
+                if (!($user['honesty_value'] & 4)) {
                     $user['honesty_value'] = $user['honesty_value'] + 4;
                 }
             } elseif ($type == 5) {
-                if(!($user['honesty_value'] & 2)) {
+                if (!($user['honesty_value'] & 2)) {
                     $user['honesty_value'] = $user['honesty_value'] + 2;
                 }
             } elseif ($type == 6) {
-                if(!($user['honesty_value'] & 8)) {
+                if (!($user['honesty_value'] & 8)) {
                     $user['honesty_value'] = $user['honesty_value'] + 8;
                 }
             }
             $userInfo['honesty_value'] = $user['honesty_value'];
             // 修改认证值
             $this->getDb()->createCommand()
-                ->update($this->tablePrefix.'user_information', $userInfo, ['user_id' => $user_id])
+                ->update($this->tablePrefix . 'user_information', $userInfo, ['user_id' => $user_id])
                 ->execute();
             //UserInformation::getInstance()->updateUserInfo($user_id, ['honesty_value' => $user['honesty_value']]);
             //$this->getDb()->createCommand()->update($this->tablePrefix.'user_information', ['honesty_value' => $user['honesty_value']], ['user_id' => $user_id])->execute();
@@ -888,50 +910,58 @@ class User extends Base
      * @param $data
      * @return bool
      */
-    public function auth($data){
-        if ($data['honesty_value'] == 1){
-            $type = [2,3];
+    public function auth($data)
+    {
+        if ($data['honesty_value'] == 1) {
+            $type = [2, 3];
             $data['has_identify'] = 1;
-        }else if ($data['honesty_value'] == 2){
+        } else if ($data['honesty_value'] == 2) {
             $type = 5;
-        }else if ($data['honesty_value'] == 4) {
+        } else if ($data['honesty_value'] == 4) {
             $type = 4;
-        }else if ($data['honesty_value'] == 8) {
+        } else if ($data['honesty_value'] == 8) {
             $type = 6;
         }
-        $user = (new Query())->from($this->tablePrefix.'user_information')
+        $user = (new Query())->from($this->tablePrefix . 'user_information')
             ->where(['user_id' => $data['user_id']])
             ->select('honesty_value')
             ->all();
-        if (is_array($user) && count($user) ==1){
-            if ($user[0]['honesty_value'] & $data['honesty_value']){
+        if (is_array($user) && count($user) == 1) {
+            if ($user[0]['honesty_value'] & $data['honesty_value']) {
                 $honesty_value = $user[0]['honesty_value'];
-            }else{
+            } else {
                 $honesty_value = $user[0]['honesty_value'] + $data['honesty_value'];
             }
-        }else{
+        } else {
             return 0;
         }
         $data['honesty_value'] = $honesty_value;
         $tran = \Yii::$app->db->beginTransaction();
-        $flag1 = \Yii::$app->db->createCommand()
-            ->update($this->tablePrefix.'user_information' ,$data ,['user_id'=>$data['user_id']])
-            ->execute();
-        $flag2 = $this->editPhoto($type,$data);
 
-        if ($flag1 >0 && $flag2 > 0 ){
+        $flag1 = \Yii::$app->db->createCommand()
+            ->update($this->tablePrefix . 'user_information', $data, ['user_id' => $data['user_id']])
+            ->execute();
+
+        $flag2 = $this->editPhoto($type, $data);
+
+        $flag3 = \Yii::$app->db->createCommand()
+            ->update($this->tablePrefix . 'user', ['status' => 2], ['id' => $data['user_id']])
+            ->execute();
+
+        if ($flag1 > 0 && $flag2 > 0 && $flag3 > 0) {
             $tran->commit();
             return 1;
-        }else{
+        } else {
             $tran->rollBack();
             return 0;
         }
 
     }
 
-    public function editPhoto($type,$data , $check = 1){
+    public function editPhoto($type, $data, $check = 1)
+    {
         return \Yii::$app->db->createCommand()
-            ->update($this->tablePrefix.'user_photo' ,['is_check'=>$check], ['user_id'=>$data['user_id'] , 'type'=>$type])
+            ->update($this->tablePrefix . 'user_photo', ['is_check' => $check], ['user_id' => $data['user_id'], 'type' => $type])
             ->execute();
     }
 }

@@ -23,7 +23,7 @@ io.on('connection', function (socket) {
     // 聊天发信息用接口
     socket.on('chat message', function (msg) {
 
-        if (userList.indexOf(msg.receive_user_id + '-' + msg.send_user_id) > -1) { // 接受者在线 ， 广播给接受者
+        if (userList.indexOf(msg.receive_user_id + '-' + msg.send_user_id) > -1) { // 接收者在线 ， 广播给接收者
             msg.status = 1;
             io.emit(msg.receive_user_id + '-' + msg.send_user_id, msg);
         } else {

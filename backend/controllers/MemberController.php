@@ -64,6 +64,10 @@ class MemberController extends BaseController
                 if($k == 'level' && $v=="0") $v = '';
                 $andWhere[] = ["=", "json_extract(info,'$.{$k}')", $v];
             }else{
+                if ($k == 'status' && $v == 5){
+                    $andWhere[] = [">", 'user_id', 12493];
+                    $v = 2;
+                }
                 $andWhere[] = ["=", $k, $v];
             }
 

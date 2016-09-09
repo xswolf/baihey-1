@@ -60,15 +60,11 @@ class ChatController extends BaseController
      * @return string|void
      */
     public function actionFictitiousList(){
-        $offset = 0;
+        $offset = 0;    //  831  1662
         if($this->user->getUser()['id'] == 1){
             $offset = 0;
-        }else if($this->user->getUser()['id'] == 2){
+        }else if($this->user->getUser()['id'] == 6){
             $offset = 0;
-        }else if($this->user->getUser()['id'] == 3){
-            $offset = 831;
-        }else if($this->user->getUser()['id'] == 4){
-            $offset = 1662;
         }else{
             return $this->renderAjax(['status'=>0 , 'data'=>[]]);
         }
@@ -77,7 +73,7 @@ class ChatController extends BaseController
             ->where([">=" , "user_id" , 10000])
             ->andWhere(["<=" , "user_id" , 12493])
             ->offset($offset)
-            ->limit(831)
+//            ->limit(831)
             ->all();
         return $this->renderAjax(['status'=>1 , 'data'=>$list]);
     }

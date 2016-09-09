@@ -28,7 +28,7 @@ class AuthUser extends Base
         } else {
             $condition = ['duty' => 1];
         }
-        $row = (new Query())->select(['real_name', 'id as job', 'phone', 'landline', 'qq', 'wechat', 'email', 'introduction', 'photo', 'address'])
+        $row = (new Query())->select(['name', 'id as job', 'phone', 'landline', 'qq', 'wechat', 'email', 'introduction', 'photo', 'address'])
             ->from($this->tablePrefix.'auth_user')
             ->where($condition)
             ->andWhere(['status' => 1])
@@ -46,7 +46,7 @@ class AuthUser extends Base
         return (new Query())->from($this->tablePrefix.'auth_assignment a')
             ->innerJoin($this->tablePrefix.'auth_user u' , 'a.user_id=u.id')
             ->where(['status'=>1])
-            ->andWhere(["like", "item_name", $role])
+            ->andWhere(["in", "item_name", $role])
             ->select("u.id,u.name")
             ->all();
     }

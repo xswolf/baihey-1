@@ -4,13 +4,13 @@
 <script src="/backend/web/js/chat.js"></script>
 <section id="page" ng-app="chatApp">
     <div class="chatList" ng-controller="chat">
-        <a class="item item-thumbnail-left" ng-repeat="userInfo in userInfoList | orderBy:'-msg_status' | limitTo:pageSize" href="http://wechat.baihey.com/wap/user/login?id={{userInfo.user_id}}&time={{userInfo.time}}&token={{userInfo.token}}">
+        <a target="_blank" ng-click="changeStatus(userInfo)" class="item item-thumbnail-left" ng-repeat="userInfo in userInfoList | orderBy:'-msg_status' | limitTo:pageSize" href="http://wechat.baihey.com/wap/user/login?id={{userInfo.user_id}}&time={{userInfo.time}}&token={{userInfo.token}}">
             <img ng-src="{{userInfo.info.head_pic}}" onerror="this.src='/wechat/web/images/no_img.png'">
             <h2>{{userInfo.user_id}}  <span ng-if="userInfo.msg_status" class="label label-danger" id="jello">新消息</span></h2>
             <p>{{userInfo.info.real_name || userInfo.user_id}} {{userInfo.sex == '1' ? '男' : '女'}} {{userInfo.age || '0'}}岁</p>
         </a>
-        <a class="item tac" ng-click="loadMore()">
-            <p class="cor_p" ng-if="!moreLoading || isMore">点击加载更多</p>
+        <a class="item tac cp" ng-click="loadMore()">
+            <p class="cor_p" ng-if="!moreLoading && isMore">点击加载更多</p>
             <img ng-if="moreLoading" src="/wechat/web/images/loading.gif">
         </a>
     </div>

@@ -83,7 +83,7 @@ class MemberController extends BaseController
      */
     public function actionDelPhoto()
     {
-        $list = UserPhoto::getInstance()->delPhoto($this->get , Cookie::getInstance()->getCookie('bhy_id')->value);
+        $list = UserPhoto::getInstance()->delPhoto($this->get, Cookie::getInstance()->getCookie('bhy_id')->value);
         $this->renderAjax(['status' => 1, 'data' => $list]);
     }
 
@@ -109,7 +109,7 @@ class MemberController extends BaseController
                     unlink($thumb_path);
                 }
             }
-            $list = UserPhoto::getInstance()->savePhoto($data, $user_id);
+            $list = UserPhoto::getInstance()->savePhoto($data, $user_id, 23);
         }
         $this->renderAjax(['status' => 1, 'data' => $list]);
     }

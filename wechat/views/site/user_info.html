@@ -1,10 +1,8 @@
 <ion-view>
     <link href="/wechat/web/css/member.css" rel="stylesheet">
-    <link href="/wechat/web/css/plugin/photoswipe/photoswipe.css" rel="stylesheet">
-    <link href="/wechat/web/css/plugin/photoswipe/default-skin.css" rel="stylesheet">
     <ion-header-bar align-title="center" >
         <title class="title">{{otherUserInfo.info.real_name | sex:otherUserInfo.sex:otherUserInfo.info.age:otherUserInfo.user_id}}</title>
-        <a class="button button-icon icon icon-new-menu-user-settings" href="#/member/settings?userId={{formData.userId}}&userName={{otherUserInfo.info.real_name}}"></a>
+        <a ng-if="otherUserInfo.id > 9999" class="button button-icon icon icon-new-menu-user-settings" href="#/member/settings?userId={{formData.userId}}&userName={{otherUserInfo.info.real_name}}"></a>
     </ion-header-bar>
     <ion-content class="bhy com_w_100 infomation has-footer">
         <ion-list>
@@ -244,7 +242,7 @@
     </ion-content>
     <ion-footer-bar align-title="left" class="bar-light">
         <div class="buttons transition" ng-class="{true:'w100',false:'w50'}[formData.isfollow == 1]">
-            <a class="button w100" style="font-size: 16px; color:#e4007f;" href="#/chat1?id={{otherUserInfo.id}}&head_pic={{otherUserInfo.info.head_pic}}&real_name={{otherUserInfo.info.real_name}}&sex={{otherUserInfo.sex}}&age={{otherUserInfo.info.age}}"><i class="ion-chatbox-working cor21 mr5 vam fs22"></i>对话</a>
+            <a class="button w100" style="font-size: 16px; color:#e4007f;" href="#/chat1/{{otherUserInfo.id}}?id={{otherUserInfo.id}}&head_pic={{otherUserInfo.info.head_pic}}&real_name={{otherUserInfo.info.real_name}}&sex={{otherUserInfo.sex}}&age={{otherUserInfo.info.age}}"><i class="ion-chatbox-working cor21 mr5 vam fs22"></i>对话</a>
         </div>
         <div class="buttons w50" ng-if="formData.isfollow != 1">
             <button class="button w100 transition"  style="font-size: 16px;" ng-click="addFollow()">

@@ -10,7 +10,7 @@
                        pulling-icon="ion-arrow-down-c"></ion-refresher>
         <ion-list>
             <!-- 举报提示 -->
-            <div ng-if="report_flag == 1" class="r_warning report">
+            <div ng-if="report_flag == 1 && receiveId > 9999" class="r_warning report">
                 <p class="mb0">
                     <i class="ion-alert-circled assertive fs14 warning_ico vam"></i>
                     <span class="vam assertive">对方被举报多次，须谨慎交流！</span>
@@ -20,10 +20,7 @@
             <!-- 固定item -->
             <ion-item class="talk_item_u">
                 <div class="talk_user">
-                    <a ng-show="!blackList" ng-href="{{receiveId >= 10000 ? '#/userInfo?userId='+receiveId : '#/admin_info?userId='+receiveId}}">
-                        <img ng-src="{{receiveHeadPic | isNull}}" onerror="this.src='/wechat/web/images/no_img.png'">
-                    </a>
-                    <a ng-show="blackList" href="javascript:;" ng-click="blackListAlert()">
+                    <a ng-click="blackListAlert()">
                         <img ng-src="{{receiveHeadPic | isNull}}" onerror="this.src='/wechat/web/images/no_img.png'">
                     </a>
                 </div>
@@ -38,7 +35,7 @@
             <!-- 固定item/ -->
 
             <!-- 身份认证提示 -->
-            <div class="r_warning" ng-if="sfzCheck !== 1">
+            <div class="r_warning" ng-if="sfzCheck !== 1 && receiveId > 9999">
                 <p class="mb0">
                     <i class="ion-alert-circled assertive fs14 warning_ico vam"></i>
                     <span class="vam">对方身份未在本站验证，须谨慎交流！</span>
@@ -63,8 +60,7 @@
 
                 <!-- 头像 -->
                 <div class="talk_user">
-                    <a ng-if="sendId != vo.send_user_id"
-                       href="#/userInfo?userId={{receiveId}}">
+                    <a ng-if="sendId != vo.send_user_id" ng-click="blackListAlert()">
                         <img ng-src="{{receiveHeadPic | isNull}}" onerror="this.src='/wechat/web/images/no_img.png'">
                     </a>
                     <a ng-if="sendId == vo.send_user_id" href="#/member">
@@ -94,7 +90,7 @@
                              ng-if="vo.type=='pic' || vo.message_type==3">
                             <span class="pic bhy-gallery">
                                 <a ng-href="{{vo.message | picture}}" data-size="{{vo.message.split('.')[0].split('_')[1] + 'x' + vo.message.split('.')[0].split('_')[2]}}">
-                                    <img src="{{vo.message}}">
+                                    <img src="{{vo.message}}" height="60">
                                     <figure class="hide">轻触照片退出</figure>
                                 </a>
                             </span>
