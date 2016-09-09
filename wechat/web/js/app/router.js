@@ -201,7 +201,7 @@ define(["app/module", 'app/service/serviceApi'],
                         controller: 'message.chat1',
 
                         onExit: function ($rootScope) {
-
+                            if ($rootScope.receiveUserInfo == undefined) return;
                             var messageList = ar.getStorage('messageList-' + ar.getCookie('bhy_user_id'));
                             if (messageList == null) messageList = [];
                             var flag = true;
