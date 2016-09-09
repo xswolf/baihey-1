@@ -40,14 +40,13 @@ define(['app/module', 'app/directive/directiveApi'
         // 用户列表
         $scope.userList = [];
 
-        var dataFilter = $rootScope.dataFilter;
         // 判断身份证是否认证通过
-        if (dataFilter.honestyStatus.length) {
-            $scope.honestyStatus = dataFilter.honestyStatus[0].is_check;
+        if ($scope.dataFilter.honestyStatus.length) {
+            $scope.honestyStatus = $scope.dataFilter.honestyStatus[0].is_check;
         }
         // 判断头像是否认证通过
-        if (dataFilter.headpicStatus) {
-            $scope.headpicStatus = dataFilter.headpicStatus.is_check;
+        if ($scope.dataFilter.headpicStatus) {
+            $scope.headpicStatus = $scope.dataFilter.headpicStatus.is_check;
         }
         $scope.honesty = function (val) {
             return val & 1;
@@ -75,7 +74,7 @@ define(['app/module', 'app/directive/directiveApi'
         // 首页搜索过滤条件（拉黑）
         $scope.indexFilter = function (user) {
             if ($scope.userId > 0 && $scope.userInfo) {
-                return user.id != $scope.userInfo.id && dataFilter.blacked.indexOf(user.id) == -1;
+                return user.id != $scope.userInfo.id && $scope.dataFilter.blacked.indexOf(user.id) == -1;
             }
             return 1;
         }

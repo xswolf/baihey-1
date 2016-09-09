@@ -4,115 +4,6 @@
 define(["app/module", 'app/service/serviceApi'],
     function (module) {
         module.run(['$rootScope', '$state', '$timeout', 'app.serviceApi', '$ionicLoading', function ($rootScope, $state, $timeout, api, $ionicLoading) {
-            var userId = ar.getCookie('bhy_user_id');
-            var messageList = function () {
-                api.list('/wap/message/message-list', []).success(function (res) {
-                    var storageList = ar.getStorage('messageList-'+userId) ? ar.getStorage('messageList-'+userId) : [];
-                    var list = res.data;
-                    for (var i in list) {
-                        list[i].info = JSON.parse(list[i].info);
-                        list[i].auth = JSON.parse(list[i].auth);
-                        list[i].order_time = parseInt(list[i].create_time); // ar.timeStamp();  // 消息时间
-                        var flag = true;
-
-                        for (var j in storageList) {  // 相同消息合并
-                            if (storageList[j].send_user_id == list[i].send_user_id) {
-                                storageList[j] = list[i];
-                                flag = false;
-                                break;
-                            }
-                        }
-                        if (flag) {
-                            storageList.push(list[i]);
-                        }
-                    }
-                    $rootScope.messageList = storageList;
-                    ar.setStorage('messageList-'+userId, storageList)
-                    // 计算总共有多少条消息
-                    var num = 0;
-                    for(var i in storageList){
-                        if (parseInt(storageList[i].sumSend) > 0){
-                            num += parseInt(storageList[i].sumSend);
-                        }
-                    }
-                    $rootScope.msgNumber = num;
-                });
-            }
-
-            $rootScope.dataFilter = JSON.parse(ar.getCookie("indexIsShowData"));
-
-            if (userId > 0) {
-                requirejs(['plugin/socket/socket.io.1.4.0'], function (socket) {
-
-                    var indexIsShowData = function () {
-                        api.list("/wap/user/index-is-show-data",{}).success(function (res) {
-                            $rootScope.dataFilter = res;
-                        });
-                    }
-                    $rootScope.skt = socket.connect("http://120.76.84.162:8088");
-
-                    $rootScope.on(userId, function (response) {
-                        // 两人对聊时不需要执行messageList
-                        if(!($state.current.url == '/chat1/:id' &&　$state.params.id == response.send_user_id )){
-                            messageList();
-                        }
-                        indexIsShowData();
-                    })
-                })
-            }
-            // 页面开始加载
-            $rootScope
-                .$on('$stateChangeStart',
-                    function (event, toState) {
-                        // 判断是否登陆
-                        if (toState.url != '/index' && toState.url != '/error') {
-                            $ionicLoading.show();
-                            if (sessionStorage.loginStatus === undefined) {
-                                api.getLoginStatus().success(function (res) {
-                                    sessionStorage.loginStatus = res.status;
-                                    if (!res.status) {
-                                        location.href = '/wap/user/login';
-                                        return false;
-                                    }
-                                })
-                            }else if(!sessionStorage.loginStatus) {
-                                location.href = '/wap/user/login';
-                                return false;
-                            }
-                        }
-
-                        var together = function () {
-                            messageList();
-                            mainIntercept();
-                        }
-                        $timeout(together, 500);
-
-                    });
-            // 页面加载成功
-            $rootScope.$on('$stateChangeSuccess',function () {
-                $ionicLoading.hide();
-            });
-
-            // 相关监听
-            function mainIntercept() {
-
-                // 监听是否有新的用户关注自己
-                $rootScope.newFollow = false;
-                $rootScope.newFollowNumber = 0;
-                api.get('/wap/follow/is-new-follow', {user_id: userId}).success(function (res) {
-                    $rootScope.newFollow = res.status;
-                    $rootScope.newFollowNumber = res.data;
-                })
-
-                // 获取评论总数
-                $rootScope.newDiscovery = 0;
-                api.get('/wap/member/comment-num', {}).success(function (res) {
-                    var discoverySum = ar.getStorage('discoverySum');
-                    if (res.data > discoverySum) {
-                        $rootScope.newDiscovery = res.data - discoverySum;
-                    }
-                })
-            }
 
         }]);
         return module.config(["$stateProvider", "$urlRouterProvider", "$ionicConfigProvider", "$controllerProvider", function ($stateProvider, $urlRouterProvider, $ionicConfigProvider) {
@@ -299,23 +190,7 @@ define(["app/module", 'app/service/serviceApi'],
                     });
                 $urlRouterProvider.otherwise("/error");
             }])
-            .controller('main', ['$scope', '$location', 'app.serviceApi', '$ionicLoading', '$ionicPopup', '$rootScope', function ($scope, $location, api, $ionicLoading, $ionicPopup, $rootScope) {
-
-                $rootScope.$on('msgNumber', function () {
-                    $scope.msgNumber = $rootScope.msgNumber;
-                })
-
-                $rootScope.$on('newFollow', function () {
-                    $scope.newFollow = $rootScope.newFollow;
-                })
-
-                $rootScope.$on('newFollowNumber', function () {
-                    $scope.newFollowNumber = $rootScope.newFollowNumber;
-                })
-
-                $rootScope.$on('newDiscovery', function () {
-                    $scope.newDiscovery = $rootScope.newDiscovery;
-                })
+            .controller('main', ['$scope', '$location', 'app.serviceApi', '$ionicLoading', '$ionicPopup', '$timeout',  function ($scope, $location, api, $ionicLoading, $ionicPopup,$timeout) {
 
                 $scope.upUserStorage = function (name, value, type) {
                     if (type == 'wu') {
@@ -469,5 +344,117 @@ define(["app/module", 'app/service/serviceApi'],
                 $scope.honesty = function (val) {
                     return 1 & val;
                 }
+
+
+                /************************run移植******************************/
+
+                var userId = ar.getCookie('bhy_user_id');
+                var messageList = function () {
+                    api.list('/wap/message/message-list', []).success(function (res) {
+                        var storageList = ar.getStorage('messageList-'+userId) ? ar.getStorage('messageList-'+userId) : [];
+                        var list = res.data;
+                        for (var i in list) {
+                            list[i].info = JSON.parse(list[i].info);
+                            list[i].auth = JSON.parse(list[i].auth);
+                            list[i].order_time = parseInt(list[i].create_time); // ar.timeStamp();  // 消息时间
+                            var flag = true;
+
+                            for (var j in storageList) {  // 相同消息合并
+                                if (storageList[j].send_user_id == list[i].send_user_id) {
+                                    storageList[j] = list[i];
+                                    flag = false;
+                                    break;
+                                }
+                            }
+                            if (flag) {
+                                storageList.push(list[i]);
+                            }
+                        }
+                        $scope.messageList = storageList;
+                        ar.setStorage('messageList-'+userId, storageList)
+                        // 计算总共有多少条消息
+                        var num = 0;
+                        for(var i in storageList){
+                            if (parseInt(storageList[i].sumSend) > 0){
+                                num += parseInt(storageList[i].sumSend);
+                            }
+                        }
+                        $scope.msgNumber = num;
+                    });
+                }
+
+                $scope.dataFilter = JSON.parse(ar.getCookie("indexIsShowData"));
+
+                if (userId > 0) {
+                    requirejs(['plugin/socket/socket.io.1.4.0'], function (socket) {
+
+                        var indexIsShowData = function () {
+                            api.list("/wap/user/index-is-show-data",{}).success(function (res) {
+                                $scope.dataFilter = res;
+                            });
+                        }
+                        $scope.skt = socket.connect("http://120.76.84.162:8088");
+
+                        $scope.skt.on(userId, function (response) {
+                            // 两人对聊时不需要执行messageList
+                            if(!($state.current.url == '/chat1/:id' &&　$state.params.id == response.send_user_id )){
+                                messageList();
+                            }
+                            indexIsShowData();
+                        })
+                    })
+                }
+                // 页面开始加载
+                $scope.$on('$stateChangeStart',function (event, toState) {
+                    // 判断是否登陆
+                    if (toState.url != '/index' && toState.url != '/error') {
+                        $ionicLoading.show();
+                        if (sessionStorage.loginStatus === undefined) {
+                            api.getLoginStatus().success(function (res) {
+                                sessionStorage.loginStatus = res.status;
+                                if (!res.status) {
+                                    location.href = '/wap/user/login';
+                                    return false;
+                                }
+                            })
+                        }else if(!sessionStorage.loginStatus) {
+                            location.href = '/wap/user/login';
+                            return false;
+                        }
+                    }
+
+                    var together = function () {
+                        messageList();
+                        mainIntercept();
+                    }
+                    $timeout(together, 500);
+
+                });
+                // 页面加载成功
+                $scope.$on('$stateChangeSuccess',function () {
+                    $ionicLoading.hide();
+                });
+
+                // 相关监听
+                function mainIntercept() {
+
+                    // 监听是否有新的用户关注自己
+                    $scope.newFollow = false;
+                    $scope.newFollowNumber = 0;
+                    api.get('/wap/follow/is-new-follow', {user_id: userId}).success(function (res) {
+                        $scope.newFollow = res.status;
+                        $scope.newFollowNumber = res.data;
+                    })
+
+                    // 获取评论总数
+                    $scope.newDiscovery = 0;
+                    api.get('/wap/member/comment-num', {}).success(function (res) {
+                        var discoverySum = ar.getStorage('discoverySum');
+                        if (res.data > discoverySum) {
+                            $scope.newDiscovery = res.data - discoverySum;
+                        }
+                    })
+                }
+
             }])
     });
