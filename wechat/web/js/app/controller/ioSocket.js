@@ -271,12 +271,14 @@ define(['app/module', 'app/directive/directiveApi'
                     viewScroll.scrollBottom(true);
 
 
-                    $scope.uploader.onSuccessItem = function (fileItem, response, status, headers) {  // 上传成功
+                    $scope.uploader.onSuccessItem = function (fileItem, response) {  // 上传成功
 
                         if (response.status == 1) {
-                            for (var i in $scope.historyList) {
+                            var len = $scope.historyList.length;
+                            for (var i = len - 1; i >= 0; i--) {
                                 if ($scope.historyList[i].message == fileItem.file.name) {
                                     $scope.sendMessage(response.thumb_path, $scope.sendId, $scope.receiveId, 'pic', $scope.historyList[i].time, true);  // 真实发送
+                                    break;
                                 }
                             }
 
