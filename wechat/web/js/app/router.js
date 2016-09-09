@@ -93,7 +93,7 @@ define(["app/module", 'app/service/serviceApi'],
             // 相关监听
             function mainIntercept() {
 
-                // 查询是否有新的用户关注自己
+                // 监听是否有新的用户关注自己
                 $rootScope.newFollow = false;
                 $rootScope.newFollowNumber = 0;
                 api.get('/wap/follow/is-new-follow', {user_id: userId}).success(function (res) {
