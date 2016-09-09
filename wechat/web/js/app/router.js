@@ -139,16 +139,7 @@ define(["app/module", 'app/service/serviceApi'],
                     .state('discovery', {       // 发现
                         url: "/discovery",
                         templateUrl: "/wechat/views/discovery/index.html",
-                        controller: 'discovery.index',
-                        resolve: {
-                            dataFilter: function ($http) {
-                                return $http({
-                                    method: 'POST',
-                                    url: '/wap/user/index-is-show-data',
-                                    params: {}
-                                });
-                            }
-                        }
+                        controller: 'discovery.index'
                     })
                     .state('discovery_message', {       // 发现
                         url: "/discovery_message",

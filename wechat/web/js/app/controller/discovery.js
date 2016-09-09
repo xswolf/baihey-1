@@ -6,7 +6,7 @@ define(['app/module', 'app/directive/directiveApi'
 ], function (module) {
 
     // 发现
-    module.controller("discovery.index", ['app.serviceApi', '$rootScope', '$scope', '$timeout', '$ionicPopup', '$ionicModal', '$ionicActionSheet', '$ionicLoading', '$location', '$filter', 'FileUploader', 'dataFilter', function (api, $rootScope, $scope, $timeout, $ionicPopup, $ionicModal, $ionicActionSheet, $ionicLoading, $location, $filter, FileUploader, dataFilter) {
+    module.controller("discovery.index", ['app.serviceApi', '$rootScope', '$scope', '$timeout', '$ionicPopup', '$ionicModal', '$ionicActionSheet', '$ionicLoading', '$location', '$filter', 'FileUploader', function (api, $rootScope, $scope, $timeout, $ionicPopup, $ionicModal, $ionicActionSheet, $ionicLoading, $location, $filter, FileUploader) {
 
         $scope.reportData = {};
         $scope.formData = {};
@@ -25,11 +25,11 @@ define(['app/module', 'app/directive/directiveApi'
                 return false;// 动态被举报
             }
             if (dis.auth == '2') {   // 用户设置该条动态为关注的人可见
-                return dataFilter.data.follow.indexOf(dis.user_id) != -1 && $scope.display.indexOf(dis.id) == -1;
+                return $scope.dataFilter.follow.indexOf(dis.user_id) != -1 && $scope.display.indexOf(dis.id) == -1;
             } else if (dis.auth == '4') {
                 return false;
             }
-            return dataFilter.data.blacked.indexOf(dis.user_id) == -1 && $scope.display.indexOf(dis.id) == -1;
+            return $scope.dataFilter.blacked.indexOf(dis.user_id) == -1 && $scope.display.indexOf(dis.id) == -1;
         }
 
         $scope.jump = function (disId, disUserId, type) {
