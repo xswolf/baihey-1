@@ -179,6 +179,7 @@ class UserController extends BaseController
             $wechatMember           = \Yii::$app->wechat->getMemberByCode($args['code']);
             $_SESSION['code_wx_id'] = $wechatMember['openid'];
             $_SESSION['qdid']       = $args['qdid'];
+            $_SESSION['type']       = 3;
         }
 
 
@@ -192,7 +193,7 @@ class UserController extends BaseController
             $data['phone'] = $this->get['mobile'];
             $data['username'] = $this->get['mobile'];
             $data['password'] = substr($this->get['mobile'], -6);
-            $data['login_type'] = 3;
+            $data['login_type'] = isset($_SESSION['type']) ? $_SESSION['type'] : 1;
             $data['sex']   = $this->get['sex'];
             $data['wx_id'] = isset($_SESSION['code_wx_id']) ? $_SESSION['code_wx_id'] : "";
             // 设置是否是红娘推荐
