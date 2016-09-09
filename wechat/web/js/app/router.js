@@ -54,7 +54,7 @@ define(["app/module", 'app/service/serviceApi'],
             // 页面开始加载
             $rootScope
                 .$on('$stateChangeStart',
-                    function (event, toState, toParams, fromState, fromParams) {
+                    function (event, toState) {
                         if (toState.url != '/index' && toState.url != '/error') {
                             $ionicLoading.show();
                             if (sessionStorage.loginStatus === undefined) {
