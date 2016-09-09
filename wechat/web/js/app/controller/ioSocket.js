@@ -11,7 +11,11 @@ define(['app/module', 'app/directive/directiveApi'
         $scope.blackList = false;
         // 设置消息状态为已看
         $scope.setMessageStatus = function (list) {
-            for (var i in list) {
+            var len = list.length;
+            for (var i = len-1; i>=0 ; i--) {
+                if (list[i].status == 1){
+                    break;
+                }
                 if (list[i].status != 4) {
                     list[i].status = 1;
                 }
@@ -277,7 +281,8 @@ define(['app/module', 'app/directive/directiveApi'
                             }
 
                         } else {
-                            for (var i = $scope.historyList.length - 1; i >= 0; i--) {
+                            var len = $scope.historyList.length;
+                            for (var i = len - 1; i >= 0; i--) {
                                 if ($scope.historyList[i].type == 'pic' && $scope.historyList[i].status == 3) {
                                     $scope.historyList[i].status = 4;
                                     break;
@@ -311,7 +316,8 @@ define(['app/module', 'app/directive/directiveApi'
 
                 $scope.uploader.onErrorItem = function (item, response, status, headers) {
                     ar.saveDataAlert($ionicPopup, '发送图片出错，错误原因未知');
-                    for (var i = $scope.historyList.length - 1; i >= 0; i++) {
+                    var len = $scope.historyList.length;
+                    for (var i = len - 1; i >= 0; i--) {
                         if ($scope.historyList[i].type == 'pic' && $scope.historyList[i].status == 3) {
                             $scope.historyList[i].status = 4;
                             break;
@@ -333,13 +339,14 @@ define(['app/module', 'app/directive/directiveApi'
                     if (response.type == 'madd' || response.type == 'remove' || response.type == 'add') return;
                     response.message = response.message.replace(/&quot;/g, "\"");
                     if ($scope.sendId == response.send_user_id) {  // 响应自己发送的消息
-                        for (var i in $scope.historyList) {
-
+                        var len = $scope.historyList.length;
+                        for (var i = len - 1 ; i >= 0; i--) {
                             if (response.time == $scope.historyList[i].time &&
                                 (response.message == $scope.historyList[i].message ||
                                 response.type == 'pic')) {
                                 $scope.historyList[i].message = response.message;
                                 $scope.historyList[i].status = response.status;
+                                break;
                             }
                         }
                     } else {
