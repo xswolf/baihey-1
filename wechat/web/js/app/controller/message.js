@@ -20,8 +20,6 @@ define(['app/module', 'app/directive/directiveApi'
             $scope.messageList = $rootScope.messageList;
         })
 
-        //console.log($scope.messageList)
-
         $scope.userInfo.id = ar.getCookie('bhy_user_id');
 
         // 删除操作
