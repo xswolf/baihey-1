@@ -27,14 +27,15 @@ class MemberController extends BaseController
 {
 
     // 根据当前登录用户所属用户组显隐列表字段
-    private function showColumnByUser(){
-        $serviceFiled   = ['intention','matchmaking',];
-        $salesFiled     = ['info.level','matchmaker',];
-        if ($_SESSION['bhy_user']['role'] == 'admin'){ //  管理员类型
+    private function showColumnByUser()
+    {
+        $serviceFiled = ['intention', 'matchmaking',];
+        $salesFiled = ['info.level', 'matchmaker',];
+        if ($_SESSION['bhy_user']['role'] == 'admin') { //  管理员类型
             return [];
-        }elseif (strpos($_SESSION['bhy_user']['role'] , "销售红娘") > 0){  // 销售红娘类型
-            return $salesFiled ;
-        }elseif (strpos($_SESSION['bhy_user']['role'] , "服务红娘") > 0){  // 服务红娘类型
+        } elseif (strpos($_SESSION['bhy_user']['role'], "销售红娘") > 0) {  // 销售红娘类型
+            return $salesFiled;
+        } elseif (strpos($_SESSION['bhy_user']['role'], "服务红娘") > 0) {  // 服务红娘类型
             return $serviceFiled;
         }
 
@@ -43,37 +44,38 @@ class MemberController extends BaseController
     public function actionIndex()
     {
         $serverUser = AuthUser::getInstance()->getUserByRole("服务红娘");
-        $salesUser  = AuthUser::getInstance()->getUserByRole("销售红娘");
-        $column     = $this->showColumnByUser();
-        $this->assign('column' , json_encode($column));
-        $this->assign('admin' , $_SESSION['bhy_user']);
-        $this->assign('serverUser' , $serverUser);
-        $this->assign('salesUser' , $salesUser);
+        $salesUser = AuthUser::getInstance()->getUserByRole("销售红娘", 'like');
+        $column = $this->showColumnByUser();
+        $this->assign('column', json_encode($column));
+        $this->assign('admin', $_SESSION['bhy_user']);
+        $this->assign('serverUser', $serverUser);
+        $this->assign('salesUser', $salesUser);
 
         return $this->render();
     }
 
-    private function searchWhere(&$andWhere , $get){
-        foreach ($get as $k=>$v){
-            if ($v=='' || !in_array($k , ['matchmaker','matchmaking','intention','constellation','zodiac','level','is_car','is_purchase','occupation','is_child','is_marriage','year_income','education','is_show','status','sex','age1','age2','height','province','city','area'])) continue;
-            if ($k=='age1'){
-                $andWhere[] = ['>=' , 'age' , $v];
-            }else if ($k=='age2'){
-                $andWhere[] = ['<=' , 'age' , $v];
-            }else if (in_array($k,['constellation','zodiac','level','is_car','is_purchase','occupation','is_child','is_marriage','year_income','height','education'])){
-                if($k == 'level' && $v=="0") $v = '';
+    private function searchWhere(&$andWhere, $get)
+    {
+        foreach ($get as $k => $v) {
+            if ($v == '' || !in_array($k, ['matchmaker', 'matchmaking', 'intention', 'constellation', 'zodiac', 'level', 'is_car', 'is_purchase', 'occupation', 'is_child', 'is_marriage', 'year_income', 'education', 'is_show', 'status', 'sex', 'age1', 'age2', 'height', 'province', 'city', 'area'])) continue;
+            if ($k == 'age1') {
+                $andWhere[] = ['>=', 'age', $v];
+            } else if ($k == 'age2') {
+                $andWhere[] = ['<=', 'age', $v];
+            } else if (in_array($k, ['constellation', 'zodiac', 'level', 'is_car', 'is_purchase', 'occupation', 'is_child', 'is_marriage', 'year_income', 'height', 'education'])) {
+                if ($k == 'level' && $v == "0") $v = '';
                 $andWhere[] = ["=", "json_extract(info,'$.{$k}')", $v];
-            }else{
-                if ($k == 'status' && $v == 5){
+            } else {
+                if ($k == 'status' && $v == 5) {
                     $andWhere[] = [">", 'user_id', 12493];
                     $v = 2;
                 }
                 $andWhere[] = ["=", $k, $v];
             }
 
-            if ($k == 'intention' && strpos($this->user->getUser()['role'] , "销售红娘") >0 ){
+            if ($k == 'intention' && strpos($this->user->getUser()['role'], "销售红娘") > 0) {
                 $id = $this->user->getUser()['id'];
-                $andWhere[] = ["=" , "matchmaker" , $id];
+                $andWhere[] = ["=", "matchmaker", $id];
             }
         }
         return $andWhere;
@@ -82,10 +84,10 @@ class MemberController extends BaseController
     public function actionSearch()
     {
         $request = \Yii::$app->request;
-        $start   = $request->get('iDisplayStart');
-        $limit   = $request->get('iDisplayLength');
+        $start = $request->get('iDisplayStart');
+        $limit = $request->get('iDisplayLength');
 
-        $andWhere      = [];
+        $andWhere = [];
         $id_phone_name = $request->get('id_phone_name');
         if ($request->get('id_phone_name') != '') { // 电话、ID、姓名
             if (is_numeric($id_phone_name)) {
@@ -98,20 +100,20 @@ class MemberController extends BaseController
                 $andWhere[] = ["like", "json_extract(info,'$.real_name')", $id_phone_name];
             }
 
-        }else{
-            $this->searchWhere($andWhere , $request->get());
+        } else {
+            $this->searchWhere($andWhere, $request->get());
         }
 
 
-        $list  = User::getInstance()->lists($start, $limit, $andWhere);
+        $list = User::getInstance()->lists($start, $limit, $andWhere);
         $count = User::getInstance()->count($andWhere);
         foreach ($list as $k => $v) {
 
-            $list[$k]['info']                 = json_decode($v['info']);
-            $list[$k]['auth']                 = json_decode($v['auth']);
-            $list[$k]['info']->level          = getLevel($list[$k]['info']->level);
-            $list[$k]['info']->is_marriage    = getMarriage($list[$k]['info']->is_marriage);
-            $list[$k]['sex']                  = getSex($list[$k]['sex']);
+            $list[$k]['info'] = json_decode($v['info']);
+            $list[$k]['auth'] = json_decode($v['auth']);
+            $list[$k]['info']->level = getLevel($list[$k]['info']->level);
+            $list[$k]['info']->is_marriage = getMarriage($list[$k]['info']->is_marriage);
+            $list[$k]['sex'] = getSex($list[$k]['sex']);
             $list[$k]['auth']->identity_check = getIsNot($list[$k]['auth']->identity_check);
         }
 
@@ -121,19 +123,20 @@ class MemberController extends BaseController
             'recordsFiltered' => $count,
             'data' => $list
         ];
-        $this->renderAjax($data,false);
+        $this->renderAjax($data, false);
     }
 
     /**
      * 判断手机号是否重复
      * @param $uid
      */
-    public function actionIsExistPhone(){
+    public function actionIsExistPhone()
+    {
 
-        if(User::getInstance()->getUserByPhone(\Yii::$app->request->get('phone'))){
-            return $this->renderAjax(['status'=>1 , 'message'=>'手机号存在']);
+        if (User::getInstance()->getUserByPhone(\Yii::$app->request->get('phone'))) {
+            return $this->renderAjax(['status' => 1, 'message' => '手机号存在']);
         }
-        return $this->renderAjax(['status'=>0 , 'message'=>'手机号不存在']);
+        return $this->renderAjax(['status' => 0, 'message' => '手机号不存在']);
     }
 
     public function actionSave()
@@ -144,11 +147,11 @@ class MemberController extends BaseController
             if ($data['phone'] == '' || $data['info']['real_name'] == '') {
                 return $this->__error('真实姓名、手机号码为必填项');
             }
-            $data['zo']       = User::getInstance()->editInfoZo($data['zo']);
-            $data['info']     = User::getInstance()->editInfoInfo($data['info']);
+            $data['zo'] = User::getInstance()->editInfoZo($data['zo']);
+            $data['info'] = User::getInstance()->editInfoInfo($data['info']);
             $data['username'] = $data['phone'];
-            $data['info']     = array_merge($data['info'], $data['zo']);
-            $photo            = $data;
+            $data['info'] = array_merge($data['info'], $data['zo']);
+            $photo = $data;
 
             unset($data['zo']);
             unset($data['photosList']);
@@ -165,8 +168,8 @@ class MemberController extends BaseController
             if ($user['id'] > 0) {
                 return $this->__success('添加成功');
                 // 写入用户日志表
-                $log['user_id']     = $user['id'];
-                $log['type']        = 2;
+                $log['user_id'] = $user['id'];
+                $log['type'] = 2;
                 $log['create_time'] = time();
                 User::getInstance()->userLog($log);
             } else {
@@ -184,14 +187,14 @@ class MemberController extends BaseController
     public function actionEdit()
     {
         $request = \Yii::$app->request;
-        $id      = $request->get('id');
+        $id = $request->get('id');
         if ($id < 1) {
             exit();
         }
         if ($postData = $request->post()) {
             $postData['info']['mate'] = trim($postData['info']['mate']);
             $postData['info']['mate'] = str_replace("\t", "", $postData['info']['mate']);
-            $postData['user_id']     = $id;
+            $postData['user_id'] = $id;
             $postData['info']['age'] = strtotime($postData['info']['age']);
 
             $user = User::getInstance()->editUser($postData);
@@ -201,7 +204,7 @@ class MemberController extends BaseController
                 return $this->__error('修改失败');
             }
         }
-        $user         = User::getInstance()->getUserById($id);
+        $user = User::getInstance()->getUserById($id);
         $user['info'] = json_decode($user['info']);
         $user['auth'] = json_decode($user['auth']);
 
@@ -223,16 +226,16 @@ class MemberController extends BaseController
 
     public function actionInfo()
     {
-        $userId       = \Yii::$app->request->get('id');
-        $user         = User::getInstance()->getUserById($userId);
+        $userId = \Yii::$app->request->get('id');
+        $user = User::getInstance()->getUserById($userId);
         $user['info'] = json_decode($user['info']);
         $user['auth'] = json_decode($user['auth']);
         // 获取登陆次数
         $loginTime = User::getInstance()->getLoginTimes($userId);
-        $moneyAll  = User::getInstance()->getPayAll($userId);
+        $moneyAll = User::getInstance()->getPayAll($userId);
         // 获取红娘名称
-        $userModel   = new UserModel();
-        $matchmaker  = $userModel->getFindUser(['id' => $user['matchmaker']]);
+        $userModel = new UserModel();
+        $matchmaker = $userModel->getFindUser(['id' => $user['matchmaker']]);
         $matchmaking = $userModel->getFindUser(['id' => $user['matchmaking']]);
 
         $this->assign('user', $user);
@@ -244,32 +247,32 @@ class MemberController extends BaseController
 
         // 消息
         $messageList = UserMessage::getInstance()->chatList($userId);
-        foreach($messageList as $k=>$v){
+        foreach ($messageList as $k => $v) {
             $messageList[$k]['info'] = json_decode($messageList[$k]['info']);
         }
         $this->assign('messageList', $messageList);
         // 动态
-        $dynamicList = UserDynamic::getInstance()->getDynamicList($userId , 0 , 1000 ,-2);
-        $this->assign('dynamicList' , $dynamicList);
+        $dynamicList = UserDynamic::getInstance()->getDynamicList($userId, 0, 1000, -2);
+        $this->assign('dynamicList', $dynamicList);
         // 认证
-        $identify = UserPhoto::getInstance()->getPhotoList($userId , [2,3,4,5,6]);
+        $identify = UserPhoto::getInstance()->getPhotoList($userId, [2, 3, 4, 5, 6]);
         $identifyType = [];
-        foreach ($identify as $k=>$v){
-            if ($v['is_check'] == '0'){
+        foreach ($identify as $k => $v) {
+            if ($v['is_check'] == '0') {
                 unset($identify[$k]);
                 continue;
             }
             $identifyType[$v['type']][] = $v;
         }
-        $this->assign('identify' , $identify);
-        $this->assign('identifyType' , $identifyType);
+        $this->assign('identify', $identify);
+        $this->assign('identifyType', $identifyType);
         // 红娘列表
-        $adminUserList = AuthUser::getInstance()->getUserByRole(['普通服务红娘','VIP服务红娘','贵宾服务红娘','钻石服务红娘']);
-        $this->assign('adminUserList' , $adminUserList);
+        $adminUserList = AuthUser::getInstance()->getUserByRole(['普通服务红娘', 'VIP服务红娘', '贵宾服务红娘', '钻石服务红娘']);
+        $this->assign('adminUserList', $adminUserList);
         // 配对记录
         $pairLogList = \common\models\PairLog::getInstance()->getPairLog($userId);
 //        var_dump($pairLogList);exit();
-        $this->assign('pairLogList' , $pairLogList);
+        $this->assign('pairLogList', $pairLogList);
         return $this->render();
     }
 
@@ -279,34 +282,35 @@ class MemberController extends BaseController
      */
     public function actionMessage()
     {
-        $this->layout  = false;
-        $sendUserId    = \Yii::$app->request->get('send_user_id');
+        $this->layout = false;
+        $sendUserId = \Yii::$app->request->get('send_user_id');
         $receiveUserId = \Yii::$app->request->get('receive_user_id');
-        $list          = Message::getInstance()->getMessageList($sendUserId, $receiveUserId);
-        $this->assign('sendName' , \Yii::$app->request->get('send_name'));
-        $this->assign('receiveName' , \Yii::$app->request->get('receive_name'));
-        $this->assign('sendUserId' , $sendUserId);
-        $this->assign('list' , $list);
+        $list = Message::getInstance()->getMessageList($sendUserId, $receiveUserId);
+        $this->assign('sendName', \Yii::$app->request->get('send_name'));
+        $this->assign('receiveName', \Yii::$app->request->get('receive_name'));
+        $this->assign('sendUserId', $sendUserId);
+        $this->assign('list', $list);
         return $this->render();
     }
 
     /**
      * 开关资料，黑名单，重置密码
      */
-    public function actionSwitch(){
+    public function actionSwitch()
+    {
         $field = \Yii::$app->request->post('field');
         if ($field == 'is_show') { // 资料开关
             $fieldValue = \Yii::$app->request->post($field) == 'true' ? 1 : 0;
-        }else if ($field == 'password'){
+        } else if ($field == 'password') {
             $fieldValue = md5(md5('123456'));
-        }else{
+        } else {
             $fieldValue = \Yii::$app->request->post($field);
         }
         $data = [
-            'id'=> \Yii::$app->request->post('user_id'),
+            'id' => \Yii::$app->request->post('user_id'),
             $field => $fieldValue,
         ];
-        if ($flag = User::getInstance()->editUser1($data)){
+        if ($flag = User::getInstance()->editUser1($data)) {
             $this->renderAjax(['status' => 1, 'message' => '操作成功', 'data' => $flag]);
         } else {
             $this->renderAjax(['status' => 0, 'message' => '操作失败', 'data' => $flag]);
@@ -316,7 +320,7 @@ class MemberController extends BaseController
     public function actionOrder()
     {
         $andWhere = [];
-        if($this->get) {
+        if ($this->get) {
             if ($this->get['id_phone_name'] != '') { // 电话、ID、姓名
                 $id_phone_name = $this->get['id_phone_name'];
                 if (is_numeric($id_phone_name)) {
@@ -329,14 +333,14 @@ class MemberController extends BaseController
                     $andWhere[] = ["like", "json_extract(info,'$.real_name')", $id_phone_name];
                 }
             }
-            if ($this->get['startDate'] != ''){
-                $andWhere[] = ['>=' , 'o.create_time' , strtotime($this->get['startDate'])];
+            if ($this->get['startDate'] != '') {
+                $andWhere[] = ['>=', 'o.create_time', strtotime($this->get['startDate'])];
             }
-            if ($this->get['endDate'] != ''){
-                $andWhere[] = ['<=' , 'o.create_time' , strtotime($this->get['endDate'])];
+            if ($this->get['endDate'] != '') {
+                $andWhere[] = ['<=', 'o.create_time', strtotime($this->get['endDate'])];
             }
-            if ($this->get['status'] != ''){
-                $andWhere[] = ['=' , 'o.status' , $this->get['status']];
+            if ($this->get['status'] != '') {
+                $andWhere[] = ['=', 'o.status', $this->get['status']];
             }
             //var_dump($this->get);exit;
         }
@@ -349,7 +353,7 @@ class MemberController extends BaseController
     {
         if (\Yii::$app->request->post()) {
             $orderId = ChargeOrder::getInstance()->createOrder(\Yii::$app->request->post('user_id'), \Yii::$app->request->post()); // 创建订单
-            $result  = ChargeOrder::getInstance()->setOrderStatus($orderId);
+            $result = ChargeOrder::getInstance()->setOrderStatus($orderId);
             $this->renderAjax(['status' => $result]);
             exit();
         }
@@ -376,19 +380,19 @@ class MemberController extends BaseController
     public function actionUpPic()
     {
         $data['thumb_path'] = \Yii::$app->request->get('thumb_path');
-        $data['pic_path']   = \Yii::$app->request->get('pic_path');
-        $data['time']       = time();
-        $result             = UserPhoto::getInstance()->addPhoto(\Yii::$app->request->get('id'), $data);
+        $data['pic_path'] = \Yii::$app->request->get('pic_path');
+        $data['time'] = time();
+        $result = UserPhoto::getInstance()->addPhoto(\Yii::$app->request->get('id'), $data);
 
         $this->renderAjax(['status' => $result]);
     }
 
     public function actionSetHead()
     {
-        $userId             = \Yii::$app->request->get('user_id');
-        $data['id']         = \Yii::$app->request->get('id');
+        $userId = \Yii::$app->request->get('user_id');
+        $data['id'] = \Yii::$app->request->get('id');
         $data['thumb_path'] = \Yii::$app->request->get('thumb_path');
-        $list               = UserPhoto::getInstance()->setHeadPic($userId, $data);
+        $list = UserPhoto::getInstance()->setHeadPic($userId, $data);
         $this->renderAjax(['status' => 1, 'data' => $list]);
     }
 
@@ -400,7 +404,7 @@ class MemberController extends BaseController
     {
 
         $isCheck = \Yii::$app->request->get('is_check');
-        $type    = \Yii::$app->request->get('type');
+        $type = \Yii::$app->request->get('type');
         if ($isCheck == '')
             $isCheck = 2;
         $list = UserPhoto::getInstance()->lists($isCheck, $type);
@@ -432,9 +436,9 @@ class MemberController extends BaseController
     public function actionAuth()
     {
         $data = \Yii::$app->request->post();
-        if ($flag = User::getInstance()->auth($data)){
+        if ($flag = User::getInstance()->auth($data)) {
             $this->renderAjax(['status' => 1, 'message' => '操作成功', 'data' => $flag]);
-        }else{
+        } else {
             $this->renderAjax(['status' => 0, 'message' => '操作失败', 'data' => $flag]);
         }
 
@@ -443,18 +447,19 @@ class MemberController extends BaseController
     /**
      * 发送系统消息
      */
-    public function actionSysMsg(){
+    public function actionSysMsg()
+    {
         $userId = \Yii::$app->request->post('user_id');
-        $type   = \Yii::$app->request->post('type');
+        $type = \Yii::$app->request->post('type');
         $content = \Yii::$app->request->post('content');
-        if ($type == '2,3') $type = explode(',' , $type);
+        if ($type == '2,3') $type = explode(',', $type);
         if (isset($type) && $type != '') { // 相册发消息
             User::getInstance()->editPhoto($type, ['user_id' => $userId], 0);
         }
-        if ($flag = (new Message())->add(1,$userId,$content,1,2)){
+        if ($flag = (new Message())->add(1, $userId, $content, 1, 2)) {
             $this->renderAjax(['status' => 1, 'message' => '操作成功', 'data' => $flag]);
 
-        }else{
+        } else {
             $this->renderAjax(['status' => 0, 'message' => '操作失败', 'data' => $flag]);
 
         }
@@ -478,7 +483,7 @@ class MemberController extends BaseController
     // 获取用户信息
     public function actionGetUser()
     {
-        if($data = User::getInstance()->getUserById($this->post['user_id'])) {
+        if ($data = User::getInstance()->getUserById($this->post['user_id'])) {
             $this->renderAjax(['status' => 1, 'data' => $data, 'message' => '成功']);
         } else {
             $this->renderAjax(['status' => 0, 'data' => [], 'message' => '失败']);
@@ -489,7 +494,7 @@ class MemberController extends BaseController
     public function actionPairList()
     {
         $pairLog = new PairLog();
-        if($data = $pairLog->getPairList($this->post)) {
+        if ($data = $pairLog->getPairList($this->post)) {
             $this->renderAjax(['status' => 1, 'data' => $data, 'message' => '成功']);
         } else {
             $this->renderAjax(['status' => 0, 'data' => [], 'message' => '失败']);
@@ -503,11 +508,11 @@ class MemberController extends BaseController
         $data = $this->post;
         $data['create_time'] = time();
         $data['update_time'] = time();
-        if($data['intention'] != 2) {
+        if ($data['intention'] != 2) {
             UserInformation::getInstance()->updateUserInfo($data['to_user_id'], ['intention' => $data['intention']]);
         }
         unset($data['intention']);
-        if($data['id'] = $pairLog->addPair($data)) {
+        if ($data['id'] = $pairLog->addPair($data)) {
             $this->renderAjax(['status' => 1, 'data' => $data, 'message' => '成功']);
         } else {
             $this->renderAjax(['status' => 0, 'data' => [], 'message' => '失败']);
