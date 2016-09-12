@@ -938,7 +938,7 @@ class User extends Base
         $data['honesty_value'] = $honesty_value;
         $tran = \Yii::$app->db->beginTransaction();
 
-        $flag1 = \Yii::$app->db->createCommand();
+        $flag1 = \Yii::$app->db->createCommand()
             ->update($this->tablePrefix . 'user_information', $data, ['user_id' => $data['user_id']])
             ->execute();
 
