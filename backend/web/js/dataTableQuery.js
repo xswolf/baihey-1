@@ -119,7 +119,6 @@ $(function () {
                 var userId = $('table').data("user-id");
                 var userType = $('table').data("user-type");
                 var returnLog = '';
-                console.log(userId , oData.matchmaker)
                 if (userId == oData.matchmaker || userType == 'admin'){
                     returnLog = '<a class="btn btn-info btn-sm" data-uid="' + oData.id +'" data-uname="' + oData.info.real_name +'" id="returningBtn" href="javascript:;">回访</a> ' ;
                 }

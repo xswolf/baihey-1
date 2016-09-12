@@ -40,13 +40,14 @@ class AuthUser extends Base
     /**
      * 获取角色下面的用户
      * @param $role
+     * @param $flag
      * @return array
      */
-    public function getUserByRole($role){
+    public function getUserByRole($role,$flag = 'in'){
         return (new Query())->from($this->tablePrefix.'auth_assignment a')
             ->innerJoin($this->tablePrefix.'auth_user u' , 'a.user_id=u.id')
             ->where(['status'=>1])
-            ->andWhere(["in", "item_name", $role])
+            ->andWhere([$flag, "item_name", $role])
             ->select("u.id,u.name")
             ->all();
     }
