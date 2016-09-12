@@ -78,10 +78,9 @@ class UserDynamic extends Base
             ->innerJoin($this->tablePrefix . 'user_information i', 'd.user_id=i.user_id')
             ->innerJoin($this->tablePrefix . 'user u', 'd.user_id=u.id')
             ->leftJoin($this->tablePrefix . 'user_click c', 'c.dynamic_id = d.id')
-            ->leftJoin($this->tablePrefix . 'user_photo p', 'p.user_id = d.user_id AND p.is_head = 1 AND p.user_id =' . $loginUserId)
+            ->leftJoin($this->tablePrefix . 'user_photo p', 'p.user_id = d.user_id AND p.is_head = 1')
             ->where(['d.id' => $id])
             ->select(["d.*", "u.phone", "i.honesty_value", "i.report_flag", "json_extract(i.info , '$.level') AS level", "json_extract(i.info , '$.head_pic') AS head_pic", "json_extract(i.info , '$.real_name') AS real_name", "json_extract(i.info , '$.age') AS age", 'u.sex', 'p.thumb_path AS thumb_path', 'p.is_check AS head_status', "c.id as cid"])
-            ->orderBy("d.create_time desc")
             ->one();
     }
 
