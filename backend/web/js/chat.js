@@ -2,8 +2,9 @@
  * Created by NSK. on 2016/8/26/0026.
  */
 
+
 var module = angular.module('chatApp', []);
-module.controller('chat', function ($scope, $http, $interval, $timeout) {
+module.controller('chat', function ($scope, $http, $interval, $timeout, $filter) {
 
     $scope.changeStatus = function(item){
         item.msg_status = 0;
@@ -59,4 +60,24 @@ module.controller('chat', function ($scope, $http, $interval, $timeout) {
 
     }
 
+    $scope.ageRange = '18-99';
+    $scope.ageChange = function(){
+        $scope.ageRange = $scope.age;
+    }
+
+    $scope.chatFilter = function(userInfo){
+        if($scope.sex == 0){    // 女
+            return userInfo.sex == 0;
+        }
+        if($scope.sex == 1){    // 男
+            return userInfo.sex == 1;
+        }
+        if($scope.ageRange != '18-99'){
+            return userInfo.age > $scope.ageRange.split('-')[0] && userInfo.age < $scope.ageRange.split('-')[1];
+        }
+        return true;
+    }
+
+
 });
+
