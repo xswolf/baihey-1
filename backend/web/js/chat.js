@@ -66,14 +66,15 @@ module.controller('chat', function ($scope, $http, $interval, $timeout, $filter)
     }
 
     $scope.chatFilter = function(userInfo){
-        if($scope.sex == 0){    // 女
-            return userInfo.sex == 0;
-        }
-        if($scope.sex == 1){    // 男
-            return userInfo.sex == 1;
-        }
-        if($scope.ageRange != '18-99'){
-            return userInfo.age > $scope.ageRange.split('-')[0] && userInfo.age < $scope.ageRange.split('-')[1];
+        if($scope.sex != undefined  && $scope.ageRange != '18-99'){
+            return userInfo.sex == $scope.sex && userInfo.age > $scope.ageRange.split('-')[0] && userInfo.age < $scope.ageRange.split('-')[1];
+        }else{
+            if($scope.sex != undefined ){
+                return userInfo.sex == $scope.sex;
+            }
+            if($scope.ageRange != '18-99'){
+                return userInfo.age > $scope.ageRange.split('-')[0] && userInfo.age < $scope.ageRange.split('-')[1];
+            }
         }
         return true;
     }
