@@ -445,6 +445,19 @@ class MemberController extends BaseController
     }
 
     /**
+     * 分配服务红娘
+     */
+    public function actionAssignMatchmaking(){
+        $data = \Yii::$app->request->post();
+        if($flag = User::getInstance()->editUser($data)){
+            $this->renderAjax(['status' => 1, 'message' => '分配成功', 'data' => $flag]);
+        }else{
+            $this->renderAjax(['status' => 0, 'message' => '分配失败', 'data' => $flag]);
+        }
+
+    }
+
+    /**
      * 发送系统消息
      */
     public function actionSysMsg()

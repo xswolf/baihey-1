@@ -32,9 +32,19 @@ class UserController extends BaseController
             $get = ['group' => '', 'duty' => ''];
         }
         $list = $user->getList($where);
+        $id = 1;
+        if (count($list) > 0) {
+            $newList = [];
+            foreach ($list as $k=>$v){
+                $item[$v['id']][] = $v['item_name'];
+                $v['item_name'] = $item[$v['id']];
+                $newList[$v['id']] = $v;
+            }
+        }
         $this->assign('get', $get);
         $this->assign('group', $group);
-        $this->assign('list', $list);
+        $this->assign('list', $newList);
+
         return $this->render();
     }
 
@@ -42,7 +52,8 @@ class UserController extends BaseController
      * @return string
      * 添加用户
      */
-    public function actionCreateUser()
+    public
+    function actionCreateUser()
     {
         $auth = \Yii::$app->authManager;
         $list = $auth->getRoles();
@@ -88,7 +99,8 @@ class UserController extends BaseController
      * @return string
      * 编辑用户
      */
-    public function actionEditUser()
+    public
+    function actionEditUser()
     {
         $auth = \Yii::$app->authManager;
         $request = \Yii::$app->request;
@@ -124,7 +136,8 @@ class UserController extends BaseController
      * @param null $id
      * 删除用户
      */
-    public function actionDeleteUser($id = null)
+    public
+    function actionDeleteUser($id = null)
     {
         $userModel = new User();
         if ($userModel->delUser($id)) {
@@ -137,7 +150,8 @@ class UserController extends BaseController
     /**
      * 修改用户状态(后台使用)
      */
-    public function actionEditUserStatus()
+    public
+    function actionEditUserStatus()
     {
         $user_id = $this->get['user_id'];
         unset($this->get['user_id']);
@@ -149,7 +163,8 @@ class UserController extends BaseController
     }
 
     // 更新管理用户
-    public function actionUpdateAuthUser()
+    public
+    function actionUpdateAuthUser()
     {
         $authUser = new User();
         if ($authUser->updateAuthUser($this->post)) {
@@ -160,7 +175,8 @@ class UserController extends BaseController
     }
 
     // 设置值班
-    public function actionSetDuty()
+    public
+    function actionSetDuty()
     {
         $authUser = new User();
         if ($authUser->setDuty($this->post)) {

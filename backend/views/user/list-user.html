@@ -53,17 +53,13 @@
                 </tr>
                 </thead>
                 <tbody>
-
                 <ul>
-                    {{$id=''}}
                     {{foreach from=$list item=vo}}
-                    {{if $vo.id != $id}}
-                        {{$id = $vo.id}}
                         <tr class="gradeX">
                             <td>{{$vo.id}}</td>
                             <td><img src="{{$vo.photo}}" height="30"></td>
                             <td>{{$vo.name}}</td>
-                            <td id="id{{$vo.id}}">{{$vo.item_name}}</td>
+                            <td>{{implode('，',$vo.item_name)}}</td>
                             <td>{{$vo.phone}}</td>
                             <td>{{$vo.landline}}</td>
                             <td class="duty">{{if $vo.duty eq 1}}<span class="text-danger">是</span>{{else}}否{{/if}}</td>
@@ -77,15 +73,8 @@
                                 {{/if}}
                             </td>
                         </tr>
-                    {{else}}
-                        <script>
-                            $("#id"+{{$vo.id}}).html($("#id"+{{$vo.id}}).html() + "，" + '{{$vo.item_name}}');
-                        </script>
-                    {{/if}}
-
                     {{/foreach}}
                 </ul>
-
             </table>
         </div>
     </div>

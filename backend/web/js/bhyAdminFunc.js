@@ -45,15 +45,9 @@ var bhyFunc = {
     },
     reviewYes: function (type) {
         if (type == 1) {  // 身份证
-            layer.open({
-                type: 1,
-                skin: 'layui-layer-demo', //样式类名
-                closeBtn: 0, //不显示关闭按钮
-                shift: 2,
-                title: '审核',
-                area: ['500px', '400px'],
-                shadeClose: false, //开启遮罩关闭
-                content: $('#layer_review')
+            layer.confirm('确认审核通过吗？', {icon: 3, title:'提示'}, function(index){
+                bhyFunc.reviewIsOk(bhyFunc.user_id);
+                layer.close(index);
             });
         }
         if (type == 5) {  // 婚姻证明
@@ -188,16 +182,13 @@ var bhyFunc = {
             user_id: user_id,
             matchmaking: matchmaking.val(),
             service_status: $('#service_status').val(),
-            honesty_value: 1
         }, function (res) {
-            console.log(res)
+            bhyFunc.layerClickedCancelButton('page');
             if (res.status == 1) {
-                $('.idCardInfo').hide();
-                $('.idCardSuccess').removeClass('hide')
+                layer.msg('分配成功');
             } else {
                 layer.msg('审核出错，请刷新重试！');
             }
-            bhyFunc.layerClickedCancelButton('page');
         })
     },
     resetPass: function (user_id) {  // 重置密码

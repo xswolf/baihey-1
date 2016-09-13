@@ -118,6 +118,12 @@
                                             充值/开通
                                         </a>
                                         {{/if}}
+                                        {{if authValidate('/admin/member/assign-matchmaking')}}
+                                        <a id="assignMatchmaking" href="javascript:;" class="list-group-item">
+                                            <i class="fa fa-users fa-fw"></i>
+                                            分配服务红娘
+                                        </a>
+                                        {{/if}}
                                         {{if authValidate('/admin/member/edit') && ($currentUserId == $user.matchmaker || $currentUserRole == 'admin' )}}
                                         <a href="/admin/member/edit?id={{$user.id}}" data-toggle="modal" class="list-group-item">
                                             <i class="fa fa-edit fa-fw"></i>
@@ -685,36 +691,6 @@
         </div>
     </div>
 </div>
-<div id="layer_review">
-    <div class="col-sm-12">
-        <div class="form-group m10">
-            <label for="matchmaker">销售红娘</label>
-            <input id="matchmaker" class="form-control" type="text" disabled="disabled" value="{{$matchmaker}}">
-        </div>
-        <div class="form-group m10">
-            <label for="matchmaking">服务红娘</label>
-            <select id="matchmaking" class="form-control">
-                <option value="">请选择</option>
-                {{foreach from=$adminUserList key=k item=vo}}
-                <option value="{{$vo.id}}">{{$vo.name}}</option>
-                {{/foreach}}
-            </select>
-        </div>
-        <div class="form-group m10">
-            <label for="service_status">服务</label>
-            <select id="service_status" class="form-control">
-                <option value="0">否</option>
-                <option value="1">是</option>
-            </select>
-        </div>
-        <div class="form-group mt20">
-            <p class="btn-toolbar center">
-                <button class="btn btn-success" onclick="bhyFunc.reviewIsOk({{$user.id}})">确认无误，审核通过</button>
-                <button class="btn btn-light-grey" onclick="bhyFunc.layerClickedCancelButton('page')">取消</button>
-            </p>
-        </div>
-    </div>
-</div>
 
 <div id="layer_charge">
     <div class="col-sm-12">
@@ -759,6 +735,38 @@
         </div>
     </div>
 </div>
+
+<div id="layer_review">
+    <div class="col-sm-12">
+        <div class="form-group m10">
+            <label for="matchmaker">销售红娘</label>
+            <input id="matchmaker" class="form-control" type="text" disabled="disabled" value="{{$matchmaker}}">
+        </div>
+        <div class="form-group m10">
+            <label for="matchmaking">服务红娘</label>
+            <select id="matchmaking" class="form-control">
+                <option value="">请选择</option>
+                {{foreach from=$adminUserList key=k item=vo}}
+                <option value="{{$vo.id}}">{{$vo.name}}</option>
+                {{/foreach}}
+            </select>
+        </div>
+        <div class="form-group m10">
+            <label for="service_status">服务</label>
+            <select id="service_status" class="form-control">
+                <option value="0">否</option>
+                <option value="1">是</option>
+            </select>
+        </div>
+        <div class="form-group mt20">
+            <p class="btn-toolbar center">
+                <button class="btn btn-success" onclick="bhyFunc.reviewIsOk({{$user.id}})">确定</button>
+                <button class="btn btn-light-grey" onclick="bhyFunc.layerClickedCancelButton('page')">取消</button>
+            </p>
+        </div>
+    </div>
+</div>
+
 <script>
     $(function () {
         layer.ready(function () {
@@ -848,6 +856,19 @@
                 area: ['500px', '380px'],
                 shadeClose: true, //开启遮罩关闭
                 content: $('#layer_charge')
+            });
+        })
+
+        $('#assignMatchmaking').click(function(){
+            layer.open({
+                type: 1,
+                skin: 'layui-layer-demo', //样式类名
+                closeBtn: 0, //不显示关闭按钮
+                shift: 2,
+                title: '审核',
+                area: ['500px', '400px'],
+                shadeClose: false, //开启遮罩关闭
+                content: $('#layer_review')
             });
         })
     })
