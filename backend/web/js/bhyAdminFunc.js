@@ -46,7 +46,7 @@ var bhyFunc = {
     reviewYes: function (type) {
         if (type == 1) {  // 身份证
             layer.confirm('确认审核通过吗？', {icon: 3, title:'提示'}, function(index){
-                this.ajaxRequest('/admin/member/auth', {
+                bhyFunc.ajaxRequest('/admin/member/auth', {
                     user_id: bhyFunc.user_id,
                     honesty_value: 1
                 }, function (res) {
