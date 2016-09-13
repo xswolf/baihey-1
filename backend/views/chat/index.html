@@ -2,12 +2,54 @@
 <script src="/wechat/web/js/plugin/angular/angular.min.js"></script>
 <script src="/backend/web/CloudAdmin/js/jQuery-md5/jQuery.md5.js"></script>
 <script src="/backend/web/js/chat.js"></script>
-<section id="page" ng-app="chatApp">
-    <div class="chatList" ng-controller="chat">
-        <a target="_blank" ng-click="changeStatus(userInfo)" class="item item-thumbnail-left" ng-repeat="userInfo in userInfoList | orderBy:'-msg_status' | limitTo:pageSize" href="http://wechat.baihey.com/wap/user/login?id={{userInfo.user_id}}&time={{userInfo.time}}&token={{userInfo.token}}">
+<section id="page" ng-app="chatApp" ng-controller="chat">
+    <div class="ibox">
+        <div class="ibox-title"><h5>搜索</h5></div>
+        <div class="ibox-content">
+            <div class="form-horizontal clearfix">
+                <div class="col-sm-12">
+                        <div class="box-body big">
+                            <div class="row form-group">
+                                <div class="col-sm-4">
+                                    <select class="form-control" ng-model="sex" ng-change="sexChange()">
+                                        <option value="">性别</option>
+                                        <option value="0">女</option>
+                                        <option value="1">男</option>
+                                    </select>
+                                </div>
+
+                                <div class="col-sm-8">
+                                    <div class="form-group">
+                                        <label class="col-md-2 control-label">
+                                            年龄范围:
+                                        </label>
+                                        <div class="col-md-8">
+                                            <div class="slider-controls slider-value-top">
+                                            </div>
+                                            <div id="slider-range" class="slider slider-red">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <span id="age" style="color:#f6931f; font-weight:bold;height:26px;line-height: 26px;font-size: 16px;"></span>
+                                            <input style="display: none;visibility: hidden;" ng-model="age" class="age-Range" ng-change="ageChange()" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="chatList">
+        <a target="_blank" ng-click="changeStatus(userInfo)" class="item item-thumbnail-left"
+           ng-repeat="userInfo in userInfoList | filter:chatFilter | orderBy:'-msg_status' | limitTo:pageSize"
+           href="http://wechat.baihey.com/wap/user/login?id={{userInfo.user_id}}&time={{userInfo.time}}&token={{userInfo.token}}">
             <img ng-src="{{userInfo.info.head_pic}}" onerror="this.src='/wechat/web/images/no_img.png'">
-            <h2>{{userInfo.user_id}}  <span ng-if="userInfo.msg_status" class="label label-danger" id="jello">新消息</span></h2>
-            <p>{{userInfo.info.real_name || userInfo.user_id}} {{userInfo.sex == '1' ? '男' : '女'}} {{userInfo.age || '0'}}岁</p>
+            <h2>{{userInfo.user_id}} <span ng-if="userInfo.msg_status" class="label label-danger" id="jello">新消息</span>
+            </h2>
+            <p>{{userInfo.info.real_name || userInfo.user_id}} {{userInfo.sex == '1' ? '男' : '女'}} {{userInfo.age ||
+                '0'}}岁</p>
         </a>
         <a class="item tac cp" ng-click="loadMore()">
             <p class="cor_p" ng-if="!moreLoading && isMore">点击加载更多</p>
@@ -22,3 +64,22 @@
 返回顶部
 </span>
 </div>
+<script>
+    jQuery(document).ready(function() {
+        var handleSliders = function () {
+            $("#slider-range").slider({
+                range: true, min: 18, max: 99, values: [18, 99],
+                slide: function( event, ui ) {
+                    $("#age").html( ui.values[ 0 ] + " - " + ui.values[ 1 ] );
+                    $(".age-Range").val( ui.values[ 0 ] + "-" + ui.values[ 1 ] );
+                    $(".age-Range").trigger('change');
+                }
+            });
+            $( "#age" ).html( $( "#slider-range" ).slider( "values", 0 ) + " - " + $( "#slider-range" ).slider( "values", 1 ) );
+            $( ".age-Range" ).val( $( "#slider-range" ).slider( "values", 0 ) + "-" + $( "#slider-range" ).slider( "values", 1 ) );
+            $(".age-Range").trigger('change');
+        }
+
+        handleSliders();
+    });
+</script>

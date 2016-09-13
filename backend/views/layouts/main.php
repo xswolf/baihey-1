@@ -20,7 +20,8 @@
     <link rel="stylesheet" type="text/css" href="/backend/web/CloudAdmin/js/bootstrap-switch/bootstrap-switch.min.css" />
     <!-- css3动画 -->
     <link rel="stylesheet" type="text/css"  href="/backend/web/css/animate.css" >
-
+    <!-- JQUERY UI-->
+    <link rel="stylesheet" type="text/css" href="/backend/web/CloudAdmin/js/jquery-ui-1.10.3.custom/css/custom-theme/jquery-ui-1.10.3.custom.min.css" />
 
     <link href="/backend/web/CloudAdmin/font-awesome/css/font-awesome.min.css" rel="stylesheet">
 
