@@ -234,9 +234,8 @@ define(['app/module', 'app/directive/directiveApi'
                 res.data.comment[i].name = res.data.comment[i].name.replace(/\"/g, '');
                 res.data.comment[i].age = res.data.comment[i].age.replace(/\"/g, '');
             }
-            //$comment = ar.cleanQuotes(JSON.stringify(res.data.comment));
-            //$scope.commentList = JSON.parse($comment);
             $scope.commentList = res.data.comment;
+            $scope.commentCount = res.commentCount;
             ar.initPhotoSwipeFromDOM('.bhy-gallery', $scope, $ionicPopup);
         })
 
@@ -335,17 +334,15 @@ define(['app/module', 'app/directive/directiveApi'
 
         // 加载更多
         $scope.loadMore = function () {
-            api.list('/wap/member/get-dynamic', {id: $location.$$search.id}).success(function (res) {
-                if ($scope.pageSize > res.commentCount) {
-                    $scope.isMore = false;
-                }
-                $scope.pageSize += 20;
-            }).finally(function(){
-                $timeout(function(){
-                    $scope.$broadcast('scroll.infiniteScrollComplete');
-                },800);
+            if ($scope.pageSize > $scope.commentCount) {
+                $scope.isMore = false;
+            }
+            $scope.pageSize += 20;
 
-            })
+            $timeout(function(){
+                $scope.$broadcast('scroll.infiniteScrollComplete');
+            },800);
+
         }
 
         //是否还有更多
