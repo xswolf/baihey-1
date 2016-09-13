@@ -603,7 +603,7 @@
         if (photoList[i]['type'] == 1) {
             if(photoList[i]['is_head'] == 1) {
                 var imgHtml = '<div class="pr imgBox"><a href="' + _data + '" rel="group1"><img src="' + data + '" ></a><i class="del fa fa-times-circle-o text-danger" onclick="delImg(this,1,1)"></i><p class="center mt5"><span class="text-danger">头像</span></p></div>';
-                $('#headPic').val(photoList[i]);
+                $('#headPic').val(photoList[i].thumb_path);
             } else {
                 var imgHtml = '<div class="pr imgBox"><a href="' + _data + '" rel="group1"><img src="' + data + '" ></a><i class="del fa fa-times-circle-o text-danger" onclick="delImg(this,1)"></i><p class="center mt5"><a data-src="' + data + '" onclick="setHeadPic(this)">设置头像</a></p></div>';
             }
