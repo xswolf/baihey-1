@@ -46,7 +46,17 @@ var bhyFunc = {
     reviewYes: function (type) {
         if (type == 1) {  // 身份证
             layer.confirm('确认审核通过吗？', {icon: 3, title:'提示'}, function(index){
-                bhyFunc.reviewIsOk(bhyFunc.user_id);
+                this.ajaxRequest('/admin/member/auth', {
+                    user_id: bhyFunc.user_id,
+                    honesty_value: 1
+                }, function (res) {
+                    if (res.status == 1) {
+                        $('.idCardInfo').hide();
+                        $('.idCardSuccess').removeClass('hide')
+                    } else {
+                        layer.msg('审核出错，请刷新重试！');
+                    }
+                })
                 layer.close(index);
             });
         }
@@ -172,7 +182,7 @@ var bhyFunc = {
             });
         }
     },
-    reviewIsOk: function (user_id) {  // 身份证审核通过
+    reviewIsOk: function (user_id) {  // 分配服务红娘
         var matchmaking = $('#matchmaking');
         if (!matchmaking.val()) {
             layer.tips('请选择服务红娘', matchmaking);
@@ -187,7 +197,7 @@ var bhyFunc = {
             if (res.status == 1) {
                 layer.msg('分配成功');
             } else {
-                layer.msg('审核出错，请刷新重试！');
+                layer.msg('分配失败，请刷新重试！');
             }
         })
     },
