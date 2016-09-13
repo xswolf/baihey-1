@@ -94,7 +94,7 @@ p.mb0{ margin-bottom: 0;}
 .ml40{ margin-left: 40px;}
 .ml48{ margin-left: 48px;}
 .ml50{ margin-left: 50px;}
-.bor_0{ border: 0;}
+.bor_0{ border: 0 !important;}
 .bor{border-top:#F0D9E3 1px solid;border-bottom:1px solid #DCDCDC;}
 .bor_btm{border-bottom:1px solid #DCDCDC;}
 .bor_btm2{border-bottom:#d4d4d4 1px solid;}

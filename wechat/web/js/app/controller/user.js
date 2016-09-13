@@ -7,9 +7,10 @@ define(['app/module', 'app/directive/directiveApi'
 ], function (module) {
 
     // 注册
-    module.controller("User.register", ['app.serviceApi', '$scope', '$ionicPopup', '$ionicLoading', '$interval', '$location', function (api, $scope, $ionicPopup, $ionicLoading, $interval, $location) {
+    module.controller("User.register", ['app.serviceApi', '$scope', '$ionicPopup', '$ionicLoading', '$interval', '$location', '$ionicModal', function (api, $scope, $ionicPopup, $ionicLoading, $interval, $location, $ionicModal) {
 
         $scope.User = {};
+        $scope.validate = {};
 
         $scope.codeTitle = '获取验证码';
 
@@ -41,6 +42,23 @@ define(['app/module', 'app/directive/directiveApi'
             return true;
         }
 
+        $ionicModal.fromTemplateUrl('sendCodeModal.html', {
+            scope: $scope,
+            animation: 'slide-in-up'
+        }).then(function (modal) {
+            $scope.modal = modal;
+        });
+        $scope.openSendCodeModal = function () {
+            $scope.modal.show();
+        };
+        $scope.closeSendCodeModal = function () {
+            $scope.modal.hide();
+        };
+
+        $scope.getVerify = function (event) {
+            event.target.src = '/wap/user/get-verify?time=' + ar.timeStamp();
+        }
+
         // 倒计时
         $scope.getCode = function () {
             validateFrom();
@@ -49,10 +67,24 @@ define(['app/module', 'app/directive/directiveApi'
                     ar.saveDataAlert($ionicPopup, '该手机号码已存在');
                     return false;
                 } else {
-                    var timeTitle = 90;
+                    $scope.openSendCodeModal();
+                }
+            });
+
+        }
+
+        $scope.sendCode = function () {
+            api.get('/wap/user/check-code', {verify_code: $scope.validate.verify}).success(function (res) {
+                if (!res) {
+                    ar.saveDataAlert($ionicPopup, '验证码不正确');
+                    angular.element(document.querySelectorAll('#verify')[0]).attr('src', '/wap/user/get-verify?time=' + ar.timeStamp())
+                    return false;
+                } else {
+                    $scope.closeSendCodeModal();
+                    var timeTitle = 60;
                     var timer = $interval(function () {
                         $scope.codeTitle = '重新获取(' + timeTitle + ')';
-                    }, 1000, 90);
+                    }, 1000, 60);
                     timer.then(function () {
                         $scope.codeTitle = '获取验证码';
                         $interval.cancel(timer);
@@ -71,6 +103,8 @@ define(['app/module', 'app/directive/directiveApi'
                     });
                 }
             });
+
+
 
         }
 
