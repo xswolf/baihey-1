@@ -48,6 +48,8 @@
                     <th>上传时间</th>
                     {{if \Yii::$app->request->get('type') == 1 && \Yii::$app->request->get('is_check')==2}}
                     <th>是否审核</th>
+                    {{else}}
+                    <th></th>
                     {{/if}}
                 </tr>
                 </thead>
