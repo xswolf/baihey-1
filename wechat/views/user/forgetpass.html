@@ -12,38 +12,50 @@
     <script data-main="/wechat/web/js/app" src="/wechat/web/js/plugin/requirejs/require.js"></script>
 </head>
 
-<body ng-controller="User.forgetpass" >
+<body ng-controller="User.forgetpass" ng-cloak>
 
-<ion-header>
-    <div class="bar bar-header">
-        <a href="/wap/user/login" class="button button-icon icon ion-arrow-left-c"></a>
-        <h1 class="title">通过手机找回密码</h1>
-    </div>
-</ion-header>
+<ion-header-bar align-title="center" class="com_w_100 bhy">
+    <h1 class="title">通过手机找回密码</h1>
+    <button class="button button-clear button-energized" ng-disabled="!formData.phone || !formData.code" ng-click="next()">下一步</button>
+</ion-header-bar>
 
-<ion-content class="has-header">
+<ion-content class="bhy com_w_100 m_bg">
     <div class="list">
-
-        <label class="item item-input">
-            <span class="input-label">手机号码</span>
-            <input type="text" ng-model="User.mobile" placeholder="请输入正确的手机号码">
+        <label class="item item-input padding">
+            <input type="text" placeholder="请输入您的手机号码" ng-model="formData.phone">
         </label>
-
-        <div class="item item-input">
-            <input class="login_input pass fl mr5 " type="text"
-                   placeholder="请输入短信验证码" ng-model="User.code">
-            <a class="button button-positive button-block" ng-disabled="User.codeSwitch"
-               ng-class="{true:'dslb',false:''}[User.codeCls]" ng-bind="User.codeBtn"
-               ng-click="User.codeSwitch || User.getCode()" href="javascript:;">获取验证码</a>
+        <div class="item item-input padding">
+            <input type="text" placeholder="请输入验证码" maxlength="6" ng-model="formData.code">
+            <button class="button button-calm button-small" ng-disabled="codeBtn != '获取验证码'" ng-click="getCode()">
+                {{codeBtn}}
+            </button>
         </div>
 
-        <div class="ft_btn">
-            <button ng-click="User.next()" class="button button-block button-energized">下一步</button>
-        </div>
     </div>
 
 </ion-content>
 
+<script id="sendCodeModal.html" type="text/ng-template">
+    <ion-modal-view>
+        <ion-header-bar align-title="center">
+            <button class="button button-icon" ng-click="closeSendCodeModal()">取消</button>
+            <h1 class="title">获取验证码</h1>
+        </ion-header-bar>
+        <ion-content>
+            <div class="list">
+                <div class="item tac bor_0">
+                    <img id="verify" class="mb15" src="/wap/user/get-verify" ng-click="getVerify($event)">
+                    <div class="item item-input" style="margin-bottom: 15px;">
+                        <input type="text" ng-model="validate.verify" placeholder="请输入上图中验证码，轻触图片可更换">
+                    </div>
+                    <button class="button button-positive button-block" ng-click="sendCode()">
+                        获取短信验证码
+                    </button>
+                </div>
+            </div>
+        </ion-content>
+    </ion-modal-view>
+</script>
 
 </body>
 

@@ -103,9 +103,6 @@ define(['app/module', 'app/directive/directiveApi'
                     });
                 }
             });
-
-
-
         }
 
         //注册提交
@@ -187,63 +184,84 @@ define(['app/module', 'app/directive/directiveApi'
     }])
 
     //找回密码
-    module.controller("User.forgetpass", ['app.serviceApi', '$scope', '$ionicPopup', function (api, $scope, $ionicPopup) {
+    module.controller("User.forgetpass", ['app.serviceApi', '$scope', '$ionicPopup', '$ionicModal','$interval', function (api, $scope, $ionicPopup, $ionicModal,$interval) {
 
-        $scope.User = {}
+        $scope.formData = {};
 
-        $scope.User.codeBtn = '获取验证码';
+        $scope.codeBtn = '获取验证码';
+
+        $scope.validate = {};
+
+        $ionicModal.fromTemplateUrl('sendCodeModal.html', {
+            scope: $scope,
+            animation: 'slide-in-up'
+        }).then(function (modal) {
+            $scope.modal = modal;
+        });
+        $scope.openSendCodeModal = function () {
+            $scope.modal.show();
+        };
+        $scope.closeSendCodeModal = function () {
+            $scope.modal.hide();
+        };
 
         // 发送验证码
-        $scope.User.getCode = function () {
+        $scope.getCode = function () {
 
-
-            //计时
-            $scope.User.codeSwitch = true;
-            $scope.User.codeCls = true;
-            $scope.User.max_time = 60;
-            $scope.User.timer = setInterval($scope.User.startTime, 1000);
-            setTimeout($scope.User.endTime, $scope.User.max_time * 1000);
-
-            if (!ar.validateMobile($scope.User.mobile)) {  // 验证手机格式
-                ar.saveDataAlert($ionicPopup, '手机号码格式不正确');
+            if (!ar.validateMobile($scope.formData.phone)) {  // 验证手机格式
+                ar.saveDataAlert($ionicPopup, '请输入正确的手机号码');
                 return false;
             }
 
-            api.sendCodeMsg($scope.User.mobile).success(function (data) {
-                if (!data.status) {
-                    ar.saveDataAlert($ionicPopup, '短信发送失败，请稍后重试。');
+            api.getMobileIsExist($scope.formData.phone).success(function (res) {
+                if (res.status > 0) {
+                    ar.saveDataAlert($ionicPopup, '该手机号码还未注册，请直接注册');
                     return false;
+                } else {
+                    $scope.openSendCodeModal();
                 }
-
             });
         }
 
+        $scope.sendCode = function () {
+            api.get('/wap/user/check-code', {verify_code: $scope.validate.verify}).success(function (res) {
+                if (!res) {
+                    ar.saveDataAlert($ionicPopup, '验证码不正确');
+                    angular.element(document.querySelectorAll('#verify')[0]).attr('src', '/wap/user/get-verify?time=' + ar.timeStamp())
+                    return false;
+                } else {
+                    $scope.closeSendCodeModal();
+                    var timeTitle = 60;
+                    var timer = $interval(function () {
+                        $scope.codeBtn = '重新获取(' + timeTitle + ')';
+                    }, 1000, 60);
+                    timer.then(function () {
+                        $scope.codeBtn = '获取验证码';
+                        $interval.cancel(timer);
+                    }, function () {
+                        ar.saveDataAlert($ionicPopup, '倒计时出错');
+                    }, function () {
+                        timeTitle -= 1;
+                    });
 
-        // 开始计时
-        $scope.User.startTime = function () {
-            $scope.User.max_time -= 1;
-            $scope.User.codeBtn = "重新发送" + $scope.User.max_time;
-            $scope.$apply();
+                    // 发送验证码
+                    api.sendCodeMsg($scope.formData.phone).success(function (res) {
+                        if (res.status < 1) {
+                            $interval.cancel(timer);
+                            ar.saveDataAlert($ionicPopup, res.msg);
+                        }
+                    });
+                }
+            });
         }
 
-        // 结束计时，还原文字
-        $scope.User.endTime = function () {
-            $scope.User.codeSwitch = false;
-            $scope.User.codeCls = false;
-            $scope.User.codeBtn = '获取验证码';
-            clearInterval($scope.User.timer);
-            $scope.$apply();
-        }
+        // 下一步
+        $scope.next = function () {
 
-        $scope.User.next = function () {
-
-            //TODO
-            // 查询手机号是否存在，如不存在自动注册
-            window.location.href = '/wap/user/setpass?mobile=' + $scope.User.mobile;
             //比对验证码是否正确
-            api.validateCode($scope.User.code).success(function (data) {
+            api.validateCode($scope.formData.code).success(function (data) {
                 if (data.status) {   //验证成功则跳转设置新密码页
-                    window.location.href = '/wap/user/setpass?mobile=' + $scope.User.mobile;
+                    window.location.href = '/wap/user/setpass?mobile=' + $scope.formData.phone;
                 } else {
                     ar.saveDataAlert($ionicPopup, '验证码不正确');
                     return false;
