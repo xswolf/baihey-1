@@ -516,17 +516,17 @@ class User extends Base
     /**
      * 开通服务（修改余额，到期时间，等级）
      * @param $user_id
-     * @param $goods_id
+     * @param $orderInfo
      * @param int $level
      * @return bool
      * @throws \yii\db\Exception
      */
-    public function changeMatureTime($user_id, $goods_id, $level = 0)
+    public function changeMatureTime($user_id, $orderInfo, $level = 0)
     {
-        $goods = ArrayHelper::toArray(ChargeGoods::getInstance()->findOne($goods_id));
+        $goods = ArrayHelper::toArray(ChargeGoods::getInstance()->findOne($orderInfo['charge_goods_id']));
         $userInfo = $this->getUserById($user_id);
-        //  金额是否大于余额
-        if ($goods['price'] > $userInfo['balance']) {
+        //  订单金额是否大于余额
+        if ($orderInfo['price'] > $userInfo['balance']) {
             return false;
         }
         $db = $this->getDb();

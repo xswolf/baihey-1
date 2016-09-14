@@ -147,7 +147,7 @@ class ChargeOrder extends Base
         $bal = User::getInstance()->changeBalance($orderInfo['user_id'], -$orderInfo['money']);  // 充值余额
 
         if ($orderInfo['charge_goods_id'] != 8) {
-            $mat = User::getInstance()->changeMatureTime($orderInfo['user_id'], $orderInfo['charge_goods_id']);  // 开通服务
+            $mat = User::getInstance()->changeMatureTime($orderInfo['user_id'], $orderInfo);  // 开通服务
         } else {
             $mat = true;
         }
