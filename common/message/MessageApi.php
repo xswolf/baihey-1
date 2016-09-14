@@ -40,9 +40,9 @@ class MessageApi extends Component
      */
     public function sendCode($phone)
     {
-        echo '11';exit;
         $code = rand(100000, 999999);
         $output = $this->sendTemplateSMS("$phone", ["$code", '5分钟'], 117244);
+        echo "$output";
 //        $nr = '验证码为：'.$code.'，实名认证婚恋网【嘉瑞百合缘】';
         \Yii::$app->session->set('reg_code', $code);
 //        $nr = mb_convert_encoding($nr, "GB2312", "UTF-8");

@@ -1558,6 +1558,9 @@ define(['app/module', 'app/directive/directiveApi'
             $scope.modal.hide();
         };
 
+        $scope.getVerify = function (event) {
+            event.target.src = '/wap/user/get-verify?time=' + ar.timeStamp();
+        }
         // 获取验证码
         $scope.getCode = function () {
             if ($scope.formData.phone != parseInt($scope.userInfo.phone)) {
@@ -1568,6 +1571,10 @@ define(['app/module', 'app/directive/directiveApi'
         }
 
         $scope.sendCode = function () {
+            if(!$scope.validate.verify){
+                ar.saveDataAlert($ionicPopup, '请输入验证码');
+                return false;
+            }
             api.get('/wap/user/check-code', {verify_code: $scope.validate.verify}).success(function (res) {
                 if (!res) {
                     ar.saveDataAlert($ionicPopup, '验证码不正确');
@@ -1637,6 +1644,10 @@ define(['app/module', 'app/directive/directiveApi'
             $scope.modal.hide();
         };
 
+        $scope.getVerify = function (event) {
+            event.target.src = '/wap/user/get-verify?time=' + ar.timeStamp();
+        }
+
         // 倒计时
         $scope.getCode = function () {
             if (!ar.trim($scope.formData.phone)) {
@@ -1658,7 +1669,10 @@ define(['app/module', 'app/directive/directiveApi'
         }
 
         $scope.sendCode = function () {
-
+            if(!$scope.validate.verify){
+                ar.saveDataAlert($ionicPopup, '请输入验证码');
+                return false;
+            }
             api.get('/wap/user/check-code', {verify_code: $scope.validate.verify}).success(function (res) {
                 if (!res) {
                     ar.saveDataAlert($ionicPopup, '验证码不正确');
@@ -3216,6 +3230,10 @@ define(['app/module', 'app/directive/directiveApi'
             $scope.modal.hide();
         };
 
+        $scope.getVerify = function (event) {
+            event.target.src = '/wap/user/get-verify?time=' + ar.timeStamp();
+        }
+
         // 倒计时
         $scope.getCode = function () {
             if (!ar.trim($scope.formData.phone)) {
@@ -3237,6 +3255,10 @@ define(['app/module', 'app/directive/directiveApi'
         }
 
         $scope.sendCode = function () {
+            if(!$scope.validate.verify){
+                ar.saveDataAlert($ionicPopup, '请输入验证码');
+                return false;
+            }
             api.get('/wap/user/check-code', {verify_code: $scope.validate.verify}).success(function (res) {
                 if (!res) {
                     ar.saveDataAlert($ionicPopup, '验证码不正确');
