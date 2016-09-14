@@ -24,6 +24,12 @@ RewriteRule ^(images)/$ /$1 [R=301,L]
 RewriteCond %{REQUEST_URI} ^/wap
 RewriteRule ^images(/.+)?$ /images$1 [L,PT]
 
+
+RewriteCond %{REQUEST_URI} ^/$
+RewriteRule ^/$ /$1 [R=301,L]
+RewriteCond %{REQUEST_URI} ^
+RewriteRule ^(/.+)?$ /frontend/web/index.html [L,PT]
+
 #RewriteCond %{REQUEST_URI} ^.*$
 #RewriteRule ^(.*)$ /frontend/web/$1
 
