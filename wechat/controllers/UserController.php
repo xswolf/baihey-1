@@ -101,7 +101,7 @@ class UserController extends BaseController
     public function actionCheckCode()
     {
         $Verify = new Verify();
-        return $Verify->check($this->get['verify_code']);
+        echo $Verify->check($this->get['verify_code']);
     }
 
     public function actionGetVerify()
