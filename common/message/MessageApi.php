@@ -103,25 +103,17 @@ class MessageApi extends Component
         // 初始化REST SDK
 //        global $accountSid,$accountToken,$appId,$serverIP,$serverPort,$softVersion;
         $rest = new REST($serverIP, $serverPort, $softVersion);
-        echo "dd";exit;
         $rest->setAccount($accountSid, $accountToken);
         $rest->setAppId($appId);
 
         // 发送模板短信
         $result = $rest->sendTemplateSMS($to, $datas, $tempId);
         if ($result == NULL) {
-            echo "result error!";
             return false;
         }
         if ($result->statusCode != 0) {
-            echo "error code :" . $result->statusCode . "<br>";
-            echo "error msg :" . $result->statusMsg . "<br>";
             return false;
         } else {
-            $smsmessage = $result->TemplateSMS;
-            echo "statusCode :" . $result->statusCode . "<br>";
-            echo "dateCreated:".$smsmessage->dateCreated."<br/>";
-            echo "smsMessageSid:".$smsmessage->smsMessageSid."<br/>";
             return true;
         }
     }
