@@ -526,7 +526,7 @@ class User extends Base
         $goods = ArrayHelper::toArray(ChargeGoods::getInstance()->findOne($orderInfo['charge_goods_id']));
         $userInfo = $this->getUserById($user_id);
         //  订单金额是否大于余额
-        if ($orderInfo['price'] > $userInfo['balance']) {
+        if ($orderInfo['money'] > $userInfo['balance']) {
             return false;
         }
         $db = $this->getDb();
