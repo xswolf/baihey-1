@@ -99,10 +99,11 @@ class MessageApi extends Component
 
         //REST版本号
         $softVersion = '2013-12-26';
-        echo "aa";exit;
+
         // 初始化REST SDK
 //        global $accountSid,$accountToken,$appId,$serverIP,$serverPort,$softVersion;
         $rest = new REST($serverIP, $serverPort, $softVersion);
+        echo "dd";exit;
         $rest->setAccount($accountSid, $accountToken);
         $rest->setAppId($appId);
 
