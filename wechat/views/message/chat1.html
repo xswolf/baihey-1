@@ -1,5 +1,6 @@
 <ion-view hide-tabs="true" cache-view="false">
     <link href="/wechat/web/css/chat.css" rel="stylesheet">
+    <link href="/wechat/web/js/plugin/angular-emoji-filter/emoji.min.css" rel="stylesheet">
     <ion-header-bar align-title="center"  class="bhy com_w_100" ng-show="u_isFollow">
         <h1 class="title" receive-id="{{receiveId}}" real-name="{{real_name}}"  change-title="{{real_name | sex:sex:age:receiveId}}"></h1>
         <button class="button button-icon" ng-click="addFollow()" ng-if="u_isFollow">关注</button>
@@ -74,7 +75,7 @@
                     <div class="talk_con">
                         <!-- 文本 -->
                         <div class="content normal" ng-if="vo.type=='send' || vo.message_type==1">
-                            <p>{{vo.message}}</p>
+                            <p ng-bind-html="vo.message | emoji"></p>
                         </div>
 
                         <!-- 语音 -->

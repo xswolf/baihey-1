@@ -12,6 +12,7 @@ require.config({
         angular_sanitize: 'plugin/angular/angular-sanitize.min',
         angular_ui_router: 'plugin/angular/angular-ui-router.min',
         angular_upload: 'plugin/angular/angular-file-upload.min',
+        angular_emoji: 'plugin/angular-emoji-filter/emoji.min',
         ionic_angular: 'plugin/ionic/ionic-angular.min',
         bootstrap: 'plugin/bootstrap/bootstrap.min',
         comm: 'comm',
@@ -24,7 +25,7 @@ require.config({
 });
 
 requirejs(['ionic'], function () {
-    requirejs(['comm', 'info_data', "app/controller/listController", 'mobiscroll', 'angular_upload'], function () {
+    requirejs(['comm', 'info_data', "app/controller/listController", 'mobiscroll', 'angular_upload','angular_emoji'], function () {
         'use strict';
         angular.bootstrap(document, ['webApp']);
     });
