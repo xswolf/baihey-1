@@ -46,7 +46,7 @@
                 </span>
             </div>
         </div>
-        <article class="am-comment padding" ng-show="isShowCommentList" ng-repeat="comment in commentList | limitTo:pageSize | orderBy:'create_time':true">
+        <article class="am-comment padding" ng-show="isShowCommentList" ng-repeat="comment in commentList | orderBy:'create_time':true">
             <a ng-click="jump({{comment.user_id}})">
                 <img ng-src="{{comment.headPic | isNull}}" onerror="this.src='/wechat/web/images/no_img.png'" alt="" class="am-comment-avatar" width="48" height="48"/>
             </a>
@@ -56,7 +56,7 @@
                     <div class="am-comment-meta pr">
                         <a ng-click="jump({{comment.user_id}})" class="am-comment-author">{{comment.name | sex:comment.sex:comment.age:comment.user_id}}</a>
                         评论于
-                        <time>{{comment.create_time * 1000 | date:'yyyy-MM-dd HH:mm'}}</time>
+                        <time>{{comment.create_time * 1000 | date:'yyyy-MM-dd HH:mm:ss'}}</time>
                         <span ng-if="comment.report_flag == 1" class="am-badge am-badge-danger am-round">被多次举报</span>
                         <img ng-if="comment.private == 1" class="private" src="/wechat/web/images/dis_private.png" height="25">
                     </div>
@@ -68,11 +68,6 @@
                 </div>
             </div>
         </article>
-        <ion-infinite-scroll
-                ng-if="moreDataCanBeLoaded()"
-                on-infinite="loadMore()"
-                distance="1%">
-        </ion-infinite-scroll>
     </ion-content>
     <ion-footer-bar class="bar-light">
         <div class="text">

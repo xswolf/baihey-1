@@ -199,8 +199,6 @@ define(['app/module', 'app/directive/directiveApi'
     module.controller("discovery.single", ['app.serviceApi', '$scope', '$location', '$ionicActionSheet', '$ionicModal', '$ionicPopup', '$ionicScrollDelegate','$timeout', function (api, $scope, $location, $ionicActionSheet, $ionicModal, $ionicPopup, $ionicScrollDelegate,$timeout) {
         $scope.formData = {};
         $scope.formData.private = false; // 私密评论默认未选中
-        $scope.isMore = true;
-        $scope.pageSize = 20;
         $scope.commentList = [];
         $scope.isShowCommentList = true;
         $scope.sendLoading = false;  // 发送中
@@ -218,7 +216,6 @@ define(['app/module', 'app/directive/directiveApi'
                     $location.url('/admin_info?userId=' + id);
                 }
             }
-
         }
         //用户已屏蔽的动态id，从localStorage获取
         $scope.display = ar.getStorage('display') ? ar.getStorage('display') : [];
@@ -287,13 +284,12 @@ define(['app/module', 'app/directive/directiveApi'
                         headPic: info.head_pic,
                         name: info.real_name,
                         private: $scope.formData.private == 'true' ? 1 : 0,
-                        create_time: res.data.create_time,
+                        create_time: res.data.create_time.toString(),
                         content: $scope.formData.content,
                         age: $scope.userInfo.info.age,
                         sex: $scope.userInfo.sex
                     });
                     $scope.dis.comment_num = parseInt($scope.dis.comment_num) + 1;
-                    $ionicScrollDelegate.scrollBottom(true);
                 }
             }).error(function(){
                 ar.saveDataAlert($ionicPopup,'评论失败，请刷新重试！');
@@ -302,6 +298,7 @@ define(['app/module', 'app/directive/directiveApi'
             }).finally(function(){
                 $scope.formData.content = '';
                 $scope.sendLoading = false;
+                $ionicScrollDelegate.scrollTop(true);
             })
         }
 
@@ -350,26 +347,6 @@ define(['app/module', 'app/directive/directiveApi'
                     return true;
                 }
             });
-        }
-
-        // 加载更多
-        $scope.loadMore = function () {
-            api.list('/wap/member/get-dynamic', {id: $location.$$search.id}).success(function (res) {
-                if ($scope.pageSize > res.commentCount) {
-                    $scope.isMore = false;
-                }
-                $scope.pageSize += 20;
-            }).finally(function(){
-                $timeout(function(){
-                    $scope.$broadcast('scroll.infiniteScrollComplete');
-                },800);
-
-            })
-        }
-
-        //是否还有更多
-        $scope.moreDataCanBeLoaded = function () {
-            return $scope.isMore;
         }
 
     }]);
