@@ -356,7 +356,7 @@ define(['app/module'], function (module) {
                 case '2':
                     return '我关注的人可见';
                 case '3':
-                    return 'vip会员可见';
+                    return 'VIP会员可见';
                 case '4':
                     return '不公开';
             }

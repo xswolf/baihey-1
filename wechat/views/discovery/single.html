@@ -16,7 +16,7 @@
                 <span class="fr fs12 cor5">{{dis.create_time*1000 | date:'yyyy-MM-dd HH:mm'}}</span>
             </h2>
             <p>
-                <span class="identity id" ng-if="honesty(dis.honesty_value)">身份证</span>
+                <span class="identity id" ng-if="dis.sfzCheck">身份证</span>
                 <span class="identity phone" ng-if="dis.phone != null">手机</span>
                 <span class="identity vip" ng-if="dis.level == '1'">vip</span>
                 <span class="identity guest" ng-if="dis.level == 2">贵宾</span>
@@ -83,6 +83,6 @@
                 <span class="cor4">私密</span>
             </label>
         </div>
-        <button type="button" class="button button-balanced ml10 send" ng-disabled="!formData.content" ng-click="sendComment()">发表</button>
+        <button type="button" class="button button-balanced ml10 send" ng-disabled="sendLoading" ng-click="sendComment()">发表</button>
     </ion-footer-bar>
 </ion-view>

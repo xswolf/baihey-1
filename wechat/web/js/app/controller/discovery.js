@@ -95,10 +95,17 @@ define(['app/module', 'app/directive/directiveApi'
                         api.save('/wap/member/delete-dynamic', {id: dis.id}).success(function (res) {
                             $scope.display.push(dis.id);
                             ar.setStorage('display', $scope.display);
-                            $scope.discoveryList.splice(index, 1);
+                            for(var i = 0 ; i < $scope.discoveryList.length; i++ ){
+                                if($scope.discoveryList[i].id == dis.id){
+                                    $scope.discoveryList.splice(i, 1);
+                                }
+                            }
+                        }).error(function(){
+                            ar.saveDataAlert($ionicPopup,'删除失败，请刷新重试！');
+                            dis.moreLoading = false;
+                        }).finally(function(){
                             dis.moreLoading = false;
                         });
-
                     }
                     return true;
                 }
@@ -118,7 +125,7 @@ define(['app/module', 'app/directive/directiveApi'
             }
             $scope.discoveryList[i].like_num = parseInt($scope.discoveryList[i].like_num) + add;
 
-            api.save('/wap/member/set-click-like', {dynamicId: dis.id, add: add}); // 请测试功能是否正常。
+            api.save('/wap/member/set-click-like', {dynamicId: dis.id, add: add});
 
         }
 
@@ -135,6 +142,7 @@ define(['app/module', 'app/directive/directiveApi'
                 }
                 for (var i in res.data) {
                     res.data[i].imgList = JSON.parse(res.data[i].pic);
+                    res.data[i].sfzCheck = res.data[i].honesty_value & 1;
                     res.data[i].real_name = res.data[i].real_name.replace(/\"/g, '');
                     res.data[i].head_pic = res.data[i].head_pic.replace(/\"/g, '');
                     res.data[i].level = res.data[i].level.replace(/\"/g, '');
@@ -159,6 +167,7 @@ define(['app/module', 'app/directive/directiveApi'
                 $scope.discoveryList = [];
                 for (var i in res.data) {
                     res.data[i].imgList = JSON.parse(res.data[i].pic);
+                    res.data[i].sfzCheck = res.data[i].honesty_value & 1;
                     res.data[i].real_name = res.data[i].real_name.replace(/\"/g, '');
                     res.data[i].head_pic = res.data[i].head_pic.replace(/\"/g, '');
                     res.data[i].level = res.data[i].level.replace(/\"/g, '');
@@ -184,7 +193,6 @@ define(['app/module', 'app/directive/directiveApi'
             }
         });
 
-
     }]);
 
     // 发现-评论
@@ -195,6 +203,7 @@ define(['app/module', 'app/directive/directiveApi'
         $scope.pageSize = 20;
         $scope.commentList = [];
         $scope.isShowCommentList = true;
+        $scope.sendLoading = false;  // 发送中
         $scope.jump = function (id) {
             if (id >= 10000) {
                 if (id == $scope.userInfo.id) {
@@ -224,6 +233,7 @@ define(['app/module', 'app/directive/directiveApi'
         $scope.user_id = userInfo.id;
         api.list('/wap/member/get-dynamic', {id: $location.$$search.id}).success(function (res) {
             res.data.imgList = JSON.parse(res.data.pic);
+            res.data.sfzCheck = res.data.honesty_value & 1;
             res.data.real_name = res.data.real_name.replace(/\"/g, '');
             res.data.head_pic = res.data.head_pic.replace(/\"/g, '');
             res.data.level = res.data.level.replace(/\"/g, '');
@@ -263,6 +273,11 @@ define(['app/module', 'app/directive/directiveApi'
 
         // 发表评论
         $scope.sendComment = function () {
+            if(!$scope.formData.content){
+                ar.saveDataAlert($ionicPopup,'请输入评论内容！');
+                return false;
+            }
+            $scope.sendLoading = true;
             $scope.formData.dynamicId = $location.$$search.id;
             api.save('/wap/member/add-comment', $scope.formData).success(function (res) {
                 if (res.data.id > 0) {
@@ -277,12 +292,16 @@ define(['app/module', 'app/directive/directiveApi'
                         age: $scope.userInfo.info.age,
                         sex: $scope.userInfo.sex
                     });
-                    //console.log($scope.commentList);
                     $scope.dis.comment_num = parseInt($scope.dis.comment_num) + 1;
-                    $scope.formData.content = ''; //重置输入框
                     $ionicScrollDelegate.scrollBottom(true);
                 }
-
+            }).error(function(){
+                ar.saveDataAlert($ionicPopup,'评论失败，请刷新重试！');
+                $scope.formData.content = '';
+                $scope.sendLoading = false;
+            }).finally(function(){
+                $scope.formData.content = '';
+                $scope.sendLoading = false;
             })
         }
 
