@@ -3008,7 +3008,11 @@ define(['app/module', 'app/directive/directiveApi'
 
         $scope.showPhone = function () {
             $scope.phone = $scope.matchmakerList[0].landline ? $scope.matchmakerList[0].landline : $scope.matchmakerList[0].phone;
-            ar.saveDataAlert($ionicPopup, '电话：' + $scope.phone);
+            $ionicPopup.alert({
+                title:'查看红娘电话号码',
+                template: $scope.phone,
+                okText: '关闭'
+            })
         }
 
     }]);
