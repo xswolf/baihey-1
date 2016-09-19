@@ -163,7 +163,7 @@ define(['app/module', 'app/directive/directiveApi'
         $scope.uploader = new FileUploader({url: '/wap/file/thumb'});
         $filter("orderBy")();
         // socket聊天
-        requirejs(['chat/wechatInterface', 'plugin/socket/socket.io.1.4.0'], function (wx, socket) {
+        requirejs(['plugin/socket/socket.io.1.4.0'], function (socket) {
 
             socket = socket.connect("http://120.76.84.162:8088");
             // 告诉服务器你已经上线
