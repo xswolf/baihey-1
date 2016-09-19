@@ -12,6 +12,10 @@ define(['app/module', 'app/directive/directiveApi'
             return $scope.dataFilter.blacked.indexOf(user_id) == -1
         }
 
+        $scope.honesty = function (val) {
+            return val & 1;
+        }
+
         $scope.userInfo = {id:ar.getCookie('bhy_user_id')};
         // 删除操作
         $scope.removeItem = function (item,event) {
@@ -31,6 +35,7 @@ define(['app/module', 'app/directive/directiveApi'
 
             return true;
         }
+
 
     }]);
 

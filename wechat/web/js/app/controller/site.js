@@ -11,7 +11,6 @@ define(['app/module', 'app/directive/directiveApi'
             if (ar.getStorage('userInfo') && ar.getStorage('userInfo').user_id == ar.getCookie('bhy_user_id')) {
                 $scope.userInfo = ar.getStorage('userInfo');
                 $scope.userInfo.info = JSON.parse($scope.userInfo.info);
-                $scope.userInfo.auth = JSON.parse($scope.userInfo.auth);
             }
         })
 
@@ -158,7 +157,6 @@ define(['app/module', 'app/directive/directiveApi'
             api.list('/wap/site/user-list', refreshForm).success(function (res) {
                 for (var i in res.data) {
                     res.data[i].info = JSON.parse(res.data[i].info);
-                    res.data[i].auth = JSON.parse(res.data[i].auth);
                 }
                 $scope.userList = res.data;
                 $scope.dataLoading = false;
@@ -180,7 +178,6 @@ define(['app/module', 'app/directive/directiveApi'
                     }
                     for (var i in res.data) {
                         res.data[i].info = JSON.parse(res.data[i].info);
-                        res.data[i].auth = JSON.parse(res.data[i].auth);
                     }
                     $scope.userList = $scope.userList.concat(res.data);
                     $scope.dataLoading = false;

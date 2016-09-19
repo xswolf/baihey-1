@@ -10,7 +10,6 @@ define(['app/module', 'app/directive/directiveApi'
     module.controller("member.index", ['app.serviceApi', '$scope', '$ionicPopup', function (api, $scope, $ionicPopup) {
         $scope.userInfo = ar.getStorage('userInfo');
         $scope.userInfo.info = JSON.parse($scope.userInfo.info);
-        $scope.userInfo.auth = JSON.parse($scope.userInfo.auth);
         // 退出登录
         $scope.loginOut = function () {
             api.save('/wap/member/login-out', {}).success(function (res) {
@@ -72,7 +71,6 @@ define(['app/module', 'app/directive/directiveApi'
 
         $scope.userInfo = ar.getStorage('userInfo');
         $scope.userInfo.info = JSON.parse($scope.userInfo.info);
-        $scope.userInfo.auth = JSON.parse($scope.userInfo.auth);
 
         // 判断身份证是否认证通过
         api.list('/wap/member/photo-list', {type: 2, pageSize: 2}).success(function (res) {
@@ -168,7 +166,6 @@ define(['app/module', 'app/directive/directiveApi'
                                     ar.setStorage("userInfo", $scope.userInfo);
                                     var userInfo = ar.getStorage("userInfo");
                                     userInfo.info = JSON.stringify(userInfo.info);
-                                    userInfo.auth = JSON.stringify(userInfo.auth);
                                     ar.setStorage("userInfo", userInfo);
                                 }
                                 for (var i in $scope.imgList) {
@@ -201,7 +198,6 @@ define(['app/module', 'app/directive/directiveApi'
                             ar.setStorage("userInfo", $scope.userInfo);
                             var userInfo = ar.getStorage("userInfo");
                             userInfo.info = JSON.stringify(userInfo.info);
-                            userInfo.auth = JSON.stringify(userInfo.auth);
                             ar.setStorage("userInfo", userInfo);
                         }
                         hideSheet();
@@ -239,7 +235,6 @@ define(['app/module', 'app/directive/directiveApi'
             $scope.saveClose = function () {
                 $scope.userInfo = ar.getStorage('userInfo');
                 $scope.userInfo.info = JSON.parse($scope.userInfo.info);
-                $scope.userInfo.auth = JSON.parse($scope.userInfo.auth);
                 $scope.infoModal.hide();
             }
         }
@@ -380,7 +375,6 @@ define(['app/module', 'app/directive/directiveApi'
                 ar.setStorage("userInfo", $scope.userInfo);
                 var userInfo = ar.getStorage("userInfo");
                 userInfo.info = JSON.stringify(userInfo.info);
-                userInfo.auth = JSON.stringify(userInfo.auth);
                 ar.setStorage("userInfo", userInfo);
                 //$scope.getUserPrivacyStorage('');
             }).finally(function () {
@@ -402,7 +396,6 @@ define(['app/module', 'app/directive/directiveApi'
 
         $scope.userInfo = ar.getStorage('userInfo');
         $scope.userInfo.info = JSON.parse($scope.userInfo.info);
-        $scope.userInfo.auth = JSON.parse($scope.userInfo.auth);
 
         // 判断身份证是否认证通过
         api.list('/wap/member/photo-list', {type: 2, pageSize: 2}).success(function (res) {
@@ -535,7 +528,6 @@ define(['app/module', 'app/directive/directiveApi'
             $scope.saveClose = function () {
                 $scope.userInfo = ar.getStorage('userInfo');
                 $scope.userInfo.info = JSON.parse($scope.userInfo.info);
-                $scope.userInfo.auth = JSON.parse($scope.userInfo.auth);
                 $scope.infoModal.hide();
             }
         }
@@ -677,7 +669,6 @@ define(['app/module', 'app/directive/directiveApi'
                 ar.setStorage("userInfo", $scope.userInfo);
                 var userInfo = ar.getStorage("userInfo");
                 userInfo.info = JSON.stringify(userInfo.info);
-                userInfo.auth = JSON.stringify(userInfo.auth);
                 ar.setStorage("userInfo", userInfo);
             }).finally(function () {
                 $scope.closeModal();
@@ -876,7 +867,6 @@ define(['app/module', 'app/directive/directiveApi'
 
             var userInfo = ar.getStorage('userInfo');
             userInfo.info = JSON.parse(userInfo.info)
-            userInfo.auth = JSON.parse(userInfo.auth);
             if (!userInfo.info.head_pic) {
                 $ionicPopup.alert({
                     template: '没有头像不可以发布动态哦，点击确定去设置头像！',
@@ -942,7 +932,6 @@ define(['app/module', 'app/directive/directiveApi'
         api.list('/wap/follow/follow-list', {type: 'follow'}).success(function (res) {
             for (var i in res.data) {
                 res.data[i].info = JSON.parse(res.data[i].info);
-                res.data[i].auth = JSON.parse(res.data[i].auth);
             }
             $scope.followList = res.data;
         });
@@ -950,7 +939,6 @@ define(['app/module', 'app/directive/directiveApi'
         api.list('/wap/follow/follow-list', {type: 'followed'}).success(function (res) {
             for (var i in res.data) {
                 res.data[i].info = JSON.parse(res.data[i].info);
-                res.data[i].auth = JSON.parse(res.data[i].auth);
             }
             $scope.followedList = res.data;
         });
@@ -985,7 +973,6 @@ define(['app/module', 'app/directive/directiveApi'
         var userInfo = ar.getStorage('userInfo');
         if (userInfo != null) {
             userInfo.info = JSON.parse(userInfo.info);
-            userInfo.auth = JSON.parse(userInfo.auth);
         }
         // 用于想去的地方，去过的地方等
         var getTravel = function (name, serId) {
@@ -1037,7 +1024,6 @@ define(['app/module', 'app/directive/directiveApi'
                 // 用户信息
                 $scope.otherUserInfo = res.userInfo;
                 $scope.otherUserInfo.info = JSON.parse($scope.otherUserInfo.info);
-                $scope.otherUserInfo.auth = JSON.parse($scope.otherUserInfo.auth);
                 // 用户相册
                 $scope.imgList = res.userPhoto.length > 0 ? res.userPhoto : [];
                 ar.initPhotoSwipeFromDOM('.bhy-gallery', $scope, $ionicPopup);
@@ -1119,7 +1105,6 @@ define(['app/module', 'app/directive/directiveApi'
         var userInfo = ar.getStorage('userInfo');
         if (userInfo != null) {
             userInfo.info = JSON.parse(userInfo.info);
-            userInfo.auth = JSON.parse(userInfo.auth);
         }
         // 用于想去的地方，去过的地方等
         var getTravel = function (name, serId) {
@@ -1172,7 +1157,6 @@ define(['app/module', 'app/directive/directiveApi'
                 $scope.otherUserInfo = res.userInfo;
                 $scope.authUserInfo = res.authUserInfo;
                 $scope.otherUserInfo.info = JSON.parse($scope.otherUserInfo.info);
-                $scope.otherUserInfo.auth = JSON.parse($scope.otherUserInfo.auth);
                 // 用户相册
                 $scope.imgList = res.userPhoto.length > 0 ? res.userPhoto : [];
                 ar.initPhotoSwipeFromDOM('.bhy-gallery', $scope, $ionicPopup);
@@ -1255,7 +1239,6 @@ define(['app/module', 'app/directive/directiveApi'
         });
         $scope.userInfo = ar.getStorage("userInfo");
         $scope.userInfo.info = JSON.stringify($scope.userInfo.info);
-        $scope.userInfo.auth = JSON.stringify($scope.userInfo.auth);
 
     }]);
 
@@ -1270,7 +1253,6 @@ define(['app/module', 'app/directive/directiveApi'
                 ar.setStorage("userInfo", $scope.userInfo);
                 var userInfo = ar.getStorage("userInfo");
                 userInfo.info = JSON.stringify(userInfo.info);
-                userInfo.auth = JSON.stringify(userInfo.auth);
                 ar.setStorage("userInfo", userInfo);
                 ar.saveDataAlert($ionicPopup, '保存成功');
                 $location.url('/member/privacy');
@@ -1316,7 +1298,6 @@ define(['app/module', 'app/directive/directiveApi'
                             ar.setStorage("userInfo", $scope.userInfo);
                             var userInfo = ar.getStorage("userInfo");
                             userInfo.info = JSON.stringify(userInfo.info);
-                            userInfo.auth = JSON.stringify(userInfo.auth);
                             ar.setStorage("userInfo", userInfo);
                         })
                     } else {
@@ -1336,7 +1317,6 @@ define(['app/module', 'app/directive/directiveApi'
                     ar.setStorage("userInfo", $scope.userInfo);
                     var userInfo = ar.getStorage("userInfo");
                     userInfo.info = JSON.stringify(userInfo.info);
-                    userInfo.auth = JSON.stringify(userInfo.auth);
                     ar.setStorage("userInfo", userInfo);
                 })
             }
@@ -1357,7 +1337,6 @@ define(['app/module', 'app/directive/directiveApi'
                 ar.setStorage("userInfo", $scope.userInfo);
                 var userInfo = ar.getStorage("userInfo");
                 userInfo.info = JSON.stringify(userInfo.info);
-                userInfo.auth = JSON.stringify(userInfo.auth);
                 ar.setStorage("userInfo", userInfo);
             });
         });
@@ -1376,7 +1355,6 @@ define(['app/module', 'app/directive/directiveApi'
                 ar.setStorage("userInfo", $scope.userInfo);
                 var userInfo = ar.getStorage("userInfo");
                 userInfo.info = JSON.stringify(userInfo.info);
-                userInfo.auth = JSON.stringify(userInfo.auth);
                 ar.setStorage("userInfo", userInfo);
             });
         });
@@ -1389,7 +1367,6 @@ define(['app/module', 'app/directive/directiveApi'
             $scope.followList = res.data;
             for (var i in $scope.followList) {
                 $scope.followList[i].info = JSON.parse($scope.followList[i].info);
-                $scope.followList[i].auth = JSON.parse($scope.followList[i].auth);
             }
         });
 
@@ -1440,7 +1417,6 @@ define(['app/module', 'app/directive/directiveApi'
                     ar.setStorage("userInfo", $scope.userInfo);
                     var userInfo = ar.getStorage("userInfo");
                     userInfo.info = JSON.stringify(userInfo.info);
-                    userInfo.auth = JSON.stringify(userInfo.auth);
                     ar.setStorage("userInfo", userInfo);
                     $location.url('/member/security');
                 } else {
@@ -1518,7 +1494,6 @@ define(['app/module', 'app/directive/directiveApi'
                                     ar.setStorage("userInfo", $scope.userInfo);
                                     var userInfo = ar.getStorage("userInfo");
                                     userInfo.info = JSON.stringify(userInfo.info);
-                                    userInfo.auth = JSON.stringify(userInfo.auth);
                                     ar.setStorage("userInfo", userInfo);
                                     var alertPopup = $ionicPopup.alert({
                                         title: '重要提示',
@@ -1651,7 +1626,6 @@ define(['app/module', 'app/directive/directiveApi'
                                     ar.setStorage("userInfo", $scope.userInfo);
                                     var userInfo = ar.getStorage("userInfo");
                                     userInfo.info = JSON.stringify(userInfo.info);
-                                    userInfo.auth = JSON.stringify(userInfo.auth);
                                     ar.setStorage("userInfo", userInfo);
                                     ar.saveDataAlert($ionicPopup, '绑定成功');
                                     $location.url('/member/security');
@@ -1686,7 +1660,6 @@ define(['app/module', 'app/directive/directiveApi'
                     ar.setStorage("userInfo", $scope.userInfo);
                     var userInfo = ar.getStorage("userInfo");
                     userInfo.info = JSON.stringify(userInfo.info);
-                    userInfo.auth = JSON.stringify(userInfo.auth);
                     ar.setStorage("userInfo", userInfo);
                     $location.url('/member/security');
                 })
@@ -1712,7 +1685,6 @@ define(['app/module', 'app/directive/directiveApi'
                     ar.setStorage("userInfo", $scope.userInfo);
                     var userInfo = ar.getStorage("userInfo");
                     userInfo.info = JSON.stringify(userInfo.info);
-                    userInfo.auth = JSON.stringify(userInfo.auth);
                     ar.setStorage("userInfo", userInfo);
                     $location.url('/member/security');
                 })
@@ -1755,9 +1727,19 @@ define(['app/module', 'app/directive/directiveApi'
         // 监听上传回传数据
         $scope.$on('thumb_path', function (event, name, data) {
             if (name == 'honesty1') {
-                !$scope.authList[0] ? $scope.authList[0] = data : $scope.authList[0].thumb_path = data.thumb_path;
+                if(!$scope.authList[0]){
+                    $scope.authList[0] = data;
+                }else {
+                    $scope.authList[0].thumb_path = data.thumb_path;
+                    $scope.authList[0].is_check = 2;
+                }
             } else {
-                !$scope.authList[1] ? $scope.authList[1] = data : $scope.authList[1].thumb_path = data.thumb_path;
+                if(!$scope.authList[1]){
+                    $scope.authList[1] = data;
+                }else {
+                    $scope.authList[1].thumb_path = data.thumb_path;
+                    $scope.authList[1].is_check = 2;
+                }
             }
         });
 
@@ -1789,7 +1771,6 @@ define(['app/module', 'app/directive/directiveApi'
                     ar.setStorage("userInfo", $scope.userInfo);
                     var userInfo = ar.getStorage("userInfo");
                     userInfo.info = JSON.stringify(userInfo.info);
-                    userInfo.auth = JSON.stringify(userInfo.auth);
                     ar.setStorage("userInfo", userInfo);
                     $location.url('/member/honesty');
                     $scope.sfzCheck = 2;
@@ -2888,7 +2869,6 @@ define(['app/module', 'app/directive/directiveApi'
             ar.setStorage('userInfo', res.data);
             if ($scope.userInfo) {
                 $scope.userInfo.info = JSON.parse($scope.userInfo.info);
-                $scope.userInfo.auth = JSON.parse($scope.userInfo.auth);
             }
             if ($scope.userInfo.matchmaking && $scope.userInfo.matchmaking != '0') {
                 $scope.title = '服务红娘';
@@ -3196,7 +3176,6 @@ define(['app/module', 'app/directive/directiveApi'
                                     ar.setStorage("userInfo", $scope.userInfo);
                                     var userInfo = ar.getStorage("userInfo");
                                     userInfo.info = JSON.stringify(userInfo.info);
-                                    userInfo.auth = JSON.stringify(userInfo.auth);
                                     ar.setStorage("userInfo", userInfo);
                                     // 返回上一个页面
                                     window.history.back();

@@ -26,7 +26,7 @@
                     <span class="identity phone">官方</span>
                 </p>
                 <p ng-if="dis.user_id >= 10000">
-                    <span class="identity id" ng-if="sfzCheck == 1">身份证</span>
+                    <span class="identity id" ng-if="dis.sfzCheck">身份证</span>
                     <span class="identity phone" ng-if="dis.phone != null">手机</span>
                     <span class="identity vip" ng-if="dis.level == '1'">vip</span>
                     <span class="identity guest" ng-if="dis.level == 2">贵宾</span>

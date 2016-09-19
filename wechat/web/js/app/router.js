@@ -118,7 +118,6 @@ define(["app/module", 'app/service/serviceApi'],
 
                             if (flag && $rootScope.historyListHide.length > 0) { // 有聊天信息，且没有加入storage
                                 $rootScope.receiveUserInfo.info = JSON.parse($rootScope.receiveUserInfo.info);
-                                $rootScope.receiveUserInfo.auth = JSON.parse($rootScope.receiveUserInfo.auth);
                                 $rootScope.receiveUserInfo.receive_user_id = ar.getCookie('bhy_user_id');
                                 $rootScope.receiveUserInfo.other = $rootScope.receiveUserInfo.id;
                                 $rootScope.receiveUserInfo.order_time = ar.timeStamp();
@@ -197,7 +196,6 @@ define(["app/module", 'app/service/serviceApi'],
                 var getUserStorage = function () {
                     if ($scope.userInfo) {
                         $scope.userInfo.info = JSON.parse($scope.userInfo.info);
-                        $scope.userInfo.auth = JSON.parse($scope.userInfo.auth);
                     }
                 }
                 var setUserInfoStorage = function () {
@@ -352,7 +350,6 @@ define(["app/module", 'app/service/serviceApi'],
                                     var list = res.data;
                                     for (var i in list) {
                                         list[i].info = JSON.parse(list[i].info);
-                                        list[i].auth = JSON.parse(list[i].auth);
                                         list[i].order_time = parseInt(list[i].create_time); // ar.timeStamp();  // 消息时间
                                         var flag = true;
 
