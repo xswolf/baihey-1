@@ -89,22 +89,6 @@ class UserInformation extends Base
         return $row;
     }
 
-    public function getAuthImgPath($user_id, $name)
-    {
-        $select = "json_extract(auth,'$.".$name."') $name";
-        $row = (new Query())
-            ->select([$select])
-            ->from($this->tablePrefix.'user_information')
-            ->where(['user_id' => $user_id]);
-        //echo $row->createCommand()->getRawSql();exit;
-        $row = $row->one();
-
-        if (!$row) {
-            return null;
-        }
-        return $row;
-    }
-
     /**
      * 获取$user_id的列
      * @param $user_id
