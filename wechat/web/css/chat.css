@@ -183,28 +183,33 @@
     text-align: center;
 }
 
-.chat .r_warning {
+.r_warning {
     background-color: rgba(0, 0, 0, 0.2);
     text-align: center;
     margin: 0 auto;
-    padding: 5px 10px;
+    padding: 5px 2px;
     width: 100%;
+    position: fixed;
+    z-index: 5;
 }
-.chat .r_warning.report{
+.r_warning.report{
     position: absolute;
     top: 0;
     left: 0;
     z-index: 99;
 }
-.chat .r_warning p {
+.r_warning p {
     color: #fff;
     font-size: 12px;
     overflow: hidden;
     text-overflow: clip;
     white-space: normal;
 }
-
-.chat .r_warning p .warning_ico {
+.r_warning .sfzBtn{
+    line-height: 16px;
+    min-height: 16px;
+}
+.r_warning p .warning_ico {
     margin-right: 5px;
     vertical-align: top;
 }

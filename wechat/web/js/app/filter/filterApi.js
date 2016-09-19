@@ -616,7 +616,7 @@ define(['app/module'], function (module) {
 
     module.filter('qqwx', function () {
         return function (value) {
-            return value.substr(0,3) + '******（VIP会员可见）';
+            return value.substr(0,3) + '******';
         }
     })
 

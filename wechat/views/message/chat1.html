@@ -1,22 +1,41 @@
-<ion-view hide-tabs="true" cache-view="false">
+<ion-view hide-tabs="true" cache-view="false" ng-cloak>
     <link href="/wechat/web/css/chat.css" rel="stylesheet">
     <ion-header-bar align-title="center"  class="bhy com_w_100" ng-show="u_isFollow">
         <h1 class="title" receive-id="{{receiveId}}" real-name="{{real_name}}"  change-title="{{real_name | sex:sex:age:receiveId}}"></h1>
         <button class="button button-icon" ng-click="addFollow()" ng-if="u_isFollow">关注</button>
     </ion-header-bar>
+
+    <!-- 身份认证提示 -->
+    <div class="r_warning" ng-show="(userSfzCheck != 1 || report_flag == 1 || sfzCheck != 1) && receiveId > 9999" ng-class="{'has-header':u_isFollow}">
+        <p class="mb0" ng-if="userSfzCheck != 1">
+            <i class="ion-alert-circled assertive fs14 vam"></i>
+            <span class="vam assertive">对方身份未在本站认证，须谨慎交流！</span>
+        </p>
+        <p class="mb0" ng-if="report_flag == 1">
+            <i class="ion-alert-circled assertive fs14 vam"></i>
+            <span class="vam assertive">对方被举报多次，须谨慎交流！</span>
+        </p>
+        <p class="mb0" ng-if="sfzCheck != 1">
+            <i class="ion-alert-circled assertive fs14 vam"></i>
+            <span class="vam assertive">由于您的身份未认证，对方会收到警示消息。<a href="#/member/honesty" class="button button-small button-positive sfzBtn">去认证</a></span>
+        </p>
+    </div>
+    <!-- 身份认证提示/ -->
+
     <ion-content class="bhy com_w_100 chat" id="message-detail-content"
                  delegate-handle="messageDetailsScroll" ng-class="{'has-header':u_isFollow}">
         <ion-refresher pulling-text="下拉加载更多" refreshing-text="加载中.." on-refresh="doRefresh()"
                        pulling-icon="ion-arrow-down-c"></ion-refresher>
         <ion-list>
-            <!-- 举报提示 -->
+           <!-- &lt;!&ndash; 举报提示 &ndash;&gt;
             <div ng-if="report_flag == 1 && receiveId > 9999" class="r_warning report">
                 <p class="mb0">
                     <i class="ion-alert-circled assertive fs14 warning_ico vam"></i>
                     <span class="vam assertive">对方被举报多次，须谨慎交流！</span>
                     <i class="ion-close-round close fr cp" ng-click="userInfo.sex=0;"></i>
                 </p>
-            </div>
+            </div>-->
+
             <!-- 固定item -->
             <ion-item class="talk_item_u">
                 <div class="talk_user">
@@ -33,22 +52,6 @@
                 </div>
             </ion-item>
             <!-- 固定item/ -->
-
-            <!-- 身份认证提示 -->
-            <div class="r_warning" ng-if="sfzCheck !== 1 && receiveId > 9999">
-                <p class="mb0">
-                    <i class="ion-alert-circled assertive fs14 warning_ico vam"></i>
-                    <span class="vam">对方身份未在本站验证，须谨慎交流！</span>
-                </p>
-            </div>
-
-            <!-- 红娘评价 -->
-           <!-- <div class="rated clearfix" ng-if="!u_maker_rated">
-
-                <p class="rated_t"><i class="bhy-icon-tips-01 cor13"></i>李小姐性格随和、有一颗善良的心，
-                    是一个懂得感恩、乐观向上的女孩。</p>
-                <p class="rated_maker">—— 红娘<a class="marker_name" href="javascript:;">郭禹杉</a>评价</p>
-            </div>-->
 
             <ion-item class="clearfix" ng-class="{true:'talk_item_u',false:'talk_item_m'}[sendId != vo.send_user_id]"
                       ng-repeat="vo in historyList track by vo.id">
@@ -74,7 +77,7 @@
                     <div class="talk_con">
                         <!-- 文本 -->
                         <div class="content normal" ng-if="vo.type=='send' || vo.message_type==1">
-                            <p>{{vo.message}}</p>
+                            <p>{{vo.message | emoji}}</p>
                         </div>
 
                         <!-- 语音 -->

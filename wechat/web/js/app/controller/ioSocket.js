@@ -34,7 +34,7 @@ define(['app/module', 'app/directive/directiveApi'
         }
         // 身份证认证
         api.list("/wap/member/honesty-photo", {user_id: $scope.receiveId}).success(function (res) {
-            $scope.sfzCheck = res.sfz;
+            $scope.userSfzCheck = res.sfz;
         });
 
         $scope.hideMultiOnKeyboard = function () {
