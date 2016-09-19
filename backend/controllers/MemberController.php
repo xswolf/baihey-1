@@ -108,11 +108,9 @@ class MemberController extends BaseController
         foreach ($list as $k => $v) {
 
             $list[$k]['info']                 = json_decode($v['info']);
-            $list[$k]['auth']                 = json_decode($v['auth']);
             $list[$k]['info']->level          = getLevel($list[$k]['info']->level);
             $list[$k]['info']->is_marriage    = getMarriage($list[$k]['info']->is_marriage);
             $list[$k]['sex']                  = getSex($list[$k]['sex']);
-            $list[$k]['auth']->identity_check = getIsNot($list[$k]['auth']->identity_check);
         }
 
         $data = [
@@ -203,7 +201,6 @@ class MemberController extends BaseController
         }
         $user         = User::getInstance()->getUserById($id);
         $user['info'] = json_decode($user['info']);
-        $user['auth'] = json_decode($user['auth']);
 
         $this->assign('id', $id);
         $this->assign('user', $user);
@@ -226,7 +223,6 @@ class MemberController extends BaseController
         $userId       = \Yii::$app->request->get('id');
         $user         = User::getInstance()->getUserById($userId);
         $user['info'] = json_decode($user['info']);
-        $user['auth'] = json_decode($user['auth']);
         // 获取登陆次数
         $loginTime = User::getInstance()->getLoginTimes($userId);
         $moneyAll  = User::getInstance()->getPayAll($userId);
