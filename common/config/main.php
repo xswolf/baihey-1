@@ -12,7 +12,7 @@ return [
 //            'dsn' => 'mysql:host=localhost;dbname=bhy', // MySQL, MariaDB 本地
             'username' => 'jrbaihe', //数据库用户名
             'password' => 'jrbh*2016', //数据库密码
-            'charset' => 'utf8',
+            'charset' => 'utf8mb4',
             'tablePrefix' => 'bhy_',   //加入前缀名称fc_
             'attributes' => [
                 PDO::ATTR_PERSISTENT => false,
