@@ -521,10 +521,12 @@ class MemberController extends BaseController
         $data = $this->post;
         $data['create_time'] = time();
         $data['update_time'] = time();
-        if ($data['intention'] != 2) {
+        if (isset($data['intention']) && $data['intention'] != 2) {
             UserInformation::getInstance()->updateUserInfo($data['to_user_id'], ['intention' => $data['intention']]);
         }
-        unset($data['intention']);
+        if (isset($data['intention'])){
+            unset($data['intention']);
+        }
         if ($data['id'] = $pairLog->addPair($data)) {
             $this->renderAjax(['status' => 1, 'data' => $data, 'message' => '成功']);
         } else {
