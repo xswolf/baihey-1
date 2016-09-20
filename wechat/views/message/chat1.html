@@ -1,4 +1,4 @@
-<ion-view hide-tabs="true" cache-view="false" ng-cloak>
+<ion-view hide-tabs="true" cache-view="false" ng-cloak ng-init="showEmoji = false;">
     <link href="/wechat/web/css/chat.css" rel="stylesheet">
     <ion-header-bar align-title="center"  class="bhy com_w_100" ng-show="u_isFollow">
         <h1 class="title" receive-id="{{receiveId}}" real-name="{{real_name}}"  change-title="{{real_name | sex:sex:age:receiveId}}"></h1>
@@ -77,16 +77,8 @@
                     <div class="talk_con">
                         <!-- 文本 -->
                         <div class="content normal" ng-if="vo.type=='send' || vo.message_type==1">
-                            <p>{{vo.message}}</p>
+                            <p ng-bind-html="vo.message | emoji"></p>
                         </div>
-
-                        <!-- 语音 -->
-                        <!--<div class="content normal voice" ng-click="detail_record('{{vo.message}}')"
-                             ng-if="vo.type=='record' || vo.message_type==2">
-                            <div class="voice_con">
-                                <i class="bhy-icon-msg-voice voice_icon"></i>
-                            </div>
-                        </div>-->
 
                         <!-- 图片 -->
                         <div class="content normal" ng-click="detail_pic('{{vo.message}}')"
@@ -147,144 +139,93 @@
         </ion-list>
     </ion-content>
 
-    <ion-footer-bar align-title="left" class="bar-light" id="msg_footer_bar" resize-foot-bar>
-        <div class="rj-footer-btn-wrap">
-            <div class="buttons">
-                <button ng-click="send_pic()" class="button button-icon icon ion-images rj-footer-btn-left" style="padding: 0;"></button>
-            </div>
+    <div id="emoji_con" class="pa w100 has-footer emoji_con" ng-show="showEmoji">
+        <div class="emojiWrapper">
+            <img src="/wechat/web/images/emoji/1.gif" title="1" ng-click="selectedEmoji(1)">
+            <img src="/wechat/web/images/emoji/2.gif" title="2" ng-click="selectedEmoji(2)">
+            <img src="/wechat/web/images/emoji/3.gif" title="3" ng-click="selectedEmoji(3)">
+            <img src="/wechat/web/images/emoji/4.gif" title="4" ng-click="selectedEmoji(4)">
+            <img src="/wechat/web/images/emoji/5.gif" title="5" ng-click="selectedEmoji(5)">
+            <img src="/wechat/web/images/emoji/6.gif" title="6" ng-click="selectedEmoji(6)">
+            <img src="/wechat/web/images/emoji/7.gif" title="7" ng-click="selectedEmoji(7)">
+            <img src="/wechat/web/images/emoji/8.gif" title="8" ng-click="selectedEmoji(8)">
+            <img src="/wechat/web/images/emoji/9.gif" title="9" ng-click="selectedEmoji(9)">
+            <img src="/wechat/web/images/emoji/10.gif" title="10" ng-click="selectedEmoji(10)">
+            <img src="/wechat/web/images/emoji/11.gif" title="11" ng-click="selectedEmoji(11)">
+            <img src="/wechat/web/images/emoji/12.gif" title="12" ng-click="selectedEmoji(12)">
+            <img src="/wechat/web/images/emoji/13.gif" title="13" ng-click="selectedEmoji(13)">
+            <img src="/wechat/web/images/emoji/14.gif" title="14" ng-click="selectedEmoji(14)">
+            <img src="/wechat/web/images/emoji/15.gif" title="15" ng-click="selectedEmoji(15)">
+            <img src="/wechat/web/images/emoji/16.gif" title="16" ng-click="selectedEmoji(16)">
+            <img src="/wechat/web/images/emoji/17.gif" title="17" ng-click="selectedEmoji(17)">
+            <img src="/wechat/web/images/emoji/18.gif" title="18" ng-click="selectedEmoji(18)">
+            <img src="/wechat/web/images/emoji/19.gif" title="19" ng-click="selectedEmoji(19)">
+            <img src="/wechat/web/images/emoji/20.gif" title="20" ng-click="selectedEmoji(20)">
+            <img src="/wechat/web/images/emoji/21.gif" title="21" ng-click="selectedEmoji(21)">
+            <img src="/wechat/web/images/emoji/22.gif" title="22" ng-click="selectedEmoji(22)">
+            <img src="/wechat/web/images/emoji/23.gif" title="23" ng-click="selectedEmoji(23)">
+            <img src="/wechat/web/images/emoji/24.gif" title="24" ng-click="selectedEmoji(24)">
+            <img src="/wechat/web/images/emoji/25.gif" title="25" ng-click="selectedEmoji(25)">
+            <img src="/wechat/web/images/emoji/26.gif" title="26" ng-click="selectedEmoji(26)">
+            <img src="/wechat/web/images/emoji/27.gif" title="27" ng-click="selectedEmoji(27)">
+            <img src="/wechat/web/images/emoji/28.gif" title="28" ng-click="selectedEmoji(28)">
+            <img src="/wechat/web/images/emoji/29.gif" title="29" ng-click="selectedEmoji(29)">
+            <img src="/wechat/web/images/emoji/30.gif" title="30" ng-click="selectedEmoji(30)">
+            <img src="/wechat/web/images/emoji/31.gif" title="31" ng-click="selectedEmoji(31)">
+            <img src="/wechat/web/images/emoji/32.gif" title="32" ng-click="selectedEmoji(32)">
+            <img src="/wechat/web/images/emoji/33.gif" title="33" ng-click="selectedEmoji(33)">
+            <img src="/wechat/web/images/emoji/34.gif" title="34" ng-click="selectedEmoji(34)">
+            <img src="/wechat/web/images/emoji/35.gif" title="35" ng-click="selectedEmoji(35)">
+            <img src="/wechat/web/images/emoji/36.gif" title="36" ng-click="selectedEmoji(36)">
+            <img src="/wechat/web/images/emoji/37.gif" title="37" ng-click="selectedEmoji(37)">
+            <img src="/wechat/web/images/emoji/38.gif" title="38" ng-click="selectedEmoji(38)">
+            <img src="/wechat/web/images/emoji/39.gif" title="39" ng-click="selectedEmoji(39)">
+            <img src="/wechat/web/images/emoji/40.gif" title="40" ng-click="selectedEmoji(40)">
+            <img src="/wechat/web/images/emoji/41.gif" title="41" ng-click="selectedEmoji(41)">
+            <img src="/wechat/web/images/emoji/42.gif" title="42" ng-click="selectedEmoji(42)">
+            <img src="/wechat/web/images/emoji/43.gif" title="43" ng-click="selectedEmoji(43)">
+            <img src="/wechat/web/images/emoji/44.gif" title="44" ng-click="selectedEmoji(44)">
+            <img src="/wechat/web/images/emoji/45.gif" title="45" ng-click="selectedEmoji(45)">
+            <img src="/wechat/web/images/emoji/46.gif" title="46" ng-click="selectedEmoji(46)">
+            <img src="/wechat/web/images/emoji/47.gif" title="47" ng-click="selectedEmoji(47)">
+            <img src="/wechat/web/images/emoji/48.gif" title="48" ng-click="selectedEmoji(48)">
+            <img src="/wechat/web/images/emoji/49.gif" title="49" ng-click="selectedEmoji(49)">
+            <img src="/wechat/web/images/emoji/50.gif" title="50" ng-click="selectedEmoji(50)">
+            <img src="/wechat/web/images/emoji/51.gif" title="51" ng-click="selectedEmoji(51)">
+            <img src="/wechat/web/images/emoji/52.gif" title="52" ng-click="selectedEmoji(52)">
+            <img src="/wechat/web/images/emoji/53.gif" title="53" ng-click="selectedEmoji(53)">
+            <img src="/wechat/web/images/emoji/54.gif" title="54" ng-click="selectedEmoji(54)">
+            <img src="/wechat/web/images/emoji/55.gif" title="55" ng-click="selectedEmoji(55)">
+            <img src="/wechat/web/images/emoji/56.gif" title="56" ng-click="selectedEmoji(56)">
+            <img src="/wechat/web/images/emoji/57.gif" title="57" ng-click="selectedEmoji(57)">
+            <img src="/wechat/web/images/emoji/58.gif" title="58" ng-click="selectedEmoji(58)">
+            <img src="/wechat/web/images/emoji/59.gif" title="59" ng-click="selectedEmoji(59)">
+            <img src="/wechat/web/images/emoji/60.gif" title="60" ng-click="selectedEmoji(60)">
+            <img src="/wechat/web/images/emoji/61.gif" title="61" ng-click="selectedEmoji(61)">
+            <img src="/wechat/web/images/emoji/62.gif" title="62" ng-click="selectedEmoji(62)">
+            <img src="/wechat/web/images/emoji/63.gif" title="63" ng-click="selectedEmoji(63)">
+            <img src="/wechat/web/images/emoji/64.gif" title="64" ng-click="selectedEmoji(64)">
+            <img src="/wechat/web/images/emoji/65.gif" title="65" ng-click="selectedEmoji(65)">
+            <img src="/wechat/web/images/emoji/66.gif" title="66" ng-click="selectedEmoji(66)">
+            <img src="/wechat/web/images/emoji/67.gif" title="67" ng-click="selectedEmoji(67)">
+            <img src="/wechat/web/images/emoji/68.gif" title="68" ng-click="selectedEmoji(68)">
+            <img src="/wechat/web/images/emoji/69.gif" title="69" ng-click="selectedEmoji(69)">
+            <img src="/wechat/web/images/emoji/70.gif" title="70" ng-click="selectedEmoji(70)">
+            <img src="/wechat/web/images/emoji/71.gif" title="71" ng-click="selectedEmoji(71)">
+            <img src="/wechat/web/images/emoji/72.gif" title="72" ng-click="selectedEmoji(72)">
+            <img src="/wechat/web/images/emoji/73.gif" title="73" ng-click="selectedEmoji(73)">
+            <img src="/wechat/web/images/emoji/74.gif" title="74" ng-click="selectedEmoji(74)">
+            <img src="/wechat/web/images/emoji/75.gif" title="75" ng-click="selectedEmoji(75)">
         </div>
-        <label class="item item-input rj-footer-input" ng-hide="talk_type=='voice'" style="padding-left: 5px;">
-            <textarea id="txt_input" msd-elastic ng-model="send_content" style="height: 21px;resize:none; "
-                      ng-focus="hideMultiOnKeyboard()"></textarea>
-        </label>
-
-        <div class="rj-footer-btn-wrap ml10">
-            <button type="button" class="button button-balanced rj-send-button" ng-disabled="!send_content || send_content === ''" ng-click="send()">发送</button>
-        </div>
-    </ion-footer-bar>
-    <div id="multi_con">
-        <ul class="clearfix">
-            <!--<li ng-click="briberyModal.show()">
-                <div class="bri_b"><i class="icon-new-bribery cor6"></i></div>
-                <p class="fs12 mb0 tac cor8">红包</p>
-            </li>-->
-            <li ng-click="send_pic()">
-                <div class="img_b"><i class="ion-images cor6"></i></div>
-                <p class="fs12 mb0 tac cor8">图片</p>
-            </li>
-        </ul>
-
-        <!--<ul class="clearfix">
-            <li><img src="/wechat/web/images/picture.jpg" ng-click="send_pic()"></li>
-            <li><img src="/wechat/web/images/bribery.jpg" ng-click="briberyModal.show()"></li>
-        </ul>-->
     </div>
+
+    <ion-footer-bar align-title="center" class="bar-stable sendMessage">
+        <button ng-click="send_pic()" class="button button-icon icon ion-images pdlr2 pic"></button>
+        <button ng-click="showEmoji = !showEmoji;" class="button button-icon icon ion-happy expr pdlr2"></button>
+        <textarea class="message_input" id="message_input"  ng-model="send_content"></textarea>
+        <button type="button" class="button button-balanced sendBtn" ng-disabled="!send_content || send_content === ''" ng-click="send()">发送</button>
+    </ion-footer-bar>
+
     <input type="file" id="pic_fileInput" class="pic_fileInput" nv-file-select="" uploader="uploader" accept="image/*"/>
-   <!-- <div class="pic_zoom_layer chat_mask" ng-if="showPic">
-        <div class="pic_zoom pa">
-            <div class="pic_z_c pr">
-                <div class="pic_z_c_s">
-                    <img alt="." ng-src="{{showPicAdd}}">
-                </div>
-            <span class="pic_closeBtn assertive-bg pa" ng-click="hidePicBox()">
-                <i class="ion-close-round"></i>
-            </span>
-            </div>
-        </div>
-    </div>-->
-
-   <!-- <script id="detailBriModal.html" type="text/ng-template">
-        <ion-modal-view class="detailBg" ng-controller="message.childDetailBriController">
-            <div class="bri_big">
-            <span class="bri_closeBtn" ng-click="detailBriModal.hide()">
-                <i class="ion-close-round"></i>
-            </span>
-            <span class="bri_uimg">
-                <img ng-src="{{receiveHeadPic}}" onerror="this.src='/wechat/web/images/no_img.png'">
-            </span>
-            <span class="bri_t">
-                <p class="bri_u_name">{{real_name|sex:sex:age}}的红包</p>
-                <p class="bri_u_name2">{{openBri.bri_message}}</p>
-            </span>
-            <span class="bri_btn">
-                <button class="button button-assertive" ng-click="openBribery()">拆开看看</button>
-            </span>
-            </div>
-        </ion-modal-view>
-    </script>
-
-    <script id="detaiOpenBriModal.html" type="text/ng-template">
-        <ion-modal-view>
-            <ion-header-bar align-title="center" >
-                <button class="button button-icon ion-arrow-left-c" ng-click="detaiOpenBriModal.hide()"></button>
-                <title class="title">红包详情</title>
-            </ion-header-bar>
-            <ion-content>
-                <div class="openBri_bg">
-                <span class="openBri_uimg">
-                     <img ng-src="{{receiveHeadPic}}" onerror="this.src='/wechat/web/images/no_img.png'">
-                </span>
-                </div>
-                <div class="openBri_con">
-                    <p class="openBri_name">
-                        {{real_name|sex:sex:age}}的红包
-                    </p>
-                    <p class="openBri_name2">
-                        {{openBri.bri_message}}
-                    </p>
-
-                    <p class="openBri_money">
-                        {{openBri.money|currency:"￥"}}元
-                    </p>
-                    <p class="openBri_disc">已存入账户，可用于发红包、提现。</p>
-
-                    <div class="openBri_line">
-
-                    </div>
-                    <p class="openBri_account">
-                        <a href="javascript:;">
-                            查看我的红包账户
-                        </a>
-                    </p>
-                </div>
-            </ion-content>
-        </ion-modal-view>
-    </script>
-
-    <script id="briberyModal.html" type="text/ng-template">
-        <ion-modal-view>
-            <ion-header-bar align-title="center" >
-                <a href="javascript:;" ng-click="briPageHide()" class="button button-icon">关闭</a>
-                <title class="title">发红包</title>
-            </ion-header-bar>
-            <ion-content class="bribery has-header" ng-controller="message.childBriberyController">
-                <div class="list">
-                    <label class="item item-input">
-                        <span class="input-label">红包金额</span>
-                        <input type="number" placeholder="请填写金额" class="tar bri_money_input" ng-model="input_money"
-                               ng-keyup="valMoney(this.input_money)">
-                        <span class="input-label">元</span>
-                    </label>
-                    <label class="item item-input item-stacked-label">
-                        <span class="input-label">留言</span>
-                        <input type="text" ng-model="bri_message" placeholder="恭喜发财">
-                    </label>
-                    <label class="item item-input item-stacked-label" style="background: #fff;">
-                        <span class="input-label">支付方式</span>
-                        <ion-radio ng-model="payType" ng-value="1">余额支付</ion-radio>
-                        <ion-radio ng-model="payType" ng-value="2">微信支付</ion-radio>
-                    </label>
-                    <label class="item tac">
-                        <span class="bri_money">{{money | currency:'￥'}}</span>
-                    </label>
-                    <div class="item tac">
-                        <input type="button" class="button button-block"
-                               ng-class="{true:'bri_dsbd',false:'button-assertive'}[btnStatus]" ng-disabled="btnStatus"
-                               value="塞钱进红包" ng-click="bri_submit()">
-                    </div>
-                </div>
-            </ion-content>
-        </ion-modal-view>
-    </script>-->
 
 </ion-view>

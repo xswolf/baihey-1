@@ -18,10 +18,11 @@ class UserPhoto extends Base
      * 新增相片
      * @param $user_id
      * @param $data array
+     * @param $head_pic
      * @return bool
      * @throws \Exception
      */
-    public function addPhoto($user_id, $data)
+    public function addPhoto($user_id, $data, $head_pic = '')
     {
         // 个人相册不得多于12张
         $type = isset($data['type']) ? $data['type'] : 1;
@@ -32,10 +33,10 @@ class UserPhoto extends Base
             $data['create_time'] = $data['time'];
             $data['update_time'] = $data['time'];
             unset($data['time']);
-//            if (0 == $sum && $type == 1) {
-//                $data['is_head'] = 1;
-//                UserInformation::getInstance()->updateUserInfo($user_id, ['head_pic' => $data['thumb_path']]);
-//            }
+            if (!empty($head_pic)) {
+                $data['is_head'] = 1;
+                UserInformation::getInstance()->updateUserInfo($user_id, ['head_pic' => $data['thumb_path']]);
+            }
             $this->getDb()->createCommand()
                 ->insert($this->tablePrefix . 'user_photo', $data)
                 ->execute();
@@ -94,11 +95,11 @@ class UserPhoto extends Base
         // 删除原有身份证
         if ($photoType == 23) {
             $this->getDb()->createCommand("delete from {$this->tablePrefix}user_photo where user_id={$user_id} and (type=2 or type=3)")
-                 ->execute();
+                ->execute();
         } else {
             $this->getDb()->createCommand()
-                 ->delete($this->tablePrefix . 'user_photo', ['user_id' => $user_id, 'type' => $photoType])
-                 ->execute();
+                ->delete($this->tablePrefix . 'user_photo', ['user_id' => $user_id, 'type' => $photoType])
+                ->execute();
         }
         $time = time();
         $ist = false;

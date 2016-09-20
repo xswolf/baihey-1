@@ -1249,7 +1249,7 @@ var ar = {
                 }
             }
 
-            $scope.maxLength = function(event,da){
+            $scope.maxLength = function (event, da) {
                 var list = $filter('filter')($scope.constellationList, {checked: true});
                 if (list.length > 3) {
                     da.checked = false;
@@ -1291,7 +1291,7 @@ var ar = {
                 }
             }
 
-            $scope.maxLength = function(event,da){
+            $scope.maxLength = function (event, da) {
                 var list = $filter('filter')($scope.zodiacList, {checked: true});
                 if (list.length > 6) {
                     da.checked = false;
@@ -1462,6 +1462,23 @@ var ar = {
             }
         })
         return str;
+    },
+
+    /**
+     * 获取光标在输入框中的位置
+     * @param inputId 输入框Id
+     * @return {*}
+     */
+    getCursorPos: function (inputId) {
+        var inpObj = document.getElementById(inputId);
+        if (navigator.userAgent.indexOf("MSIE") > -1) { // IE
+            var range = document.selection.createRange();
+            range.text = '';
+            range.setEndPoint('StartToStart', inpObj.createTextRange());
+            return range.text.length;
+        } else {
+            return inpObj.selectionStart;
+        }
     }
 
 

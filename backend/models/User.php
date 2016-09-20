@@ -1,5 +1,6 @@
 <?php
 namespace backend\models;
+
 use common\models\UserPhoto;
 use yii\base\Model;
 use yii\db\Connection;
@@ -31,15 +32,17 @@ class User extends Model
     public function rules()
     {
         return [
-                [['file'], 'file']
-            ];
+            [['file'], 'file']
+        ];
     }
 
-    public function getUser(){
+    public function getUser()
+    {
         return $this->user;
     }
 
-    public function setUser($data){
+    public function setUser($data)
+    {
         return $this->user = $data;
     }
 
@@ -47,8 +50,9 @@ class User extends Model
      * 设置用户信息到session
      * @param $user
      */
-    public function setUserSession($user) {
-        \Yii::$app->session->set(USER_SESSION,$user);
+    public function setUserSession($user)
+    {
+        \Yii::$app->session->set(USER_SESSION, $user);
     }
 
     /**
@@ -60,7 +64,7 @@ class User extends Model
         $authAssignmentTable = \Yii::$app->db->tablePrefix . 'auth_assignment';
         $authUserTable = \Yii::$app->db->tablePrefix . 'auth_user';
         if (isset($where['group'])) {
-            $aaWhere = " AND aa.item_name='" . $where['group'] ."'";
+            $aaWhere = " AND aa.item_name='" . $where['group'] . "'";
             unset($where['group']);
         } else {
             $aaWhere = '';
@@ -68,7 +72,7 @@ class User extends Model
         $row = (new Query)
             ->select('*')
             ->from($authUserTable . ' AS au')
-            ->leftJoin($authAssignmentTable . ' AS aa', "aa.user_id=au.id". $aaWhere)
+            ->leftJoin($authAssignmentTable . ' AS aa', "aa.user_id=au.id" . $aaWhere)
             ->where($where)
             ->all();
 
@@ -80,7 +84,7 @@ class User extends Model
      * @return array|bool|null
      * 获取单条记录
      */
-    public function getFindUser($where=[])
+    public function getFindUser($where = [])
     {
         $row = (new Query)
             ->select('*')
@@ -101,8 +105,9 @@ class User extends Model
      * @return $this|array|null
      * 获取用户列表
      */
-    public function getListUser($where=[],$order='',$limit='') {
-        if(!$limit) {
+    public function getListUser($where = [], $order = '', $limit = '')
+    {
+        if (!$limit) {
             $row = (new Query)
                 ->select(['id', 'name', 'password', 'status', 'created_at', 'updated_at'])
                 ->from($this->userTable)
@@ -129,19 +134,20 @@ class User extends Model
      * @throws \yii\base\Exception
      * 新增用户
      */
-    public function addUser($data, $createToWeb = true) {
+    public function addUser($data, $createToWeb = true)
+    {
         $auth = \Yii::$app->authManager;
         $time = time();
-        if(isset($data['file_upload'])) {
+        if (isset($data['file_upload'])) {
             unset($data['file_upload']);
         }
-        if(isset($data['createToWeb'])) {
+        if (isset($data['createToWeb'])) {
             unset($data['createToWeb']);
         }
         $data['created_at'] = $time;
         $data['updated_at'] = $time;
         $data['password'] = md5(md5($data['password']));
-        if(isset($data['role'])) {
+        if (isset($data['role'])) {
             $role = $data['role'];
             unset($data['role']);
         } else {
@@ -152,14 +158,14 @@ class User extends Model
             ->execute();
         $id = $this->db->getLastInsertID();
         // 添加管理员前端用户
-        if($createToWeb){
+        if ($createToWeb) {
             $this->addAdminUser($id, $data);
         }
 
         // 角色处理
-        if($id && $role) {
-            foreach($role as $vo) {
-                $auth->assign($auth->getRole($vo),$id);
+        if ($id && $role) {
+            foreach ($role as $vo) {
+                $auth->assign($auth->getRole($vo), $id);
             }
         }
         return true;
@@ -171,21 +177,22 @@ class User extends Model
      * @throws \yii\base\Exception
      * 编辑用户
      */
-    public function editUser($data) {
+    public function editUser($data)
+    {
         $auth = \Yii::$app->authManager;
         $time = time();
-        if(isset($data['file_upload'])) {
+        if (isset($data['file_upload'])) {
             unset($data['file_upload']);
         }
         $data['updated_at'] = $time;
-        if($data['password']) {
+        if ($data['password']) {
             $data['password'] = md5(md5($data['password']));
         } else {
             unset($data['password']);
         }
 
         $uid = $data['id'];
-        if(isset($data['role'])) {
+        if (isset($data['role'])) {
             $role = $data['role'];
             unset($data['role']);
         } else {
@@ -196,12 +203,12 @@ class User extends Model
             ->execute();
 
         $uidRole = $auth->getAssignments($uid);
-        if(!empty($uidRole) && !$auth->revokeAll($uid)) {
+        if (!empty($uidRole) && !$auth->revokeAll($uid)) {
             $this->__error('清除角色失败');
         }
 
         //重新分配角色
-        if($row && !empty($role)) {
+        if ($row && !empty($role)) {
             foreach ($role as $v) {
                 if (!$auth->assign($auth->getRole($v), $uid)) {
                     $this->__error('添加失败');
@@ -216,11 +223,12 @@ class User extends Model
      * @param $id
      * @return mixed
      */
-    public function delUser($id) {
+    public function delUser($id)
+    {
         //删除用户角色
         $auth = \Yii::$app->authManager;
         $uidRole = $auth->getAssignments($id);
-        if(!empty($uidRole) && !$auth->revokeAll($id)) {
+        if (!empty($uidRole) && !$auth->revokeAll($id)) {
             $this->__error('清除角色失败');
         }
 
@@ -278,14 +286,14 @@ class User extends Model
         $member['info']['wechat'] = isset($data['wechat']) && !empty($data['wechat']) ? $data['wechat'] : '';
         $member['password'] = $data['password'];
         $member['sex'] = !empty($data['sex']) ? $data['sex'] : 1;
-        if(\common\models\User::getInstance()->addUser($member) && !empty($data['photo'])) {
+        if (\common\models\User::getInstance()->addUser($member) && !empty($data['photo'])) {
             $photo['type'] = 1;
             $photo['thumb_path'] = $data['photo'];
-            $photo['pic_path']   = str_replace('thumb', 'picture', $data['photo']);
-            $photo['time']       = time();
-            $photo['is_check']   = 1;
-            UserPhoto::getInstance()->addPhoto($id, $photo);
-        }else{
+            $photo['pic_path'] = str_replace('thumb', 'picture', $data['photo']);
+            $photo['time'] = time();
+            $photo['is_check'] = 1;
+            UserPhoto::getInstance()->addPhoto($id, $photo, 1);
+        } else {
             return false;
         }
         return true;

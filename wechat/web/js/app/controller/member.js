@@ -151,7 +151,8 @@ define(['app/module', 'app/directive/directiveApi'
         }
 
         // 点击img，功能
-        $scope.moreImg = function (img) {
+        $scope.moreImg = function (img, event) {
+            event.stopPropagation();
             var hideSheet = $ionicActionSheet.show({
                 buttons: img.is_check == 1 && img.is_head == 0 ? [{text: '设为头像'}] : [],
                 destructiveText: '删除',

@@ -620,4 +620,24 @@ define(['app/module'], function (module) {
         }
     })
 
+    module.filter('emoji', function ($sce) {
+        return function (value) {
+            if(value){
+                var match, result = value,
+                    reg = /\[emoji:\d+\]/g,
+                    emojiIndex,
+                    totalEmojiNum = 75;
+                while (match = reg.exec(value)) {
+                    emojiIndex = match[0].slice(7, -1);
+                    if (emojiIndex > totalEmojiNum) {
+                        result = result.replace(match[0], '[X]');
+                    } else {
+                        result = result.replace(match[0], '<img class="emoji" src="/wechat/web/images/emoji/' + emojiIndex + '.gif" />');
+                    };
+                };
+                return $sce.trustAsHtml(result);;
+            }
+        }
+    })
+
 })

@@ -21,6 +21,20 @@ define(['app/module', 'app/directive/directiveApi'
         $scope.sendId = ar.getCookie("bhy_user_id");
         $scope.receiveId = $location.search().id;
 
+
+        // 选择表情
+        $scope.selectedEmoji = function (val) {
+            if ($scope.send_content) {
+                var pos = ar.getCursorPos('message_input');
+                var strArr = $scope.send_content.split("");
+                strArr.splice(pos, 0, "[emoji:" + val + "]");
+                $scope.send_content = strArr.join("");
+            } else {
+                $scope.send_content = "[emoji:" + val + "]";
+            }
+            $scope.showEmoji = false;
+        }
+
         $scope.blackListAlert = function () {
             if (dataFilter.data.blacked.indexOf($scope.receiveId) > -1) {   // 已被对方拉黑，不可查看对方资料
                 ar.saveDataAlert($ionicPopup, '您已被对方拉黑，不可查看对方资料。')
@@ -133,16 +147,16 @@ define(['app/module', 'app/directive/directiveApi'
             var data = res.data.messageList;
 
             list = list != null ? list.concat(data) : data;
-            if (list.length > 50){ //最多只能保存50条数据
-                list.splice(0, list.length-50);
+            if (list.length > 50) { //最多只能保存50条数据
+                list.splice(0, list.length - 50);
             }
-            $rootScope.historyListHide =  list;
+            $rootScope.historyListHide = list;
 
             ar.setStorage('chat_messageHistory-' + $scope.receiveId + '-' + userId, list);
 
             if (data.length > 0 || res.data.status == 0) { // 如果有新消息，所有消息状态为已看 res.data.status == 0 对方已看
                 list = $scope.setMessageStatus(list);
-                if(data.length > 0){
+                if (data.length > 0) {
                     //$scope.doRefresh();
                     $scope.historyList = $scope.historyList.concat(data);
                     viewScroll.resize();
