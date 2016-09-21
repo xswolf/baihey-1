@@ -131,6 +131,7 @@ class ServerController extends BaseController {
             'openid'=>'oEQpts_MMapxllPTfwRw0VfGeLSg',
             'total_amount'=>100
         ];
-        \Yii::$app->wechat->sendPack($args);
+        $data = \Yii::$app->wechat->sendPack($args);
+        print_r($data);
     }
 }
