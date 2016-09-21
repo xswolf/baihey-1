@@ -57,7 +57,7 @@ class WeChat extends \callmez\wechat\sdk\Wechat {
         //默认格式为PEM，可以注释
         curl_setopt($ch,CURLOPT_SSLCERTTYPE,'PEM');
         echo getcwd();
-        curl_setopt($ch,CURLOPT_SSLCERT,getcwd().'../common/pem/rootca.pem');
+        curl_setopt($ch,CURLOPT_SSLCERT,getcwd().'../../common/pem/rootca.pem');
 
 
         curl_setopt($ch,CURLOPT_POST, 1);
