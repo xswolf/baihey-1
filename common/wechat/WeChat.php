@@ -26,9 +26,26 @@ class WeChat extends \callmez\wechat\sdk\Wechat
      */
     public function sendPack($args)
     {
-
+        $data = [
+            'mch_billno'=> $args['order_id'],
+            'mch_id'=> static::MCH_ID,
+            'wxappid'=> $this->appId,
+            'send_name'=> '嘉瑞百合缘',
+            're_openid'=> $args['openid'],
+            'total_amount'=> $args['total_amount'],
+            'total_num'=> 1,
+            'wishing'=> '恭喜发财',
+            'client_ip'=> '120.76.84.162',
+            'act_name'=> '嘉瑞百合缘，感谢参与',
+            'remark'=> '抢红包',
+            'scene_id'=> 'PRODUCT_2',
+            'nonce_str'=> \Yii::$app->getSecurity()->generateRandomString(16),
+        ];
+        ksort($data);
+        $str = http_build_query($data);
+        $sign = md5($str."&key=".$this->appSecret);
         $xmlData = "<xml>
-                    <sign><![CDATA[E1EE61A91C8E90F299DE6AE075D60A2D]]></sign>
+                    <sign><![CDATA[{$sign}]]></sign>
                     <mch_billno><![CDATA[{$args['order_id']}]]></mch_billno>
                     <mch_id><![CDATA[" . static::MCH_ID . "]]></mch_id>
                     <wxappid><![CDATA[{$this->appId}]]></wxappid>
@@ -41,7 +58,7 @@ class WeChat extends \callmez\wechat\sdk\Wechat
                     <act_name><![CDATA[嘉瑞百合缘，感谢参与]]></act_name>
                     <remark><![CDATA[抢红包]]></remark>
                     <scene_id><![CDATA[PRODUCT_2]]></scene_id>
-                    <nonce_str><![CDATA[" . \Yii::$app->getSecurity()->generateRandomString(16) . "]]></nonce_str>
+                    <nonce_str><![CDATA[" . $data['nonce_str'] . "]]></nonce_str>
                   </xml>";
 
         $ch = curl_init();
