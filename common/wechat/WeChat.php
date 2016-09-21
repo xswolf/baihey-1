@@ -62,7 +62,7 @@ class WeChat extends \callmez\wechat\sdk\Wechat
                   </xml>";
 
 
-        echo $sign."\n";
+        echo $str."\n";
         echo $xmlData;
 
         $ch = curl_init();
