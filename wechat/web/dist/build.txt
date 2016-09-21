@@ -9,7 +9,6 @@ comm.js
 config/infoData.js
 app/directive/directiveApi.js
 app/controller/user.js
-app/filter/filterApi.js
 config/city.js
 app/controller/site.js
 app/controller/message.js

@@ -23,7 +23,8 @@
         info_data: 'config/infoData',
         ionic_gallery:'plugin/ionic/ion-gallery.min',
         ng_cordova:'plugin/cordova/ng-cordova.min',
-        cordova:'plugin/cordova/cordova'
+        cordova:'plugin/cordova/cordova',
+        filterApi:'app/filter/filterApi'
     },
 
     modules: [
@@ -42,6 +43,7 @@
                 'photoswipe_ui',
                 //'info_data',
                 'ionic_gallery',
+                'filterApi',
 
 
                 //'config/city',
