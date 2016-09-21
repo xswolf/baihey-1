@@ -43,7 +43,7 @@ class WeChat extends \callmez\wechat\sdk\Wechat
         ];
         ksort($data);
         $str = http_build_query($data);
-        $sign = strtoupper(md5($str."&key=".$this->appSecret));
+        $sign = strtoupper(md5($str . "&key=" . $this->appSecret));
         $xmlData = "<xml>
                     <sign><![CDATA[{$sign}]]></sign>
                     <mch_billno><![CDATA[{$args['order_id']}]]></mch_billno>
@@ -61,7 +61,7 @@ class WeChat extends \callmez\wechat\sdk\Wechat
                     <nonce_str><![CDATA[" . $data['nonce_str'] . "]]></nonce_str>
                   </xml>";
 
-
+        echo $sign."\n";
         echo $str."\n";
         echo $xmlData;
 
