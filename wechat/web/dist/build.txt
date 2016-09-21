@@ -12,8 +12,6 @@ app/controller/user.js
 config/city.js
 app/controller/site.js
 app/controller/message.js
-chat/chat.js
-chat/wechatInterface.js
 app/controller/ioSocket.js
 app/controller/member.js
 app/controller/discovery.js
