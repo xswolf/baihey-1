@@ -14,6 +14,62 @@ class WeChat extends \callmez\wechat\sdk\Wechat {
     const MATERIAL_LIST = "https://api.weixin.qq.com/cgi-bin/material/batchget_material?access_token=";
     const MATERIAL_SEND = "https://api.weixin.qq.com/cgi-bin/message/template/send?access_token=";
     const OAUTH_TOKEN = "/sns/oauth2/access_token";
+    // 发红包接口
+    const OAUTH_PACK = "https://api.mch.weixin.qq.com/mmpaymkttransfers/sendredpack";
+    const MCH_ID = 1244137602;
+
+    /**
+     * 发送红包
+     * @param $args
+     * @return bool
+     */
+    public function sendPack($args){
+        $data['nonce_str'] = \Yii::$app->getSecurity()->generateRandomString(16);
+        $data['sign'] = \Yii::$app->getSecurity()->generateRandomString(16);
+        $data['mch_billno'] = $args['order_id'];
+        $data['mch_id'] = static::MCH_ID;
+        $data['wxappid'] = $this->appId;
+        $data['send_name'] = "嘉瑞百合缘";
+        $data['re_openid'] = $args['openid'];
+        $data['total_amount'] = $args['total_amount']; // 单位分
+        $data['total_num'] = 1; // 单位分
+        $data['wishing'] = '嘉瑞百合缘，感谢参与'; // 单位分
+        $data['client_ip'] = '120.76.84.162'; // 单位分
+        $data['act_name'] = '抢红包'; // 单位分
+        $data['remark'] = '抢红包'; // 单位分
+
+        $ch = curl_init();
+        //超时时间
+        curl_setopt($ch,CURLOPT_TIMEOUT,30);
+        curl_setopt($ch,CURLOPT_RETURNTRANSFER, 1);
+
+        curl_setopt($ch,CURLOPT_URL,static::OAUTH_PACK);
+        curl_setopt($ch,CURLOPT_SSL_VERIFYPEER,false);
+        curl_setopt($ch,CURLOPT_SSL_VERIFYHOST,false);
+
+        //以下两种方式需选择一种
+
+        //第一种方法，cert 与 key 分别属于两个.pem文件
+        //默认格式为PEM，可以注释
+        curl_setopt($ch,CURLOPT_SSLCERTTYPE,'PEM');
+        curl_setopt($ch,CURLOPT_SSLCERT,getcwd().'../pem/apiclient_key.pem');
+
+
+        curl_setopt($ch,CURLOPT_POST, 1);
+        curl_setopt($ch,CURLOPT_POSTFIELDS,$data);
+        $data = curl_exec($ch);
+        if($data){
+            curl_close($ch);
+            return $data;
+        }
+        else {
+            $error = curl_errno($ch);
+            echo "call faild, errorCode:$error\n";
+            curl_close($ch);
+            return false;
+        }
+    }
+
     /**
      * 素材
      *
