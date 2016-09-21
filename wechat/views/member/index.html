@@ -167,7 +167,11 @@
                     <i class="ion-ios-arrow-right vam"></i>
                 </div>
             </ion-item>
-            <button class="button button-light button-block" ng-click="loginOut()">退出登录</button>
+            <div class="button-bar mt20 mb20">
+                <button class="button button-positive" ng-click="claerCache()">清除缓存<ion-spinner class="vam ml5" ng-show="clearLoading" icon="spiral"></ion-spinner></button>
+                <button class="button button-light" ng-click="loginOut()">退出登录</button>
+            </div>
+
         </ion-list>
     </ion-content>
 
