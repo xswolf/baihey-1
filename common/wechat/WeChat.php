@@ -30,20 +30,21 @@ class WeChat extends \callmez\wechat\sdk\Wechat
             'mch_billno'=> $args['order_id'],
             'mch_id'=> static::MCH_ID,
             'wxappid'=> $this->appId,
-            'send_name'=> '嘉瑞百合缘',
+            'send_name'=> 'hello',
             're_openid'=> $args['openid'],
             'total_amount'=> $args['total_amount'],
             'total_num'=> 1,
-            'wishing'=> '恭喜发财',
+            'wishing'=> 'hello',
             'client_ip'=> '120.76.84.162',
-            'act_name'=> '嘉瑞百合缘，感谢参与',
-            'remark'=> '抢红包',
+            'act_name'=> 'hello',
+            'remark'=> 'hello',
             'scene_id'=> 'PRODUCT_2',
             'nonce_str'=> 123456, //\Yii::$app->getSecurity()->generateRandomString(16),
         ];
         ksort($data);
-        $str = http_build_query($data);
-        $sign = strtoupper(md5($str . "&key=" . $this->appSecret));
+        $str = http_build_query($data)."&key=" . $this->appSecret;
+        $sign = strtoupper(md5($str));
+
         $xmlData = "<xml>
                     <sign><![CDATA[{$sign}]]></sign>
                     <mch_billno><![CDATA[{$args['order_id']}]]></mch_billno>
