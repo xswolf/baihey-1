@@ -39,6 +39,7 @@ class WeChat extends \callmez\wechat\sdk\Wechat {
                     <act_name><![CDATA[嘉瑞百合缘，感谢参与]]></act_name>
                     <remark><![CDATA[抢红包]]></remark>
                     <scene_id><![CDATA[PRODUCT_2]]></scene_id>
+                    <nonce_str><![CDATA[" . \Yii::$app->getSecurity()->generateRandomString(16) . "]]></nonce_str>
                   </xml>";
 
         $ch = curl_init();
