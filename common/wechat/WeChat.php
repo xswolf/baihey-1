@@ -39,7 +39,7 @@ class WeChat extends \callmez\wechat\sdk\Wechat
             'act_name'=> '嘉瑞百合缘，感谢参与',
             'remark'=> '抢红包',
             'scene_id'=> 'PRODUCT_2',
-            'nonce_str'=> \Yii::$app->getSecurity()->generateRandomString(16),
+            'nonce_str'=> 123456, //\Yii::$app->getSecurity()->generateRandomString(16),
         ];
         ksort($data);
         $str = http_build_query($data);
@@ -60,6 +60,10 @@ class WeChat extends \callmez\wechat\sdk\Wechat
                     <scene_id><![CDATA[PRODUCT_2]]></scene_id>
                     <nonce_str><![CDATA[" . $data['nonce_str'] . "]]></nonce_str>
                   </xml>";
+
+
+        echo $sign."\n";
+        echo $xmlData;
 
         $ch = curl_init();
         //超时时间
