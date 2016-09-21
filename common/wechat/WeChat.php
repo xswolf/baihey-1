@@ -29,7 +29,7 @@ class WeChat extends \callmez\wechat\sdk\Wechat
         $data = [
             'mch_billno'=> $args['order_id'],
             'mch_id'=> static::MCH_ID,
-            'wxappid'=> $this->appId,
+            'wxappid'=> 'gh_d9ad4f5baba3',
             'send_name'=> 'hello',
             're_openid'=> $args['openid'],
             'total_amount'=> $args['total_amount'],
@@ -49,7 +49,7 @@ class WeChat extends \callmez\wechat\sdk\Wechat
                     <sign>{$sign}</sign>
                     <mch_billno>{$args['order_id']}</mch_billno>
                     <mch_id>" . static::MCH_ID . "</mch_id>
-                    <wxappid>{$this->appId}></wxappid>
+                    <wxappid>gh_d9ad4f5baba3></wxappid>
                     <send_name>{$data['send_name']}</send_name>
                     <re_openid>{$args['openid']}</re_openid>
                     <total_amount>{$args['total_amount']}</total_amount>
