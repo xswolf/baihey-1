@@ -56,7 +56,7 @@ class WeChat extends \callmez\wechat\sdk\Wechat {
         //第一种方法，cert 与 key 分别属于两个.pem文件
         //默认格式为PEM，可以注释
         curl_setopt($ch,CURLOPT_SSLCERTTYPE,'PEM');
-        curl_setopt($ch,CURLOPT_SSLCERT,getcwd().'../pem/apiclient_key.pem');
+        curl_setopt($ch,CURLOPT_SSLCERT,getcwd().'../pem/rootca.pem');
 
 
         curl_setopt($ch,CURLOPT_POST, 1);
