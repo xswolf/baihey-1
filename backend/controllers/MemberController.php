@@ -109,12 +109,10 @@ class MemberController extends BaseController
         $count = User::getInstance()->count($andWhere);
         foreach ($list as $k => $v) {
 
-            $list[$k]['info'] = json_decode($v['info']);
-            $list[$k]['auth'] = json_decode($v['auth']);
-            $list[$k]['info']->level = getLevel($list[$k]['info']->level);
-            $list[$k]['info']->is_marriage = getMarriage($list[$k]['info']->is_marriage);
-            $list[$k]['sex'] = getSex($list[$k]['sex']);
-            $list[$k]['auth']->identity_check = getIsNot($list[$k]['auth']->identity_check);
+            $list[$k]['info']                 = json_decode($v['info']);
+            $list[$k]['info']->level          = getLevel($list[$k]['info']->level);
+            $list[$k]['info']->is_marriage    = getMarriage($list[$k]['info']->is_marriage);
+            $list[$k]['sex']                  = getSex($list[$k]['sex']);
         }
 
         $data = [

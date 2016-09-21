@@ -5,13 +5,17 @@ define(['app/module', 'app/directive/directiveApi'
     , 'app/service/serviceApi', 'comm'
 ], function (module) {
 
-    module.controller("message.chat1", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$ionicModal', '$ionicActionSheet', '$ionicLoading', '$ionicScrollDelegate', 'FileUploader', '$http', '$location', '$rootScope', '$filter', '$ionicPopover', '$interval', 'dataFilter', function (api, $scope, $timeout, $ionicPopup, $ionicModal, $ionicActionSheet, $ionicLoading, $ionicScrollDelegate, FileUploader, $http, $location, $rootScope, $filter, $ionicPopover, $interval, dataFilter) {
+    module.controller("message.chat1", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$ionicModal', '$ionicActionSheet', '$ionicLoading', '$ionicScrollDelegate', 'FileUploader', '$http', '$location', '$rootScope', '$filter', '$ionicPopover', '$interval', function (api, $scope, $timeout, $ionicPopup, $ionicModal, $ionicActionSheet, $ionicLoading, $ionicScrollDelegate, FileUploader, $http, $location, $rootScope, $filter, $ionicPopover, $interval) {
         var userId = ar.getCookie('bhy_user_id');
         $scope.historyList = [];
         $scope.blackList = false;
         // 设置消息状态为已看
         $scope.setMessageStatus = function (list) {
-            for (var i in list) {
+            var len = list.length;
+            for (var i = len-1; i>=0 ; i--) {
+                if (list[i].status == 1){
+                    break;
+                }
                 if (list[i].status != 4) {
                     list[i].status = 1;
                 }
@@ -36,7 +40,7 @@ define(['app/module', 'app/directive/directiveApi'
         }
 
         $scope.blackListAlert = function () {
-            if (dataFilter.data.blacked.indexOf($scope.receiveId) > -1) {   // 已被对方拉黑，不可查看对方资料
+            if ($scope.dataFilter.blacked.indexOf($scope.receiveId) > -1) {   // 已被对方拉黑，不可查看对方资料
                 ar.saveDataAlert($ionicPopup, '您已被对方拉黑，不可查看对方资料。')
                 return;
             }
@@ -111,7 +115,7 @@ define(['app/module', 'app/directive/directiveApi'
                 ar.saveDataAlert($ionicPopup, '您不能关注自己');
                 return;
             }
-            if (dataFilter.data.blacked.indexOf($scope.followData.follow_id) != -1) {
+            if ($scope.dataFilter.blacked.indexOf($scope.followData.follow_id) != -1) {
                 ar.saveDataAlert($ionicPopup, '对方设置，关注失败');
                 return;
             }
@@ -173,7 +177,7 @@ define(['app/module', 'app/directive/directiveApi'
         $scope.uploader = new FileUploader({url: '/wap/file/thumb'});
         $filter("orderBy")();
         // socket聊天
-        requirejs(['chat/wechatInterface', 'plugin/socket/socket.io.1.4.0'], function (wx, socket) {
+        requirejs(['plugin/socket/socket.io.1.4.0'], function (socket) {
 
             socket = socket.connect("http://120.76.84.162:8088");
             // 告诉服务器你已经上线
@@ -201,7 +205,7 @@ define(['app/module', 'app/directive/directiveApi'
                     create_time: flagTime
                 };
 
-                if (dataFilter.data.blacked.indexOf(receiveID) > -1) {  //黑名单，不能发消息
+                if ($scope.dataFilter.blacked.indexOf(receiveID) > -1) {  //黑名单，不能发消息
                     message.refuse = -1;
                     message.status = 4;
                     $scope.historyList.push(message);
@@ -244,10 +248,7 @@ define(['app/module', 'app/directive/directiveApi'
                 try {
                     $scope.sendMessage($scope.send_content, $scope.sendId, $scope.receiveId, 'send', undefined, true);
                 } catch (e) {
-                    alert(e.message);
-                    alert(e.description);
-                    alert(e.number);
-                    alert(e.name);
+
                 } finally {
                     $scope.send_content = '';
                 }
@@ -281,17 +282,20 @@ define(['app/module', 'app/directive/directiveApi'
                     viewScroll.scrollBottom(true);
 
 
-                    $scope.uploader.onSuccessItem = function (fileItem, response, status, headers) {  // 上传成功
+                    $scope.uploader.onSuccessItem = function (fileItem, response) {  // 上传成功
 
                         if (response.status == 1) {
-                            for (var i in $scope.historyList) {
+                            var len = $scope.historyList.length;
+                            for (var i = len - 1; i >= 0; i--) {
                                 if ($scope.historyList[i].message == fileItem.file.name) {
                                     $scope.sendMessage(response.thumb_path, $scope.sendId, $scope.receiveId, 'pic', $scope.historyList[i].time, true);  // 真实发送
+                                    break;
                                 }
                             }
 
                         } else {
-                            for (var i = $scope.historyList.length - 1; i >= 0; i--) {
+                            var len = $scope.historyList.length;
+                            for (var i = len - 1; i >= 0; i--) {
                                 if ($scope.historyList[i].type == 'pic' && $scope.historyList[i].status == 3) {
                                     $scope.historyList[i].status = 4;
                                     break;
@@ -325,7 +329,8 @@ define(['app/module', 'app/directive/directiveApi'
 
                 $scope.uploader.onErrorItem = function (item, response, status, headers) {
                     ar.saveDataAlert($ionicPopup, '发送图片出错，错误原因未知');
-                    for (var i = $scope.historyList.length - 1; i >= 0; i++) {
+                    var len = $scope.historyList.length;
+                    for (var i = len - 1; i >= 0; i--) {
                         if ($scope.historyList[i].type == 'pic' && $scope.historyList[i].status == 3) {
                             $scope.historyList[i].status = 4;
                             break;
@@ -347,13 +352,14 @@ define(['app/module', 'app/directive/directiveApi'
                     if (response.type == 'madd' || response.type == 'remove' || response.type == 'add') return;
                     response.message = response.message.replace(/&quot;/g, "\"");
                     if ($scope.sendId == response.send_user_id) {  // 响应自己发送的消息
-                        for (var i in $scope.historyList) {
-
+                        var len = $scope.historyList.length;
+                        for (var i = len - 1 ; i >= 0; i--) {
                             if (response.time == $scope.historyList[i].time &&
                                 (response.message == $scope.historyList[i].message ||
                                 response.type == 'pic')) {
                                 $scope.historyList[i].message = response.message;
                                 $scope.historyList[i].status = response.status;
+                                break;
                             }
                         }
                     } else {

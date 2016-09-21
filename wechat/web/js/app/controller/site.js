@@ -5,13 +5,12 @@ define(['app/module', 'app/directive/directiveApi'
     , 'app/service/serviceApi', 'app/filter/filterApi', 'config/city', 'config/occupation'
 ], function (module) {
 
-    module.controller("site.index", ['app.serviceApi', '$rootScope', '$scope', '$timeout', '$ionicPopup', '$ionicModal', '$ionicActionSheet', '$ionicLoading', '$ionicBackdrop', '$ionicScrollDelegate', '$location', 'dataFilter', function (api, $rootScope, $scope, $timeout, $ionicPopup, $ionicModal, $ionicActionSheet, $ionicLoading, $ionicBackdrop, $ionicScrollDelegate, $location, dataFilter) {
+    module.controller("site.index", ['app.serviceApi', '$rootScope', '$scope', '$timeout', '$ionicPopup', '$ionicModal', '$ionicActionSheet', '$ionicLoading', '$ionicBackdrop', '$ionicScrollDelegate', function (api, $rootScope, $scope, $timeout, $ionicPopup, $ionicModal, $ionicActionSheet, $ionicLoading, $ionicBackdrop, $ionicScrollDelegate) {
 
         $scope.$on('$ionicView.beforeEnter', function () {
             if (ar.getStorage('userInfo') && ar.getStorage('userInfo').user_id == ar.getCookie('bhy_user_id')) {
                 $scope.userInfo = ar.getStorage('userInfo');
                 $scope.userInfo.info = JSON.parse($scope.userInfo.info);
-                $scope.userInfo.auth = JSON.parse($scope.userInfo.auth);
             }
         })
 
@@ -41,12 +40,12 @@ define(['app/module', 'app/directive/directiveApi'
         $scope.userList = [];
 
         // 判断身份证是否认证通过
-        if (dataFilter.data.honestyStatus.length) {
-            $scope.honestyStatus = dataFilter.data.honestyStatus[0].is_check;
+        if ($scope.dataFilter.honestyStatus.length) {
+            $scope.honestyStatus = $scope.dataFilter.honestyStatus[0].is_check;
         }
         // 判断头像是否认证通过
-        if (dataFilter.data.headpicStatus) {
-            $scope.headpicStatus = dataFilter.data.headpicStatus.is_check;
+        if ($scope.dataFilter.headpicStatus) {
+            $scope.headpicStatus = $scope.dataFilter.headpicStatus.is_check;
         }
         $scope.honesty = function (val) {
             return val & 1;
@@ -74,7 +73,7 @@ define(['app/module', 'app/directive/directiveApi'
         // 首页搜索过滤条件（拉黑）
         $scope.indexFilter = function (user) {
             if ($scope.userId > 0 && $scope.userInfo) {
-                return user.id != $scope.userInfo.id && dataFilter.data.blacked.indexOf(user.id) == -1;
+                return user.id != $scope.userInfo.id && $scope.dataFilter.blacked.indexOf(user.id) == -1;
             }
             return 1;
         }
@@ -158,7 +157,6 @@ define(['app/module', 'app/directive/directiveApi'
             api.list('/wap/site/user-list', refreshForm).success(function (res) {
                 for (var i in res.data) {
                     res.data[i].info = JSON.parse(res.data[i].info);
-                    res.data[i].auth = JSON.parse(res.data[i].auth);
                 }
                 $scope.userList = res.data;
                 $scope.dataLoading = false;
@@ -180,7 +178,6 @@ define(['app/module', 'app/directive/directiveApi'
                     }
                     for (var i in res.data) {
                         res.data[i].info = JSON.parse(res.data[i].info);
-                        res.data[i].auth = JSON.parse(res.data[i].auth);
                     }
                     $scope.userList = $scope.userList.concat(res.data);
                     $scope.dataLoading = false;
