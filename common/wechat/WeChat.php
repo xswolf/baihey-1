@@ -50,14 +50,14 @@ class WeChat extends \callmez\wechat\sdk\Wechat
                     <mch_billno><![CDATA[{$args['order_id']}]]></mch_billno>
                     <mch_id><![CDATA[" . static::MCH_ID . "]]></mch_id>
                     <wxappid><![CDATA[{$this->appId}]]></wxappid>
-                    <send_name><![CDATA[嘉瑞百合缘]]></send_name>
+                    <send_name><![CDATA[{$data['send_name']}]]></send_name>
                     <re_openid><![CDATA[{$args['openid']}]]></re_openid>
                     <total_amount><![CDATA[{$args['total_amount']}]]></total_amount>
                     <total_num><![CDATA[1]]></total_num>
-                    <wishing><![CDATA[恭喜发财]]></wishing>
+                    <wishing><![CDATA[{$data['wishing']}]]></wishing>
                     <client_ip><![CDATA[120.76.84.162]]></client_ip>
-                    <act_name><![CDATA[嘉瑞百合缘，感谢参与]]></act_name>
-                    <remark><![CDATA[抢红包]]></remark>
+                    <act_name><![CDATA[{$data['act_name']}]]></act_name>
+                    <remark><![CDATA[{$data['remark']}]]></remark>
                     <scene_id><![CDATA[PRODUCT_2]]></scene_id>
                     <nonce_str><![CDATA[" . $data['nonce_str'] . "]]></nonce_str>
                   </xml>";
