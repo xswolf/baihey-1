@@ -61,8 +61,7 @@ class WeChat extends \callmez\wechat\sdk\Wechat {
         if($data){
             curl_close($ch);
             return $data;
-        }
-        else {
+        }else {
             $error = curl_errno($ch);
             echo "call faild, errorCode:$error\n";
             curl_close($ch);
