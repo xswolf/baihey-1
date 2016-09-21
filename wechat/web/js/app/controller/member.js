@@ -7,10 +7,22 @@ define(['app/module', 'app/directive/directiveApi'
 ], function (module) {
 
     // 我
-    module.controller("member.index", ['app.serviceApi', '$scope', '$ionicPopup', function (api, $scope, $ionicPopup) {
+    module.controller("member.index", ['app.serviceApi', '$scope', '$ionicPopup', '$templateCache','$timeout', function (api, $scope, $ionicPopup, $templateCache,$timeout) {
         $scope.userInfo = ar.getStorage('userInfo');
         $scope.userInfo.info = JSON.parse($scope.userInfo.info);
         $scope.userInfo.auth = JSON.parse($scope.userInfo.auth);
+
+        $scope.clearLoading = false;
+        // 清除缓存
+        $scope.claerCache = function () {
+            $scope.clearLoading = true;
+            $templateCache.removeAll();
+            $timeout(function(){
+                $scope.clearLoading = false;
+                ar.saveDataAlert($ionicPopup,'缓存已清理完毕！');
+            },1500)
+        }
+
         // 退出登录
         $scope.loginOut = function () {
             api.save('/wap/member/login-out', {}).success(function (res) {
@@ -1288,7 +1300,7 @@ define(['app/module', 'app/directive/directiveApi'
         $scope.infoSafe = function () {
             if ($scope.userInfo.info.level < 1) {
                 var alertPopup = $ionicPopup.alert({
-                    template: '开通VIP，立即享受资料保护',
+                    template: '开通VIP，立即享受资料隐身',
                     okText: '现在去开通'
                 });
                 alertPopup.then(function () {
@@ -1299,7 +1311,7 @@ define(['app/module', 'app/directive/directiveApi'
             if ($scope.userInfo.is_show == 1) {
                 var confirmPopup = $ionicPopup.confirm({
                     title: '重要提示',
-                    template: '您确定要开启资料保护吗？开启后在您未主动联系其他会员时，他人均不可搜索及浏览您的资料。',
+                    template: '您确定要开启资料隐身吗？开启后在您未主动联系其他会员时，他人均不可搜索及浏览您的资料。',
                     okText: '我确定',
                     cancelText: '再考虑一下'
                 });
@@ -1339,6 +1351,7 @@ define(['app/module', 'app/directive/directiveApi'
                     userInfo.info = JSON.stringify(userInfo.info);
                     userInfo.auth = JSON.stringify(userInfo.auth);
                     ar.setStorage("userInfo", userInfo);
+                    ar.saveDataAlert($ionicPopup,'关闭资料隐身成功！现在您的资料可以被他人搜索及浏览。');
                 })
             }
         }
@@ -1572,7 +1585,7 @@ define(['app/module', 'app/directive/directiveApi'
         }
 
         $scope.sendCode = function () {
-            if(!$scope.validate.verify){
+            if (!$scope.validate.verify) {
                 ar.saveDataAlert($ionicPopup, '请输入验证码');
                 return false;
             }
@@ -1670,7 +1683,7 @@ define(['app/module', 'app/directive/directiveApi'
         }
 
         $scope.sendCode = function () {
-            if(!$scope.validate.verify){
+            if (!$scope.validate.verify) {
                 ar.saveDataAlert($ionicPopup, '请输入验证码');
                 return false;
             }
@@ -3010,7 +3023,7 @@ define(['app/module', 'app/directive/directiveApi'
         $scope.showPhone = function () {
             $scope.phone = $scope.matchmakerList[0].landline ? $scope.matchmakerList[0].landline : $scope.matchmakerList[0].phone;
             $ionicPopup.alert({
-                title:'查看红娘电话号码',
+                title: '查看红娘电话号码',
                 template: $scope.phone,
                 okText: '关闭'
             })
@@ -3260,7 +3273,7 @@ define(['app/module', 'app/directive/directiveApi'
         }
 
         $scope.sendCode = function () {
-            if(!$scope.validate.verify){
+            if (!$scope.validate.verify) {
                 ar.saveDataAlert($ionicPopup, '请输入验证码');
                 return false;
             }
