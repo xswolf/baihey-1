@@ -24,19 +24,22 @@ class WeChat extends \callmez\wechat\sdk\Wechat {
      * @return bool
      */
     public function sendPack($args){
-        $data['nonce_str'] = \Yii::$app->getSecurity()->generateRandomString(16);
-        $data['sign'] = \Yii::$app->getSecurity()->generateRandomString(16);
-        $data['mch_billno'] = $args['order_id'];
-        $data['mch_id'] = static::MCH_ID;
-        $data['wxappid'] = $this->appId;
-        $data['send_name'] = "嘉瑞百合缘";
-        $data['re_openid'] = $args['openid'];
-        $data['total_amount'] = $args['total_amount']; // 单位分
-        $data['total_num'] = 1; // 单位分
-        $data['wishing'] = '嘉瑞百合缘，感谢参与'; // 单位分
-        $data['client_ip'] = '120.76.84.162'; // 单位分
-        $data['act_name'] = '抢红包'; // 单位分
-        $data['remark'] = '抢红包'; // 单位分
+
+        $xmlData = "<xml>
+                    <sign><![CDATA[E1EE61A91C8E90F299DE6AE075D60A2D]]></sign>
+                    <mch_billno><![CDATA[{$args['order_id']}]]></mch_billno>
+                    <mch_id><![CDATA[" . static::MCH_ID . "]]></mch_id>
+                    <wxappid><![CDATA[{$this->appId}]]></wxappid>
+                    <send_name><![CDATA[嘉瑞百合缘]]></send_name>
+                    <re_openid><![CDATA[{$args['openid']}]]></re_openid>
+                    <total_amount><![CDATA[{$args['total_amount']}]]></total_amount>
+                    <total_num><![CDATA[1]]></total_num>
+                    <wishing><![CDATA[恭喜发财]]></wishing>
+                    <client_ip><![CDATA[120.76.84.162]]></client_ip>
+                    <act_name><![CDATA[嘉瑞百合缘，感谢参与]]></act_name>
+                    <remark><![CDATA[抢红包]]></remark>
+                    <scene_id><![CDATA[PRODUCT_2]]></scene_id>
+                  </xml>";
 
         $ch = curl_init();
         //超时时间
@@ -56,7 +59,7 @@ class WeChat extends \callmez\wechat\sdk\Wechat {
 
 
         curl_setopt($ch,CURLOPT_POST, 1);
-        curl_setopt($ch,CURLOPT_POSTFIELDS,$data);
+        curl_setopt($ch,CURLOPT_POSTFIELDS,$xmlData);
         $data = curl_exec($ch);
         if($data){
             curl_close($ch);
