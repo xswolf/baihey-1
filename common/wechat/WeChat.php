@@ -39,7 +39,7 @@ class WeChat extends \callmez\wechat\sdk\Wechat
             'act_name'=> 'hello',
             'remark'=> 'hello',
             'scene_id'=> 'PRODUCT_2',
-            'nonce_str'=> 123456, //\Yii::$app->getSecurity()->generateRandomString(16),
+            'nonce_str'=> 1234561, //\Yii::$app->getSecurity()->generateRandomString(16),
         ];
         ksort($data);
         $str = http_build_query($data)."&key=" . $this->appSecret;
