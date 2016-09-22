@@ -19,11 +19,14 @@ class WeChat extends \callmez\wechat\sdk\Wechat
     const OAUTH_PACK = "https://api.mch.weixin.qq.com/mmpaymkttransfers/sendredpack";
     const MCH_ID     = 1244137602;
 
-    protected  function arrToXml($data){
+    protected  function arrToXml($data ,$sign = ""){
         $xml = "<xml>";
         ksort($data);
         foreach ($data as $k=>$v){
             $xml .= "<" . $k . ">" . $v . "</" . $k . ">";
+        }
+        if ($sign != ""){
+            $xml .= "<sign>{$sign}</sign>";
         }
         return $xml . "</xml>";
     }
@@ -53,7 +56,7 @@ class WeChat extends \callmez\wechat\sdk\Wechat
         $str  = http_build_query($data) . "&key=" . $this->appSecret;
         $sign = strtoupper(md5($str));
 
-        $xmlData = $this->arrToXml($data);
+        $xmlData = $this->arrToXml($data , $sign);
 
         echo $sign . "\n";
         echo $str . "\n";
