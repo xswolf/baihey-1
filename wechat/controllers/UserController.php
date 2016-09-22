@@ -178,6 +178,8 @@ class UserController extends BaseController
             $_SESSION['code_wx_id'] = $wechatMember['openid'];
             $_SESSION['qdid']       = $args['qdid'];
             $_SESSION['type']       = 3;
+        }else{
+            exit;
         }
 
 
