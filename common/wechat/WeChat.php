@@ -58,9 +58,6 @@ class WeChat extends \callmez\wechat\sdk\Wechat
 
         $xmlData = $this->arrToXml($data , $sign);
 
-        echo $sign . "\n";
-        echo $str . "\n";
-        echo $xmlData;
         return $this->wxHttpsRequestPem(static::OAUTH_PACK, $xmlData);
     }
 
