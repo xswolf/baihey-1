@@ -51,10 +51,10 @@ class WeChat extends \callmez\wechat\sdk\Wechat
                     <mch_billno>{$args['order_id']}</mch_billno>
                     <mch_id>" . static::MCH_ID . "</mch_id>
                     <nonce_str>" . $data['nonce_str'] . "</nonce_str>
-                    <scene_id>{$data['scene_id']}</scene_id>
-                    <send_name>{$data['send_name']}</send_name>
                     <re_openid>{$args['openid']}</re_openid>
                     <remark>{$data['remark']}</remark>
+                    <scene_id>{$data['scene_id']}</scene_id>
+                    <send_name>{$data['send_name']}</send_name>
                     <total_amount>{$args['total_amount']}</total_amount>
                     <total_num>1</total_num>
                     <wishing>{$data['wishing']}</wishing>
