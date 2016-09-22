@@ -7,7 +7,7 @@ define(['app/module', 'app/directive/directiveApi'
 ], function (module) {
 
     // 我
-    module.controller("member.index", ['app.serviceApi', '$scope', '$ionicPopup', '$templateCache','$timeout', function (api, $scope, $ionicPopup, $templateCache,$timeout) {
+    module.controller("member.index", ['app.serviceApi', '$scope', '$ionicPopup', '$templateCache', '$timeout', function (api, $scope, $ionicPopup, $templateCache, $timeout) {
         $scope.userInfo = ar.getStorage('userInfo');
         $scope.userInfo.info = JSON.parse($scope.userInfo.info);
         $scope.userInfo.auth = JSON.parse($scope.userInfo.auth);
@@ -17,10 +17,10 @@ define(['app/module', 'app/directive/directiveApi'
         $scope.claerCache = function () {
             $scope.clearLoading = true;
             $templateCache.removeAll();
-            $timeout(function(){
+            $timeout(function () {
                 $scope.clearLoading = false;
-                ar.saveDataAlert($ionicPopup,'缓存已清理完毕！');
-            },1500)
+                ar.saveDataAlert($ionicPopup, '缓存已清理完毕！');
+            }, 1500)
         }
 
         // 退出登录
@@ -164,7 +164,7 @@ define(['app/module', 'app/directive/directiveApi'
 
         // 点击img，功能
         $scope.moreImg = function (img, event) {
-            event.stopPropagation();
+            event.preventDefault(); // 阻止浏览器默认事件
             var hideSheet = $ionicActionSheet.show({
                 buttons: img.is_check == 1 && img.is_head == 0 ? [{text: '设为头像'}] : [],
                 destructiveText: '删除',
@@ -219,10 +219,11 @@ define(['app/module', 'app/directive/directiveApi'
                         }
                         hideSheet();
                     });
-                    return true;
+
                 }
             });
         }
+
         $scope.dynamicList = [];
         api.list('/wap/member/get-dynamic-list', {user_id: $scope.userInfo.id, page: 0}).success(function (res) {
             for (var i in res.data) {
@@ -1351,7 +1352,7 @@ define(['app/module', 'app/directive/directiveApi'
                     userInfo.info = JSON.stringify(userInfo.info);
                     userInfo.auth = JSON.stringify(userInfo.auth);
                     ar.setStorage("userInfo", userInfo);
-                    ar.saveDataAlert($ionicPopup,'关闭资料隐身成功！现在您的资料可以被他人搜索及浏览。');
+                    ar.saveDataAlert($ionicPopup, '关闭资料隐身成功！现在您的资料可以被他人搜索及浏览。');
                 })
             }
         }

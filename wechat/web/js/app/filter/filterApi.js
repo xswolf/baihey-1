@@ -58,7 +58,7 @@ define(['app/module'], function (module) {
                     } else {
                         return name.substr(0, 1) + '小姐';
                     }
-                }else {
+                } else {
                     return name;
                 }
             }
@@ -616,27 +616,31 @@ define(['app/module'], function (module) {
 
     module.filter('qqwx', function () {
         return function (value) {
-            return value.substr(0,3) + '******';
+            return value.substr(0, 3) + '******';
         }
     })
 
     module.filter('emoji', function ($sce) {
         return function (value) {
-            if(value){
+            if (value) {
+
                 var match, result = value,
-                    reg = /\[emoji:\d+\]/g,
+                    reg = /\[\W+:\d+\]/g,
                     emojiIndex,
                     totalEmojiNum = 75;
                 while (match = reg.exec(value)) {
-                    emojiIndex = match[0].slice(7, -1);
+                    emojiIndex = match[0].slice(match[0].split(':')[0].length + 1, -1);
                     if (emojiIndex > totalEmojiNum) {
                         result = result.replace(match[0], '[X]');
                     } else {
                         result = result.replace(match[0], '<img class="emoji" src="/wechat/web/images/emoji/' + emojiIndex + '.gif" />');
-                    };
-                };
-                return $sce.trustAsHtml(result);;
+                    }
+
+                }
+
+                return $sce.trustAsHtml(result);
             }
+
         }
     })
 
