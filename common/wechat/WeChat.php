@@ -35,7 +35,7 @@ class WeChat extends \callmez\wechat\sdk\Wechat
             'total_amount' => $args['total_amount'],
             'total_num' => 1,
             'wishing' => 'hello',
-            'client_ip' => '120.76.84.162',
+            'client_ip' => '125.84.82.63',
             'act_name' => 'hello',
             'remark' => 'hello',
             'nonce_str' => 1234561, //\Yii::$app->getSecurity()->generateRandomString(16),
