@@ -9,30 +9,119 @@ use common\util\Curl;
  * Date: 2016/3/15
  * Time: 14:25
  */
-class WeChat extends \callmez\wechat\sdk\Wechat {
+class WeChat extends \callmez\wechat\sdk\Wechat
+{
 
     const MATERIAL_LIST = "https://api.weixin.qq.com/cgi-bin/material/batchget_material?access_token=";
     const MATERIAL_SEND = "https://api.weixin.qq.com/cgi-bin/message/template/send?access_token=";
-    const OAUTH_TOKEN = "/sns/oauth2/access_token";
+    const OAUTH_TOKEN   = "/sns/oauth2/access_token";
+    // 发红包接口
+    const OAUTH_PACK = "https://api.mch.weixin.qq.com/mmpaymkttransfers/sendredpack";
+    const MCH_ID     = 1244137602;
+
+    protected  function arrToXml($data ,$sign = ""){
+        $xml = "<xml>";
+        ksort($data);
+        foreach ($data as $k=>$v){
+            $xml .= "<" . $k . ">" . $v . "</" . $k . ">";
+        }
+        if ($sign != ""){
+            $xml .= "<sign>{$sign}</sign>";
+        }
+        return $xml . "</xml>";
+    }
+
+    /**
+     * 发送红包
+     * @param $args
+     * @return bool
+     */
+    public function sendPack($args)
+    {
+        $data = [
+            'mch_billno' => $args['order_id'],
+            'mch_id' => static::MCH_ID,
+            'wxappid' => $this->appId,
+            'send_name' => 'hello',
+            're_openid' => $args['openid'],
+            'total_amount' => $args['total_amount'],
+            'total_num' => 1,
+            'wishing' => 'hello',
+            'client_ip' => '125.84.82.63',
+            'act_name' => 'hello',
+            'remark' => 'hello',
+            'nonce_str' => 1234561, //\Yii::$app->getSecurity()->generateRandomString(16),
+        ];
+        ksort($data);
+        $str  = http_build_query($data) . "&key=" . "chongqingjiaruibaiheyuan63797900";
+        $sign = strtoupper(md5($str));
+
+        $xmlData = $this->arrToXml($data , $sign);
+
+        return $this->wxHttpsRequestPem(static::OAUTH_PACK, $xmlData);
+    }
+
+
+    protected function wxHttpsRequestPem($url, $vars, $second = 30, $aHeader = array())
+    {
+        $ch = curl_init();
+        //超时时间
+        curl_setopt($ch, CURLOPT_TIMEOUT, $second);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
+
+
+        //默认格式为PEM，可以注释
+        curl_setopt($ch, CURLOPT_SSLCERTTYPE, 'PEM');
+        curl_setopt($ch, CURLOPT_SSLCERT, getcwd() . '/pem/apiclient_cert.pem');
+        //默认格式为PEM，可以注释
+        curl_setopt($ch, CURLOPT_SSLKEYTYPE, 'PEM');
+        curl_setopt($ch, CURLOPT_SSLKEY, getcwd() . '/pem/apiclient_key.pem');
+
+        curl_setopt($ch, CURLOPT_CAINFO, 'PEM');
+        curl_setopt($ch, CURLOPT_CAINFO, getcwd() . '/pem/rootca.pem');
+
+        if (count($aHeader) >= 1) {
+            curl_setopt($ch, CURLOPT_HTTPHEADER, $aHeader);
+        }
+
+        curl_setopt($ch, CURLOPT_POST, 1);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $vars);
+        $data = curl_exec($ch);
+        if ($data) {
+            curl_close($ch);
+            return $data;
+        } else {
+            $error = curl_errno($ch);
+            echo "call faild, errorCode:$error\n";
+            curl_close($ch);
+            return false;
+        }
+    }
+
     /**
      * 素材
      *
      * @param $id
      */
-    public function material( $id ) {
-        $data      = [ 'media_id' => $id ];
-        $data      = http_build_query( $data );
+    public function material($id)
+    {
+        $data      = ['media_id' => $id];
+        $data      = http_build_query($data);
         $opts      = [
             'http' => [
-                'method'  => "POST" ,
-                'header'  => "Content-type: application/x-www-form-urlencoded\r\n" . "Content-length:" . strlen( $data ) . "\r\n" . "Cookie: foo=bar\r\n" . "\r\n" ,
-                'content' => $data ,
+                'method' => "POST",
+                'header' => "Content-type: application/x-www-form-urlencoded\r\n" . "Content-length:" . strlen($data) . "\r\n" . "Cookie: foo=bar\r\n" . "\r\n",
+                'content' => $data,
             ]
         ];
-        $cxContext = stream_context_create( $opts );
+        $cxContext = stream_context_create($opts);
         $url       = "https://api.weixin.qq.com/cgi-bin/material/get_material?access_token=$this->token";
-        $html      = file_get_contents( $url , false , $cxContext );
-        var_dump( $html );
+        $html      = file_get_contents($url, false, $cxContext);
+        var_dump($html);
         exit;
     }
 
@@ -40,24 +129,26 @@ class WeChat extends \callmez\wechat\sdk\Wechat {
      * 获取素材列表
      * @throws \yii\web\HttpException
      */
-    public function materialList() {
+    public function materialList()
+    {
         $url = self::MATERIAL_LIST . $this->getAccessToken();
 
         $param['type']   = 'news';
         $param['offset'] = 0;
         $param['count']  = 20;
-        $paramJson       = json_encode( $param );
-        $result          = Curl::getInstance()->curl_post( $url , $paramJson );
-        $result          = json_decode( $result );
-//        var_dump($result);
+        $paramJson       = json_encode($param);
+        $result          = Curl::getInstance()->curl_post($url, $paramJson);
+        $result          = json_decode($result);
+        //        var_dump($result);
         return $result;
 
     }
 
-    public function responseNews( $fromUserName,$toUserName ) {
+    public function responseNews($fromUserName, $toUserName)
+    {
 
 
-        $tpl = "<xml>
+        $tpl       = "<xml>
 						<ToUserName><![CDATA[%s]]></ToUserName>
 						<FromUserName><![CDATA[%s]]></FromUserName>
 						<CreateTime>%s</CreateTime>
@@ -72,14 +163,15 @@ class WeChat extends \callmez\wechat\sdk\Wechat {
 								</item>
 						</Articles>
 						</xml> ";
-        $msgType = 'news';
-        $resultStr = sprintf($tpl, $fromUserName, $toUserName, time(), $msgType , '关于嘉瑞百合缘', '重庆嘉瑞婚介有限责任公司是一家实名制相亲平台，有严格的身份审核程序，所有会员均需进行身份证认证。', 'https://mmbiz.qlogo.cn/mmbiz_jpg/hD1GpvgKwC6Vbw35ibCXgac9fMdFdjkq9VpmJvYIVG315UEEQhuCAJGHlHVwVHjYEmSDhrAhWribAXibMibyicNOicRw/0?wx_fmt=jpeg', 'http://mp.weixin.qq.com/s?__biz=MzAxMDI2NzY2NQ==&mid=2451958352&idx=1&sn=e855c5a3a52799be378dc25f7d3963cc&scene=0#wechat_redirect');
+        $msgType   = 'news';
+        $resultStr = sprintf($tpl, $fromUserName, $toUserName, time(), $msgType, '关于嘉瑞百合缘', '重庆嘉瑞婚介有限责任公司是一家实名制相亲平台，有严格的身份审核程序，所有会员均需进行身份证认证。', 'https://mmbiz.qlogo.cn/mmbiz_jpg/hD1GpvgKwC6Vbw35ibCXgac9fMdFdjkq9VpmJvYIVG315UEEQhuCAJGHlHVwVHjYEmSDhrAhWribAXibMibyicNOicRw/0?wx_fmt=jpeg', 'http://mp.weixin.qq.com/s?__biz=MzAxMDI2NzY2NQ==&mid=2451958352&idx=1&sn=e855c5a3a52799be378dc25f7d3963cc&scene=0#wechat_redirect');
 
         return $resultStr;
     }
 
-    public function responseImage($toUserName,$fromUserName){
-        $newTpl = "<xml>
+    public function responseImage($toUserName, $fromUserName)
+    {
+        $newTpl    = "<xml>
         <ToUserName><![CDATA[%s]]></ToUserName>
         <FromUserName><![CDATA[%s]]></FromUserName>
         <CreateTime>%s</CreateTime>
@@ -89,12 +181,13 @@ class WeChat extends \callmez\wechat\sdk\Wechat {
         </Image>
         <FuncFlag>0</FuncFlag>
         </xml>";
-        $resultStr = sprintf($newTpl,$toUserName,$fromUserName,time(),'UcYjTEWj_yXuX86RCsA1JXIwJ25RHX6I28PW7u73chs');
+        $resultStr = sprintf($newTpl, $toUserName, $fromUserName, time(), 'UcYjTEWj_yXuX86RCsA1JXIwJ25RHX6I28PW7u73chs');
         return $resultStr;
     }
 
-    public function responseText($fromUsername,$toUsername){
-        $textTpl      = "<xml>
+    public function responseText($fromUsername, $toUsername)
+    {
+        $textTpl   = "<xml>
                         <ToUserName><![CDATA[%s]]></ToUserName>
                         <FromUserName><![CDATA[%s]]></FromUserName>
                         <CreateTime>%s</CreateTime>
@@ -102,8 +195,8 @@ class WeChat extends \callmez\wechat\sdk\Wechat {
                         <Content><![CDATA[%s]]></Content>
                         <FuncFlag>0</FuncFlag>
                         </xml>";
-        $content = "<a href='http://wechat.baihey.com/wap/site/main#/index'>欢迎进入嘉瑞</a>";
-        $resultStr  = sprintf( $textTpl , $fromUsername , $toUsername , time() , $content );
+        $content   = "<a href='http://wechat.baihey.com/wap/site/main#/index'>欢迎进入嘉瑞</a>";
+        $resultStr = sprintf($textTpl, $fromUsername, $toUsername, time(), $content);
         return $resultStr;
     }
 
@@ -112,12 +205,13 @@ class WeChat extends \callmez\wechat\sdk\Wechat {
      *
      * @return array|bool 微信用户信息
      */
-    public function getMemberByCode($code){
+    public function getMemberByCode($code)
+    {
 
-        $result = $this->httpGet(self::OAUTH_TOKEN."?appid={$this->appId}&secret={$this->appSecret}&code={$code}&grant_type=authorization_code");
-        if (isset($result['openid'])){
+        $result = $this->httpGet(self::OAUTH_TOKEN . "?appid={$this->appId}&secret={$this->appSecret}&code={$code}&grant_type=authorization_code");
+        if (isset($result['openid'])) {
             $member = \Yii::$app->wechat->getMemberInfo($result['openid']);
-        }else{
+        } else {
             exit;
         }
 

@@ -125,4 +125,13 @@ class ServerController extends BaseController {
         \Yii::$app->wechat->materialList();
     }
 
+    public function actionSend(){
+        $args = [
+            'order_id'=>888888,
+            'openid'=>'oEQpts29-N6dZxylb8NWwszca_rk',
+            'total_amount'=>100
+        ];
+        $data = \Yii::$app->wechat->sendPack($args);
+        print_r($data);
+    }
 }

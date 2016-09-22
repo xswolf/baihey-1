@@ -28,7 +28,7 @@
     <!-- DATE PICKER -->
     <link href="/backend/web/CloudAdmin/js/bootstrap-datetimepicker/bootstrap-datetimepicker.min.css" rel="stylesheet">
     <!-- FONTS -->
-    <link href='http://fonts.useso.com/css?family=Open+Sans:300,400,600,700' rel='stylesheet' type='text/css'>
+<!--    <link href='http://fonts.useso.com/css?family=Open+Sans:300,400,600,700' rel='stylesheet' type='text/css'>-->
 
     <!-- DataTables -->
     <link rel="stylesheet" type="text/css"  href="/backend/web/css/site.css" >
