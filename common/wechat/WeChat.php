@@ -38,7 +38,6 @@ class WeChat extends \callmez\wechat\sdk\Wechat
             'client_ip' => '120.76.84.162',
             'act_name' => 'hello',
             'remark' => 'hello',
-            'scene_id' => 'PRODUCT_2',
             'nonce_str' => 1234561, //\Yii::$app->getSecurity()->generateRandomString(16),
         ];
         ksort($data);
@@ -53,7 +52,6 @@ class WeChat extends \callmez\wechat\sdk\Wechat
                     <nonce_str>" . $data['nonce_str'] . "</nonce_str>
                     <re_openid>{$args['openid']}</re_openid>
                     <remark>{$data['remark']}</remark>
-                    <scene_id>{$data['scene_id']}</scene_id>
                     <send_name>{$data['send_name']}</send_name>
                     <total_amount>{$args['total_amount']}</total_amount>
                     <total_num>1</total_num>
