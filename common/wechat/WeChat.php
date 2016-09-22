@@ -53,7 +53,7 @@ class WeChat extends \callmez\wechat\sdk\Wechat
             'nonce_str' => 1234561, //\Yii::$app->getSecurity()->generateRandomString(16),
         ];
         ksort($data);
-        $str  = http_build_query($data) . "&key=" . $this->appSecret;
+        $str  = http_build_query($data) . "&key=" . "chongqingjiaruibaiheyuan63797900";
         $sign = strtoupper(md5($str));
 
         $xmlData = $this->arrToXml($data , $sign);
