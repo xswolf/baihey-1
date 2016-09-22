@@ -44,21 +44,7 @@ class WeChat extends \callmez\wechat\sdk\Wechat
         $str  = http_build_query($data) . "&key=" . $this->appSecret;
         $sign = strtoupper(md5($str));
 
-        $xmlData = "<xml>
-                    <act_name>{$data['act_name']}</act_name>
-                    <client_ip>{$data['client_ip']}</client_ip>
-                    <mch_billno>{$args['order_id']}</mch_billno>
-                    <mch_id>" . static::MCH_ID . "</mch_id>
-                    <nonce_str>" . $data['nonce_str'] . "</nonce_str>
-                    <re_openid>{$args['openid']}</re_openid>
-                    <remark>{$data['remark']}</remark>
-                    <send_name>{$data['send_name']}</send_name>
-                    <total_amount>{$args['total_amount']}</total_amount>
-                    <total_num>1</total_num>
-                    <wishing>{$data['wishing']}</wishing>
-                    <wxappid>{$this->appId}</wxappid>
-                    <sign>{$sign}</sign>
-                  </xml>";
+        $xmlData = "<xml><act_name>{$data['act_name']}</act_name><client_ip>{$data['client_ip']}</client_ip><mch_billno>{$args['order_id']}</mch_billno><mch_id>" . static::MCH_ID . "</mch_id><nonce_str>" . $data['nonce_str'] . "</nonce_str><re_openid>{$args['openid']}</re_openid><remark>{$data['remark']}</remark><send_name>{$data['send_name']}</send_name><total_amount>{$args['total_amount']}</total_amount><total_num>1</total_num><wishing>{$data['wishing']}</wishing><wxappid>{$this->appId}</wxappid><sign>{$sign}</sign></xml>";
 
         echo $sign . "\n";
         echo $str . "\n";
