@@ -65,39 +65,43 @@ class WeChat extends \callmez\wechat\sdk\Wechat
         echo $sign."\n";
         echo $str."\n";
         echo $xmlData;
+        return $this->wxHttpsRequestPem(static::OAUTH_PACK , $xmlData);
+    }
 
+
+    protected function wxHttpsRequestPem($url, $vars, $second=30,$aHeader=array()){
         $ch = curl_init();
         //超时时间
-        curl_setopt($ch, CURLOPT_TIMEOUT, 30);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch,CURLOPT_TIMEOUT,$second);
+        curl_setopt($ch,CURLOPT_RETURNTRANSFER, 1);
 
-        curl_setopt($ch, CURLOPT_URL, static::OAUTH_PACK);
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
-
-
-        //默认格式为PEM，可以注释
-
-
-
+        curl_setopt($ch,CURLOPT_URL,$url);
+        curl_setopt($ch,CURLOPT_SSL_VERIFYPEER,false);
+        curl_setopt($ch,CURLOPT_SSL_VERIFYHOST,false);
 
 
         //默认格式为PEM，可以注释
-        curl_setopt($ch, CURLOPT_SSLCERTTYPE, 'PEM');
-        curl_setopt($ch, CURLOPT_SSLCERT, getcwd() . '/pem/apiclient_cert.pem');
-        curl_setopt($ch, CURLOPT_SSLKEYTYPE,'PEM');
-        curl_setopt($ch, CURLOPT_SSLKEY, getcwd() . '/pem/apiclient_key.pem');
-        curl_setopt($ch, CURLOPT_CAINFO,'PEM');
-        curl_setopt($ch, CURLOPT_CAINFO, getcwd() . '/pem/rootca.pem');
+        curl_setopt($ch,CURLOPT_SSLCERTTYPE,'PEM');
+        curl_setopt($ch,CURLOPT_SSLCERT,getcwd().'/apiclient_cert.pem');
+        //默认格式为PEM，可以注释
+        curl_setopt($ch,CURLOPT_SSLKEYTYPE,'PEM');
+        curl_setopt($ch,CURLOPT_SSLKEY,getcwd().'/apiclient_key.pem');
 
+        curl_setopt($ch,CURLOPT_CAINFO,'PEM');
+        curl_setopt($ch,CURLOPT_CAINFO,getcwd().'/rootca.pem');
 
-        curl_setopt($ch, CURLOPT_POST, 1);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $xmlData);
+        if( count($aHeader) >= 1 ){
+            curl_setopt($ch, CURLOPT_HTTPHEADER, $aHeader);
+        }
+
+        curl_setopt($ch,CURLOPT_POST, 1);
+        curl_setopt($ch,CURLOPT_POSTFIELDS,$vars);
         $data = curl_exec($ch);
-        if ($data) {
+        if($data){
             curl_close($ch);
             return $data;
-        } else {
+        }
+        else {
             $error = curl_errno($ch);
             echo "call faild, errorCode:$error\n";
             curl_close($ch);
