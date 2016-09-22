@@ -46,20 +46,20 @@ class WeChat extends \callmez\wechat\sdk\Wechat
         $sign = strtoupper(md5($str));
 
         $xmlData = "<xml>
-                    <sign>{$sign}</sign>
+                    <act_name>{$data['act_name']}</act_name>
+                    <client_ip>{$data['client_ip']}</client_ip>
                     <mch_billno>{$args['order_id']}</mch_billno>
                     <mch_id>" . static::MCH_ID . "</mch_id>
-                    <wxappid>{$this->appId}</wxappid>
+                    <nonce_str>" . $data['nonce_str'] . "</nonce_str>
+                    <scene_id>{$data['scene_id']}</scene_id>
                     <send_name>{$data['send_name']}</send_name>
                     <re_openid>{$args['openid']}</re_openid>
+                    <remark>{$data['remark']}</remark>
                     <total_amount>{$args['total_amount']}</total_amount>
                     <total_num>1</total_num>
                     <wishing>{$data['wishing']}</wishing>
-                    <client_ip>120.76.84.162</client_ip>
-                    <act_name>{$data['act_name']}</act_name>
-                    <remark>{$data['remark']}</remark>
-                    <scene_id>PRODUCT_2</scene_id>
-                    <nonce_str>" . $data['nonce_str'] . "</nonce_str>
+                    <wxappid>{$this->appId}</wxappid>
+                    <sign>{$sign}</sign>
                   </xml>";
 
         echo $sign."\n";
