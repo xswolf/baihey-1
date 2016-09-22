@@ -27,22 +27,22 @@ class WeChat extends \callmez\wechat\sdk\Wechat
     public function sendPack($args)
     {
         $data = [
-            'mch_billno'=> $args['order_id'],
-            'mch_id'=> static::MCH_ID,
-            'wxappid'=> $this->appId,
-            'send_name'=> 'hello',
-            're_openid'=> $args['openid'],
-            'total_amount'=> $args['total_amount'],
-            'total_num'=> 1,
-            'wishing'=> 'hello',
-            'client_ip'=> '120.76.84.162',
-            'act_name'=> 'hello',
-            'remark'=> 'hello',
-            'scene_id'=> 'PRODUCT_2',
-            'nonce_str'=> 1234561, //\Yii::$app->getSecurity()->generateRandomString(16),
+            'mch_billno' => $args['order_id'],
+            'mch_id' => static::MCH_ID,
+            'wxappid' => $this->appId,
+            'send_name' => 'hello',
+            're_openid' => $args['openid'],
+            'total_amount' => $args['total_amount'],
+            'total_num' => 1,
+            'wishing' => 'hello',
+            'client_ip' => '120.76.84.162',
+            'act_name' => 'hello',
+            'remark' => 'hello',
+            'scene_id' => 'PRODUCT_2',
+            'nonce_str' => 1234561, //\Yii::$app->getSecurity()->generateRandomString(16),
         ];
         ksort($data);
-        $str = http_build_query($data)."&key=" . $this->appSecret;
+        $str  = http_build_query($data) . "&key=" . $this->appSecret;
         $sign = strtoupper(md5($str));
 
         $xmlData = "<xml>
@@ -62,46 +62,46 @@ class WeChat extends \callmez\wechat\sdk\Wechat
                     <sign>{$sign}</sign>
                   </xml>";
 
-        echo $sign."\n";
-        echo $str."\n";
+        echo $sign . "\n";
+        echo $str . "\n";
         echo $xmlData;
-        return $this->wxHttpsRequestPem(static::OAUTH_PACK , $xmlData);
+        return $this->wxHttpsRequestPem(static::OAUTH_PACK, $xmlData);
     }
 
 
-    protected function wxHttpsRequestPem($url, $vars, $second=30,$aHeader=array()){
+    protected function wxHttpsRequestPem($url, $vars, $second = 30, $aHeader = array())
+    {
         $ch = curl_init();
         //超时时间
-        curl_setopt($ch,CURLOPT_TIMEOUT,$second);
-        curl_setopt($ch,CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_TIMEOUT, $second);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 
-        curl_setopt($ch,CURLOPT_URL,$url);
-        curl_setopt($ch,CURLOPT_SSL_VERIFYPEER,false);
-        curl_setopt($ch,CURLOPT_SSL_VERIFYHOST,false);
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
 
 
         //默认格式为PEM，可以注释
-        curl_setopt($ch,CURLOPT_SSLCERTTYPE,'PEM');
-        curl_setopt($ch,CURLOPT_SSLCERT,getcwd().'/apiclient_cert.pem');
+        curl_setopt($ch, CURLOPT_SSLCERTTYPE, 'PEM');
+        curl_setopt($ch, CURLOPT_SSLCERT, getcwd() . '/pem/apiclient_cert.pem');
         //默认格式为PEM，可以注释
-        curl_setopt($ch,CURLOPT_SSLKEYTYPE,'PEM');
-        curl_setopt($ch,CURLOPT_SSLKEY,getcwd().'/apiclient_key.pem');
+        curl_setopt($ch, CURLOPT_SSLKEYTYPE, 'PEM');
+        curl_setopt($ch, CURLOPT_SSLKEY, getcwd() . '/pem/apiclient_key.pem');
 
-        curl_setopt($ch,CURLOPT_CAINFO,'PEM');
-        curl_setopt($ch,CURLOPT_CAINFO,getcwd().'/rootca.pem');
+        curl_setopt($ch, CURLOPT_CAINFO, 'PEM');
+        curl_setopt($ch, CURLOPT_CAINFO, getcwd() . '/pem/rootca.pem');
 
-        if( count($aHeader) >= 1 ){
+        if (count($aHeader) >= 1) {
             curl_setopt($ch, CURLOPT_HTTPHEADER, $aHeader);
         }
 
-        curl_setopt($ch,CURLOPT_POST, 1);
-        curl_setopt($ch,CURLOPT_POSTFIELDS,$vars);
+        curl_setopt($ch, CURLOPT_POST, 1);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $vars);
         $data = curl_exec($ch);
-        if($data){
+        if ($data) {
             curl_close($ch);
             return $data;
-        }
-        else {
+        } else {
             $error = curl_errno($ch);
             echo "call faild, errorCode:$error\n";
             curl_close($ch);
