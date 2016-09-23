@@ -33,6 +33,10 @@ class LoginController  extends Controller{
                 $userRole = $auth->getAssignments($userInfo['id']);
                 $role = "";
                 foreach ($userRole as $k=>$v){
+                    if ($k=='admin') {
+                        $role="admin";
+                        break;
+                    }
                     $role .= ",". $k ;
                 }
                 $userInfo['role'] = $role;
