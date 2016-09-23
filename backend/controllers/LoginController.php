@@ -31,7 +31,11 @@ class LoginController  extends Controller{
                 }
                 $auth = \Yii::$app->authManager;
                 $userRole = $auth->getAssignments($userInfo['id']);
-                $userInfo['role'] = key($userRole);
+                $role = "";
+                foreach ($userRole as $k=>$v){
+                    $role .= ",". $k ;
+                }
+                $userInfo['role'] = $role;
                 $user->setUserSession($userInfo);                           //设置Session
                 return ['msg'=>'登录成功','status'=>1];
             }
