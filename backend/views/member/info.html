@@ -16,7 +16,7 @@
                             <span class="hidden-inline-mobile"> 证件</span>
                             <span class="badge badge-red font-11">{{count($identify)}}</span>
                         </a></li>
-                        {{if ($currentUserId == $user.matchmaker || strpos($currentUserRole,'admin') > 0 )}}
+                        {{if ($currentUserId == $user.matchmaker || strpos($currentUserRole,'admin') > -1 )}}
                         <li><a href="#pro_msg" data-toggle="tab"><i class="fa fa-comments-o"></i> <span
                                 class="hidden-inline-mobile"> 消息记录</span></a></li>
                         {{/if}}
@@ -124,7 +124,7 @@
                                             分配服务红娘
                                         </a>
                                         {{/if}}
-                                        {{if authValidate('/admin/member/edit') && ($currentUserId == $user.matchmaker || strpos($currentUserRole,'admin') > 0 )}}
+                                        {{if authValidate('/admin/member/edit') && ($currentUserId == $user.matchmaker || strpos($currentUserRole,'admin') > -1 )}}
                                         <a href="/admin/member/edit?id={{$user.id}}" data-toggle="modal" class="list-group-item">
                                             <i class="fa fa-edit fa-fw"></i>
                                             修改资料</a>
@@ -336,7 +336,7 @@
                                                                     <span class="text-muted fwb">会员等级：</span>
                                                                     <span class="text-danger">{{getLevel($user.info->level)}}</span>
                                                                 </div>
-                                                                {{if strpos($currentUserRole,'admin') > 0}}
+                                                                {{if strpos($currentUserRole,'admin') > -1}}
                                                                 <div class="col-sm-3">
                                                                     <span class="text-muted fwb">账户余额：</span>
                                                                     <span class="text-danger">{{$user.balance/100}}元</span>

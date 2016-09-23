@@ -676,27 +676,27 @@ function authValidate($url)
 // 钻石 = 分配给自己的会员、所有VIP、贵宾、钻石会员
 function showPhoneByUserLevel($matchmaker, $matchmaking, $level){
     $admin = Yii::$app->session->get(USER_SESSION);
-    if(strpos($admin['role'],'admin') < 0 && ($matchmaking == $admin['id'] || $matchmaker == $admin['id'])) {
+    if(!strpos($admin['role'],'admin') && ($matchmaking == $admin['id'] || $matchmaker == $admin['id'])) {
         return 1;
     }
-    if(strpos($admin['role'],'admin') > 0){
+    if(strpos($admin['role'],'admin') > -1){
         return 1;
     }
-    if(strpos($admin['role'],'VIP服务红娘') > 0 || strpos($admin['role'],'VIP销售红娘') > 0){
+    if(strpos($admin['role'],'VIP服务红娘') > -1 || strpos($admin['role'],'VIP销售红娘') > -1){
         if($level <= 1) {
             return 1;
         } else {
             return 0;
         }
     }
-    if(strpos($admin['role'],'贵宾服务红娘') > 0 || strpos($admin['role'],'贵宾销售红娘') > 0){
+    if(strpos($admin['role'],'贵宾服务红娘') > -1 || strpos($admin['role'],'贵宾销售红娘') > -1){
         if($level <= 2) {
             return 1;
         } else {
             return 0;
         }
     }
-    if(strpos($admin['role'],'钻石服务红娘') > 0 || strpos($admin['role'],'钻石销售红娘') > 0){
+    if(strpos($admin['role'],'钻石服务红娘') > -1 || strpos($admin['role'],'钻石销售红娘') > -1){
         if($level <= 3) {
             return 1;
         } else {
