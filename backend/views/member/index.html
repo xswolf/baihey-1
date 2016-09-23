@@ -533,6 +533,10 @@
                 layer.tips('请输入回访内容', $('#return_content'));
                 return false;
             }
+            if($('#return_content').val() == ""){
+                layer.tips('请选择意向情况', $('#return_content'));
+                return false;
+            }
             var content = $.trim($('#return_content').val());
             var intention = $.trim($('#intention').val());
             bhyFunc.ajaxRequest('/admin/member/add-pair', {
