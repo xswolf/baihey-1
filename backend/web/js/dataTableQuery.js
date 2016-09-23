@@ -122,9 +122,19 @@ $(function () {
                 if (userId == oData.matchmaker || userType == 'admin'){
                     returnLog = '<a class="btn btn-info btn-sm" data-uid="' + oData.id +'" data-uname="' + oData.info.real_name +'" id="returningBtn" href="javascript:;">回访</a> ' ;
                 }
-                var html = '<a target="_blank" class="btn btn-primary btn-sm" href="/admin/member/info?id=' + oData.id + '">管理</a> '+
-                    returnLog +
-                    ' <a id="pairBtn" class="btn btn-info btn-sm" data-uid="' + oData.id +'" data-uname="' + oData.info.real_name + '" href="javascript:;">配对</a>';
+                if(!oData.phone){
+                    var html = '<a target="_blank" class="btn btn-light-grey btn-sm" href="/admin/member/info?id=' + oData.id + '">管理</a> '+
+                        returnLog +
+                        ' <a id="pairBtn" class="btn btn-info btn-sm" data-uid="' + oData.id +'" data-uname="' + oData.info.real_name + '" href="javascript:;">配对</a>';
+                }else if(parseInt(oData.intention)  == 2){
+                    var html = '<a target="_blank" class="btn btn-success btn-sm" href="/admin/member/info?id=' + oData.id + '">管理</a> '+
+                        returnLog +
+                        ' <a id="pairBtn" class="btn btn-info btn-sm" data-uid="' + oData.id +'" data-uname="' + oData.info.real_name + '" href="javascript:;">配对</a>';
+                }else{
+                    var html = '<a target="_blank" class="btn btn-danger btn-sm" href="/admin/member/info?id=' + oData.id + '">管理</a> '+
+                        returnLog +
+                        ' <a id="pairBtn" class="btn btn-info btn-sm" data-uid="' + oData.id +'" data-uname="' + oData.info.real_name + '" href="javascript:;">配对</a>';
+                }
                 $(nTd).html(html);
             }
         }
