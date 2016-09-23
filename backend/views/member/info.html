@@ -124,7 +124,7 @@
                                             分配服务红娘
                                         </a>
                                         {{/if}}
-                                        {{if authValidate('/admin/member/edit') && ($currentUserId == $user.matchmaker || $currentUserRole == 'admin' )}}
+                                        {{if authValidate('/admin/member/edit') && ($currentUserId == $user.matchmaker || strpos($currentUserRole,'admin') > 0 )}}
                                         <a href="/admin/member/edit?id={{$user.id}}" data-toggle="modal" class="list-group-item">
                                             <i class="fa fa-edit fa-fw"></i>
                                             修改资料</a>
@@ -336,7 +336,7 @@
                                                                     <span class="text-muted fwb">会员等级：</span>
                                                                     <span class="text-danger">{{getLevel($user.info->level)}}</span>
                                                                 </div>
-                                                                {{if $currentUserRole == 'admin'}}
+                                                                {{if strpos($currentUserRole,'admin') > 0}}
                                                                 <div class="col-sm-3">
                                                                     <span class="text-muted fwb">账户余额：</span>
                                                                     <span class="text-danger">{{$user.balance/100}}元</span>
