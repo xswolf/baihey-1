@@ -10,6 +10,9 @@
     border: 0;
     background: #f9f9f9;
 }
+.sendMessage{
+    border: 1px solid #f1f1f1 !important;
+}
 .sendMessage .message_input{
     width:100%;
     height: 33px;
@@ -34,15 +37,14 @@
 }
 .emoji_con{
     background: #fff;
-    border-top: 1px solid #b2b2b2;
-    border-left: 1px solid #b2b2b2;
-    border-right: 1px solid #b2b2b2;
+    border-top: 1px solid #f1f1f1;
+    border-left: 1px solid #f1f1f1;
+    border-right: 1px solid #f1f1f1;
     border-bottom: 0;
-    max-height: 110px;
+    max-height: 130px;
     overflow-y: scroll;
 }
-.emojiWrapper{
-}
+
 .emojiWrapper img{
     width: 24px;
     height: 24px;

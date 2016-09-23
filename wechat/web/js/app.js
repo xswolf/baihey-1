@@ -3,10 +3,10 @@
  */
 
 require.config({
-    urlArgs: "bust=v3" + Math.random(), // 清除缓存
+    //urlArgs: "bust=v3" + Math.random(), // 清除缓存
     baseUrl: '/wechat/web/js/',
     paths: {
-        ionic: ['//cdn.bootcss.com/ionic/1.2.4/js/ionic.bundle.min', 'plugin/ionic/ionic.bundle'],
+        ionic: ['//cdn.bootcss.com/ionic/1.2.4/js/ionic.bundle.min', 'plugin/ionic/ionic.bundle.min'],
         angular: 'plugin/angular/angular.min',
         angular_animate: 'plugin/angular/angular-animate.min',
         angular_sanitize: 'plugin/angular/angular-sanitize.min',

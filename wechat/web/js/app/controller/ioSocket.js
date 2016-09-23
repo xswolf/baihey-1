@@ -12,8 +12,8 @@ define(['app/module', 'app/directive/directiveApi'
         // 设置消息状态为已看
         $scope.setMessageStatus = function (list) {
             var len = list.length;
-            for (var i = len-1; i>=0 ; i--) {
-                if (list[i].status == 1){
+            for (var i = len - 1; i >= 0; i--) {
+                if (list[i].status == 1) {
                     break;
                 }
                 if (list[i].status != 4) {
@@ -31,13 +31,27 @@ define(['app/module', 'app/directive/directiveApi'
             if ($scope.send_content) {
                 var pos = ar.getCursorPos('message_input');
                 var strArr = $scope.send_content.split("");
-                strArr.splice(pos, 0, "[emoji:" + val + "]");
+                strArr.splice(pos, 0, "[" + config_infoData.emoji[val] + ":" + val + "]");
                 $scope.send_content = strArr.join("");
             } else {
-                $scope.send_content = "[emoji:" + val + "]";
+                $scope.send_content = "[" + config_infoData.emoji[val] + ":" + val + "]";
             }
-            $scope.showEmoji = false;
         }
+
+        $scope.showEmojiEvent = function () {
+            if (angular.element(document.querySelectorAll('#emojiWrapper')).hasClass('ng-hide')) {
+                angular.element(document.querySelectorAll('#emojiWrapper')).removeClass('ng-hide');
+            } else {
+                angular.element(document.querySelectorAll('#emojiWrapper')).addClass('ng-hide');
+            }
+
+        }
+
+        angular.element(document.body).bind('click', function (e) {
+            if (e.target.id != 'emojiWrapper' && !e.target.id && e.target.id != 'expr' && !e.target.title) {
+                angular.element(document.querySelectorAll('#emojiWrapper')).addClass('ng-hide');
+            }
+        });
 
         $scope.blackListAlert = function () {
             if ($scope.dataFilter.blacked.indexOf($scope.receiveId) > -1) {   // 已被对方拉黑，不可查看对方资料
@@ -353,7 +367,7 @@ define(['app/module', 'app/directive/directiveApi'
                     response.message = response.message.replace(/&quot;/g, "\"");
                     if ($scope.sendId == response.send_user_id) {  // 响应自己发送的消息
                         var len = $scope.historyList.length;
-                        for (var i = len - 1 ; i >= 0; i--) {
+                        for (var i = len - 1; i >= 0; i--) {
                             if (response.time == $scope.historyList[i].time &&
                                 (response.message == $scope.historyList[i].message ||
                                 response.type == 'pic')) {

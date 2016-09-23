@@ -1,4 +1,4 @@
-<ion-view hide-tabs="true" cache-view="false" ng-cloak ng-init="showEmoji = false;">
+<ion-view cache-view="false">
     <link href="/wechat/web/css/chat.css" rel="stylesheet">
     <link href="/wechat/web/js/plugin/angular-emoji-filter/emoji.min.css" rel="stylesheet">
     <ion-header-bar align-title="center"  class="bhy com_w_100" ng-show="u_isFollow">
@@ -28,14 +28,6 @@
         <ion-refresher pulling-text="下拉加载更多" refreshing-text="加载中.." on-refresh="doRefresh()"
                        pulling-icon="ion-arrow-down-c"></ion-refresher>
         <ion-list>
-           <!-- &lt;!&ndash; 举报提示 &ndash;&gt;
-            <div ng-if="report_flag == 1 && receiveId > 9999" class="r_warning report">
-                <p class="mb0">
-                    <i class="ion-alert-circled assertive fs14 warning_ico vam"></i>
-                    <span class="vam assertive">对方被举报多次，须谨慎交流！</span>
-                    <i class="ion-close-round close fr cp" ng-click="userInfo.sex=0;"></i>
-                </p>
-            </div>-->
 
             <!-- 固定item -->
             <ion-item class="talk_item_u">
@@ -92,18 +84,6 @@
                             </span>
                         </div>
 
-                        <!-- 红包 -->
-                        <!--<div class="content normal bri" ng-click="detail_bri(vo.message)"
-                             ng-if="vo.type=='bribery' || vo.message_type==4">
-                            <div class="bri_con clearfix">
-                                <div class="bhy-icon-bribery bri_con_icon"></div>
-                                <div class="bri_con_txt">
-                                    <p>{{vo.message | briMessage }}</p>
-                                    <p>领取红包</p>
-                                </div>
-                            </div>
-                        </div>-->
-
                         <!-- 已读 -->
                         <div class="status" ng-if="vo.status==1 && sendId == vo.send_user_id && vo.refuse != -1">
                             <span class="delivered">已读</span>
@@ -138,91 +118,90 @@
             </ion-item>
 
         </ion-list>
+
     </ion-content>
 
-    <div id="emoji_con" class="pa w100 has-footer emoji_con" ng-show="showEmoji">
-        <div class="emojiWrapper">
-            <img src="/wechat/web/images/emoji/1.gif" title="1" ng-click="selectedEmoji(1)">
-            <img src="/wechat/web/images/emoji/2.gif" title="2" ng-click="selectedEmoji(2)">
-            <img src="/wechat/web/images/emoji/3.gif" title="3" ng-click="selectedEmoji(3)">
-            <img src="/wechat/web/images/emoji/4.gif" title="4" ng-click="selectedEmoji(4)">
-            <img src="/wechat/web/images/emoji/5.gif" title="5" ng-click="selectedEmoji(5)">
-            <img src="/wechat/web/images/emoji/6.gif" title="6" ng-click="selectedEmoji(6)">
-            <img src="/wechat/web/images/emoji/7.gif" title="7" ng-click="selectedEmoji(7)">
-            <img src="/wechat/web/images/emoji/8.gif" title="8" ng-click="selectedEmoji(8)">
-            <img src="/wechat/web/images/emoji/9.gif" title="9" ng-click="selectedEmoji(9)">
-            <img src="/wechat/web/images/emoji/10.gif" title="10" ng-click="selectedEmoji(10)">
-            <img src="/wechat/web/images/emoji/11.gif" title="11" ng-click="selectedEmoji(11)">
-            <img src="/wechat/web/images/emoji/12.gif" title="12" ng-click="selectedEmoji(12)">
-            <img src="/wechat/web/images/emoji/13.gif" title="13" ng-click="selectedEmoji(13)">
-            <img src="/wechat/web/images/emoji/14.gif" title="14" ng-click="selectedEmoji(14)">
-            <img src="/wechat/web/images/emoji/15.gif" title="15" ng-click="selectedEmoji(15)">
-            <img src="/wechat/web/images/emoji/16.gif" title="16" ng-click="selectedEmoji(16)">
-            <img src="/wechat/web/images/emoji/17.gif" title="17" ng-click="selectedEmoji(17)">
-            <img src="/wechat/web/images/emoji/18.gif" title="18" ng-click="selectedEmoji(18)">
-            <img src="/wechat/web/images/emoji/19.gif" title="19" ng-click="selectedEmoji(19)">
-            <img src="/wechat/web/images/emoji/20.gif" title="20" ng-click="selectedEmoji(20)">
-            <img src="/wechat/web/images/emoji/21.gif" title="21" ng-click="selectedEmoji(21)">
-            <img src="/wechat/web/images/emoji/22.gif" title="22" ng-click="selectedEmoji(22)">
-            <img src="/wechat/web/images/emoji/23.gif" title="23" ng-click="selectedEmoji(23)">
-            <img src="/wechat/web/images/emoji/24.gif" title="24" ng-click="selectedEmoji(24)">
-            <img src="/wechat/web/images/emoji/25.gif" title="25" ng-click="selectedEmoji(25)">
-            <img src="/wechat/web/images/emoji/26.gif" title="26" ng-click="selectedEmoji(26)">
-            <img src="/wechat/web/images/emoji/27.gif" title="27" ng-click="selectedEmoji(27)">
-            <img src="/wechat/web/images/emoji/28.gif" title="28" ng-click="selectedEmoji(28)">
-            <img src="/wechat/web/images/emoji/29.gif" title="29" ng-click="selectedEmoji(29)">
-            <img src="/wechat/web/images/emoji/30.gif" title="30" ng-click="selectedEmoji(30)">
-            <img src="/wechat/web/images/emoji/31.gif" title="31" ng-click="selectedEmoji(31)">
-            <img src="/wechat/web/images/emoji/32.gif" title="32" ng-click="selectedEmoji(32)">
-            <img src="/wechat/web/images/emoji/33.gif" title="33" ng-click="selectedEmoji(33)">
-            <img src="/wechat/web/images/emoji/34.gif" title="34" ng-click="selectedEmoji(34)">
-            <img src="/wechat/web/images/emoji/35.gif" title="35" ng-click="selectedEmoji(35)">
-            <img src="/wechat/web/images/emoji/36.gif" title="36" ng-click="selectedEmoji(36)">
-            <img src="/wechat/web/images/emoji/37.gif" title="37" ng-click="selectedEmoji(37)">
-            <img src="/wechat/web/images/emoji/38.gif" title="38" ng-click="selectedEmoji(38)">
-            <img src="/wechat/web/images/emoji/39.gif" title="39" ng-click="selectedEmoji(39)">
-            <img src="/wechat/web/images/emoji/40.gif" title="40" ng-click="selectedEmoji(40)">
-            <img src="/wechat/web/images/emoji/41.gif" title="41" ng-click="selectedEmoji(41)">
-            <img src="/wechat/web/images/emoji/42.gif" title="42" ng-click="selectedEmoji(42)">
-            <img src="/wechat/web/images/emoji/43.gif" title="43" ng-click="selectedEmoji(43)">
-            <img src="/wechat/web/images/emoji/44.gif" title="44" ng-click="selectedEmoji(44)">
-            <img src="/wechat/web/images/emoji/45.gif" title="45" ng-click="selectedEmoji(45)">
-            <img src="/wechat/web/images/emoji/46.gif" title="46" ng-click="selectedEmoji(46)">
-            <img src="/wechat/web/images/emoji/47.gif" title="47" ng-click="selectedEmoji(47)">
-            <img src="/wechat/web/images/emoji/48.gif" title="48" ng-click="selectedEmoji(48)">
-            <img src="/wechat/web/images/emoji/49.gif" title="49" ng-click="selectedEmoji(49)">
-            <img src="/wechat/web/images/emoji/50.gif" title="50" ng-click="selectedEmoji(50)">
-            <img src="/wechat/web/images/emoji/51.gif" title="51" ng-click="selectedEmoji(51)">
-            <img src="/wechat/web/images/emoji/52.gif" title="52" ng-click="selectedEmoji(52)">
-            <img src="/wechat/web/images/emoji/53.gif" title="53" ng-click="selectedEmoji(53)">
-            <img src="/wechat/web/images/emoji/54.gif" title="54" ng-click="selectedEmoji(54)">
-            <img src="/wechat/web/images/emoji/55.gif" title="55" ng-click="selectedEmoji(55)">
-            <img src="/wechat/web/images/emoji/56.gif" title="56" ng-click="selectedEmoji(56)">
-            <img src="/wechat/web/images/emoji/57.gif" title="57" ng-click="selectedEmoji(57)">
-            <img src="/wechat/web/images/emoji/58.gif" title="58" ng-click="selectedEmoji(58)">
-            <img src="/wechat/web/images/emoji/59.gif" title="59" ng-click="selectedEmoji(59)">
-            <img src="/wechat/web/images/emoji/60.gif" title="60" ng-click="selectedEmoji(60)">
-            <img src="/wechat/web/images/emoji/61.gif" title="61" ng-click="selectedEmoji(61)">
-            <img src="/wechat/web/images/emoji/62.gif" title="62" ng-click="selectedEmoji(62)">
-            <img src="/wechat/web/images/emoji/63.gif" title="63" ng-click="selectedEmoji(63)">
-            <img src="/wechat/web/images/emoji/64.gif" title="64" ng-click="selectedEmoji(64)">
-            <img src="/wechat/web/images/emoji/65.gif" title="65" ng-click="selectedEmoji(65)">
-            <img src="/wechat/web/images/emoji/66.gif" title="66" ng-click="selectedEmoji(66)">
-            <img src="/wechat/web/images/emoji/67.gif" title="67" ng-click="selectedEmoji(67)">
-            <img src="/wechat/web/images/emoji/68.gif" title="68" ng-click="selectedEmoji(68)">
-            <img src="/wechat/web/images/emoji/69.gif" title="69" ng-click="selectedEmoji(69)">
-            <img src="/wechat/web/images/emoji/70.gif" title="70" ng-click="selectedEmoji(70)">
-            <img src="/wechat/web/images/emoji/71.gif" title="71" ng-click="selectedEmoji(71)">
-            <img src="/wechat/web/images/emoji/72.gif" title="72" ng-click="selectedEmoji(72)">
-            <img src="/wechat/web/images/emoji/73.gif" title="73" ng-click="selectedEmoji(73)">
-            <img src="/wechat/web/images/emoji/74.gif" title="74" ng-click="selectedEmoji(74)">
-            <img src="/wechat/web/images/emoji/75.gif" title="75" ng-click="selectedEmoji(75)">
-        </div>
+    <div id="emojiWrapper" class="emojiWrapper pa w100 has-footer emoji_con ng-hide">
+        <img src="/wechat/web/images/emoji/1.gif" title="1" ng-click="selectedEmoji(1)">
+        <img src="/wechat/web/images/emoji/2.gif" title="2" ng-click="selectedEmoji(2)">
+        <img src="/wechat/web/images/emoji/3.gif" title="3" ng-click="selectedEmoji(3)">
+        <img src="/wechat/web/images/emoji/4.gif" title="4" ng-click="selectedEmoji(4)">
+        <img src="/wechat/web/images/emoji/5.gif" title="5" ng-click="selectedEmoji(5)">
+        <img src="/wechat/web/images/emoji/6.gif" title="6" ng-click="selectedEmoji(6)">
+        <img src="/wechat/web/images/emoji/7.gif" title="7" ng-click="selectedEmoji(7)">
+        <img src="/wechat/web/images/emoji/8.gif" title="8" ng-click="selectedEmoji(8)">
+        <img src="/wechat/web/images/emoji/9.gif" title="9" ng-click="selectedEmoji(9)">
+        <img src="/wechat/web/images/emoji/10.gif" title="10" ng-click="selectedEmoji(10)">
+        <img src="/wechat/web/images/emoji/11.gif" title="11" ng-click="selectedEmoji(11)">
+        <img src="/wechat/web/images/emoji/12.gif" title="12" ng-click="selectedEmoji(12)">
+        <img src="/wechat/web/images/emoji/13.gif" title="13" ng-click="selectedEmoji(13)">
+        <img src="/wechat/web/images/emoji/14.gif" title="14" ng-click="selectedEmoji(14)">
+        <img src="/wechat/web/images/emoji/15.gif" title="15" ng-click="selectedEmoji(15)">
+        <img src="/wechat/web/images/emoji/16.gif" title="16" ng-click="selectedEmoji(16)">
+        <img src="/wechat/web/images/emoji/17.gif" title="17" ng-click="selectedEmoji(17)">
+        <img src="/wechat/web/images/emoji/18.gif" title="18" ng-click="selectedEmoji(18)">
+        <img src="/wechat/web/images/emoji/19.gif" title="19" ng-click="selectedEmoji(19)">
+        <img src="/wechat/web/images/emoji/20.gif" title="20" ng-click="selectedEmoji(20)">
+        <img src="/wechat/web/images/emoji/21.gif" title="21" ng-click="selectedEmoji(21)">
+        <img src="/wechat/web/images/emoji/22.gif" title="22" ng-click="selectedEmoji(22)">
+        <img src="/wechat/web/images/emoji/23.gif" title="23" ng-click="selectedEmoji(23)">
+        <img src="/wechat/web/images/emoji/24.gif" title="24" ng-click="selectedEmoji(24)">
+        <img src="/wechat/web/images/emoji/25.gif" title="25" ng-click="selectedEmoji(25)">
+        <img src="/wechat/web/images/emoji/26.gif" title="26" ng-click="selectedEmoji(26)">
+        <img src="/wechat/web/images/emoji/27.gif" title="27" ng-click="selectedEmoji(27)">
+        <img src="/wechat/web/images/emoji/28.gif" title="28" ng-click="selectedEmoji(28)">
+        <img src="/wechat/web/images/emoji/29.gif" title="29" ng-click="selectedEmoji(29)">
+        <img src="/wechat/web/images/emoji/30.gif" title="30" ng-click="selectedEmoji(30)">
+        <img src="/wechat/web/images/emoji/31.gif" title="31" ng-click="selectedEmoji(31)">
+        <img src="/wechat/web/images/emoji/32.gif" title="32" ng-click="selectedEmoji(32)">
+        <img src="/wechat/web/images/emoji/33.gif" title="33" ng-click="selectedEmoji(33)">
+        <img src="/wechat/web/images/emoji/34.gif" title="34" ng-click="selectedEmoji(34)">
+        <img src="/wechat/web/images/emoji/35.gif" title="35" ng-click="selectedEmoji(35)">
+        <img src="/wechat/web/images/emoji/36.gif" title="36" ng-click="selectedEmoji(36)">
+        <img src="/wechat/web/images/emoji/37.gif" title="37" ng-click="selectedEmoji(37)">
+        <img src="/wechat/web/images/emoji/38.gif" title="38" ng-click="selectedEmoji(38)">
+        <img src="/wechat/web/images/emoji/39.gif" title="39" ng-click="selectedEmoji(39)">
+        <img src="/wechat/web/images/emoji/40.gif" title="40" ng-click="selectedEmoji(40)">
+        <img src="/wechat/web/images/emoji/41.gif" title="41" ng-click="selectedEmoji(41)">
+        <img src="/wechat/web/images/emoji/42.gif" title="42" ng-click="selectedEmoji(42)">
+        <img src="/wechat/web/images/emoji/43.gif" title="43" ng-click="selectedEmoji(43)">
+        <img src="/wechat/web/images/emoji/44.gif" title="44" ng-click="selectedEmoji(44)">
+        <img src="/wechat/web/images/emoji/45.gif" title="45" ng-click="selectedEmoji(45)">
+        <img src="/wechat/web/images/emoji/46.gif" title="46" ng-click="selectedEmoji(46)">
+        <img src="/wechat/web/images/emoji/47.gif" title="47" ng-click="selectedEmoji(47)">
+        <img src="/wechat/web/images/emoji/48.gif" title="48" ng-click="selectedEmoji(48)">
+        <img src="/wechat/web/images/emoji/49.gif" title="49" ng-click="selectedEmoji(49)">
+        <img src="/wechat/web/images/emoji/50.gif" title="50" ng-click="selectedEmoji(50)">
+        <img src="/wechat/web/images/emoji/51.gif" title="51" ng-click="selectedEmoji(51)">
+        <img src="/wechat/web/images/emoji/52.gif" title="52" ng-click="selectedEmoji(52)">
+        <img src="/wechat/web/images/emoji/53.gif" title="53" ng-click="selectedEmoji(53)">
+        <img src="/wechat/web/images/emoji/54.gif" title="54" ng-click="selectedEmoji(54)">
+        <img src="/wechat/web/images/emoji/55.gif" title="55" ng-click="selectedEmoji(55)">
+        <img src="/wechat/web/images/emoji/56.gif" title="56" ng-click="selectedEmoji(56)">
+        <img src="/wechat/web/images/emoji/57.gif" title="57" ng-click="selectedEmoji(57)">
+        <img src="/wechat/web/images/emoji/58.gif" title="58" ng-click="selectedEmoji(58)">
+        <img src="/wechat/web/images/emoji/59.gif" title="59" ng-click="selectedEmoji(59)">
+        <img src="/wechat/web/images/emoji/60.gif" title="60" ng-click="selectedEmoji(60)">
+        <img src="/wechat/web/images/emoji/61.gif" title="61" ng-click="selectedEmoji(61)">
+        <img src="/wechat/web/images/emoji/62.gif" title="62" ng-click="selectedEmoji(62)">
+        <img src="/wechat/web/images/emoji/63.gif" title="63" ng-click="selectedEmoji(63)">
+        <img src="/wechat/web/images/emoji/64.gif" title="64" ng-click="selectedEmoji(64)">
+        <img src="/wechat/web/images/emoji/65.gif" title="65" ng-click="selectedEmoji(65)">
+        <img src="/wechat/web/images/emoji/66.gif" title="66" ng-click="selectedEmoji(66)">
+        <img src="/wechat/web/images/emoji/67.gif" title="67" ng-click="selectedEmoji(67)">
+        <img src="/wechat/web/images/emoji/68.gif" title="68" ng-click="selectedEmoji(68)">
+        <img src="/wechat/web/images/emoji/69.gif" title="69" ng-click="selectedEmoji(69)">
+        <img src="/wechat/web/images/emoji/70.gif" title="70" ng-click="selectedEmoji(70)">
+        <img src="/wechat/web/images/emoji/71.gif" title="71" ng-click="selectedEmoji(71)">
+        <img src="/wechat/web/images/emoji/72.gif" title="72" ng-click="selectedEmoji(72)">
+        <img src="/wechat/web/images/emoji/73.gif" title="73" ng-click="selectedEmoji(73)">
+        <img src="/wechat/web/images/emoji/74.gif" title="74" ng-click="selectedEmoji(74)">
+        <img src="/wechat/web/images/emoji/75.gif" title="75" ng-click="selectedEmoji(75)">
     </div>
 
     <ion-footer-bar align-title="center" class="bar-stable sendMessage">
         <button ng-click="send_pic()" class="button button-icon icon ion-images pdlr2 pic"></button>
-        <button ng-click="showEmoji = !showEmoji;" class="button button-icon icon ion-happy expr pdlr2"></button>
+        <button id="expr" ng-click="showEmojiEvent()" class="button button-icon icon ion-happy expr pdlr2"></button>
         <textarea class="message_input" id="message_input"  ng-model="send_content"></textarea>
         <button type="button" class="button button-balanced sendBtn" ng-disabled="!send_content || send_content === ''" ng-click="send()">发送</button>
     </ion-footer-bar>
