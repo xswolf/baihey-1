@@ -13,8 +13,8 @@
                     <p>密码修改</p>
                 </div>
                 <div class="menu_arrow">
-                    <span class="cor21 fs14 mr15 vam" ng-if="userInfo.reset_pass_time == 0 && userInfo.phone == 0">请先绑定手机号码</span>
-                    <span class="cor5 fs14 mr15 vam" ng-if="userInfo.reset_pass_time != 0 && userInfo.phone != 0">上次修改 {{userInfo.reset_pass_time | date:'yyyy-MM-dd HH:mm:ss'}}</span>
+                    <span class="cor21 fs14 mr15 vam" ng-if="!userInfo.phone">请先绑定手机号码</span>
+                    <span class="cor5 fs14 mr15 vam" ng-if="userInfo.reset_pass_time != 0 && userInfo.phone">上次修改 {{userInfo.reset_pass_time | date:'yyyy-MM-dd HH:mm:ss'}}</span>
                     <i class="ion-ios-arrow-right vam"></i>
                 </div>
             </ion-item>
@@ -26,8 +26,8 @@
                     <p>手机绑定</p>
                 </div>
                 <div class="menu_arrow">
-                    <span class="cor21 fs14 mr15 vam" ng-if="userInfo.phone == 0">立即绑定</span>
-                    <span class="cor5 fs14 mr15 vam" ng-if="userInfo.phone != 0">已绑定 {{userInfo.phone | cut: true:3:'********'}}，点击更换绑定</span>
+                    <span class="cor21 fs14 mr15 vam" ng-if="!userInfo.phone">立即绑定</span>
+                    <span class="cor5 fs14 mr15 vam" ng-if="userInfo.phone">已绑定 {{userInfo.phone | cut: true:3:'********'}}，点击更换绑定</span>
                     <i class="ion-ios-arrow-right vam"></i>
                 </div>
             </ion-item>

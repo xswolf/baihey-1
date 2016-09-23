@@ -16,7 +16,7 @@
                             <span class="hidden-inline-mobile"> 证件</span>
                             <span class="badge badge-red font-11">{{count($identify)}}</span>
                         </a></li>
-                        {{if ($currentUserId == $user.matchmaker || $currentUserRole == 'admin' )}}
+                        {{if ($currentUserId == $user.matchmaker || strpos($currentUserRole,'admin') > 0 )}}
                         <li><a href="#pro_msg" data-toggle="tab"><i class="fa fa-comments-o"></i> <span
                                 class="hidden-inline-mobile"> 消息记录</span></a></li>
                         {{/if}}
