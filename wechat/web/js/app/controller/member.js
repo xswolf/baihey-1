@@ -1484,7 +1484,7 @@ define(['app/module', 'app/directive/directiveApi'
             }
             api.getMobileIsExist($scope.formData.phone).success(function (res) {
                 if (res.status < 1) {
-                    ar.saveDataAlert($ionicPopup, '该手机号码已存在');
+                    ar.saveDataAlert($ionicPopup, '该手机号码已存在，如有疑问请致电：023-68800997。');
                     return false;
                 } else {
                     var timeTitle = 90;
@@ -1519,7 +1519,7 @@ define(['app/module', 'app/directive/directiveApi'
             }
             api.getMobileIsExist($scope.formData.phone).success(function (res) {
                 if (res.status < 1) {
-                    ar.saveDataAlert($ionicPopup, '该手机号码已存在');
+                    ar.saveDataAlert($ionicPopup, '该手机号码已存在，如有疑问请致电：023-68800997。');
                     return false;
                 } else {
                     api.validateCode($scope.formData.code).success(function (res) {
@@ -1675,7 +1675,7 @@ define(['app/module', 'app/directive/directiveApi'
             }
             api.getMobileIsExist($scope.formData.phone).success(function (res) {
                 if (res.status < 1) {
-                    ar.saveDataAlert($ionicPopup, '该手机号码已存在');
+                    ar.saveDataAlert($ionicPopup, '该手机号码已存在，如有疑问请致电：023-68800997。');
                     return false;
                 } else {
                     $scope.openSendCodeModal();
@@ -1727,7 +1727,7 @@ define(['app/module', 'app/directive/directiveApi'
             }
             api.getMobileIsExist($scope.formData.phone).success(function (res) {
                 if (res.status < 1) {
-                    ar.saveDataAlert($ionicPopup, '该手机号码已存在');
+                    ar.saveDataAlert($ionicPopup, '该手机号码已存在，如有疑问请致电：023-68800997。');
                     return false;
                 } else {
                     api.validateCode($scope.formData.code).success(function (res) {
@@ -3265,7 +3265,7 @@ define(['app/module', 'app/directive/directiveApi'
             }
             api.getMobileIsExist($scope.formData.phone).success(function (res) {
                 if (res.status < 1) {
-                    ar.saveDataAlert($ionicPopup, '该手机号码已存在');
+                    ar.saveDataAlert($ionicPopup, '该手机号码已存在，如有疑问请致电：023-68800997。');
                     return false;
                 } else {
                     $scope.openSendCodeModal();
@@ -3320,7 +3320,7 @@ define(['app/module', 'app/directive/directiveApi'
             api.getMobileIsExist($scope.formData.phone).success(function (res) {
                 $ionicLoading.hide();
                 if (res.status < 1) {
-                    ar.saveDataAlert($ionicPopup, '该手机号码已存在');
+                    ar.saveDataAlert($ionicPopup, '该手机号码已存在，如有疑问请致电：023-68800997。');
                     return false;
                 } else {
                     api.validateCode($scope.formData.code).success(function (res) {
