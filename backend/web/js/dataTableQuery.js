@@ -130,6 +130,10 @@ $(function () {
                     var html = '<a target="_blank" class="btn btn-success btn-sm" href="/admin/member/info?id=' + oData.id + '">管理</a> '+
                         returnLog +
                         ' <a id="pairBtn" class="btn btn-info btn-sm" data-uid="' + oData.id +'" data-uname="' + oData.info.real_name + '" href="javascript:;">配对</a>';
+                }else if(parseInt(oData.intention)  == 1){
+                    var html = '<a target="_blank" class="btn btn-purple btn-sm" href="/admin/member/info?id=' + oData.id + '">管理</a> '+
+                        returnLog +
+                        ' <a id="pairBtn" class="btn btn-info btn-sm" data-uid="' + oData.id +'" data-uname="' + oData.info.real_name + '" href="javascript:;">配对</a>';
                 }else{
                     var html = '<a target="_blank" class="btn btn-danger btn-sm" href="/admin/member/info?id=' + oData.id + '">管理</a> '+
                         returnLog +
