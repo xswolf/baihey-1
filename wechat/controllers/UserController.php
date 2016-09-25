@@ -178,12 +178,12 @@ class UserController extends BaseController
             $_SESSION['code_wx_id'] = $wechatMember['openid'];
             $_SESSION['qdid']       = $args['qdid'];
             $_SESSION['type']       = 3;
-        }else{
+        }/*else{
             echo '<script>';
             echo 'location.href="https://open.weixin.qq.com/connect/oauth2/authorize?appid='.\Yii::$app->wechat->appId.'&redirect_uri=http://wechat.baihey.com/wap/user/register?response_type=code&scope=snsapi_userinfo&state=tes#wechat_redirect"';
             echo '</script>';
             exit;
-        }
+        }*/
 
 
         // 判断是否提交注册
