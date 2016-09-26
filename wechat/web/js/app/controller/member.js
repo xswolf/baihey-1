@@ -944,9 +944,6 @@ define(['app/module', 'app/directive/directiveApi'
         $scope.followList = [];
         $scope.followedList = [];
 
-        $scope.skt.emit('note', {method:'mainInterceptCancel'});
-        $scope.skt.emit('note', {method:'mainIntercept'});
-
         api.list('/wap/follow/follow-list', {type: 'follow'}).success(function (res) {
             for (var i in res.data) {
                 res.data[i].info = JSON.parse(res.data[i].info);
@@ -977,6 +974,10 @@ define(['app/module', 'app/directive/directiveApi'
                 }
             })
         }
+
+        api.list('/wap/follow/set-checked', {user_id: userId}).success(function (res) {
+            console.log(res);
+        })
 
         // 切换，我关注的人，关注我的人
         $scope.switching = function (value) {
@@ -1113,7 +1114,7 @@ define(['app/module', 'app/directive/directiveApi'
                     document.getElementsByClassName('transition')[1].style.transition = 'all 0.5s';
                     $scope.formData.isfollow = 1;
 
-                    var message = {method:'mainIntercept'};
+                    var message = {method:'mainIntercept',receive_user_id:$scope.formData.userId};
                     $scope.skt.emit('note', message);
 
                     // 成功，提示
@@ -1234,7 +1235,7 @@ define(['app/module', 'app/directive/directiveApi'
                     document.getElementsByClassName('transition')[1].style.transition = 'all 0.5s';
                     $scope.formData.isfollow = '1';
 
-                    var message = {method:'mainIntercept'};
+                    var message = {method:'mainIntercept',receive_user_id:$scope.formData.userId};
                     $scope.skt.emit('note', message);
 
                     // 成功，提示

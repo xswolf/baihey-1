@@ -385,12 +385,6 @@ define(["app/module", 'app/service/serviceApi'],
                                     $scope.newFollowNumber = res.data;
                                 })
                             },
-                            // “个人”导航去除红点
-                            mainInterceptCancel : function(){
-                                api.list('/wap/follow/set-checked', {user_id: userId}).success(function (res) {
-                                    console.log(res);
-                                })
-                            },
                             // 获取评论总数
                             commentNum : function () {
 
