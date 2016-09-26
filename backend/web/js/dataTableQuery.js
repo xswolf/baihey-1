@@ -120,7 +120,7 @@ $(function () {
                 var userType = $('table').data("user-type");
                 var returnLog = '';
                 if (userId == oData.matchmaker || userType == 'admin'){
-                    returnLog = '<a class="btn btn-info btn-sm" data-uid="' + oData.id +'" data-uname="' + oData.info.real_name +'" id="returningBtn" href="javascript:;">回访</a> ' ;
+                    returnLog = '<a class="btn btn-info btn-sm" data-uid="' + oData.id +'" data-uname="' + oData.info.real_name + '" data-intention="' + oData.intention + '" id="returningBtn" href="javascript:;">回访</a> ' ;
                 }
                 if(!oData.phone){
                     var html = '<a target="_blank" class="btn btn-light-grey btn-sm" href="/admin/member/info?id=' + oData.id + '">管理</a> '+
@@ -210,6 +210,8 @@ $(function () {
                 table.column('intention:name').visible(false);
             }
 
+
+
             // ajax提交查询
             $(".submit-form").click(function () {
                 var url_param = $("form").serialize();
@@ -262,7 +264,15 @@ $(function () {
 
 });
 
-
+// 回车键搜索
+document.onkeydown=function(event){
+    var e = event || window.event || arguments.callee.caller.arguments[0];
+    if(e && e.keyCode==13){
+        if($("input[name='id_phone_name']").val()){
+            $(".submit-form").trigger('click');
+        }
+    }
+};
 ////////////////// Filter Start ////////////////////////
 var Filter = function ($dom, type, $container) {
     this.$dom = $dom;

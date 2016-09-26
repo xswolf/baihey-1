@@ -437,11 +437,12 @@
 
         })
 
-        var userId, userName, layerIndex;
+        var userId, userName,userIntention, layerIndex;
         // 回访
         $('#demo1').delegate('#returningBtn', 'click', function () {
             userId = $(this).data('uid');
             userName = $(this).data('uname');
+            userIntention = $(this).data('intention');
             layer.open({
                 type: 1,
                 title: false,
@@ -523,6 +524,7 @@
                     layerIndex = index;
                     $('#return_match_name').val(admin_name);
                     $('#return_user_name').val(userName + '(' + userId + ')');
+                    $('#intention').val(userIntention);
                 }
             });
         })
