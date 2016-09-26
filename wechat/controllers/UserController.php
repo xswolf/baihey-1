@@ -209,7 +209,7 @@ class UserController extends BaseController
             }
 
             if (isset($_SESSION['code_wx_id']) && \common\models\User::getInstance()->wxIsExist($_SESSION['code_wx_id'])) {
-                return $this->renderAjax(['status' => 0, 'msg' => '微信已存在', 'data' => []]);
+                return $this->renderAjax(['status' => 0, 'msg' => '微信已存在，请关闭本页面直接从公众号内点击“进入嘉瑞”。', 'data' => []]);
             }
 
             // 添加用户
