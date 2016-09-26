@@ -55,7 +55,7 @@
                 </h2>
             </a>
 
-            <a class="item item-thumbnail-left" href="#/userInfo?userId={{user.user_id}}" ng-repeat="user in userList | filter:indexFilter track by user.id"
+            <a class="item item-thumbnail-left" href="#/userInfo?userId={{user.user_id}}" ng-repeat="user in userList | filter:indexFilter track by $index"
                ng-if="user.id > 9999">
                 <img class="rounded"
                      ng-src="{{user.info.head_pic | isNull}}"
