@@ -31,7 +31,7 @@ class MemberController extends BaseController
     {
         $serviceFiled = ['intention', 'matchmaking',];
         $salesFiled = ['info.level', 'matchmaker',];
-        if ($_SESSION['bhy_user']['role'] == 'admin') { //  管理员类型
+        if (isset($_SESSION['bhy_user']) && $_SESSION['bhy_user']['role'] == 'admin') { //  管理员类型
             return [];
         } elseif (strpos($_SESSION['bhy_user']['role'], "销售红娘") > 0) {  // 销售红娘类型
             return $salesFiled;
