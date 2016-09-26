@@ -109,6 +109,7 @@ class UserFollow extends Base
         }
         if($follow = $this->findOne($where)) {
             $follow->status = 1;
+            $follow->checked = 0;
             $follow->update_time = YII_BEGIN_TIME;
             return $follow->save(false);
         } else {
