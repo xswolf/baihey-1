@@ -975,7 +975,7 @@ define(['app/module', 'app/directive/directiveApi'
             })
         }
 
-        api.list('/wap/follow/set-checked', {user_id: userId}).success(function (res) {
+        api.list('/wap/follow/set-checked', {user_id: $scope.userInfo.id}).success(function (res) {
             console.log(res);
         })
 
