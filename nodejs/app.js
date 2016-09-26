@@ -41,7 +41,7 @@ io.on('connection', function (socket) {
 
     // 通知接口
     socket.on('note' , function (msg) {
-
+        console.log("通知成功：" + msg.receive_user_id)
         io.emit(msg.receive_user_id, msg);
     });
 
