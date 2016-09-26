@@ -383,7 +383,6 @@ define(["app/module", 'app/service/serviceApi'],
                                 api.get('/wap/follow/is-new-follow', {user_id: userId}).success(function (res) {
                                     $scope.newFollow = res.status;
                                     $scope.newFollowNumber = res.data;
-                                    $scope.$apply();
                                 })
 
                             },
