@@ -387,7 +387,7 @@ define(["app/module", 'app/service/serviceApi'],
                             },
                             // “个人”导航去除红点
                             mainInterceptCancel : function(){
-                                api.list('/wap/follow/set-checked', {user_id: $scope.userInfo.user_id}).success(function (res) {
+                                api.list('/wap/follow/set-checked', {user_id: userId}).success(function (res) {
                                     console.log(res);
                                 })
                             },
