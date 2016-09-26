@@ -5,7 +5,7 @@
     </ion-header-bar>
     <ion-content class="bhy com_w_100 m_bg security">
         <ion-list>
-            <ion-item class="item" ng-href="{{userInfo.phone == 0 ? '#/member/security_phone' : '#/member/security_pass'}}">
+            <ion-item class="item" ng-href="{{!userInfo.phone ? '#/member/security_phone' : '#/member/security_pass'}}">
                 <div class="security_menu_i rounded pass">
                     <i class="ion-ios-locked"></i>
                 </div>
@@ -18,7 +18,7 @@
                     <i class="ion-ios-arrow-right vam"></i>
                 </div>
             </ion-item>
-            <ion-item class="item" ng-href="{{userInfo.phone != 0 ? '#/member/edit_phone' : '#/member/edit_phone_new'}}">
+            <ion-item class="item" ng-href="{{userInfo.phone ? '#/member/edit_phone' : '#/member/edit_phone_new'}}">
                 <div class="security_menu_i rounded phone">
                     <i class="ion-android-phone-portrait"></i>
                 </div>

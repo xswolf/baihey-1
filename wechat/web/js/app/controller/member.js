@@ -1118,6 +1118,10 @@ define(['app/module', 'app/directive/directiveApi'
                     document.getElementsByClassName('transition')[0].style.transition = 'all 0.5s';
                     document.getElementsByClassName('transition')[1].style.transition = 'all 0.5s';
                     $scope.formData.isfollow = 1;
+
+                    var message = {method:'mainIntercept'};
+                    $scope.skt.emit('chat message', message);
+
                     // 成功，提示
                     ar.saveDataAlert($ionicPopup, '关注成功');
                 }
@@ -1219,23 +1223,6 @@ define(['app/module', 'app/directive/directiveApi'
         var followData = {};
         followData.user_id = ar.getCookie("bhy_user_id");
         followData.follow_id = $scope.formData.userId;
-        // 未关注
-        /*$scope.formData.follow = false;
-         api.getStatus('/wap/follow/get-follow-status', followData).success(function (res) {
-         if (res.data) {
-         $scope.formData.follow = true;
-         }
-         });*/
-        // 取消关注
-        //$scope.cancelFollow = function () {
-        //    api.save('/wap/follow/del-follow', followData).success(function (res) {
-        //        if (res.data) {
-        //            $scope.formData.isfollow = '2';
-        //            // 成功，提示
-        //            ar.saveDataAlert($ionicPopup, '取消关注成功');
-        //        }
-        //    });
-        //}
 
         // 关注
         $scope.addFollow = function () {
@@ -1252,6 +1239,10 @@ define(['app/module', 'app/directive/directiveApi'
                     document.getElementsByClassName('transition')[0].style.transition = 'all 0.5s';
                     document.getElementsByClassName('transition')[1].style.transition = 'all 0.5s';
                     $scope.formData.isfollow = '1';
+
+                    var message = {method:'mainIntercept'};
+                    $scope.skt.emit('chat message', message);
+
                     // 成功，提示
                     ar.saveDataAlert($ionicPopup, '关注成功');
                 }
