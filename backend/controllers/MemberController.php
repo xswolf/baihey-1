@@ -43,15 +43,18 @@ class MemberController extends BaseController
 
     public function actionIndex()
     {
-        $serverUser = AuthUser::getInstance()->getUserByRole("服务红娘");
-        $salesUser = AuthUser::getInstance()->getUserByRole("销售红娘", 'like');
-        $column = $this->showColumnByUser();
-        $this->assign('column', json_encode($column));
-        $this->assign('admin', $_SESSION['bhy_user']);
-        $this->assign('serverUser', $serverUser);
-        $this->assign('salesUser', $salesUser);
+        if (isset($_SESSION['bhy_user'])){
+            $serverUser = AuthUser::getInstance()->getUserByRole("服务红娘");
+            $salesUser = AuthUser::getInstance()->getUserByRole("销售红娘", 'like');
+            $column = $this->showColumnByUser();
+            $this->assign('column', json_encode($column));
+            $this->assign('admin', $_SESSION['bhy_user']);
+            $this->assign('serverUser', $serverUser);
+            $this->assign('salesUser', $salesUser);
 
-        return $this->render();
+            return $this->render();
+        }
+
     }
 
     private function searchWhere(&$andWhere, $get)
