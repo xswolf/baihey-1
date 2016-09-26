@@ -70,12 +70,6 @@ define(['app/module', 'app/directive/directiveApi'
 
         })
 
-        // 设置新关注的人已看
-        if ($scope.followNumber > 0) {
-            $scope.skt.emit('note', {method:'mainInterceptCancel'});
-            $scope.skt.emit('note', {method:'mainIntercept'});
-        }
-
     }]);
 
     // 资料首页
