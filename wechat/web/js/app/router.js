@@ -375,7 +375,7 @@ define(["app/module", 'app/service/serviceApi'],
                                     $scope.dataFilter = res;
                                 });
                             },
-                            // 监听是否有新的用户关注自己
+                            // 监听是否有新的用户关注自己 “个人”导航添加红点
                             mainIntercept : function () {
 
                                 $scope.newFollow = false;
@@ -383,6 +383,12 @@ define(["app/module", 'app/service/serviceApi'],
                                 api.get('/wap/follow/is-new-follow', {user_id: userId}).success(function (res) {
                                     $scope.newFollow = res.status;
                                     $scope.newFollowNumber = res.data;
+                                })
+                            },
+                            // “个人”导航去除红点
+                            mainInterceptCancel : function(){
+                                api.list('/wap/follow/set-checked', {user_id: $scope.userInfo.user_id}).success(function (res) {
+                                    console.log(res);
                                 })
                             },
                             // 获取评论总数
@@ -396,6 +402,7 @@ define(["app/module", 'app/service/serviceApi'],
                                     }
                                 })
                             }
+
                         }
 
                         for (var i in func){

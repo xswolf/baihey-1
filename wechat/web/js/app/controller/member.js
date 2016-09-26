@@ -950,9 +950,10 @@ define(['app/module', 'app/directive/directiveApi'
 
         $scope.followList = [];
         $scope.followedList = [];
-        api.list('/wap/follow/set-checked', {user_id: $scope.userInfo.user_id}).success(function (res) {
-            console.log(res);
-        })
+
+        $scope.skt.emit('note', {method:'mainInterceptCancel'});
+        $scope.skt.emit('note', {method:'mainIntercept'});
+
         api.list('/wap/follow/follow-list', {type: 'follow'}).success(function (res) {
             for (var i in res.data) {
                 res.data[i].info = JSON.parse(res.data[i].info);
@@ -1120,7 +1121,7 @@ define(['app/module', 'app/directive/directiveApi'
                     $scope.formData.isfollow = 1;
 
                     var message = {method:'mainIntercept'};
-                    $scope.skt.emit('chat message', message);
+                    $scope.skt.emit('note', message);
 
                     // 成功，提示
                     ar.saveDataAlert($ionicPopup, '关注成功');
@@ -1241,7 +1242,7 @@ define(['app/module', 'app/directive/directiveApi'
                     $scope.formData.isfollow = '1';
 
                     var message = {method:'mainIntercept'};
-                    $scope.skt.emit('chat message', message);
+                    $scope.skt.emit('note', message);
 
                     // 成功，提示
                     ar.saveDataAlert($ionicPopup, '关注成功');
