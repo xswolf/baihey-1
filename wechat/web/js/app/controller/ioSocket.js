@@ -191,142 +191,196 @@ define(['app/module', 'app/directive/directiveApi'
         $scope.uploader = new FileUploader({url: '/wap/file/thumb'});
         $filter("orderBy")();
         // socket聊天
-        requirejs(['plugin/socket/socket.io.1.4.0'], function (socket) {
 
-            socket = socket.connect("http://120.76.84.162:8088");
-            // 告诉服务器你已经上线
-            socket.emit('tell name', {send_user_id: $scope.sendId, receive_user_id: $scope.receiveId, status: 1});
-            // 监听离开聊天页面，断掉socket
-            $scope.$on('$destroy', function () {
-                socket.emit('tell name', {send_user_id: $scope.sendId, receive_user_id: $scope.receiveId, status: 0});
-                socket.disconnect();
+        var socket = $scope.skt;
+        // 告诉服务器你已经上线
+        socket.emit('tell name', {send_user_id: $scope.sendId, receive_user_id: $scope.receiveId, status: 1});
+        // 监听离开聊天页面，断掉socket
+        $scope.$on('$destroy', function () {
+            socket.emit('tell name', {send_user_id: $scope.sendId, receive_user_id: $scope.receiveId, status: 0});
+            socket.disconnect();
+        });
+
+
+        // 发送消息函数
+        $scope.sendMessage = function (serverId, sendId, receiveID, type, flagTime, isSend) {
+
+            flagTime != undefined ? '' : flagTime = ar.timeStamp();
+            var id = ar.getId($scope.historyList);
+            var message = {
+                id: id,
+                message: serverId,
+                send_user_id: sendId,
+                receive_user_id: receiveID,
+                type: type,
+                status: 3,
+                time: flagTime,
+                create_time: flagTime
+            };
+
+            if ($scope.dataFilter.blacked.indexOf(receiveID) > -1) {  //黑名单，不能发消息
+                message.refuse = -1;
+                message.status = 4;
+                $scope.historyList.push(message);
+                ar.setStorage('chat_messageHistory-' + receiveID + '-' + userId, $scope.historyList); // 每次发送消息后把消息放到浏览器端缓存
+                return;
+            }
+
+            // 图片上传发送消息回调时不写localStorage,因为上传的时候已经写过了
+            if ((isSend && type != 'pic') || (type == 'pic' && !isSend)) {
+                $scope.historyList.push(message);
+                ar.setStorage('chat_messageHistory-' + receiveID + '-' + userId, $scope.historyList); // 每次发送消息后把消息放到浏览器端缓存
+            }
+
+            if (!isSend && type == 'pic') {
+                return;
+            }
+
+            socket.emit('chat message', message);
+
+        }
+
+        // 发送文本消息调用接口
+        $scope.send = function () {
+            if ($scope.send_content == '' || $scope.send_content == null || $scope.send_content == undefined) return;
+            if (!$scope.userInfo.phone || $scope.userInfo.phone == '0') {   // 用户未认证手机号码  $scope.userInfo.phone
+                var alertPopup = $ionicPopup.alert({
+                    template: '绑定手机，免费畅聊',
+                    okText: '现在去绑定'
+                });
+                alertPopup.then(function (res) {
+                    $location.url('/member/bindPhone');
+                });
+                return;
+            }
+            if ($scope.userInfo.id == $location.$$search.id) {    // 不能与自己聊天  TODO
+                ar.saveDataAlert($ionicPopup, '您不能与自己聊天！');
+                return;
+            }
+
+            try {
+                $scope.sendMessage($scope.send_content, $scope.sendId, $scope.receiveId, 'send', undefined, true);
+            } catch (e) {
+
+            } finally {
+                $scope.send_content = '';
+            }
+
+        }
+
+        // 发送图片
+        $scope.send_pic = function () {
+            var e = document.getElementById("pic_fileInput");
+            var ev = document.createEvent("MouseEvents");
+            ev.initEvent("click", true, true);
+            e.dispatchEvent(ev);
+
+            $scope.uploader.filters.push({
+                name: 'file-size-Res',
+                fn: function (item) {
+                    if (item.size > 8388608) {
+                        ar.saveDataAlert($ionicPopup, '请选择小于8MB的图片！')
+                        return false;
+                    }
+                    return true;
+                }
             });
 
+            var time = ar.timeStamp();
+            $scope.uploader.onAfterAddingFile = function (fileItem) {   // 选择文件之后
 
-            // 发送消息函数
-            $scope.sendMessage = function (serverId, sendId, receiveID, type, flagTime, isSend) {
+                $scope.sendMessage(fileItem.file.name, $scope.sendId, $scope.receiveId, 'pic', time, false); // 假发送，便于预览图片
+                fileItem.upload();   // 上传
+                viewScroll.resize();
+                viewScroll.scrollBottom(true);
 
-                flagTime != undefined ? '' : flagTime = ar.timeStamp();
-                var id = ar.getId($scope.historyList);
-                var message = {
-                    id: id,
-                    message: serverId,
-                    send_user_id: sendId,
-                    receive_user_id: receiveID,
-                    type: type,
-                    status: 3,
-                    time: flagTime,
-                    create_time: flagTime
-                };
 
-                if ($scope.dataFilter.blacked.indexOf(receiveID) > -1) {  //黑名单，不能发消息
-                    message.refuse = -1;
-                    message.status = 4;
-                    $scope.historyList.push(message);
-                    ar.setStorage('chat_messageHistory-' + receiveID + '-' + userId, $scope.historyList); // 每次发送消息后把消息放到浏览器端缓存
-                    return;
-                }
+                $scope.uploader.onSuccessItem = function (fileItem, response) {  // 上传成功
 
-                // 图片上传发送消息回调时不写localStorage,因为上传的时候已经写过了
-                if ((isSend && type != 'pic') || (type == 'pic' && !isSend)) {
-                    $scope.historyList.push(message);
-                    ar.setStorage('chat_messageHistory-' + receiveID + '-' + userId, $scope.historyList); // 每次发送消息后把消息放到浏览器端缓存
-                }
-
-                if (!isSend && type == 'pic') {
-                    return;
-                }
-
-                socket.emit('chat message', message);
-
-            }
-
-            // 发送文本消息调用接口
-            $scope.send = function () {
-                if ($scope.send_content == '' || $scope.send_content == null || $scope.send_content == undefined) return;
-                if (!$scope.userInfo.phone || $scope.userInfo.phone == '0') {   // 用户未认证手机号码  $scope.userInfo.phone
-                    var alertPopup = $ionicPopup.alert({
-                        template: '绑定手机，免费畅聊',
-                        okText: '现在去绑定'
-                    });
-                    alertPopup.then(function (res) {
-                        $location.url('/member/bindPhone');
-                    });
-                    return;
-                }
-                if ($scope.userInfo.id == $location.$$search.id) {    // 不能与自己聊天  TODO
-                    ar.saveDataAlert($ionicPopup, '您不能与自己聊天！');
-                    return;
-                }
-
-                try {
-                    $scope.sendMessage($scope.send_content, $scope.sendId, $scope.receiveId, 'send', undefined, true);
-                } catch (e) {
-
-                } finally {
-                    $scope.send_content = '';
-                }
-
-            }
-
-            // 发送图片
-            $scope.send_pic = function () {
-                var e = document.getElementById("pic_fileInput");
-                var ev = document.createEvent("MouseEvents");
-                ev.initEvent("click", true, true);
-                e.dispatchEvent(ev);
-
-                $scope.uploader.filters.push({
-                    name: 'file-size-Res',
-                    fn: function (item) {
-                        if (item.size > 8388608) {
-                            ar.saveDataAlert($ionicPopup, '请选择小于8MB的图片！')
-                            return false;
+                    if (response.status == 1) {
+                        var len = $scope.historyList.length;
+                        for (var i = len - 1; i >= 0; i--) {
+                            if ($scope.historyList[i].message == fileItem.file.name) {
+                                $scope.sendMessage(response.thumb_path, $scope.sendId, $scope.receiveId, 'pic', $scope.historyList[i].time, true);  // 真实发送
+                                break;
+                            }
                         }
-                        return true;
-                    }
-                });
 
-                var time = ar.timeStamp();
-                $scope.uploader.onAfterAddingFile = function (fileItem) {   // 选择文件之后
-
-                    $scope.sendMessage(fileItem.file.name, $scope.sendId, $scope.receiveId, 'pic', time, false); // 假发送，便于预览图片
-                    fileItem.upload();   // 上传
-                    viewScroll.resize();
-                    viewScroll.scrollBottom(true);
-
-
-                    $scope.uploader.onSuccessItem = function (fileItem, response) {  // 上传成功
-
-                        if (response.status == 1) {
-                            var len = $scope.historyList.length;
-                            for (var i = len - 1; i >= 0; i--) {
-                                if ($scope.historyList[i].message == fileItem.file.name) {
-                                    $scope.sendMessage(response.thumb_path, $scope.sendId, $scope.receiveId, 'pic', $scope.historyList[i].time, true);  // 真实发送
-                                    break;
-                                }
+                    } else {
+                        var len = $scope.historyList.length;
+                        for (var i = len - 1; i >= 0; i--) {
+                            if ($scope.historyList[i].type == 'pic' && $scope.historyList[i].status == 3) {
+                                $scope.historyList[i].status = 4;
+                                break;
                             }
-
-                        } else {
-                            var len = $scope.historyList.length;
-                            for (var i = len - 1; i >= 0; i--) {
-                                if ($scope.historyList[i].type == 'pic' && $scope.historyList[i].status == 3) {
-                                    $scope.historyList[i].status = 4;
-                                    break;
-                                }
-                            }
-
                         }
 
                     }
 
-                };
+                }
+
+            };
 
 
-                $scope.uploader.onCompleteItem = function (fileItem, response, status, headers) {  // 上传结束
-                    if (response.thumb_path) {
+            $scope.uploader.onCompleteItem = function (fileItem, response, status, headers) {  // 上传结束
+                if (response.thumb_path) {
+                    var img = new Image();
+                    img.src = response.thumb_path;
+                    if (img.complete) {
+                        viewScroll.resize();
+                        viewScroll.scrollBottom(true);
+                    } else {
+                        img.onload = function () {
+                            viewScroll.resize();
+                            viewScroll.scrollBottom(true);
+                            img.onload = null; //避免重复加载
+                        }
+                    }
+                    ar.initPhotoSwipeFromDOM('.bhy-gallery', $scope, $ionicPopup);
+                }
+            };
+
+            $scope.uploader.onErrorItem = function (item, response, status, headers) {
+                ar.saveDataAlert($ionicPopup, '发送图片出错，错误原因未知');
+                var len = $scope.historyList.length;
+                for (var i = len - 1; i >= 0; i--) {
+                    if ($scope.historyList[i].type == 'pic' && $scope.historyList[i].status == 3) {
+                        $scope.historyList[i].status = 4;
+                        break;
+                    }
+                }
+            }
+
+        }
+
+        // 消息响应回调函数
+        socket.on($scope.sendId + '-' + $scope.receiveId, function (response) {
+            if (response == "10086") {
+                $scope.historyList = $scope.setMessageStatus($scope.historyList);
+                ar.setStorage('chat_messageHistory-' + $scope.receiveId + '-' + userId, $scope.historyList); // 每次发送消息后把消息放到浏览器端缓存
+                $scope.$apply();
+                return;
+            }
+            var setMessage = function (response) {
+                if (response.type == 'madd' || response.type == 'remove' || response.type == 'add') return;
+                response.message = response.message.replace(/&quot;/g, "\"");
+                if ($scope.sendId == response.send_user_id) {  // 响应自己发送的消息
+                    var len = $scope.historyList.length;
+                    for (var i = len - 1; i >= 0; i--) {
+                        if (response.time == $scope.historyList[i].time &&
+                            (response.message == $scope.historyList[i].message ||
+                            response.type == 'pic')) {
+                            $scope.historyList[i].message = response.message;
+                            $scope.historyList[i].status = response.status;
+                            break;
+                        }
+                    }
+                } else {
+                    response.id = ar.getId($scope.historyList);
+                    $scope.historyList.push(response);
+                    if (response.type == 'pic') {
                         var img = new Image();
-                        img.src = response.thumb_path;
+                        img.src = response.message;
                         if (img.complete) {
                             viewScroll.resize();
                             viewScroll.scrollBottom(true);
@@ -337,83 +391,26 @@ define(['app/module', 'app/directive/directiveApi'
                                 img.onload = null; //避免重复加载
                             }
                         }
-                        ar.initPhotoSwipeFromDOM('.bhy-gallery', $scope, $ionicPopup);
                     }
-                };
 
-                $scope.uploader.onErrorItem = function (item, response, status, headers) {
-                    ar.saveDataAlert($ionicPopup, '发送图片出错，错误原因未知');
-                    var len = $scope.historyList.length;
-                    for (var i = len - 1; i >= 0; i--) {
-                        if ($scope.historyList[i].type == 'pic' && $scope.historyList[i].status == 3) {
-                            $scope.historyList[i].status = 4;
-                            break;
-                        }
-                    }
                 }
+                list = $rootScope.historyListHide = $rootScope.historyList = $scope.historyList;
+                ar.setStorage('chat_messageHistory-' + $scope.receiveId + '-' + userId, $scope.historyList); // 每次发送消息后把消息放到浏览器端缓存
 
             }
 
-            // 消息响应回调函数
-            socket.on($scope.sendId + '-' + $scope.receiveId, function (response) {
-                if (response == "10086") {
-                    $scope.historyList = $scope.setMessageStatus($scope.historyList);
-                    ar.setStorage('chat_messageHistory-' + $scope.receiveId + '-' + userId, $scope.historyList); // 每次发送消息后把消息放到浏览器端缓存
+            switch (response.type) {
+                case 'record': // 录音
+
+                    break;
+
+                default :
+                    setMessage(response);
+                    viewScroll.resize();
+                    viewScroll.scrollBottom(true);  // 滚动至底部
                     $scope.$apply();
-                    return;
-                }
-                var setMessage = function (response) {
-                    if (response.type == 'madd' || response.type == 'remove' || response.type == 'add') return;
-                    response.message = response.message.replace(/&quot;/g, "\"");
-                    if ($scope.sendId == response.send_user_id) {  // 响应自己发送的消息
-                        var len = $scope.historyList.length;
-                        for (var i = len - 1; i >= 0; i--) {
-                            if (response.time == $scope.historyList[i].time &&
-                                (response.message == $scope.historyList[i].message ||
-                                response.type == 'pic')) {
-                                $scope.historyList[i].message = response.message;
-                                $scope.historyList[i].status = response.status;
-                                break;
-                            }
-                        }
-                    } else {
-                        response.id = ar.getId($scope.historyList);
-                        $scope.historyList.push(response);
-                        if (response.type == 'pic') {
-                            var img = new Image();
-                            img.src = response.message;
-                            if (img.complete) {
-                                viewScroll.resize();
-                                viewScroll.scrollBottom(true);
-                            } else {
-                                img.onload = function () {
-                                    viewScroll.resize();
-                                    viewScroll.scrollBottom(true);
-                                    img.onload = null; //避免重复加载
-                                }
-                            }
-                        }
-
-                    }
-                    list = $rootScope.historyListHide = $rootScope.historyList = $scope.historyList;
-                    ar.setStorage('chat_messageHistory-' + $scope.receiveId + '-' + userId, $scope.historyList); // 每次发送消息后把消息放到浏览器端缓存
-
-                }
-
-                switch (response.type) {
-                    case 'record': // 录音
-
-                        break;
-
-                    default :
-                        setMessage(response);
-                        viewScroll.resize();
-                        viewScroll.scrollBottom(true);  // 滚动至底部
-                        $scope.$apply();
-                        break;
-                }
-            })
-
+                    break;
+            }
         })
 
     }]);
