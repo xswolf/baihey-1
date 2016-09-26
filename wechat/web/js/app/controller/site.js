@@ -170,9 +170,9 @@ define(['app/module', 'app/directive/directiveApi'
         $scope.loadMore = function (flag) {
             try {
 
-
                 $scope.dataLoading = true;
                 api.list('/wap/site/user-list', $scope.searchForm).success(function (res) {
+                    $scope.searchForm.pageNum += 1;
                     if (res.data.length < 6) {
                         $scope.pageLast = false;
                     }
@@ -181,7 +181,7 @@ define(['app/module', 'app/directive/directiveApi'
                         $scope.userList.push(res.data[i]);
                     }
                     $scope.dataLoading = false;
-                    $scope.searchForm.pageNum += 1;
+
                     if (flag == 'search') {
                         $ionicScrollDelegate.$getByHandle('mainScroll').scrollTop();
                     }
