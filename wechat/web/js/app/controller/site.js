@@ -178,8 +178,8 @@ define(['app/module', 'app/directive/directiveApi'
                     }
                     for (var i in res.data) {
                         res.data[i].info = JSON.parse(res.data[i].info);
+                        $scope.userList.push(res.data[i]);
                     }
-                    $scope.userList = $scope.userList.concat(res.data);
                     $scope.dataLoading = false;
                     $scope.searchForm.pageNum += 1;
                     if (flag == 'search') {
