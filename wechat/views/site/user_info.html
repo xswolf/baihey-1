@@ -90,7 +90,7 @@
                 </div>
             </div>
             <ion-item ng-if="went_travel.length > 0">
-                    <p><span class="cor4">去过的地方({{went_travel_count}})</span></p>
+                    <p><span class="cor4">去过的地方({{went_travel.length}})</span></p>
                     <div class="hob_addr clearfix">
                         <span class="hob_addr_flag" ng-repeat="addrt in went_travel track by addrt.id">
                             <i class="ion-location hob_addr_icon"></i>
@@ -99,7 +99,7 @@
                     </div>
             </ion-item>
             <ion-item ng-if="want_travel.length > 0">
-                    <p><span class="cor4">想去的地方({{want_travel_count}})</span></p>
+                    <p><span class="cor4">想去的地方({{want_travel.length}})</span></p>
                     <div class="hob_addr clearfix">
                         <span class="hob_addr_flag f2" ng-repeat="addrt in want_travel track by addrt.id">
                             <i class="ion-location hob_addr_icon"></i>
@@ -109,7 +109,7 @@
             </ion-item>
 
             <ion-item ng-if="love_sport.length > 0">
-                    <p><span class="cor4">喜欢的运动({{love_sport_count}})</span></p>
+                    <p><span class="cor4">喜欢的运动({{love_sport.length}})</span></p>
                     <div class="hob_sport clearfix">
                         <span class="hob_sport_flag" ng-repeat="addrt in love_sport track by addrt.id">
                             <i class="icon-sport-{{addrt.pic_path}} hob_sport_icon"></i>
@@ -119,7 +119,7 @@
             </ion-item>
 
             <ion-item ng-if="want_film.length > 0">
-                    <p><span class="cor4">喜欢的影视类型({{want_film_count}})</span></p>
+                    <p><span class="cor4">喜欢的影视类型({{want_film.length}})</span></p>
                     <div class="hob_sport clearfix">
                         <span class="hob_tv_flag" ng-repeat="addrt in want_film track by addrt.id">
                             <i class="ion-ios-play mr5"></i>
@@ -129,7 +129,7 @@
             </ion-item>
 
             <ion-item class="hob_item" ng-if="like_food.length > 0">
-                <p><span class="cor4">喜欢的美食({{like_food_count}})</span></p>
+                <p><span class="cor4">喜欢的美食({{like_food.length}})</span></p>
                 <div class="hob_food clearfix">
                     <span class="hob_food_flag" ng-repeat="addrt in like_food track by addrt.id">
                         <i class="icon-food hob_food_icon"></i>

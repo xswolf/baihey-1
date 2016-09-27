@@ -1286,12 +1286,17 @@ define(['app/module', 'app/directive/directiveApi'
 
         $scope.infoSafe = function () {
             if ($scope.userInfo.info.level < 1) {
-                var alertPopup = $ionicPopup.alert({
+                var confirmPopupVip = $ionicPopup.confirm({
                     template: '开通VIP，立即享受资料隐身',
-                    okText: '现在去开通'
+                    okText: '现在去开通',
+                    cancelText: '取消'
                 });
-                alertPopup.then(function () {
-                    $location.url('/member/vip');
+                confirmPopupVip.then(function (res) {
+                    if(res){
+                        $location.url('/member/vip');
+                    }else {
+                        return;
+                    }
                 })
                 return false;
             }
@@ -1872,8 +1877,8 @@ define(['app/module', 'app/directive/directiveApi'
                     userInfo.info = JSON.stringify(userInfo.info);
                     userInfo.auth = JSON.stringify(userInfo.auth);
                     ar.setStorage("userInfo", userInfo);
-                    $location.url('/member/honesty');
                     $scope.sfzCheck = 2;
+                    ar.saveDataAlert($ionicPopup,'保存成功！')
                 });
             });
         }
