@@ -1843,17 +1843,20 @@ define(['app/module', 'app/directive/directiveApi'
             if (name == 'honesty1') {
                 if(!$scope.authList[0]){
                     $scope.authList[0] = data;
+                    $scope.authList[0].is_check = 2;
                 }else{
                     $scope.authList[0].thumb_path = data.thumb_path;
+                    $scope.authList[0].is_check = 2;
                 }
             } else {
                 if(!$scope.authList[1]){
                     $scope.authList[1] = data;
+                    $scope.authList[1].is_check = 2;
                 }else{
                     $scope.authList[1].thumb_path = data.thumb_path;
+                    $scope.authList[1].is_check = 2;
                 }
             }
-            $scope.authList[1].is_check = 2;
         });
 
         // 保存
