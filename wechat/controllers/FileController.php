@@ -115,7 +115,7 @@ class FileController extends BaseController
                 $photo[0]['thumb_path'] = $data['thumb_path'];
                 $photo[0]['pic_path'] = $data['pic_path'];
                 $photo[0]['update_time'] = $data['time'];
-                if (!UserPhoto::getInstance()->savePhoto($photo, $user_id)) {
+                if (!UserPhoto::getInstance()->savePhoto($photo, $user_id,$photo[0]['type'])) {
                     $data = ['status' => -1, 'info' => '保存失败!~'];
                 }
             } else {
