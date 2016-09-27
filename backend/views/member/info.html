@@ -684,7 +684,7 @@
         <div class="col-sm-6 center m10">发送者：<span class="text-primary">系统管理员</span></div>
         <div class="col-sm-6 center m10">接收者：<span class="text-danger">{{$user.info->real_name}}</span></div>
         <div class="col-sm-12">
-            <textarea id="msg_content" class="ckeditor" name="editor1"></textarea>
+            <textarea id="msg_content" placeholder="请输入内容，限300字。" maxlength="300" style="height: 110px;"></textarea>
         </div>
         <div class="col-sm-12 center">
             <button class="btn btn-yellow m10" onclick="bhyFunc.sendMsg()">发送</button>
@@ -784,63 +784,10 @@
                 closeBtn: 0, //不显示关闭按钮
                 shift: 2,
                 title: '发站内信',
-                area: ['700px', '550px'],
+                area: ['700px', '250px'],
                 shadeClose: true, //开启遮罩关闭
                 content: $('#layer_sendMsg'),
                 success:function(){
-                    var handleWysiwyg = function () {
-                        /* Init Bootstrap WYSIWYG */
-                        function initToolbarBootstrapBindings() {
-                            var fonts = ['Serif', 'Sans', 'Arial', 'Arial Black', 'Courier',
-                                        'Courier New', 'Comic Sans MS', 'Helvetica', 'Impact', 'Lucida Grande', 'Lucida Sans', 'Tahoma', 'Times',
-                                        'Times New Roman', 'Verdana'],
-                                    fontTarget = $('[title=Font]').siblings('.dropdown-menu');
-                            $.each(fonts, function (idx, fontName) {
-                                fontTarget.append($('<li><a data-edit="fontName ' + fontName + '" style="font-family:\'' + fontName + '\'">' + fontName + '</a></li>'));
-                            });
-                            $('a[title]').tooltip({container: 'body'});
-                            $('.dropdown-menu input').click(function () {
-                                        return false;
-                                    })
-                                    .change(function () {
-                                        $(this).parent('.dropdown-menu').siblings('.dropdown-toggle').dropdown('toggle');
-                                    })
-                                    .keydown('esc', function () {
-                                        this.value = '';
-                                        $(this).change();
-                                    });
-
-                            $('[data-role=magic-overlay]').each(function () {
-                                var overlay = $(this), target = $(overlay.data('target'));
-                                overlay.css('opacity', 0).css('position', 'absolute').offset(target.offset()).width(target.outerWidth()).height(target.outerHeight());
-                            });
-                            if ("onwebkitspeechchange" in document.createElement("input")) {
-                                var editorOffset = $('#editor').offset();
-                                $('#voiceBtn').css('position', 'absolute').offset({
-                                    top: editorOffset.top,
-                                    left: editorOffset.left + $('#editor').innerWidth() - 35
-                                });
-                            } else {
-                                $('#voiceBtn').hide();
-                            }
-                        };
-                        function showErrorAlert(reason, detail) {
-                            var msg = '';
-                            if (reason === 'unsupported-file-type') {
-                                msg = "Unsupported format " + detail;
-                            }
-                            else {
-                                console.log("error uploading file", reason, detail);
-                            }
-                            $('<div class="alert"> <button type="button" class="close" data-dismiss="alert">&times;</button>' +
-                                    '<strong>File upload error</strong> ' + msg + ' </div>').prependTo('#alerts');
-                        };
-                        initToolbarBootstrapBindings();
-                        $('#editor').wysiwyg({fileUploadError: showErrorAlert});
-                        /* Disable auto-inline */
-                        CKEDITOR.disableAutoInline = true;
-                    }
-                    handleWysiwyg();
                 }
             });
         })
