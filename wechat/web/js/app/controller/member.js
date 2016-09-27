@@ -1917,6 +1917,7 @@ define(['app/module', 'app/directive/directiveApi'
                 $scope.authList[0].is_check = 2;
             }else{
                 $scope.authList[0].thumb_path = data.thumb_path;
+                $scope.authList[0].is_check = 2;
             }
             ar.initPhotoSwipeFromDOM('.bhy-gallery', $scope, $ionicPopup);
             ar.saveDataAlert($ionicPopup, '上传成功');
@@ -1946,6 +1947,7 @@ define(['app/module', 'app/directive/directiveApi'
                 $scope.authList[0].is_check = 2;
             }else{
                 $scope.authList[0].thumb_path = data.thumb_path;
+                $scope.authList[0].is_check = 2;
             }
             ar.initPhotoSwipeFromDOM('.bhy-gallery', $scope, $ionicPopup);
             ar.saveDataAlert($ionicPopup, '上传成功');
@@ -1976,6 +1978,7 @@ define(['app/module', 'app/directive/directiveApi'
                 $scope.authList[0].is_check = 2;
             }else{
                 $scope.authList[0].thumb_path = data.thumb_path;
+                $scope.authList[0].is_check = 2;
             }
             ar.initPhotoSwipeFromDOM('.bhy-gallery', $scope, $ionicPopup);
             ar.saveDataAlert($ionicPopup, '上传成功');
