@@ -1843,18 +1843,17 @@ define(['app/module', 'app/directive/directiveApi'
             if (name == 'honesty1') {
                 if(!$scope.authList[0]){
                     $scope.authList[0] = data;
-                    $scope.authList[0].is_check = 2;
                 }else{
                     $scope.authList[0].thumb_path = data.thumb_path;
                 }
             } else {
                 if(!$scope.authList[1]){
                     $scope.authList[1] = data;
-                    $scope.authList[1].is_check = 2;
                 }else{
                     $scope.authList[1].thumb_path = data.thumb_path;
                 }
             }
+            $scope.authList[1].is_check = 2;
         });
 
         // 保存
@@ -1914,11 +1913,10 @@ define(['app/module', 'app/directive/directiveApi'
         $scope.$on('thumb_path', function (event, name, data) {
             if(!$scope.authList[0]){
                 $scope.authList[0] = data;
-                $scope.authList[0].is_check = 2;
             }else{
                 $scope.authList[0].thumb_path = data.thumb_path;
-                $scope.authList[0].is_check = 2;
             }
+            $scope.authList[0].is_check = 2;
             ar.initPhotoSwipeFromDOM('.bhy-gallery', $scope, $ionicPopup);
             ar.saveDataAlert($ionicPopup, '上传成功');
         });
@@ -1944,11 +1942,10 @@ define(['app/module', 'app/directive/directiveApi'
         $scope.$on('thumb_path', function (event, name, data) {
             if(!$scope.authList[0]){
                 $scope.authList[0] = data;
-                $scope.authList[0].is_check = 2;
             }else{
                 $scope.authList[0].thumb_path = data.thumb_path;
-                $scope.authList[0].is_check = 2;
             }
+            $scope.authList[0].is_check = 2;
             ar.initPhotoSwipeFromDOM('.bhy-gallery', $scope, $ionicPopup);
             ar.saveDataAlert($ionicPopup, '上传成功');
         });
@@ -1975,11 +1972,10 @@ define(['app/module', 'app/directive/directiveApi'
         $scope.$on('thumb_path', function (event, name, data) {
             if(!$scope.authList[0]){
                 $scope.authList[0] = data;
-                $scope.authList[0].is_check = 2;
             }else{
                 $scope.authList[0].thumb_path = data.thumb_path;
-                $scope.authList[0].is_check = 2;
             }
+            $scope.authList[0].is_check = 2;
             ar.initPhotoSwipeFromDOM('.bhy-gallery', $scope, $ionicPopup);
             ar.saveDataAlert($ionicPopup, '上传成功');
         });
