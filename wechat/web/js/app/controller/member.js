@@ -1053,12 +1053,17 @@ define(['app/module', 'app/directive/directiveApi'
                 // 用户动态
                 if (res.dynamic) {
                     for (var i in res.dynamic) {
-                        res.dynamic[i].imgList = JSON.parse(res.dynamic[i].pic);
-                        $scope.dynamicList.push(res.dynamic[i]);
+                        if(res.dynamic[i].auth == 1 || (res.dynamic[i].auth == 2 && res.followedStatus)){
+                            res.dynamic[i].imgList = JSON.parse(res.dynamic[i].pic);
+                            $scope.dynamicList.push(res.dynamic[i]);
+                        }
                     }
                 }
-                $scope.formData.isfollow = res.followStatus;// 关注状态
-                $scope.formData.followed = res.followedStatus;// 被关注状态
+
+                $scope.formData.isfollow = res.followStatus;// 关注状态  登陆者是否关注查看者
+                $scope.formData.followed = res.followedStatus;// 被关注状态 查看者是否关注登陆者
+                console.log($scope.formData.isfollow);
+                console.log($scope.formData.followed);
                 $scope.qqAuth = is_privacy($scope.otherUserInfo.privacy_qq);// qq权限
                 $scope.wxAuth = is_privacy($scope.otherUserInfo.privacy_wechat);// 微信权限
                 $scope.picAuth = is_privacy($scope.otherUserInfo.privacy_pic);// 相册权限
