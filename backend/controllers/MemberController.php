@@ -450,6 +450,13 @@ class MemberController extends BaseController
      */
     public function actionAssignMatchmaking(){
         $data = \Yii::$app->request->post();
+        if(!isset($data['user'])){
+            $data['user'] = '';
+        }
+        if(!isset($data['info'])){
+            $data['info'] = [];
+        }
+
         if($flag = User::getInstance()->editUser($data)){
             $this->renderAjax(['status' => 1, 'message' => '分配成功', 'data' => $flag]);
         }else{

@@ -188,7 +188,7 @@ var bhyFunc = {
             layer.tips('请选择服务红娘', matchmaking);
             return false;
         }
-        this.ajaxRequest('/admin/member/auth', {
+        this.ajaxRequest('/admin/member/assign-matchmaking', {
             user_id: user_id,
             matchmaking: matchmaking.val(),
             service_status: $('#service_status').val(),
