@@ -944,11 +944,11 @@ class User extends Base
 
         $flag2 = $this->editPhoto($type, $data);
 
-        \Yii::$app->db->createCommand()
+        $flag3 = \Yii::$app->db->createCommand()
             ->update($this->tablePrefix . 'user', ['status' => 2], ['id' => $data['user_id']])
             ->execute();
 
-        if ($flag1 > 0 && $flag2 > 0) {
+        if ($flag1 > 0 && $flag2 > 0 && $flag3 > 0) {
             $tran->commit();
             return 1;
         } else {
