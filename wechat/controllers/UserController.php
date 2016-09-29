@@ -16,7 +16,7 @@ class UserController extends BaseController
 
     public function beforeAction($action)
     {
-        $this->layout               = false;
+        $this->layout = false;
         $this->enableCsrfValidation = false;
         return parent::beforeAction($action);
     }
@@ -57,7 +57,7 @@ class UserController extends BaseController
 
 
         $token = \Yii::$app->request->get('token');
-        $id    = \Yii::$app->request->get('id');
+        $id = \Yii::$app->request->get('id');
         if ($token && $id && $token == md5($id . 'jzBhY2016-jr' . \Yii::$app->request->get('time'))) {
             \common\models\User::getInstance()->loginOut();
             if ($user = User::getInstance()->getUserById($id)) {
@@ -120,9 +120,9 @@ class UserController extends BaseController
     public function actionWxLogin()
     {
 
-        $appId       = \Yii::$app->wechat->appId;
+        $appId = \Yii::$app->wechat->appId;
         $redirectUri = urlencode("http://wechat.baihey.com/wap/user/welcome");
-        $url         = "https://open.weixin.qq.com/connect/oauth2/authorize?appid={$appId}&redirect_uri={$redirectUri}&response_type=code&scope=snsapi_base&state=123#wechat_redirect";
+        $url = "https://open.weixin.qq.com/connect/oauth2/authorize?appid={$appId}&redirect_uri={$redirectUri}&response_type=code&scope=snsapi_base&state=123#wechat_redirect";
 
         $this->redirect($url);
     }
@@ -155,9 +155,9 @@ class UserController extends BaseController
     public function actionGetLocation()
     {
 
-        $url      = 'http://api.map.baidu.com/geocoder/v2/?coordtype=wgs84ll&output=json&ak=Zh7mCxOxCyteqEhmCZtKPmhG&pois=0&location=' . \Yii::$app->request->get('lat') . ',' . \Yii::$app->request->get('lng');
-        $result   = file_get_contents($url);
-        $result   = json_decode($result);
+        $url = 'http://api.map.baidu.com/geocoder/v2/?coordtype=wgs84ll&output=json&ak=Zh7mCxOxCyteqEhmCZtKPmhG&pois=0&location=' . \Yii::$app->request->get('lat') . ',' . \Yii::$app->request->get('lng');
+        $result = file_get_contents($url);
+        $result = json_decode($result);
         $cityName = $result->result->addressComponent->city;
         AutoAddress::getInstance()->autoAddress($cityName);
         exit();
@@ -174,14 +174,14 @@ class UserController extends BaseController
 
         // 微信授权
         if (isset($args['code'])) {
-            $wechatMember           = \Yii::$app->wechat->getMemberByCode($args['code']);
+            $wechatMember = \Yii::$app->wechat->getMemberByCode($args['code']);
             $_SESSION['code_wx_id'] = $wechatMember['openid'];
-            $_SESSION['qdid']       = $args['qdid'];
-            $_SESSION['type']       = 3;
+            $_SESSION['qdid'] = $args['qdid'];
+            $_SESSION['type'] = 3;
         }
-        if(!isset($args['code']) && !isset($_SESSION['qdid'])){
+        if (!isset($args['code']) && !isset($_SESSION['qdid'])) {
             echo '<script>';
-            echo 'location.href="https://open.weixin.qq.com/connect/oauth2/authorize?appid='.\Yii::$app->wechat->appId.'&redirect_uri=http://wechat.baihey.com/wap/user/register?response_type=code&scope=snsapi_userinfo&state=tes#wechat_redirect"';
+            echo 'location.href="https://open.weixin.qq.com/connect/oauth2/authorize?appid=' . \Yii::$app->wechat->appId . '&redirect_uri=http://wechat.baihey.com/wap/user/register?response_type=code&scope=snsapi_userinfo&state=tes#wechat_redirect"';
             echo '</script>';
             exit;
         }
@@ -198,7 +198,7 @@ class UserController extends BaseController
             $data['username'] = $this->get['mobile'];
             $data['password'] = substr($this->get['mobile'], -6);
             $data['login_type'] = isset($_SESSION['type']) ? $_SESSION['type'] : 1;
-            $data['sex']   = $this->get['sex'];
+            $data['sex'] = $this->get['sex'];
             $data['wx_id'] = isset($_SESSION['code_wx_id']) ? $_SESSION['code_wx_id'] : "";
             // 设置是否是红娘推荐
             isset($_SESSION['qdid']) ? $data['matchmaker'] = $_SESSION['qdid'] : "";
@@ -216,8 +216,8 @@ class UserController extends BaseController
             $userInfo = \common\models\User::getInstance()->addUser($data);
             if ($userInfo) {
                 // 写入用户日志表
-                $log['user_id']     = $userInfo['id'];
-                $log['type']        = 2;
+                $log['user_id'] = $userInfo['id'];
+                $log['type'] = 2;
                 $log['create_time'] = time();
                 \common\models\User::getInstance()->userLog($log);
                 // 模拟登录
@@ -270,7 +270,7 @@ class UserController extends BaseController
                 $this->renderAjax(['status' => 0, 'msg' => '该手机号码已存在']);
             } else {
                 if (isset($_SESSION['code_wx_id']) && \common\models\User::getInstance()->wxIsExist($_SESSION['code_wx_id'])) {
-                   return $this->renderAjax(['status' => 0, 'msg' => '该微信已注册', 'data' => []]);
+                    return $this->renderAjax(['status' => 0, 'msg' => '该微信已注册', 'data' => []]);
                 }
                 $this->renderAjax(['status' => 1, 'msg' => '该手机号可以注册']);
             }
@@ -313,8 +313,13 @@ class UserController extends BaseController
     public function actionResetPassword()
     {
         $user_id = \common\util\Cookie::getInstance()->getCookie('bhy_id')->value;
-        $list    = User::getInstance()->resetPassword($user_id, $this->get);
-        $this->renderAjax(['status' => 1, 'data' => $list]);
+        $list = User::getInstance()->resetPassword($user_id, $this->get);
+        if ($list) {
+            $this->renderAjax(['status' => 1, 'data' => $list, 'msg' => '密码修改成功']);
+        } else {
+            $this->renderAjax(['status' => 0, 'data' => $list, 'msg' => '密码修改失败']);
+        }
+
     }
 
     /**
@@ -322,8 +327,8 @@ class UserController extends BaseController
      */
     public function actionForgotPassword()
     {
-        $user                    = \common\models\User::getInstance()->getUserByPhone($this->get['phone']);
-        $data['password']        = md5(md5($this->get['password']));
+        $user = \common\models\User::getInstance()->getUserByPhone($this->get['phone']);
+        $data['password'] = md5(md5($this->get['password']));
         $data['reset_pass_time'] = time();
         if ($list = \common\models\User::getInstance()->editUserTableInfo($user['id'], $data)) {
             $this->renderAjax(['status' => 1, 'data' => $list, 'msg' => '修改成功']);
@@ -338,7 +343,7 @@ class UserController extends BaseController
     public function actionUpdateUserData()
     {
         $user_id = \common\util\Cookie::getInstance()->getCookie('bhy_id')->value;
-        $list    = User::getInstance()->updateUserData($user_id, $this->get);
+        $list = User::getInstance()->updateUserData($user_id, $this->get);
         $this->renderAjax(['status' => 1, 'data' => $list]);
     }
 
@@ -348,7 +353,7 @@ class UserController extends BaseController
     public function actionIndexIsShowData()
     {
         $user_id = Cookie::getInstance()->getCookie('bhy_id');
-        $result  = User::getInstance()->indexIsShowData($user_id);
+        $result = User::getInstance()->indexIsShowData($user_id);
         $this->renderAjax($result);
     }
 
