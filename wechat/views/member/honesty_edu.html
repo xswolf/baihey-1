@@ -15,10 +15,10 @@
                         <a ng-href="{{authList[0].thumb_path | picture}}"
                            data-size="{{authList[0].thumb_path.split('.')[0].split('_')[1] + 'x' + authList[0].thumb_path.split('.')[0].split('_')[2]}}">
                             <img ng-src="{{authList[0].thumb_path}}">
+                            <span class="review" ng-if="authList[0].is_check == 2">审核中</span>
+                            <span class="review no" ng-if="authList[0].is_check == 0">审核未通过</span>
                         </a>
                     </div>
-                    <div class="underReview" ng-if="authList[0].is_check == 2"><span>审核中</span></div>
-                    <div class="underReview" ng-if="authList[0].is_check == 0"><span>审核未通过</span></div>
                 </div>
                 <br/>
                 <button type="button" class="button button-calm mb10"

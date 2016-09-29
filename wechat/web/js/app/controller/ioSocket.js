@@ -245,12 +245,18 @@ define(['app/module', 'app/directive/directiveApi'
             $scope.send = function () {
                 if ($scope.send_content == '' || $scope.send_content == null || $scope.send_content == undefined) return;
                 if (!$scope.userInfo.phone || $scope.userInfo.phone == '0') {   // 用户未认证手机号码  $scope.userInfo.phone
-                    var alertPopup = $ionicPopup.alert({
+                    var confirmPopup = $ionicPopup.confirm({
                         template: '绑定手机，免费畅聊',
-                        okText: '现在去绑定'
+                        okText: '现在去绑定',
+                        cancelText: '取消'
                     });
-                    alertPopup.then(function (res) {
-                        $location.url('/member/bindPhone');
+                    confirmPopup.then(function (res) {
+                        if(res){
+                            $location.url('/member/bindPhone');
+                        }else {
+                            return;
+                        }
+
                     });
                     return;
                 }

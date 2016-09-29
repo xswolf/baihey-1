@@ -44,7 +44,8 @@ define(['app/module', 'app/directive/directiveApi'
 
         $ionicModal.fromTemplateUrl('sendCodeModal.html', {
             scope: $scope,
-            animation: 'slide-in-up'
+            animation: 'slide-in-up',
+            focusFirstInput:true
         }).then(function (modal) {
             $scope.modal = modal;
         });
@@ -198,7 +199,8 @@ define(['app/module', 'app/directive/directiveApi'
 
         $ionicModal.fromTemplateUrl('sendCodeModal.html', {
             scope: $scope,
-            animation: 'slide-in-up'
+            animation: 'slide-in-up',
+            focusFirstInput:true
         }).then(function (modal) {
             $scope.modal = modal;
         });

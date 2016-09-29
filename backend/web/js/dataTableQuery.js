@@ -78,7 +78,7 @@ $(function () {
         },
         {
             "data": "matchmaking", fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
-            var list = $("table").data("matchmaking");
+            var list = $("table").data("matchmaker");
             for(var i in list){
                 if (list[i].id == oData.matchmaking){
                     $(nTd).html(list[i].name);

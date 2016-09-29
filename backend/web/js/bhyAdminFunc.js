@@ -100,7 +100,7 @@ var bhyFunc = {
                 value: '您好，您上传的身份证照片未审核通过，原因：图片模糊不清。',
                 title: '请填写原因'
             }, function (value, index, elem) {
-                cause = value ? value : '您好，您上传的身份证照片未审核通过，原因：未知。';
+                cause = value ? value : '您好，您上传的身份证照片未审核通过，原因：图片模糊不清。';
                 $this.ajaxRequest('/admin/member/sys-msg', {
                     user_id: $this.user_id,
                     type: '2,3',
@@ -119,10 +119,10 @@ var bhyFunc = {
             var cause = '';
             layer.prompt({
                 formType: 2,
-                value: '图片模糊不清',
-                title: '请填写审核不通过原因'
+                value: '您好，您上传的婚姻证明照片未审核通过，原因：图片模糊不清。',
+                title: '请填写原因'
             }, function (value, index, elem) {
-                cause = value ? value : '图片模糊不清';
+                cause = value ? value : '您好，您上传的婚姻证明照片未审核通过，原因：图片模糊不清。';
                 $this.ajaxRequest('/admin/member/sys-msg', {
                     user_id: $this.user_id,
                     type: '5',
@@ -141,10 +141,10 @@ var bhyFunc = {
             var cause = '';
             layer.prompt({
                 formType: 2,
-                value: '图片模糊不清',
+                value: '您好，您上传的学历证明照片未审核通过，原因：图片模糊不清。',
                 title: '请填写审核不通过原因'
             }, function (value, index, elem) {
-                cause = value ? value : '图片模糊不清';
+                cause = value ? value : '您好，您上传的学历证明照片未审核通过，原因：图片模糊不清。';
                 $this.ajaxRequest('/admin/member/sys-msg', {
                     user_id: $this.user_id,
                     type: '4',
@@ -163,10 +163,10 @@ var bhyFunc = {
             var cause = '';
             layer.prompt({
                 formType: 2,
-                value: '图片模糊不清',
+                value: '您好，您上传的房产证明照片未审核通过，原因：图片模糊不清。',
                 title: '请填写审核不通过原因'
             }, function (value, index, elem) {
-                cause = value ? value : '图片模糊不清';
+                cause = value ? value : '您好，您上传的房产证明照片未审核通过，原因：图片模糊不清。';
                 $this.ajaxRequest('/admin/member/sys-msg', {
                     user_id: $this.user_id,
                     type: '6',
@@ -188,7 +188,7 @@ var bhyFunc = {
             layer.tips('请选择服务红娘', matchmaking);
             return false;
         }
-        this.ajaxRequest('/admin/member/auth', {
+        this.ajaxRequest('/admin/member/assign-matchmaking', {
             user_id: user_id,
             matchmaking: matchmaking.val(),
             service_status: $('#service_status').val(),
