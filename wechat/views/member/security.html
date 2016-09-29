@@ -14,7 +14,7 @@
                 </div>
                 <div class="menu_arrow">
                     <span class="cor21 fs14 mr15 vam" ng-if="!userInfo.phone">请先绑定手机号码</span>
-                    <span class="cor5 fs14 mr15 vam" ng-if="userInfo.reset_pass_time != 0 && userInfo.phone">上次修改 {{userInfo.reset_pass_time | date:'yyyy-MM-dd HH:mm:ss'}}</span>
+                    <span class="cor5 fs14 mr15 vam" ng-if="userInfo.reset_pass_time != 0 && userInfo.phone">上次修改 {{userInfo.reset_pass_time * 1000 | date:'yyyy-MM-dd HH:mm:ss'}}</span>
                     <i class="ion-ios-arrow-right vam"></i>
                 </div>
             </ion-item>
@@ -31,44 +31,6 @@
                     <i class="ion-ios-arrow-right vam"></i>
                 </div>
             </ion-item>
-            <!--<ion-item class="item" href="#/member/security_wechat">
-                <div class="security_menu_i rounded wx">
-                    <i class="bhy-icon-member-wechat"></i>
-                </div>
-                <div class="menu_name">
-                    <p>微信绑定</p>
-                </div>
-                <div class="menu_arrow">
-                    <span class="cor5 fs14 mr15 vam" ng-if="userInfo.info.wechat">已绑定 {{userInfo.info.wechat}}</span>
-                    <span class="cor5 fs14 mr15 vam" ng-if="!userInfo.info.wechat">立即绑定</span>
-                    <i class="ion-ios-arrow-right vam"></i>
-                </div>
-            </ion-item>
-            <ion-item class="item" href="#/member/security_qq">
-                <div class="security_menu_i rounded qq">
-                    <i class="bhy-icon-member-qq"></i>
-                </div>
-                <div class="menu_name">
-                    <p>QQ绑定</p>
-                </div>
-                <div class="menu_arrow">
-                    <span class="cor5 fs14 mr15 vam" ng-if="userInfo.info.wechat">已绑定 {{userInfo.info.qq}}</span>
-                    <span class="cor5 fs14 mr15 vam" ng-if="!userInfo.info.wechat">立即绑定</span>
-                    <i class="ion-ios-arrow-right vam"></i>
-                </div>
-            </ion-item>-->
-            <!--<ion-item class="item" ui-sref="#">
-                <div class="security_menu_i rounded weibo">
-                    <i class="bhy-icon-member-blacklist"></i>
-                </div>
-                <div class="menu_name">
-                    <p>新浪微博绑定</p>
-                </div>
-                <div class="menu_arrow">
-                    <span class="cor5 fs14 mr15 vam">已绑定 helloword002</span>
-                    <i class="ion-ios-arrow-right vam"></i>
-                </div>
-            </ion-item>-->
         </ion-list>
     </ion-content>
 </ion-view>

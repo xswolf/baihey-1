@@ -13,7 +13,10 @@ define(['app/module', 'app/directive/directiveApi'
                 $scope.userInfo.info = JSON.parse($scope.userInfo.info);
             }
         })
-
+        if (ar.getStorage('userInfo') && ar.getStorage('userInfo').user_id == ar.getCookie('bhy_user_id')) {
+            $scope.userInfo = ar.getStorage('userInfo');
+            $scope.userInfo.info = JSON.parse($scope.userInfo.info);
+        }
         // 搜索条件
         $scope.searchForm = {age: '18-28', pageNum: 1, pageSize: 6, sex: 0};
         $scope.userId = ar.getCookie("bhy_user_id") ? ar.getCookie("bhy_user_id") : 0;
@@ -35,7 +38,9 @@ define(['app/module', 'app/directive/directiveApi'
         }
         init();
 
-
+        console.log($scope.userInfo);
+        console.log($scope.searchForm);
+        console.log($scope.whereForm);
         // 用户列表
         $scope.userList = [];
 
@@ -257,7 +262,6 @@ define(['app/module', 'app/directive/directiveApi'
             },
             parseValue: function (valueText) {
                 if (valueText) {
-                    console.log(valueText);
                     return valueText.replace(/\s/gi, '').split('-');
                 }
                 return [18, 22];
