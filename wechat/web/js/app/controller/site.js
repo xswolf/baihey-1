@@ -38,9 +38,6 @@ define(['app/module', 'app/directive/directiveApi'
         }
         init();
 
-        console.log($scope.userInfo);
-        console.log($scope.searchForm);
-        console.log($scope.whereForm);
         // 用户列表
         $scope.userList = [];
 
