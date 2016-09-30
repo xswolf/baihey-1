@@ -936,6 +936,8 @@ class User extends Base
             return 0;
         }
         $data['honesty_value'] = $honesty_value;
+
+
         $tran = \Yii::$app->db->beginTransaction();
 
         $flag1 = \Yii::$app->db->createCommand()
@@ -944,11 +946,12 @@ class User extends Base
 
         $flag2 = $this->editPhoto($type, $data);
 
-        $flag3 = \Yii::$app->db->createCommand()
+         // 修改用户状态为已审核
+         \Yii::$app->db->createCommand()
             ->update($this->tablePrefix . 'user', ['status' => 2], ['id' => $data['user_id']])
             ->execute();
 
-        if ($flag1 > 0 && $flag2 > 0 && $flag3 > 0) {
+        if ($flag1 > 0 && $flag2 > 0 ) {
             $tran->commit();
             return 1;
         } else {
