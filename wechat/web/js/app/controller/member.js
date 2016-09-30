@@ -33,7 +33,7 @@ define(['app/module', 'app/directive/directiveApi'
                     ar.delCookie('bhy_u_cityId');
                     ar.delCookie('bhy_u_cityPid');
                     localStorage.clear();
-                    sessionStorage.loginStatus = 0;
+                    sessionStorage.loginStatus = undefined;
                     location.href = '/wap/user/login';
                 });
             };
