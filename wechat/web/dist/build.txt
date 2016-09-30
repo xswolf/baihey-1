@@ -6,6 +6,7 @@ plugin/mobiscroll/mobiscroll.custom-3.0.0-beta.min.css
 app.js
 ----------------
 comm.js
+config/infoData.js
 app/directive/directiveApi.js
 app/controller/user.js
 config/city.js
