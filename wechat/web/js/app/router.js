@@ -121,7 +121,7 @@ define(["app/module", 'app/service/serviceApi'],
                                 $rootScope.receiveUserInfo.receive_user_id = ar.getCookie('bhy_user_id');
                                 $rootScope.receiveUserInfo.other = $rootScope.receiveUserInfo.id;
                                 $rootScope.receiveUserInfo.order_time = ar.timeStamp();
-                                $rootScope.receiveUserInfo.send_user_id = $rootScope.receiveUserInfo.id
+                                $rootScope.receiveUserInfo.send_user_id = $rootScope.receiveUserInfo.id;
                                 if ($rootScope.historyListHide != undefined && $rootScope.historyListHide.length > 0) {
                                     $rootScope.receiveUserInfo.message = $rootScope.historyListHide[$rootScope.historyListHide.length - 1].message
                                 }
@@ -188,7 +188,7 @@ define(["app/module", 'app/service/serviceApi'],
                     } else {
                         eval('$scope.userInfo.' + type + '.' + name + ' = ' + value);
                     }
-                }
+                };
 
                 // 以下为用户信息处理
                 $scope.userInfo = {};
@@ -197,19 +197,19 @@ define(["app/module", 'app/service/serviceApi'],
                     if ($scope.userInfo) {
                         $scope.userInfo.info = JSON.parse($scope.userInfo.info);
                     }
-                }
+                };
                 var setUserInfoStorage = function () {
 
                     ar.setStorage('userInfo', $scope.userInfo);
                     getUserStorage();
-                }
+                };
 
 
                 // 设置用户信息跳转至资料页
                 $scope.setUserStorage = function () {
                     setUserInfoStorage();
                     window.location.hash = '#/member/information';
-                }
+                };
 
                 // 设置用户信息不跳转
                 $scope.getUserPrivacyStorage = function (url) {
@@ -217,7 +217,7 @@ define(["app/module", 'app/service/serviceApi'],
                     if (url != '' && typeof(url) != undefined) {
                         window.location.hash = url;
                     }
-                }
+                };
 
                 if (ar.getCookie('bhy_user_id')) {
                     // 身份证认证
@@ -254,7 +254,7 @@ define(["app/module", 'app/service/serviceApi'],
                     } else {
                         eval("$scope." + name + "_count = " + 0);
                     }
-                }
+                };
                 $scope.getConfig = function (name, serId) {
                     if (serId != null) {
                         var arrSer = serId.split(',');
@@ -265,7 +265,7 @@ define(["app/module", 'app/service/serviceApi'],
                     } else {
                         eval("$scope." + name + "_count = " + 0);
                     }
-                }
+                };
 
                 $scope.showLoading = function (progress) {
                     $ionicLoading.show({
@@ -274,7 +274,7 @@ define(["app/module", 'app/service/serviceApi'],
                 };
                 $scope.hideLoading = function () {
                     $ionicLoading.hide();
-                }
+                };
 
                 // 图片上传目前用于诚信认证（obj，str）
                 $scope.uploaderImage = function (uploader, name) {
@@ -298,7 +298,7 @@ define(["app/module", 'app/service/serviceApi'],
                         name: 'file-size-Res',
                         fn: function (item) {
                             if (item.size > 8388608) {
-                                ar.saveDataAlert($ionicPopup, '请选择小于8MB的图片！')
+                                ar.saveDataAlert($ionicPopup, '请选择小于8MB的图片！');
                                 return false;
                             }
                             return true;
@@ -327,12 +327,12 @@ define(["app/module", 'app/service/serviceApi'],
                         $scope.hideLoading();  // 隐藏loading
 
                     };
-                }
+                };
 
                 // 身份证认证判断
                 $scope.honesty = function (val) {
                     return 1 & val;
-                }
+                };
 
 
                 /************************run移植******************************/
@@ -398,7 +398,7 @@ define(["app/module", 'app/service/serviceApi'],
                                 })
                             }
 
-                        }
+                        };
 
                         for (var i in func){
                             func[i]();
@@ -414,7 +414,7 @@ define(["app/module", 'app/service/serviceApi'],
                                 }
                             }
                             $scope.msgNumber = num;
-                        })
+                        });
 
                         $scope.skt = socket.connect("http://120.76.84.162:8088");
                         $scope.skt.on(userId, function (response) {
@@ -433,7 +433,7 @@ define(["app/module", 'app/service/serviceApi'],
                     // 判断是否登陆
                     if (toState.url != '/index' && toState.url != '/error') {
                         $ionicLoading.show();
-                        if (sessionStorage.loginStatus === undefined) {
+                        if (sessionStorage.loginStatus == 0) {
                             api.getLoginStatus().success(function (res) {
                                 sessionStorage.loginStatus = res.status;
                                 if (!res.status) {

@@ -21,7 +21,7 @@ define(['app/module', 'app/directive/directiveApi'
                     $scope.clearLoading = false;
                     ar.saveDataAlert($ionicPopup, '缓存已清理完毕！');
                 }, 1500)
-            }
+            };
 
             // 退出登录
             $scope.loginOut = function () {
@@ -33,10 +33,10 @@ define(['app/module', 'app/directive/directiveApi'
                     ar.delCookie('bhy_u_cityId');
                     ar.delCookie('bhy_u_cityPid');
                     localStorage.clear();
-                    //localStorage.removeItem("userInfo");
+                    sessionStorage.loginStatus = 0;
                     location.href = '/wap/user/login';
                 });
-            }
+            };
 
             // 判断身份证是否认证通过
             api.list('/wap/member/photo-list', {type: 2, pageSize: 2}).success(function (res) {
@@ -52,7 +52,7 @@ define(['app/module', 'app/directive/directiveApi'
             });
             $scope.honesty = function (val) {
                 return val & 1;
-            }
+            };
 
             // 查询当前用户是否发过动态。
             $scope.discoveryNumber = 0;
@@ -123,7 +123,7 @@ define(['app/module', 'app/directive/directiveApi'
                     name: 'file-size-Res',
                     fn: function (item) {
                         if (item.size > 8388608) {
-                            ar.saveDataAlert($ionicPopup, '请选择小于8MB的图片！')
+                            ar.saveDataAlert($ionicPopup, '请选择小于8MB的图片！');
                             return false;
                         }
                         return true;
@@ -132,11 +132,11 @@ define(['app/module', 'app/directive/directiveApi'
 
                 uploader.onAfterAddingFile = function (fileItem) {  // 选择文件后
                     fileItem.upload();
-                }
+                };
 
                 uploader.onProgressItem = function (item, progress) {
                     $scope.showLoading(progress);
-                }
+                };
 
                 uploader.onSuccessItem = function (fileItem, response, status, headers) {  // 上传成功
                     if (response.status > 0) {
@@ -153,7 +153,7 @@ define(['app/module', 'app/directive/directiveApi'
                     $scope.hideLoading();  // 隐藏loading
                 };
 
-            }
+            };
 
             // 点击img，功能
             $scope.moreImg = function (img, event) {
@@ -164,7 +164,7 @@ define(['app/module', 'app/directive/directiveApi'
                     titleText: '操作照片',
                     cancelText: '取消',
                     destructiveButtonClicked: function () {  // 点击删除
-                        var cpmform = ar.saveDataConfirm($ionicPopup, "是否确认删除该照片？")
+                        var cpmform = ar.saveDataConfirm($ionicPopup, "是否确认删除该照片？");
                         cpmform.then(function (res) {
                             if (res) {
                                 // 删除操作
@@ -215,7 +215,7 @@ define(['app/module', 'app/directive/directiveApi'
 
                     }
                 });
-            }
+            };
 
             $scope.dynamicList = [];
             api.list('/wap/member/get-dynamic-list', {user_id: $scope.userInfo.id, page: 0}).success(function (res) {
@@ -249,7 +249,7 @@ define(['app/module', 'app/directive/directiveApi'
                     $scope.userInfo.auth = JSON.parse($scope.userInfo.auth);
                     $scope.infoModal.hide();
                 }
-            }
+            };
 
             $scope.settingsBirthday = {
                 theme: 'mobiscroll',
@@ -264,7 +264,7 @@ define(['app/module', 'app/directive/directiveApi'
                 $scope.formData.age = $scope.userInfo.age + '岁';
                 $scope.formData.zodiac = ar.getZodicByBirthday(ar.DateTimeToDate($scope.formData.birthday));
                 $scope.formData.constellation = ar.getConstellationByBirthday(ar.DateTimeToDate($scope.formData.birthday));
-            }
+            };
 
             var minAge = [], maxAge = [];
             for (var i = 18; i <= 99; i++) {
@@ -378,7 +378,7 @@ define(['app/module', 'app/directive/directiveApi'
                         $scope.closeModal();
                     }
                 }
-            })
+            });
 
             // 保存数据
             $scope.saveData = function (formData) {
@@ -393,7 +393,7 @@ define(['app/module', 'app/directive/directiveApi'
                 }).finally(function () {
                     $scope.closeModal();
                 })
-            }
+            };
 
             // 关闭modal
             $scope.closeModal = function () {
@@ -449,7 +449,7 @@ define(['app/module', 'app/directive/directiveApi'
                     name: 'file-size-Res',
                     fn: function (item) {
                         if (item.size > 8388608) {
-                            ar.saveDataAlert($ionicPopup, '请选择小于8MB的图片！')
+                            ar.saveDataAlert($ionicPopup, '请选择小于8MB的图片！');
                             return false;
                         }
                         return true;
@@ -477,7 +477,7 @@ define(['app/module', 'app/directive/directiveApi'
                     $scope.hideLoading();  // 隐藏loading
                 };
 
-            }
+            };
 
             // 点击img，功能
             $scope.moreImg = function (index) {
@@ -491,7 +491,7 @@ define(['app/module', 'app/directive/directiveApi'
                     titleText: '操作照片',
                     cancelText: '取消',
                     destructiveButtonClicked: function () {  // 点击删除
-                        var cpmform = ar.saveDataConfirm($ionicPopup, "是否确认删除该照片？")
+                        var cpmform = ar.saveDataConfirm($ionicPopup, "是否确认删除该照片？");
                         cpmform.then(function (res) {
                             if (res) {
                                 // 删除操作
@@ -512,7 +512,7 @@ define(['app/module', 'app/directive/directiveApi'
 
                 });
 
-            }
+            };
             $scope.dynamicList = [];
             api.list('/wap/member/get-dynamic-list', {user_id: $scope.userInfo.id, page: 0}).success(function (res) {
                 for (var i in res.data) {
@@ -545,7 +545,7 @@ define(['app/module', 'app/directive/directiveApi'
                     $scope.userInfo.auth = JSON.parse($scope.userInfo.auth);
                     $scope.infoModal.hide();
                 }
-            }
+            };
 
 
             $scope.settingsBirthday = {
@@ -561,7 +561,7 @@ define(['app/module', 'app/directive/directiveApi'
                 $scope.formData.age = $scope.userInfo.age + '岁';
                 $scope.formData.zodiac = ar.getZodicByBirthday(ar.DateTimeToDate($scope.formData.birthday));
                 $scope.formData.constellation = ar.getConstellationByBirthday(ar.DateTimeToDate($scope.formData.birthday));
-            }
+            };
 
             var minAge = [], maxAge = [];
             for (var i = 18; i <= 99; i++) {
@@ -675,7 +675,7 @@ define(['app/module', 'app/directive/directiveApi'
                         $scope.closeModal();
                     }
                 }
-            })
+            });
 
             // 保存数据
             $scope.saveData = function (formData) {
@@ -689,7 +689,7 @@ define(['app/module', 'app/directive/directiveApi'
                 }).finally(function () {
                     $scope.closeModal();
                 })
-            }
+            };
 
             // 关闭modal
             $scope.closeModal = function () {
@@ -729,11 +729,11 @@ define(['app/module', 'app/directive/directiveApi'
             // 发现列表过滤条件：黑名单
             $scope.indexFilter = function (dis) {
                 return $scope.display.indexOf(dis.id) == -1;
-            }
+            };
 
             $scope.jump = function (url) {
                 $location.url(url);
-            }
+            };
 
             $scope.more = function (id, index) {
                 $ionicActionSheet.show({
@@ -756,7 +756,7 @@ define(['app/module', 'app/directive/directiveApi'
                         return true;
                     }
                 });
-            }
+            };
             // 点赞
             $scope.clickLike = function (dis) {
                 var i = ar.getArrI($scope.discoveryList, 'id', dis.id);
@@ -772,7 +772,7 @@ define(['app/module', 'app/directive/directiveApi'
 
                 api.save('/wap/member/set-click-like', {dynamicId: dis.id, add: add}); // 请测试功能是否正常。
 
-            }
+            };
 
             $scope.pageSize = 5;
             $scope.isMore = true;
@@ -783,7 +783,7 @@ define(['app/module', 'app/directive/directiveApi'
                 }
                 $scope.$broadcast('scroll.infiniteScrollComplete');
                 $scope.pageSize += 5;
-            }
+            };
 
             // 是否还有更多
             $scope.moreDataCanBeLoaded = function () {
@@ -818,7 +818,7 @@ define(['app/module', 'app/directive/directiveApi'
 
             $scope.hideLoading = function () {
                 $ionicLoading.hide();
-            }
+            };
 
             var id = 0;
             $scope.addNewImg = function () {
@@ -841,7 +841,7 @@ define(['app/module', 'app/directive/directiveApi'
                     name: 'file-size-Res',
                     fn: function (item) {
                         if (item.size > 8388608) {
-                            ar.saveDataAlert($ionicPopup, '请选择小于8MB的图片！')
+                            ar.saveDataAlert($ionicPopup, '请选择小于8MB的图片！');
                             return false;
                         }
                         return true;
@@ -869,20 +869,20 @@ define(['app/module', 'app/directive/directiveApi'
                 uploader.onCompleteItem = function (fileItem, response, status, headers) {  // 上传结束
                     $scope.hideLoading();  // 隐藏loading
                 };
-            }
+            };
 
             // 删除照片
             $scope.delImg = function (event, index) {
                 event.stopPropagation();
                 event.preventDefault();
                 $scope.imgList.splice(index, 1);
-            }
+            };
 
             // 发布动态
             $scope.saveData = function () {
 
                 var userInfo = ar.getStorage('userInfo');
-                userInfo.info = JSON.parse(userInfo.info)
+                userInfo.info = JSON.parse(userInfo.info);
                 userInfo.auth = JSON.parse(userInfo.auth);
                 if (!userInfo.info.head_pic) {
                     $ionicPopup.alert({
@@ -890,12 +890,12 @@ define(['app/module', 'app/directive/directiveApi'
                         okText: '确定'
                     }).then(function () {
                         $location.url('/member/information');
-                    })
+                    });
                     return false;
                 }
 
                 if (!$scope.formData.content) {
-                    ar.saveDataAlert($ionicPopup, '说点什么吧，不要为难小的哦。')
+                    ar.saveDataAlert($ionicPopup, '说点什么吧，不要为难小的哦。');
                     return false;
                 }
 
@@ -973,10 +973,10 @@ define(['app/module', 'app/directive/directiveApi'
                         ar.saveDataAlert($ionicPopup, '取消关注失败');
                     }
                 })
-            }
+            };
 
             api.list('/wap/follow/set-checked', {user_id: $scope.userInfo.id}).success(function (res) {
-            })
+            });
 
             // 切换，我关注的人，关注我的人
             $scope.switching = function (value) {
@@ -1006,7 +1006,7 @@ define(['app/module', 'app/directive/directiveApi'
                 } else {
                     eval("$scope." + name + "_count = " + 0);
                 }
-            }
+            };
             var getConfig = function (name, serId) {
                 if (serId != null) {
                     var arrSer = serId.split(',');
@@ -1017,7 +1017,7 @@ define(['app/module', 'app/directive/directiveApi'
                 } else {
                     eval("$scope." + name + "_count = " + 0);
                 }
-            }
+            };
             // 权限判断
             var is_privacy = function (val) {
                 switch (val) {
@@ -1032,7 +1032,7 @@ define(['app/module', 'app/directive/directiveApi'
                     default :
                         return false;
                 }
-            }
+            };
 
             $scope.formData.userId = $location.$$search.userId;
             $scope.otherUserInfo = [];
@@ -1076,7 +1076,7 @@ define(['app/module', 'app/directive/directiveApi'
 
             $scope.localChat = function () {
                 window.location.hash = "#/chat1?id=" + $scope.otherUserInfo.id + "&head_pic=" + $scope.otherUserInfo.info.head_pic + "&real_name=" + $scope.otherUserInfo.info.real_name + "&sex=" + $scope.otherUserInfo.sex + "&age=" + $scope.otherUserInfo.info.age;
-            }
+            };
 
             var followData = {};
             followData.user_id = ar.getCookie("bhy_user_id");
@@ -1146,7 +1146,7 @@ define(['app/module', 'app/directive/directiveApi'
                 } else {
                     eval("$scope." + name + "_count = " + 0);
                 }
-            }
+            };
             var getConfig = function (name, serId) {
                 if (serId != null) {
                     var arrSer = serId.split(',');
@@ -1157,7 +1157,7 @@ define(['app/module', 'app/directive/directiveApi'
                 } else {
                     eval("$scope." + name + "_count = " + 0);
                 }
-            }
+            };
             // 权限判断
             var is_privacy = function (val) {
                 switch (val) {
@@ -1172,7 +1172,7 @@ define(['app/module', 'app/directive/directiveApi'
                     default :
                         return false;
                 }
-            }
+            };
 
             $scope.formData.userId = $location.$$search.userId;
             $scope.otherUserInfo = [];
@@ -1214,7 +1214,7 @@ define(['app/module', 'app/directive/directiveApi'
 
             $scope.localChat = function () {
                 window.location.hash = "#/chat1?id=" + $scope.otherUserInfo.id + "&head_pic=" + $scope.otherUserInfo.info.head_pic + "&real_name=" + $scope.otherUserInfo.info.real_name + "&sex=" + $scope.otherUserInfo.sex + "&age=" + $scope.otherUserInfo.info.age;
-            }
+            };
 
             var followData = {};
             followData.user_id = ar.getCookie("bhy_user_id");
@@ -1296,9 +1296,9 @@ define(['app/module', 'app/directive/directiveApi'
                         if (res) {
                             $location.url('/member/vip');
                         } else {
-                            return;
+
                         }
-                    })
+                    });
                     return false;
                 }
                 if ($scope.userInfo.is_show == 1) {
@@ -1326,7 +1326,7 @@ define(['app/module', 'app/directive/directiveApi'
                                 ar.setStorage("userInfo", userInfo);
                             })
                         } else {
-                            return;
+
                         }
                     });
                 } else {
@@ -1405,7 +1405,7 @@ define(['app/module', 'app/directive/directiveApi'
                 api.save('/wap/follow/del-black', {'id': item.id}).success(function (res) {
                     $scope.followList.splice($index, 1);
                 });
-            }
+            };
             $scope.delTitle = '解除';
             $scope.shouldShowDelete = false;
             $scope.showDeleteBtn = function () {
@@ -1483,7 +1483,7 @@ define(['app/module', 'app/directive/directiveApi'
 
             $scope.getVerify = function (event) {
                 event.target.src = '/wap/user/get-verify?time=' + ar.timeStamp();
-            }
+            };
 
             // 倒计时
             $scope.getCode = function () {
@@ -1503,7 +1503,7 @@ define(['app/module', 'app/directive/directiveApi'
                         $scope.openSendCodeModal();
                     }
                 })
-            }
+            };
 
             // 发送短信验证码
             $scope.sendCode = function () {
@@ -1540,7 +1540,7 @@ define(['app/module', 'app/directive/directiveApi'
                         });
                     }
                 });
-            }
+            };
             // 立即绑定
             $scope.bindNow = function () {
                 if (!ar.validateMobile($scope.formData.phone)) {
@@ -1590,7 +1590,7 @@ define(['app/module', 'app/directive/directiveApi'
         module.controller("member.edit_phone", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$interval', '$location', '$ionicModal', function (api, $scope, $timeout, $ionicPopup, $interval, $location, $ionicModal) {
             $scope.formData = {};
             $scope.validate = {};
-            $scope.codeTitle = '获取验证码'
+            $scope.codeTitle = '获取验证码';
 
             $ionicModal.fromTemplateUrl('sendCodeModal.html', {
                 scope: $scope,
@@ -1608,15 +1608,15 @@ define(['app/module', 'app/directive/directiveApi'
 
             $scope.getVerify = function (event) {
                 event.target.src = '/wap/user/get-verify?time=' + ar.timeStamp();
-            }
+            };
             // 获取验证码
             $scope.getCode = function () {
                 if ($scope.formData.phone != parseInt($scope.userInfo.phone)) {
-                    ar.saveDataAlert($ionicPopup, '旧手机号码错误！')
+                    ar.saveDataAlert($ionicPopup, '旧手机号码错误！');
                     return false;
                 }
                 $scope.openSendCodeModal();
-            }
+            };
 
             $scope.sendCode = function () {
                 if (!$scope.validate.verify) {
@@ -1626,7 +1626,7 @@ define(['app/module', 'app/directive/directiveApi'
                 api.get('/wap/user/check-code', {verify_code: $scope.validate.verify}).success(function (res) {
                     if (!res) {
                         ar.saveDataAlert($ionicPopup, '验证码不正确');
-                        angular.element(document.querySelectorAll('#verify')[0]).attr('src', '/wap/user/get-verify?time=' + ar.timeStamp())
+                        angular.element(document.querySelectorAll('#verify')[0]).attr('src', '/wap/user/get-verify?time=' + ar.timeStamp());
                         return false;
                     } else {
                         $scope.closeSendCodeModal();
@@ -1653,12 +1653,12 @@ define(['app/module', 'app/directive/directiveApi'
                     }
                 });
 
-            }
+            };
 
             // 下一步
             $scope.next = function () {
                 if ($scope.formData.phone != parseInt($scope.userInfo.phone)) {
-                    ar.saveDataAlert($ionicPopup, '旧手机号码错误！')
+                    ar.saveDataAlert($ionicPopup, '旧手机号码错误！');
                     return false;
                 }
                 api.validateCode($scope.formData.code).success(function (res) {
@@ -1695,7 +1695,7 @@ define(['app/module', 'app/directive/directiveApi'
 
             $scope.getVerify = function (event) {
                 event.target.src = '/wap/user/get-verify?time=' + ar.timeStamp();
-            }
+            };
 
             // 倒计时
             $scope.getCode = function () {
@@ -1715,7 +1715,7 @@ define(['app/module', 'app/directive/directiveApi'
                         $scope.openSendCodeModal();
                     }
                 })
-            }
+            };
 
             $scope.sendCode = function () {
                 if (!$scope.validate.verify) {
@@ -1725,7 +1725,7 @@ define(['app/module', 'app/directive/directiveApi'
                 api.get('/wap/user/check-code', {verify_code: $scope.validate.verify}).success(function (res) {
                     if (!res) {
                         ar.saveDataAlert($ionicPopup, '验证码不正确');
-                        angular.element(document.querySelectorAll('#verify')[0]).attr('src', '/wap/user/get-verify?time=' + ar.timeStamp())
+                        angular.element(document.querySelectorAll('#verify')[0]).attr('src', '/wap/user/get-verify?time=' + ar.timeStamp());
                         return false;
                     } else {
                         $scope.closeSendCodeModal();
@@ -1751,7 +1751,7 @@ define(['app/module', 'app/directive/directiveApi'
                         });
                     }
                 });
-            }
+            };
 
             // 立即绑定
             $scope.bindNow = function () {
@@ -1780,7 +1780,7 @@ define(['app/module', 'app/directive/directiveApi'
                                         var alt = $ionicPopup.alert({
                                             template: '绑定成功',
                                             okText: '确定'
-                                        })
+                                        });
                                         alt.then(function () {
                                             $location.url('/member/security');
                                         })
@@ -1880,7 +1880,7 @@ define(['app/module', 'app/directive/directiveApi'
             $scope.addNewImg = function (name) {
                 $scope.uploaderImage(uploader, name);
                 ar.initPhotoSwipeFromDOM('.bhy-gallery', $scope, $ionicPopup);
-            }
+            };
             // 监听上传回传数据
             $scope.$on('thumb_path', function (event, name, data) {
                 if (name == 'honesty1') {
@@ -1954,7 +1954,7 @@ define(['app/module', 'app/directive/directiveApi'
             $scope.addNewImg = function (name) {
                 $scope.uploaderImage(uploader, name);
                 ar.initPhotoSwipeFromDOM('.bhy-gallery', $scope, $ionicPopup);
-            }
+            };
             // 监听上传回传数据
             $scope.$on('thumb_path', function (event, name, data) {
                 if (!$scope.authList[0]) {
@@ -1983,7 +1983,7 @@ define(['app/module', 'app/directive/directiveApi'
 
             $scope.addNewImg = function (name) {
                 $scope.uploaderImage(uploader, name);
-            }
+            };
             // 监听上传回传数据
             $scope.$on('thumb_path', function (event, name, data) {
                 if (!$scope.authList[0]) {
@@ -2012,7 +2012,7 @@ define(['app/module', 'app/directive/directiveApi'
 
             $scope.addNewImg = function (name) {
                 $scope.uploaderImage(uploader, name);
-            }
+            };
 
             // 监听上传回传数据
             $scope.$on('thumb_path', function (event, name, data) {
@@ -2112,7 +2112,7 @@ define(['app/module', 'app/directive/directiveApi'
                         $scope.money = parseInt(res.data.balance);   // 用户当前余额
                     })
                 }, 800)
-            }
+            };
 
             $scope.timestamp = ar.timeStamp();  // 当前时间戳
 
@@ -2144,7 +2144,7 @@ define(['app/module', 'app/directive/directiveApi'
                         $location.url('/charge_index?orderId=' + res.data);
                     }
                 })
-            }
+            };
 
             $scope.customizePay = function () {
                 if (!$scope.formData.customize) {
@@ -2177,7 +2177,7 @@ define(['app/module', 'app/directive/directiveApi'
                 if (res.status > 0) {
                     $scope.recordList = res.data;
                 }
-            })
+            });
 
             $scope.pageSize = 1;
             $scope.isMore = true;
@@ -2189,7 +2189,7 @@ define(['app/module', 'app/directive/directiveApi'
                 }
                 $scope.pageSize += 1;
                 $scope.$broadcast('scroll.infiniteScrollComplete');
-            }
+            };
 
             // 是否还有更多
             $scope.moreDataCanBeLoaded = function () {
@@ -2215,13 +2215,13 @@ define(['app/module', 'app/directive/directiveApi'
 
             $scope.briberyList = [];
             api.list('/wap/member/bribery-list', {flag: false, page: $scope.page}).success(function (res) {
-                var data = ar.cleanQuotes(JSON.stringify(res.data))
+                var data = ar.cleanQuotes(JSON.stringify(res.data));
                 $scope.briberyList = $scope.briberyList.concat(JSON.parse(data));
-            })
+            });
             api.list('/wap/member/bribery-list', {flag: true, page: $scope.page}).success(function (res) {
-                var data = ar.cleanQuotes(JSON.stringify(res.data))
+                var data = ar.cleanQuotes(JSON.stringify(res.data));
                 $scope.briberyList = $scope.briberyList.concat(JSON.parse(data));
-            })
+            });
 
             $scope.numAndmoney = {number: 0, money: 0.00};   // 发出的、收到的红包， 数量，总额
             for (var i in $scope.briberyList) {
@@ -2244,7 +2244,7 @@ define(['app/module', 'app/directive/directiveApi'
 
             $scope.moreDataCanBeLoaded = function () {
                 return $scope.isMore;
-            }
+            };
 
             // 切换
             $scope.showTab = function (value) {
@@ -2271,7 +2271,7 @@ define(['app/module', 'app/directive/directiveApi'
 
             api.get('/wap/member/get-user-balance', {}).success(function (res) {
                 $scope.money = parseInt(res.data.balance) / 100;   // 用户当前余额
-            })
+            });
 
             $scope.phone = $scope.userInfo.phone; // 用户绑定的手机号码
 
@@ -2307,7 +2307,7 @@ define(['app/module', 'app/directive/directiveApi'
                     if (!res) {
                         ar.saveDataAlert($ionicPopup, '获取验证码失败');
                     }
-                })
+                });
 
                 var timeTitle = 60;
                 var timer = $interval(function () {
@@ -2321,7 +2321,7 @@ define(['app/module', 'app/directive/directiveApi'
                 }, function () {
                     timeTitle -= 1;
                 });
-            }
+            };
 
             $scope.saveData = function () {
 
@@ -2342,7 +2342,7 @@ define(['app/module', 'app/directive/directiveApi'
                     } else {
                         $ionicLoading.hide();
                         ar.saveDataAlert($ionicPopup, '验证码错误');
-                        return;
+
                     }
                 })
             }
@@ -2440,7 +2440,7 @@ define(['app/module', 'app/directive/directiveApi'
                         break;
                     }
                 }
-            }
+            };
 
             $scope.saveData = function () {
                 // 验证
@@ -2494,7 +2494,7 @@ define(['app/module', 'app/directive/directiveApi'
                 } else {
                     $location.url('/member/rendezvous');
                 }
-            }
+            };
 
 
             // 约会主题
@@ -2619,7 +2619,7 @@ define(['app/module', 'app/directive/directiveApi'
                 {id: 3, title: '旅游'},
                 {id: 4, title: '运动健身'},
                 {id: -1, title: '其他'},
-            ]
+            ];
 
             // 保存，发布
             $scope.saveData = function () {
@@ -2733,7 +2733,7 @@ define(['app/module', 'app/directive/directiveApi'
                     $scope.lab.push(value);
                     $scope.nothing = true;
                 }
-            }
+            };
 
             // 删除标签
             $scope.removeLabel = function (index, value) {
@@ -2741,7 +2741,7 @@ define(['app/module', 'app/directive/directiveApi'
                     $scope.nothing = false;
                 }
                 $scope.lab.splice(index, 1);
-            }
+            };
 
             $scope.saveRequirement = function () {
                 $scope.closeRequirementModal();
@@ -2775,7 +2775,7 @@ define(['app/module', 'app/directive/directiveApi'
                     }
                     $scope.$broadcast('scroll.infiniteScrollComplete');
                 });
-            }
+            };
             // 修改约会状态
             var upStatus = function (id, status) {
                 var formData = [];
@@ -2783,7 +2783,7 @@ define(['app/module', 'app/directive/directiveApi'
                 formData.status = status;
                 api.save('/wap/rendezvous/update-status', formData).success(function (res) {
                 });
-            }
+            };
             // 只能查看最近半年的数据
             for (var i = 0; i < 6; i++) {
                 var dt = new Date();
@@ -2799,7 +2799,7 @@ define(['app/module', 'app/directive/directiveApi'
             $scope.datePicker = false;
             $scope.showDate = function () {
                 $scope.datePicker = !$scope.datePicker;
-            }
+            };
 
             // 选择日期改变样式、并查询数据
             $scope.seletedDate = function (title, time) {
@@ -2810,19 +2810,19 @@ define(['app/module', 'app/directive/directiveApi'
                 getPutList(time, 0);
                 $scope.putList = []; // 根据日期查询的数据
                 $scope.datePicker = false;
-            }
+            };
 
             $scope.isMore = true;
 
             // 加载更多
             $scope.loadMore = function () {
                 getPutList($scope.formData.date, $scope.formData.pageNum);
-            }
+            };
 
             // 是否还有更多
             $scope.moreDataCanBeLoaded = function () {
                 return $scope.isMore;
-            }
+            };
 
             // 操作
             $scope.showhandle = function (id, itemIndex) {
@@ -2866,12 +2866,12 @@ define(['app/module', 'app/directive/directiveApi'
                         }
                     }
                 });
-            }
+            };
 
             // 跳转-参与的人
             $scope.involved = function (id, theme, title) {
                 $location.url('/member/rendezvous_involved?id=' + id + '&theme=' + theme + '&title=' + title);
-            }
+            };
 
             $scope.openTxt = false;
             // 展开全文
@@ -2906,19 +2906,19 @@ define(['app/module', 'app/directive/directiveApi'
                     }
                     $scope.$broadcast('scroll.infiniteScrollComplete');
                 });
-            }
+            };
 
             $scope.isMore = true;
 
             // 加载更多
             $scope.loadMore = function () {
                 getPutList($scope.formData.pageNum);
-            }
+            };
 
             // 是否还有更多
             $scope.moreDataCanBeLoaded = function () {
                 return $scope.isMore;
-            }
+            };
 
             $scope.delPart = function (id, itemIndex) {
                 var confirmPopup = $ionicPopup.confirm({
@@ -2937,14 +2937,14 @@ define(['app/module', 'app/directive/directiveApi'
                         return false;
                     }
                 });
-            }
+            };
 
             $scope.openTxt = false;
             // 展开全文
             $scope.openText = function ($event) {
                 $event.stopPropagation();
                 $scope.openTxt = true;
-            }
+            };
 
             $scope.acceptAlert = function (phone) {
                 if (phone == null || typeof(phone) == undefined) {
@@ -2998,7 +2998,7 @@ define(['app/module', 'app/directive/directiveApi'
                         return false;
                     }
                 });
-            }
+            };
 
             // 忽略
             $scope.ignore = function (id, itemIndex) {
@@ -3073,7 +3073,7 @@ define(['app/module', 'app/directive/directiveApi'
                     $scope.showTitle = '专属红娘';
                     $scope.matchmakerList.reverse();
                 }
-            }
+            };
 
             $scope.showPhone = function () {
                 $scope.phone = $scope.matchmakerList[0].landline ? $scope.matchmakerList[0].landline : $scope.matchmakerList[0].phone;
@@ -3223,7 +3223,7 @@ define(['app/module', 'app/directive/directiveApi'
                         })
                     }
                 });
-            }
+            };
 
             // 取消关注
             $scope.delFollow = function () {
@@ -3234,7 +3234,7 @@ define(['app/module', 'app/directive/directiveApi'
                         ar.saveDataAlert($ionicPopup, '取消关注失败');
                     }
                 })
-            }
+            };
 
             // 拉黑
             $scope.pullTheBlack = function () {
@@ -3265,7 +3265,7 @@ define(['app/module', 'app/directive/directiveApi'
                 } else {
                     $scope.delFollow();
                 }
-            }
+            };
 
             $ionicModal.fromTemplateUrl('reBackModal.html', {
                 scope: $scope,
@@ -3305,7 +3305,7 @@ define(['app/module', 'app/directive/directiveApi'
 
             $scope.getVerify = function (event) {
                 event.target.src = '/wap/user/get-verify?time=' + ar.timeStamp();
-            }
+            };
 
             // 倒计时
             $scope.getCode = function () {
@@ -3325,7 +3325,7 @@ define(['app/module', 'app/directive/directiveApi'
                         $scope.openSendCodeModal();
                     }
                 })
-            }
+            };
 
             $scope.sendCode = function () {
                 if (!$scope.validate.verify) {
@@ -3335,7 +3335,7 @@ define(['app/module', 'app/directive/directiveApi'
                 api.get('/wap/user/check-code', {verify_code: $scope.validate.verify}).success(function (res) {
                     if (!res) {
                         ar.saveDataAlert($ionicPopup, '验证码不正确');
-                        angular.element(document.querySelectorAll('#verify')[0]).attr('src', '/wap/user/get-verify?time=' + ar.timeStamp())
+                        angular.element(document.querySelectorAll('#verify')[0]).attr('src', '/wap/user/get-verify?time=' + ar.timeStamp());
                         return false;
                     } else {
                         $scope.closeSendCodeModal();
@@ -3362,7 +3362,7 @@ define(['app/module', 'app/directive/directiveApi'
                     }
                 });
 
-            }
+            };
 
             // 立即绑定
             $scope.bindNow = function () {
@@ -3389,7 +3389,7 @@ define(['app/module', 'app/directive/directiveApi'
                                         var alt = $ionicPopup.alert({
                                             template: '恭喜，手机绑定成功！',
                                             okText: '确定'
-                                        })
+                                        });
                                         alt.then(function () {
                                             $scope.userInfo.phone = $scope.formData.phone;
                                             ar.setStorage("userInfo", $scope.userInfo);
@@ -3423,6 +3423,6 @@ define(['app/module', 'app/directive/directiveApi'
 
         return module;
     }
-)
+);
 
 
