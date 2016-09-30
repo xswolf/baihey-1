@@ -1,0 +1,152 @@
+.main {
+    width: 100%;
+    height: 100%;
+    background-color: #fff;
+}
+
+.center_con {
+    width: 1200px;
+    height: 100%;
+    margin: 0 auto;
+    position: relative;
+}
+
+.header {
+    background: url("/frontend/web/images/site/index_bg.jpg") no-repeat center center;
+    height: 786px;
+    width: 100%;
+}
+.header .header_top{
+    position: absolute;
+    height: 65px;
+    background: rgba(255,255,255,0.3);
+    width: 100%;
+}
+.header .header_left .warning_icon{
+    background: url("/frontend/web/images/site/warning.png") no-repeat center center;
+    width: 35px;
+    height: 65px;
+}
+.header .header_left .warning_title{
+    margin-left: 10px;
+    margin-top: 15px;
+}
+.header .header_left p{
+    color: #fff;
+    line-height: 18px;
+}
+.header .header_right{
+    background: url("/frontend/web/images/site/header_right.png") no-repeat center;
+    width: 361px;
+    height: 65px;
+}
+.header .header_con {
+    background: url("/frontend/web/images/site/header_con.png") no-repeat center bottom;
+    width: 1086px;
+    height: 100%;
+    margin: 0 auto;
+}
+.content{
+
+}
+.ourMembers_top{
+    background: url("/frontend/web/images/site/ourMembers_top.png") no-repeat center;
+    width: 100%;
+    height: 276px;
+    margin: 0 auto;
+}
+.ourMembers_con{
+    background: url("/frontend/web/images/site/ourMembers_bg.png") no-repeat center;
+    width: 100%;
+}
+.ourMembers_middle{
+    background: url("/frontend/web/images/site/ourMembers_con.png") no-repeat center;
+    width: 1200px;
+    height: 673px;
+    margin: 0 auto;
+}
+.stealthSettings_top{
+     background: url("/frontend/web/images/site/stealthSettings_top.png") no-repeat center;
+     width: 100%;
+     height: 260px;
+     margin: 0 auto;
+ }
+.stealthSettings_bg{
+    background: url("/frontend/web/images/site/stealthSettings_bg.jpg") no-repeat center;
+    width: 100%;
+}
+.stealthSettings_con{
+    width: 100%;
+}
+.stealthSettings_middle{
+    background: url("/frontend/web/images/site/stealthSettings_con.png") no-repeat center;
+    width: 1200px;
+    height: 673px;
+    margin: 0 auto;
+}
+
+.marriageCounselor_top{
+    background: url("/frontend/web/images/site/marriageCounselor_top.png") no-repeat center;
+    width: 100%;
+    height: 276px;
+}
+.marriageCounselor_bg{
+    background: url("/frontend/web/images/site/marriageCounselor_bg.jpg") no-repeat top center;
+    width: 100%;
+    padding-bottom: 83px;
+}
+.marriageCounselor_con{
+    width: 100%;
+}
+.marriageCounselor_middle{
+    background: url("/frontend/web/images/site/marriageCounselor_con.png") no-repeat center;
+    width: 1200px;
+    height: 510px;
+    margin: 0 auto;
+    position: relative;
+}
+.marriageCounselor_people{
+    background: url("/frontend/web/images/site/marriageCounselor_people.png") no-repeat center;
+    height: 638px;
+    position: absolute;
+    right: -305px;
+    top: -45px;
+    width: 616px;
+}
+.profileCompany_top{
+    background: url("/frontend/web/images/site/profileCompany_top.png") no-repeat center;
+    height: 276px;
+    width: 100%;
+}
+.profileCompany_t{
+    background: url("/frontend/web/images/site/profileCompany_t.png") no-repeat center;
+    height: 190px;
+    width: 100%;
+}
+.profileCompany_b{
+    background: url("/frontend/web/images/site/profileCompany_b.png") no-repeat center;
+    height: 455px;
+    width: 100%;
+}
+.honoraryCertificate_bg{
+    background: url("/frontend/web/images/site/honoraryCertificate_bg.jpg") no-repeat top center;
+    width: 100%;
+    padding-top: 230px;
+    padding-bottom: 60px;
+}
+.honoraryCertificate_con{
+    background: url("/frontend/web/images/site/honoraryCertificate_con.png") no-repeat center;
+    width: 1200px;
+    height: 472px;
+    margin: 0 auto;
+}
+.footer_t{
+    background: url("/frontend/web/images/site/footer_t.png") no-repeat center;
+    width: 100%;
+    height: 111px;
+}
+.footer{
+    background: url("/frontend/web/images/site/footer.png") no-repeat center;
+    width: 100%;
+    height: 277px;
+}

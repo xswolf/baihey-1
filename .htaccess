@@ -28,7 +28,7 @@ RewriteRule ^images(/.+)?$ /images$1 [L,PT]
 RewriteCond %{REQUEST_URI} ^/$
 RewriteRule ^/$ /$1 [R=301,L]
 RewriteCond %{REQUEST_URI} ^
-RewriteRule ^(/.+)?$ /frontend/web/index.html [L,PT]
+RewriteRule ^(/.+)?$ /frontend/views/site/index.html [L,PT]
 
 #RewriteCond %{REQUEST_URI} ^.*$
 #RewriteRule ^(.*)$ /frontend/web/$1
