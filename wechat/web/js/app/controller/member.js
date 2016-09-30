@@ -976,6 +976,7 @@ define(['app/module', 'app/directive/directiveApi'
             };
 
             api.list('/wap/follow/set-checked', {user_id: $scope.userInfo.id}).success(function (res) {
+                $scope.newFollow = false;
             });
 
             // 切换，我关注的人，关注我的人
