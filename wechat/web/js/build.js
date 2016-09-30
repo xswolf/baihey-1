@@ -41,7 +41,7 @@
                 'mobiscroll',
                 'photoswipe',
                 'photoswipe_ui',
-                //'info_data',
+                'info_data',
                 'ionic_gallery',
                 'filterApi',
 
@@ -68,4 +68,4 @@
         }
     },
     //name: "app.js",
-})
+});
