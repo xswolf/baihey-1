@@ -86,7 +86,7 @@ class UserController extends BaseController
                 } else {
                     // 删除登录cookie
                     Cookie::getInstance()->delLoginCookie();
-                    return $this->renderAjax(['status' => 0, 'msg' => '您的账号异常，已经被限制登录！', 'data' => []]);
+                    return $this->renderAjax(['status' => 0, 'msg' => '您的账号异常，已经被限制登录！如有疑问请致电：023-68800997。', 'data' => []]);
                 }
             } else {
                 return $this->renderAjax(['status' => 0, 'msg' => '账号或密码错误', 'data' => []]);
