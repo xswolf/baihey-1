@@ -72,7 +72,6 @@ class UserDynamic extends Base
      */
     public function getDynamicById($id)
     {
-        $loginUserId = \common\util\Cookie::getInstance()->getCookie('bhy_id')->value;
         return (new Query())
             ->from($this->tablePrefix . "user_dynamic d")
             ->innerJoin($this->tablePrefix . 'user_information i', 'd.user_id=i.user_id')
