@@ -885,12 +885,31 @@ define(['app/module', 'app/directive/directiveApi'
                 userInfo.info = JSON.parse(userInfo.info);
                 userInfo.auth = JSON.parse(userInfo.auth);
                 if (!userInfo.info.head_pic) {
-                    $ionicPopup.alert({
-                        template: '没有头像不可以发布动态哦，点击确定去设置头像！',
-                        okText: '确定'
-                    }).then(function () {
-                        $location.url('/member/information');
+                    var cfHead = $ionicPopup.confirm({
+                        title:'实名制婚恋网',
+                        template: '没有头像不可以发布动态哦！',
+                        okText: '去上传头像',
+                        cancelText: '取消'
+                    })
+                    cfHead.then(function (res) {
+                        if(res){
+                            $location.url('/member/information');
+                        }
                     });
+                    return false;
+                }
+                if(userInfo.info.level < 1){
+                    var cfVIP = $ionicPopup.confirm({
+                        title:'实名制婚恋网',
+                        template: 'VIP会员才可以发布动态哦！现在开通VIP，即刻享受超级特权。',
+                        okText: '去开通',
+                        cancelText:'考虑一下'
+                    })
+                    cfVIP.then(function(res){
+                        if(res){
+                            $location.url('/member/vip');
+                        }
+                    })
                     return false;
                 }
 
