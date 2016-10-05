@@ -21,6 +21,9 @@ function getAge($timeStamp)
 // 时间戳转日期
 function timeStampToDate($timeStamp)
 {
+    if(empty($timeStamp) || $timeStamp < 1){
+        return ' ';
+    }
     return date('Y-m-d H:i:s', $timeStamp);
 }
 

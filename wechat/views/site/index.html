@@ -69,12 +69,7 @@
                         <span ng-if="user.info.is_marriage"
                               class="cor19 fs12">{{user.info.is_marriage | marriage}}</span>
                     </h2>
-                    <!--<p class="fr local" ng-if="user.info.local">
-                        <i class="ion-android-pin calm"></i>
-                        {{user.info.local}}
-                    </p>-->
                 </div>
-
                 <p>
                     <span ng-if="honesty(user.honesty_value)" class="identity id">身份证</span>
                     <span ng-if="user.phone" class="identity phone">手机</span>
@@ -85,15 +80,14 @@
                 </p>
                 <p class="signature mt5">{{user.personalized}}</p>
             </a>
-
-        </div>
-        <ion-infinite-scroll ng-if="moreDataCanBeLoaded()" on-infinite="loadMore()" immediate-check="true"></ion-infinite-scroll>
-
-        <ion-list ng-if="userList.length <= 0  && !dataLoading">
-            <ion-item>
+            <ion-item ng-if="!pageLast && userList.length > 0 && !dataLoading">
+                <p class="tac">没有更多了</p>
+            </ion-item>
+            <ion-item ng-if="userList.length < 1  && !dataLoading">
                 <p class="tac">没有相关的数据，您可以放宽搜索条件后再试！</p>
             </ion-item>
-        </ion-list>
+        </div>
+        <ion-infinite-scroll ng-if="moreDataCanBeLoaded()" on-infinite="loadMore()" immediate-check="true"></ion-infinite-scroll>
     </ion-content>
     <!-- <script id="selCityModal.html" type="text/ng-template">  TODO 此功能暂时屏蔽
          <ion-modal-view>

@@ -788,7 +788,7 @@ class User extends Base
      */
     public function getPayAll($userId)
     {
-        return (new Query())->from($this->tablePrefix . 'charge_order')->where(['user_id' => $userId])->sum("money");
+        return (new Query())->from($this->tablePrefix . 'charge_order')->where(['user_id' => $userId,'status'=> 1])->sum("money");
     }
 
     /**

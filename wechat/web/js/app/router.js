@@ -235,7 +235,7 @@ define(["app/module", 'app/service/serviceApi'],
 
                 } else {
                     if (ar.getCookie('wx_login') == 'out') {
-                        ar.saveDataAlert($ionicPopup, '您的账号异常，已经被限制登录！');
+                        ar.saveDataAlert($ionicPopup, '您的账号异常，已经被限制登录！如有疑问请致电：023-68800997。');
                         ar.delCookie('wx_login');
                     }
                     ar.setStorage('userInfo', null);

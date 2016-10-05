@@ -144,6 +144,10 @@ define(['app/module', 'app/directive/directiveApi'
                 }
                 $scope.page += 1;
                 ar.initPhotoSwipeFromDOM('.bhy-gallery', $scope, $ionicPopup);
+            }).error(function(){
+                $timeout(function(){
+                    $scope.$broadcast('scroll.infiniteScrollComplete');
+                },800);
             }).finally(function () {
                 $timeout(function(){
                     $scope.$broadcast('scroll.infiniteScrollComplete');

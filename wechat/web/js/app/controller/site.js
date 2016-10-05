@@ -171,7 +171,6 @@ define(['app/module', 'app/directive/directiveApi'
         // 加载更多
         $scope.loadMore = function (flag) {
             try {
-
                 $scope.dataLoading = true;
                 api.list('/wap/site/user-list', $scope.searchForm).success(function (res) {
                     $scope.searchForm.pageNum += 1;

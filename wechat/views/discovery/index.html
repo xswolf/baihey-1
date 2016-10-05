@@ -62,8 +62,10 @@
 
                 </div>
             </div>
+            <ion-item ng-if="!isMore">
+                <p class="tac">没有更多了</p>
+            </ion-item>
         </div>
-
         <ion-infinite-scroll
                 ng-if="moreDataCanBeLoaded()"
                 on-infinite="loadMore()"
