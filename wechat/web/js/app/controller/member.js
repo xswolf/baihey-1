@@ -183,6 +183,8 @@ define(['app/module', 'app/directive/directiveApi'
                                         }
                                     }
                                     hideSheet();
+                                    var imgList_isCheck = $filter('filter')($scope.imgList, {is_check: 1});
+                                    $scope.isCheckNumber = imgList_isCheck.length;
                                 });
 
                             } else {
