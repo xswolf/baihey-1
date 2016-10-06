@@ -2107,6 +2107,13 @@ define(['app/module', 'app/directive/directiveApi'
                 $scope.vipModal = modal;
             });
 
+            $scope.openVipModal = function() {
+                $scope.vipModal.show();
+            };
+            $scope.closeVipModal = function() {
+                $scope.vipModal.hide();
+            };
+
         }]);
 
 
