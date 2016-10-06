@@ -2100,7 +2100,7 @@ define(['app/module', 'app/directive/directiveApi'
                 })
             }
 
-            $ionicModal.fromTemplateUrl('/wechat/web/templates/vip_privilege.html', {
+            $ionicModal.fromTemplateUrl('/wechat/web/templates/vip_info.html', {
                 scope: $scope,
                 animation: 'slide-in-right'
             }).then(function (modal) {
