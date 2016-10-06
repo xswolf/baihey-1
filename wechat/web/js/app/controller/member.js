@@ -888,27 +888,27 @@ define(['app/module', 'app/directive/directiveApi'
                 userInfo.auth = JSON.parse(userInfo.auth);
                 if (!userInfo.info.head_pic) {
                     var cfHead = $ionicPopup.confirm({
-                        title:'实名制婚恋网',
+                        title: '实名制婚恋网',
                         template: '没有头像不可以发布动态哦！',
                         okText: '去上传头像',
                         cancelText: '取消'
                     })
                     cfHead.then(function (res) {
-                        if(res){
+                        if (res) {
                             $location.url('/member/information');
                         }
                     });
                     return false;
                 }
-                if(userInfo.info.level < 1){
+                if (userInfo.info.level < 1) {
                     var cfVIP = $ionicPopup.confirm({
-                        title:'实名制婚恋网',
+                        title: '实名制婚恋网',
                         template: 'VIP会员才可以发布动态哦！现在开通VIP，即刻享受超级特权。',
                         okText: '去开通',
-                        cancelText:'考虑一下'
+                        cancelText: '考虑一下'
                     })
-                    cfVIP.then(function(res){
-                        if(res){
+                    cfVIP.then(function (res) {
+                        if (res) {
                             $location.url('/member/vip');
                         }
                     })
@@ -1959,7 +1959,7 @@ define(['app/module', 'app/directive/directiveApi'
                             title: '提示',
                             template: '保存成功！点击确定返回上页！'
                         });
-                        alertPopup.then(function(res) {
+                        alertPopup.then(function (res) {
                             history.go(-1);
                         });
                     });
@@ -2056,59 +2056,13 @@ define(['app/module', 'app/directive/directiveApi'
         }]);
 
         // 开通VIP
-        module.controller("member.vip", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$interval', '$location', function (api, $scope, $timeout, $ionicPopup, $interval, $location) {
-            $scope.formData = [];
+        module.controller("member.vip", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$interval', '$location', '$ionicModal', function (api, $scope, $timeout, $ionicPopup, $interval, $location, $ionicModal) {
+            $scope.formData = {};
 
             // 商品列表
-            api.save('/wap/charge/get-charge-goods-list', {type: 1}).success(function (res) {
+            api.save('/wap/charge/get-charge-goods-list', {type: 1, status: 1}).success(function (res) {
                 $scope.goodsList = res;
             });
-
-            /*var tid = $interval(function () {
-             var totalSec = getTotalSecond($scope.formData.timer) - 1;
-             if (totalSec >= 0) {
-             $scope.formData.timer = getNewSyTime(totalSec);
-             } else {
-             $interval.cancel(tid);
-             }
-
-             }, 1000);
-
-             //根据剩余时间字符串计算出总秒数
-             function getTotalSecond(timestr) {
-             var reg = /\d+/g;
-             var timenums = new Array();
-             while ((r = reg.exec(timestr)) != null) {
-             timenums.push(parseInt(r));
-             }
-             var second = 0, i = 0;
-             if (timenums.length == 4) {
-             second += timenums[0] * 24 * 3600;
-             i = 1;
-             }
-             second += timenums[i] * 3600 + timenums[++i] * 60 + timenums[++i];
-             return second;
-             }
-
-             //根据剩余秒数生成时间格式
-             function getNewSyTime(sec) {
-             var s = sec % 60;
-             sec = (sec - s) / 60; //min
-             var m = sec % 60;
-             sec = (sec - m) / 60; //hour
-             var h = sec % 24;
-             var d = (sec - h) / 24;//day
-             var syTimeStr = "";
-             if (d > 0) {
-             syTimeStr += d.toString() + "天";
-             }
-
-             syTimeStr += ("0" + h.toString()).substr(-2) + "时"
-             + ("0" + m.toString()).substr(-2) + "分"
-             + ("0" + s.toString()).substr(-2) + "秒";
-
-             return syTimeStr;
-             }*/
 
             // 生成订单并跳转支付
             $scope.createOrder = function (_goodsId) {
@@ -2123,6 +2077,13 @@ define(['app/module', 'app/directive/directiveApi'
                     }
                 })
             }
+
+            $ionicModal.fromTemplateUrl('/wechat/web/templates/vip_privilege.html', {
+                scope: $scope,
+                animation: 'slide-in-right'
+            }).then(function (modal) {
+                $scope.vipModal = modal;
+            });
 
         }]);
 
