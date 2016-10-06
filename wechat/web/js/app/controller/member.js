@@ -1955,7 +1955,13 @@ define(['app/module', 'app/directive/directiveApi'
                         userInfo.auth = JSON.stringify(userInfo.auth);
                         ar.setStorage("userInfo", userInfo);
                         $scope.sfzCheck = 2;
-                        ar.saveDataAlert($ionicPopup, '保存成功！')
+                        var alertPopup = $ionicPopup.alert({
+                            title: '提示',
+                            template: '保存成功！点击确定返回上页！'
+                        });
+                        alertPopup.then(function(res) {
+                            history.go(-1);
+                        });
                     });
                 });
             }
