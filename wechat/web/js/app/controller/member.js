@@ -1312,8 +1312,13 @@ define(['app/module', 'app/directive/directiveApi'
                     userInfo.info = JSON.stringify(userInfo.info);
                     userInfo.auth = JSON.stringify(userInfo.auth);
                     ar.setStorage("userInfo", userInfo);
-                    ar.saveDataAlert($ionicPopup, '保存成功');
-                    $location.url('/member/privacy');
+                    var alertPopup = $ionicPopup.alert({
+                        title: '提示',
+                        template: '保存成功！'
+                    });
+                    alertPopup.then(function (res) {
+                        history.go(-1);
+                    });
                 });
             }
 
