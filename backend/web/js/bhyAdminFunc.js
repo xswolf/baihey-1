@@ -270,8 +270,8 @@ var bhyFunc = {
                 layer.close(index);
             });
         } else {
-            this.ajaxRequest('/admin/member/switch', {
-                user_id: this.user_id,
+            bhyFunc.ajaxRequest('/admin/member/switch', {
+                user_id: bhyFunc.user_id,
                 status: 1,
                 field: 'status'
             }, function (res) {

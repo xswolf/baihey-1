@@ -143,7 +143,7 @@
 
                                         <a onclick='bhyFunc.addBlacklist("{{$user.id}}")' id="addBlacklist" href="javascript:;" class="list-group-item">
                                             <i class="fa fa-minus-circle fa-fw"></i>
-                                            <span id="userBlackList">{{if $user.is_show != 3}}列入黑名单{{else}}解除黑名单{{/if}}</span></a>
+                                            <span id="userBlackList">{{if $user.status != 3}}列入黑名单{{else}}解除黑名单{{/if}}</span></a>
                                         {{/if}}
                                     </div>
                                 </div>
