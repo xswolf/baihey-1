@@ -1288,6 +1288,23 @@ define(['app/module', 'app/directive/directiveApi'
             $scope.formData.privacy_pic = $scope.userInfo.privacy_pic ? $scope.userInfo.privacy_pic : 1;
 
             $scope.saveData = function () {
+                var userInfo = ar.getStorage('userInfo');
+                userInfo.info = JSON.parse(userInfo.info);
+                userInfo.auth = JSON.parse(userInfo.auth);
+                if ($scope.formData.privacy_pic != 1 && userInfo.info.level < 1) {
+                    var cfVIP = $ionicPopup.confirm({
+                        title: '实名制婚恋网',
+                        template: 'VIP会员才可以设置照片展示权限哦！现在开通VIP，即刻享受更多超级特权。',
+                        okText: '去开通',
+                        cancelText: '考虑一下'
+                    })
+                    cfVIP.then(function (res) {
+                        if (res) {
+                            $location.url('/member/vip');
+                        }
+                    })
+                    return false;
+                }
                 $scope.userInfo.privacy_pic = $scope.formData.privacy_pic;
                 api.save('/wap/member/save-data', $scope.userInfo).success(function (res) {
                     ar.setStorage("userInfo", $scope.userInfo);
