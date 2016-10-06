@@ -442,6 +442,7 @@
                                             <th>点赞数</th>
                                             <th>评论数</th>
                                             <th>发布时间</th>
+                                            <th>操作</th>
                                         </tr>
                                         </thead>
                                         <tbody>
@@ -454,6 +455,7 @@
                                             <td>{{$vo.like_num}}</td>
                                             <td>{{$vo.comment_num}}</td>
                                             <td>{{date('Y-m-d H:i:s' , $vo.create_time)}}</td>
+                                            <td><a onclick="bhyFunc.deleteItemByList({{$vo.id}},this,'/admin/member/delete-dynamic');" href="javascript:;">删除</a></td>
                                         </tr>
                                         {{/foreach}}
                                         </tbody>

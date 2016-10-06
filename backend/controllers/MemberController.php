@@ -542,4 +542,15 @@ class MemberController extends BaseController
         }
     }
 
+    // 删除动态
+    public function actionDeleteDynamic()
+    {
+        $data = $this->post;
+        if ($result = UserDynamic::getInstance()->deleteDynamic($data['id'])) {
+            $this->renderAjax(['status' => 1, 'data' => $result, 'msg' => '删除成功']);
+        } else {
+            $this->renderAjax(['status' => 0, 'data' => [], 'msg' => '删除失败']);
+        }
+    }
+
 }
