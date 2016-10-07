@@ -21,7 +21,7 @@
                     <span ng-if="userInfo.info.real_name">{{userInfo.info.real_name | sex:userInfo.sex:userInfo.info.age:userInfo.id}}，您好！</span>
                     <span ng-if="!userInfo.info.real_name">会员{{userInfo.id}}，您好！</span>
                 </h2>
-                <span class="cor20 user_id"><span ng-if="userInfo.is_show == 1">ID:{{userInfo.id}}</span><i ng-if="userInfo.is_show == 0" class="icon-flag-hide fs24 cor21"></i></span>
+                <span class="cor20 user_id"><span ng-if="userInfo.is_show == 1">ID:{{userInfo.id}}</span><span ng-if="userInfo.is_show == 0" class="infoSafe_flag">资料隐身</span></span>
                 <p ng-if="userInfo.id < 10000" class="clearfix">
                     <span class="identity phone">官方</span>
                 </p>

@@ -522,3 +522,9 @@ span.under {
   width: 100%;
   z-index: 99;
 }
+.infoSafe_flag{
+  background: #909090;
+  color: #fff;
+  padding: 3px 6px;
+  border-radius: 99px;
+}
