@@ -265,7 +265,7 @@ define(['app/module', 'app/directive/directiveApi'
                 if(($scope.userInfo.honesty_value & 16) > 0){
                     var confirmVipPopup = $ionicPopup.confirm({
                         title: '提示',
-                        template: '开通VIP即可免费畅聊，还可享受更多超级特权！',
+                        template: '您还未成为嘉瑞VIP会员，无法继续聊天。开通VIP即可畅聊，还可享受更多超级特权！',
                         okText: '现在去开通',
                         cancelText: '考虑一下'
                     });
