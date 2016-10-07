@@ -291,6 +291,7 @@ var bhyFunc = {
         }
         var t = $('#userSetVipChat').text();
         if (t == '开启VIP聊天权限') {
+
             layer.confirm('开启VIP聊天权限，该用户必须开通VIP才可聊天，您确定吗？', {icon: 3, title: '提示'}, function (index) {
                 bhyFunc.ajaxRequest('/admin/member/set-vip-chat', {
                     user_id: bhyFunc.user_id,
@@ -299,6 +300,7 @@ var bhyFunc = {
                     if (res.status == 1) {
                         layer.msg('开启成功！');
                         $('#userSetVipChat').text('关闭VIP聊天权限');
+                        $('#userSetVipChat').addClass('text-danger');
                     } else {
                         layer.msg('开启失败!');
                     }
@@ -306,6 +308,7 @@ var bhyFunc = {
                 layer.close(index);
             });
         } else {
+
             bhyFunc.ajaxRequest('/admin/member/set-vip-chat', {
                 user_id: bhyFunc.user_id,
                 honesty_value: -16
@@ -313,6 +316,7 @@ var bhyFunc = {
                 if (res.status == 1) {
                     layer.msg('关闭成功！');
                     $('#userSetVipChat').text('开启VIP聊天权限');
+                    $('#userSetVipChat').removeClass('text-danger');
                 } else {
                     layer.msg('关闭失败!');
                 }

@@ -148,7 +148,7 @@
                                         {{if authValidate('/admin/member/set-vip-chat')}}
                                         <a onclick='bhyFunc.setVipChat("{{$user.info->level}}")' id="setVipChat" href="javascript:;" class="list-group-item">
                                             <i class="fa fa-minus-circle fa-fw"></i>
-                                            <span id="userSetVipChat">{{if !($user.honesty_value & 16) }}开启VIP聊天权限{{else}}关闭VIP聊天权限{{/if}}</span></a>
+                                            <span class="{{if $user.honesty_value & 16}}text-danger{{/if}}" id="userSetVipChat">{{if !($user.honesty_value & 16) }}开启VIP聊天权限{{else}}关闭VIP聊天权限{{/if}}</span></a>
                                         {{/if}}
                                     </div>
                                 </div>
