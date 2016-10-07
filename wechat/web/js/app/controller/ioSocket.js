@@ -253,15 +253,27 @@ define(['app/module', 'app/directive/directiveApi'
                     confirmPopup.then(function (res) {
                         if(res){
                             $location.url('/member/bindPhone');
-                        }else {
-                            return;
                         }
-
                     });
                     return;
                 }
                 if ($scope.userInfo.id == $location.$$search.id) {    // 不能与自己聊天  TODO
                     ar.saveDataAlert($ionicPopup, '您不能与自己聊天！');
+                    return;
+                }
+
+                if(($scope.userInfo.honesty_value & 16) > 0){
+                    var confirmVipPopup = $ionicPopup.confirm({
+                        title: '提示',
+                        template: '开通VIP即可免费畅聊，还可享受更多超级特权！',
+                        okText: '现在去开通',
+                        cancelText: '考虑一下'
+                    });
+                    confirmVipPopup.then(function (res) {
+                        if(res){
+                            $location.url('/member/vip');
+                        }
+                    });
                     return;
                 }
 

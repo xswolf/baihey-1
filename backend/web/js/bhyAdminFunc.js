@@ -201,7 +201,7 @@ var bhyFunc = {
             }
         })
     },
-    resetPass: function (user_id) {  // 重置密码
+    resetPass: function () {  // 重置密码
         layer.confirm('确定重置该用户密码吗？', {icon: 3, title: '提示'}, function (index) {
             bhyFunc.ajaxRequest('/admin/member/switch', {user_id: bhyFunc.user_id, field: 'password'}, function (res) {
                 if (res.status == 1) {
@@ -214,7 +214,7 @@ var bhyFunc = {
         });
     },
     isShow: $('#is-show').data('isshow'),
-    closeUserInfo: function (a, user_id) {   // 开关用户资料
+    closeUserInfo: function (a) {   // 开关用户资料
         var isShow = this.isShow;
         var status = $('#status').data('status');
         if (status != 2) {
@@ -251,7 +251,7 @@ var bhyFunc = {
         });
 
     },
-    addBlacklist: function (user_id) {
+    addBlacklist: function () {
         var t = $('#userBlackList').text();
         if (t == '列入黑名单') {
             layer.confirm('列入黑名单后，该用户无法登录，您确定吗？', {icon: 3, title: '提示'}, function (index) {
@@ -280,6 +280,37 @@ var bhyFunc = {
                     $('#userBlackList').text('列入黑名单');
                 } else {
                     layer.msg('解除黑名单失败!');
+                }
+            })
+        }
+    },
+    setVipChat: function(){
+        var t = $('#userSetVipChat').text();
+        if (t == '开启VIP聊天权限') {
+            layer.confirm('开启VIP聊天权限，该用户必须开通VIP才可聊天，您确定吗？', {icon: 3, title: '提示'}, function (index) {
+                bhyFunc.ajaxRequest('/admin/member/set-vip-chat', {
+                    user_id: bhyFunc.user_id,
+                    honesty_value: 16
+                }, function (res) {
+                    if (res.status == 1) {
+                        layer.msg('开启成功！');
+                        $('#userSetVipChat').text('关闭VIP聊天权限');
+                    } else {
+                        layer.msg('开启失败!');
+                    }
+                })
+                layer.close(index);
+            });
+        } else {
+            bhyFunc.ajaxRequest('/admin/member/set-vip-chat', {
+                user_id: bhyFunc.user_id,
+                honesty_value: -16
+            }, function (res) {
+                if (res.status == 1) {
+                    layer.msg('关闭成功！');
+                    $('#userSetVipChat').text('开启VIP聊天权限');
+                } else {
+                    layer.msg('关闭失败!');
                 }
             })
         }

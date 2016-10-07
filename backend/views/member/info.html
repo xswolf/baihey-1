@@ -134,17 +134,20 @@
                                                 class="fa fa-comment-o fa-fw"></i> 发站内信</a>
                                         {{/if}}
                                         {{if authValidate('/admin/member/switch')}}
-                                        <a onclick='bhyFunc.resetPass("{{$user.id}}")' href="javascript:;" class="list-group-item"><i
+                                        <a onclick='bhyFunc.resetPass()' href="javascript:;" class="list-group-item"><i
                                                 class="fa fa-unlock-alt fa-fw"></i> 重置密码</a>
 
-                                        <a onclick='bhyFunc.closeUserInfo(this , "{{$user.id}}")' id="is-show" data-isshow="{{$user.is_show}}" href="javascript:;" class="list-group-item">
+                                        <a onclick='bhyFunc.closeUserInfo(this)' id="is-show" data-isshow="{{$user.is_show}}" href="javascript:;" class="list-group-item">
                                             <i class="fa fa-power-off fa-fw"></i>
                                             <span id="closeUserInfoBtnTitle">{{if $user.is_show == 1}}关闭资料{{else}}开放资料{{/if}}</span></a>
 
-                                        <a onclick='bhyFunc.addBlacklist("{{$user.id}}")' id="addBlacklist" href="javascript:;" class="list-group-item">
+                                        <a onclick='bhyFunc.addBlacklist()' id="addBlacklist" href="javascript:;" class="list-group-item">
                                             <i class="fa fa-minus-circle fa-fw"></i>
                                             <span id="userBlackList">{{if $user.status != 3}}列入黑名单{{else}}解除黑名单{{/if}}</span></a>
                                         {{/if}}
+                                        <a onclick='bhyFunc.setVipChat()' id="setVipChat" href="javascript:;" class="list-group-item">
+                                            <i class="fa fa-minus-circle fa-fw"></i>
+                                            <span id="userSetVipChat">{{if !($user.honesty_value & 16) }}开启VIP聊天权限{{else}}关闭VIP聊天权限{{/if}}</span></a>
                                     </div>
                                 </div>
 
