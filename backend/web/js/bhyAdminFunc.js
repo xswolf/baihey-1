@@ -286,7 +286,7 @@ var bhyFunc = {
     },
     setVipChat: function(level){
         if(level && level > 0){
-            layer.msg('操作失败，该会员已开通VIP！')
+            layer.msg('操作失败，该会员已开通VIP！');
             return false;
         }
         var t = $('#userSetVipChat').text();
