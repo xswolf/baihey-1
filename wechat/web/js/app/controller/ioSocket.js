@@ -21,7 +21,7 @@ define(['app/module', 'app/directive/directiveApi'
                 }
             }
             return list;
-        }
+        };
         $scope.sendId = ar.getCookie("bhy_user_id");
         $scope.receiveId = $location.search().id;
 
@@ -36,7 +36,7 @@ define(['app/module', 'app/directive/directiveApi'
             } else {
                 $scope.send_content = "[" + config_infoData.emoji[val] + ":" + val + "]";
             }
-        }
+        };
 
         $scope.showEmojiEvent = function () {
             if (angular.element(document.querySelectorAll('#emojiWrapper')).hasClass('ng-hide')) {
@@ -45,7 +45,7 @@ define(['app/module', 'app/directive/directiveApi'
                 angular.element(document.querySelectorAll('#emojiWrapper')).addClass('ng-hide');
             }
 
-        }
+        };
 
         angular.element(document.body).bind('click', function (e) {
             if (e.target.id != 'emojiWrapper' && !e.target.id && e.target.id != 'expr' && !e.target.title) {
@@ -55,7 +55,7 @@ define(['app/module', 'app/directive/directiveApi'
 
         $scope.blackListAlert = function () {
             if ($scope.dataFilter.blacked.indexOf($scope.receiveId) > -1) {   // 已被对方拉黑，不可查看对方资料
-                ar.saveDataAlert($ionicPopup, '您已被对方拉黑，不可查看对方资料。')
+                ar.saveDataAlert($ionicPopup, '您已被对方拉黑，不可查看对方资料。');
                 return;
             }
             if ($scope.receiveId >= 10000) {
@@ -63,7 +63,7 @@ define(['app/module', 'app/directive/directiveApi'
             } else {
                 $location.url('/admin_info?userId=' + $scope.receiveId)
             }
-        }
+        };
         // 身份证认证
         api.list("/wap/member/honesty-photo", {user_id: $scope.receiveId}).success(function (res) {
             $scope.userSfzCheck = res.sfz;
@@ -72,7 +72,7 @@ define(['app/module', 'app/directive/directiveApi'
         $scope.hideMultiOnKeyboard = function () {
             angular.element(document.querySelector('#multi_con')).css('bottom', '-110px');
             angular.element(document.querySelector('#msg_footer_bar')).css('bottom', '0');
-        }
+        };
 
         var viewScroll = $ionicScrollDelegate.$getByHandle('messageDetailsScroll');
 
@@ -110,7 +110,7 @@ define(['app/module', 'app/directive/directiveApi'
             if (index < 1) return true;
             if (!time) return false;
             return (time - $scope.historyList[index - 1].create_time) > 300;
-        }
+        };
 
         $scope.followData = {};
         $scope.followData.user_id = $scope.sendId;
@@ -140,7 +140,7 @@ define(['app/module', 'app/directive/directiveApi'
                     ar.saveDataAlert($ionicPopup, '加关注成功');
                 }
             });
-        }
+        };
 
         // 用户身份是否验证 TODO 用户验证了之后localStorage是否能够得到更新
         var userInfoList = ar.getStorage('messageList-' + userId);
@@ -151,14 +151,15 @@ define(['app/module', 'app/directive/directiveApi'
         }
 
         //  获取历史聊天数据
-        $scope.real_name = $location.search().real_name;
-        $scope.sex = $location.search().sex;
-        $scope.age = $location.search().age;
-        $scope.report_flag = $location.search().report_flag;
-        $scope.receiveHeadPic = $location.search().head_pic.replace(/~2F/g, "/");
         $scope.sendHeadPic = JSON.parse(ar.getStorage('userInfo').info).head_pic;
         api.getUserInfo($scope.receiveId).success(function (res) {
             $rootScope.receiveUserInfo = res.data;
+            var info = JSON.parse(res.data.info);
+            $scope.real_name = info.real_name;
+            $scope.sex = res.data.sex;
+            $scope.age = res.data.age;
+            $scope.report_flag = res.data.age.report_flag;
+            $scope.receiveHeadPic = info.head_pic;
         });
 
         api.list("/wap/message/message-history", {id: $scope.receiveId}).success(function (res) {
@@ -185,7 +186,7 @@ define(['app/module', 'app/directive/directiveApi'
 
         }).error(function () {
             console.log('页面message.js出现错误，代码：/wap/chat/message-history');
-        })
+        });
 
         // 实例化上传图片插件
         $scope.uploader = new FileUploader({url: '/wap/file/thumb'});
@@ -239,7 +240,7 @@ define(['app/module', 'app/directive/directiveApi'
 
                 socket.emit('chat message', message);
 
-            }
+            };
 
             // 发送文本消息调用接口
             $scope.send = function () {
@@ -285,7 +286,7 @@ define(['app/module', 'app/directive/directiveApi'
                     $scope.send_content = '';
                 }
 
-            }
+            };
 
             // 发送图片
             $scope.send_pic = function () {
@@ -298,7 +299,7 @@ define(['app/module', 'app/directive/directiveApi'
                     name: 'file-size-Res',
                     fn: function (item) {
                         if (item.size > 8388608) {
-                            ar.saveDataAlert($ionicPopup, '请选择小于8MB的图片！')
+                            ar.saveDataAlert($ionicPopup, '请选择小于8MB的图片！');
                             return false;
                         }
                         return true;
@@ -370,7 +371,7 @@ define(['app/module', 'app/directive/directiveApi'
                     }
                 }
 
-            }
+            };
 
             // 消息响应回调函数
             socket.on($scope.sendId + '-' + $scope.receiveId, function (response) {
@@ -416,7 +417,7 @@ define(['app/module', 'app/directive/directiveApi'
                     list = $rootScope.historyListHide = $rootScope.historyList = $scope.historyList;
                     ar.setStorage('chat_messageHistory-' + $scope.receiveId + '-' + userId, $scope.historyList); // 每次发送消息后把消息放到浏览器端缓存
 
-                }
+                };
 
                 switch (response.type) {
                     case 'record': // 录音
@@ -437,5 +438,5 @@ define(['app/module', 'app/directive/directiveApi'
     }]);
 
 
-})
+});
 

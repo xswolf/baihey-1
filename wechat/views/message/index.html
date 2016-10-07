@@ -17,7 +17,7 @@
     <ion-content class="has-header bhy-has-footer message">
         <ion-list show-delete="shouldShowDelete">
             <!--  href="#/chat1?id={{messageInfo.other}}&head_pic={{messageInfo.info.head_pic}}&real_name={{messageInfo.info.real_name}}&sex={{messageInfo.sex}}&age={{messageInfo.info.age}}" -->
-            <ion-item ng-repeat="messageInfo in messageList  | orderBy:'order_time':true" href="#/chat1/{{messageInfo.other}}?id={{messageInfo.other}}&head_pic={{messageInfo.info.head_pic}}&real_name={{messageInfo.info.real_name}}&sex={{messageInfo.sex}}&age={{messageInfo.info.age}}&report_flag={{messageInfo.report_flag}}">
+            <ion-item ng-repeat="messageInfo in messageList  | orderBy:'order_time':true" href="#/chat1/{{messageInfo.other}}?id={{messageInfo.other}}">
                 <ion-delete-button class="ion-minus-circled" ng-click="removeItem(messageInfo,$event)"></ion-delete-button>
                 <div class="row">
                     <div class="msg_u_img mr20 pr fl">
