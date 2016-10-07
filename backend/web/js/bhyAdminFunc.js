@@ -284,7 +284,11 @@ var bhyFunc = {
             })
         }
     },
-    setVipChat: function(){
+    setVipChat: function(level){
+        if(level && level > 0){
+            layer.msg('操作失败，该会员已开通VIP！')
+            return false;
+        }
         var t = $('#userSetVipChat').text();
         if (t == '开启VIP聊天权限') {
             layer.confirm('开启VIP聊天权限，该用户必须开通VIP才可聊天，您确定吗？', {icon: 3, title: '提示'}, function (index) {

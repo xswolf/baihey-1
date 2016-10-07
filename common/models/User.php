@@ -541,6 +541,12 @@ class User extends Base
         // 修改余额
         $user = $this->changeBalance($user_id, $goods['price']);
 
+
+        if($userInfo['honesty_value'] & 16){
+            $nData['honesty_value'] = intval($userInfo['honesty_value']) - 16;
+            UserInformation::getInstance()->updateUserInfo($user_id,$nData);
+        }
+
         // 修改到期时间
         $_user_information_table = $this->tablePrefix . 'user_information';// 表名
         $userInfo['mature_time'] = YII_BEGIN_TIME > $userInfo['mature_time'] ? YII_BEGIN_TIME + $time : $userInfo['mature_time'] + $time;
