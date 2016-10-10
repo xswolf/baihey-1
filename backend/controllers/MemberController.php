@@ -57,7 +57,7 @@ class MemberController extends BaseController
 
     }
 
-    private function searchWhere(&$andWhere, $get)
+    private function searchWhere(&$andWhere, $get , &$order)
     {
         foreach ($get as $k => $v) {
             if ($v == '' || !in_array($k, ['matchmaker', 'matchmaking', 'intention', 'constellation', 'zodiac', 'level', 'is_car', 'is_purchase', 'occupation', 'is_child', 'is_marriage', 'year_income', 'education', 'is_show', 'status', 'sex', 'age1', 'age2', 'height', 'province', 'city', 'area'])) continue;
@@ -72,6 +72,7 @@ class MemberController extends BaseController
                 if ($k == 'status' && $v == 5) {
                     $andWhere[] = [">", 'user_id', 12493];
                     $v = 2;
+                    $order = 'service_status desc';
                 }
                 $andWhere[] = ["=", $k, $v];
             }
@@ -104,11 +105,11 @@ class MemberController extends BaseController
             }
 
         } else {
-            $this->searchWhere($andWhere, $request->get());
+            $this->searchWhere($andWhere, $request->get() , $order);
         }
 
 
-        $list = User::getInstance()->lists($start, $limit, $andWhere);
+        $list = User::getInstance()->lists($start, $limit, $andWhere , $order);
         $count = User::getInstance()->count($andWhere);
         foreach ($list as $k => $v) {
 

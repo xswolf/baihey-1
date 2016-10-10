@@ -10,16 +10,19 @@ class User extends Base
 {
 
 
-    public function lists($start, $limit, $andWhere = [])
+    public function lists($start, $limit, $andWhere = [] , $order='')
     {
 
         $handle = (new Query())->from($this->tablePrefix . 'user u')
             ->innerJoin($this->tablePrefix . 'user_information i', 'u.id=i.user_id')
             ->select("*")
-            ->orderBy('id desc')
             ->offset($start)
             ->limit($limit);
-
+        if ($order == ''){
+            $handle->orderBy('id desc');
+        }else{
+            $handle->orderBy($order);
+        }
         if (count($andWhere) > 0) {
             foreach ($andWhere as $v) {
                 $handle->andWhere($v);
