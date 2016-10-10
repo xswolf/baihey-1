@@ -367,13 +367,19 @@ define(["app/module", 'app/service/serviceApi'],
                                     $rootScope.messageList = storageList;
                                     ar.setStorage('messageList-'+userId, storageList)
 
-                                });
+                                }).error(function(response){
+                                    alert('获取聊天信息出错！');
+                                    console.log(response);
+                                });;
                             },
                             // 读取黑名单，认证相关信息
                             indexIsShowData : function () {
                                 api.list("/wap/user/index-is-show-data", {}).success(function (res) {
                                     $scope.dataFilter = res;
-                                });
+                                }).error(function(response){
+                                    alert('获取黑名单信息出错！');
+                                    console.log(response);
+                                });;
                             },
                             // 监听是否有新的用户关注自己 “个人”导航添加红点
                             mainIntercept : function () {
@@ -383,7 +389,10 @@ define(["app/module", 'app/service/serviceApi'],
                                 api.get('/wap/follow/is-new-follow', {user_id: userId}).success(function (res) {
                                     $scope.newFollow = res.status;
                                     $scope.newFollowNumber = res.data;
-                                })
+                                }).error(function(response){
+                                    alert('获取新关注信息出错！');
+                                    console.log(response);
+                                });
 
                             },
                             // 获取评论总数
@@ -395,7 +404,10 @@ define(["app/module", 'app/service/serviceApi'],
                                     if (res.data > discoverySum) {
                                         $scope.newDiscovery = res.data - discoverySum;
                                     }
-                                })
+                                }).error(function(response){
+                                    alert('获取评论信息出错！');
+                                    console.log(response);
+                                });
                             }
 
                         };

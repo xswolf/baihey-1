@@ -67,6 +67,9 @@ define(['app/module', 'app/directive/directiveApi'
         // 身份证认证
         api.list("/wap/member/honesty-photo", {user_id: $scope.receiveId}).success(function (res) {
             $scope.userSfzCheck = res.sfz;
+        }).error(function(response){
+            alert('获取身份认证信息出错！');
+            console.log(response);
         });
 
         $scope.hideMultiOnKeyboard = function () {
@@ -121,7 +124,10 @@ define(['app/module', 'app/directive/directiveApi'
             if (res.data) {
                 $scope.u_isFollow = false;
             }
-        });
+        }).error(function(response){
+            alert('获取关注信息出错！');
+            console.log(response);
+        });;
 
         // 加关注
         $scope.addFollow = function () {
@@ -139,7 +145,10 @@ define(['app/module', 'app/directive/directiveApi'
                     // 成功，提示
                     ar.saveDataAlert($ionicPopup, '加关注成功');
                 }
-            });
+            }).error(function(response){
+                alert('加关注出错！');
+                console.log(response);
+            });;
         };
 
         // 用户身份是否验证 TODO 用户验证了之后localStorage是否能够得到更新
@@ -160,7 +169,10 @@ define(['app/module', 'app/directive/directiveApi'
             $scope.age = res.data.age;
             $scope.report_flag = res.data.age.report_flag;
             $scope.receiveHeadPic = info.head_pic;
-        });
+        }).error(function(response){
+            alert('获取历史聊天记录出错！');
+            console.log(response);
+        });;
 
         api.list("/wap/message/message-history", {id: $scope.receiveId}).success(function (res) {
             var data = res.data.messageList;
