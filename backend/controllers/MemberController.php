@@ -92,6 +92,7 @@ class MemberController extends BaseController
         $limit = $request->get('iDisplayLength');
 
         $andWhere = [];
+        $order = '';
         $id_phone_name = $request->get('id_phone_name');
         if ($request->get('id_phone_name') != '') { // 电话、ID、姓名
             if (is_numeric($id_phone_name)) {
@@ -103,7 +104,6 @@ class MemberController extends BaseController
             } else {
                 $andWhere[] = ["like", "json_extract(info,'$.real_name')", $id_phone_name];
             }
-
         } else {
             $this->searchWhere($andWhere, $request->get() , $order);
         }
