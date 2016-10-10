@@ -32,7 +32,7 @@ SET age = IF ({$m} - DATE_FORMAT(DATE_ADD(FROM_UNIXTIME(0), INTERVAL json_extrac
 
                 {$y} - DATE_FORMAT(DATE_ADD(FROM_UNIXTIME(0), INTERVAL json_extract(info,'$.age')+0 SECOND) , '%Y'))
 
-                 WHERE json_extract(info,'$.age')  != fase AND json_extract(info,'$.age') != '' ";
+                 WHERE json_extract(info,'$.age')  != false AND json_extract(info,'$.age') != '' ";
 
 
         if (\Yii::$app->db->createCommand($sql)->execute()) {
