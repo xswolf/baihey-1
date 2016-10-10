@@ -8,9 +8,8 @@
 
 namespace console\controllers;
 
-
-use common\models\User;
 use yii\console\Controller;
+use yii\db\Query;
 
 class ConsoleController extends Controller
 {
@@ -40,8 +39,21 @@ SET age = IF ({$m} - DATE_FORMAT(DATE_ADD(FROM_UNIXTIME(0), INTERVAL json_extrac
             echo 'age is update';
         }
 
-
     }
 
+    public function actionSendNews(){
+        $db = \Yii::$app->db;
+        $list = (new Query())->from($db->tablePrefix."user_message m")
+            ->innerJoin($db->tablePrefix."user u" , "u.id=m.receive_user_id")
+            ->where(["m.status" => 2 , "u.login_type" => 3 , "u.id"=>10000])
+            ->select("u.wx_id")
+            ->groupBy("u.id")
+            ->all();
 
+        foreach ($list as $v){
+            $result = \Yii::$app->wechat->sendText($v['wx_id'] , "有会员给你发送消息，<a href='http://wechat.baihey.com/wap'>请查收</a>");
+            var_dump($result);
+        }
+
+    }
 }
