@@ -45,8 +45,10 @@ class ServerController extends BaseController {
                 echo \Yii::$app->wechat->sendText($fromUsername,rand(1,3));
 
                 file_put_contents('./log.txt' , "123\n" ,FILE_APPEND);
+                exit;
             }else{
                 $this->process($fromUsername);
+                exit;
             }
 
         } else {
