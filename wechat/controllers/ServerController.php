@@ -41,7 +41,7 @@ class ServerController extends BaseController {
 
             if('subscribe' != $postObj->Event){  // 关注
                 echo '';exit;
-            }if ($postObj->Event == 'scan' && $postObj->Ticket == 'gQFq8ToAAAAAAAAAASxodHRwOi8vd2VpeGluLnFxLmNvbS9xL1dFZ0NFUHptMk9xaDJCTlBJMlRWAAIE_oP8VwMEAAAAAA==') {
+            }if ($postObj->Event == 'SCAN' && $postObj->Ticket == 'gQFq8ToAAAAAAAAAASxodHRwOi8vd2VpeGluLnFxLmNvbS9xL1dFZ0NFUHptMk9xaDJCTlBJMlRWAAIE_oP8VwMEAAAAAA==') {
                 \Yii::$app->wechat->sendText($fromUsername,rand(1,3));
             }else{
                 $this->process($fromUsername);
