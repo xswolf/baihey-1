@@ -39,15 +39,16 @@ class ServerController extends BaseController {
             $postObj      = simplexml_load_string( $postStr , 'SimpleXMLElement' , LIBXML_NOCDATA );
             $fromUsername = trim($postObj->FromUserName);
 
-            if('subscribe' != $postObj->Event){  // 关注
-                echo '';exit;
-            }if ($postObj->Event == 'SCAN' && $postObj->Ticket == 'gQFq8ToAAAAAAAAAASxodHRwOi8vd2VpeGluLnFxLmNvbS9xL1dFZ0NFUHptMk9xaDJCTlBJMlRWAAIE_oP8VwMEAAAAAA==') {
+            if ($postObj->Event == 'SCAN' && $postObj->Ticket == 'gQFq8ToAAAAAAAAAASxodHRwOi8vd2VpeGluLnFxLmNvbS9xL1dFZ0NFUHptMk9xaDJCTlBJMlRWAAIE_oP8VwMEAAAAAA==') {
                 echo \Yii::$app->wechat->sendText($fromUsername,rand(1,3));
 
                 file_put_contents('./log.txt' , "123\n" ,FILE_APPEND);
                 exit;
-            }else{
+            }elseif ('subscribe' == $postObj->Event){
                 $this->process($fromUsername);
+                exit;
+            }else{
+                echo '';
                 exit;
             }
 
