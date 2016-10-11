@@ -41,8 +41,6 @@ class ServerController extends BaseController {
 
             if ($postObj->Event == 'SCAN' && $postObj->Ticket == 'gQFq8ToAAAAAAAAAASxodHRwOi8vd2VpeGluLnFxLmNvbS9xL1dFZ0NFUHptMk9xaDJCTlBJMlRWAAIE_oP8VwMEAAAAAA==') {
                 echo \Yii::$app->wechat->sendText($fromUsername,rand(1,3));
-
-                file_put_contents('./log.txt' , "123\n" ,FILE_APPEND);
                 exit;
             }elseif ('subscribe' == $postObj->Event){
                 $this->process($fromUsername);
