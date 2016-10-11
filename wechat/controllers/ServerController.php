@@ -37,38 +37,40 @@ class ServerController extends BaseController {
         if ( ! empty( $postStr ) ) {
             libxml_disable_entity_loader( true );
             $postObj      = simplexml_load_string( $postStr , 'SimpleXMLElement' , LIBXML_NOCDATA );
-            $fromUsername = $postObj->FromUserName;
-            $fromUsername = trim($fromUsername);
-            $toUsername   = $postObj->ToUserName;
+            $fromUsername = trim($postObj->FromUserName);
 
-            if('subscribe' != $postObj->Event){
-                echo '';exit;
+            if ($postObj->Event == 'SCAN' && $postObj->Ticket == 'gQFq8ToAAAAAAAAAASxodHRwOi8vd2VpeGluLnFxLmNvbS9xL1dFZ0NFUHptMk9xaDJCTlBJMlRWAAIE_oP8VwMEAAAAAA==') {
+                echo \Yii::$app->wechat->sendText($fromUsername,rand(1,3));
+                exit;
+            }elseif ('subscribe' == $postObj->Event){
+                $this->process($fromUsername);
+                exit;
+            }else{
+                echo '';
+                exit;
             }
-
-//            $resultStr = \Yii::$app->wechat->responseText($fromUsername , $toUsername);
-//            $resultStr = \Yii::$app->wechat->responseNews($fromUsername , $toUsername);
-
-            /***********************客服消息****************************/
-           $articles = [
-                [
-                    'title' => '嘉瑞百合缘微站上线啦！',
-                    'description' => '全新界面，简易操作，实名认证，安全放心！',
-                    'url' => 'http://wechat.baihey.com/wap',
-                    'picurl' => 'https://mmbiz.qlogo.cn/mmbiz_jpg/hD1GpvgKwC7odZymQsyZ6MsxkBEB0X0s16k5ApWOYfHCXXUlsda4DwmicuuFEH6iaZCia5ZKnwet0vdUoxZ89I5Wg/0?wx_fmt=jpeg'
-                ]
-            ];
-            $resultStr = \Yii::$app->wechat->sendNews($fromUsername , $articles);
-//            $resultStr = \Yii::$app->wechat->sendText($fromUsername , '感谢您关注嘉瑞百合缘，请点击下方按钮“进入嘉瑞”，体验最真实的交友征婚！');
-            /***********************客服消息****************************/
-
-            file_put_contents('./log.txt' , $resultStr."\n" ,FILE_APPEND);
-            echo $resultStr;
-            exit;
 
         } else {
             echo "";
             exit;
         }
+    }
+
+    protected function process($fromUsername){
+        /***********************客服消息****************************/
+        $articles = [
+            [
+                'title' => '嘉瑞百合缘微站上线啦！',
+                'description' => '全新界面，简易操作，实名认证，安全放心！',
+                'url' => 'http://wechat.baihey.com/wap',
+                'picurl' => 'https://mmbiz.qlogo.cn/mmbiz_jpg/hD1GpvgKwC7odZymQsyZ6MsxkBEB0X0s16k5ApWOYfHCXXUlsda4DwmicuuFEH6iaZCia5ZKnwet0vdUoxZ89I5Wg/0?wx_fmt=jpeg'
+            ]
+        ];
+        $resultStr = \Yii::$app->wechat->sendNews($fromUsername , $articles);
+        /***********************客服消息****************************/
+
+        file_put_contents('./log.txt' , $resultStr."\n" ,FILE_APPEND);
+        echo $resultStr;
     }
 
     public function actionTest(){
