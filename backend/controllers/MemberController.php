@@ -458,6 +458,10 @@ class MemberController extends BaseController
             $data['info'] = [];
         }
 
+        if(isset($data['service_status']) && $data['service_status'] == 1){
+            $data['service_status'] = time();
+        }
+
         if($flag = User::getInstance()->editUser($data)){
             $this->renderAjax(['status' => 1, 'message' => '分配成功', 'data' => $flag]);
         }else{
