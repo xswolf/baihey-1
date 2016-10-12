@@ -203,7 +203,7 @@
                     <i class="fa fa-angle-down"></i>
                 </a>
                 <ul class="dropdown-menu">
-                    <li>
+                    <!--<li>
                         <a href="#">
                             <i class="fa fa-user"></i>
                            个人账户
@@ -214,7 +214,7 @@
                             <i class="fa fa-lock"></i>
                             修改密码
                         </a>
-                    </li>
+                    </li>-->
                     <li>
                         <a href="/admin/login/logout">
                             <i class="fa fa-power-off"></i>
