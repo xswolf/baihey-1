@@ -210,8 +210,6 @@ $(function () {
                 table.column('intention:name').visible(false);
             }
 
-
-
             // ajax提交查询
             $(".submit-form").click(function () {
                 var url_param = $("form").serialize();
