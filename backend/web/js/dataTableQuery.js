@@ -55,9 +55,9 @@ $(function () {
         {"data": "info.level"},
         {"data": "service_status",fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
             var title = '';
-            if (oData.service_status == 0) {
+            if (oData.service_status < 1) {
                 title = '<span class="text-muted">服务</span>';
-            } else if(oData.service_status == 1){
+            } else if(oData.service_status > 0){
                 title = '<span style="color: red;">服务</span>';
             }
             $(nTd).html(title);
