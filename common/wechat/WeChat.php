@@ -46,7 +46,7 @@ class WeChat extends \callmez\wechat\sdk\Wechat
             're_openid' => $args['openid'],
             'total_amount' => $args['total_amount'],
             'total_num' => 1,
-            'wishing' => 'hello',
+            'wishing' => '恭喜发财',
             'client_ip' => '125.84.82.63',
             'act_name' => 'hello',
             'remark' => 'hello',
