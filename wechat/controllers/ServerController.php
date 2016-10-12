@@ -10,6 +10,8 @@
 namespace wechat\controllers;
 
 
+use common\models\UserActive;
+
 class ServerController extends BaseController {
 
     /**
@@ -40,7 +42,9 @@ class ServerController extends BaseController {
             $fromUsername = trim($postObj->FromUserName);
 
             if ($postObj->Event == 'SCAN' && $postObj->Ticket == 'gQFq8ToAAAAAAAAAASxodHRwOi8vd2VpeGluLnFxLmNvbS9xL1dFZ0NFUHptMk9xaDJCTlBJMlRWAAIE_oP8VwMEAAAAAA==') {
-                echo \Yii::$app->wechat->sendText($fromUsername,rand(1,3));
+//                echo \Yii::$app->wechat->sendText($fromUsername,"");
+
+                UserActive::getInstance()->sendMoney($fromUsername);
                 exit;
             }elseif ('subscribe' == $postObj->Event){
                 $this->process($fromUsername);
@@ -127,12 +131,16 @@ class ServerController extends BaseController {
         \Yii::$app->wechat->materialList();
     }
 
+
+
+
     public function actionSend(){
         $args = [
             'order_id'=>888888,
             'openid'=>'oEQpts29-N6dZxylb8NWwszca_rk',
-            'total_amount'=>100
+            'total_amount'=>$this->randMoney()
         ];
+
         $data = \Yii::$app->wechat->sendPack($args);
         print_r($data);
     }
