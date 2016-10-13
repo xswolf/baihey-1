@@ -141,6 +141,7 @@ class BaseController extends Controller {
         $user = User::getInstance()->getUser( [ 'wx_id' => $data['wx_id'] ] );
 
         if ( !$user ) { // 用户不存在，写入数据
+            Cookie::getInstance()->setCookie( 'bhy_u_name' , '' );
             setcookie('wx_id', $data['wx_id'], time() + 3600 * 24 , '/wap');
             return false;
 
