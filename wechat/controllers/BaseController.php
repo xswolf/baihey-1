@@ -45,8 +45,7 @@ class BaseController extends Controller {
      * @return bool
      */
     public function isLogin() {
-
-        if ( Cookie::getInstance()->getCookie( 'bhy_u_name' ) ) {
+        if ( Cookie::getInstance()->getCookie( 'bhy_u_name' ) != '' ) {
             return true;
         }
 
