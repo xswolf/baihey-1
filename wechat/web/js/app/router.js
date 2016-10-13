@@ -370,7 +370,7 @@ define(["app/module", 'app/service/serviceApi'],
                                 }).error(function(response){
                                     alert('获取聊天信息出错！');
                                     console.log(response);
-                                });;
+                                });
                             },
                             // 读取黑名单，认证相关信息
                             indexIsShowData : function () {
@@ -379,7 +379,7 @@ define(["app/module", 'app/service/serviceApi'],
                                 }).error(function(response){
                                     alert('获取黑名单信息出错！');
                                     console.log(response);
-                                });;
+                                });
                             },
                             // 监听是否有新的用户关注自己 “个人”导航添加红点
                             mainIntercept : function () {
@@ -445,7 +445,7 @@ define(["app/module", 'app/service/serviceApi'],
                     // 判断是否登陆
                     if (toState.url != '/index' && toState.url != '/error') {
                         $ionicLoading.show();
-                        if (sessionStorage.loginStatus === undefined) {
+                        if (sessionStorage.loginStatus == 'undefined') {
                             api.getLoginStatus().success(function (res) {
                                 sessionStorage.loginStatus = res.status;
                                 if (!res.status) {
@@ -454,6 +454,7 @@ define(["app/module", 'app/service/serviceApi'],
                                 }
                             })
                         }else if(sessionStorage.loginStatus == 0) {
+
                             location.href = '/wap/user/login';
                             return false;
                         }
