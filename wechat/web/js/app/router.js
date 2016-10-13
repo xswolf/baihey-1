@@ -445,7 +445,7 @@ define(["app/module", 'app/service/serviceApi'],
                     // 判断是否登陆
                     if (toState.url != '/index' && toState.url != '/error') {
                         $ionicLoading.show();
-                        if (sessionStorage.loginStatus == 'undefined') {
+
                             api.getLoginStatus().success(function (res) {
                                 sessionStorage.loginStatus = res.status;
                                 if (!res.status) {
@@ -453,11 +453,8 @@ define(["app/module", 'app/service/serviceApi'],
                                     return false;
                                 }
                             })
-                        }else if(sessionStorage.loginStatus == 0) {
 
-                            location.href = '/wap/user/login';
-                            return false;
-                        }
+
                     }
 
                 });
