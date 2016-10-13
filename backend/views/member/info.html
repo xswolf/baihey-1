@@ -354,7 +354,9 @@
                                                                 <div class="col-sm-3">
                                                                     <span class="text-muted fwb">服务到期时间：</span>
                                                                     <span id="serviceEndTime" class="text-danger">{{timeStampToDate($user.mature_time)}}</span>
+                                                                    <button class="btn btn-xs btn-primary" id="edit_matureTime">修改到期时间</button>
                                                                 </div>
+
                                                             </div>
                                                             <div class="row m10">
                                                                 <div class="col-sm-3">
@@ -773,7 +775,13 @@
         </div>
     </div>
 </div>
-
+<div id="layer_matureTime" style="padding-top: 10px;">
+    <div class="form_date col-md-12" data-date=""
+         data-date-format="yyyy-mm-dd" data-link-field="mature_time"
+         data-link-format="yyyy-mm-dd">
+        <input id="mature_time" name="mature_time" class="form-control" size="16" type="text" value="" readonly>
+    </div>
+</div>
 <script>
     $(function () {
         layer.ready(function () {
@@ -837,6 +845,42 @@
         if(new Date($.trim($('#serviceEndTime').text())) <= new Date()){
             $('#serviceEndTime').removeClass('text-danger').addClass('text-muted');
         }
+
+        $('#edit_matureTime').click(function(){
+
+            layer.open({
+                type: 1,
+                title: '修改服务到期时间',
+                area: '240px',
+                shadeClose: true,
+                content: $('#layer_matureTime'),
+                success: function (layero1, index1) {
+                    $('.form_date').datetimepicker({
+                        language: 'zh-CN',
+                        weekStart: 1,
+                        todayBtn: 1,
+                        autoclose: 1,
+                        todayHighlight: 1,
+                        startView: 2,
+                        minView: 2,
+                        forceParse: 0
+                    });
+                },
+                btn: ['确定修改']
+                ,yes: function(index, layero){
+                   var dt = $('#mature_time').val();
+                   dt = dt.replace(/-/g,'/');
+                   var ndt = new Date(dt);
+                   var timestamp = ndt.getTime() / 1000;
+                    bhyFunc.ajaxRequest('/admin/member/edit-information',{user_id:bhyFunc.user_id,mature_time:timestamp},function(res){
+                        console.log(res);
+                    })
+                }
+            });
+
+        })
+
+
 
         $('.colorbox-button').colorbox({rel: 'colorbox-button', maxWidth: '95%', maxHeight: '95%'});
         var resizeTimer;

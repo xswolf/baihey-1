@@ -43,6 +43,9 @@ class UserInformation extends Base
                 case 'report_flag'      :// 标记被举报 1：已标记，0：未标记
                 case 'intention'        :// 有无意向
                 case 'matchmaker'       :// 专属红娘
+                case 'mature_time'      :// 服务到期时间
+                    $sql = "UPDATE {$_user_information_table} SET ".key($data)." = '".$data[key($data)]."' WHERE user_id={$user_id}";
+                    break;
                 case 'matchmaking'      :// 服务红娘
                     $sql = "UPDATE {$_user_information_table} SET ".key($data)." = '".$data[key($data)]."' WHERE user_id={$user_id}";
                     break;

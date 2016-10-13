@@ -570,4 +570,15 @@ class MemberController extends BaseController
         }
     }
 
+    public function actionEditInformation(){
+        $data = $this->post;
+        $nData = $data;
+        unset($nData['user_id']);
+        if($result = UserInformation::getInstance()->updateUserInfo($data['user_id'],$nData)){
+            $this->renderAjax(['status' => 1, 'data' => $result, 'msg' => '修改成功']);
+        }else{
+            $this->renderAjax(['status' => 0, 'data' => $result, 'msg' => '修改失败']);
+        }
+    }
+
 }
