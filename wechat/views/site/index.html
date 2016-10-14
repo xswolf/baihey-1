@@ -12,7 +12,7 @@
                 on-refresh="doRefresh()">
         </ion-refresher>
         <div class="list">
-            <a class="item item-thumbnail-left" href="#/member/index" ng-if="userInfo.info">
+            <a class="item item-thumbnail-left" href="#/member/index" ng-if="userInfo.info && userInfo.id != 10011 && userInfo.id != 10016">
 
                 <img ng-src="{{userInfo.info.head_pic | isNull}}" onerror="this.src='/wechat/web/images/u_noimg.jpg'"
                      class="rounded">
@@ -48,7 +48,7 @@
                 </p>
                 <p class="lh24" ng-if="sfzCheck == 1 && userInfo.id > 9999">{{userInfo.personalized}}</p>
             </a>
-            <a class="item item-thumbnail-left" href="/wap/user/login" ng-if="!userInfo.info">
+            <a class="item item-thumbnail-left" href="/wap/user/login" ng-if="!userInfo.info || userInfo.id == 10011 || userInfo.id == 10016">
                 <img src="/wechat/web/images/u_noimg.jpg" class="rounded">
                 <h2 style="margin-top: 30px;">
                     您好！您还没有登录！<span class="cor26">立即登录</span>
@@ -289,7 +289,7 @@
             </i>
             <p>消息</p>
         </a>
-        <a class="menuBtn" href="/wap/site/main#/member">
+        <a class="menuBtn" href="/wap/site/main#/member" ng-href="{{userInfo.id == 10011 || userInfo.id == 10016 ? '/wap/site/main#/member/bindPhone' : '/wap/site/main#/member'}}">
             <i class="icon-new-menu-user">
                 <span ng-if="newFollow" class="msg_number new"></span>
             </i>
