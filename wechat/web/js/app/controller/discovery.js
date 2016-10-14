@@ -18,7 +18,7 @@ define(['app/module', 'app/directive/directiveApi'
 
         // 发现列表过滤条件：黑名单
         $scope.indexFilter = function (dis) {
-            if(dis.user_id == $scope.userInfo.user_id) {
+            if (dis.user_id == $scope.userInfo.user_id) {
                 return true;
             }
             if (dis.fid > 0) {
@@ -55,8 +55,8 @@ define(['app/module', 'app/directive/directiveApi'
         }
 
         $scope.more = function (isUser, dis, index) {
-            if($scope.userInfo.user_id == 10011 || $scope.userInfo.user_id == 10016){
-                $location.url('/wap/user/login');
+            if ($scope.userInfo.user_id == 10011 || $scope.userInfo.user_id == 10016) {
+                location.href = '/wap/user/login';
                 return;
             }
 
@@ -112,8 +112,8 @@ define(['app/module', 'app/directive/directiveApi'
 
         // 点赞
         $scope.clickLike = function (dis) {
-            if($scope.userInfo.user_id == 10011 || $scope.userInfo.user_id == 10016){
-                $location.url('/wap/user/login');
+            if ($scope.userInfo.user_id == 10011 || $scope.userInfo.user_id == 10016) {
+                location.href = '/wap/user/login';
                 return;
             }
 
@@ -154,21 +154,21 @@ define(['app/module', 'app/directive/directiveApi'
                 }
                 $scope.page += 1;
                 ar.initPhotoSwipeFromDOM('.bhy-gallery', $scope, $ionicPopup);
-            }).error(function(){
-                $timeout(function(){
+            }).error(function () {
+                $timeout(function () {
                     $scope.$broadcast('scroll.infiniteScrollComplete');
-                },800);
+                }, 800);
             }).finally(function () {
-                $timeout(function(){
+                $timeout(function () {
                     $scope.$broadcast('scroll.infiniteScrollComplete');
-                },800);
+                }, 800);
             })
         };
         // 下拉刷新
         $scope.doRefresh = function () {
             var refreshForm = {};
             refreshForm.limit = $scope.discoveryList.length;
-            api.list('/wap/member/get-dynamic-list?timestamp='+new Date().getTime(), refreshForm).success(function (res) {
+            api.list('/wap/member/get-dynamic-list?timestamp=' + new Date().getTime(), refreshForm).success(function (res) {
                 $scope.discoveryList = [];
                 for (var i in res.data) {
                     res.data[i].imgList = JSON.parse(res.data[i].pic);
@@ -178,14 +178,13 @@ define(['app/module', 'app/directive/directiveApi'
                     res.data[i].level = res.data[i].level.replace(/\"/g, '');
                     res.data[i].age = res.data[i].age.replace(/\"/g, '');
                     $scope.discoveryList.push(res.data[i]);
-
                 }
 
                 ar.initPhotoSwipeFromDOM('.bhy-gallery', $scope, $ionicPopup);
             }).finally(function () {
-                $timeout(function(){
+                $timeout(function () {
                     $scope.$broadcast('scroll.refreshComplete');
-                },800);
+                }, 800);
             });
         };
 
@@ -194,8 +193,8 @@ define(['app/module', 'app/directive/directiveApi'
             return $scope.isMore;
         };
 
-        $rootScope.$on('reload', function(d,data) {
-            if(data){
+        $rootScope.$on('reload', function (d, data) {
+            if (data) {
                 $scope.doRefresh();
             }
         });
@@ -204,7 +203,7 @@ define(['app/module', 'app/directive/directiveApi'
     }]);
 
     // 发现-评论
-    module.controller("discovery.single", ['app.serviceApi', '$scope', '$location', '$ionicActionSheet', '$ionicModal', '$ionicPopup', '$ionicScrollDelegate','$timeout', function (api, $scope, $location, $ionicActionSheet, $ionicModal, $ionicPopup, $ionicScrollDelegate,$timeout) {
+    module.controller("discovery.single", ['app.serviceApi', '$scope', '$location', '$ionicActionSheet', '$ionicModal', '$ionicPopup', '$ionicScrollDelegate', '$timeout', function (api, $scope, $location, $ionicActionSheet, $ionicModal, $ionicPopup, $ionicScrollDelegate, $timeout) {
         $scope.formData = {};
         $scope.formData.private = false; // 私密评论默认未选中
         $scope.isMore = true;
@@ -230,7 +229,7 @@ define(['app/module', 'app/directive/directiveApi'
         //用户已屏蔽的动态id，从localStorage获取
         $scope.display = ar.getStorage('display') ? ar.getStorage('display') : [];
 
-        $scope.showComment = function(){
+        $scope.showComment = function () {
             $scope.isShowCommentList = !$scope.isShowCommentList;
             $ionicScrollDelegate.$getByHandle('discoveryMain').resize();
         }
@@ -258,8 +257,8 @@ define(['app/module', 'app/directive/directiveApi'
 
         // 点赞
         $scope.clickLike = function (dis) {
-            if($scope.userInfo.user_id == 10011 || $scope.userInfo.user_id == 10016){
-                $location.url('/wap/user/login');
+            if ($scope.userInfo.user_id == 10011 || $scope.userInfo.user_id == 10016) {
+                location.href = '/wap/user/login';
                 return;
             }
 
@@ -276,8 +275,8 @@ define(['app/module', 'app/directive/directiveApi'
         }
 
         $scope.checkPrivate = function () {
-            if($scope.userInfo.user_id == 10011 || $scope.userInfo.user_id == 10016){
-                $location.url('/wap/user/login');
+            if ($scope.userInfo.user_id == 10011 || $scope.userInfo.user_id == 10016) {
+                location.href = '/wap/user/login';
                 return;
             }
             $scope.formData.private = !$scope.formData.private;
@@ -288,12 +287,12 @@ define(['app/module', 'app/directive/directiveApi'
 
         // 发表评论
         $scope.sendComment = function () {
-            if($scope.userInfo.user_id == 10011 || $scope.userInfo.user_id == 10016){
-                $location.url('/wap/user/login');
+            if ($scope.userInfo.user_id == 10011 || $scope.userInfo.user_id == 10016) {
+                location.href = '/wap/user/login';
                 return;
             }
-            if(!$scope.formData.content){
-                ar.saveDataAlert($ionicPopup,'请输入评论内容！');
+            if (!$scope.formData.content) {
+                ar.saveDataAlert($ionicPopup, '请输入评论内容！');
                 return false;
             }
             $scope.formData.dynamicId = $location.$$search.id;
@@ -312,18 +311,18 @@ define(['app/module', 'app/directive/directiveApi'
                     });
                     $scope.dis.comment_num = parseInt($scope.dis.comment_num) + 1;
                 }
-            }).error(function(){
+            }).error(function () {
                 $scope.formData.content = ''; //重置输入框
-                ar.saveDataAlert($ionicPopup,'发表评论失败，请重试！');
-            }).finally(function(){
+                ar.saveDataAlert($ionicPopup, '发表评论失败，请重试！');
+            }).finally(function () {
                 $scope.formData.content = ''; //重置输入框
                 $ionicScrollDelegate.scrollTop(true);
             })
         }
 
         $scope.more = function (isUser, dis) {
-            if($scope.userInfo.user_id == 10011 || $scope.userInfo.user_id == 10016){
-                $location.url('/wap/user/login');
+            if ($scope.userInfo.user_id == 10011 || $scope.userInfo.user_id == 10016) {
+                location.href = '/wap/user/login';
                 return;
             }
 
@@ -379,16 +378,16 @@ define(['app/module', 'app/directive/directiveApi'
     module.controller("discovery.message", ['app.serviceApi', '$scope', '$location', '$ionicActionSheet', '$ionicModal', '$ionicPopup', '$ionicScrollDelegate', function (api, $scope, $location, $ionicActionSheet, $ionicModal, $ionicPopup, $ionicScrollDelegate) {
         var timesstamp = '';
 
-        if(ar.getStorage('discoveryTime')){
+        if (ar.getStorage('discoveryTime')) {
             timesstamp = ar.getStorage('discoveryTime');
-        }else{
+        } else {
             timesstamp = '';
         }
 
         $scope.disList = [];
-        api.get('/wap/member/comment-list',{create_time:timesstamp}).success(function(res){
-            if(res.status){
-                for(var i in res.data){
+        api.get('/wap/member/comment-list', {create_time: timesstamp}).success(function (res) {
+            if (res.status) {
+                for (var i in res.data) {
                     res.data[i].info = JSON.parse(res.data[i].info);
                     res.data[i].pic = JSON.parse(res.data[i].pic);
                 }
@@ -396,18 +395,18 @@ define(['app/module', 'app/directive/directiveApi'
             }
         })
 
-        ar.setStorage('discoveryTime',ar.timeStamp());
+        ar.setStorage('discoveryTime', ar.timeStamp());
         // 获取评论总数
-        api.get('/wap/member/comment-num',{}).success(function(res){
+        api.get('/wap/member/comment-num', {}).success(function (res) {
             $scope.discoverySum = res.data;
             // 存入Storage
-            ar.setStorage('discoverySum',res.data);
+            ar.setStorage('discoverySum', res.data);
         })
 
-        $scope.loadData = function(){
-            api.get('/wap/member/comment-list',{create_time:''}).success(function(res){
-                if(res.status){
-                    for(var i in res.data){
+        $scope.loadData = function () {
+            api.get('/wap/member/comment-list', {create_time: ''}).success(function (res) {
+                if (res.status) {
+                    for (var i in res.data) {
                         res.data[i].info = JSON.parse(res.data[i].info);
                         res.data[i].pic = JSON.parse(res.data[i].pic);
                     }

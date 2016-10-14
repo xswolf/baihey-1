@@ -879,12 +879,14 @@
                    var ndt = new Date(dt);
                    var timestamp = ndt.getTime() / 1000;
                     bhyFunc.ajaxRequest('/admin/member/edit-information',{user_id:bhyFunc.user_id,mature_time:timestamp},function(res){
+                       layer.closeAll();
                        if(res.status == 1){
-                           $('#serviceEndTime').text(bhyFunc.timesTampToDate(timestamp));
+                           layer.msg('修改成功！');
+                           location.reload();
                        }else{
                            layer.msg('修改失败！');
                        }
-                       layer.closeAll();
+
                     })
                 }
             });

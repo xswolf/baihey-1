@@ -34,7 +34,7 @@
 </head>
 
 <!--<script src="//cdn.bootcss.com/ionic/1.2.4/js/ionic.bundle.min.js"></script>-->
-<script data-main="/wechat/web/js/app" src="/wechat/web/js/plugin/requirejs/require.js"></script>
+<script data-main="/wechat/web/dist/app" src="/wechat/web/js/plugin/requirejs/require.js"></script>
 <!--<script data-main="/wechat/web/js/build" src="/wechat/web/js/plugin/requirejs/require.js"></script>-->
 <body onload="addElement();" ng-controller="main">
 <?= $content ?>
