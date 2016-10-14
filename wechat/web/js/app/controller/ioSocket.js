@@ -255,6 +255,11 @@ define(['app/module', 'app/directive/directiveApi'
 
             // 发送文本消息调用接口
             $scope.send = function () {
+                if($scope.userInfo.id == 10011 || $scope.userInfo.id == 10016){
+                    $location.url('/wap/user/login');
+                    return;
+                }
+
                 if ($scope.send_content == '' || $scope.send_content == null || $scope.send_content == undefined) return;
                 if (!$scope.userInfo.phone || $scope.userInfo.phone == '0') {   // 用户未认证手机号码  $scope.userInfo.phone
                     var confirmPopup = $ionicPopup.confirm({
