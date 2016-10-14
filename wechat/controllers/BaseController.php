@@ -139,18 +139,8 @@ class BaseController extends Controller {
 
         $user = User::getInstance()->getUser( [ 'wx_id' => $data['wx_id'] ] );
 
-        if ( !$user ) { // 用户不存在，写入数据
-            Cookie::getInstance()->setCookie( 'bhy_u_name' , '' );
-            setcookie('wx_id', $data['wx_id'], time() + 3600 * 24 , '/wap');
-            return false;
-
-//            $userInfo = \common\models\User::getInstance()->addUser($data);
-//            // 写入用户日志表
-//            $log['user_id']     = $userInfo['id'];
-//            $log['type']        = 2;
-//            $log['create_time'] = time();
-//            \common\models\User::getInstance()->userLog($log);
-//            $user     = User::getInstance()->getUserById( $userInfo['id'] );
+        if ( !$user ) { // 用户不存在，虚拟账号登陆
+            $data['sex'] == 1 ? $user = User::getInstance()->getUserById(10011) : $user = User::getInstance()->getUserById(10016);
         }
 
         // 登录日志

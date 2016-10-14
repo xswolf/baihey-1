@@ -48,8 +48,14 @@ class SiteController extends BaseController
 
         setcookie('indexIsShowData' , json_encode($result));
 
-        if($user_id = Cookie::getInstance()->getCookie('bhy_id') && !isset($_GET['code'])) {
-            $user = User::getInstance()->getUserById($user_id);
+        if(!isset($_GET['code'])) {
+            $user_id = Cookie::getInstance()->getCookie('bhy_id');
+            if (empty($user_id)){ // 虚拟账号登陆
+                $user = User::getInstance()->getUserById(10011);
+                Cookie::getInstance()->setLoginCookie($user);
+            }else{
+                $user = User::getInstance()->getUserById($user_id);
+            }
         } else {
             $user = $this->weChatMember();
         }
