@@ -76,8 +76,8 @@ class UserController extends BaseController
         if (\Yii::$app->request->get('username') && \Yii::$app->request->get('password')) {
             if ($user = User::getInstance()->login($this->get['username'], $this->get['password'])) {
 
-                if ($user['wx_id'] == '' && Cookie::getInstance()->getCookie('wx_id') != ''){
-                    User::getInstance()->editUser1(['id'=>$user['id'] , 'wx_id' => Cookie::getInstance()->getCookie('wx_id')]);
+                if ($user['wx_id'] == '' && isset($_COOKIE['wx_id'])){
+                    User::getInstance()->editUser1(['id'=>$user['id'] , 'wx_id' => $_COOKIE['wx_id'] ]);
                 }
 
                 if ($user['status'] < 3) {
