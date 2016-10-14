@@ -178,7 +178,6 @@ define(['app/module', 'app/directive/directiveApi'
                     res.data[i].level = res.data[i].level.replace(/\"/g, '');
                     res.data[i].age = res.data[i].age.replace(/\"/g, '');
                     $scope.discoveryList.push(res.data[i]);
-
                 }
 
                 ar.initPhotoSwipeFromDOM('.bhy-gallery', $scope, $ionicPopup);

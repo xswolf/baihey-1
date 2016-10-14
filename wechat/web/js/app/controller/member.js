@@ -768,6 +768,10 @@ define(['app/module', 'app/directive/directiveApi'
             };
             // 点赞
             $scope.clickLike = function (dis) {
+                if($scope.userInfo.id == 10011 || $scope.userInfo.id == 10016){
+                    $location.url('/wap/user/login');
+                    return;
+                }
                 var i = ar.getArrI($scope.discoveryList, 'id', dis.id);
                 var add = 0;
                 if ($scope.discoveryList[i].cid > 0) {
@@ -805,7 +809,6 @@ define(['app/module', 'app/directive/directiveApi'
                 ar.setStorage('discoverySum', res.data);
             })
 
-
         }]);
 
         // 发布动态
@@ -816,7 +819,6 @@ define(['app/module', 'app/directive/directiveApi'
             $scope.reportData = {};
             $scope.formData = {};
             $scope.formData.auth = 1;
-
             $scope.imgList = [];
 
             $scope.showLoading = function (progress) {
@@ -1130,6 +1132,12 @@ define(['app/module', 'app/directive/directiveApi'
 
             // 关注
             $scope.addFollow = function () {
+
+                if($scope.userInfo.id == 10011 || $scope.userInfo.id == 10016){
+                    $location.url('/wap/user/login');
+                    return;
+                }
+
                 if (followData.user_id == followData.follow_id) {
                     ar.saveDataAlert($ionicPopup, '您不能关注自己');
                     return;
@@ -1251,6 +1259,12 @@ define(['app/module', 'app/directive/directiveApi'
 
             // 关注
             $scope.addFollow = function () {
+
+                if($scope.userInfo.id == 10011 || $scope.userInfo.id == 10016){
+                    $location.url('/wap/user/login');
+                    return;
+                }
+
                 if (followData.user_id == followData.follow_id) {
                     ar.saveDataAlert($ionicPopup, '您不能关注自己');
                     return;
@@ -3201,6 +3215,10 @@ define(['app/module', 'app/directive/directiveApi'
             });
             // 举报
             $scope.report = function () {
+                if($scope.userInfo.id == 10011 || $scope.userInfo.id == 10016){
+                    $location.url('/wap/user/login');
+                    return;
+                }
                 if (followData.user_id == followData.follow_id) {
                     ar.saveDataAlert($ionicPopup, '您不能举报自己');
                     return;
@@ -3249,6 +3267,12 @@ define(['app/module', 'app/directive/directiveApi'
 
             // 拉黑
             $scope.pullTheBlack = function () {
+
+                if($scope.userInfo.id == 10011 || $scope.userInfo.id == 10016){
+                    $location.url('/wap/user/login');
+                    return;
+                }
+
                 if ($scope.formData.pullBlack) {
                     if (followData.user_id == followData.follow_id) {
                         ar.saveDataAlert($ionicPopup, '您不能拉黑自己');
