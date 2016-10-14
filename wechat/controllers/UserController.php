@@ -68,13 +68,17 @@ class UserController extends BaseController
         }
 
         // 判断是否自动登录
-        if ($this->isLogin()) {
+        if ($this->isLogin() && !in_array(Cookie::getInstance()->getCookie('bhy_id') , [10011,10016])) {
             return $this->redirect('/wap');
         }
 
         //判断是否点击提交
         if (\Yii::$app->request->get('username') && \Yii::$app->request->get('password')) {
             if ($user = User::getInstance()->login($this->get['username'], $this->get['password'])) {
+
+                if ($user['wx_id'] == '' && $_COOKIE['wx_id'] != ''){
+                    User::getInstance()->editUser1(['id'=>$user['id'] , 'wx_id' => $_COOKIE['wx_id']]);
+                }
 
                 if ($user['status'] < 3) {
                     $data = \common\models\User::getInstance()->getUserById($user['id']);
