@@ -68,7 +68,7 @@ class UserController extends BaseController
         }
 
         // 判断是否自动登录
-        if ($this->isLogin() && !in_array(Cookie::getInstance()->getCookie('bhy_id') , [10011,10016])) {
+        if ($this->isLogin() && !in_array(Cookie::getInstance()->getCookie('bhy_id')->value , ['10011','10016'])) {
             return $this->redirect('/wap');
         }
 
