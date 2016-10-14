@@ -256,7 +256,7 @@ define(['app/module', 'app/directive/directiveApi'
             // 发送文本消息调用接口
             $scope.send = function () {
                 if($scope.userInfo.id == 10011 || $scope.userInfo.id == 10016){
-                    $location.url('/wap/user/login');
+                    location.href = '/wap/user/login';
                     return;
                 }
 
@@ -324,15 +324,12 @@ define(['app/module', 'app/directive/directiveApi'
 
                 var time = ar.timeStamp();
                 $scope.uploader.onAfterAddingFile = function (fileItem) {   // 选择文件之后
-
                     $scope.sendMessage(fileItem.file.name, $scope.sendId, $scope.receiveId, 'pic', time, false); // 假发送，便于预览图片
                     fileItem.upload();   // 上传
                     viewScroll.resize();
                     viewScroll.scrollBottom(true);
 
-
                     $scope.uploader.onSuccessItem = function (fileItem, response) {  // 上传成功
-
                         if (response.status == 1) {
                             var len = $scope.historyList.length;
                             for (var i = len - 1; i >= 0; i--) {
@@ -341,7 +338,6 @@ define(['app/module', 'app/directive/directiveApi'
                                     break;
                                 }
                             }
-
                         } else {
                             var len = $scope.historyList.length;
                             for (var i = len - 1; i >= 0; i--) {
@@ -350,13 +346,9 @@ define(['app/module', 'app/directive/directiveApi'
                                     break;
                                 }
                             }
-
                         }
-
                     }
-
                 };
-
 
                 $scope.uploader.onCompleteItem = function (fileItem, response, status, headers) {  // 上传结束
                     if (response.thumb_path) {

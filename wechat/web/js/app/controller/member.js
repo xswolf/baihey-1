@@ -15,7 +15,7 @@ define(['app/module', 'app/directive/directiveApi'
             $scope.userInfo.auth = JSON.parse($scope.userInfo.auth);
 
             if($scope.userInfo.id == 10011 || $scope.userInfo.id == 10016){
-                $location.url('/wap/user/login');
+                location.href = '/wap/user/login';
                 return;
             }
 
@@ -769,7 +769,7 @@ define(['app/module', 'app/directive/directiveApi'
             // 点赞
             $scope.clickLike = function (dis) {
                 if($scope.userInfo.id == 10011 || $scope.userInfo.id == 10016){
-                    $location.url('/wap/user/login');
+                    location.href = '/wap/user/login';
                     return;
                 }
                 var i = ar.getArrI($scope.discoveryList, 'id', dis.id);
@@ -1134,7 +1134,7 @@ define(['app/module', 'app/directive/directiveApi'
             $scope.addFollow = function () {
 
                 if($scope.userInfo.id == 10011 || $scope.userInfo.id == 10016){
-                    $location.url('/wap/user/login');
+                    location.href = '/wap/user/login';
                     return;
                 }
 
@@ -1261,7 +1261,7 @@ define(['app/module', 'app/directive/directiveApi'
             $scope.addFollow = function () {
 
                 if($scope.userInfo.id == 10011 || $scope.userInfo.id == 10016){
-                    $location.url('/wap/user/login');
+                    location.href = '/wap/user/login';
                     return;
                 }
 
@@ -3216,7 +3216,7 @@ define(['app/module', 'app/directive/directiveApi'
             // 举报
             $scope.report = function () {
                 if($scope.userInfo.id == 10011 || $scope.userInfo.id == 10016){
-                    $location.url('/wap/user/login');
+                    location.href = '/wap/user/login';
                     return;
                 }
                 if (followData.user_id == followData.follow_id) {
@@ -3269,7 +3269,7 @@ define(['app/module', 'app/directive/directiveApi'
             $scope.pullTheBlack = function () {
 
                 if($scope.userInfo.id == 10011 || $scope.userInfo.id == 10016){
-                    $location.url('/wap/user/login');
+                    location.href = '/wap/user/login';
                     return;
                 }
 
