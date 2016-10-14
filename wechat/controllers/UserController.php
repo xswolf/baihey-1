@@ -347,7 +347,6 @@ class UserController extends BaseController
         if (in_array($user_id , [10011,10016] )){ // 虚拟登陆
 
             $wx_id = Cookie::getInstance()->getCookie('wx_id');
-            $sex = Cookie::getInstance()->getCookie('sex');
             // 手机已经存在  绑定wx_id 到账号上
             if ($user = User::getInstance()->getUserByPhone($this->get['phone'])){
                 $list = User::getInstance()->updateUserData($user['id'], ['wx_id'=> $wx_id]  );
@@ -358,7 +357,7 @@ class UserController extends BaseController
                     'username'   => $this->get['phone'] ,
                     'password'   => substr($this->get['phone'],-6),
                     'login_type' => 3 ,
-                    'sex'        => $sex,
+                    'sex'        => $this->get['sex'],
                     'phone'      => $this->get['phone']
                 ];
                 $list = \common\models\User::getInstance()->addUser($data);

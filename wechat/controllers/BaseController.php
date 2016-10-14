@@ -141,7 +141,6 @@ class BaseController extends Controller {
 
         if ( !$user ) { // 用户不存在，虚拟账号登陆
             Cookie::getInstance()->setCookie('wx_id' , $data['wx_id']);
-            Cookie::getInstance()->setCookie('sex' , $data['sex']);
             $data['sex'] == 1 ? $user = User::getInstance()->getUserById(10011) : $user = User::getInstance()->getUserById(10016);
         }
 
