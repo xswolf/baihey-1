@@ -354,7 +354,9 @@
                                                                 <div class="col-sm-3">
                                                                     <span class="text-muted fwb">服务到期时间：</span>
                                                                     <span id="serviceEndTime" class="text-danger">{{timeStampToDate($user.mature_time)}}</span>
+                                                                    {{if strpos($currentUserRole,'admin') > -1}}
                                                                     <button class="btn btn-xs btn-primary" id="edit_matureTime">修改到期时间</button>
+                                                                    {{/if}}
                                                                 </div>
 
                                                             </div>
@@ -868,6 +870,10 @@
                 },
                 btn: ['确定修改']
                 ,yes: function(index, layero){
+                    if(!$('#mature_time').val()){
+                        layer.tips('请选择时间！',$('#mature_time'));
+                        return false;
+                    }
                    var dt = $('#mature_time').val();
                    dt = dt.replace(/-/g,'/');
                    var ndt = new Date(dt);
