@@ -349,7 +349,7 @@ class UserController extends BaseController
             $wx_id = Cookie::getInstance()->getCookie('wx_id');
             // 手机已经存在  绑定wx_id 到账号上
             if ($user = User::getInstance()->getUserByPhone($this->get['phone'])){
-                $list = User::getInstance()->updateUserData($user['id'], ['wx_id'=> $wx_id]  );
+                User::getInstance()->updateUserData($user['id'], ['wx_id'=> $wx_id]  );
             }else{
                 // 手机不存在，重新注册账号
                 $data = [
@@ -360,9 +360,10 @@ class UserController extends BaseController
                     'sex'        => $this->get['sex'],
                     'phone'      => $this->get['phone']
                 ];
-                $list = \common\models\User::getInstance()->addUser($data);
+                $user = \common\models\User::getInstance()->addUser($data);
 
             }
+            $list = User::getInstance()->getUserById($user['id']);
         }else{
             $list = User::getInstance()->updateUserData($user_id, $this->get);
 
