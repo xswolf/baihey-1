@@ -56,7 +56,7 @@ define(['app/module', 'app/directive/directiveApi'
 
         $scope.more = function (isUser, dis, index) {
             if($scope.userInfo.user_id == 10011 || $scope.userInfo.user_id == 10016){
-                $location.url('/member/bindPhone');
+                $location.url('/wap/user/login');
                 return;
             }
 
@@ -113,7 +113,7 @@ define(['app/module', 'app/directive/directiveApi'
         // 点赞
         $scope.clickLike = function (dis) {
             if($scope.userInfo.user_id == 10011 || $scope.userInfo.user_id == 10016){
-                $location.url('/member/bindPhone');
+                $location.url('/wap/user/login');
                 return;
             }
 
@@ -259,7 +259,7 @@ define(['app/module', 'app/directive/directiveApi'
         // 点赞
         $scope.clickLike = function (dis) {
             if($scope.userInfo.user_id == 10011 || $scope.userInfo.user_id == 10016){
-                $location.url('/member/bindPhone');
+                $location.url('/wap/user/login');
                 return;
             }
 
@@ -277,7 +277,7 @@ define(['app/module', 'app/directive/directiveApi'
 
         $scope.checkPrivate = function () {
             if($scope.userInfo.user_id == 10011 || $scope.userInfo.user_id == 10016){
-                $location.url('/member/bindPhone');
+                $location.url('/wap/user/login');
                 return;
             }
             $scope.formData.private = !$scope.formData.private;
@@ -289,7 +289,7 @@ define(['app/module', 'app/directive/directiveApi'
         // 发表评论
         $scope.sendComment = function () {
             if($scope.userInfo.user_id == 10011 || $scope.userInfo.user_id == 10016){
-                $location.url('/member/bindPhone');
+                $location.url('/wap/user/login');
                 return;
             }
             if(!$scope.formData.content){
@@ -323,7 +323,7 @@ define(['app/module', 'app/directive/directiveApi'
 
         $scope.more = function (isUser, dis) {
             if($scope.userInfo.user_id == 10011 || $scope.userInfo.user_id == 10016){
-                $location.url('/member/bindPhone');
+                $location.url('/wap/user/login');
                 return;
             }
 

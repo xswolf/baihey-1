@@ -14,6 +14,10 @@ define(['app/module', 'app/directive/directiveApi'
             $scope.userInfo.info = JSON.parse($scope.userInfo.info);
             $scope.userInfo.auth = JSON.parse($scope.userInfo.auth);
 
+            if($scope.userInfo.id == 10011 || $scope.userInfo.id == 10016){
+                $location.url('/wap/user/login');
+                return;
+            }
 
             $scope.clearLoading = false;
             // 清除缓存
@@ -1126,11 +1130,6 @@ define(['app/module', 'app/directive/directiveApi'
 
             // 关注
             $scope.addFollow = function () {
-                if(followData.user_id == 10011 || followData.user_id == 10016){
-                    $location.url('/member/bindPhone');
-                    return;
-                }
-
                 if (followData.user_id == followData.follow_id) {
                     ar.saveDataAlert($ionicPopup, '您不能关注自己');
                     return;
@@ -1252,12 +1251,6 @@ define(['app/module', 'app/directive/directiveApi'
 
             // 关注
             $scope.addFollow = function () {
-
-                if(followData.user_id == 10011 || followData.user_id == 10016){
-                    $location.url('/member/bindPhone');
-                    return;
-                }
-
                 if (followData.user_id == followData.follow_id) {
                     ar.saveDataAlert($ionicPopup, '您不能关注自己');
                     return;
@@ -3208,10 +3201,6 @@ define(['app/module', 'app/directive/directiveApi'
             });
             // 举报
             $scope.report = function () {
-                if(followData.user_id == 10011 || followData.user_id == 10016){
-                    $location.url('/member/bindPhone');
-                    return;
-                }
                 if (followData.user_id == followData.follow_id) {
                     ar.saveDataAlert($ionicPopup, '您不能举报自己');
                     return;
@@ -3260,12 +3249,6 @@ define(['app/module', 'app/directive/directiveApi'
 
             // 拉黑
             $scope.pullTheBlack = function () {
-
-                if(followData.user_id == 10011 || followData.user_id == 10016){
-                    $location.url('/member/bindPhone');
-                    return;
-                }
-
                 if ($scope.formData.pullBlack) {
                     if (followData.user_id == followData.follow_id) {
                         ar.saveDataAlert($ionicPopup, '您不能拉黑自己');
