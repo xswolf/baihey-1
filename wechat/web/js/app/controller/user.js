@@ -125,10 +125,17 @@ define(['app/module', 'app/directive/directiveApi'
                         $ionicLoading.hide();
                         if (data.status == 1) {
                             ar.setStorage('userInfo', data.data);
-                            var alertPopup = $ionicPopup.alert({
-                                title: '重要提示',
-                                template: '您的初始密码为：' + ar.getPassByPhone($scope.User.mobile) + '，请及时前往个人中心修改您的密码。'
-                            });
+                            if(ar.isWeChat()){
+                                var alertPopup = $ionicPopup.alert({
+                                    title: '重要提示',
+                                    template: '您的初始密码为：' + ar.getPassByPhone($scope.User.mobile) + '，请及时前往个人中心修改您的密码。'
+                                });
+                            }else{
+                                var alertPopup = $ionicPopup.alert({
+                                    title: '重要提示',
+                                    template: '您的初始密码为：' + ar.getPassByPhone($scope.User.mobile) + '，请及时前往个人中心修改您的密码。下次登录请关注微信公众号“嘉瑞百合缘”！'
+                                });
+                            }
                             alertPopup.then(function (res) {
                                 top.location.href = '/wap/site/main#/index';
                             });
