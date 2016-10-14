@@ -344,30 +344,7 @@ class UserController extends BaseController
     public function actionUpdateUserData()
     {
         $user_id = \common\util\Cookie::getInstance()->getCookie('bhy_id')->value;
-        if (in_array($user_id , [10011,10016] )){ // 虚拟登陆
-
-            $wx_id = Cookie::getInstance()->getCookie('wx_id');
-            // 手机已经存在  绑定wx_id 到账号上
-            if ($user = User::getInstance()->getUserByPhone($this->get['phone'])){
-                User::getInstance()->updateUserData($user['id'], ['wx_id'=> $wx_id]  );
-            }else{
-                // 手机不存在，重新注册账号
-                $data = [
-                    'wx_id'      => $wx_id ,
-                    'username'   => $this->get['phone'] ,
-                    'password'   => substr($this->get['phone'],-6),
-                    'login_type' => 3 ,
-                    'sex'        => $this->get['sex'],
-                    'phone'      => $this->get['phone']
-                ];
-                $user = \common\models\User::getInstance()->addUser($data);
-
-            }
-            $list = User::getInstance()->getUserById($user['id']);
-        }else{
-            $list = User::getInstance()->updateUserData($user_id, $this->get);
-
-        }
+        $list = User::getInstance()->updateUserData($user_id, $this->get);
         $this->renderAjax(['status' => 1, 'data' => $list]);
     }
 
