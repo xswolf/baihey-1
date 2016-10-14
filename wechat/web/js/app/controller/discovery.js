@@ -55,6 +55,11 @@ define(['app/module', 'app/directive/directiveApi'
         }
 
         $scope.more = function (isUser, dis, index) {
+            if($scope.userInfo.user_id == 10011 || $scope.userInfo.user_id == 10016){
+                $location.url('/member/bindPhone');
+                return;
+            }
+
             if (dis.user_id >= 10000) {
                 var btnList = [
                     {text: '举报'},
@@ -107,6 +112,11 @@ define(['app/module', 'app/directive/directiveApi'
 
         // 点赞
         $scope.clickLike = function (dis) {
+            if($scope.userInfo.user_id == 10011 || $scope.userInfo.user_id == 10016){
+                $location.url('/member/bindPhone');
+                return;
+            }
+
             var i = ar.getArrI($scope.discoveryList, 'id', dis.id);
             var add = 0;
             if ($scope.discoveryList[i].cid > 0) {
@@ -248,6 +258,11 @@ define(['app/module', 'app/directive/directiveApi'
 
         // 点赞
         $scope.clickLike = function (dis) {
+            if($scope.userInfo.user_id == 10011 || $scope.userInfo.user_id == 10016){
+                $location.url('/member/bindPhone');
+                return;
+            }
+
             var add = 0;
             if ($scope.dis.cid > 0) {
                 add = -1;
@@ -261,6 +276,10 @@ define(['app/module', 'app/directive/directiveApi'
         }
 
         $scope.checkPrivate = function () {
+            if($scope.userInfo.user_id == 10011 || $scope.userInfo.user_id == 10016){
+                $location.url('/member/bindPhone');
+                return;
+            }
             $scope.formData.private = !$scope.formData.private;
             if ($scope.formData.private) {
                 ar.saveDataAlert($ionicPopup, '私密评论将只有您和该条动态发布者可见此条评论。');
@@ -269,6 +288,10 @@ define(['app/module', 'app/directive/directiveApi'
 
         // 发表评论
         $scope.sendComment = function () {
+            if($scope.userInfo.user_id == 10011 || $scope.userInfo.user_id == 10016){
+                $location.url('/member/bindPhone');
+                return;
+            }
             if(!$scope.formData.content){
                 ar.saveDataAlert($ionicPopup,'请输入评论内容！');
                 return false;
@@ -299,6 +322,11 @@ define(['app/module', 'app/directive/directiveApi'
         }
 
         $scope.more = function (isUser, dis) {
+            if($scope.userInfo.user_id == 10011 || $scope.userInfo.user_id == 10016){
+                $location.url('/member/bindPhone');
+                return;
+            }
+
             if (dis.user_id >= 10000) {
                 var btnList = [
                     {text: '举报'},
