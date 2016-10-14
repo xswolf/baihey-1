@@ -68,8 +68,7 @@ define(['app/module', 'app/directive/directiveApi'
         api.list("/wap/member/honesty-photo", {user_id: $scope.receiveId}).success(function (res) {
             $scope.userSfzCheck = res.sfz;
         }).error(function(response){
-            alert('获取身份认证信息出错！');
-            console.log(response);
+            console.log('获取身份认证信息出错！'+ response);
         });
 
         $scope.hideMultiOnKeyboard = function () {
@@ -125,8 +124,7 @@ define(['app/module', 'app/directive/directiveApi'
                 $scope.u_isFollow = false;
             }
         }).error(function(response){
-            alert('获取关注信息出错！');
-            console.log(response);
+            console.log('获取关注信息出错！' + response);
         });;
 
         // 加关注
@@ -146,8 +144,7 @@ define(['app/module', 'app/directive/directiveApi'
                     ar.saveDataAlert($ionicPopup, '加关注成功');
                 }
             }).error(function(response){
-                alert('加关注出错！');
-                console.log(response);
+                console.log('加关注出错！' + response);
             });;
         };
 
@@ -170,8 +167,7 @@ define(['app/module', 'app/directive/directiveApi'
             $scope.report_flag = res.data.age.report_flag;
             $scope.receiveHeadPic = info.head_pic;
         }).error(function(response){
-            alert('获取历史聊天记录出错！');
-            console.log(response);
+            console.log('获取历史聊天记录出错'+response);
         });;
 
         api.list("/wap/message/message-history", {id: $scope.receiveId}).success(function (res) {

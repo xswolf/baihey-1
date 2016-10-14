@@ -957,7 +957,7 @@ define(['app/module', 'app/directive/directiveApi'
                     })
 
                 }).error(function (res) {
-                    alert(res.msg);
+                    console.log(res.msg);
                 }).finally(function () {
                     $ionicLoading.hide();
                 })
@@ -1866,7 +1866,7 @@ define(['app/module', 'app/directive/directiveApi'
             $scope.formData = [];
             $scope.formData.wechat = $scope.userInfo.info.wechat;
             $scope.saveData = function () {
-                alert($scope.formData.wechat);
+                console.log($scope.formData.wechat);
                 if (!$scope.formData.wechat) {
                     if (confirm('检测到您还未填写微信号，确定放弃吗？')) {
                         $location.url('/member/security');  //跳转
