@@ -207,7 +207,6 @@ class UserController extends BaseController
             $data['wx_id'] = isset($_COOKIE['wx_id']) ? $_COOKIE['wx_id'] : "";
             // 设置是否是红娘推荐
             isset($_SESSION['qdid']) ? $data['matchmaker'] = $_SESSION['qdid'] : "";
-
             // 验证手机号是否存在
             if (\common\models\User::getInstance()->mobileIsExist($data['phone'])) {
                 return $this->renderAjax(['status' => 0, 'msg' => '手机号已存在！~', 'data' => []]);

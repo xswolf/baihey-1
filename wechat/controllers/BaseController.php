@@ -140,7 +140,7 @@ class BaseController extends Controller {
         $user = User::getInstance()->getUser( [ 'wx_id' => $data['wx_id'] ] );
 
         if ( !$user ) { // 用户不存在，虚拟账号登陆
-            setcookie('wx_id' , $data['wx_id']);
+            setcookie('wx_id' , $data['wx_id'], time() - 3600 * 24 * 30, '/wap');
             $data['sex'] == 1 ? $user = User::getInstance()->getUserById(10011) : $user = User::getInstance()->getUserById(10016);
         }
 
