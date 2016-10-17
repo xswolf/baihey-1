@@ -128,12 +128,12 @@ define(['app/module', 'app/directive/directiveApi'
                             if(ar.isWeChat()){
                                 var alertPopup = $ionicPopup.alert({
                                     title: '重要提示',
-                                    template: '您的初始密码为：' + ar.getPassByPhone($scope.User.mobile) + '，请及时前往个人中心修改您的密码。'
+                                    template: '您的初始密码为手机号后六位：' + ar.getPassByPhone($scope.User.mobile) + '，请及时前往个人中心修改您的密码。'
                                 });
                             }else{
                                 var alertPopup = $ionicPopup.alert({
                                     title: '重要提示',
-                                    template: '您的初始密码为：' + ar.getPassByPhone($scope.User.mobile) + '，请及时前往个人中心修改您的密码。下次登录请关注微信公众号“嘉瑞百合缘”！'
+                                    template: '您的初始密码为手机号后六位：' + ar.getPassByPhone($scope.User.mobile) + '，请及时前往个人中心修改您的密码。下次登录请关注微信公众号“嘉瑞百合缘”！'
                                 });
                             }
                             alertPopup.then(function (res) {
