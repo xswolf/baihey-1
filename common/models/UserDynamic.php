@@ -57,6 +57,7 @@ class UserDynamic extends Base
             ->limit($limit)
             ->offset($offset)
             ->select(["d.*", "u.phone", "i.honesty_value", "i.report_flag", "json_extract(i.info , '$.level') AS level", "json_extract(i.info , '$.head_pic') AS head_pic", "json_extract(i.info , '$.real_name') AS real_name", "json_extract(i.info , '$.age') AS age", 'u.sex', 'p.thumb_path AS thumb_path', 'p.is_check AS head_status', "c.id as cid", "f.id as fid"])
+            ->groupBy("d.user_id")
             ->orderBy("f.id desc ,d.create_time desc");
         if ($uid > 0) {
             return $obj->where(['u.id' => $uid, 'd.status' => 1])->all();
