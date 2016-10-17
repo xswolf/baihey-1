@@ -9,7 +9,7 @@ $(function () {
             $(".next_btn").data('index',$(this).data('index') + 1);
         });
     });
-    $(document).bind('click',function(e){
+    $(document).click(function(e){
         var target =$(e.target);
         if(target.closest(".next_btn").length == 0){
             $(".show_pic_box").hide();
