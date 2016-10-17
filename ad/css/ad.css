@@ -1,0 +1,75 @@
+.ad_reg_con{
+    min-width: 320px;
+    width: 100%;
+    max-width: 640px;
+}
+.ad_reg_bg{
+    background: #eeeeee;
+}
+.ad_reg_logo{
+    background: url("/ad/images/logo.png") no-repeat center;
+    width: 100%;
+    height: 100px;
+}
+.ad_reg_form{
+    width: 290px;
+    margin: 15px auto 0;
+}
+.reg_input_phone{
+    background: #fff;
+}
+.reg_input_phone .phone_icon{
+    margin:0 5px 0 10px;
+}
+.reg_input_phone input{
+    border: 0 none;
+    width: 290px;
+    padding-bottom: 12px;
+    padding-left: 50px;
+    padding-top: 12px;
+    font-size: 14px;
+}
+.reg_input_code{
+    background: #fff;
+    margin-top: 10px;
+}
+.reg_input_code input{
+    border: 0 none;
+    font-size: 14px;
+    padding-bottom: 12px;
+    padding-left: 5px;
+    padding-top: 12px;
+    width: 181px;
+}
+.reg_input_code .getCode{
+    background: #7ecef4;
+    border: 0 none;
+    color: #fff;
+    float: right;
+    padding: 13px 5px;
+}
+.reg_submit{
+    margin-top: 20px;
+}
+.reg_submit button{
+    background: #ec4e43;
+    border: 0;
+    color: #fff;
+    font-size: 14px;
+    height: 44px;
+    line-height: 44px;
+    width: 100%;
+}
+.pic_list{
+    max-width: 100%;
+    margin: 20px auto 0;
+}
+.pic_list img{
+    max-width: 100%;
+}
+.pic_list .col-xs-3{
+    padding: 0;
+}
+.pic_list .row{
+    margin: 0;
+}
