@@ -42,7 +42,7 @@ class UserDynamic extends Base
      * @param $page
      * @return array
      */
-    public function getDynamicList($uid, $page = 0, $limit = 5, $loginUserId = -1)
+    public function getDynamicList($uid = -1, $page = 0, $limit = 5, $loginUserId = -1)
     {
         $loginUserId = $loginUserId == -1 ? \common\util\Cookie::getInstance()->getCookie('bhy_id')->value : $loginUserId;
         $offset = $page * $limit;
@@ -51,13 +51,12 @@ class UserDynamic extends Base
             ->innerJoin($this->tablePrefix . 'user_information i', 'd.user_id=i.user_id')
             ->innerJoin($this->tablePrefix . 'user u', 'd.user_id=u.id')
             ->leftJoin($this->tablePrefix . 'feedback f', 'f.feedback_id = d.id AND f.type = 2 AND f.status = 1')
-            ->leftJoin($this->tablePrefix . 'user_click c', 'c.dynamic_id = d.id')
+            ->leftJoin($this->tablePrefix . 'user_click c', 'c.dynamic_id = d.id and c.user_id = '.$uid)
             ->leftJoin($this->tablePrefix . 'user_photo p', 'p.user_id = i.user_id AND p.is_head = 1')
             ->where(['c.user_id' => $loginUserId])
             ->limit($limit)
             ->offset($offset)
             ->select(["d.*", "u.phone", "i.honesty_value", "i.report_flag", "json_extract(i.info , '$.level') AS level", "json_extract(i.info , '$.head_pic') AS head_pic", "json_extract(i.info , '$.real_name') AS real_name", "json_extract(i.info , '$.age') AS age", 'u.sex', 'p.thumb_path AS thumb_path', 'p.is_check AS head_status', "c.id as cid", "f.id as fid"])
-//            ->groupBy("d.user_id")
             ->orderBy("f.id desc ,d.create_time desc");
         if ($uid > 0) {
             return $obj->where(['u.id' => $uid, 'd.status' => 1])->all();
