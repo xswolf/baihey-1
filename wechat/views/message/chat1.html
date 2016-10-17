@@ -46,7 +46,7 @@
             <!-- 固定item/ -->
 
             <ion-item class="clearfix" ng-class="{true:'talk_item_u',false:'talk_item_m'}[sendId != vo.send_user_id]"
-                      ng-repeat="vo in historyList track by vo.id">
+                      ng-repeat="vo in historyList track by $index | unique:'id'">
 
                 <!-- 时间 -->
                 <div class="s_date mb10">
