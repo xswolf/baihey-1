@@ -51,7 +51,7 @@ class UserDynamic extends Base
             ->innerJoin($this->tablePrefix . 'user_information i', 'd.user_id=i.user_id')
             ->innerJoin($this->tablePrefix . 'user u', 'd.user_id=u.id')
             ->leftJoin($this->tablePrefix . 'feedback f', 'f.feedback_id = d.id AND f.type = 2 AND f.status = 1')
-            ->leftJoin($this->tablePrefix . 'user_click c', 'c.dynamic_id = i.user_id')
+            ->leftJoin($this->tablePrefix . 'user_click c', 'c.dynamic_id = d.id')
             ->leftJoin($this->tablePrefix . 'user_photo p', 'p.user_id = i.user_id AND p.is_head = 1')
             ->where(['c.user_id' => $loginUserId])
             ->limit($limit)
