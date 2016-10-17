@@ -32,8 +32,7 @@ define(['app/module', 'app/directive/directiveApi'
             ar.setStorage('messageList-'+ ar.getCookie('bhy_user_id'), $scope.messageList);
             api.setMsgDisplay(item.other).success(function (res) {
             }).error(function(response){
-                alert('设置消息显隐出错！');
-                console.log(response);
+                console.log('设置消息显隐出错！'+response);
             });;
 
             return true;

@@ -164,7 +164,7 @@ define(['app/module', 'app/directive/directiveApi'
 
             // 点击img，功能
             $scope.moreImg = function (img, event) {
-                event.preventDefault(); // 阻止浏览器默认事件
+                event.stopPropagation(); // 阻止浏览器默认事件
                 var hideSheet = $ionicActionSheet.show({
                     buttons: img.is_check == 1 && img.is_head == 0 ? [{text: '设为头像'}] : [],
                     destructiveText: '删除',
@@ -957,7 +957,7 @@ define(['app/module', 'app/directive/directiveApi'
                     })
 
                 }).error(function (res) {
-                    alert(res.msg);
+                    console.log(res.msg);
                 }).finally(function () {
                     $ionicLoading.hide();
                 })
@@ -1866,7 +1866,7 @@ define(['app/module', 'app/directive/directiveApi'
             $scope.formData = [];
             $scope.formData.wechat = $scope.userInfo.info.wechat;
             $scope.saveData = function () {
-                alert($scope.formData.wechat);
+                console.log($scope.formData.wechat);
                 if (!$scope.formData.wechat) {
                     if (confirm('检测到您还未填写微信号，确定放弃吗？')) {
                         $location.url('/member/security');  //跳转

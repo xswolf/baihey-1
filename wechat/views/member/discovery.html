@@ -2,7 +2,7 @@
     <link href="/wechat/web/css/discovery.css" rel="stylesheet">
     <ion-header-bar align-title="center"  class="com_w_100 bhy">
         <title class="title">个人动态</title>
-        <a class="button button-icon icon ion-plus-circled positive" href="#/member/discovery_add?tempUrl=/member/discovery" ></a>
+        <a class="button button-icon icon ion-plus-circled positive" ng-href="{{userInfo.user_id == 10011 || userInfo.user_id == 10016 ? '/wap/user/login' : '#/member/discovery_add?tempUrl=/member/discovery'}}"></a>
     </ion-header-bar>
 
     <ion-content class="com_w_100 bhy discovery bg5">

@@ -440,6 +440,10 @@ define(['app/module', 'app/directive/directiveApi'
 
         // 点赞
         $scope.clickLike = function (dis) {
+            if ($scope.userInfo.user_id == 10011 || $scope.userInfo.user_id == 10016) {
+                location.href = '/wap/user/login';
+                return;
+            }
             var i = ar.getArrI($scope.discoveryList, 'id', dis.id);
             var add = 0;
             if ($scope.discoveryList[i].cid > 0) {
@@ -455,6 +459,10 @@ define(['app/module', 'app/directive/directiveApi'
 
         // 更多功能
         $scope.more = function (isUser, id, index) {
+            if ($scope.userInfo.user_id == 10011 || $scope.userInfo.user_id == 10016) {
+                location.href = '/wap/user/login';
+                return;
+            }
             var btnList = [
                 {text: '举报'},
                 {text: '屏蔽'}
