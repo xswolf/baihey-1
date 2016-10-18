@@ -148,6 +148,11 @@ class User extends Base
             unset($data['auth']);
         }
 
+        if (isset($data['channel_id'])){
+            $infoData['channel_id'] = $data['channel_id'];
+            unset($data['channel_id']);
+        }
+
         $infoData['auth'] = json_encode($userAuth);
         $infoData['info'] = json_encode($userInfo);
 
