@@ -14,6 +14,11 @@
 <div class="ad_reg_con ad_reg_bg">
     <div class="ad_reg_logo"></div>
     <div class="ad_reg_form">
+        <input type="hidden" id="sex" value="">
+        <div class="reg_input_sex fn-clear">
+            <span class="fn-left" data-sex="1">我是男生</span>
+            <span class="fn-right" data-sex="0">我是女生</span>
+        </div>
         <div class="reg_input_phone pr">
             <div class="pa">
                 <img class="phone_icon" src="/ad/images/smartphone.png" height="26">
@@ -22,7 +27,7 @@
             <input id="phone" type="text" placeholder="请输入手机号码">
         </div>
         <div class="reg_input_code">
-            <input id="code" type="number" placeholder="请输入验证码">
+            <input id="code" type="number" min="100000" max="999999" placeholder="请输入验证码">
             <button type="button" class="getCode">点击获取验证码</button>
         </div>
         <div class="reg_submit">
@@ -85,9 +90,22 @@
         </div>
     </div>
 </div>
-
-<div >
-
+<div class="submit_alert_bg"></div>
+<div class="submit_alert">
+    <div class="alt_bg">
+        <div class="alt_con">
+            <p class="alt_t1">
+                <img src="/ad/images/success.png" width="22">
+                <span>注册成功</span>
+            </p>
+            <p>您的初始密码为：</p>
+            <p class="alt_t2">000000（手机号后六位）</p>
+            <p>下次登录请关注微信公众号“<span class="alt_t2">嘉瑞百合缘</span>”</p>
+        </div>
+    </div>
+    <div class="alert_subBtn">
+        <a href="/wap" class="subBtn"></a>
+    </div>
 </div>
 
 <script src="/wechat/web/js/plugin/jquery-1.8.3.min.js"></script>

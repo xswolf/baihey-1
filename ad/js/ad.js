@@ -1,4 +1,5 @@
 $(function () {
+    $("#sex").val("");
     $(".row .col-xs-3 img").each(function (index, ele) {
         $(this).click(function (e) {
             e.stopPropagation();
@@ -26,7 +27,7 @@ $(function () {
         $(".next_btn").data('index', idx + 1);
     })
 
-    function validateForm(){
+    function validateForm() {
         if (!$("#phone").val()) {
             alert("请输入手机号码！");
             return false;
@@ -38,9 +39,12 @@ $(function () {
         }
         return true;
     }
+
     $(".getCode").click(function () {
 
-        validateForm();
+        if(!validateForm()){
+            return;
+        }
 
         $.ajax({
             type: "GET",
@@ -51,18 +55,18 @@ $(function () {
                     alert("该手机号已经存在！如需登录请关注微信公众号“嘉瑞百合缘”！");
                     return;
                 } else {
-                    $.get("/wap/user/send-code-msg", {mobile: $.trim($("#phone").val())}, function (res) {
-                        if (res.status < 1) {
+                    $.get("/wap/user/send-code-msg", {mobile: $.trim($("#phone").val())}, function (msgRes) {
+                        if (msgRes.status < 1) {
                             alert("发送短信验证码失败，请重试！");
                             return;
                         } else {
                             $(".getCode").addClass('disabd').prop('disabled', true);
                             var max = 60;
-                            var int = setInterval(function(){
+                            var int = setInterval(function () {
                                 max--;
                                 $(".getCode").html(max + " 秒重新获取");
-                                if(max == 0){
-                                    $(".getCode").prop('disabled',false).removeClass('disabd').html("点击获取验证码");
+                                if (max == 0) {
+                                    $(".getCode").prop('disabled', false).removeClass('disabd').html("点击获取验证码");
                                     clearInterval(int);
                                 }
                             }, 1000);
@@ -73,9 +77,15 @@ $(function () {
         });
     })
 
-    $("#regSubmit").click(function(){
+    $("#regSubmit").click(function () {
 
-        validateForm();
+        if($("#sex").val() == ""){
+            alert("请选择您的性别！");
+            return;
+        }
+        if(!validateForm()){
+            return;
+        }
 
         $.ajax({
             type: "GET",
@@ -86,30 +96,36 @@ $(function () {
                     alert("该手机号已经存在！如需登录请关注微信公众号“嘉瑞百合缘”！");
                     return;
                 } else {
-                    $.get("/wap/user/validate-code", {code: $.trim($("#code").val())}, function (res) {
-                        if (!res.status) {
+                    $.get("/wap/user/validate-code", {code: $("#code").val()}, function (codeData) {
+                        codeData = JSON.parse(codeData)
+                        if (!codeData.status) {
                             alert("短信验证码错误！");
                             return;
                         } else {
                             // 注册
                             $.ajax({
-                                type: "POST",
+                                type: "GET",
                                 url: "/wap/user/register",
-                                data: {mobile: $.trim($("#phone").val())},
-                                beforeSend:function(){
-                                    $("#regSubmit").addClass('disabd').prop('disabled',true).html("注册中，请稍候...");
+                                data: {mobile: $.trim($("#phone").val()),sex:$("#sex").val()},
+                                beforeSend: function () {
+                                    $("#regSubmit").addClass('disabd').prop('disabled', true).html("注册中，请稍候...");
                                 },
                                 success: function (data) {
                                     if (data.status == 1) {
-                                        alert("恭喜您注册成功！" + "\n" + "您的初始密码为："+$.trim($("#phone").val()).substring($.trim($("#phone").val()).length, $.trim($("#phone").val()).length - 6)+"（手机号后六位）。")
+                                        $(".alt_t2").html($.trim($("#phone").val()).substring($.trim($("#phone").val()).length, $.trim($("#phone").val()).length - 6) + "（手机号后六位）。")
+                                        $(".submit_alert_bg").show();
+                                        $(".submit_alert").show();
+                                    }else{
+                                        alert("注册失败，请重试！")
+                                        location.reload();
                                     }
                                 },
-                                error:function(){
+                                error: function () {
                                     alert("网络错误，请刷新重试！");
-                                    $("#regSubmit").removeClass('disabd').prop('disabled',false).html("立即注册，开启幸福之旅");
+                                    $("#regSubmit").removeClass('disabd').prop('disabled', false).html("立即注册，开启幸福之旅");
                                 },
-                                complete:function(){
-                                    $("#regSubmit").removeClass('disabd').prop('disabled',false).html("立即注册，开启幸福之旅");
+                                complete: function () {
+                                    $("#regSubmit").removeClass('disabd').prop('disabled', false).html("立即注册，开启幸福之旅");
                                 }
                             });
                         }
@@ -117,5 +133,10 @@ $(function () {
                 }
             }
         });
+    });
+
+    $(".reg_input_sex span").click(function(){
+        $(this).addClass('selected').siblings().removeClass('selected');
+        $("#sex").val($(this).data('sex'));
     })
 });

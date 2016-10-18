@@ -28,6 +28,7 @@
     padding-left: 50px;
     padding-top: 12px;
     font-size: 14px;
+    color: #999;
 }
 .reg_input_code{
     background: #fff;
@@ -40,6 +41,7 @@
     padding-left: 5px;
     padding-top: 12px;
     width: 181px;
+    color: #999;
 }
 .reg_input_code .getCode{
     background: #7ecef4;
@@ -119,4 +121,74 @@
 }
 .disabd{
     background: #cccccc !important;
+}
+.submit_alert_bg{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: #000;
+    opacity: 0.6;
+    left: 0;
+    top: 0;
+    z-index: 97;
+}
+.submit_alert{
+    position: absolute;
+    width: 300px;
+    height: 400px;
+    left: 50%;
+    top: 50%;
+    margin-top: -200px;
+    margin-left: -150px;
+    z-index: 98;
+}
+
+.submit_alert .alt_bg{
+    background: url("/ad/images/submit_bg.png") no-repeat;
+    width: 100%;
+    height: 313px;
+}
+
+.submit_alert .alt_con{
+    padding-top: 42px;
+    text-align: center;
+}
+.submit_alert .alt_con .alt_t1{
+    color: #ff3b4b;
+}
+.submit_alert .alt_con .alt_t2{
+    color: #007fcf;
+}
+.submit_alert .alt_con .alt_t1 img,.submit_alert .alt_con .alt_t1 span{
+    vertical-align: middle;
+}
+.alert_subBtn{
+    width: 100%;
+}
+.subBtn{
+    background: url("/ad/images/sub_btn.png") no-repeat center;
+    width: 127px;
+    height: 48px;
+    margin: 0 auto;
+    display: block;
+}
+.submit_alert_bg,.submit_alert{
+    display: none;
+}
+.reg_input_sex span{
+    background: #fff none repeat scroll 0 0;
+    color: #999;
+    display: inline-block;
+    height: 44px;
+    line-height: 44px;
+    text-align: center;
+    width: 140px;
+    cursor: pointer;
+}
+.reg_input_sex{
+    margin-bottom: 10px;
+    width: 100%;
+}
+.reg_input_sex>span.selected{
+    color: #000;
 }
