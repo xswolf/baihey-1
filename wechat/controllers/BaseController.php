@@ -134,7 +134,7 @@ class BaseController extends Controller {
             'username'   => $memberInfo['openid'] ,
             'password'   => 'wx_xx' ,
             'login_type' => 3 ,
-            'sex'        => ($memberInfo['sex'] == 2) ? 0 : 1
+            'sex'        => (isset($memberInfo['sex']) && $memberInfo['sex'] == 2) ? 0 : 1
         ];
 
         $user = User::getInstance()->getUser( [ 'wx_id' => $data['wx_id'] ] );
