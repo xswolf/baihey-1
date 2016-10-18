@@ -210,6 +210,8 @@ class UserController extends BaseController
             }elseif(isset($_COOKIE['wx_id'])){
                 $data['wx_id'] = $_COOKIE['wx_id'];
             }
+            $data['channel_id'] = $this->get['channel_id'];
+
             // 设置是否是红娘推荐
             isset($_SESSION['qdid']) ? $data['matchmaker'] = $_SESSION['qdid'] : "";
             // 验证手机号是否存在
