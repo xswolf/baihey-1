@@ -176,3 +176,11 @@ $(function () {
     }
 
 });
+
+var _hmt = _hmt || [];
+(function() {
+    var hm = document.createElement("script");
+    hm.src = "//hm.baidu.com/hm.js?c7169d7d7fbc555dffae8fe9c2d1222e";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+})();
