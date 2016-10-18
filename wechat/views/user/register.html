@@ -43,10 +43,10 @@
                 </div>
 
                 <div class="form-group clearfix">
-                    <div class="item item-input">
+                    <div class="item item-input reg_box">
                         <i class="ion-key mr16 fs18 cor50"></i>
                         <input type="text" class="login_input pass" maxlength="6" ng-model="User.code" style="padding-right: 5px;" placeholder="短信验证码">
-                        <button type="button" class="button button-positive button-small" ng-click="getCode()" ng-disabled="codeTitle != '获取验证码' || !User.mobile || User.mobile.length != 11" style="min-width: 75px;">{{codeTitle}}</button>
+                        <button type="button" class="button button-positive button-small" ng-click="getCode()" ng-disabled="codeTitle != '获取验证码' || !User.mobile || User.mobile.length != 11" style="min-width: 75px;" ng-bind-html="codeTitle"></button>
                     </div>
                 </div>
 
@@ -75,8 +75,9 @@
             <div class="list">
                 <div class="item tac bor_0">
                     <img id="verify" class="mb15" src="/wap/user/get-verify" ng-click="getVerify($event)">
+                    <a class="db mb20" href="javascript:;" ng-click="changeVerify()">看不清，换一张</a>
                     <div class="item item-input" style="margin-bottom: 15px;">
-                        <input type="text" ng-model="validate.verify" placeholder="请输入上图中验证码，轻触图片可更换">
+                        <input type="text" ng-model="validate.verify" placeholder="请输入上图中验证码">
                     </div>
                     <button class="button button-positive button-block" ng-click="sendCode()">
                         获取短信验证码

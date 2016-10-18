@@ -56,13 +56,19 @@ define(['app/module', 'app/directive/directiveApi'
             $scope.modal.hide();
         };
 
+        $scope.changeVerify = function(){
+            angular.element(document.querySelectorAll('#verify')[0]).attr('src','/wap/user/get-verify?time=' + ar.timeStamp());
+        }
+
         $scope.getVerify = function (event) {
             event.target.src = '/wap/user/get-verify?time=' + ar.timeStamp();
         }
 
         // 倒计时
         $scope.getCode = function () {
-            validateFrom();
+            if(!validateFrom()){
+                return;
+            }
             api.getMobileIsExist($scope.User.mobile).success(function (res) {
                 if (res.status < 1) {
                     ar.saveDataAlert($ionicPopup, '该手机号码已存在');
@@ -88,7 +94,7 @@ define(['app/module', 'app/directive/directiveApi'
                     $scope.closeSendCodeModal();
                     var timeTitle = 60;
                     var timer = $interval(function () {
-                        $scope.codeTitle = '重新获取(' + timeTitle + ')';
+                        $scope.codeTitle = '重新获取(<span class="cor1">' + timeTitle + '</span>)';
                     }, 1000, 60);
                     timer.then(function () {
                         $scope.codeTitle = '获取验证码';

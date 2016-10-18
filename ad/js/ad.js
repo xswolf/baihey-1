@@ -49,6 +49,7 @@ $(function () {
         $.ajax({
             type: "GET",
             url: "/wap/user/mobile-is-exist",
+            dataType:"json",
             data: {mobile: $.trim($("#phone").val())},
             success: function (res) {
                 if (res.status < 1) {
@@ -91,13 +92,14 @@ $(function () {
             type: "GET",
             url: "/wap/user/mobile-is-exist",
             data: {mobile: $.trim($("#phone").val())},
+            dataType:'json',
             success: function (res) {
                 if (res.status < 1) {
                     alert("该手机号已经存在！如需登录请关注微信公众号“嘉瑞百合缘”！");
                     return;
                 } else {
                     $.get("/wap/user/validate-code", {code: $("#code").val()}, function (codeData) {
-                        codeData = JSON.parse(codeData)
+                        codeData = JSON.parse(codeData);
                         if (!codeData.status) {
                             alert("短信验证码错误！");
                             return;
@@ -107,6 +109,7 @@ $(function () {
                                 type: "GET",
                                 url: "/wap/user/register",
                                 data: {mobile: $.trim($("#phone").val()),sex:$("#sex").val()},
+                                dataType:"json",
                                 beforeSend: function () {
                                     $("#regSubmit").addClass('disabd').prop('disabled', true).html("注册中，请稍候...");
                                 },
