@@ -1,4 +1,5 @@
 $(function () {
+    var channel_id = 0;
     $("#sex").val("");
     $(".row .col-xs-3 img").each(function (index, ele) {
         $(this).click(function (e) {
@@ -42,14 +43,14 @@ $(function () {
 
     $(".getCode").click(function () {
 
-        if(!validateForm()){
+        if (!validateForm()) {
             return;
         }
 
         $.ajax({
             type: "GET",
             url: "/wap/user/mobile-is-exist",
-            dataType:"json",
+            dataType: "json",
             data: {mobile: $.trim($("#phone").val())},
             success: function (res) {
                 if (res.status < 1) {
@@ -80,11 +81,15 @@ $(function () {
 
     $("#regSubmit").click(function () {
 
-        if($("#sex").val() == ""){
+        if(GetUrlParms()['channel_id']){
+            channel_id = GetUrlParms()['channel_id'];
+        }
+
+        if ($("#sex").val() == "") {
             alert("请选择您的性别！");
             return;
         }
-        if(!validateForm()){
+        if (!validateForm()) {
             return;
         }
 
@@ -92,7 +97,7 @@ $(function () {
             type: "GET",
             url: "/wap/user/mobile-is-exist",
             data: {mobile: $.trim($("#phone").val())},
-            dataType:'json',
+            dataType: 'json',
             success: function (res) {
                 if (res.status < 1) {
                     alert("该手机号已经存在！如需登录请关注微信公众号“嘉瑞百合缘”！");
@@ -108,8 +113,8 @@ $(function () {
                             $.ajax({
                                 type: "GET",
                                 url: "/wap/user/register",
-                                data: {mobile: $.trim($("#phone").val()),sex:$("#sex").val()},
-                                dataType:"json",
+                                data: {mobile: $.trim($("#phone").val()), sex: $("#sex").val(),channel_id:channel_id},
+                                dataType: "json",
                                 beforeSend: function () {
                                     $("#regSubmit").addClass('disabd').prop('disabled', true).html("注册中，请稍候...");
                                 },
@@ -118,7 +123,7 @@ $(function () {
                                         $(".alt_t2").html($.trim($("#phone").val()).substring($.trim($("#phone").val()).length, $.trim($("#phone").val()).length - 6) + "（手机号后六位）。")
                                         $(".submit_alert_bg").show();
                                         $(".submit_alert").show();
-                                    }else{
+                                    } else {
                                         alert("注册失败，请重试！")
                                         location.reload();
                                     }
@@ -138,8 +143,36 @@ $(function () {
         });
     });
 
-    $(".reg_input_sex span").click(function(){
+    $(".reg_input_sex span").click(function () {
         $(this).addClass('selected').siblings().removeClass('selected');
         $("#sex").val($(this).data('sex'));
     })
+
+
+    function GetUrlParms() {
+
+        var args = new Object();
+
+        var query = location.search.substring(1);//获取查询串
+
+        var pairs = query.split("&");//在逗号处断开
+
+        for (var i = 0; i < pairs.length; i++) {
+
+            var pos = pairs[i].indexOf('=');//查找name=value
+
+            if (pos == -1)   continue;//如果没有找到就跳过
+
+            var argname = pairs[i].substring(0, pos);//提取name
+
+            var value = pairs[i].substring(pos + 1);//提取value
+
+            args[argname] = unescape(value);//存为属性
+
+        }
+
+        return args;
+
+    }
+
 });
