@@ -170,7 +170,6 @@ define(['app/module', 'app/directive/directiveApi'
                 } else {
                     ar.saveDataAlert($ionicPopup, res.msg);
                 }
-
             }).error(function () {
                 $ionicLoading.hide();
                 ar.saveDataAlert($ionicPopup, '网络连接错误，请重试');
