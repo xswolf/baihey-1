@@ -10,7 +10,7 @@ class User extends Base
 {
 
 
-    public function lists($start, $limit, $andWhere = [] , $order='')
+    public function lists($start, $limit, $andWhere = [], $order = '')
     {
 
         $handle = (new Query())->from($this->tablePrefix . 'user u')
@@ -18,9 +18,9 @@ class User extends Base
             ->select("*")
             ->offset($start)
             ->limit($limit);
-        if ($order == ''){
+        if ($order == '') {
             $handle->orderBy('id desc');
-        }else{
+        } else {
             $handle->orderBy($order);
         }
         if (count($andWhere) > 0) {
@@ -148,7 +148,7 @@ class User extends Base
             unset($data['auth']);
         }
 
-        if (isset($data['channel_id'])){
+        if (isset($data['channel_id'])) {
             $infoData['channel_id'] = $data['channel_id'];
             unset($data['channel_id']);
         }
@@ -550,9 +550,9 @@ class User extends Base
         $user = $this->changeBalance($user_id, $goods['price']);
 
 
-        if($userInfo['honesty_value'] & 16){
+        if ($userInfo['honesty_value'] & 16) {
             $nData['honesty_value'] = intval($userInfo['honesty_value']) - 16;
-            UserInformation::getInstance()->updateUserInfo($user_id,$nData);
+            UserInformation::getInstance()->updateUserInfo($user_id, $nData);
         }
 
         // 修改到期时间
@@ -802,7 +802,7 @@ class User extends Base
      */
     public function getPayAll($userId)
     {
-        return (new Query())->from($this->tablePrefix . 'charge_order')->where(['user_id' => $userId,'status'=> 1])->sum("money");
+        return (new Query())->from($this->tablePrefix . 'charge_order')->where(['user_id' => $userId, 'status' => 1])->sum("money");
     }
 
     /**
@@ -910,9 +910,14 @@ class User extends Base
                 }
             }
             $userInfo['honesty_value'] = $user['honesty_value'];
+
             // 修改认证值
             $this->getDb()->createCommand()
                 ->update($this->tablePrefix . 'user_information', $userInfo, ['user_id' => $user_id])
+                ->execute();
+
+            $this->getDb()->createCommand()
+                ->update($this->tablePrefix . 'user', ['status' => 2], ['id' => $user_id])
                 ->execute();
             //UserInformation::getInstance()->updateUserInfo($user_id, ['honesty_value' => $user['honesty_value']]);
             //$this->getDb()->createCommand()->update($this->tablePrefix.'user_information', ['honesty_value' => $user['honesty_value']], ['user_id' => $user_id])->execute();
@@ -960,12 +965,12 @@ class User extends Base
 
         $flag2 = $this->editPhoto($type, $data);
 
-         // 修改用户状态为已审核
-         \Yii::$app->db->createCommand()
+        // 修改用户状态为已审核
+        \Yii::$app->db->createCommand()
             ->update($this->tablePrefix . 'user', ['status' => 2], ['id' => $data['user_id']])
             ->execute();
 
-        if ($flag1 > 0 && $flag2 > 0 ) {
+        if ($flag1 > 0 && $flag2 > 0) {
             $tran->commit();
             return 1;
         } else {
