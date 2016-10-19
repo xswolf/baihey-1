@@ -30,23 +30,23 @@ define(['app/module', 'app/directive/directiveApi'
                 $scope.searchForm.sex = 0;
                 $scope.whereForm.sex = 0;
             }
-        }
+        };
         init();
 
         // 用户列表
         $scope.userList = [];
 
         // 判断身份证是否认证通过
-        if ($scope.dataFilter.honestyStatus.length) {
+        if ($scope.dataFilter != null && $scope.dataFilter.honestyStatus.length) {
             $scope.honestyStatus = $scope.dataFilter.honestyStatus[0].is_check;
         }
         // 判断头像是否认证通过
-        if ($scope.dataFilter.headpicStatus) {
+        if ($scope.dataFilter != null && $scope.dataFilter.headpicStatus) {
             $scope.headpicStatus = $scope.dataFilter.headpicStatus.is_check;
         }
         $scope.honesty = function (val) {
             return val & 1;
-        }
+        };
 
         //$scope.cityName = '重庆';
         //$scope.cityId = 2;
@@ -63,7 +63,7 @@ define(['app/module', 'app/directive/directiveApi'
             } else {
                 window.location.hash = '#/member/security_phone';
             }
-        }
+        };
 
         $scope.dataLoading = false;
 
@@ -73,7 +73,7 @@ define(['app/module', 'app/directive/directiveApi'
                 return user.id != $scope.userInfo.id && $scope.dataFilter.blacked.indexOf(user.id) == -1;
             }
             return 1;
-        }
+        };
 
         // 高级搜索模版
         $ionicModal.fromTemplateUrl('MoreSearchModal.html', {
@@ -143,7 +143,7 @@ define(['app/module', 'app/directive/directiveApi'
                     hideSheet();
                 }
             });
-        }
+        };
 
 
         $scope.doRefresh = function () {
@@ -161,7 +161,7 @@ define(['app/module', 'app/directive/directiveApi'
             }).finally(function () {
                 $scope.$broadcast('scroll.refreshComplete');
             });
-        }
+        };
 
         // 加载更多
         $scope.loadMore = function (flag) {
@@ -197,12 +197,12 @@ define(['app/module', 'app/directive/directiveApi'
                 }, 800);
             }
 
-        }
+        };
 
         // 是否还有更多
         $scope.moreDataCanBeLoaded = function () {
             return $scope.pageLast;
-        }
+        };
 
 
         /* 高级搜索 */
@@ -329,7 +329,7 @@ define(['app/module', 'app/directive/directiveApi'
         // 性别切换
         $scope.sexChange = function (value) {
             $scope.whereForm.sex = value;
-        }
+        };
 
         $scope.moreText = '展开';
         $scope.more = false;
@@ -343,7 +343,7 @@ define(['app/module', 'app/directive/directiveApi'
             } else {
                 $scope.moreText = '展开';
             }
-        }
+        };
 
         // remove欢迎图片
         if (document.getElementById('welcome')) {
@@ -411,11 +411,11 @@ define(['app/module', 'app/directive/directiveApi'
             $scope.user.age = res.data[0].age;
             $scope.user.sex = res.data[0].sex;
             ar.initPhotoSwipeFromDOM('.bhy-gallery', $scope, $ionicPopup);
-        })
+        });
 
         $scope.jump = function (url) {
             $location.url(url);
-        }
+        };
 
         //用户已屏蔽的动态id，从localStorage获取
         $scope.display = ar.getStorage('display') ? ar.getStorage('display') : [];
@@ -431,7 +431,7 @@ define(['app/module', 'app/directive/directiveApi'
                 return false;
             }
             return $scope.display.indexOf(dis.id) == -1;
-        }
+        };
 
         // 点赞
         $scope.clickLike = function (dis) {
@@ -450,7 +450,7 @@ define(['app/module', 'app/directive/directiveApi'
             }
             $scope.discoveryList[i].like_num = parseInt($scope.discoveryList[i].like_num) + add;
             api.save('/wap/member/set-click-like', {dynamicId: dis.id, add: add});
-        }
+        };
 
         // 更多功能
         $scope.more = function (isUser, id, index) {
@@ -495,7 +495,7 @@ define(['app/module', 'app/directive/directiveApi'
                     return true;
                 }
             });
-        }
+        };
 
         // 加载更多
         $scope.loadMore = function () {
@@ -508,7 +508,7 @@ define(['app/module', 'app/directive/directiveApi'
             }).finally(function () {
                 $scope.$broadcast('scroll.infiniteScrollComplete');
             })
-        }
+        };
 
         // 是否还有更多
         $scope.moreDataCanBeLoaded = function () {
@@ -521,4 +521,4 @@ define(['app/module', 'app/directive/directiveApi'
     module.controller("site.error", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$ionicModal', '$location', function (api, $scope, $timeout, $ionicPopup, $ionicModal, $location) {
 
     }]);
-})
+});
