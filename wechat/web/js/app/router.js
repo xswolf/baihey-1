@@ -441,23 +441,23 @@ define(["app/module", 'app/service/serviceApi'],
                     })
                 }
                 // 页面开始加载
-                $scope.$on('$stateChangeStart',function (event, toState) {
-                    // 判断是否登陆
-                    if (toState.url != '/index' && toState.url != '/error') {
-                        $ionicLoading.show();
-
-                            api.getLoginStatus().success(function (res) {
-                                sessionStorage.loginStatus = res.status;
-                                if (!res.status) {
-                                    location.href = '/wap/user/login';
-                                    return false;
-                                }
-                            })
-
-
-                    }
-
-                });
+                //$scope.$on('$stateChangeStart',function (event, toState) {
+                //    // 判断是否登陆
+                //    if (toState.url != '/index' && toState.url != '/error') {
+                //        $ionicLoading.show();
+                //
+                //            api.getLoginStatus().success(function (res) {
+                //                sessionStorage.loginStatus = res.status;
+                //                if (!res.status) {
+                //                    location.href = '/wap/user/login';
+                //                    return false;
+                //                }
+                //            })
+                //
+                //
+                //    }
+                //
+                //});
                 // 页面加载成功
                 $scope.$on('$stateChangeSuccess',function () {
                     $ionicLoading.hide();
