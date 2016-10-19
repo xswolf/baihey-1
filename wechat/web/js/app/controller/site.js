@@ -7,12 +7,7 @@ define(['app/module', 'app/directive/directiveApi'
 
     module.controller("site.index", ['app.serviceApi', '$rootScope', '$scope', '$timeout', '$ionicPopup', '$ionicModal', '$ionicActionSheet', '$ionicLoading', '$ionicBackdrop', '$ionicScrollDelegate', function (api, $rootScope, $scope, $timeout, $ionicPopup, $ionicModal, $ionicActionSheet, $ionicLoading, $ionicBackdrop, $ionicScrollDelegate) {
 
-        $scope.$on('$ionicView.beforeEnter', function () {
-            if (ar.getStorage('userInfo') && ar.getStorage('userInfo').user_id == ar.getCookie('bhy_user_id')) {
-                $scope.userInfo = ar.getStorage('userInfo');
-                $scope.userInfo.info = JSON.parse($scope.userInfo.info);
-            }
-        })
+
         if (ar.getStorage('userInfo') && ar.getStorage('userInfo').user_id == ar.getCookie('bhy_user_id')) {
             $scope.userInfo = ar.getStorage('userInfo');
             $scope.userInfo.info = JSON.parse($scope.userInfo.info);
@@ -28,7 +23,7 @@ define(['app/module', 'app/directive/directiveApi'
             $scope.searchForm.pageNum = 1; // 初始化页码
             //$scope.searchForm.pageSize = 6; // 初始化页码
             // 默认查询条件：年龄范围，页码，每页数量
-            if ($scope.userId > 0 && $scope.userInfo.sex == 0) {
+            if ($scope.userInfo.sex == 0) {
                 $scope.searchForm.sex = 1;
                 $scope.whereForm.sex = 1;
             } else {
