@@ -47,11 +47,12 @@
     var _hmt = _hmt || [];
     (function() {
         var hm = document.createElement("script");
-        hm.src = "//hm.baidu.com/hm.js?51eb3b1bd10bed60aa541977075e2a08";
+        hm.src = "//hm.baidu.com/hm.js?cf7b87334b5715919657c33c407da8c2";
         var s = document.getElementsByTagName("script")[0];
         s.parentNode.insertBefore(hm, s);
     })();
 </script>
+
 
 </body>
 
