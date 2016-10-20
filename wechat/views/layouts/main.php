@@ -43,6 +43,16 @@
 <script src="/wechat/web/js/plugin/h5/excanvas.min.js"></script>
 <script src="/wechat/web/js/plugin/h5/css3-mediaqueries.js"></script>
 <![endif]-->
+<script>
+    var _hmt = _hmt || [];
+    (function() {
+        var hm = document.createElement("script");
+        hm.src = "//hm.baidu.com/hm.js?51eb3b1bd10bed60aa541977075e2a08";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+
 </body>
 
 </html>

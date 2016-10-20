@@ -3,10 +3,12 @@ $(function () {
         controlArrows:false,
         slidesNavigation:true,
         loopHorizontal:false,
-        afterRender:function(s){
+        autoScrolling:true,
+        afterRender:function(){
             $('.ad_reg_con').show();
         }
     });
+    FastClick.attach(document.body);
     var channel_id = 0;
     $("#sex").val("");
     $(".row .col-xs-3 img").each(function (index, ele) {
@@ -156,7 +158,7 @@ $(function () {
         $("#sex").val($(this).data('sex'));
     })
 
-    $(".showCon").on('click',function(){
+    $('#showCon').click(function(){
         $("#fullpage").fadeOut(2000);
     })
 
@@ -185,5 +187,5 @@ $(function () {
         return args;
 
     }
-
 });
+
