@@ -1,7 +1,11 @@
+.mw100{
+    max-width: 100%;
+}
 .ad_reg_con{
     min-width: 320px;
     width: 100%;
     max-width: 640px;
+    display: none;
 }
 .ad_reg_bg{
     background: #eeeeee;
@@ -191,4 +195,9 @@
 }
 .reg_input_sex>span.selected{
     color: #000;
+}
+.ad_fullpage{
+    position: absolute;
+    top: 0;
+    z-index: 10;
 }

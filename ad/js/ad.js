@@ -1,4 +1,12 @@
 $(function () {
+    $('#fullpage').fullpage({
+        controlArrows:false,
+        slidesNavigation:true,
+        loopHorizontal:false,
+        afterRender:function(s){
+            $('.ad_reg_con').show();
+        }
+    });
     var channel_id = 0;
     $("#sex").val("");
     $(".row .col-xs-3 img").each(function (index, ele) {
@@ -148,6 +156,9 @@ $(function () {
         $("#sex").val($(this).data('sex'));
     })
 
+    $(".showCon").on('click',function(){
+        $("#fullpage").fadeOut(2000);
+    })
 
     function GetUrlParms() {
 
