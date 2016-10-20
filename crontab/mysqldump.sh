@@ -1,0 +1,1 @@
+mysqldump --opt -uroot -pwolfyan2.b --skip-extended-insert -B bhy > msyql`date +%Y-%m-%d_%H_%i`.sql
