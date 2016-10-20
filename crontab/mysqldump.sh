@@ -1,0 +1,1 @@
+mysqldump --opt -ujrbaihe --skip-extended-insert -B bhy > mysql`date +%Y-%m-%d_%H-%M`.sql
