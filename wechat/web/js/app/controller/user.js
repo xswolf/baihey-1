@@ -309,7 +309,7 @@ define(['app/module', 'app/directive/directiveApi'
         //设置新密码
         $scope.User.setpass = function () {
 
-            if (!ar.validatePass($scope.User.password)) {
+            if (!$scope.User.password || $scope.User.password.length < 6) {
                 ar.saveDataAlert($ionicPopup, '密码不能少于6位字符');
                 return false;
             }
