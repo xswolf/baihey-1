@@ -909,7 +909,23 @@ define(['app/module', 'app/directive/directiveApi'
                     });
                     return false;
                 }
-                if (userInfo.info.level < 1) {
+
+                if(!$scope.userInfo.phone){
+                    var cfVIP = $ionicPopup.confirm({
+                        title: '实名制婚恋网',
+                        template: '绑定手机才可以发布动态哦！',
+                        okText: '去绑定',
+                        cancelText: '取消'
+                    })
+                    cfVIP.then(function (res) {
+                        if (res) {
+                            $location.url('/member/bindPhone');
+                        }
+                    })
+                    return false;
+                }
+
+               /* if (userInfo.info.level < 1) {
                     var cfVIP = $ionicPopup.confirm({
                         title: '实名制婚恋网',
                         template: 'VIP会员才可以发布动态哦！现在开通VIP，即刻享受超级特权。',
@@ -922,7 +938,7 @@ define(['app/module', 'app/directive/directiveApi'
                         }
                     })
                     return false;
-                }
+                }*/
 
                 if (!$scope.formData.content) {
                     ar.saveDataAlert($ionicPopup, '说点什么吧，不要为难小的哦。');
@@ -3321,7 +3337,6 @@ define(['app/module', 'app/directive/directiveApi'
         module.controller("member.bindPhone", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$location', '$interval', '$ionicModal', '$ionicLoading', function (api, $scope, $timeout, $ionicPopup, $location, $interval, $ionicModal, $ionicLoading) {
             $scope.formData = {};
             $scope.getCodeTitle = '获取验证码';
-
             $scope.validate = {};
 
             $ionicModal.fromTemplateUrl('sendCodeModal.html', {
@@ -3331,6 +3346,7 @@ define(['app/module', 'app/directive/directiveApi'
             }).then(function (modal) {
                 $scope.modal = modal;
             });
+
             $scope.openSendCodeModal = function () {
                 $scope.modal.show();
             };
