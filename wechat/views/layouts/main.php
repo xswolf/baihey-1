@@ -43,25 +43,7 @@
 <script src="/wechat/web/js/plugin/h5/excanvas.min.js"></script>
 <script src="/wechat/web/js/plugin/h5/css3-mediaqueries.js"></script>
 <![endif]-->
-<script>
-    var _hmt = _hmt || [];
-    (function() {
-        var hm = document.createElement("script");
-        hm.src = "//hm.baidu.com/hm.js?cf7b87334b5715919657c33c407da8c2";
-        var s = document.getElementsByTagName("script")[0];
-        s.parentNode.insertBefore(hm, s);
-    })();
-</script>
-
 
 </body>
 
 </html>
-<?php
-//$code = \Yii::$app->request->get( 'code' );
-//if ( $code != null ) {
-//
-//    header("Location:http://wechat.baihey.com/wap/site/main#/index");
-//    exit;
-//}
-?>
