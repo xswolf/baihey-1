@@ -873,7 +873,7 @@ class User extends Base
         foreach ($photo as $k => $v) {
             $arr[$k]['pic_path'] = str_replace('thumb', 'picture', $v);
             $arr[$k]['thumb_path'] = $v;
-            $arr[$k]['is_check'] = 1;
+            $arr[$k]['is_check'] = 2;
             $arr[$k]['time'] = time();
             $arr[$k]['type'] = $type;
             /*if($type != 1) {
@@ -916,9 +916,6 @@ class User extends Base
                 ->update($this->tablePrefix . 'user_information', $userInfo, ['user_id' => $user_id])
                 ->execute();
 
-            $this->getDb()->createCommand()
-                ->update($this->tablePrefix . 'user', ['status' => 2], ['id' => $user_id])
-                ->execute();
             //UserInformation::getInstance()->updateUserInfo($user_id, ['honesty_value' => $user['honesty_value']]);
             //$this->getDb()->createCommand()->update($this->tablePrefix.'user_information', ['honesty_value' => $user['honesty_value']], ['user_id' => $user_id])->execute();
         }
