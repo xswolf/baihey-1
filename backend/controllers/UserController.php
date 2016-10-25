@@ -99,8 +99,7 @@ class UserController extends BaseController
      * @return string
      * 编辑用户
      */
-    public
-    function actionEditUser()
+    public   function actionEditUser()
     {
         $auth = \Yii::$app->authManager;
         $request = \Yii::$app->request;
