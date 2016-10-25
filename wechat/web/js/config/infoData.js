@@ -5,48 +5,48 @@ var config_infoData = {
     'height': config_heightLink(140),
 
     'marriage': [
-        {id: 1, name: '未婚'},
-        {id: 2, name: '离异'},
-        {id: 3, name: '丧偶'}
+        {id: "1", name: '未婚'},
+        {id: "2", name: '离异'},
+        {id: "3", name: '丧偶'}
     ],
 
     'education': [
-        {id: 1, name: '初中'},
-        {id: 2, name: '高中'},
-        {id: 3, name: '大专'},
-        {id: 4, name: '本科'},
-        {id: 5, name: '硕士'},
-        {id: 6, name: '博士'}
+        {id: "1", name: '初中'},
+        {id: "2", name: '高中'},
+        {id: "3", name: '大专'},
+        {id: "4", name: '本科'},
+        {id: "5", name: '硕士'},
+        {id: "6", name: '博士'}
     ],
 
     'zodiac': [
-        {id: 1, name: '鼠'},
-        {id: 2, name: '牛'},
-        {id: 3, name: '虎'},
-        {id: 4, name: '兔'},
-        {id: 5, name: '龙'},
-        {id: 6, name: '蛇'},
-        {id: 7, name: '马'},
-        {id: 8, name: '羊'},
-        {id: 9, name: '猴'},
-        {id: 10, name: '鸡'},
-        {id: 11, name: '狗'},
-        {id: 12, name: '猪'}
+        {id: "1", name: '鼠'},
+        {id: "2", name: '牛'},
+        {id: "3", name: '虎'},
+        {id: "4", name: '兔'},
+        {id: "5", name: '龙'},
+        {id: "6", name: '蛇'},
+        {id: "7", name: '马'},
+        {id: "8", name: '羊'},
+        {id: "9", name: '猴'},
+        {id: "10", name: '鸡'},
+        {id: "11", name: '狗'},
+        {id: "12", name: '猪'}
     ],
 
     'constellation': [
-        {id: 1, name: '水瓶座'},
-        {id: 2, name: '双鱼座'},
-        {id: 3, name: '白羊座'},
-        {id: 4, name: '金牛座'},
-        {id: 5, name: '双子座'},
-        {id: 6, name: '巨蟹座'},
-        {id: 7, name: '狮子座'},
-        {id: 8, name: '处女座'},
-        {id: 9, name: '天秤座'},
-        {id: 10, name: '天蝎座'},
-        {id: 11, name: '射手座'},
-        {id: 12, name: '摩羯座'}
+        {id: "1", name: '水瓶座'},
+        {id: "2", name: '双鱼座'},
+        {id: "3", name: '白羊座'},
+        {id: "4", name: '金牛座'},
+        {id: "5", name: '双子座'},
+        {id: "6", name: '巨蟹座'},
+        {id: "7", name: '狮子座'},
+        {id: "8", name: '处女座'},
+        {id: "9", name: '天秤座'},
+        {id: "10", name: '天蝎座'},
+        {id: "11", name: '射手座'},
+        {id: "12", name: '摩羯座'}
     ],
 
     'children_occupation':[
@@ -292,44 +292,44 @@ var config_infoData = {
         {id: 23,name: '咨询/顾问',icon: '21'}
     ],
     'nation': [
-        {id: 1, name: '汉族'},
-        {id: 2, name: '藏族'},
-        {id: 3, name: '朝鲜族'},
-        {id: 4, name: '蒙古族'},
-        {id: 5, name: '回族'},
-        {id: 6, name: '满族'},
-        {id: 7, name: '维吾尔族'},
-        {id: 8, name: '壮族'},
-        {id: 9, name: '彝族'},
-        {id: 10, name: '苗族'},
-        {id: 11, name: '其他'}
+        {id: "1", name: '汉族'},
+        {id: "2", name: '藏族'},
+        {id: "3", name: '朝鲜族'},
+        {id: "4", name: '蒙古族'},
+        {id: "5", name: '回族'},
+        {id: "6", name: '满族'},
+        {id: "7", name: '维吾尔族'},
+        {id: "8", name: '壮族'},
+        {id: "9", name: '彝族'},
+        {id: "10", name: '苗族'},
+        {id: "11", name: '其他'}
     ],
     'salary': [
-        {id: 1, name: '3-5万'},
-        {id: 2, name: '6-9万'},
-        {id: 3, name: '10-15万'},
-        {id: 4, name: '16-25万'},
-        {id: 5, name: '100万以上'}
+        {id: "1", name: '3-5万'},
+        {id: "2", name: '6-9万'},
+        {id: "3", name: '10-15万'},
+        {id: "4", name: '16-25万'},
+        {id: "5", name: '100万以上'}
     ],
     'house': [
-        {id: 1, name: '已购房'},
-        {id: 2, name: '未购房'}
+        {id: "1", name: '已购房'},
+        {id: "2", name: '未购房'}
     ],
     'car': [
-        {id: 1, name: '已购车'},
-        {id: 2, name: '未购车'}
+        {id: "1", name: '已购车'},
+        {id: "2", name: '未购车'}
     ],
     'blood': [
-        {id: 1, name: 'A型'},
-        {id: 2, name: 'B型'},
-        {id: 3, name: 'AB型'},
-        {id: 4, name: 'O型'},
-        {id: 5, name: 'RH型'}
+        {id: "1", name: 'A型'},
+        {id: "2", name: 'B型'},
+        {id: "3", name: 'AB型'},
+        {id: "4", name: 'O型'},
+        {id: "5", name: 'RH型'}
     ],
     'children': [
-        {id: 1, name: '无小孩'},
-        {id: 2, name: '有小孩归自己'},
-        {id: 3, name: '有小孩归对方'}
+        {id: "1", name: '无小孩'},
+        {id: "2", name: '有小孩归自己'},
+        {id: "3", name: '有小孩归对方'}
     ],
 
     'feedback': [
