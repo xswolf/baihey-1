@@ -916,7 +916,7 @@ class User extends Base
             $this->getDb()->createCommand()
                 ->update($this->tablePrefix . 'user_information', $userInfo, ['user_id' => $user_id])
                 ->execute();
-
+            $this->getDb()->createCommand()->update($this->tablePrefix . 'user', ['status' => 1], ['id' => $user_id])->execute();
             //UserInformation::getInstance()->updateUserInfo($user_id, ['honesty_value' => $user['honesty_value']]);
             //$this->getDb()->createCommand()->update($this->tablePrefix.'user_information', ['honesty_value' => $user['honesty_value']], ['user_id' => $user_id])->execute();
         }
