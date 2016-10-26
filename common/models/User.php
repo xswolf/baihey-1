@@ -885,14 +885,15 @@ class User extends Base
         // 上传照片
         $photoType = count($arr) == 0 ? 1 : $arr[0]['type'];
         UserPhoto::getInstance()->savePhoto($arr, $user_id, $photoType, $headPic);
-        /*if ($type != 1) {
+        if ($type != 1) {
             $user = (new Query())->select('*')->from($this->tablePrefix . 'user_information')->where(['user_id' => $user_id])->one();
 
             // 修改用户认证值
             if (($type == 2 || $type == 3) && $card = UserPhoto::getInstance()->getPhotoList($user_id, 23)) {
-                if (count($card) == 2 && !($user['honesty_value'] & 1)) {
+                /*if (count($card) == 2 && !($user['honesty_value'] & 1)) {
                     $user['honesty_value'] = $user['honesty_value'] + 1;
-                } elseif ($user['honesty_value'] & 1) {
+                } else*/
+                if ($user['honesty_value'] & 1) {
                     $user['honesty_value'] = $user['honesty_value'] - 1;
                 }
                 $userInfo['has_identify'] = 1;
@@ -918,7 +919,7 @@ class User extends Base
 
             //UserInformation::getInstance()->updateUserInfo($user_id, ['honesty_value' => $user['honesty_value']]);
             //$this->getDb()->createCommand()->update($this->tablePrefix.'user_information', ['honesty_value' => $user['honesty_value']], ['user_id' => $user_id])->execute();
-        }*/
+        }
     }
 
     /**
