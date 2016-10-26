@@ -329,7 +329,7 @@ class User extends Base
         $this->getDb()->createCommand()->update($this->tablePrefix . "user_information", $userInfo, ['user_id' => $data['user_id']])->execute();
         $this->getDb()->createCommand()->update($this->tablePrefix . "user", $user, ['id' => $data['user_id']])->execute();
         // 添加图片
-        if (isset($data['cardFace_List'])) {
+        if (isset($data['cardFace_List']) ) {
             User::getInstance()->insertUserPhoto($user['id'], $data);
         }
         return $user;
@@ -895,6 +895,7 @@ class User extends Base
                 } else*/
                 if ($user['honesty_value'] & 1) {
                     $user['honesty_value'] = $user['honesty_value'] - 1;
+                    $this->getDb()->createCommand()->update($this->tablePrefix . 'user', ['status' => 1], ['id' => $user_id])->execute();
                 }
                 $userInfo['has_identify'] = 1;
             } elseif ($type == 4) {
@@ -916,7 +917,7 @@ class User extends Base
             $this->getDb()->createCommand()
                 ->update($this->tablePrefix . 'user_information', $userInfo, ['user_id' => $user_id])
                 ->execute();
-            $this->getDb()->createCommand()->update($this->tablePrefix . 'user', ['status' => 1], ['id' => $user_id])->execute();
+
             //UserInformation::getInstance()->updateUserInfo($user_id, ['honesty_value' => $user['honesty_value']]);
             //$this->getDb()->createCommand()->update($this->tablePrefix.'user_information', ['honesty_value' => $user['honesty_value']], ['user_id' => $user_id])->execute();
         }
