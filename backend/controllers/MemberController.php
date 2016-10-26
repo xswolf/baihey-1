@@ -73,6 +73,7 @@ class MemberController extends BaseController
             } else {
                 if ($k == 'status' && $v == 5) {
                     $andWhere[] = [">", 'user_id', 12493];
+                    $andWhere[] = ["=", 'status', 2];
                     $v = 2;
                     $order = 'service_status desc';
                 }
