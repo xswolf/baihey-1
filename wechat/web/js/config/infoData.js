@@ -460,7 +460,7 @@ function config_heightLink(min) {
     var data = [];
     for (var i = min; i <= 260; i++) {
         data.push({
-            'id': i,
+            'id': "'" + i + "'",
             'name': i + '厘米'
         })
     }
