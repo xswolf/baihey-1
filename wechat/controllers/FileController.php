@@ -140,6 +140,12 @@ class FileController extends BaseController
 
         $filename = '/alidata/www/baihey' . \Yii::$app->request->get('filename');
         $oldName = str_replace('thumb', 'picture', $filename);
+
+        if ($this->imgturn($filename , 1) && $this->imgturn($oldName , 1)){
+            return $this->renderAjax(['status' => 1, 'message' => '成功']);
+        }
+        return $this->renderAjax(['status' => 0, 'message' => '失败']);
+
         $degrees = \Yii::$app->request->get('degrees');
 
         $ext = strtolower(strrchr($filename, '.'));
@@ -167,6 +173,66 @@ class FileController extends BaseController
         }
         return $this->renderAjax(['status' => 0, 'message' => '失败']);
 
+    }
+
+    protected function imgturn($src,$direction=1)
+    {
+        $ext = pathinfo($src)['extension'];
+        switch ($ext) {
+            case 'gif':
+                $img = imagecreatefromgif($src);
+                break;
+            case 'jpg':
+            case 'jpeg':
+                $img = imagecreatefromjpeg($src);
+                break;
+            case 'png':
+                $img = imagecreatefrompng($src);
+                break;
+            default:
+                die('图片格式错误!');
+                break;
+        }
+        $width = imagesx($img);
+        $height = imagesy($img);
+        $img2 = imagecreatetruecolor($height,$width);
+        //顺时针旋转90度
+        if($direction==1)
+        {
+            for ($x = 0; $x < $width; $x++) {
+                for($y=0;$y<$height;$y++) {
+                    imagecopy($img2, $img, $height-1-$y,$x, $x, $y, 1, 1);
+                }
+            }
+        }else if($direction==2) {
+            //逆时针旋转90度
+            for ($x = 0; $x < $height; $x++) {
+                for($y=0;$y<$width;$y++) {
+                    imagecopy($img2, $img, $x, $y, $width-1-$y, $x, 1, 1);
+                }
+            }
+        }
+        switch ($ext) {
+            case 'jpg':
+            case "jpeg":
+                imagejpeg($img2, $src, 100);
+                break;
+
+            case "gif":
+                imagegif($img2, $src, 100);
+                break;
+
+            case "png":
+                imagepng($img2, $src, 100);
+                break;
+
+            default:
+                die('图片格式错误!');
+                break;
+        }
+        imagedestroy($img);
+        imagedestroy($img2);
+        return true;
     }
 
 }
