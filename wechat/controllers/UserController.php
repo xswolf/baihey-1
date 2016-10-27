@@ -76,7 +76,7 @@ class UserController extends BaseController
         if (\Yii::$app->request->get('username') && \Yii::$app->request->get('password')) {
             if ($user = User::getInstance()->login($this->get['username'], $this->get['password'])) {
 
-                if ($user['wx_id'] == '' && isset($_COOKIE['wx_id'])){
+                if (empty($user['wx_id']) && isset($_COOKIE['wx_id'])){
                     User::getInstance()->editUser1(['id'=>$user['id'] , 'wx_id' => $_COOKIE['wx_id'] ]);
                 }
 
@@ -112,6 +112,7 @@ class UserController extends BaseController
             'fontSize' => 30,    // 验证码字体大小
             'length' => 4,     // 验证码位数
             'useNoise' => false, // 关闭验证码杂点
+            'codeSet' => '0123456789'  // 纯数字
         );
 
         $Verify = new Verify($config);
