@@ -146,32 +146,32 @@ class FileController extends BaseController
         }
         return $this->renderAjax(['status' => 0, 'message' => '失败']);
 
-        $degrees = \Yii::$app->request->get('degrees');
-
-        $ext = strtolower(strrchr($filename, '.'));
-        $method = 'jpeg';
-        if ($ext == 'jpg' || $ext == 'jpeg') {
-            $method = 'jpeg';
-        } elseif ($ext == 'gif') {
-            $method = 'gif';
-        } elseif ($ext == 'png') {
-            $method = 'png';
-        } elseif ($ext == 'bmp') {
-            $method = 'wbmp';
-        }
-
-        $createMethod = "imagecreatefrom" . $method;
-        $imgMethod = "image" . $method;
-        $oldSource = $createMethod($oldName);
-        $oldRotate = imagerotate($oldSource, $degrees, 0);
-
-        $source = $createMethod($filename);
-        $rotate = imagerotate($source, $degrees, 0);
-
-        if ($imgMethod($rotate, $filename) && $imgMethod($oldRotate, $oldName)) {
-            return $this->renderAjax(['status' => 1, 'message' => '成功']);
-        }
-        return $this->renderAjax(['status' => 0, 'message' => '失败']);
+//        $degrees = \Yii::$app->request->get('degrees');
+//
+//        $ext = strtolower(strrchr($filename, '.'));
+//        $method = 'jpeg';
+//        if ($ext == 'jpg' || $ext == 'jpeg') {
+//            $method = 'jpeg';
+//        } elseif ($ext == 'gif') {
+//            $method = 'gif';
+//        } elseif ($ext == 'png') {
+//            $method = 'png';
+//        } elseif ($ext == 'bmp') {
+//            $method = 'wbmp';
+//        }
+//
+//        $createMethod = "imagecreatefrom" . $method;
+//        $imgMethod = "image" . $method;
+//        $oldSource = $createMethod($oldName);
+//        $oldRotate = imagerotate($oldSource, $degrees, 0);
+//
+//        $source = $createMethod($filename);
+//        $rotate = imagerotate($source, $degrees, 0);
+//
+//        if ($imgMethod($rotate, $filename) && $imgMethod($oldRotate, $oldName)) {
+//            return $this->renderAjax(['status' => 1, 'message' => '成功']);
+//        }
+//        return $this->renderAjax(['status' => 0, 'message' => '失败']);
 
     }
 
