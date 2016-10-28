@@ -899,16 +899,16 @@ class User extends Base
                 }
                 $userInfo['has_identify'] = 1;
             } elseif ($type == 4) {
-                if (!($user['honesty_value'] & 4)) {
-                    $user['honesty_value'] = $user['honesty_value'] + 4;
+                if ($user['honesty_value'] & 4) {
+                    $user['honesty_value'] = $user['honesty_value'] - 4;
                 }
             } elseif ($type == 5) {
-                if (!($user['honesty_value'] & 2)) {
-                    $user['honesty_value'] = $user['honesty_value'] + 2;
+                if ($user['honesty_value'] & 2) {
+                    $user['honesty_value'] = $user['honesty_value'] - 2;
                 }
             } elseif ($type == 6) {
-                if (!($user['honesty_value'] & 8)) {
-                    $user['honesty_value'] = $user['honesty_value'] + 8;
+                if ($user['honesty_value'] & 8) {
+                    $user['honesty_value'] = $user['honesty_value'] - 8;
                 }
             }
             $userInfo['honesty_value'] = $user['honesty_value'];
