@@ -43,7 +43,7 @@ class MemberController extends BaseController
 
     public function actionIndex()
     {
-        if (isset($_SESSION['bhy_user'])){
+        if (isset($_SESSION['bhy_user'])) {
             $serverUser = AuthUser::getInstance()->getUserByRole("服务红娘");
             $salesUser = AuthUser::getInstance()->getUserByRole("销售红娘", 'like');
             $column = $this->showColumnByUser();
@@ -57,7 +57,7 @@ class MemberController extends BaseController
 
     }
 
-    private function searchWhere(&$andWhere, $get , &$order)
+    private function searchWhere(&$andWhere, $get, &$order)
     {
         foreach ($get as $k => $v) {
             if ($v == '' || !in_array($k, ['matchmaker', 'matchmaking', 'intention', 'constellation', 'zodiac', 'level', 'is_car', 'is_purchase', 'occupation', 'is_child', 'is_marriage', 'year_income', 'education', 'is_show', 'status', 'sex', 'age1', 'age2', 'height', 'province', 'city', 'area'])) continue;
@@ -65,7 +65,7 @@ class MemberController extends BaseController
                 $andWhere[] = ['>=', 'age', $v];
             } else if ($k == 'age2') {
                 $andWhere[] = ['<=', 'age', $v];
-            } else if ($k == 'height'){
+            } else if ($k == 'height') {
                 $andWhere[] = [">=", "json_extract(info,'$.{$k}')", $v];
             } else if (in_array($k, ['constellation', 'zodiac', 'level', 'is_car', 'is_purchase', 'occupation', 'is_child', 'is_marriage', 'year_income', 'education'])) {
                 if ($k == 'level' && $v == "0") $v = '';
@@ -107,18 +107,18 @@ class MemberController extends BaseController
                 $andWhere[] = ["like", "json_extract(info,'$.real_name')", $id_phone_name];
             }
         } else {
-            $this->searchWhere($andWhere, $request->get() , $order);
+            $this->searchWhere($andWhere, $request->get(), $order);
         }
 
 
-        $list = User::getInstance()->lists($start, $limit, $andWhere , $order);
+        $list = User::getInstance()->lists($start, $limit, $andWhere, $order);
         $count = User::getInstance()->count($andWhere);
         foreach ($list as $k => $v) {
 
-            $list[$k]['info']                 = json_decode($v['info']);
-            $list[$k]['info']->level          = getLevel($list[$k]['info']->level);
-            $list[$k]['info']->is_marriage    = getMarriage($list[$k]['info']->is_marriage);
-            $list[$k]['sex']                  = getSex($list[$k]['sex']);
+            $list[$k]['info'] = json_decode($v['info']);
+            $list[$k]['info']->level = getLevel($list[$k]['info']->level);
+            $list[$k]['info']->is_marriage = getMarriage($list[$k]['info']->is_marriage);
+            $list[$k]['sex'] = getSex($list[$k]['sex']);
         }
 
         $data = [
@@ -451,22 +451,23 @@ class MemberController extends BaseController
     /**
      * 分配服务红娘
      */
-    public function actionAssignMatchmaking(){
+    public function actionAssignMatchmaking()
+    {
         $data = \Yii::$app->request->post();
-        if(!isset($data['user'])){
+        if (!isset($data['user'])) {
             $data['user'] = '';
         }
-        if(!isset($data['info'])){
+        if (!isset($data['info'])) {
             $data['info'] = [];
         }
 
-        if(isset($data['service_status']) && $data['service_status'] == 1){
+        if (isset($data['service_status']) && $data['service_status'] == 1) {
             $data['service_status'] = time();
         }
 
-        if($flag = User::getInstance()->editUser($data)){
+        if ($flag = User::getInstance()->editUser($data)) {
             $this->renderAjax(['status' => 1, 'message' => '分配成功', 'data' => $flag]);
-        }else{
+        } else {
             $this->renderAjax(['status' => 0, 'message' => '分配失败', 'data' => $flag]);
         }
 
@@ -539,7 +540,7 @@ class MemberController extends BaseController
         if (isset($data['intention']) && $data['intention'] != 2) {
             UserInformation::getInstance()->updateUserInfo($data['to_user_id'], ['intention' => $data['intention']]);
         }
-        if (isset($data['intention'])){
+        if (isset($data['intention'])) {
             unset($data['intention']);
         }
         if ($data['id'] = $pairLog->addPair($data)) {
@@ -560,26 +561,38 @@ class MemberController extends BaseController
         }
     }
 
-    public function actionSetVipChat(){
+    public function actionSetVipChat()
+    {
         $data = $this->post;
-        $user = UserInformation::getInstance()->getUserField($data['user_id'],'honesty_value');
+        $user = UserInformation::getInstance()->getUserField($data['user_id'], 'honesty_value');
         $honesty_value = intval($user['honesty_value']) + intval($data['honesty_value']);
         $nData['honesty_value'] = $honesty_value;
-        if($result = UserInformation::getInstance()->updateUserInfo($data['user_id'],$nData)){
+        if ($result = UserInformation::getInstance()->updateUserInfo($data['user_id'], $nData)) {
             $this->renderAjax(['status' => 1, 'data' => $result, 'msg' => '成功']);
-        }else{
+        } else {
             $this->renderAjax(['status' => 0, 'data' => $result, 'msg' => '失败']);
         }
     }
 
-    public function actionEditInformation(){
+    public function actionEditInformation()
+    {
         $data = $this->post;
         $nData = $data;
         unset($nData['user_id']);
-        if($result = UserInformation::getInstance()->updateUserInfo($data['user_id'],$nData)){
+        if ($result = UserInformation::getInstance()->updateUserInfo($data['user_id'], $nData)) {
             $this->renderAjax(['status' => 1, 'data' => $result, 'msg' => '修改成功']);
-        }else{
+        } else {
             $this->renderAjax(['status' => 0, 'data' => $result, 'msg' => '修改失败']);
+        }
+    }
+
+    public function actionGetPicIsCheck()
+    {
+        $data = $this->post;
+        if ($photo = UserPhoto::getInstance()->queryPicIsCheckByPath($data['thumb_path']) != 1) {
+            $this->renderAjax(['status' => 0, 'msg' => '未审核的照片不可以设置为头像']);
+        } else {
+            $this->renderAjax(['status' => 1, 'msg' => '该照片可以设为头像', 'data' => $photo]);
         }
     }
 

@@ -225,4 +225,14 @@ class UserPhoto extends Base
             ->one();
         return $result;
     }
+
+    // 根据照片路径查询照片是否审核
+    public function queryPicIsCheckByPath($thumb_path){
+        $result = (new Query())
+            ->select('is_check')
+            ->from($this->tablePrefix . 'user_photo')
+            ->where(['thumb_path' => $thumb_path])
+            ->one();
+        return $result;
+    }
 }

@@ -691,15 +691,22 @@
     // 设置头像
     function setHeadPic(a) {
         var src = $(a).data('src');
-        $('#headPic').val(src);
-        $('.imgBox').each(function () {
-            if ($(this).find('p').find('span')) {
-                $(this).find('i').replaceWith('<i class="del fa fa-times-circle-o text-danger" onclick="delImg(this,1)"></i>')
-                $(this).find('p').find('span').replaceWith('<a data-src="' + src + '" onclick="setHeadPic(this)">设置头像</a>');
+        bhyFunc.ajaxRequest('/admin/member/get-pic-is-check',{thumb_path:src},function(res){
+            if(!res.status){
+                layer.msg(res.msg);
+                return false;
+            }else{
+                $('#headPic').val(src);
+                $('.imgBox').each(function () {
+                    if ($(this).find('p').find('span')) {
+                        $(this).find('i').replaceWith('<i class="del fa fa-times-circle-o text-danger" onclick="delImg(this,1)"></i>')
+                        $(this).find('p').find('span').replaceWith('<a data-src="' + src + '" onclick="setHeadPic(this)">设置头像</a>');
+                    }
+                })
+                $(a).parent().siblings('i').replaceWith('<i class="del fa fa-times-circle-o text-danger" onclick="delImg(this,1,1)"></i>')
+                $(a).replaceWith('<span class="text-danger">头像</span>');
             }
         })
-        $(a).parent().siblings('i').replaceWith('<i class="del fa fa-times-circle-o text-danger" onclick="delImg(this,1,1)"></i>')
-        $(a).replaceWith('<span class="text-danger">头像</span>');
     }
 
     jQuery(document).ready(function () {
