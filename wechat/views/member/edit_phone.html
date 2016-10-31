@@ -22,25 +22,4 @@
         </ion-list>
     </ion-content>
 
-    <script id="sendCodeModal.html" type="text/ng-template">
-        <ion-modal-view>
-            <ion-header-bar align-title="center">
-                <button class="button button-icon" ng-click="closeSendCodeModal()">取消</button>
-                <h1 class="title">获取验证码</h1>
-            </ion-header-bar>
-            <ion-content>
-                <div class="list">
-                    <div class="item tac bor_0">
-                        <img id="verify" class="mb15" src="/wap/user/get-verify" ng-click="getVerify($event)">
-                        <div class="item item-input" style="margin-bottom: 15px;">
-                            <input type="text" maxlength="4" ng-model="validate.verify" placeholder="请输入上图中验证码，轻触图片可更换">
-                        </div>
-                        <button class="button button-positive button-block" ng-click="sendCode()">
-                            获取短信验证码
-                        </button>
-                    </div>
-                </div>
-            </ion-content>
-        </ion-modal-view>
-    </script>
 </ion-view>

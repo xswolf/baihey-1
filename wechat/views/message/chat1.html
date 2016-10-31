@@ -1,5 +1,4 @@
 <ion-view cache-view="false">
-    <link href="/wechat/web/css/chat.css" rel="stylesheet">
     <ion-header-bar align-title="center"  class="bhy com_w_100" ng-show="u_isFollow">
         <h1 class="title" receive-id="{{receiveId}}" real-name="{{real_name}}"  change-title="{{real_name | sex:sex:age:receiveId}}"></h1>
         <button class="button button-icon" ng-click="addFollow()" ng-if="u_isFollow">关注</button>
@@ -32,7 +31,7 @@
             <ion-item class="talk_item_u">
                 <div class="talk_user">
                     <a ng-click="blackListAlert()">
-                        <img ng-src="{{receiveHeadPic | isNull}}" onerror="this.src='/wechat/web/images/no_img.png'">
+                        <img ng-src="{{receiveHeadPic | isNull}}" onerror="this.src='/wechat/web/images/no_img.png'" width="42" height="42">
                     </a>
                 </div>
                 <div class="talk_r">
@@ -56,10 +55,10 @@
                 <!-- 头像 -->
                 <div class="talk_user">
                     <a ng-if="sendId != vo.send_user_id" ng-click="blackListAlert()">
-                        <img ng-src="{{receiveHeadPic | isNull}}" onerror="this.src='/wechat/web/images/no_img.png'">
+                        <img width="42" height="42" ng-src="{{receiveHeadPic | isNull}}" onerror="this.src='/wechat/web/images/no_img.png'">
                     </a>
                     <a ng-if="sendId == vo.send_user_id" href="#/member">
-                    <img ng-src="{{sendHeadPic | isNull}}"
+                    <img width="42" height="42" ng-src="{{sendHeadPic | isNull}}"
                          onerror="this.src='/wechat/web/images/no_img.png'">
                     </a>
                 </div>

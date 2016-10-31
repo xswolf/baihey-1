@@ -7,14 +7,14 @@ define(['app/module', 'app/directive/directiveApi'
     ], function (module) {
 
         // 我
-        module.controller("member.index", ['app.serviceApi', '$scope', '$ionicPopup', '$templateCache', '$timeout','$location', function (api, $scope, $ionicPopup, $templateCache, $timeout,$location) {
+        module.controller("member.index", ['app.serviceApi', '$scope', '$ionicPopup', '$templateCache', '$timeout', '$location', function (api, $scope, $ionicPopup, $templateCache, $timeout, $location) {
 
 
             $scope.userInfo = ar.getStorage('userInfo');
             $scope.userInfo.info = JSON.parse($scope.userInfo.info);
             $scope.userInfo.auth = JSON.parse($scope.userInfo.auth);
 
-            if($scope.userInfo.id == 10011 || $scope.userInfo.id == 10016){
+            if ($scope.userInfo.id == 10011 || $scope.userInfo.id == 10016) {
                 location.href = '/wap/user/login';
                 return;
             }
@@ -768,7 +768,7 @@ define(['app/module', 'app/directive/directiveApi'
             };
             // 点赞
             $scope.clickLike = function (dis) {
-                if($scope.userInfo.id == 10011 || $scope.userInfo.id == 10016){
+                if ($scope.userInfo.id == 10011 || $scope.userInfo.id == 10016) {
                     location.href = '/wap/user/login';
                     return;
                 }
@@ -910,7 +910,7 @@ define(['app/module', 'app/directive/directiveApi'
                     return false;
                 }
 
-                if(!$scope.userInfo.phone){
+                if (!$scope.userInfo.phone) {
                     var cfVIP = $ionicPopup.confirm({
                         title: '实名制婚恋网',
                         template: '绑定手机才可以发布动态哦！',
@@ -925,20 +925,20 @@ define(['app/module', 'app/directive/directiveApi'
                     return false;
                 }
 
-               /* if (userInfo.info.level < 1) {
-                    var cfVIP = $ionicPopup.confirm({
-                        title: '实名制婚恋网',
-                        template: 'VIP会员才可以发布动态哦！现在开通VIP，即刻享受超级特权。',
-                        okText: '去开通',
-                        cancelText: '考虑一下'
-                    })
-                    cfVIP.then(function (res) {
-                        if (res) {
-                            $location.url('/member/vip');
-                        }
-                    })
-                    return false;
-                }*/
+                /* if (userInfo.info.level < 1) {
+                 var cfVIP = $ionicPopup.confirm({
+                 title: '实名制婚恋网',
+                 template: 'VIP会员才可以发布动态哦！现在开通VIP，即刻享受超级特权。',
+                 okText: '去开通',
+                 cancelText: '考虑一下'
+                 })
+                 cfVIP.then(function (res) {
+                 if (res) {
+                 $location.url('/member/vip');
+                 }
+                 })
+                 return false;
+                 }*/
 
                 if (!$scope.formData.content) {
                     ar.saveDataAlert($ionicPopup, '说点什么吧，不要为难小的哦。');
@@ -1149,7 +1149,7 @@ define(['app/module', 'app/directive/directiveApi'
             // 关注
             $scope.addFollow = function () {
 
-                if($scope.userInfo.id == 10011 || $scope.userInfo.id == 10016){
+                if ($scope.userInfo.id == 10011 || $scope.userInfo.id == 10016) {
                     location.href = '/wap/user/login';
                     return;
                 }
@@ -1276,7 +1276,7 @@ define(['app/module', 'app/directive/directiveApi'
             // 关注
             $scope.addFollow = function () {
 
-                if($scope.userInfo.id == 10011 || $scope.userInfo.id == 10016){
+                if ($scope.userInfo.id == 10011 || $scope.userInfo.id == 10016) {
                     location.href = '/wap/user/login';
                     return;
                 }
@@ -1545,26 +1545,7 @@ define(['app/module', 'app/directive/directiveApi'
         module.controller("member.security_phone", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$interval', '$location', '$ionicModal', function (api, $scope, $timeout, $ionicPopup, $interval, $location, $ionicModal) {
 
             $scope.formData = {};
-            $scope.validate = {};
             $scope.getCodeTitle = '获取验证码';
-
-            $ionicModal.fromTemplateUrl('sendCodeModal.html', {
-                scope: $scope,
-                animation: 'slide-in-up',
-                focusFirstInput: true
-            }).then(function (modal) {
-                $scope.modal = modal;
-            });
-            $scope.openSendCodeModal = function () {
-                $scope.modal.show();
-            };
-            $scope.closeSendCodeModal = function () {
-                $scope.modal.hide();
-            };
-
-            $scope.getVerify = function (event) {
-                event.target.src = '/wap/user/get-verify?time=' + ar.timeStamp();
-            };
 
             // 倒计时
             $scope.getCode = function () {
@@ -1581,47 +1562,35 @@ define(['app/module', 'app/directive/directiveApi'
                         ar.saveDataAlert($ionicPopup, '该手机号码已存在，如有疑问请致电：023-68800997。');
                         return false;
                     } else {
-                        $scope.openSendCodeModal();
+                        $scope.sendCode();
                     }
                 })
             };
 
             // 发送短信验证码
             $scope.sendCode = function () {
-
-                if (!$scope.validate.verify) {
-                    ar.saveDataAlert($ionicPopup, '请输入验证码');
-                    return false;
-                }
-                api.get('/wap/user/check-code', {verify_code: $scope.validate.verify}).success(function (res) {
-                    if (!res) {
-                        ar.saveDataAlert($ionicPopup, '验证码不正确');
-                        angular.element(document.querySelectorAll('#verify')[0]).attr('src', '/wap/user/get-verify?time=' + ar.timeStamp())
+                api.sendCodeMsg($scope.formData.phone).success(function (res) {
+                    if (res.status < 1) {
+                        ar.saveDataAlert($ionicPopup, res.msg);
                     } else {
-                        api.sendCodeMsg($scope.formData.phone).success(function (res) {
-                            if (res.status < 1) {
-                                ar.saveDataAlert($ionicPopup, res.msg);
-                            } else {
-                                $scope.closeSendCodeModal();
-                                var timeTitle = 60;
-                                var timer = $interval(function () {
-                                    $scope.getCodeTitle = '重新获取(' + timeTitle + ')';
-                                }, 1000, 60);
-                                timer.then(function () {
-                                    $scope.getCodeTitle = '获取验证码';
-                                    $interval.cancel(timer);
-                                }, function () {
-                                    ar.saveDataAlert($ionicPopup, '倒计时出错');
-                                }, function () {
-                                    timeTitle -= 1;
-                                });
-                            }
-                        }).error(function () {
-                            ar.saveDataAlert($ionicPopup, '获取短信验证码失败，请重试！');
+                        var timeTitle = 60;
+                        var timer = $interval(function () {
+                            $scope.getCodeTitle = '重新获取(' + timeTitle + ')';
+                        }, 1000, 60);
+                        timer.then(function () {
+                            $scope.getCodeTitle = '获取验证码';
+                            $interval.cancel(timer);
+                        }, function () {
+                            ar.saveDataAlert($ionicPopup, '倒计时出错');
+                        }, function () {
+                            timeTitle -= 1;
                         });
                     }
+                }).error(function () {
+                    ar.saveDataAlert($ionicPopup, '获取短信验证码失败，请重试！');
                 });
             };
+
             // 立即绑定
             $scope.bindNow = function () {
                 if (!ar.validateMobile($scope.formData.phone)) {
@@ -1663,74 +1632,41 @@ define(['app/module', 'app/directive/directiveApi'
                 })
             }
 
-        }
-        ])
-        ;
+        }]);
 
         // 账户安全-更换手机-验证原手机
         module.controller("member.edit_phone", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$interval', '$location', '$ionicModal', function (api, $scope, $timeout, $ionicPopup, $interval, $location, $ionicModal) {
             $scope.formData = {};
-            $scope.validate = {};
             $scope.codeTitle = '获取验证码';
 
-            $ionicModal.fromTemplateUrl('sendCodeModal.html', {
-                scope: $scope,
-                animation: 'slide-in-up',
-                focusFirstInput: true
-            }).then(function (modal) {
-                $scope.modal = modal;
-            });
-            $scope.openSendCodeModal = function () {
-                $scope.modal.show();
-            };
-            $scope.closeSendCodeModal = function () {
-                $scope.modal.hide();
-            };
-
-            $scope.getVerify = function (event) {
-                event.target.src = '/wap/user/get-verify?time=' + ar.timeStamp();
-            };
             // 获取验证码
             $scope.getCode = function () {
                 if ($scope.formData.phone != parseInt($scope.userInfo.phone)) {
                     ar.saveDataAlert($ionicPopup, '旧手机号码错误！');
                     return false;
                 }
-                $scope.openSendCodeModal();
+                $scope.sendCode();
             };
 
             $scope.sendCode = function () {
-                if (!$scope.validate.verify) {
-                    ar.saveDataAlert($ionicPopup, '请输入验证码');
-                    return false;
-                }
-                api.get('/wap/user/check-code', {verify_code: $scope.validate.verify}).success(function (res) {
-                    if (!res) {
-                        ar.saveDataAlert($ionicPopup, '验证码不正确');
-                        angular.element(document.querySelectorAll('#verify')[0]).attr('src', '/wap/user/get-verify?time=' + ar.timeStamp());
-                        return false;
-                    } else {
-                        $scope.closeSendCodeModal();
-                        var timeTitle = 60;
-                        var timer = $interval(function () {
-                            $scope.codeTitle = '重新获取(' + timeTitle + ')';
-                        }, 1000, 60);
-                        timer.then(function () {
-                            $scope.codeTitle = '获取验证码';
-                            $interval.cancel(timer);
-                        }, function () {
-                            ar.saveDataAlert($ionicPopup, '倒计时出错');
-                        }, function () {
-                            timeTitle -= 1;
-                        });
+                var timeTitle = 60;
+                var timer = $interval(function () {
+                    $scope.codeTitle = '重新获取(' + timeTitle + ')';
+                }, 1000, 60);
+                timer.then(function () {
+                    $scope.codeTitle = '获取验证码';
+                    $interval.cancel(timer);
+                }, function () {
+                    ar.saveDataAlert($ionicPopup, '倒计时出错');
+                }, function () {
+                    timeTitle -= 1;
+                });
 
-                        // 发送验证码
-                        api.sendCodeMsg($scope.userInfo.phone).success(function (res) {
-                            if (res.status < 1) {
-                                $interval.cancel(timer);
-                                ar.saveDataAlert($ionicPopup, res.msg);
-                            }
-                        });
+                // 发送验证码
+                api.sendCodeMsg($scope.userInfo.phone).success(function (res) {
+                    if (res.status < 1) {
+                        $interval.cancel(timer);
+                        ar.saveDataAlert($ionicPopup, res.msg);
                     }
                 });
 
@@ -1757,26 +1693,7 @@ define(['app/module', 'app/directive/directiveApi'
         // 账户安全-更换手机-绑定新手机
         module.controller("member.edit_phone_new", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$interval', '$location', '$ionicModal', function (api, $scope, $timeout, $ionicPopup, $interval, $location, $ionicModal) {
             $scope.formData = {};
-            $scope.validate = {};
             $scope.getCodeTitle = '获取验证码';
-
-            $ionicModal.fromTemplateUrl('sendCodeModal.html', {
-                scope: $scope,
-                animation: 'slide-in-up',
-                focusFirstInput: true
-            }).then(function (modal) {
-                $scope.modal = modal;
-            });
-            $scope.openSendCodeModal = function () {
-                $scope.modal.show();
-            };
-            $scope.closeSendCodeModal = function () {
-                $scope.modal.hide();
-            };
-
-            $scope.getVerify = function (event) {
-                event.target.src = '/wap/user/get-verify?time=' + ar.timeStamp();
-            };
 
             // 倒计时
             $scope.getCode = function () {
@@ -1793,43 +1710,30 @@ define(['app/module', 'app/directive/directiveApi'
                         ar.saveDataAlert($ionicPopup, '该手机号码已存在，如有疑问请致电：023-68800997。');
                         return false;
                     } else {
-                        $scope.openSendCodeModal();
+                        $scope.sendCode();
                     }
                 })
             };
 
             $scope.sendCode = function () {
-                if (!$scope.validate.verify) {
-                    ar.saveDataAlert($ionicPopup, '请输入验证码');
-                    return false;
-                }
-                api.get('/wap/user/check-code', {verify_code: $scope.validate.verify}).success(function (res) {
-                    if (!res) {
-                        ar.saveDataAlert($ionicPopup, '验证码不正确');
-                        angular.element(document.querySelectorAll('#verify')[0]).attr('src', '/wap/user/get-verify?time=' + ar.timeStamp());
-                        return false;
-                    } else {
-                        $scope.closeSendCodeModal();
-                        var timeTitle = 60;
-                        var timer = $interval(function () {
-                            $scope.getCodeTitle = '重新获取(' + timeTitle + ')';
-                        }, 1000, 60);
-                        timer.then(function () {
-                            $scope.getCodeTitle = '获取验证码';
-                            $interval.cancel(timer);
-                        }, function () {
-                            ar.saveDataAlert($ionicPopup, '倒计时出错');
-                        }, function () {
-                            timeTitle -= 1;
-                        });
+                var timeTitle = 60;
+                var timer = $interval(function () {
+                    $scope.getCodeTitle = '重新获取(' + timeTitle + ')';
+                }, 1000, 60);
+                timer.then(function () {
+                    $scope.getCodeTitle = '获取验证码';
+                    $interval.cancel(timer);
+                }, function () {
+                    ar.saveDataAlert($ionicPopup, '倒计时出错');
+                }, function () {
+                    timeTitle -= 1;
+                });
 
-                        // 发送验证码
-                        api.sendCodeMsg($scope.formData.phone).success(function (res) {
-                            if (res.status < 1) {
-                                $interval.cancel(timer);
-                                ar.saveDataAlert($ionicPopup, res.msg);
-                            }
-                        });
+                // 发送验证码
+                api.sendCodeMsg($scope.formData.phone).success(function (res) {
+                    if (res.status < 1) {
+                        $interval.cancel(timer);
+                        ar.saveDataAlert($ionicPopup, res.msg);
                     }
                 });
             };
@@ -3231,7 +3135,7 @@ define(['app/module', 'app/directive/directiveApi'
             });
             // 举报
             $scope.report = function () {
-                if($scope.userInfo.id == 10011 || $scope.userInfo.id == 10016){
+                if ($scope.userInfo.id == 10011 || $scope.userInfo.id == 10016) {
                     location.href = '/wap/user/login';
                     return;
                 }
@@ -3284,7 +3188,7 @@ define(['app/module', 'app/directive/directiveApi'
             // 拉黑
             $scope.pullTheBlack = function () {
 
-                if($scope.userInfo.id == 10011 || $scope.userInfo.id == 10016){
+                if ($scope.userInfo.id == 10011 || $scope.userInfo.id == 10016) {
                     location.href = '/wap/user/login';
                     return;
                 }
@@ -3337,26 +3241,6 @@ define(['app/module', 'app/directive/directiveApi'
         module.controller("member.bindPhone", ['app.serviceApi', '$scope', '$timeout', '$ionicPopup', '$location', '$interval', '$ionicModal', '$ionicLoading', function (api, $scope, $timeout, $ionicPopup, $location, $interval, $ionicModal, $ionicLoading) {
             $scope.formData = {};
             $scope.getCodeTitle = '获取验证码';
-            $scope.validate = {};
-
-            $ionicModal.fromTemplateUrl('sendCodeModal.html', {
-                scope: $scope,
-                animation: 'slide-in-up',
-                focusFirstInput: true,
-            }).then(function (modal) {
-                $scope.modal = modal;
-            });
-
-            $scope.openSendCodeModal = function () {
-                $scope.modal.show();
-            };
-            $scope.closeSendCodeModal = function () {
-                $scope.modal.hide();
-            };
-
-            $scope.getVerify = function (event) {
-                event.target.src = '/wap/user/get-verify?time=' + ar.timeStamp();
-            };
 
             // 倒计时
             $scope.getCode = function () {
@@ -3373,47 +3257,35 @@ define(['app/module', 'app/directive/directiveApi'
                         ar.saveDataAlert($ionicPopup, '该手机号码已存在，如有疑问请致电：023-68800997。');
                         return false;
                     } else {
-                        $scope.openSendCodeModal();
+                        $scope.sendCode();
                     }
                 })
             };
 
             $scope.sendCode = function () {
-                if (!$scope.validate.verify) {
-                    ar.saveDataAlert($ionicPopup, '请输入验证码');
-                    return false;
-                }
-                api.get('/wap/user/check-code', {verify_code: $scope.validate.verify}).success(function (res) {
-                    if (!res) {
-                        ar.saveDataAlert($ionicPopup, '验证码不正确');
-                        angular.element(document.querySelectorAll('#verify')[0]).attr('src', '/wap/user/get-verify?time=' + ar.timeStamp());
-                        return false;
-                    } else {
-                        $scope.closeSendCodeModal();
-                        var timeTitle = 60;
-                        var timer = $interval(function () {
-                            $scope.getCodeTitle = '重新获取(' + timeTitle + ')';
-                        }, 1000, 60);
-                        timer.then(function () {
-                            $scope.getCodeTitle = '获取验证码';
-                            $interval.cancel(timer);
-                        }, function () {
-                            ar.saveDataAlert($ionicPopup, '倒计时出错');
-                        }, function () {
-                            timeTitle -= 1;
-                        });
 
-                        // 发送验证码
-                        api.sendCodeMsg($scope.formData.phone).success(function (res) {
-                            if (res.status < 1) {
-                                $interval.cancel(timer);
-                                ar.saveDataAlert($ionicPopup, res.msg);
-                            }
-                        });
-                    }
+                var timeTitle = 60;
+                var timer = $interval(function () {
+                    $scope.getCodeTitle = '重新获取(' + timeTitle + ')';
+                }, 1000, 60);
+                timer.then(function () {
+                    $scope.getCodeTitle = '获取验证码';
+                    $interval.cancel(timer);
+                }, function () {
+                    ar.saveDataAlert($ionicPopup, '倒计时出错');
+                }, function () {
+                    timeTitle -= 1;
                 });
 
-            };
+                // 发送验证码
+                api.sendCodeMsg($scope.formData.phone).success(function (res) {
+                    if (res.status < 1) {
+                        $interval.cancel(timer);
+                        ar.saveDataAlert($ionicPopup, res.msg);
+                    }
+                });
+            }
+
 
             // 立即绑定
             $scope.bindNow = function () {
@@ -3429,13 +3301,11 @@ define(['app/module', 'app/directive/directiveApi'
                         return false;
                     } else {
                         api.validateCode($scope.formData.code).success(function (res) {
-                            $ionicLoading.hide();
                             if (!res.status) {
                                 ar.saveDataAlert($ionicPopup, '验证码不正确');
                                 return false;
                             } else {
                                 api.save('/wap/user/update-user-data', {phone: $scope.formData.phone}).success(function (res) {
-                                    $ionicLoading.hide();
                                     if (res.data) {
                                         var alt = $ionicPopup.alert({
                                             template: '恭喜，手机绑定成功！',

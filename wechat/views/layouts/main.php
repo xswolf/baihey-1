@@ -12,6 +12,7 @@
     <link href="/wechat/web/css/base.css" rel="stylesheet">
     <link href="/wechat/web/css/index.css" rel="stylesheet">
     <link href="/wechat/web/css/android.css" rel="stylesheet">
+    <link href="/wechat/web/css/chat.css" rel="stylesheet">
     <link href="/wechat/web/css/plugin/animate/animate.css" rel="stylesheet">
     <link href="/wechat/web/css/newFontIcon160613.css" rel="stylesheet">
     <link href="/wechat/web/css/newFontIcon160901.css" rel="stylesheet">

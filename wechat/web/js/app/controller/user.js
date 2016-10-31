@@ -45,7 +45,7 @@ define(['app/module', 'app/directive/directiveApi'
         $ionicModal.fromTemplateUrl('sendCodeModal.html', {
             scope: $scope,
             animation: 'slide-in-up',
-            focusFirstInput:true
+            focusFirstInput: true
         }).then(function (modal) {
             $scope.modal = modal;
         });
@@ -56,8 +56,8 @@ define(['app/module', 'app/directive/directiveApi'
             $scope.modal.hide();
         };
 
-        $scope.changeVerify = function(){
-            angular.element(document.querySelectorAll('#verify')[0]).attr('src','/wap/user/get-verify?time=' + ar.timeStamp());
+        $scope.changeVerify = function () {
+            angular.element(document.querySelectorAll('#verify')[0]).attr('src', '/wap/user/get-verify?time=' + ar.timeStamp());
         }
 
         $scope.getVerify = function (event) {
@@ -66,7 +66,7 @@ define(['app/module', 'app/directive/directiveApi'
 
         // 倒计时
         $scope.getCode = function () {
-            if(!validateFrom()){
+            if (!validateFrom()) {
                 return;
             }
             api.getMobileIsExist($scope.User.mobile).success(function (res) {
@@ -81,7 +81,7 @@ define(['app/module', 'app/directive/directiveApi'
         }
 
         $scope.sendCode = function () {
-            if(!$scope.validate.verify){
+            if (!$scope.validate.verify) {
                 ar.saveDataAlert($ionicPopup, '请输入验证码');
                 return false;
             }
@@ -131,12 +131,12 @@ define(['app/module', 'app/directive/directiveApi'
                         $ionicLoading.hide();
                         if (data.status == 1) {
                             ar.setStorage('userInfo', data.data);
-                            if(ar.isWeChat()){
+                            if (ar.isWeChat()) {
                                 var alertPopup = $ionicPopup.alert({
                                     title: '重要提示',
                                     template: '您的初始密码为手机号后六位：' + ar.getPassByPhone($scope.User.mobile) + '，请及时前往个人中心修改您的密码。'
                                 });
-                            }else{
+                            } else {
                                 var alertPopup = $ionicPopup.alert({
                                     title: '重要提示',
                                     template: '您的初始密码为手机号后六位：' + ar.getPassByPhone($scope.User.mobile) + '，请及时前往个人中心修改您的密码。下次登录请关注微信公众号“嘉瑞百合缘”！'
@@ -201,27 +201,11 @@ define(['app/module', 'app/directive/directiveApi'
     }])
 
     //找回密码
-    module.controller("User.forgetpass", ['app.serviceApi', '$scope', '$ionicPopup', '$ionicModal','$interval', function (api, $scope, $ionicPopup, $ionicModal,$interval) {
+    module.controller("User.forgetpass", ['app.serviceApi', '$scope', '$ionicPopup', '$ionicModal', '$interval', function (api, $scope, $ionicPopup, $ionicModal, $interval) {
 
         $scope.formData = {};
 
         $scope.codeBtn = '获取验证码';
-
-        $scope.validate = {};
-
-        $ionicModal.fromTemplateUrl('sendCodeModal.html', {
-            scope: $scope,
-            animation: 'slide-in-up',
-            focusFirstInput:true
-        }).then(function (modal) {
-            $scope.modal = modal;
-        });
-        $scope.openSendCodeModal = function () {
-            $scope.modal.show();
-        };
-        $scope.closeSendCodeModal = function () {
-            $scope.modal.hide();
-        };
 
         // 发送验证码
         $scope.getCode = function () {
@@ -236,47 +220,30 @@ define(['app/module', 'app/directive/directiveApi'
                     ar.saveDataAlert($ionicPopup, '该手机号码还未注册，请直接注册');
                     return false;
                 } else {
-                    $scope.openSendCodeModal();
+                    $scope.sendCode();
                 }
             });
         }
 
-        $scope.getVerify = function (event) {
-            event.target.src = '/wap/user/get-verify?time=' + ar.timeStamp();
-        }
-
         $scope.sendCode = function () {
-            if(!$scope.validate.verify){
-                ar.saveDataAlert($ionicPopup, '请输入验证码');
-                return false;
-            }
-            api.get('/wap/user/check-code', {verify_code: $scope.validate.verify}).success(function (res) {
-                if (!res) {
-                    ar.saveDataAlert($ionicPopup, '验证码不正确');
-                    angular.element(document.querySelectorAll('#verify')[0]).attr('src', '/wap/user/get-verify?time=' + ar.timeStamp())
-                    return false;
-                } else {
-                    $scope.closeSendCodeModal();
-                    var timeTitle = 60;
-                    var timer = $interval(function () {
-                        $scope.codeBtn = '重新获取(' + timeTitle + ')';
-                    }, 1000, 60);
-                    timer.then(function () {
-                        $scope.codeBtn = '获取验证码';
-                        $interval.cancel(timer);
-                    }, function () {
-                        ar.saveDataAlert($ionicPopup, '倒计时出错');
-                    }, function () {
-                        timeTitle -= 1;
-                    });
+            var timeTitle = 60;
+            var timer = $interval(function () {
+                $scope.codeBtn = '重新获取(' + timeTitle + ')';
+            }, 1000, 60);
+            timer.then(function () {
+                $scope.codeBtn = '获取验证码';
+                $interval.cancel(timer);
+            }, function () {
+                ar.saveDataAlert($ionicPopup, '倒计时出错');
+            }, function () {
+                timeTitle -= 1;
+            });
 
-                    // 发送验证码
-                    api.sendCodeMsg($scope.formData.phone).success(function (res) {
-                        if (res.status < 1) {
-                            $interval.cancel(timer);
-                            ar.saveDataAlert($ionicPopup, res.msg);
-                        }
-                    });
+            // 发送验证码
+            api.sendCodeMsg($scope.formData.phone).success(function (res) {
+                if (res.status < 1) {
+                    $interval.cancel(timer);
+                    ar.saveDataAlert($ionicPopup, res.msg);
                 }
             });
         }
