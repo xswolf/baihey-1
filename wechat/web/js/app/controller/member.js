@@ -153,7 +153,7 @@ define(['app/module', 'app/directive/directiveApi'
                     }
                 };
                 uploader.onErrorItem = function (fileItem, response, status, headers) {  // 上传出错
-                    ar.saveDataAlert($ionicPopup, '上传图片出错！');
+                    ar.saveDataAlert($ionicPopup, '网络不给力！');
                     $scope.hideLoading();  // 隐藏loading
                 };
                 uploader.onCompleteItem = function (fileItem, response, status, headers) {  // 上传结束
@@ -479,7 +479,7 @@ define(['app/module', 'app/directive/directiveApi'
                     }
                 };
                 uploader.onErrorItem = function (fileItem, response, status, headers) {  // 上传出错
-                    ar.saveDataAlert($ionicPopup, '上传图片出错！');
+                    ar.saveDataAlert($ionicPopup, '网络不给力！');
                     $scope.hideLoading();  // 隐藏loading
                 };
                 uploader.onCompleteItem = function (fileItem, response, status, headers) {  // 上传结束
@@ -874,7 +874,7 @@ define(['app/module', 'app/directive/directiveApi'
                     ar.initPhotoSwipeFromDOM('.bhy-gallery', $scope, $ionicPopup);
                 };
                 uploader.onErrorItem = function (fileItem, response, status, headers) {  // 上传出错
-                    ar.saveDataAlert($ionicPopup, '上传图片出错！');
+                    ar.saveDataAlert($ionicPopup, '网络不给力！');
                     $scope.hideLoading();  // 隐藏loading
                 };
                 uploader.onCompleteItem = function (fileItem, response, status, headers) {  // 上传结束
@@ -1889,16 +1889,18 @@ define(['app/module', 'app/directive/directiveApi'
 
             // 保存
             $scope.saveData = function () {
-                if (!$scope.authList[0]) {
-                    ar.saveDataAlert($ionicPopup, '请上传身份证正面照片');
+                if (!$scope.authList[0] || !$scope.authList[1]) {
+                    ar.saveDataAlert($ionicPopup, '身份证正反两面都要上传哦！');
                     return false;
                 }
-                if (!$scope.authList[1]) {
-                    ar.saveDataAlert($ionicPopup, '请上传身份证反面照片');
+
+                if($scope.authList[0].is_check == 0 || $scope.authList[1].is_check == 0){
+                    ar.saveDataAlert($ionicPopup, '保存失败，您有未审核通过的身份证照片！');
                     return false;
                 }
+
                 if (!$scope.formData.real_name) {
-                    ar.saveDataAlert($ionicPopup, '请填写您的真实姓名，本站前台只显示您的姓氏。');
+                    ar.saveDataAlert($ionicPopup, '请填写您的真实姓名，本站只展示您的姓氏。');
                     return false;
                 }
 
