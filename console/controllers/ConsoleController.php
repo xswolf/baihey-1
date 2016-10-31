@@ -24,6 +24,7 @@ class ConsoleController extends Controller
         $m = date('n');
         $y = date('Y');
 
+        // 更新年龄
         $sql = "UPDATE bhy_user_information
 
 SET age = IF ({$m} - DATE_FORMAT(DATE_ADD(FROM_UNIXTIME(0), INTERVAL json_extract(info,'$.age')+0 SECOND) , '%m') < 0 ,
@@ -39,6 +40,12 @@ SET age = IF ({$m} - DATE_FORMAT(DATE_ADD(FROM_UNIXTIME(0), INTERVAL json_extrac
             echo 'age is update';
         }
 
+        // 设置头像
+        $setHead = "UPDATE bhy_user_information i INNER JOIN bhy_user_photo p ON i.`user_id`=p.`user_id` SET info = JSON_SET(info,'$.head_pic',p.`thumb_path`)  WHERE json_extract(info, '$.head_pic') = '' AND p.`type` = 1 AND p.`is_check`=1";
+
+        if (\Yii::$app->db->createCommand($setHead)->execute()) {
+            echo 'head is update';
+        }
     }
 
     public function actionSendNews(){
